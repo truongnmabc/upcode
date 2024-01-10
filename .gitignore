@@ -4,7 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
-.yarn/install-state.gz
+.history
+package-lock.json
+yarn.lock
 
 # testing
 /coverage
@@ -12,7 +14,7 @@
 # next.js
 /.next/
 /out/
-
+/README.md
 # production
 /build
 
@@ -26,11 +28,23 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+.idea/
+
+public/info/images/logo192.png
+public/info/images/logo512.png
+public/info/images/logo60.png
+src/config_app.js
+src/data/appInfos.json
+src/data/footerMenus.json
+src/data/stateData.json
+src/styles/config.css
+.env
+ssh_keys/id_rsa

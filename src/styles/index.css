@@ -1,0 +1,43 @@
+@import "config.css"; /*  Using a string */
+html,
+body {
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+@font-face {
+    font-family: "Poppins-Medium";
+    src: url("/fonts/Poppins-Medium.ttf");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Poppins-Bold";
+    src: url("/fonts/Poppins-Bold.ttf");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Poppins-SemiBold";
+    src: url("/fonts/Poppins-SemiBold.ttf");
+    font-display: swap;
+}
+@font-face {
+    font-family: "Poppins-Regular";
+    src: url("/fonts/Poppins-Regular.ttf");
+    font-display: swap;
+}
+/* <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet"> */
+/* font-family: 'Sora', sans-serif; */
+:root {
+    --background: rgb(255, 255, 255);
+}
+[data-theme="dark"] {
+    --background: rgb(33, 33, 33);
+}
+
+* {
+    font-family: "Poppins-Regular";
+}
