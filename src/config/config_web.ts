@@ -26,3 +26,7 @@ export function getSession(key: string) {
 export const isProduction = () => {
     return process.env.NEXT_PUBLIC_WEB_PROD == "production";
 };
+
+export const isParentApp = () => {
+    return isWebPASSEMALL();
+};

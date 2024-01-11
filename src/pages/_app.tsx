@@ -5,7 +5,6 @@ import isMobileFunctionsWithUserAgent from "@/utils/isMobileFunctionsWithUserAge
 import getCountryAPI from "@/utils/getCountryAPI";
 import "../styles/index.css";
 export default function App({ Component, pageProps, deviceType }: any) {
-    console.log(deviceType);
     const ssrMatchMedia = (query: any) => ({
         matches: mediaQuery.match(query, {
             // The estimated CSS width of the browser.
@@ -27,10 +26,10 @@ export default function App({ Component, pageProps, deviceType }: any) {
         if (jssStyles) {
             jssStyles.parentElement?.removeChild(jssStyles);
         }
-        if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-            const { register } = require("../serviceWorker");
-            register();
-        }
+        // if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+        //     const { register } = require("../serviceWorker");
+        //     register();
+        // }
         async function getCountryFC() {
             let countryLocalStorage = localStorage.getItem("country");
             if (!countryLocalStorage) {

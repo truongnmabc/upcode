@@ -1,6 +1,7 @@
 import { isWebPASSEMALL } from "@/config/config_web";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import React from "react";
+import { ServerStyleSheets } from "@mui/styles";
 import { GA4_ID, TAG_MANAGER_ID } from "@/config_app";
 class MyDocument extends Document {
     render() {
