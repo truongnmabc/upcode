@@ -1,0 +1,33 @@
+$animation: 0.3s 0s cubic-bezier(0.55, 0, 0.1, 1);
+#_blank {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-image: linear-gradient(to right, transparent, rgba(33, 33, 33, 0.3));
+    transition: 0.3s all;
+    top: 0;
+    right: -100vw;
+}
+#navigation_drawer {
+    position: fixed;
+    top: 0;
+    right: calc(-100vw - 25px + 30px);
+    bottom: 0;
+    max-width: 350px;
+    width: calc(100vw - 25px);
+    background-color: white;
+    z-index: 1100;
+    height: -webkit-fill-available;
+    overscroll-behavior: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    transition: transform $animation;
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+@media screen and (min-width: 769px) {
+    #navigation_drawer {
+        max-width: 456px;
+    }
+}

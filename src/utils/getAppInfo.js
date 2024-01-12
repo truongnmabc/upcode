@@ -1,14 +1,14 @@
 import { AppInfo } from "@/models/AppInfo";
 import fs from "fs";
 import path from "path";
-let mapAppInfos: any;
+let mapAppInfos;
 const readAllAppInfos = () => {
     if (!mapAppInfos) {
         const directoryAppInfos = path.join(process.cwd(), "src/data/appInfos.json");
         let appInfosData = fs.readFileSync(directoryAppInfos);
         mapAppInfos = JSON.parse(appInfosData.toString());
     }
-    let appInfos = mapAppInfos?.map((appInfo: any) => {
+    let appInfos = mapAppInfos?.map((appInfo) => {
         return new AppInfo(appInfo);
     });
     return appInfos;
@@ -18,12 +18,12 @@ const readAllAppInfos = () => {
  * @param appId
  * @returns trả ra appInfo hiện tại hoặc theo id được truyền vào
  */
-const getAppInfo = (appId?: string) => {
+const getAppInfo = (appId = null) => {
     let mapAppInfos = readAllAppInfos();
-    let appInfo = mapAppInfos.find((appInfo: any) => appInfo.appNameId == appId);
+    let appInfo = mapAppInfos.find((appInfo) => appInfo.appNameId == appId);
 
     if (!appInfo) {
-        appInfo = mapAppInfos.find((appInfo: any) => appInfo.appId == appId);
+        appInfo = mapAppInfos.find((appInfo) => appInfo.appId == appId);
     }
     // if (isWebDMV() && !appInfo) {
     //     appInfo = mapAppInfos.find(
