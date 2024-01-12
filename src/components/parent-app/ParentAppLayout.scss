@@ -1,11 +1,16 @@
 .take-learning-to-the-next-level {
+    margin-top: 24px;
+    .align-center.-container {
+        flex-direction: column;
+    }
     .landing-title {
         position: relative;
+        max-width: 342px;
         img {
             // 4/3
             position: absolute;
             top: -14px;
-            left: -32px;
+            left: -6px;
             width: 64px;
             height: 48px;
         }
@@ -19,6 +24,7 @@
             .invisible-text {
                 color: transparent;
                 text-shadow: none;
+                padding-left: 26px;
             }
 
             .part-color-1 {
@@ -26,20 +32,30 @@
                 position: relative;
             }
         }
+        p {
+            font-size: 16px;
+            line-height: 24px;
+            color: rgba(33, 33, 33, 0.52);
+            text-align: center;
+            margin-bottom: 0;
+        }
     }
-    figure {
+    .img-landing {
         width: 360px;
         height: 276px;
-        background-image: url("/public/images/easy-prep/landing-img.png");
-        background-size: cover;
-        margin: 0;
     }
 
     @media screen and (min-width: 769px) {
+        margin-top: 40px;
+        .align-center.-container {
+            flex-direction: row;
+            justify-content: space-between;
+        }
         .landing-title {
+            max-width: 660px;
             img {
                 top: -32px;
-                left: -62px;
+                left: -10px;
                 width: 112px;
                 height: 84px;
             }
@@ -48,13 +64,20 @@
                 line-height: 60px;
                 text-shadow: -5px 5px #fff;
                 .invisible-text {
+                    padding-left: 50px;
                 }
 
                 .part-color-1 {
                 }
             }
+            p {
+                margin-top: 24px;
+                font-size: 20px;
+                line-height: 26px;
+                text-align: left;
+            }
         }
-        figure {
+        .img-landing {
             width: 470px;
             height: 360px;
         }

@@ -11,7 +11,7 @@ const ParentAppLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listApp
         <>
             <Layout1 listAppInfos={listAppInfos}>
                 <MyContainer className="take-learning-to-the-next-level ">
-                    <div className="align-center">
+                    <div className="align-center -container">
                         <div className="landing-title">
                             <img src="/images/easy-prep/logo-word.png" />
                             <h1 className="landing-title-h1">
@@ -31,8 +31,9 @@ const ParentAppLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listApp
                                     </>
                                 )}
                             </h1>
+                            <p>Our mission is to bring you the best online test prep that you can learn anytime, anywhere.</p>
                         </div>
-                        <figure />
+                        <img className="img-landing" src="/images/easy-prep/landing-img.png" alt="Take learning" />
                     </div>
                 </MyContainer>
             </Layout1>
