@@ -9,7 +9,7 @@ const Header1 = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
     const isDesktop = useMediaQuery("(min-width: 769px)");
     const [focusSearch, setFocusSearch] = useState(false);
     return (
-        <div className={`header-1-container`}>
+        <header className={`header-1-container`}>
             <div className="grid-frame -f1 align-center font-14">
                 {isDesktop ? (
                     <>
@@ -76,7 +76,7 @@ const Header1 = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
                 )}
                 <script type="text/javascript">{}</script>
             </div>
-        </div>
+        </header>
     );
 };
 

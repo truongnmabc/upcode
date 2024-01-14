@@ -2,8 +2,9 @@
     position: sticky;
     top: 0;
     height: 64px;
+    z-index: 100;
     background: #fff;
-    border: 1px solid #2121211f;
+    border-bottom: 1px solid #2121211f;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     padding: 0 16px;

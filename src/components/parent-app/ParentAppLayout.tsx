@@ -4,6 +4,7 @@ import Layout1 from "../layout/layout-1/Layout1";
 import MyContainer from "../v4-material/MyContainer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import "./ParentAppLayout.scss";
+import ListApp from "../easy-prep/ListApp";
 
 const ParentAppLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listAppInfos: IAppInfo[] }) => {
     const isDesktop = useMediaQuery("(min-width: 769px)");
@@ -36,6 +37,7 @@ const ParentAppLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listApp
                         <img className="img-landing" src="/images/easy-prep/landing-img.png" alt="Take learning" />
                     </div>
                 </MyContainer>
+                <ListApp listAppInfos={listAppInfos} />
             </Layout1>
         </>
     );
