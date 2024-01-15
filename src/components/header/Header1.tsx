@@ -163,7 +163,7 @@ const SearchResult = ({
                 else
                     return (
                         <div key={index} className="result-item align-center">
-                            <img width={24} height={24} src={`/info/images/${res.appShortName}/logo60.png`} />
+                            <img width={24} height={24} src={`/info/images/${res.appShortName}/logo60.png`} alt="app-logo" />
                             {res?.appName}
                         </div>
                     );

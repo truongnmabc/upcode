@@ -1,8 +1,8 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import mediaQuery from "../declaration/mediaQuery";
 import { Fragment, useEffect } from "react";
 import isMobileFunctionsWithUserAgent from "@/utils/isMobileFunctionsWithUserAgent";
 import getCountryAPI from "@/utils/getCountryAPI";
+import mediaQuery from "css-mediaquery";
 import "../styles/index.css";
 export default function App({ Component, pageProps, deviceType }: any) {
     const ssrMatchMedia = (query: any) => ({
@@ -33,7 +33,7 @@ export default function App({ Component, pageProps, deviceType }: any) {
         async function getCountryFC() {
             let countryLocalStorage = localStorage.getItem("country");
             if (!countryLocalStorage) {
-                let getCountry = await getCountryAPI();
+                let getCountry: any = await getCountryAPI();
                 if (getCountry?.country) {
                     localStorage.setItem("country", getCountry?.country);
                     if (getCountry.country == "VN") {

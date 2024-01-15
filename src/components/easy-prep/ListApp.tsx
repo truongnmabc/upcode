@@ -15,9 +15,7 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
             mapAppCategory[app.categoryId].push(app);
         }
     }
-    useEffect(() => {
-        focusCategory(categorySelected);
-    }, [categorySelected]);
+
     const focusCategory = (id: number) => {
         let background = document.getElementById("category-background");
         let category = document.getElementById("category-item-" + id);
@@ -84,7 +82,10 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
                                         "category-item align-center " + (categorySelected == category.id ? "active" : "")
                                     }
                                     onClick={() => {
-                                        if (categorySelected !== category.id) setCategorySelected(category.id);
+                                        if (categorySelected !== category.id) {
+                                            setCategorySelected(category.id);
+                                            focusCategory(category.id);
+                                        }
                                     }}
                                     style={{ marginLeft: index != 0 ? "10px" : "" }}
                                 >

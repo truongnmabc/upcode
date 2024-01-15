@@ -5,6 +5,8 @@ import MyContainer from "../v4-material/MyContainer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import "./ParentAppLayout.scss";
 import ListApp from "../easy-prep/ListApp";
+import AppAchievement from "../easy-prep/AppAchievement";
+import Testimonals from "../easy-prep/Testimonals";
 
 const ParentAppLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listAppInfos: IAppInfo[] }) => {
     const isDesktop = useMediaQuery("(min-width: 769px)");
@@ -14,7 +16,7 @@ const ParentAppLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listApp
                 <MyContainer className="take-learning-to-the-next-level ">
                     <div className="align-center -container">
                         <div className="landing-title">
-                            <img src="/images/easy-prep/logo-word.png" />
+                            <img src="/images/easy-prep/logo-word.png" alt="logo compact" />
                             <h1 className="landing-title-h1">
                                 <span className="invisible-text">E</span>
                                 <span className="part-color-1">{`asy ${isDesktop ? "Prep" : ""}`}</span>
@@ -38,6 +40,9 @@ const ParentAppLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listApp
                     </div>
                 </MyContainer>
                 <ListApp listAppInfos={listAppInfos} />
+                <AppAchievement />
+                <Testimonals />
+                {/* Blog */}
             </Layout1>
         </>
     );
