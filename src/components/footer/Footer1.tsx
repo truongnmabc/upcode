@@ -28,22 +28,22 @@ const Footer1 = () => {
                             </a>
                         )}
                         {tw && (
-                            <a href={fb}>
+                            <a href={tw}>
                                 <TwitterIcon />
                             </a>
                         )}
                         {yt && (
-                            <a href={fb}>
+                            <a href={yt}>
                                 <YoutubeIcon />
                             </a>
                         )}
                         {ld && (
-                            <a href={fb}>
+                            <a href={ld}>
                                 <LinkedinIcon />
                             </a>
                         )}
                         {ins && (
-                            <a href={fb}>
+                            <a href={ins}>
                                 <InstagramIcon />
                             </a>
                         )}

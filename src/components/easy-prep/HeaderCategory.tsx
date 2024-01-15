@@ -2,16 +2,20 @@ import { IAppInfo } from "@/models/AppInfo";
 import categories from "../../data/categories.json";
 import "./HeaderCategory.scss";
 import { useEffect, useRef, useState } from "react";
+import ExpandMoreIcon from "../icon/ExpandMoreIcon";
+import Collapse from "@mui/material/Collapse";
 const HeaderCategory = ({
     isDesktop,
     listAppInfos,
     buttonRef,
     hideMenu,
+    showCategory = false,
 }: {
     isDesktop: boolean;
     listAppInfos: IAppInfo[];
     buttonRef?: React.RefObject<HTMLDivElement>;
     hideMenu?: () => void;
+    showCategory?: boolean;
 }) => {
     const [activeCategory, setActiveCategory] = useState(-1);
     const areaRef = useRef<HTMLDivElement>(null);
@@ -31,7 +35,40 @@ const HeaderCategory = ({
         }
     }, [isDesktop]);
     if (!isDesktop) {
-        return <div></div>;
+        return (
+            <Collapse in={showCategory}>
+                <div className="header-1-category-mobile">
+                    {categories.map((category) => {
+                        return (
+                            <>
+                                <div
+                                    className={"category-name align-center " + (activeCategory === category.id ? "active" : "")}
+                                    onClick={() => {
+                                        if (activeCategory !== category.id) setActiveCategory(category.id);
+                                        else setActiveCategory(-1);
+                                    }}
+                                >
+                                    {category.name}
+                                    <div className="expand-icon align-center">
+                                        <ExpandMoreIcon />
+                                    </div>
+                                </div>
+                                <Collapse in={activeCategory == category.id}>
+                                    <div className={"list-app " + (activeCategory == category.id ? "active" : "")}>
+                                        {listAppInfos
+                                            .filter((app) => app.categoryId === category.id)
+                                            .sort((a, b) => a.appName.localeCompare(b.appName))
+                                            .map((app) => {
+                                                return <div className="app-name align-center">{app.appName.toUpperCase()}</div>;
+                                            })}
+                                    </div>
+                                </Collapse>
+                            </>
+                        );
+                    })}
+                </div>
+            </Collapse>
+        );
     }
     return (
         <div className="header-1-category-desktop" ref={areaRef}>
@@ -50,18 +87,18 @@ const HeaderCategory = ({
                     );
                 })}
             </div>
-            {activeCategory !== -1 && (
+            <Collapse in={activeCategory !== -1} orientation="horizontal">
                 <div className="list-app">
                     <div className="grid-app">
                         {listAppInfos
                             .filter((app) => app.categoryId === activeCategory)
                             .sort((a, b) => a.appName.localeCompare(b.appName))
                             .map((app) => {
-                                return <div className="app-name">{app.appName.toUpperCase()}</div>;
+                                return <div className="app-name align-center">{app.appName.toUpperCase()}</div>;
                             })}
                     </div>
                 </div>
-            )}
+            </Collapse>
         </div>
     );
 };

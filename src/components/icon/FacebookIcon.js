@@ -1,6 +1,4 @@
-import IconProps from "./IconProp";
-
-const FacebookIcon = ({ color = "#212121", width = 24, height = 24 }: IconProps) => {
+const FacebookIcon = ({ color = "#212121", width = 24, height = 24 }) => {
     return (
         <svg width={`${width}`} height={`${height}`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_1595_145)">

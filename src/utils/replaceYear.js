@@ -1,4 +1,4 @@
-const replaceYear = (year: string) => {
+const replaceYear = (year) => {
     let text = "";
     const currentYear = "2024";
     if (year) {

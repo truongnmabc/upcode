@@ -4,7 +4,6 @@
     height: fit-content;
     padding: 16px;
     width: max-content;
-    max-width: 720px;
     box-shadow: 0px 24px 56px 0px rgba(167, 174, 186, 0.161);
     display: flex;
     .list-category {
@@ -35,12 +34,15 @@
         background: #f0f4f5;
         border-top-right-radius: 8px;
         border-bottom-right-radius: 8px;
+        max-height: 238px;
+        height: 100%;
+        overflow: auto;
         padding: 16px;
     }
     .grid-app {
         width: 100%;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
         gap: 12px;
         grid-gap: 12px;
         .app-name {
@@ -52,6 +54,8 @@
             text-align: center;
             border-radius: 8px;
             border: 1px solid #8e8177;
+            width: 144px;
+            justify-content: center;
             cursor: pointer;
         }
 
@@ -59,11 +63,49 @@
             box-shadow: 2px 2px 0px 0px #212121;
         }
     }
-
-    @media screen and (min-width: 1300px) {
-        max-width: 1100px;
+    @media screen and (min-width: 1024px) {
+        .grid-app {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+    @media screen and (min-width: 1210px) {
         .grid-app {
             grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+    }
+}
+
+.header-1-category-mobile {
+    padding: 0 16px;
+    .category-name {
+        padding: 14px 12px;
+        font-size: 16px;
+        line-height: 20px;
+        border-bottom: 1px solid transparent;
+        .expand-icon {
+            margin-left: 6px;
+            transition: 0.1s all;
+        }
+
+        &.active {
+            color: #0eb4d3;
+            background: #f0f4f5;
+            border-bottom: 1px solid #212121;
+            .expand-icon {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .list-app {
+        padding: 0 12px;
+        background: #f0f4f5;
+        .app-name {
+            padding: 12px;
+            font-size: 14px;
+            line-height: 24px;
+            color: rgba(33, 33, 33, 0.52);
+            border-bottom: 1px solid rgba(33, 33, 33, 0.08);
         }
     }
 }

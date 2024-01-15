@@ -1,7 +1,6 @@
 import React from "react";
-import IconProps from "./IconProp";
 
-const MenuIcon = ({ color = "#000", width = 24, height = 24 }: IconProps) => {
+const MenuIcon = ({ color = "#000", width = 24, height = 24 }) => {
     return (
         <svg width={`${width}`} height={`${height}`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path

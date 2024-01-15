@@ -1,7 +1,6 @@
 import React from "react";
-import IconProps from "./IconProp";
 
-const SearchIcon = ({ color = "#262626", width = 20, height = 20 }: IconProps) => {
+const SearchIcon = ({ color = "#262626", width = 20, height = 20 }) => {
     return (
         <svg width={`${width}`} height={`${height}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="Iconly/Light/Search">

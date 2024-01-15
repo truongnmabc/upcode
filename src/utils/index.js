@@ -1,6 +1,6 @@
 import { APP_SHORT_NAME } from "@/config_app";
 
-const getDomainName = (router: any) => {
+const getDomainName = (router) => {
     let urlCanonical;
     let baseUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL;
     if (baseUrl) {
@@ -17,7 +17,7 @@ const getDomainName = (router: any) => {
     return urlCanonical;
 };
 
-const capitalizeFirstWord = (s: string) => {
+const capitalizeFirstWord = (s) => {
     if (!s) return "";
     const convetToArray = s?.split(" ");
     return convetToArray
@@ -27,14 +27,14 @@ const capitalizeFirstWord = (s: string) => {
         ?.join(" ");
 };
 
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 
-const parseBoolean = (b: any) => {
+const parseBoolean = (b) => {
     if (!b) return false;
     return b == true || b == "true" ? true : false;
 };
 
-function setScrollDownAuto(screen: string) {
+function setScrollDownAuto(screen) {
     // Lưu trạng thái hiện tại của trang vào localStorage
     function savePagePosition() {
         localStorage.setItem("scrollPosition", window.pageYOffset.toString());

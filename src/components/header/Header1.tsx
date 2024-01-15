@@ -95,7 +95,7 @@ const Header1 = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
             >
                 {!isDesktop && focusMenu && (
                     <div className="menu-component-mobile">
-                        <div onClick={() => setFocusMenu(false)}>
+                        <div onClick={() => setFocusMenu(false)} style={{ marginBottom: "24px", padding: 16 }}>
                             <CloseIcon />
                         </div>
                         <HeaderMenu isDesktop={isDesktop} listAppInfos={listAppInfos} />
@@ -199,9 +199,9 @@ const SearchResult = ({
 };
 
 const HeaderMenu = ({ isDesktop, listAppInfos }: { isDesktop: boolean; listAppInfos: IAppInfo[] }) => {
-    const [showCategory, setShowCategory] = useState(!isDesktop);
+    const [showCategory, setShowCategory] = useState(false);
     const buttonRef = useRef<HTMLDivElement>(null);
-    return isDesktop ? (
+    return (
         <>
             <a className="header-1-menu -option-home" href="/">
                 Home
@@ -211,32 +211,35 @@ const HeaderMenu = ({ isDesktop, listAppInfos }: { isDesktop: boolean; listAppIn
             </a>
             <div
                 ref={buttonRef}
-                className="header-1-menu -option-practice-test align-center"
+                className={"header-1-menu -option-practice-test align-center " + (showCategory ? "active" : "")}
                 onClick={() => {
                     if (!showCategory) setShowCategory(true);
+                    else if (!isDesktop) setShowCategory(false);
                 }}
                 onMouseOver={() => {
-                    if (!showCategory) setShowCategory(true);
+                    if (!showCategory && isDesktop) setShowCategory(true);
                 }}
             >
                 Practice Tests
-                <div className="icon">
+                <div className="icon align-center">
                     <ExpandMoreIcon />
                 </div>
             </div>
-            {showCategory && (
-                <div className="header-1-category-container-desktop">
-                    <HeaderCategory
-                        isDesktop={isDesktop}
-                        listAppInfos={listAppInfos}
-                        buttonRef={buttonRef}
-                        hideMenu={() => setShowCategory(false)}
-                    />
-                </div>
+            {isDesktop ? (
+                showCategory && (
+                    <div className="header-1-category-container-desktop">
+                        <HeaderCategory
+                            isDesktop={isDesktop}
+                            listAppInfos={listAppInfos}
+                            buttonRef={buttonRef}
+                            hideMenu={() => setShowCategory(false)}
+                        />
+                    </div>
+                )
+            ) : (
+                <HeaderCategory isDesktop={isDesktop} listAppInfos={listAppInfos} showCategory={showCategory} />
             )}
         </>
-    ) : (
-        <HeaderCategory isDesktop={isDesktop} listAppInfos={listAppInfos} />
     );
 };
 
