@@ -1,16 +1,19 @@
 .header-1-container {
     position: sticky;
     top: 0;
-    height: 64px;
     z-index: 100;
     background: #fff;
     border-bottom: 1px solid #2121211f;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    padding: 0 16px;
+    .header-grid {
+        padding: 0 16px;
+        display: grid;
+        height: 64px;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
     .grid-frame {
         &.-f1 {
             justify-content: left;
+            position: relative;
         }
 
         &.-f2 {
@@ -27,9 +30,10 @@
         }
     }
     @media screen and (min-width: 769px) {
-        height: 52px;
-        padding: 0 56px;
-
+        .header-grid {
+            height: 52px;
+            padding: 0 56px;
+        }
         .grid-frame {
             .header-1-menu {
                 margin-right: 24px;
@@ -153,7 +157,8 @@
     padding: 6px;
 }
 
-.search-component-mobile {
+.search-component-mobile,
+.menu-component-mobile {
     position: fixed;
     height: calc(100vh - 16px - 16px);
     background: #fff;
@@ -168,10 +173,17 @@
     }
 }
 
-#search-component-mobile {
+#search-component-mobile,
+#menu-component-mobile {
     position: fixed;
     top: 0;
     left: 0;
     transition: 0.2s all;
     background: #fff;
+}
+
+.header-1-category-container-desktop {
+    position: fixed;
+    top: 55px;
+    left: 128px;
 }

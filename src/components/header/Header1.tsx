@@ -5,41 +5,50 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "../icon/MenuIcon";
 import { IAppInfo } from "@/models/AppInfo";
 import SearchIcon from "../icon/SearchIcon";
+import CloseIcon from "../icon/CloseIcon";
+import HeaderCategory from "../easy-prep/HeaderCategory";
 const Header1 = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
     const isDesktop = useMediaQuery("(min-width: 769px)");
     const [focusSearch, setFocusSearch] = useState(false);
+    const [focusMenu, setFocusMenu] = useState(false);
+    useEffect(() => {
+        let nextEle = document.getElementById("__next");
+        if (!!nextEle) {
+            if (focusMenu || focusSearch) {
+                nextEle.style.height = "-webkit-fill-available";
+                nextEle.style.overflow = "hidden";
+                document.body.style.overflow = "hidden";
+            } else {
+                nextEle.style.height = "100%";
+                nextEle.style.overflow = "";
+                document.body.style.overflow = "unset";
+            }
+        }
+    }, [focusMenu, focusSearch]);
     return (
         <header className={`header-1-container`}>
-            <div className="grid-frame -f1 align-center font-14">
-                {isDesktop ? (
-                    <>
-                        <a className="header-1-menu -option-home" href="/">
-                            Home
-                        </a>
-                        <a className="header-1-menu -option-about" href="/about">
-                            About
-                        </a>
-                        <div className="header-1-menu -option-practice-test align-center">
-                            Practice Tests
-                            <div className="icon">
-                                <ExpandMoreIcon />
-                            </div>
+            <div className="header-grid">
+                <div className="grid-frame -f1 align-center font-14">
+                    {isDesktop ? (
+                        <HeaderMenu isDesktop={isDesktop} listAppInfos={listAppInfos} />
+                    ) : (
+                        <div
+                            className="menu-icon-mobile"
+                            onClick={() => {
+                                setFocusMenu(true);
+                            }}
+                        >
+                            <MenuIcon />
                         </div>
-                    </>
-                ) : (
-                    <>
-                        <MenuIcon />
-                    </>
-                )}
-            </div>
-            <div className="grid-frame -f2 align-center">
-                <img src="/images/easy-prep/logo-easy-prep.png" width={90} height={24} alt="logo" />
-            </div>
-            <div className="grid-frame -f3 align-center">
-                {isDesktop ? (
-                    <SearchAppComponent listAppInfos={listAppInfos} isDesktop={isDesktop} />
-                ) : (
-                    <>
+                    )}
+                </div>
+                <div className="grid-frame -f2 align-center">
+                    <img src="/images/easy-prep/logo-easy-prep.png" width={90} height={24} alt="logo" />
+                </div>
+                <div className="grid-frame -f3 align-center">
+                    {isDesktop ? (
+                        <SearchAppComponent listAppInfos={listAppInfos} isDesktop={isDesktop} />
+                    ) : (
                         <div
                             className="search-icon-mobile"
                             onClick={() => {
@@ -48,8 +57,8 @@ const Header1 = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
                         >
                             <SearchIcon />
                         </div>
-                    </>
-                )}
+                    )}
+                </div>
             </div>
             <div
                 id="search-component-mobile"
@@ -74,7 +83,24 @@ const Header1 = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
                         </div>
                     </div>
                 )}
-                <script type="text/javascript">{}</script>
+            </div>
+
+            <div
+                id="menu-component-mobile"
+                style={{
+                    opacity: !isDesktop && focusMenu ? 1 : 0,
+                    height: !isDesktop && focusMenu ? "100vh" : 0,
+                    width: !isDesktop && focusMenu ? "100vw" : 0,
+                }}
+            >
+                {!isDesktop && focusMenu && (
+                    <div className="menu-component-mobile">
+                        <div onClick={() => setFocusMenu(false)}>
+                            <CloseIcon />
+                        </div>
+                        <HeaderMenu isDesktop={isDesktop} listAppInfos={listAppInfos} />
+                    </div>
+                )}
             </div>
         </header>
     );
@@ -169,6 +195,48 @@ const SearchResult = ({
                     );
             })}
         </div>
+    );
+};
+
+const HeaderMenu = ({ isDesktop, listAppInfos }: { isDesktop: boolean; listAppInfos: IAppInfo[] }) => {
+    const [showCategory, setShowCategory] = useState(!isDesktop);
+    const buttonRef = useRef<HTMLDivElement>(null);
+    return isDesktop ? (
+        <>
+            <a className="header-1-menu -option-home" href="/">
+                Home
+            </a>
+            <a className="header-1-menu -option-about" href="/about">
+                About
+            </a>
+            <div
+                ref={buttonRef}
+                className="header-1-menu -option-practice-test align-center"
+                onClick={() => {
+                    if (!showCategory) setShowCategory(true);
+                }}
+                onMouseOver={() => {
+                    if (!showCategory) setShowCategory(true);
+                }}
+            >
+                Practice Tests
+                <div className="icon">
+                    <ExpandMoreIcon />
+                </div>
+            </div>
+            {showCategory && (
+                <div className="header-1-category-container-desktop">
+                    <HeaderCategory
+                        isDesktop={isDesktop}
+                        listAppInfos={listAppInfos}
+                        buttonRef={buttonRef}
+                        hideMenu={() => setShowCategory(false)}
+                    />
+                </div>
+            )}
+        </>
+    ) : (
+        <HeaderCategory isDesktop={isDesktop} listAppInfos={listAppInfos} />
     );
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./ListApp.scss";
 import { IAppInfo } from "@/models/AppInfo";
 import MyContainer from "../v4-material/MyContainer";
@@ -35,31 +35,9 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
     };
 
     const scroll = (direction: "left" | "right") => {
-        const margin = 44; // trùng với margin của .category ***
         let nav = document.getElementById("nav-category");
-        let lastCategory = document.getElementById("category-item-" + categories[categories.length - 1].id);
-        let firstCategory = document.getElementById("category-item-" + categories[0].id);
-        if (nav && lastCategory && firstCategory) {
-            let navWidth = lastCategory.offsetWidth + lastCategory.offsetLeft - firstCategory.offsetLeft;
-            let currentLEft = nav.offsetLeft;
-            let _d = 0;
-            let d = window.innerWidth - 12 - 12 - margin - margin;
-
-            if (direction === "left") {
-                if (currentLEft - d + navWidth < d) {
-                    _d = d + margin - navWidth - 5; // 5 là margin của nút bấm, k hiểu tsao nó lại có liên quan ở đây nhưng phải thêm vào thì mới cân đối
-                } else {
-                    _d = currentLEft - d;
-                }
-            } else if (direction === "right") {
-                if (currentLEft + d > margin) {
-                    _d = margin;
-                } else {
-                    _d = currentLEft + d;
-                }
-            }
-            nav.style.marginLeft = _d + "px";
-        }
+        if (direction == "left") nav.scrollBy({ left: 300, behavior: "smooth" });
+        else if (direction == "right") nav.scrollBy({ left: -300, behavior: "smooth" });
     };
     return (
         <MyContainer className="list-app-container">

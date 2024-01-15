@@ -4,7 +4,6 @@ $transition: 0.2s all ease;
 
     .category-and-list-app {
         background: #fff;
-        overflow-x: hidden;
         padding-top: 16px;
     }
     h2 {
@@ -20,10 +19,7 @@ $transition: 0.2s all ease;
         margin: 0 7px;
         position: relative;
         ._blank {
-            margin-top: 14px;
-            #triangle {
-                display: none;
-            }
+            display: none;
         }
 
         .slider-left,
@@ -63,8 +59,14 @@ $transition: 0.2s all ease;
         }
     }
     .category {
-        margin: 0 44px;
+        padding: 0 44px;
+        overflow: auto;
         transition: $transition;
+        &::-webkit-scrollbar,
+        &::-webkit-scrollbar-track,
+        &::-webkit-scrollbar-thumb {
+            display: none;
+        }
     }
     .category-item {
         padding: 7px 15px;
@@ -78,7 +80,7 @@ $transition: 0.2s all ease;
             font-weight: 600;
             transition: $transition;
             text-align: center;
-            text-wrap: nowrap;
+            white-space: nowrap;
         }
 
         span {
@@ -97,6 +99,7 @@ $transition: 0.2s all ease;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 8px;
+        margin-top: 14px;
         grid-gap: 8px;
         .list-app-item {
             border: 1px solid #8e8177;
@@ -138,47 +141,29 @@ $transition: 0.2s all ease;
             margin: 40px 0;
         }
         .category-container {
-            width: fit-content;
             margin: 0 auto;
-            .slider-left,
-            .slider-right {
-                display: none;
+            .slider-left .blur-gradient-left {
+                background: linear-gradient(90deg, #f8f3ef 0%, #f8f3ef 35.23%, rgba(248, 243, 239, 0) 103.09%);
             }
-            ._blank {
-                margin-top: 10px;
-                height: 20px;
-
-                #triangle {
-                    width: 0;
-                    height: 0;
-                    display: block;
-                    margin-left: 92px;
-                    border-left: 20px solid transparent;
-                    border-right: 20px solid transparent;
-                    border-bottom: 20px solid #fff;
-                    transition: $transition;
-                }
+            .slider-right .blur-gradient-right {
+                background: linear-gradient(-90deg, rgba(248, 243, 239, 0) 0%, #f8f3ef 67.75%, #f8f3ef 103.09%);
             }
         }
         .category {
-            justify-content: center;
-            width: fit-content;
+            overflow: auto;
             position: relative;
-            margin: 0;
             #category-background {
-                height: 44px;
-                width: 224px;
+                height: 36px;
+                width: 232px;
                 transition: $transition;
                 position: absolute;
                 z-index: 0;
-                left: 0px;
+                left: 44px;
                 background-color: #212121;
                 border-radius: 30px;
             }
         }
         .category-item {
-            padding: 12px;
-            border: none;
             span {
                 transition: $transition;
                 padding: 0 5px;
@@ -200,16 +185,13 @@ $transition: 0.2s all ease;
                 }
             }
         }
-        ._blank {
-            height: 20px;
-        }
+
         .list-app {
             padding: 20px;
             background-color: #fff;
             border-radius: 12px;
             gap: 24px;
             grid-gap: 24px;
-
             .list-app-item {
                 .dot,
                 .total-questions,
@@ -225,6 +207,49 @@ $transition: 0.2s all ease;
     @media screen and (min-width: 881px) {
         .list-app {
             grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+    @media screen and (min-width: 1024px) {
+        .category-container {
+            width: fit-content;
+            .slider-left,
+            .slider-right {
+                display: none;
+            }
+            ._blank {
+                margin-top: 10px;
+                display: block;
+                height: 20px;
+                #triangle {
+                    width: 0;
+                    height: 0;
+                    margin-left: 92px;
+                    border-left: 20px solid transparent;
+                    border-right: 20px solid transparent;
+                    border-bottom: 20px solid #fff;
+                    transition: $transition;
+                }
+            }
+        }
+
+        .category {
+            width: fit-content;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            #category-background {
+                height: 44px;
+                left: 0;
+            }
+        }
+
+        .category-item {
+            padding: 12px 15px;
+            border: none;
+        }
+
+        .list-app {
+            margin-top: 0;
         }
     }
     @media screen and (min-width: 1141px) {

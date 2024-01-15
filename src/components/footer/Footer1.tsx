@@ -18,7 +18,9 @@ const Footer1 = () => {
         <footer className="footer-1">
             <MyContainer className="footer-1-container">
                 <div className="line-1 align-center">
-                    <img src="/images/easy-prep/logo-easy-prep.png" width={90} height={24} alt="logo" />
+                    <a href="/">
+                        <img src="/images/easy-prep/logo-easy-prep.png" width={90} height={24} alt="logo" />
+                    </a>
                     <div className="socials">
                         {fb && (
                             <a href={fb}>
