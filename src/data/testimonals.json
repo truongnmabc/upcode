@@ -1,212 +1,583 @@
 [
     {
-        "id": 5670550412197888,
-        "userId": "",
-        "userName": "Alex Karma",
-        "appId": 5513556919320576,
-        "createDate": 1583751437001,
-        "lastUpdate": 1614929393289,
-        "content": "Both app and website are easy to use, covers all CDL endorsement materials, and includes the study guide questions which is great to help you understand. They were helpful for me to study for my upcoming CDL exam. I Highly recommend to anyone wanting to obtain their CDL license.",
-        "avatar": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/cdl/images/alex-karma.jpeg",
-        "rateValue": 5,
-        "status": 1
+        "rating": 5,
+        "content": "This app has helped me pass my permit twice. Because of this his app it started my journey to driving a B-class and now an A-class CMV. Highly recommend this app. I’ve tried other ones and I found this one a mile above the rest. Purchasing the pro version is definitely worth every penny.",
+        "userName": "Stevenforbz",
+        "appKey": "cdl",
+        "appName": "CDL"
     },
     {
-        "id": 5711369003335680,
-        "userId": "",
-        "userName": "Dane Blackburn",
-        "appId": 5513556919320576,
-        "createDate": 0,
-        "lastUpdate": 0,
-        "content": "I knew next to nothing and passed general, air brakes and combination 2 weeks later. Got 98 out of 100 questions correct on the Colorado test. Only saw one question on the DMV test that I feel the app didn’t prepare me for.",
-        "avatar": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/cdl/images/dan-blackburn.jpeg",
-        "rateValue": 0,
-        "status": 1
+        "rating": 5,
+        "content": "This app is pretty neat, it helps you to track your date of when your going to take the exam and preps you a plan for the future event. As well as repeats the wrong answers you had gotten to make sure you remember them. Very good app so far.",
+        "userName": "miamiblu305",
+        "appKey": "cdl",
+        "appName": "CDL"
     },
     {
-        "id": 5947700493156352,
-        "userId": "",
-        "userName": "Sharon Filbert",
-        "appId": 5513556919320576,
-        "createDate": 1614928913045,
-        "lastUpdate": 1614929393289,
-        "content": "All I need for my CDL exams here! Lucky for me, when I found this CDL practice tests. Most of questions that I faced in real test are similar comparing to the practice questions. I got my CDL easily. Thanks.",
-        "avatar": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/cdl/images/sharon-filbert.jpeg",
-        "rateValue": 5,
-        "status": 1
+        "rating": 5,
+        "content": "Used this to get my CDL the first time and using it to brush up on my hazards for renewal. (Don’t drive hazard but want to keep it) \n\nThe app for the questions appears as website links but the options are still available. Just the question is not what it should be",
+        "userName": "Austin Cash",
+        "appKey": "cdl",
+        "appName": "CDL"
     },
     {
         "rating": 5,
         "content": "\tThis app provides relevant questions for the CompTIA A+ exam and gives detailed explanations for the answers. The grammer is mostly correct. After reviewing online videos, this has become my primary studying tool for the exam.",
         "userName": "Adam Petersen",
-        "appKey": "comptiaa"
+        "appKey": "comptiaa",
+        "appName": "CompTIA A+"
+    },
+    {
+        "rating": 5,
+        "content": "I have a text today and I am hoping I pass. Sor far I love how it explains it to me. I do better in question then to read the book... I have adhd and I can’t concentrate reading. So I found a way to help me study it",
+        "userName": "eddiemom215",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "This app was suggested by the officer at the DMV who is the actual tester. After check four other apps I find this one to be easiest to use and spot on compared to any of the other study apps and is closest to what is on the test. This is a accurate and great app!!",
+        "userName": "slowrollerky",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "This app goes in depth of all categories of the MBLEX and you may work on certain sections along with many practice tests. Definitely worth paying for if close to test but free version also has a lot of options for studying!",
+        "userName": "Princess2/20/2001",
+        "appKey": "mblex",
+        "appName": "MBLEx"
+    },
+    {
+        "rating": 4,
+        "content": "This app is good but I’m horrible with math and some problems I simply just don’t understand. Some of the explanations don’t make sense and I’ll have to go to another app to get a better understanding. But overall it’s a good app.",
+        "userName": "Day day from Friday",
+        "appKey": "hesia2",
+        "appName": "HESI A2"
+    },
+    {
+        "rating": 5,
+        "content": "There are some questions with more than one correct answer, but they don’t include it in the answer. Mostly great stuff though. An editor should go back through the questions again and remove and correct them.",
+        "userName": "Jrhr1122",
+        "appKey": "ccna",
+        "appName": "CCNA"
+    },
+    {
+        "rating": 4,
+        "content": "App is well worth the practice sessions it has. Also this is a app meant for ipads but it still works relatively well with minor discrepancies.ads displaying sideways but that does not take away from the learning aspect of the app.",
+        "userName": "Layo 757",
+        "appKey": "asvab",
+        "appName": "ASVAB"
+    },
+    {
+        "rating": 5,
+        "content": "I’m trying to take screen shots for myself and myself only. To write down later on so I can study and memorize certain things. But the whole explanation of the answer doesn’t fit in the screen. There is to much spacing.",
+        "userName": "Jus42n",
+        "appKey": "part107",
+        "appName": "Part"
+    },
+    {
+        "rating": 5,
+        "content": "I’m new to taking the tests and it’s been quite some time since I’ve studied stuff like this. Not familiar with a lot of things like words but I’m learning more everyday. It’s great to help refresh my brain with this knowledge",
+        "userName": "Jesse Peters0526",
+        "appKey": "asvab",
+        "appName": "ASVAB"
+    },
+    {
+        "rating": 5,
+        "content": "This app helped me out so much this is the first time I ever left a review on anything. This app seriously helped me study and fast too! I was able to use this app for 4 days and on my first attempt on taking the actual test I was able to get my Universal EPA Certificate!",
+        "userName": "Eddie the HVAC TECH",
+        "appKey": "epa608",
+        "appName": "EPA"
+    },
+    {
+        "rating": 5,
+        "content": "I passed the general knowledge test by just studying this app!! This app has definitely helped me to build my confidence to move forward. I’m so excited and ready to take my air brakes and combination test. \n\nWho ever created this app did a wonderful job!! Thank you for helping me!",
+        "userName": "SRKADVIS",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "I find this app to be perfect for those who are studying and want to pass the Comptia A+ certification. It’s easy to use and gives you tips on what you missed. A definite must have if your just getting into I.T.",
+        "userName": "Domo1217",
+        "appKey": "comptiaa",
+        "appName": "Comptia A+"
+    },
+    {
+        "rating": 5,
+        "content": "I love this app because before using it, every time I would go to the DMV and take my permit I would fail it every time. Ever since I came across the app everything seemed to be so much easier and I went back to take the permit and I passed it.",
+        "userName": "Fanelisa",
+        "appKey": "dmv",
+        "appName": "DMV Practice Test"
+    },
+    {
+        "rating": 5,
+        "content": "I paid $2k for a in-class course and it wasn’t helpful at all. In fact, the instructor was mostly providing us incorrect information. This app only cost me $10 and I am close to getting ready to take the exam.",
+        "userName": "SSRahim",
+        "appKey": "comptiaa",
+        "appName": "Comptia A+"
     },
     {
         "rating": 5,
         "content": "\tPhenomenal! I tried out 8 or so different Android apps to study for the AZ-900. This one has been the best so far, by a good bit, and appears to be completely free and without ads. If it is in fact free and maintains the same level of quality throughout, I will be thoroughly impressed.",
         "userName": "Chris Hozian (chozian)",
-        "appKey": ""
+        "appKey": "",
+        "appName": "AZ-900 Practice Test 2023"
+    },
+    {
+        "rating": 5,
+        "content": "I’m using the free version, mainly for science. The Mometrix book does a great job at covering all subjects but I need to really test/practice my knowledge for science. I find the science questions in this app to be relevant. So far, so good for being a free app.",
+        "userName": "sks627",
+        "appKey": "teas",
+        "appName": "TEAS"
+    },
+    {
+        "rating": 5,
+        "content": "Not only do you study all the subjects on the ASVAB, your able to see the questions that have you stuck as well with the ones you understand,, they also have multiple practice ASVAB test as well ,,, pretty dope have to say",
+        "userName": "Hones-E",
+        "appKey": "asvab",
+        "appName": "ASVAB"
+    },
+    {
+        "rating": 5,
+        "content": "A truly invaluable tool for making quick and easy progress towards a cert. Everything is excellent but I would love to see the app retain its session information because I have to restore purchases every time the app is suspended.",
+        "userName": "freeze.blink",
+        "appKey": "comptiasecurity",
+        "appName": "CompTIA Security+"
     },
     {
         "rating": 5,
         "content": "\tI really like the explanations and variety of questions. Sorry for the typo there initially. But yeah, so far the layout of the app is user friendly. The explanations help understand why the correct answer is correct and the incorrect answer is incorrect.",
         "userName": "Jana Macklin",
-        "appKey": "comptiaa"
+        "appKey": "comptiaa",
+        "appName": "CompTIA A+"
     },
     {
-        "rating": 4,
-        "content": "\tThis is a great app so far, and very useful for studying and finding my weaknesses. I only have two real complaints, both small. It could really use a way to pause timers. I understand the use of being timed, but I use this app to study at work and I shouldn't get penalized for having to look away from my phone sometimes. Could also use a way to mute sounds in-app.",
-        "userName": "Penguinius Jonesington",
-        "appKey": "comptiaa"
+        "rating": 5,
+        "content": "This app is awesome. I passed all of my written tests with ease and without looking in the manual. I purchased the premium version because it’s well worth the investment. I highly recommend this app if you are attempting to get your CDL or any endorsements.",
+        "userName": "BJajishajalsns",
+        "appKey": "cdl",
+        "appName": "CDL"
     },
     {
-        "rating": 4,
-        "content": "\tIt's a good option to get used to answering comptia a+ questions with explanations about why you are wrong. Love that it breaks down the info into sections tou can understand it. Recommend that you continue to use a study guide, textbook, or youtube videos to keep practicing for the exam along with this app. Thank you, devs, for making this app.",
-        "userName": "Zen Zanders",
-        "appKey": "comptiaa"
+        "rating": 5,
+        "content": "This test was super helpful and I definitely saw questions on this app that I saw on the actual exam. No need to get the $10 one, I stopped reading the EPA book halfway through and did this app instead and I learned way more and was so much more helpful.",
+        "userName": "Bob 777777777",
+        "appKey": "epa608",
+        "appName": "EPA"
     },
     {
         "rating": 5,
         "content": "\tI was just looking for an app to see how much I know in this subject area and this app let me know that right away! If you are just looking to learn but not quite ready to take the test, this one is great.",
         "userName": "Damian Jackson (clacrymosa)",
-        "appKey": "comptiaa"
-    },
-    {
-        "rating": 5,
-        "content": "\tIt worked unlike a lot of things in life. Also they are supportive of your feedback and if you or someone you love is looking for a way to study then I would go with this it simply to use and gets the job done I haven't taken my ASVAB yet but I believe because of my trust in God and this app I will pass.",
-        "userName": "Kc Betts",
-        "appKey": "asvab"
+        "appKey": "comptiaa",
+        "appName": "CompTIA A+"
     },
     {
         "rating": 5,
         "content": "\tI'm not finished yet, but so far, I'm learning and getting more confident that I'll be ready to retake the CompTIA Exam. The app is very good at asking questions in a similar way as the actual exam would, which is key for anyone looking to pass.",
         "userName": "Dre Holloway",
-        "appKey": "comptiaitf"
+        "appKey": "comptiaitf",
+        "appName": "CompTIA ITF+"
+    },
+    {
+        "rating": 5,
+        "content": "Taking my epa in December so I have plenty of time but so far loving the layout. My classmate put me onto this app. You guys make solid study guide apps. The same company made cna study guides and they helped me a lot",
+        "userName": "buck fiden yo",
+        "appKey": "epa608",
+        "appName": "EPA"
+    },
+    {
+        "rating": 5,
+        "content": "This app is very use to use and quick to get started with.  It monitors one’s progress to keep you motivated. The best thing is that set realistic deadlines to move you to take the test fully ready and without procrastinating.",
+        "userName": "Tsukiz3",
+        "appKey": "dmv",
+        "appName": "DMV Practice Test"
+    },
+    {
+        "rating": 5,
+        "content": "i took (and passed) the AWS CCP exam in May 2020 and have to recertify in a few months.  this app has been super great as a review resource so i can take the exam again and hopefully, pass again when it comes around.",
+        "userName": "texasstryker",
+        "appKey": "clfc01",
+        "appName": "CLF-C01"
+    },
+    {
+        "rating": 5,
+        "content": "app works great, questions are formatted similarly to other comptia test formats, and useful explanation is given after each question. it would be super hard to pass the network+ exam using only this, but this is an amazing study tool alongside video learning or book study.",
+        "userName": "dad08749163628",
+        "appKey": "comptianetwork",
+        "appName": "CompTIA Network+"
     },
     {
         "rating": 5,
         "content": "\tSo far this app has been great. No adds, good UI and the questions seem to be similar to questions I see on Professor Messer or Mike Myers videos. This is a good supplement to be used in addition to the above mentioned.",
         "userName": "william barney",
-        "appKey": "comptiaa"
+        "appKey": "comptiaa",
+        "appName": "CompTIA A+"
+    },
+    {
+        "rating": 5,
+        "content": "I just started using this, made by the army, it’s pretty easy to use and I’m looking forward to using it, plus premium for a YEAR is only like $20 so I think it’s far worth it, it is still free though!",
+        "userName": "Nish2207",
+        "appKey": "asvab",
+        "appName": "ASVAB"
+    },
+    {
+        "rating": 4,
+        "content": "You will find mistakes but you can't report it, this is an example: The pump level could have up to 3 INCHS IN PLAY. But as usual, developers doesn't want to know they made a mistake, nor correct them. The believe to be perfect, but this is not, pretty good, yes , but not excellent.",
+        "userName": "Budrus58",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 4,
+        "content": "This app is really good with studying and I’ve been using it for a month now. All of a sudden, it’s no longer free? You can only do Part 1 for each topic instead of all of them. I remember being able to do all them with ads. What happen?",
+        "userName": "VMiranda1995",
+        "appKey": "comptiasecurity",
+        "appName": "CompTIA Security+"
+    },
+    {
+        "rating": 5,
+        "content": "Love the app. I don’t pay for the upgraded version but I like how when I’m taking the tests that it gives you the correct answer if I get it wrong and then comes back later on and asks the question again until I get it right. Great learning tool!",
+        "userName": "BGZ4SHZ",
+        "appKey": "epa608",
+        "appName": "EPA"
+    },
+    {
+        "rating": 5,
+        "content": "Used it for Indiana. Passed the test at first try. Thanks a lot to this app. Was a great preparation. Even though the question in the test were slightly different, this App prepared me enough. Thumbs up 👍.",
+        "userName": "newsfeed in den Griff kriegen",
+        "appKey": "dmv",
+        "appName": "DMV Practice Test"
+    },
+    {
+        "rating": 5,
+        "content": "I’m using this app to review my knowledge after studying each Domain. It really asked me questions about what I already studied and also ask the same question in different ways.\n\nIt’s pretty good, I will recommend to add this to your CCP study resources.",
+        "userName": "vikluk",
+        "appKey": "awscp_old",
+        "appName": "AWS CCP"
+    },
+    {
+        "rating": 5,
+        "content": "Just took my test a few days ago and passed with flying colors( General knowledge and air brakes for Pennsylvania) I solely studied with this app and it made the test easy, the questions were practically word for word. Would recommend to anyone trying to pass their written",
+        "userName": "bullyhunter420",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "I’m using this app to study for my permit test and it is so useful!! Easy to study for your DMV test with or without the manual. I had sent a request to change one part of the app and they gladly complied to my request which I was very happy to see! Definitely recommend~",
+        "userName": "Tammy Dinh",
+        "appKey": "dmv",
+        "appName": "DMV Practice Test"
+    },
+    {
+        "rating": 5,
+        "content": "This app helped me prepare and understand the content on the ASVAB. I was very confident while taking the test; however, I will say the vocabulary on the actual ASVAB was much simpler than what this app was training me for. Still very helpful though!",
+        "userName": "A person of this world 😜",
+        "appKey": "asvab",
+        "appName": "ASVAB"
+    },
+    {
+        "rating": 5,
+        "content": "I had to download this one cause the one I was using became out of date and it recommended this one! Very awesome!! I have a hard time following the book when I read it and this app helps me understand so much more than what I was reading.",
+        "userName": "sierra__02",
+        "appKey": "dmv",
+        "appName": "DMV Practice Test"
+    },
+    {
+        "rating": 5,
+        "content": "I love how you can click show me details after answering a question and it explains why the other options were not the right answer. It is really helping me to retrieve the information I have studied and figure out where I need to study more.",
+        "userName": "AnsariD",
+        "appKey": "comptianetwork",
+        "appName": "CompTIA Network+"
     },
     {
         "rating": 5,
         "content": "\tExcellent app 👍 .... but one request is there please also make subject test or question bank for different subject it will be really helpful for all students .. whole mocks are useful only when full syllabus is covered and if we want to test us in each subject then it is not possible",
         "userName": "Dhruv Ozarkar",
-        "appKey": "cfalevel2"
+        "appKey": "cfalevel2",
+        "appName": "CFA Test"
     },
     {
         "rating": 5,
-        "content": "\tI appreciate more then I can describe for this app being free. This app is 10x better than apps that make you pay for wanting to increase your knowledge and perspective for a career, especially a career that involves military contracting. So thank y'all, this app is easy too use and very helpful in the learning department.",
-        "userName": "Curtis",
-        "appKey": "asvab"
+        "content": "It allows you to break down and master different categories so you can work more in what you know your struggling with, it lays out a plan for success based on what you want to know and how much time you have to do so. Great study tool for national registry",
+        "userName": "teob5000",
+        "appKey": "emtb",
+        "appName": "EMT-B"
+    },
+    {
+        "rating": 5,
+        "content": "Passed Friday Sec+ 601\n\nUse the app every where, standing in line, waiting, after meals, on trains, etc. Turn off social media and just do questions. Watch dion or messer videos.  \n\nDo all the questions and a few practice tests.  Commit to learning.",
+        "userName": "Zdr6",
+        "appKey": "comptiasecurity",
+        "appName": "CompTIA Security+"
+    },
+    {
+        "rating": 5,
+        "content": "Only had one week to study for a retest and only needed 2 more points for the job I wanted. I scored 10 more than needed in only a week. Also saw many similar questions or questions that helped with other questions only using this app. Great tool to help you get the score you want.",
+        "userName": "icemannn4",
+        "appKey": "asvab",
+        "appName": "ASVAB"
+    },
+    {
+        "rating": 5,
+        "content": "I’m in a school for CDL, and I used this app for test prep. I tested this morning, 3 written ( computer ) tests. The app was exact on the questions I got. I bought the advanced version to be safe. This app is worth way more that the upgrade I paid. Thank you app developers, CDL Prep.",
+        "userName": "Kcmyway",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "I knew next to nothing and passed general, air brakes and combination 2 weeks later. Got 98 out of 100 questions correct on the Colorado test. Only saw one question on the DMV test that I feel the app didn’t prepare me for.",
+        "userName": "Novagator",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "I think the practice test is very good for those who are trying to get their license or permit, I try to study every day cus I’m new to this n I want to know bout driving I’m planning on going for my permit",
+        "userName": "white grap head",
+        "appKey": "dmv",
+        "appName": "DMV Practice Test"
+    },
+    {
+        "rating": 5,
+        "content": "I had to go take my CDL class F (non commercial) test in Georgia and I went through it all and I ended up passing the written test easily. The wording on the DMV test is slightly different, but it teaches the material.",
+        "userName": "rickybobbyfire",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "I have taken my permit three times. The first I couldn’t pass. I downloaded this app 4 days before my test and I passed with flying colors!!!! I recommend this app. Please try it before you go buying others.",
+        "userName": "🥺😘😝🧐",
+        "appKey": "dmv",
+        "appName": "DMV Practice Test"
+    },
+    {
+        "rating": 4,
+        "content": "I purchased the pro version and love it! I wish it would tell you what you should focus more on studying. Also, the pass rate % confuses me it says I need to complete 34 questions daily but when I do the percentage doesn’t go up to 94%.",
+        "userName": "ndyxheb",
+        "appKey": "hiset",
+        "appName": "HISET"
+    },
+    {
+        "rating": 5,
+        "content": "Loving this app. Explains why each answer is the correct answer. Any question not answered correctly on the first attempt is gone over at the end of each part and taken again. Very simple, straightforward, and resourceful.",
+        "userName": "DéCoy",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "Just getting into trucking, my older brother being a 22 year veteran driver he is mentoring me and sent me that app to download. I studied with only this app, no CDL manual, and this app was the only tool I used and passed 1st try. Highly recommend.",
+        "userName": "Ozzy Dotson",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "Really liking the app so far. Very intuitive. I feel it does provide similar concepts and scenarios that I am receiving from my graduate level courses in project management and also feel confident it will help me pass my PMP examination. Will see next month!",
+        "userName": "WMSCrypto",
+        "appKey": "pmp",
+        "appName": "PMP"
+    },
+    {
+        "rating": 5,
+        "content": "This company helped me pass my Security+ exam. Now I’m studying for my AWS certification. The app is convenient and easy to use. You just need to be disciplined enough to keep consistent! For preparation, It works like a charm!",
+        "userName": "Deonte W.",
+        "appKey": "awscertifiedsolutionsarchitect",
+        "appName": "AWS"
+    },
+    {
+        "rating": 5,
+        "content": "I just purchased this app for study purposes and I have to say that I've made a wonderful investment. It's easy to navigate and you clear explanations on questions you've missed. I feel confident that when I go take my compTIA exam, I will ace it on the first try. Again thanks for this app.",
+        "userName": "rahiim",
+        "appKey": "comptiaa",
+        "appName": "Comptia A+"
+    },
+    {
+        "rating": 5,
+        "content": "Really amazing App I saw ever! Everything explained so easy that anyone who really wants to get his/her CDL as soon as possible can make it from the first attempt. Thank you very much to developers and all who were involved in making it happen!!!😍😍😍",
+        "userName": "Shavkat Saliheen",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "I just passed my permit test for the first time with every answer correct all thanks to this app!!!!! I also recommend skimming the DMV manual of your state too but this app was an absolute godsend! Good luck to anyone taking their test soon, don’t worry you got this!!!!!",
+        "userName": "donuthatestrump",
+        "appKey": "dmv",
+        "appName": "DMV Practice Test"
+    },
+    {
+        "rating": 5,
+        "content": "I’ve only made my way a little through the app, but so far the information is very similar to what I have in my book and the online study material I have found through other resources. \n\nThis app is a great way to study on the go.",
+        "userName": "Nelsonjg",
+        "appKey": "comptiaa",
+        "appName": "Comptia A+"
+    },
+    {
+        "rating": 5,
+        "content": "My first Time taking it I used the Kaplan book to study but I only scored a 34, My recruiter advised this app to me and I scored a 68 on the next test I took, which is good and totally unexpected. Some of the questions from on this app are the exact same or similar.",
+        "userName": "Lynsi.foreman-21",
+        "appKey": "asvab",
+        "appName": "ASVAB"
+    },
+    {
+        "rating": 4,
+        "content": "They just updated this app and it’s not the same. A lot harder to read then before and it didn’t just pop up the explanation which I really liked, now you have to click an extra button. Doesn’t makes sense. It was perfect before. Helped me pass the test, it was so good.",
+        "userName": "BeerBellyBubba",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "Had to renew CDL I have the HAZMAT endorsement so had to take the test.  This APP prepaid me for the test. It was the best. It helped me a great deal. I would recommend to anyone that is taking the CDL test for hazmat",
+        "userName": "Jorge g 2011",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "Each practice sections give explanations of each question after every question. Commercial shows up after each section/ module, which is fine with me. It probably help them offset in maintaining the app. This is a 100% free apps with a lot sections and practice quizzes.",
+        "userName": "PN78999",
+        "appKey": "asvab",
+        "appName": "ASVAB"
+    },
+    {
+        "rating": 5,
+        "content": "I really like this app but I feel like there are a few mistakes in the questions like on one of the questions it said passingis prohibited when I’m pretty sure it should of said passing is not prohibited just me? I really like this app otherwise though!!!",
+        "userName": "So whatever 💩💩💩💩",
+        "appKey": "dmv",
+        "appName": "DMV Practice Test"
+    },
+    {
+        "rating": 5,
+        "content": "I switched careers so after reading the handbook I finally gave in to purchase this I failed the test so this study w/this app is crucial. This test has almost same wording as the California dmv test. I know after study w/ this I will pass Fido my knowledge & passenger test.",
+        "userName": "ronihellokitty",
+        "appKey": "dmv",
+        "appName": "DMV Practice Test"
+    },
+    {
+        "rating": 5,
+        "content": "Non intrusive well designed ASVAB work plans entailing every section of the test, rerunning questions until you master them. Sit down with a notepad and pen, enter a flow, and feel yourself get more and more ready for the entrance exam.",
+        "userName": "Cyda Rouxe",
+        "appKey": "asvab",
+        "appName": "ASVAB"
+    },
+    {
+        "rating": 5,
+        "content": "So far so good! Very helpful and easy to use. Not to many ads and complications like other apps I have tried and it’s free to practice. Not sure if you could pay for an advanced feature but the basic app is all I need. Good app!",
+        "userName": "RickyZel",
+        "appKey": "dmv",
+        "appName": "DMV Practice Test"
+    },
+    {
+        "rating": 5,
+        "content": "i took (and passed) the AWS CCP exam in May 2020 and have to recertify in a few months.  this app has been super great as a review resource so i can take the exam again and hopefully, pass again when it comes around.",
+        "userName": "texasstryker",
+        "appKey": "awscp_old",
+        "appName": "AWS CCP"
+    },
+    {
+        "rating": 4,
+        "content": "I learned a lot from this app. However in the end, I gave it a 4 star since the questions were more confusing and didn't understand the exact point it was asking.  Different from trick questions... since you would at least know what it's asking but have to really think of your answer.",
+        "userName": "ppansu",
+        "appKey": "comptiasecurity",
+        "appName": "CompTIA Security+"
+    },
+    {
+        "rating": 4,
+        "content": "The only point i didn’t like is that you can’t copy any word in the app. I want to copy sentences in app for translate because of my english not very well. The app don’t let me copy so i am suffering with typing for translate.",
+        "userName": "Bugra93",
+        "appKey": "asvab",
+        "appName": "ASVAB"
+    },
+    {
+        "rating": 5,
+        "content": "I recently just took my cdl class a with air brakes written test. This app pretty much had all the exact same questions that were on the test. I passed all tests the first try. All thanks to this great app!",
+        "userName": "Greatest ever56738655452",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "Just got my Universal EPA from the mail. Got a 100% on the core and 88% on the other parts. All the questions on the test were related to the practice questions from the app. This app is a guaranteed pass if you put in the work!",
+        "userName": "Angel HVAC Rookie",
+        "appKey": "epa608",
+        "appName": "EPA"
+    },
+    {
+        "rating": 5,
+        "content": "Today is 8/31/2023 I’m currently in my drone class and wanted a little more practice so i download this app and we will see how much it will help. I take my test in less than a month so we will see so far so good.",
+        "userName": "KD DYNASTY",
+        "appKey": "part107",
+        "appName": "Part"
+    },
+    {
+        "rating": 5,
+        "content": "Someone else recommended this app so I could get my Class A. This app didn’t let me down on my first try I passed all my permits. \n\nI highly recommend this app I paid for the premium version to support the developer.",
+        "userName": "Jayb_81",
+        "appKey": "cdl",
+        "appName": "CDL"
+    },
+    {
+        "rating": 5,
+        "content": "The questions stimulate you, and their explanations are AMAZING. Read the answers even if you get them right. Also, really high value for free. Questions are easier than exam tho (actual exam is unbelievable).",
+        "userName": "wariofart",
+        "appKey": "comptiaa",
+        "appName": "Comptia A+"
+    },
+    {
+        "rating": 5,
+        "content": "I just downloaded this app today, however, I was happy to find out that I could take a test for free and the best part of all, it provides an explanation when you fail a question which helps you understand where you were wrong.",
+        "userName": "Parce91",
+        "appKey": "comptianetwork",
+        "appName": "CompTIA Network+"
+    },
+    {
+        "rating": 5,
+        "content": "This app is very generous and focused on learning! I am currently working through the sections and I appreciate that the quizzes shuffle in incorrect answers so you have another chance of answering them instead of restarting. \nI would love to have a network+ version",
+        "userName": "MushiRoomz",
+        "appKey": "comptiasecurity",
+        "appName": "CompTIA Security+"
     },
     {
         "rating": 5,
         "content": "\tThis is helping me to passed the asvab test and one thing is mostly the same practice questions will on the real asvab test when taking it. And best thing is after you passed and joing military you only take it one time to join and if you rejoin you get a DD-124 to reenlistment",
         "userName": "Drew T studios",
-        "appKey": "asvab"
+        "appKey": "asvab",
+        "appName": "ASVAB"
     },
     {
         "rating": 5,
-        "content": "\tSo far 5 stars will update after I've passed the first part of my collage course. However, I am loving this app so far. Great only note I have is it would be cool to customize your tests to throw questions at you from the areas you're currently working on, for instance, being able to combine questions from networking and hardware. Just for practice to help keep you frosty.",
-        "userName": "Damien Binnie-Brown",
-        "appKey": "comptiaa"
+        "content": "If you are really and truly serious about obtaining your CDL A license, this app is the only one you need the questions that the DMV have on their test are the same ones word for word on this app you just have to study!",
+        "userName": "ToneySgator",
+        "appKey": "cdl",
+        "appName": "CDL"
     },
     {
         "rating": 5,
-        "content": "\tI'm addicted to it. This app is fantastic and i feel it will help me pass the n008 exam. I love how seamless it feels. Me only concern is that the continue and swip options prompts seen after completing a question is placed directly on top of the explanation. If this could be removed or hidden that will be most appreciated. Thanks keep up the great work",
-        "userName": "Dwight Andrews",
-        "appKey": "comptianetwork"
+        "content": "This is a great app to resort to, especially to prepare yourself before hand. Study everything you need to know or study literally everything.. Why not? This app has almost everything you need to know to pass.",
+        "userName": "RivasJordan",
+        "appKey": "asvab",
+        "appName": "ASVAB"
     },
     {
         "rating": 5,
-        "content": "\tgreat app, thank you so much for making it free. one feature suggestion I would request is to make it possible to study for core 1 and 2 individually, studying them together is great but my school does core 2 before core 1.",
-        "userName": "vee",
-        "appKey": "comptiaa"
+        "content": "I really love how you can set a deadline goal for yourself and the app will lyk how many questions you must master a day to be ready for the exam. I’m aslo glad that explanations are provided for questions you get wrong and that you’re able to re-take them!",
+        "userName": "Error-N",
+        "appKey": "comptiaa",
+        "appName": "Comptia A+"
     },
     {
         "rating": 5,
-        "content": "\tI just downloaded and starting using this tool a few minutes ago, but I am already pleased by the app fluidity, the ease of use, the format, the wording of individual questions, careful editing of grammar, spelling, and punctuation, and the helpful explanations for each question. Above all, I understand that it takes time and money to create any good tool, but I appreciate, for once, not having to spend more of my money on one more thing in a field that won't exactly make me wealthy.",
-        "userName": "David Falck",
-        "appKey": "nce"
-    },
-    {
-        "rating": 5,
-        "content": "\tVery helpful. It helps me know like what I need to work on more. But it also tells me what I got wrong and what I got that was correct. I like how they have many sections that I can study into. It's very helpful and it helps me learn new things.",
-        "userName": "ILove# 38",
-        "appKey": "asvab"
-    },
-    {
-        "rating": 5,
-        "content": "\tSome of the practice/learning questions are exactly the same as the ones on the practice test from Nursehub which I love. I don't know if that was intentional or not but it has greatly helped my studying!",
-        "userName": "Jessica Borg",
-        "appKey": "teas"
-    },
-    {
-        "rating": 4,
-        "content": "\tGreat app that is useful for studying! Good question bank and tons of organization to show your weak points. Has a dark mode! Sounds silly, but I love such a feature on apps like this. I have one issue where the \"Swipe to Continue\" button covers a portion of the explanation. The only way to get around this is by downsizing the font. (Experiencing the issue on a Galaxy S10)",
-        "userName": "Zackary Herman",
-        "appKey": "comptiasecurity"
-    },
-    {
-        "rating": 5,
-        "content": "\tAs others have said, this should be something to review while taking a course. Great for studying for the CompTia A+ certification, not to mention no ads and completely free. They also have other apps for Sec+, CySa+, Net+, and CCNA! This is amazing. Now you guys just need some Linux practice tests for their certifications and I'm all set! 😆",
-        "userName": "Dylan Sullivan",
-        "appKey": "comptiaa"
-    },
-    {
-        "rating": 5,
-        "content": "\tAmazing app. It truly helped me cram in studying for 2 days before my exam at anytime, on the go. I fortunately passed the exam too. I'd say the practice questions with explainations and having to reanswer missed questions was very effect for myself and were very similar to ones found on the exam. Also a very clean UI.",
-        "userName": "Soham (Soham)",
-        "appKey": "ptce"
-    },
-    {
-        "rating": 5,
-        "content": "\tI am in AP psychology in my highschool and I get along with everyone and even the teacher, but his methods haven't been working for me, to get a 5 on the AP test, I am trying to find different ways of study, so far this app is been the best one! 👏",
-        "userName": "•Multi Noir•",
-        "appKey": ""
-    },
-    {
-        "rating": 5,
-        "content": "\tLove the look and feel of the application. Objectives are in line with what to expected to know for the A+ certification and occasionally use it as a refresher to remind me things that have might have forgotten.",
-        "userName": "Luis Pina",
-        "appKey": "comptiaa"
-    },
-    {
-        "rating": 5,
-        "content": "\tAfter just an hour of use, I don't have any complaints. My only question as if now is, since we're in the middle of SY0-601 and 701, what version is this training you for? I've been studying for 601 for a month or 2 and would like clarification as to which test I'm studying for in this app.",
-        "userName": "Andrew Bean",
-        "appKey": "comptiasecurity"
-    },
-    {
-        "rating": 4,
-        "content": "\tSo far, so good. I have only just begun using this app, however, so far I am liking the methods used to teach, learn and test my knowledge. I will update my review as I continue using the app and putting to use what its offering.",
-        "userName": "STEVI",
-        "appKey": "hiset"
-    },
-    {
-        "rating": 5,
-        "content": "\tThe best source of learning!! Thanks to all you years of hardworking and dedication in building such a great platform. you people are helping an entire generation to grow. Kudos!! keep up the great work. Lots of wishes to the whole team.",
-        "userName": "Ajmal Khan",
-        "appKey": "comptiaa"
-    },
-    {
-        "rating": 5,
-        "content": "\tThis app is very extensive and provides a lot of questions. The greatest part I would say is they give you an explanation with each question of why it's the correct answer instead of of just telling you what the correct answer is. Remember it's important to know how and why with troubleshooting so to me this app will help you to become an expert in the it industry.",
-        "userName": "bflex84",
-        "appKey": "comptiaa"
-    },
-    {
-        "rating": 5,
-        "content": "\tIf you are doing the GED test. No matter your age, if you are starting at the beginning on the app, formulas need to be provided. I tell you get to a certain point because all you really do is start. Memorizing the answer instead of trying to work it out.",
-        "userName": "Franklin Spencer",
-        "appKey": "ged"
-    },
-    {
-        "rating": 5,
-        "content": "\tInitially there was issues with the app. I contacted developers. I was pleasantly surprised how quickly they fixed everything. It is a great app to get prepared for your test. I got my certification successfully just by watching YouTube and using this app. Highly recommend. For the future users, I would recommend developers to create a simulation of performance based questions as they are critical part of certification. Thank you guys. 👍.",
-        "userName": "Alexey Bogatyrev",
-        "appKey": "comptianetwork"
+        "content": "This tool is a great design to ask questions to check knowledge while giving explanations where needed to understand the correct information for future answers.\n\nStill deciding on pay version.  Ad. version is highly useful. Thank you!",
+        "userName": "GTRevenor",
+        "appKey": "comptianetwork",
+        "appName": "CompTIA Network+"
     }
 ]

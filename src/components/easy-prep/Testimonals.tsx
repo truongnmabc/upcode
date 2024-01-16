@@ -56,7 +56,7 @@ const Testimonals = () => {
                                         fill="#212121"
                                     />
                                 </svg>
-                                <p className="testimonial-feedback">{ele.content.replace(/CDL/g, APP_SHORT_NAME)}</p>
+                                <p className="testimonial-feedback">{ele.content}</p>
                                 <p className="userName">{ele.userName}</p>
                             </div>
                         );

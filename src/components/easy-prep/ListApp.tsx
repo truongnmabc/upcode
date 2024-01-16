@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./ListApp.scss";
 import { IAppInfo } from "@/models/AppInfo";
 import MyContainer from "../v4-material/MyContainer";
@@ -7,6 +7,7 @@ import ArrowLeft from "../icon/ArrowLeft";
 import { getLink } from "@/utils";
 const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
     const [categorySelected, setCategorySelected] = useState(categories[0]?.id ?? 0);
+    const navRef = useRef<HTMLElement>(null);
     let mapAppCategory: { [categoryId: number]: IAppInfo[] } = {};
     for (let app of listAppInfos) {
         if (app.categoryId) {
@@ -36,7 +37,7 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
     };
 
     const scroll = (direction: "left" | "right") => {
-        let nav = document.getElementById("nav-category");
+        let nav = navRef.current;
         if (direction == "left") nav.scrollBy({ left: 220, behavior: "smooth" });
         else if (direction == "right") nav.scrollBy({ left: -220, behavior: "smooth" });
     };
@@ -60,7 +61,7 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
                         </div>
                         <div className="blur-gradient-left"></div>
                     </div>
-                    <nav id="nav-category" className="align-center category">
+                    <nav ref={navRef} id="nav-category" className="align-center category">
                         {categories.map((category, index) => {
                             return (
                                 <div
@@ -69,10 +70,17 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
                                     className={
                                         "category-item align-center " + (categorySelected == category.id ? "active" : "")
                                     }
-                                    onClick={() => {
+                                    onClick={(e) => {
                                         if (categorySelected !== category.id) {
                                             setCategorySelected(category.id);
                                             focusCategory(category.id);
+                                            if (typeof window !== "undefined" && window.innerWidth < 1024) {
+                                                e.currentTarget.scrollIntoView({
+                                                    behavior: "smooth",
+                                                    block: "nearest",
+                                                    inline: "center",
+                                                });
+                                            }
                                         }
                                     }}
                                     style={{ marginLeft: index != 0 ? "10px" : "" }}
