@@ -42,8 +42,8 @@ USER root
 RUN mkdir -p /app
 WORKDIR /app
 
-COPY . /app/cdl
-WORKDIR /app/cdl
+COPY . /app/web
+WORKDIR /app/web
 COPY temp-next .next
 COPY temp-env .env
 RUN yarn install

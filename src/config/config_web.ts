@@ -6,6 +6,10 @@ export const isWebPASSEMALL = () => {
     return APP_SHORT_NAME.toLowerCase() == "passemall";
 };
 
+export const isWebEASYPREP = () => {
+    return APP_SHORT_NAME.toLowerCase() == "easyprep";
+};
+
 export const isWebASVAB = () => {
     return APP_SHORT_NAME.toLowerCase() == "asvab";
 };
@@ -28,5 +32,5 @@ export const isProduction = () => {
 };
 
 export const isParentApp = () => {
-    return isWebPASSEMALL();
+    return isWebPASSEMALL() || isWebEASYPREP();
 };

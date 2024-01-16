@@ -2,10 +2,10 @@ import ParentAppLayout from "@/components/parent-app/ParentAppLayout";
 import SeoHeader from "@/components/seo/SeoHeader";
 import { isParentApp, isWebASVAB } from "@/config/config_web";
 import { AppInfo, IAppInfo } from "@/models/AppInfo";
-import TestInfo, { ITestInfo } from "@/models/TestInfo";
-import { ITopic } from "@/models/Topic";
-import { getHomeSeoContentApi } from "@/services/home.service";
-import { readFileAppFromGoogleStorage } from "@/services/importAppData";
+// import TestInfo, { ITestInfo } from "@/models/TestInfo";
+// import { ITopic } from "@/models/Topic";
+// import { getHomeSeoContentApi } from "@/services/home.service";
+// import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { setScrollDownAuto } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
 import { getAppInfo, readAllAppInfos } from "@/utils/getAppInfo";
@@ -15,20 +15,20 @@ import { useEffect } from "react";
 
 export default function Home({
     descriptionSEO,
-    listTopics,
-    tests,
+    // listTopics,
+    // tests,
     keywordSEO,
     appInfo,
-    homeSeoContent,
+    // homeSeoContent,
     titleSEO = "",
     listAppInfo,
 }: {
-    listTopics?: ITopic[];
-    tests: ITestInfo[];
+    // listTopics?: ITopic[];
+    // tests: ITestInfo[];
     keywordSEO: string;
     descriptionSEO: string;
     appInfo: IAppInfo;
-    homeSeoContent: string;
+    // homeSeoContent: string;
     titleSEO?: string;
     listAppInfo: IAppInfo[];
 }) {
@@ -46,10 +46,10 @@ export default function Home({
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const isAsvab = isWebASVAB();
-    let listTopics = []; // topics
+    // let listTopics = []; // topics
     let appInfo: IAppInfo | null = getAppInfo();
-    let tests = []; // tests
-    let homeSeoContent;
+    // let tests = []; // tests
+    // let homeSeoContent;
     let listAppInfo = [];
     let _isParentApp = isParentApp();
     if (_isParentApp) {
@@ -59,21 +59,21 @@ export const getStaticProps: GetStaticProps = async (context) => {
         if (isAsvab) {
             // làm giao diện mới cho asvab nên check riêng asvab
             if (appInfo) {
-                let appData: any = await readFileAppFromGoogleStorage(appInfo.appId + "");
-                listTopics = appData?.topics ?? [];
-                listTopics.sort((a: any, b: any) => {
-                    return a.name.localeCompare(b.name);
-                });
-                let _tests = appData?.fullTests ?? [];
-                tests = _tests.map((t: any) => new TestInfo(t));
+                // let appData: any = await readFileAppFromGoogleStorage(appInfo.appId + "");
+                // listTopics = appData?.topics ?? [];
+                // listTopics.sort((a: any, b: any) => {
+                //     return a.name.localeCompare(b.name);
+                // });
+                // let _tests = appData?.fullTests ?? [];
+                // tests = _tests.map((t: any) => new TestInfo(t));
             }
-            homeSeoContent = await getHomeSeoContentApi("home-seo-content");
+            // homeSeoContent = await getHomeSeoContentApi("home-seo-content");
         }
     }
 
-    if (homeSeoContent) {
-        homeSeoContent.content = replaceYear(homeSeoContent.content);
-    }
+    // if (homeSeoContent) {
+    //     homeSeoContent.content = replaceYear(homeSeoContent.content);
+    // }
     let rankMathTitle = appInfo?.rank_math_title;
     if (appInfo && rankMathTitle) {
         rankMathTitle = rankMathTitle?.replace("%title%", appInfo.title).replace("%page%", "");
@@ -85,11 +85,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
         props: {
             titleSEO: titleSEO,
             descriptionSEO: appInfo?.descriptionSEO,
-            listTopics,
-            tests: tests,
+            // listTopics,
+            // tests: tests,
             keywordSEO: appInfo?.keywordSEO,
             appInfo,
-            homeSeoContent,
+            // homeSeoContent,
             listAppInfo,
         },
     });

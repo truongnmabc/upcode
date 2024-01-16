@@ -36,9 +36,9 @@ const Testimonals = () => {
                         setCurrentSlide(v);
                     }}
                 >
-                    {testimonals.map((ele) => {
+                    {testimonals.map((ele, index) => {
                         return (
-                            <div key={ele.id} className="testimonial-item">
+                            <div key={index} className="testimonial-item">
                                 <svg
                                     className="testimonial-double-quotes"
                                     width="41"

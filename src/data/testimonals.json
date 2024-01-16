@@ -36,27 +36,177 @@
         "status": 1
     },
     {
-        "id": 5947700493156352,
-        "userId": "",
-        "userName": "Sharon Filbert",
-        "appId": 5513556919320576,
-        "createDate": 1614928913045,
-        "lastUpdate": 1614929393289,
-        "content": "All I need for my CDL exams here! Lucky for me, when I found this CDL practice tests. Most of questions that I faced in real test are similar comparing to the practice questions. I got my CDL easily. Thanks.",
-        "avatar": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/cdl/images/sharon-filbert.jpeg",
-        "rateValue": 5,
-        "status": 1
+        "rating": 5,
+        "content": "\tThis app provides relevant questions for the CompTIA A+ exam and gives detailed explanations for the answers. The grammer is mostly correct. After reviewing online videos, this has become my primary studying tool for the exam.",
+        "userName": "Adam Petersen",
+        "appKey": "comptiaa"
     },
     {
-        "id": 5947700493156352,
-        "userId": "",
-        "userName": "Sharon Filbert",
-        "appId": 5513556919320576,
-        "createDate": 1614928913045,
-        "lastUpdate": 1614929393289,
-        "content": "All I need for my CDL exams here! Lucky for me, when I found this CDL practice tests. Most of questions that I faced in real test are similar comparing to the practice questions. I got my CDL easily. Thanks.",
-        "avatar": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/cdl/images/sharon-filbert.jpeg",
-        "rateValue": 5,
-        "status": 1
+        "rating": 5,
+        "content": "\tPhenomenal! I tried out 8 or so different Android apps to study for the AZ-900. This one has been the best so far, by a good bit, and appears to be completely free and without ads. If it is in fact free and maintains the same level of quality throughout, I will be thoroughly impressed.",
+        "userName": "Chris Hozian (chozian)",
+        "appKey": ""
+    },
+    {
+        "rating": 5,
+        "content": "\tI really like the explanations and variety of questions. Sorry for the typo there initially. But yeah, so far the layout of the app is user friendly. The explanations help understand why the correct answer is correct and the incorrect answer is incorrect.",
+        "userName": "Jana Macklin",
+        "appKey": "comptiaa"
+    },
+    {
+        "rating": 4,
+        "content": "\tThis is a great app so far, and very useful for studying and finding my weaknesses. I only have two real complaints, both small. It could really use a way to pause timers. I understand the use of being timed, but I use this app to study at work and I shouldn't get penalized for having to look away from my phone sometimes. Could also use a way to mute sounds in-app.",
+        "userName": "Penguinius Jonesington",
+        "appKey": "comptiaa"
+    },
+    {
+        "rating": 4,
+        "content": "\tIt's a good option to get used to answering comptia a+ questions with explanations about why you are wrong. Love that it breaks down the info into sections tou can understand it. Recommend that you continue to use a study guide, textbook, or youtube videos to keep practicing for the exam along with this app. Thank you, devs, for making this app.",
+        "userName": "Zen Zanders",
+        "appKey": "comptiaa"
+    },
+    {
+        "rating": 5,
+        "content": "\tI was just looking for an app to see how much I know in this subject area and this app let me know that right away! If you are just looking to learn but not quite ready to take the test, this one is great.",
+        "userName": "Damian Jackson (clacrymosa)",
+        "appKey": "comptiaa"
+    },
+    {
+        "rating": 5,
+        "content": "\tIt worked unlike a lot of things in life. Also they are supportive of your feedback and if you or someone you love is looking for a way to study then I would go with this it simply to use and gets the job done I haven't taken my ASVAB yet but I believe because of my trust in God and this app I will pass.",
+        "userName": "Kc Betts",
+        "appKey": "asvab"
+    },
+    {
+        "rating": 5,
+        "content": "\tI'm not finished yet, but so far, I'm learning and getting more confident that I'll be ready to retake the CompTIA Exam. The app is very good at asking questions in a similar way as the actual exam would, which is key for anyone looking to pass.",
+        "userName": "Dre Holloway",
+        "appKey": "comptiaitf"
+    },
+    {
+        "rating": 5,
+        "content": "\tSo far this app has been great. No adds, good UI and the questions seem to be similar to questions I see on Professor Messer or Mike Myers videos. This is a good supplement to be used in addition to the above mentioned.",
+        "userName": "william barney",
+        "appKey": "comptiaa"
+    },
+    {
+        "rating": 5,
+        "content": "\tExcellent app 👍 .... but one request is there please also make subject test or question bank for different subject it will be really helpful for all students .. whole mocks are useful only when full syllabus is covered and if we want to test us in each subject then it is not possible",
+        "userName": "Dhruv Ozarkar",
+        "appKey": "cfalevel2"
+    },
+    {
+        "rating": 5,
+        "content": "\tI appreciate more then I can describe for this app being free. This app is 10x better than apps that make you pay for wanting to increase your knowledge and perspective for a career, especially a career that involves military contracting. So thank y'all, this app is easy too use and very helpful in the learning department.",
+        "userName": "Curtis",
+        "appKey": "asvab"
+    },
+    {
+        "rating": 5,
+        "content": "\tThis is helping me to passed the asvab test and one thing is mostly the same practice questions will on the real asvab test when taking it. And best thing is after you passed and joing military you only take it one time to join and if you rejoin you get a DD-124 to reenlistment",
+        "userName": "Drew T studios",
+        "appKey": "asvab"
+    },
+    {
+        "rating": 5,
+        "content": "\tSo far 5 stars will update after I've passed the first part of my collage course. However, I am loving this app so far. Great only note I have is it would be cool to customize your tests to throw questions at you from the areas you're currently working on, for instance, being able to combine questions from networking and hardware. Just for practice to help keep you frosty.",
+        "userName": "Damien Binnie-Brown",
+        "appKey": "comptiaa"
+    },
+    {
+        "rating": 5,
+        "content": "\tI'm addicted to it. This app is fantastic and i feel it will help me pass the n008 exam. I love how seamless it feels. Me only concern is that the continue and swip options prompts seen after completing a question is placed directly on top of the explanation. If this could be removed or hidden that will be most appreciated. Thanks keep up the great work",
+        "userName": "Dwight Andrews",
+        "appKey": "comptianetwork"
+    },
+    {
+        "rating": 5,
+        "content": "\tgreat app, thank you so much for making it free. one feature suggestion I would request is to make it possible to study for core 1 and 2 individually, studying them together is great but my school does core 2 before core 1.",
+        "userName": "vee",
+        "appKey": "comptiaa"
+    },
+    {
+        "rating": 5,
+        "content": "\tI just downloaded and starting using this tool a few minutes ago, but I am already pleased by the app fluidity, the ease of use, the format, the wording of individual questions, careful editing of grammar, spelling, and punctuation, and the helpful explanations for each question. Above all, I understand that it takes time and money to create any good tool, but I appreciate, for once, not having to spend more of my money on one more thing in a field that won't exactly make me wealthy.",
+        "userName": "David Falck",
+        "appKey": "nce"
+    },
+    {
+        "rating": 5,
+        "content": "\tVery helpful. It helps me know like what I need to work on more. But it also tells me what I got wrong and what I got that was correct. I like how they have many sections that I can study into. It's very helpful and it helps me learn new things.",
+        "userName": "ILove# 38",
+        "appKey": "asvab"
+    },
+    {
+        "rating": 5,
+        "content": "\tSome of the practice/learning questions are exactly the same as the ones on the practice test from Nursehub which I love. I don't know if that was intentional or not but it has greatly helped my studying!",
+        "userName": "Jessica Borg",
+        "appKey": "teas"
+    },
+    {
+        "rating": 4,
+        "content": "\tGreat app that is useful for studying! Good question bank and tons of organization to show your weak points. Has a dark mode! Sounds silly, but I love such a feature on apps like this. I have one issue where the \"Swipe to Continue\" button covers a portion of the explanation. The only way to get around this is by downsizing the font. (Experiencing the issue on a Galaxy S10)",
+        "userName": "Zackary Herman",
+        "appKey": "comptiasecurity"
+    },
+    {
+        "rating": 5,
+        "content": "\tAs others have said, this should be something to review while taking a course. Great for studying for the CompTia A+ certification, not to mention no ads and completely free. They also have other apps for Sec+, CySa+, Net+, and CCNA! This is amazing. Now you guys just need some Linux practice tests for their certifications and I'm all set! 😆",
+        "userName": "Dylan Sullivan",
+        "appKey": "comptiaa"
+    },
+    {
+        "rating": 5,
+        "content": "\tAmazing app. It truly helped me cram in studying for 2 days before my exam at anytime, on the go. I fortunately passed the exam too. I'd say the practice questions with explainations and having to reanswer missed questions was very effect for myself and were very similar to ones found on the exam. Also a very clean UI.",
+        "userName": "Soham (Soham)",
+        "appKey": "ptce"
+    },
+    {
+        "rating": 5,
+        "content": "\tI am in AP psychology in my highschool and I get along with everyone and even the teacher, but his methods haven't been working for me, to get a 5 on the AP test, I am trying to find different ways of study, so far this app is been the best one! 👏",
+        "userName": "•Multi Noir•",
+        "appKey": ""
+    },
+    {
+        "rating": 5,
+        "content": "\tLove the look and feel of the application. Objectives are in line with what to expected to know for the A+ certification and occasionally use it as a refresher to remind me things that have might have forgotten.",
+        "userName": "Luis Pina",
+        "appKey": "comptiaa"
+    },
+    {
+        "rating": 5,
+        "content": "\tAfter just an hour of use, I don't have any complaints. My only question as if now is, since we're in the middle of SY0-601 and 701, what version is this training you for? I've been studying for 601 for a month or 2 and would like clarification as to which test I'm studying for in this app.",
+        "userName": "Andrew Bean",
+        "appKey": "comptiasecurity"
+    },
+    {
+        "rating": 4,
+        "content": "\tSo far, so good. I have only just begun using this app, however, so far I am liking the methods used to teach, learn and test my knowledge. I will update my review as I continue using the app and putting to use what its offering.",
+        "userName": "STEVI",
+        "appKey": "hiset"
+    },
+    {
+        "rating": 5,
+        "content": "\tThe best source of learning!! Thanks to all you years of hardworking and dedication in building such a great platform. you people are helping an entire generation to grow. Kudos!! keep up the great work. Lots of wishes to the whole team.",
+        "userName": "Ajmal Khan",
+        "appKey": "comptiaa"
+    },
+    {
+        "rating": 5,
+        "content": "\tThis app is very extensive and provides a lot of questions. The greatest part I would say is they give you an explanation with each question of why it's the correct answer instead of of just telling you what the correct answer is. Remember it's important to know how and why with troubleshooting so to me this app will help you to become an expert in the it industry.",
+        "userName": "bflex84",
+        "appKey": "comptiaa"
+    },
+    {
+        "rating": 5,
+        "content": "\tIf you are doing the GED test. No matter your age, if you are starting at the beginning on the app, formulas need to be provided. I tell you get to a certain point because all you really do is start. Memorizing the answer instead of trying to work it out.",
+        "userName": "Franklin Spencer",
+        "appKey": "ged"
+    },
+    {
+        "rating": 5,
+        "content": "\tInitially there was issues with the app. I contacted developers. I was pleasantly surprised how quickly they fixed everything. It is a great app to get prepared for your test. I got my certification successfully just by watching YouTube and using this app. Highly recommend. For the future users, I would recommend developers to create a simulation of performance based questions as they are critical part of certification. Thank you guys. 👍.",
+        "userName": "Alexey Bogatyrev",
+        "appKey": "comptianetwork"
     }
 ]

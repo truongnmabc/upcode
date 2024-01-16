@@ -7,6 +7,8 @@ import { IAppInfo } from "@/models/AppInfo";
 import SearchIcon from "../icon/SearchIcon";
 import CloseIcon from "../icon/CloseIcon";
 import HeaderCategory from "../easy-prep/HeaderCategory";
+import AppLogo from "../logo/AppLogo";
+import Link from "next/link";
 const Header1 = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
     const isDesktop = useMediaQuery("(min-width: 769px)");
     const [focusSearch, setFocusSearch] = useState(false);
@@ -29,35 +31,34 @@ const Header1 = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
         <header className={`header-1-container`}>
             <div className="header-grid">
                 <div className="grid-frame -f1 align-center font-14">
-                    {isDesktop ? (
+                    <div className="menu-desktop align-center">
                         <HeaderMenu isDesktop={isDesktop} listAppInfos={listAppInfos} />
-                    ) : (
-                        <div
-                            className="menu-icon-mobile"
-                            onClick={() => {
-                                setFocusMenu(true);
-                            }}
-                        >
-                            <MenuIcon />
-                        </div>
-                    )}
+                    </div>
+
+                    <div
+                        className="menu-icon-mobile"
+                        onClick={() => {
+                            setFocusMenu(true);
+                        }}
+                    >
+                        <MenuIcon />
+                    </div>
                 </div>
                 <div className="grid-frame -f2 align-center">
-                    <img src="/images/easy-prep/logo-easy-prep.png" width={90} height={24} alt="logo" />
+                    <AppLogo />
                 </div>
                 <div className="grid-frame -f3 align-center">
-                    {isDesktop ? (
+                    <div className="search-desktop">
                         <SearchAppComponent listAppInfos={listAppInfos} isDesktop={isDesktop} />
-                    ) : (
-                        <div
-                            className="search-icon-mobile"
-                            onClick={() => {
-                                setFocusSearch(true);
-                            }}
-                        >
-                            <SearchIcon />
-                        </div>
-                    )}
+                    </div>
+                    <div
+                        className="search-icon-mobile"
+                        onClick={() => {
+                            setFocusSearch(true);
+                        }}
+                    >
+                        <SearchIcon />
+                    </div>
                 </div>
             </div>
             <div
@@ -178,7 +179,7 @@ const SearchResult = ({
         };
     }, []);
     return (
-        <div className="search-result-container" ref={areaRef}>
+        <div className="search-result-container overflow-auto" ref={areaRef}>
             {searchValue.map((res: IAppInfo | string, index) => {
                 if (typeof res === "string")
                     return (
@@ -203,12 +204,12 @@ const HeaderMenu = ({ isDesktop, listAppInfos }: { isDesktop: boolean; listAppIn
     const buttonRef = useRef<HTMLDivElement>(null);
     return (
         <>
-            <a className="header-1-menu -option-home" href="/">
-                Home
-            </a>
-            <a className="header-1-menu -option-about" href="/about">
-                About
-            </a>
+            <Link href="/">
+                <a className="header-1-menu -option-home">Home</a>
+            </Link>
+            <Link href="/about" prefetch={false}>
+                <a className="header-1-menu -option-about">About</a>
+            </Link>
             <div
                 ref={buttonRef}
                 className={"header-1-menu -option-practice-test align-center " + (showCategory ? "active" : "")}

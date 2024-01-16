@@ -1,3 +1,4 @@
+import Config from "@/config";
 import Axios, { Method } from "axios";
 const callApi = ({
     method,

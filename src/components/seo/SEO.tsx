@@ -70,7 +70,7 @@ const SEO = ({
             )}
             {children}
             {urlCanonical?.length && <link rel="canonical" href={urlCanonical}></link>}
-            <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+            {/* <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" /> */}
             <link rel="apple-touch-icon" href={image} />
             <link rel="icon" href={image} />
             {/* <link rel="manifest" href={router.basePath + "/manifest.json"} /> */}

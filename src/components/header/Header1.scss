@@ -15,6 +15,10 @@
         &.-f1 {
             justify-content: left;
             position: relative;
+
+            .menu-desktop {
+                display: none;
+            }
         }
 
         &.-f2 {
@@ -23,6 +27,9 @@
 
         &.-f3 {
             justify-content: right;
+            .search-desktop {
+                display: none;
+            }
         }
 
         .header-1-menu {
@@ -36,6 +43,12 @@
             padding: 0 56px;
         }
         .grid-frame {
+            .menu-desktop {
+                display: flex !important;
+            }
+            .menu-icon-mobile {
+                display: none;
+            }
             .header-1-menu {
                 margin-right: 24px;
 
@@ -47,8 +60,21 @@
                 }
                 &.-option-practice-test {
                     width: 132px;
-                    font-weight: 700;
                     background-color: transparent !important;
+                    &.active {
+                        font-weight: 700;
+                    }
+                }
+                &:hover {
+                    font-weight: 700;
+                }
+            }
+            &.-f3 {
+                .search-desktop {
+                    display: flex;
+                }
+                .search-icon-mobile {
+                    display: none;
                 }
             }
         }
@@ -107,7 +133,6 @@
         width: calc(100vw - 16px - 16px);
         min-height: 48px;
         max-height: 280px; // = 56*5
-        overflow: auto;
         box-shadow: 0 2px 5px 0px rgb(38 51 77 / 4%);
         .no-result {
             font-size: 12px;
@@ -129,27 +154,6 @@
             &:hover {
                 background-color: #f0f4f5;
             }
-        }
-
-        /* width */
-        &::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        /* Track */
-        &::-webkit-scrollbar-track {
-            border-radius: 10px;
-        }
-
-        /* Handle */
-        &::-webkit-scrollbar-thumb {
-            background: rgba(33, 33, 33, 0.12);
-            border-radius: 10px;
-        }
-
-        /* Handle on hover */
-        &::-webkit-scrollbar-thumb:hover {
-            background: rgba(33, 33, 33, 0.32);
         }
     }
     @media screen and (min-width: 769px) {

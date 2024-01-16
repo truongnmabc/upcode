@@ -160,4 +160,17 @@ function getContactLink(contactMethod) {
     }
     return null;
 }
-export { parseBoolean, capitalizeFirstWord, getDomainName, setScrollDownAuto, getContactLink };
+
+const getLink = (app, stateSlug = "") => {
+    let link = "";
+    if (app.appNameId.startsWith("http")) {
+        link = app.appNameId;
+    } else {
+        link = "/" + app.appNameId;
+        if (stateSlug && app.hasState) {
+            link += "/" + stateSlug;
+        }
+    }
+    return link;
+};
+export { parseBoolean, capitalizeFirstWord, getDomainName, setScrollDownAuto, getContactLink, getLink };

@@ -9,12 +9,17 @@ class MyDocument extends Document {
             <Html lang="en">
                 <Head>
                     <meta charSet="UTF-8" />
+                    <link
+                        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap"
+                        rel="stylesheet"
+                    />
                 </Head>
                 <body id="canvas">
                     {isWebPASSEMALL() && (
                         <script
                             type="text/javascript"
                             src="https://s.skimresources.com/js/221681X1703163.skimlinks.js"
+                            async
                         ></script>
                     )}
 

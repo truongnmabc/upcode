@@ -8,6 +8,7 @@ import YoutubeIcon from "../icon/YoutubeIcon";
 import LinkedinIcon from "../icon/LinkedinIcon";
 import InstagramIcon from "../icon/InstagramIcon";
 import TwitterIcon from "../icon/TwitterIcon";
+import AppLogo from "../logo/AppLogo";
 const Footer1 = () => {
     let fb = getContactLink("facebook");
     let tw = getContactLink("twitter");
@@ -18,9 +19,7 @@ const Footer1 = () => {
         <footer className="footer-1">
             <MyContainer className="footer-1-container">
                 <div className="line-1 align-center">
-                    <a href="/">
-                        <img src="/images/easy-prep/logo-easy-prep.png" width={90} height={24} alt="logo" />
-                    </a>
+                    <AppLogo />
                     <div className="socials">
                         {fb && (
                             <a href={fb}>
@@ -56,9 +55,6 @@ const Footer1 = () => {
                         </Link>
                         <Link href={"/privacy"} prefetch={false}>
                             Privacy
-                        </Link>
-                        <Link href={"/legal"} prefetch={false}>
-                            Legal
                         </Link>
                     </div>
                     <span>©2024 Easy Prep All Rights Reserved.</span>

@@ -4,6 +4,7 @@ import "./HeaderCategory.scss";
 import { useEffect, useRef, useState } from "react";
 import ExpandMoreIcon from "../icon/ExpandMoreIcon";
 import Collapse from "@mui/material/Collapse";
+import { getLink } from "@/utils";
 const HeaderCategory = ({
     isDesktop,
     listAppInfos,
@@ -19,6 +20,7 @@ const HeaderCategory = ({
 }) => {
     const [activeCategory, setActiveCategory] = useState(-1);
     const areaRef = useRef<HTMLDivElement>(null);
+    const [stateSlug, setStateSlug] = useState("");
     useEffect(() => {
         if (isDesktop) {
             const clickEvent = (e: MouseEvent) => {
@@ -34,13 +36,21 @@ const HeaderCategory = ({
             };
         }
     }, [isDesktop]);
+
+    useEffect(() => {
+        let stateName = localStorage.getItem("stateSlug");
+        if (stateName?.length) {
+            setStateSlug(stateName);
+        }
+    }, []);
+
     if (!isDesktop) {
         return (
             <Collapse in={showCategory}>
                 <div className="header-1-category-mobile">
                     {categories.map((category) => {
                         return (
-                            <>
+                            <div key={category.id}>
                                 <div
                                     className={"category-name align-center " + (activeCategory === category.id ? "active" : "")}
                                     onClick={() => {
@@ -58,12 +68,20 @@ const HeaderCategory = ({
                                         {listAppInfos
                                             .filter((app) => app.categoryId === category.id)
                                             .sort((a, b) => a.appName.localeCompare(b.appName))
-                                            .map((app) => {
-                                                return <div className="app-name align-center">{app.appName.toUpperCase()}</div>;
+                                            .map((app, index) => {
+                                                return (
+                                                    <a
+                                                        className="app-name align-center"
+                                                        href={getLink(app, stateSlug)}
+                                                        key={index}
+                                                    >
+                                                        {app.appName.toUpperCase()}
+                                                    </a>
+                                                );
                                             })}
                                     </div>
                                 </Collapse>
-                            </>
+                            </div>
                         );
                     })}
                 </div>
@@ -71,30 +89,40 @@ const HeaderCategory = ({
         );
     }
     return (
-        <div className="header-1-category-desktop" ref={areaRef}>
+        <div
+            className="header-1-category-desktop"
+            ref={areaRef}
+            onMouseLeave={() => {
+                hideMenu();
+            }}
+        >
             <div className="list-category">
                 {categories.map((category) => {
                     return (
                         <div
-                            className={"category-name " + (activeCategory === category.id ? "active" : "")}
+                            className={"align-center category-name " + (activeCategory === category.id ? "active" : "")}
                             key={category.id}
-                            onClick={() => {
+                            onMouseEnter={() => {
                                 if (activeCategory !== category.id) setActiveCategory(category.id);
                             }}
                         >
-                            {category.name}
+                            {category.name} <ExpandMoreIcon width={20} height={20} />
                         </div>
                     );
                 })}
             </div>
             <Collapse in={activeCategory !== -1} orientation="horizontal">
-                <div className="list-app">
+                <div className="list-app overflow-auto">
                     <div className="grid-app">
                         {listAppInfos
                             .filter((app) => app.categoryId === activeCategory)
-                            .sort((a, b) => a.appName.localeCompare(b.appName))
-                            .map((app) => {
-                                return <div className="app-name align-center">{app.appName.toUpperCase()}</div>;
+                            .sort((a, b) => a.appName.length - b.appName.length)
+                            .map((app, index) => {
+                                return (
+                                    <a className="app-name align-center" href={getLink(app, stateSlug)} key={index}>
+                                        {app.appName.toUpperCase()}
+                                    </a>
+                                );
                             })}
                     </div>
                 </div>

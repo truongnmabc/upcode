@@ -7,7 +7,7 @@
     box-shadow: 0px 24px 56px 0px rgba(167, 174, 186, 0.161);
     display: flex;
     .list-category {
-        width: 250px;
+        width: 264px;
         flex: none;
         .category-name {
             font-size: 16px;
@@ -16,6 +16,10 @@
             transition: 0.1s all;
             cursor: pointer;
             border-bottom: 2px solid transparent;
+            justify-content: space-between;
+            svg {
+                transform: rotate(-90deg);
+            }
         }
 
         .category-name:hover {
@@ -25,7 +29,7 @@
         .category-name.active {
             background: #f0f4f5;
             color: #0eb4d3;
-            font-size: 600;
+            font-weight: 600;
             border-bottom: 2px solid rgba(33, 33, 33, 0.52);
         }
     }
@@ -36,7 +40,6 @@
         border-bottom-right-radius: 8px;
         max-height: 238px;
         height: 100%;
-        overflow: auto;
         padding: 16px;
     }
     .grid-app {
@@ -45,9 +48,11 @@
         grid-template-columns: 1fr 1fr;
         gap: 12px;
         grid-gap: 12px;
+        text-decoration: none;
         .app-name {
             font-size: 14px;
             line-height: 18px;
+            text-decoration: none;
             font-weight: 700;
             padding: 16px;
             background: #fff;
@@ -76,7 +81,7 @@
 }
 
 .header-1-category-mobile {
-    padding: 0 16px;
+    padding: 0 28px;
     .category-name {
         padding: 14px 12px;
         font-size: 16px;
@@ -104,6 +109,7 @@
             padding: 12px;
             font-size: 14px;
             line-height: 24px;
+            text-decoration: none;
             color: rgba(33, 33, 33, 0.52);
             border-bottom: 1px solid rgba(33, 33, 33, 0.08);
         }

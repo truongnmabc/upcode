@@ -16,24 +16,23 @@ const ParentAppLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listApp
                 <MyContainer className="take-learning-to-the-next-level ">
                     <div className="align-center -container">
                         <div className="landing-title">
-                            <img src="/images/easy-prep/logo-word.png" alt="logo compact" />
-                            <h1 className="landing-title-h1">
-                                <span className="invisible-text">E</span>
-                                <span className="part-color-1">{`asy ${isDesktop ? "Prep" : ""}`}</span>
-                                {isDesktop ? (
-                                    <>
-                                        <span>{": take learning"}</span>
-                                        <br />
-                                        <span>{"to the next level"}</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <span>{"Solution For"}</span>
-                                        <br />
-                                        <span>{"Teaching & Learning"}</span>
-                                    </>
-                                )}
+                            <h1 style={{ display: "none" }}>
+                                {isDesktop
+                                    ? "Easy Prep: take learning to the next level"
+                                    : "Easy Solution For Teaching & Learning"}
                             </h1>
+                            <div className="landing-title-text">
+                                <img src="/info/images/logo60.png" alt="logo compact" />
+                                <span className="-for-desktop">
+                                    <span className="part-color-1">{`asy Prep`}</span>
+                                    {": Take Tearning To The Next Level"}
+                                </span>
+                                <span className="-for-mobile">
+                                    <span className="part-color-1">{`asy `}</span>
+                                    {" Solution For Teaching & Learning"}
+                                </span>
+                            </div>
+
                             <p>Our mission is to bring you the best online test prep that you can learn anytime, anywhere.</p>
                         </div>
                         <img className="img-landing" src="/images/easy-prep/landing-img.png" alt="Take learning" />

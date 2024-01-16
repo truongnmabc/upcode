@@ -18,3 +18,10 @@ export const getHomeSeoContentApi = async (postUrl: string) => {
     let content = await GET({ url });
     return content;
 };
+
+// export const getAppRatingReviewForWeb = async (appKey: string) => {
+//     //http://localhost:3001/api/app-rating/getAppRatingReviewForWeb?appKey=all
+//     let url = "https://api-cms-v2-dot-micro-enigma-235001.appspot.com/api/app-rating/getAppRatingReviewForWeb?appKey=" + appKey;
+//     let reviews = await GET({ url });
+//     return reviews;
+// };

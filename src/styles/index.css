@@ -6,7 +6,7 @@ body {
     margin: 0;
     height: 100%;
     width: 100%;
-    background: #f8f3ef;
+    background: var(--main-background-color);
 }
 /* font-family: 'Sora', sans-serif; */
 :root {
@@ -34,4 +34,29 @@ body {
 .font-16 {
     font-size: 16px;
     line-height: 24px;
+}
+
+.overflow-auto {
+    overflow: auto;
+}
+
+/* width */
+.overflow-auto::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.overflow-auto::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+/* Handle */
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: rgba(33, 33, 33, 0.12);
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(33, 33, 33, 0.32);
 }

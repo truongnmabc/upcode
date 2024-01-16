@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ListApp.scss";
 import { IAppInfo } from "@/models/AppInfo";
 import MyContainer from "../v4-material/MyContainer";
 import categories from "../../data/categories.json";
 import ArrowLeft from "../icon/ArrowLeft";
+import { getLink } from "@/utils";
 const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
     const [categorySelected, setCategorySelected] = useState(categories[0]?.id ?? 0);
     let mapAppCategory: { [categoryId: number]: IAppInfo[] } = {};
@@ -36,9 +37,18 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
 
     const scroll = (direction: "left" | "right") => {
         let nav = document.getElementById("nav-category");
-        if (direction == "left") nav.scrollBy({ left: 300, behavior: "smooth" });
-        else if (direction == "right") nav.scrollBy({ left: -300, behavior: "smooth" });
+        if (direction == "left") nav.scrollBy({ left: 220, behavior: "smooth" });
+        else if (direction == "right") nav.scrollBy({ left: -220, behavior: "smooth" });
     };
+
+    const [stateSlug, setStateSlug] = useState("");
+    useEffect(() => {
+        let stateName = localStorage.getItem("stateSlug");
+        if (stateName?.length) {
+            setStateSlug(stateName);
+        }
+    }, []);
+
     return (
         <MyContainer className="list-app-container">
             <h2>Easily Pass Your Exam With Our Practice Tests</h2>
@@ -86,10 +96,10 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
                 </div>
                 <div className="list-app">
                     {mapAppCategory[categorySelected]
-                        ?.sort((a, b) => a.appName.localeCompare(b.appName))
+                        ?.sort((a, b) => a.appName.length - b.appName.length)
                         .map((app, index) => {
                             return (
-                                <a className="align-center list-app-item" key={index}>
+                                <a className="align-center list-app-item" key={index} href={getLink(app, stateSlug)}>
                                     <div className="font-14 app-name">{app.appName.toUpperCase()}</div>
                                     <div className="font-14 dot">&middot;</div>
                                     <div className="font-14 total-questions">{app.totalQuestion}</div>
