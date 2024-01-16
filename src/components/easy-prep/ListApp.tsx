@@ -37,9 +37,31 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
     };
 
     const scroll = (direction: "left" | "right") => {
+        let d = 220;
         let nav = navRef.current;
-        if (direction == "left") nav.scrollBy({ left: 220, behavior: "smooth" });
-        else if (direction == "right") nav.scrollBy({ left: -220, behavior: "smooth" });
+        if (direction == "left")
+            nav.scrollBy({
+                left:
+                    nav.scrollLeft + d + nav.clientWidth >= nav.scrollWidth
+                        ? nav.scrollWidth - nav.scrollLeft - nav.clientWidth
+                        : d,
+                behavior: "smooth",
+            });
+        else if (direction == "right")
+            nav.scrollBy({ left: nav.scrollLeft - d < 0 ? -nav.scrollLeft : -d, behavior: "smooth" });
+    };
+
+    const handleScroll = (loc: "mid" | "left" | "right") => {
+        let buttonRight = document.getElementById("slider-right");
+        let buttonLeft = document.getElementById("slider-left");
+        if (buttonLeft && buttonRight) {
+            if (loc === "right") buttonRight.style.display = "none";
+            else if (loc === "left") buttonLeft.style.display = "none";
+            else {
+                buttonRight.style.display = "block";
+                buttonLeft.style.display = "block";
+            }
+        }
     };
 
     const [stateSlug, setStateSlug] = useState("");
@@ -50,12 +72,33 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
         }
     }, []);
 
+    useEffect(() => {
+        const element = navRef.current;
+        if (element) {
+            const _scroll = () => {
+                const scrollLeft = element.scrollLeft;
+                const scrollWidth = element.scrollWidth;
+                const clientWidth = element.clientWidth;
+                if (scrollLeft <= 0) {
+                    // Detect scroll to left
+                    handleScroll("left");
+                } else if (scrollLeft + clientWidth >= scrollWidth) {
+                    // Detect scroll to right
+                    handleScroll("right");
+                } else {
+                    handleScroll("mid");
+                }
+            };
+            element.addEventListener("scroll", _scroll);
+            return () => element.removeEventListener("scroll", _scroll);
+        }
+    }, [navRef]);
     return (
         <MyContainer className="list-app-container">
             <h2>Easily Pass Your Exam With Our Practice Tests</h2>
             <div className="category-and-list-app">
                 <div className="category-container">
-                    <div className="slider-left">
+                    <div className="slider-left" id="slider-left">
                         <div className="left-icon align-center" onClick={() => scroll("right")}>
                             <ArrowLeft width={20} height={20} />
                         </div>
@@ -92,7 +135,7 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
                         })}
                         <div id="category-background" />
                     </nav>
-                    <div className="slider-right">
+                    <div className="slider-right" id="slider-right">
                         <div className="right-icon align-center" onClick={() => scroll("left")}>
                             <ArrowLeft width={20} height={20} />
                         </div>
