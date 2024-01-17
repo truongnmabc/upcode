@@ -36,7 +36,7 @@
 # EXPOSE 4050
 # CMD ["yarn", "start", "-p" , "4050"]
 
-FROM node:16.15.1
+FROM node:18.12.0
 USER root
 
 RUN mkdir -p /app
