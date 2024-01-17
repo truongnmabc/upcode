@@ -1,5 +1,5 @@
 .take-learning-to-the-next-level {
-    margin-top: 89px; //24 + 64 + 1
+    margin-top: 24px; //24 + 64 + 1
     .align-center.-container {
         flex-direction: column;
     }
@@ -48,7 +48,7 @@
     }
 
     @media screen and (min-width: 769px) {
-        margin-top: 93px; // 40 + 52 + 1
+        margin-top: 40px; // 40 + 52 + 1
         .align-center.-container {
             flex-direction: row;
             justify-content: space-between;

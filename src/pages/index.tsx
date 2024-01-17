@@ -1,4 +1,4 @@
-import ParentAppLayout from "@/components/parent-app/ParentAppLayout";
+import ParentAppLayout from "@/container/parent-app/ParentAppLayout";
 import SeoHeader from "@/components/seo/SeoHeader";
 import { isParentApp, isWebASVAB } from "@/config/config_web";
 import { AppInfo, IAppInfo } from "@/models/AppInfo";

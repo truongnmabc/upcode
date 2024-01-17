@@ -1,12 +1,12 @@
 import { IAppInfo } from "@/models/AppInfo";
 import React from "react";
-import Layout1 from "../layout/layout-1/Layout1";
-import MyContainer from "../v4-material/MyContainer";
+import Layout1 from "../../components/layout/layout-1/Layout1";
+import MyContainer from "../../components/v4-material/MyContainer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import "./ParentAppLayout.scss";
-import ListApp from "../easy-prep/ListApp";
-import AppAchievement from "../easy-prep/AppAchievement";
-import Testimonals from "../easy-prep/Testimonals";
+import ListApp from "../../components/easy-prep/ListApp";
+import AppAchievement from "../../components/easy-prep/AppAchievement";
+import Testimonals from "../../components/easy-prep/Testimonals";
 
 const ParentAppLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listAppInfos: IAppInfo[] }) => {
     const isDesktop = useMediaQuery("(min-width: 769px)");

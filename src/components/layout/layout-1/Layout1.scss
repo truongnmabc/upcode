@@ -1,0 +1,6 @@
+.header-1-frame {
+    height: 65px; // 64 + 1
+    @media screen and (min-width: 769px) {
+        height: 53px; //52 + 1
+    }
+}
