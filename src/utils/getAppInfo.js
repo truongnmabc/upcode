@@ -1,3 +1,4 @@
+import { isWebDMV } from "@/config/config_web";
 import { AppInfo } from "@/models/AppInfo";
 import fs from "fs";
 import path from "path";
@@ -18,29 +19,22 @@ const readAllAppInfos = () => {
  * @param appId
  * @returns trả ra appInfo hiện tại hoặc theo id được truyền vào
  */
-const getAppInfo = (appId = null) => {
+const getAppInfo = (appId = "") => {
     let mapAppInfos = readAllAppInfos();
     let appInfo = mapAppInfos.find((appInfo) => appInfo.appNameId == appId);
-
     if (!appInfo) {
         appInfo = mapAppInfos.find((appInfo) => appInfo.appId == appId);
     }
-    // if (isWebDMV() && !appInfo) {
-    //     appInfo = mapAppInfos.find(
-    //         (appInfo) =>
-    //             appInfo.appNameId?.length > 0 &&
-    //             appId.includes(appInfo.appNameId)
-    //     );
-    // }
+    if (isWebDMV() && !appInfo) {
+        appInfo = mapAppInfos.find((appInfo) => appInfo.appNameId?.length > 0 && appId.includes(appInfo.appNameId));
+    }
 
-    // if (!appInfo) {
-    //     appInfo = mapAppInfos.find(
-    //         (appInfo: IAppInfo) => appInfo.appId === APP_NEW_DOMAIN
-    //     );
-    // }
+    if (!appInfo) {
+        appInfo = mapAppInfos.find((appInfo) => appInfo.appId === APP_NEW_DOMAIN);
+    }
     if (appInfo) {
         appInfo = new AppInfo(appInfo);
-        // appInfo.id = appInfo.appId;
+        appInfo.id = appInfo.appId;
         appInfo.currentTime = new Date().getTime();
     }
     return appInfo;

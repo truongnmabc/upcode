@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 const AppLogo = () => {
-    let srcLogo = "/images/easy-prep/logo-easy-prep.png";
+    let srcLogo = "/images/easy-prep/logo.png";
     return (
         <Link href="/" prefetch={false}>
             <a>

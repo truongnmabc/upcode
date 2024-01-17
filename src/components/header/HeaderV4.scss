@@ -1,0 +1,160 @@
+.container-header-v4 {
+    background: #fff;
+    border-bottom: 1px solid #e4e4e4;
+    .header-v4 {
+        position: relative;
+        .logo-header-v4 {
+            display: flex;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            img {
+                height: 32px;
+                width: 100px;
+            }
+        }
+        .header-menu-v4 {
+            display: flex;
+            align-items: center;
+            color: rgba(89, 89, 89);
+            padding: 14px 12px;
+            cursor: pointer;
+            justify-content: flex-end;
+            width: fit-content;
+            margin-left: auto;
+            span {
+                display: none;
+            }
+        }
+    }
+    @media screen and (min-width: 769px) {
+        .header-v4 {
+            height: 52px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .logo-header-v4 {
+                position: relative;
+                left: 0;
+                top: 0;
+                transform: none;
+                img {
+                    height: 40px;
+                    width: 132px;
+                }
+            }
+            .header-menu-v4 {
+                span {
+                    display: block;
+                    padding-right: 12px;
+                }
+            }
+        }
+    }
+}
+#navigation_drawer {
+    .drawer-right-menu-header-v4 {
+        * {
+            font-family: "Poppins", sans-serif;
+        }
+        max-width: 350px;
+        width: calc(100% - 25px);
+        padding: 12px;
+        background: #fff !important;
+        .button-close-drawer-v4 {
+            cursor: pointer;
+            padding: 12px;
+            display: flex;
+            width: fit-content;
+            border-radius: 100%;
+            transition: 0.2s all ease;
+
+            &:hover {
+                background-color: rgba(33, 33, 33, 0.12);
+            }
+        }
+        .container-drawer-right-menu-header-v4 {
+            padding: 16px;
+            color: #212121;
+            a {
+                text-decoration: none;
+                color: #212121;
+            }
+            .container-drawer-right-menu-header-v4-1 {
+                padding: 12px;
+                display: flex;
+                align-items: center;
+                font-weight: 600;
+                cursor: pointer;
+                // &:not(:first-child) {
+                //     margin-top: 16px;
+                // }
+                > a {
+                    font-weight: 600;
+                }
+                .v4-icon-expand {
+                    display: flex;
+                    transition: 0.2s all;
+                    font-size: 14px;
+                    &.false {
+                        transform: rotate(360deg);
+                    }
+                    &.true {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+            #collapse-topic {
+                height: 0;
+                overflow: hidden;
+                transition: all 0.2s;
+            }
+            .v4-app-topic {
+                font-size: 14px;
+                padding: 12px;
+                margin-left: 12px;
+                transition: 0.2s all;
+
+                &:hover {
+                    background: rgba(33, 33, 33, 0.12);
+                }
+                &:not(:last-child) {
+                    border-bottom: 1px solid #e4e4e4;
+                }
+                a {
+                    color: rgba(89, 89, 89);
+                }
+            }
+            .container-drawer-right-menu-header-v4-2 {
+                font-size: 12px;
+                color: rgba(89, 89, 89);
+                display: flex;
+                padding-top: 12px;
+                padding-bottom: 80px;
+                flex-direction: column;
+                align-items: center;
+                width: fit-content;
+                > div:first-child {
+                    width: fit-content;
+                    margin-bottom: 12px;
+                }
+            }
+        }
+        @media screen and (min-width: 769px) {
+            max-width: 456px;
+            .container-drawer-right-menu-header-v4 {
+                padding: 16px 28px;
+
+                .container-drawer-right-menu-header-v4-1 {
+                    font-size: 24px;
+                    text-decoration: none;
+                }
+
+                .v4-app-topic {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}

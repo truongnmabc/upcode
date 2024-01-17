@@ -14,6 +14,10 @@ export const isWebASVAB = () => {
     return APP_SHORT_NAME.toLowerCase() == "asvab";
 };
 
+export const isWebDMV = () => {
+    return APP_SHORT_NAME.toLowerCase() == "dmv";
+};
+
 export function setSession(key: string, value: string) {
     if (typeof sessionStorage !== "undefined") {
         sessionStorage.setItem(key, value);

@@ -1,0 +1,93 @@
+.v4-home-landing-0 {
+    color: #212121;
+    h1,
+    h2 {
+        margin: 0;
+    }
+    .landing-title-0 {
+        padding-top: 24px;
+
+        .landing-title-11 {
+            .title-h1 {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .landing-title-21 {
+                    text-align: center;
+                    font-family: "Vampiro One";
+                    font-size: 36px;
+                    line-height: 36px;
+                }
+                .landing-title-22 {
+                    text-align: center;
+                    font-size: 24px;
+                    font-weight: 400;
+                    line-height: 36px;
+                }
+            }
+        }
+        .landing-title-12 {
+            display: none;
+            text-align: center;
+        }
+    }
+    .v4-landing-topic-0,
+    .v4-landing-practice-test-0,
+    .v4-landing-banner-download-app-0 {
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+            padding: 24px 0;
+            line-height: 30px;
+            text-align: center;
+        }
+    }
+    .v4-landing-practice-test-0 {
+        padding-top: 16px;
+    }
+    .v4-landing-seo-content-0 {
+        margin-top: 32px;
+    }
+    @media screen and (min-width: 769px) {
+        .landing-title-0 {
+            padding-top: 36px;
+            padding-bottom: 12px;
+            .landing-title-11 {
+                .title-h1 {
+                    .landing-title-21 {
+                        font-size: 52px;
+                        line-height: 64px;
+                    }
+                    .landing-title-22 {
+                        font-size: 40px;
+                        line-height: 60px;
+                    }
+                }
+            }
+            .landing-title-12 {
+                display: block;
+                padding-top: 24px;
+                font-size: 16px;
+                line-height: 24px;
+            }
+        }
+
+        .v4-landing-topic-0,
+        .v4-landing-practice-test-0,
+        .v4-landing-banner-download-app-0 {
+            margin-top: 18px;
+            h2 {
+                font-size: 32px;
+                padding: 32px 0;
+                line-height: 48px;
+            }
+        }
+        .v4-landing-practice-test-0 {
+            padding-top: 48px;
+        }
+
+        .v4-landing-seo-content-0 {
+            margin-top: 50px;
+        }
+    }
+}
