@@ -5,6 +5,7 @@ import MyContainer from "../v4-material/MyContainer";
 import categories from "../../data/categories.json";
 import ArrowLeft from "../icon/ArrowLeft";
 import { getLink } from "@/utils";
+const _MARGIN = 44; // trùng với margin trong scss
 const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
     const [categorySelected, setCategorySelected] = useState(categories[0]?.id ?? 0);
     const navRef = useRef<HTMLElement>(null);
@@ -82,7 +83,7 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
                 if (scrollLeft <= 0) {
                     // Detect scroll to left
                     handleScroll("left");
-                } else if (scrollLeft + clientWidth >= scrollWidth) {
+                } else if (scrollLeft + clientWidth >= scrollWidth - _MARGIN) {
                     // Detect scroll to right
                     handleScroll("right");
                 } else {

@@ -71,7 +71,7 @@ const Testimonals = () => {
                     >
                         <ArrowLeft color="#fff" />
                     </div>
-                    <span>{`${currentSlide} of ${testimonals.length}`}</span>
+                    <span>{`${currentSlide + slidesToShow} of ${testimonals.length}`}</span>
 
                     <div
                         onClick={() => {

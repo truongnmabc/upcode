@@ -10,6 +10,7 @@ import MyContainer from "../v4-material/MyContainer";
 import CloseIcon from "../icon/CloseIcon";
 import MenuIcon from "../icon/MenuIcon";
 import ExpandMoreIcon from "../icon/ExpandMoreIcon";
+import Link from "next/link";
 
 const DownloadAppV4 = dynamic(() => import("../homepage-v4/DownloadAppV4"));
 
@@ -29,9 +30,9 @@ const HeaderV4 = ({
     return (
         <div className="container-header-v4">
             <MyContainer className="header-v4">
-                <a href="/" className="logo-header-v4">
+                <Link href="/" className="logo-header-v4">
                     <img src={getSrcLogo()} alt={"logo-" + APP_SHORT_NAME} />
-                </a>
+                </Link>
                 <div
                     className="header-menu-v4"
                     onClick={() => {
