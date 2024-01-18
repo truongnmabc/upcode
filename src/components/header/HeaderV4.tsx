@@ -30,9 +30,11 @@ const HeaderV4 = ({
     return (
         <div className="container-header-v4">
             <MyContainer className="header-v4">
-                <Link href="/" className="logo-header-v4">
-                    <img src={getSrcLogo()} alt={"logo-" + APP_SHORT_NAME} />
-                </Link>
+                <div className="logo-header-v4">
+                    <Link href="/">
+                        <img src={getSrcLogo()} alt={"logo-" + APP_SHORT_NAME} />
+                    </Link>
+                </div>
                 <div
                     className="header-menu-v4"
                     onClick={() => {

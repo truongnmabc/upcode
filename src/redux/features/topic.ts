@@ -1,89 +1,45 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
 import { REHYDRATE } from "redux-persist";
-// import { TopicRepo } from '../../repos/topic'
 import Topic from "@/models/Topic";
 
-export interface TopicState {
-    loading: boolean;
-    mapTopic: Map<string, Topic>;
-    mapParentTopic: Map<string, string[]>;
-    error?: any;
+export interface ITestInforV4State {
+    list: Topic[];
 }
-
-// export const getTopicsByCourseId = createAsyncThunk(
-//     "topic/getTopicsByCourseId",
-//     async (courseId: string, { rejectWithValue }) => {
-//         return await TopicRepo.getTopicsByCourseId(courseId).catch(rejectWithValue);
-//     }
-// );
-
-// export const getTopic = createAsyncThunk("topic/getTopic", async (topicId: string, { rejectWithValue }) => {
-//     return await TopicRepo.getTopic(topicId).catch(rejectWithValue);
-// });
-
-// export const updateTopic = createAsyncThunk("topic/updateTopic", async (topic: Topic, { rejectWithValue }) => {
-//     return await TopicRepo.updateTopic(topic).catch(rejectWithValue);
-// });
-export const rehydrate = createAsyncThunk(REHYDRATE, async (data) => {
-    return data;
-});
 
 export const topicSlice = createSlice({
     name: "topic",
-    initialState: {
-        loading: false,
-        mapParentTopic: new Map(),
-        mapTopic: new Map(),
-    } as TopicState,
+    initialState: { list: [] },
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(rehydrate.fulfilled, (state, action) => {
-            console.log("kkk");
+        //TODO
+        builder.addCase(REHYDRATE, (state, action) => {
+            if (action["payload"]) {
+                let list = action["payload"]["topicReducer"]["list"];
+                if (list) {
+                    state.list = list.map((t) => {
+                        return new Topic(t);
+                    });
+                }
+            }
+            return state;
         });
-        // builder.addCase(getTopicsByCourseId.pending, (state) => {
-        //     state.loading = true;
-        // });
-        // builder.addCase(getTopicsByCourseId.fulfilled, (state, action) => {
-        //     state.loading = false;
-        //     for (const topic of action.payload) {
-        //         state.mapTopic.set(topic.id, topic);
-        //         if (!state.mapParentTopic.has(topic.courseId)) {
-        //             state.mapParentTopic.set(topic.courseId, []);
+
+        // case Types.GET_TOPICS_BY_PARENT_ID_SUCCESS: {
+        //     action.data?.forEach((topic) => {
+        //         topic = new Topic(topic);
+        //         let a = JSON.parse(JSON.stringify(state.list)).map((t) => new Topic(t));
+        //         let indexTopic = a.findIndex((t) => t.id + "" == topic.id + "");
+        //         if (indexTopic == -1) {
+        //             a.push(topic);
+        //         } else {
+        //             a[indexTopic] = topic;
         //         }
-        //         state.mapParentTopic.get(topic.courseId)!.push(topic.id);
-        //     }
-        // });
-        // builder.addCase(getTopicsByCourseId.rejected, (state, action) => {
-        //     state.loading = false;
-        //     state.error = action.error;
-        // });
-        // builder.addCase(updateTopic.fulfilled, (state, action) => {
-        //     const topic = action.payload;
-        //     state.mapTopic.set(topic.id, topic);
-        //         if(!state.mapParentTopic.has(topic.courseId)) {
-        //             state.mapParentTopic.set(topic.courseId, []);
-        //         }
-        //         state.mapParentTopic.get(topic.courseId)!.push(topic.id);
-        // });
-        // builder.addCase(getTopic.fulfilled, (state, action) => {
-        //     const topic = action.payload;
-        //     state.mapTopic.set(topic.id, topic);
-        //         if(!state.mapParentTopic.has(topic.courseId)) {
-        //             state.mapParentTopic.set(topic.courseId, []);
-        //         }
-        //         state.mapParentTopic.get(topic.courseId)!.push(topic.id);
-        // });
+        //         state.list = a;
+        //     });
+        //     return { ...state, loading: false, error: null };
+        // }
     },
 });
-
-export const filterTopicsByCourseId = (state: TopicState, parentId: string) => {
-    const list: Topic[] = [];
-    for (const id of state.mapParentTopic.get(parentId) ?? []) {
-        if (state.mapTopic.has(id)) {
-            list.push(state.mapTopic.get(id)!);
-        }
-    }
-    return list;
-};
 
 export default topicSlice.reducer;

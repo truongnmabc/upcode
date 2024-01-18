@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import mediaQuery from "css-mediaquery";
 import "../styles/index.css";
 import { wrapper } from "@/redux/store";
+import StoreProvider from "@/redux/StoreProvider";
 function App({ Component, ...rest }: any) {
     const { store, props } = wrapper.useWrappedStore(rest);
     const { pageProps, deviceType } = props;
@@ -70,6 +71,9 @@ function App({ Component, ...rest }: any) {
     }, []);
     return (
         <Provider store={store}>
+            {/* <StoreProvider>
+                <></>
+            </StoreProvider> */}
             <Fragment>
                 <ThemeProvider theme={theme}>
                     <Component {...pageProps} />

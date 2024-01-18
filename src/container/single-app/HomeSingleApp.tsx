@@ -10,6 +10,8 @@ import BannerDownloadApp from "@/components/homepage-v4/BannerDownloadApp";
 import SeoContentComponentV2 from "@/components/seo";
 import MyContainer from "@/components/v4-material/MyContainer";
 import "./HomeSingleApp.scss";
+import { useAppDispatch } from "@/redux/hooks";
+import { setAppInfo } from "@/redux/features/appInfo";
 const HomeSingleApp = ({
     appInfo,
     listTopics,
@@ -21,6 +23,7 @@ const HomeSingleApp = ({
     homeSeoContent: any;
     tests: ITestInfo[];
 }) => {
+    const dispatch = useAppDispatch();
     // useEffect(() => {
     //     if (window) {
     //         ga.event({
@@ -40,7 +43,12 @@ const HomeSingleApp = ({
                 <MyContainer>
                     <div className="landing-title-0">
                         <div className="landing-title-11">
-                            <h1 className="title-h1">
+                            <h1
+                                className="title-h1"
+                                onClick={() => {
+                                    dispatch(setAppInfo(appInfo));
+                                }}
+                            >
                                 <span className="landing-title-21">{appInfo?.appName + " Practice Test"}</span>{" "}
                                 <span className="landing-title-22">
                                     Ace The <strong className="v4-font-semi-bold">{appInfo?.appName}</strong> On First Try

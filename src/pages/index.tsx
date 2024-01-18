@@ -12,6 +12,9 @@ import replaceYear from "@/utils/replaceYear";
 import { GetStaticProps } from "next";
 import { useEffect } from "react";
 import dynamic from "next/dynamic";
+import { useAppDispatch } from "@/redux/hooks";
+import { setAppInfo } from "@/redux/features/appInfo";
+import StoreProvider from "@/redux/StoreProvider";
 const HomeSingleApp = dynamic(() => import("@/container/single-app/HomeSingleApp"));
 const ParentAppLayout = dynamic(() => import("@/container/parent-app/ParentAppLayout"));
 
@@ -35,9 +38,12 @@ export default function Home({
     listAppInfo: IAppInfo[];
 }) {
     const _isParentApp = isParentApp();
+    const dispatch = useAppDispatch();
     useEffect(() => {
-        setScrollDownAuto("home");
+        dispatch(setAppInfo(appInfo));
+        // setScrollDownAuto("home");
     }, []);
+    console.log("dc,mmmmmmm");
     return (
         <>
             <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} />

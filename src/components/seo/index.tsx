@@ -8,12 +8,10 @@ const SeoContentComponentV2 = ({
     homeSeoContent,
     srcFlag,
     stateLayout,
-    dmvChildApp,
 }: {
     homeSeoContent?: any;
     srcFlag?: string;
     stateLayout?: boolean;
-    dmvChildApp?: any;
 }) => {
     useEffect(() => {
         let seoContentEle = document.querySelector(".seo-content .text");
@@ -35,15 +33,8 @@ const SeoContentComponentV2 = ({
             {homeSeoContent?.content && (
                 <div className="seo-content-container-v2">
                     <div className="section seo-content-v2">
-                        <div
-                            className={
-                                "content " + (stateLayout ? "state" : "")
-                            }
-                        >
-                            <div
-                                id="text-seo-content"
-                                className={"text read-more"}
-                            >
+                        <div className={"content " + (stateLayout ? "state" : "")}>
+                            <div id="text-seo-content" className={"text read-more"}>
                                 {typeof window !== "undefined" ? (
                                     <div
                                         className="wrap-text"

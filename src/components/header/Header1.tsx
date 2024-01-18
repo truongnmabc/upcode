@@ -12,10 +12,6 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 const SearchAppComponent = dynamic(() => import("./SearchAppComponent"), {
     ssr: false,
-    // loading: () => {
-    //     console.log("dcmmm");
-    //     return <div style={{ width: "100px", background: "red" }} className="search-app-frame" />;
-    // },
 });
 const Header1 = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
     const isDesktop = useMediaQuery("(min-width: 769px)");
