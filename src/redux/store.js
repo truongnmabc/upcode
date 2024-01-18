@@ -5,12 +5,12 @@ import { persistStore, persistReducer } from "redux-persist";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import Config from "@/config";
 import createEncryptor from "redux-persist-transform-encrypt";
-import createIdbStorage from "@piotr-cz/redux-persist-idb-storage";
+// import createIdbStorage from "@piotr-cz/redux-persist-idb-storage";
 import defaultStorage from "redux-persist/lib/storage";
 import rootReducer from "./features/rootReducer";
-import { isProduction } from "@/config/config_web";
 
 enableMapSet();
+const _isProduction = process.env.NODE_ENV === "production";
 
 const reducers = (state, action) => {
     if (action.type === HYDRATE) {
@@ -24,10 +24,12 @@ const reducers = (state, action) => {
 export const makeStore = () => {
     const isClient = typeof window !== "undefined";
     if (!isClient) {
+        //https://redux-toolkit.js.org/usage/nextjs
+        // với next js, có cả quá trình SSR nên  tại server cũng cần khởi tạo store và về client sẽ khởi tạo lại, để tránh lỗi gì đó, trong link trên có đề cập đến
         const store = configureStore({
             reducer: rootReducer,
-            devTools: !isProduction(),
-            middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
+            devTools: !_isProduction,
+            middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }), // liên quan đến check không đồng bộ cho các action của PERSIST
         });
         return store;
     } else {
@@ -37,31 +39,21 @@ export const makeStore = () => {
         });
         const persistConfig = {
             key: "root",
-            storage: globalThis.indexedDB
-                ? createIdbStorage({
-                      name: "abc-elearning",
-                      storeName: "reduxpersist",
-                  })
-                : defaultStorage,
+            storage: defaultStorage,
             stateReconciler: autoMergeLevel2,
             transform: [encryptor],
-            whitelist: ["appInfoReducer", "cardReducer", "listGameReducer", "testReducer", "topicReducer"],
+            whitelist: ["appInfoReducer", "cardReducer", "listGameReducer", "testReducer", "topicReducer"], // các reducer được tự động load dữ liệu khi vào trang
         };
         const persistedReducer = persistReducer(persistConfig, reducers);
         const store = configureStore({
             reducer: persistedReducer,
-            devTools: !isProduction(),
-            middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
+            devTools: !_isProduction,
+            middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }), // liên quan đến check không đồng bộ cho các action của PERSIST
         });
+        store.__persistor = persistStore(store); // gán thêm vào trường này để nó đi cùng biến store thôi
         return store;
     }
 };
-
-export const persistor = persistStore(makeStore());
-
-export type AppStore = ReturnType<typeof makeStore>;
-export type AppDispatch = AppStore["dispatch"]; // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type RootState = ReturnType<AppStore["getState"]>; // Infer the `RootState` and `AppDispatch` types from the store itself
 
 export const wrapper = createWrapper(makeStore, {
     debug: false,

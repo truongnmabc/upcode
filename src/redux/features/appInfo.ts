@@ -1,5 +1,5 @@
 import { AppInfo, IAppInfo } from "../../models/AppInfo";
-import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { REHYDRATE } from "redux-persist";
 
 export interface IAppInfoReducer {
@@ -20,7 +20,7 @@ export const appInfoSlice = createSlice({
         error: null,
     },
     reducers: {
-        setAppInfo: (state, action) => {
+        setAppInfo: (state, action: PayloadAction<IAppInfo>) => {
             if (action.payload) {
                 let appInfo = action.payload;
                 console.log("setAppInfo", appInfo);

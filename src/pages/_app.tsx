@@ -2,14 +2,15 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Fragment, useEffect } from "react";
 import isMobileFunctionsWithUserAgent from "@/utils/isMobileFunctionsWithUserAgent";
 import getCountryAPI from "@/utils/getCountryAPI";
-import { Provider } from "react-redux";
+// import { Provider } from "react-redux";
 import mediaQuery from "css-mediaquery";
 import "../styles/index.css";
 import { wrapper } from "@/redux/store";
-import StoreProvider from "@/redux/StoreProvider";
-function App({ Component, ...rest }: any) {
-    const { store, props } = wrapper.useWrappedStore(rest);
-    const { pageProps, deviceType } = props;
+function App(props: any) {
+    // function App({ Component, ...rest }: any) {
+    // const { store, props } = wrapper.useWrappedStore(rest);
+    const { Component, pageProps, deviceType } = props;
+    // const { pageProps, deviceType } = props;
 
     const ssrMatchMedia = (query: any) => ({
         matches: mediaQuery.match(query, {
@@ -32,10 +33,7 @@ function App({ Component, ...rest }: any) {
         if (jssStyles) {
             jssStyles.parentElement?.removeChild(jssStyles);
         }
-        // if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-        //     const { register } = require("../serviceWorker");
-        //     register();
-        // }
+
         async function getCountryFC() {
             let countryLocalStorage = localStorage.getItem("country");
             if (!countryLocalStorage) {
@@ -47,8 +45,6 @@ function App({ Component, ...rest }: any) {
                         window.location.reload();
                     }
                 }
-            } else {
-                // setProduction(pageProps?.urlOrigin, countryLocalStorage);
             }
             if (countryLocalStorage == "VN") {
                 var element = document.getElementsByTagName("ins");
@@ -59,27 +55,15 @@ function App({ Component, ...rest }: any) {
         }
         getCountryFC();
     }, []);
-    useEffect(() => {
-        // if ("serviceWorker" in navigator) {
-        //     window.addEventListener("load", function () {
-        //         navigator.serviceWorker.register("/sw.js").then(
-        //             function (registration) {},
-        //             function (err) {}
-        //         );
-        //     });
-        // }
-    }, []);
+
     return (
-        <Provider store={store}>
-            {/* <StoreProvider>
-                <></>
-            </StoreProvider> */}
-            <Fragment>
-                <ThemeProvider theme={theme}>
-                    <Component {...pageProps} />
-                </ThemeProvider>
-            </Fragment>
-        </Provider>
+        // <Provider store={store}>
+        <Fragment>
+            <ThemeProvider theme={theme}>
+                <Component {...pageProps} />
+            </ThemeProvider>
+        </Fragment>
+        // </Provider>
     );
 }
 
@@ -93,4 +77,4 @@ App.getInitialProps = async (context: any) => {
         deviceType,
     };
 };
-export default App;
+export default wrapper.withRedux(App);
