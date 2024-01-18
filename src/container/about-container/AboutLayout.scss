@@ -8,7 +8,7 @@
     .background-about-page {
         background-image: url("public/images/about/background-about-page.png");
         background-size: cover;
-        background-position: center;
+        background-position: 40%;
         flex-direction: column;
         height: 485px;
         .p1 {
@@ -165,7 +165,7 @@
     @media screen and (min-width: 769px) {
         .background-about-page {
             height: 530px;
-
+            background-position: center;
             .p1 {
                 margin-top: 120px;
                 font-size: 96px;
@@ -200,8 +200,8 @@
                 flex-direction: row;
                 align-items: flex-start;
                 img {
-                    width: 500px;
-                    height: 455px;
+                    width: 375px;
+                    height: 341px;
                 }
             }
             .part-1,
@@ -251,6 +251,19 @@
                 grid-template-columns: 1fr 1fr 1fr;
                 grid-gap: 48px;
                 gap: 48px;
+            }
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        .about-page-content {
+            .part-1,
+            .part-2,
+            .part-3 {
+                img {
+                    width: 500px;
+                    height: 455px;
+                }
             }
         }
     }

@@ -40,23 +40,7 @@ export default function Home({
     }, []);
     return (
         <>
-            <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO}>
-                {_isParentApp ? (
-                    <>
-                        <link
-                            href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap"
-                            rel="stylesheet"
-                        />
-                    </>
-                ) : (
-                    <>
-                        <link
-                            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Vampiro+One&display=swap"
-                            rel="stylesheet"
-                        ></link>
-                    </>
-                )}
-            </SeoHeader>
+            <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} />
             {_isParentApp ? (
                 <ParentAppLayout appInfo={appInfo} listAppInfos={listAppInfo} />
             ) : (

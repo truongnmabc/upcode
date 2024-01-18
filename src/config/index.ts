@@ -3,5 +3,6 @@ class Config {
     static HTTP_REQUEST_TIMEOUT = 30000;
     static HTTP_REQUEST_SUCCESS = 200;
     static PREFIX_URL = "/wp-json/passemall/v1";
+    static SECRET_KEY = "koolsoft-web";
 }
 export default Config;

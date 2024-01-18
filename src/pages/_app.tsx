@@ -2,9 +2,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Fragment, useEffect } from "react";
 import isMobileFunctionsWithUserAgent from "@/utils/isMobileFunctionsWithUserAgent";
 import getCountryAPI from "@/utils/getCountryAPI";
+import { Provider } from "react-redux";
 import mediaQuery from "css-mediaquery";
 import "../styles/index.css";
-export default function App({ Component, pageProps, deviceType }: any) {
+import { wrapper } from "@/redux/store";
+function App({ Component, ...rest }: any) {
+    const { store, props } = wrapper.useWrappedStore(rest);
+    const { pageProps, deviceType } = props;
+
     const ssrMatchMedia = (query: any) => ({
         matches: mediaQuery.match(query, {
             // The estimated CSS width of the browser.
@@ -64,13 +69,13 @@ export default function App({ Component, pageProps, deviceType }: any) {
         // }
     }, []);
     return (
-        <Fragment>
-            <ThemeProvider theme={theme}>
-                {/* <DialogProvider> */}
-                <Component {...pageProps} />
-                {/* </DialogProvider> */}
-            </ThemeProvider>
-        </Fragment>
+        <Provider store={store}>
+            <Fragment>
+                <ThemeProvider theme={theme}>
+                    <Component {...pageProps} />
+                </ThemeProvider>
+            </Fragment>
+        </Provider>
     );
 }
 
@@ -84,3 +89,4 @@ App.getInitialProps = async (context: any) => {
         deviceType,
     };
 };
+export default App;
