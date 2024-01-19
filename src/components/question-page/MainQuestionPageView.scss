@@ -1,0 +1,43 @@
+.v4-main-question-view-0 {
+    .v4-main-question-view-1 {
+        .v4-main-question-view-btn-wrapper {
+            padding-top: 24px;
+            .v4-main-question-view-btn-0 {
+                background: #7c6f5b;
+                color: #fff;
+                font-size: 16px;
+                font-weight: 600;
+                padding: 10px 16px;
+                width: 100%;
+                line-height: 24px;
+                border: none;
+                cursor: pointer;
+                transition: 0.2s all;
+                &:hover {
+                    opacity: 0.9;
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 769px) {
+        .v4-question-title {
+            text-align: center;
+            margin: 0;
+            line-height: 36px;
+            font-size: 24px;
+            padding-top: 24px;
+            padding-bottom: 10px;
+        }
+        .v4-main-question-view-1 {
+            padding: 24px;
+            background-color: #fff;
+            .v4-main-question-view-btn-wrapper {
+                .v4-main-question-view-btn-0 {
+                    width: 160px;
+                    align-self: self-end;
+                }
+            }
+        }
+    }
+}

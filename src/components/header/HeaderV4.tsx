@@ -12,7 +12,7 @@ import MenuIcon from "../icon/MenuIcon";
 import ExpandMoreIcon from "../icon/ExpandMoreIcon";
 import Link from "next/link";
 
-const DownloadAppV4 = dynamic(() => import("../homepage-v4/DownloadAppV4"));
+const DownloadAppV4 = dynamic(() => import("../homepage/DownloadAppV4"));
 
 const HeaderV4 = ({
     appInfo,

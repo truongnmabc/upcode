@@ -18,6 +18,16 @@ body {
 
 * {
     font-family: "Sora", sans-serif;
+}
+
+span,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
     color: #212121;
 }
 
@@ -70,7 +80,7 @@ body {
 }
 
 .v4-font-semi-bold {
-    /* font-family: "Poppins-Semibold"; */
+    /* font-weight: 600; */
     font-weight: 500; /* for safari using strong, h1, h2, h3,h4 ,.. element*/
 }
 .v4-font-size-12 {
@@ -100,4 +110,28 @@ body {
 #__next {
     width: 100%;
     height: 100%;
+}
+
+html {
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+        width: 8px;
+        display: block !important;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #fff;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #c9c9c9;
+        border-radius: 8px;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #adadad;
+    }
 }

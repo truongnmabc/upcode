@@ -3,16 +3,16 @@ import { APP_SHORT_NAME } from "../../config_app";
 // import * as ga from "../../lib/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
+import { GameState, getNumOfCorrectAnswer } from "../../redux/features/game";
+import TargetIcon from "../icon/TargetIcon";
+import "./GridTopic.scss";
 import { getGameProgress, getHighhestLevelOfTopicBePassedSequentially } from "../../utils/v4_study";
 // import { getStudyDataAction } from "../../redux/actions/sync.action";
 import { SYNC_TYPE } from "../../config/config_sync";
 import { memo } from "react";
 import { render } from "react-dom";
-import { GameState, getNumOfCorrectAnswer } from "@/redux/features/game";
-import TargetIcon from "../icon/TargetIcon";
-import getRawTopicsData from "@/utils/getRawTopicsData";
+import getRawTopicsData from "../../utils/getRawTopicsData";
 import { AppState } from "@/redux/appState";
-import "./GridTopic.scss";
 const RANDOM_COLORS = [
     "#30749F",
     "#E68A4F",
@@ -100,7 +100,7 @@ const GridTopic = ({
                             }}
                             onMouseLeave={(e) => {
                                 if (window.innerWidth > 768) {
-                                    e.currentTarget.style.borderColor = isHighlighted ? topic.color : "#e4e4e4";
+                                    e.currentTarget.style.borderColor = isHighlighted ? topic.color : "var(--border-color)";
                                 }
                             }}
                             onClick={(e) => {
@@ -170,7 +170,7 @@ const GridTopic = ({
                                 if (!window.location.href.includes(_href)) window.location.href = _href;
                             }}
                             style={{
-                                borderColor: isHighlighted ? topic.color : "#e4e4e4",
+                                borderColor: isHighlighted ? topic.color : "var(--border-color)",
                             }}
                         >
                             <div

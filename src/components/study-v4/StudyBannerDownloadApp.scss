@@ -1,0 +1,49 @@
+.v4-study-banner-download-app-0 {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    align-items: center;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    .v4-study-banner-download-app-content {
+        padding: 20px;
+        .v4-study-banner-download-app-content-title {
+            font-size: 18px;
+            margin: 0;
+            text-align: center;
+            line-height: 27px;
+        }
+    }
+
+    .v4-study-banner-download-app-thumbnail {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 6px;
+        height: 184px;
+        background-size: cover;
+    }
+
+    @media screen and (min-width: 769px) {
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 16px;
+        align-items: unset;
+        .v4-study-banner-download-app-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px;
+            .v4-study-banner-download-app-content-title {
+                font-size: 24px;
+                width: 500px;
+                line-height: 32px;
+                margin-bottom: 36px;
+                line-height: 32px;
+            }
+        }
+        .v4-study-banner-download-app-thumbnail {
+            height: initial;
+            width: 320px;
+        }
+    }
+}

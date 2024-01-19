@@ -1,0 +1,45 @@
+.v4-question-text-content-0 {
+    color: var(--font-color);
+    &.study {
+        height: 24px; // bằng line-height của content (24px trên mobile và 25px trên desktop)
+        transition: 0.2s all ease;
+    }
+    &.have-img {
+        height: 160px;
+    }
+    .v4-question-text {
+        line-height: 24px;
+    }
+    .v4-image-in-question,
+    .img-in-content {
+        height: 160px;
+    }
+
+    img {
+        max-width: 100%;
+        cursor: pointer;
+        max-height: 160px;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .v4-question-text-content-0 {
+        &.study {
+            height: 25px; // bằng line-height của content (24px trên mobile và 25px trên desktop)
+        }
+        &.have-img {
+            height: 200px;
+        }
+        .v4-question-text {
+            line-height: 25px;
+        }
+        .v4-image-in-question,
+        .img-in-content {
+            height: 200px;
+        }
+
+        img {
+            max-height: 200px;
+        }
+    }
+}

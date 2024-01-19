@@ -5,14 +5,14 @@ import { ITestInfo } from "../../models/TestInfo";
 // import * as ga from "../../lib/ga";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Layout2 from "@/components/layout/layout-2/Layout2";
-import TestBanner from "@/components/homepage-v4/TestBanner";
-import BannerDownloadApp from "@/components/homepage-v4/BannerDownloadApp";
+import TestBanner from "@/components/homepage/TestBanner";
+import BannerDownloadApp from "@/components/homepage/BannerDownloadApp";
 import SeoContentComponentV2 from "@/components/seo";
 import MyContainer from "@/components/v4-material/MyContainer";
 import "./HomeSingleApp.scss";
 import { useAppDispatch } from "@/redux/hooks";
 import { setAppInfo } from "@/redux/features/appInfo";
-import GridTopic from "@/components/homepage-v4/GridTopic";
+import GridTopic from "@/components/homepage/GridTopic";
 const HomeSingleApp = ({
     appInfo,
     listTopics,

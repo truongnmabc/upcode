@@ -20,6 +20,29 @@ export const timeTestSlice = createSlice({
                 state = updateDataToState(action.payload.timeTest, action.payload.id, state);
             }
         },
+        // case Types.START_NEW_STUDY:
+        //     // khi start study voi truong hop la test
+        //     let { gameType, studyId, defaultTimeTest } = action;
+        //     let _id = JSON.stringify(studyId);
+        //     if (gameType == Config.TEST_GAME) {
+        //         state = updateDataToState(defaultTimeTest, _id, state);
+        //     }
+        //     return { ...state };
+        // case Types.RESTORE_GAME_STATE:
+        //     let gameRestoredData: GameState = action.gameState;
+        //     if (gameRestoredData.gameType == Config.TEST_GAME) {
+        //         state = updateDataToState(gameRestoredData.timeTest, gameRestoredData.id, state);
+        //     }
+        //     return { ...state };
+        // case Types.ON_RESTART_GAME_SUCCESS: // update vào đây vì trong này được dùng để làm biến countdown
+        //     let gameRestartedData: GameState = action.gameState;
+        //     if (gameRestartedData.gameType == Config.TEST_GAME) {
+        //         state = updateDataToState(
+        //             gameRestartedData.timeTest, //reset lại thời gian khi restart lại bài học
+        //             gameRestartedData.id,
+        //             state
+        //         );
+        //     }
     },
 });
 

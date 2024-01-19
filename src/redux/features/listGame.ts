@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { GameState } from "./game";
 import { REHYDRATE } from "redux-persist";
 
@@ -25,16 +25,28 @@ export const listGameSlice = createSlice({
     reducers: {
         updateToListGames: (state, action) => {
             let newGameData: GameState = action.payload.gameState;
-            let isExisted = false;
-            state.games = state.games.map((game) => {
-                if (game.id == newGameData.id) {
-                    isExisted = true;
-                    return newGameData; //chý ý chỗ này (gán đè luôn)
-                }
-                return game;
-            });
-            if (!isExisted) state.games.push(newGameData);
+            state = updateToState(state, newGameData);
         },
+        // case Types.ON_CHOOSE_ANSWER_SUCCESS:
+        //     newGameData = action.gameState;
+        //     state = updateToState(state, newGameData);
+        //     return { ...state };
+        // case Types.ON_GAME_SUBMITTED_SUCCESS:
+        //     newGameData = action.gameState;
+        //     state = updateToState(state, newGameData);
+        //     return { ...state };
+        // case Types.ON_RESTART_GAME_SUCCESS:
+        //     newGameData = action.gameState;
+        //     state = updateToState(state, newGameData);
+        //     return { ...state };
+        // case Types.NEXT_QUESTION_SUCCESS:
+        //     newGameData = action.gameState;
+        //     state = updateToState(state, newGameData);
+        //     return { ...state };
+        // case Types.START_NEW_STUDY:
+        //     newGameData = action.gameState;
+        //     state = updateToState(state, newGameData);
+        //     return { ...state };
     },
     extraReducers: (builder) => {
         //TODO
@@ -47,6 +59,19 @@ export const listGameSlice = createSlice({
         });
     },
 });
+
+const updateToState = (_state: ListGamesState, newGameData: GameState) => {
+    let isExisted = false;
+    _state.games = _state.games.map((game) => {
+        if (game.id == newGameData.id) {
+            isExisted = true;
+            return newGameData; //chý ý chỗ này (gán đè luôn)
+        }
+        return game;
+    });
+    if (!isExisted) _state.games.push(newGameData);
+    return _state;
+};
 
 export const { updateToListGames } = listGameSlice.actions;
 export default listGameSlice.reducer;

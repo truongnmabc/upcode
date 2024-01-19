@@ -183,4 +183,26 @@ const validateEmail = (email) => {
     return re.test(String(email).toLowerCase());
     // return true;
 };
-export { parseBoolean, capitalizeFirstWord, getDomainName, setScrollDownAuto, getContactLink, getLink, validateEmail };
+
+function convertTime(time) {
+    let hours = parseInt(time / 3600);
+    let minutes = parseInt((time - hours * 3600) / 60);
+    let seconds = time - hours * 3600 - minutes * 60;
+    return (
+        (hours.toString().length == 2 ? hours.toString() : "0" + hours.toString()) +
+        " : " +
+        (minutes.toString().length == 2 ? minutes.toString() : "0" + minutes.toString()) +
+        " : " +
+        (seconds.toString().length == 2 ? seconds.toString() : "0" + seconds.toString())
+    );
+}
+export {
+    parseBoolean,
+    capitalizeFirstWord,
+    getDomainName,
+    setScrollDownAuto,
+    getContactLink,
+    getLink,
+    validateEmail,
+    convertTime,
+};

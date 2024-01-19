@@ -2,24 +2,9 @@ import { useRouter } from "next/router";
 import { APP_SHORT_NAME, GOOGLE_SITE_VERIFICATION } from "../../config_app";
 import { capitalizeFirstWord, getDomainName } from "../../utils";
 import Head from "next/head";
-import { IAppInfo } from "@/models/AppInfo";
 import replaceYear from "@/utils/replaceYear";
 
-const SEO = ({
-    appInfo,
-    title = "",
-    descriptionSEO = "",
-    addMathJax = false,
-    keywordsSeo,
-    children,
-}: {
-    appInfo?: IAppInfo;
-    children?: any;
-    title?: string;
-    descriptionSEO?: string;
-    addMathJax?: boolean;
-    keywordsSeo: string;
-}) => {
+const SEO = ({ appInfo, title = "", descriptionSEO = "", addMathJax = false, keywordsSeo = "", children = null }) => {
     const router = useRouter();
     let description;
     let keywords =
@@ -70,12 +55,8 @@ const SEO = ({
             )}
             {children}
             {urlCanonical?.length && <link rel="canonical" href={urlCanonical}></link>}
-            {/* <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" /> */}
-            <link rel="apple-touch-icon" href={image} />
             <link rel="icon" href={image} />
             {/* <link rel="manifest" href={router.basePath + "/manifest.json"} /> */}
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
             <link rel="preconnect" href="https://micro-enigma-235001.appspot.com" />
             <link rel="preconnect" href="https://www.googletagmanager.com" />
             <meta name="description" content={description} />
