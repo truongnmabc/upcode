@@ -1,6 +1,6 @@
 import { REHYDRATE } from "redux-persist";
 import Question from "../../models/Question";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export interface ICardState {
@@ -15,11 +15,11 @@ export const cardSlice = createSlice({
         mapTopicQuestions: new Map<string, Question[]>(),
     },
     reducers: {
-        getQuestionsDataSuccess: (state, action) => {
+        getQuestionsDataSuccess: (state, action: PayloadAction<{ parentId: string; questions: Question[] }>) => {
             if (action["payload"]) {
                 let payload = action["payload"];
-                let questions = payload["questions"];
-                let parentId = payload["parentId"] + "";
+                let questions = payload.questions;
+                let parentId = payload.parentId;
                 questions = questions.map((q) => new Question(q));
                 state.mapTopicQuestions.set(parentId, questions); // gán đè luôn, chú ý chỗ này!!
             }

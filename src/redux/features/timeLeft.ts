@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { GameState } from "./game";
+import Config from "@/config";
 
 export interface ITimeTestItem {
     id: string; //id cua bai hoc
@@ -20,20 +22,19 @@ export const timeTestSlice = createSlice({
                 state = updateDataToState(action.payload.timeTest, action.payload.id, state);
             }
         },
-        // case Types.START_NEW_STUDY:
-        //     // khi start study voi truong hop la test
-        //     let { gameType, studyId, defaultTimeTest } = action;
-        //     let _id = JSON.stringify(studyId);
-        //     if (gameType == Config.TEST_GAME) {
-        //         state = updateDataToState(defaultTimeTest, _id, state);
-        //     }
-        //     return { ...state };
-        // case Types.RESTORE_GAME_STATE:
-        //     let gameRestoredData: GameState = action.gameState;
-        //     if (gameRestoredData.gameType == Config.TEST_GAME) {
-        //         state = updateDataToState(gameRestoredData.timeTest, gameRestoredData.id, state);
-        //     }
-        //     return { ...state };
+        setTimeTestForRestoreGame: (state, action: PayloadAction<GameState>) => {
+            let gameRestoredData: GameState = action.payload;
+            if (gameRestoredData.gameType == Config.TEST_GAME) {
+                state = updateDataToState(gameRestoredData.timeTest, gameRestoredData.id, state);
+            }
+        },
+        setTimeTestForStartNewGame: (state, action: PayloadAction<GameState>) => {
+            let { gameType, id, defaultTimeTest } = action.payload;
+            let _id = JSON.stringify(id);
+            if (gameType == Config.TEST_GAME) {
+                state = updateDataToState(defaultTimeTest, _id, state);
+            }
+        },
         // case Types.ON_RESTART_GAME_SUCCESS: // update vào đây vì trong này được dùng để làm biến countdown
         //     let gameRestartedData: GameState = action.gameState;
         //     if (gameRestartedData.gameType == Config.TEST_GAME) {
@@ -68,5 +69,5 @@ const updateDataToState = (timeTest: number, id: string, state: ITimeTestState) 
     return state;
 };
 
-export const { setTimeTest } = timeTestSlice.actions;
+export const { setTimeTest, setTimeTestForRestoreGame, setTimeTestForStartNewGame } = timeTestSlice.actions;
 export default timeTestSlice.reducer;

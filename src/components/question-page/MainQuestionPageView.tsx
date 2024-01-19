@@ -4,6 +4,7 @@ import { ITopic } from "../../models/Topic";
 import { GameState } from "../../redux/features/game";
 import "./MainQuestionPageView.scss";
 import QuestionPanelV4 from "../study-v4/QuestionPanelV4";
+import Link from "next/link";
 
 const MainQuestionPageView = ({
     gameState,
@@ -34,7 +35,11 @@ const MainQuestionPageView = ({
                 </div>
                 <div style={{ textAlign: "right", paddingTop: "8px", fontSize: "16px", lineHeight: "24px" }}>
                     <i>
-                        Take more free practice tests for other ASVAB topics with our <a href="/">{anchorText}</a> now!
+                        Take more free practice tests for other ASVAB topics with our{" "}
+                        <Link href="/" prefetch>
+                            {anchorText}
+                        </Link>{" "}
+                        now!
                     </i>
                 </div>
             </div>

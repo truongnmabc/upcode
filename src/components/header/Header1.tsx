@@ -32,82 +32,85 @@ const Header1 = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
         }
     }, [focusMenu, focusSearch]);
     return (
-        <header className={`header-1-container`}>
-            <div className="header-grid">
-                <div className="grid-frame -f1 align-center font-14">
-                    <div className="menu-desktop align-center">
-                        <HeaderMenu isDesktop={isDesktop} listAppInfos={listAppInfos} />
-                    </div>
+        <>
+            <header className={`header-1-container`}>
+                <div className="header-grid">
+                    <div className="grid-frame -f1 align-center font-14">
+                        <div className="menu-desktop align-center">
+                            <HeaderMenu isDesktop={isDesktop} listAppInfos={listAppInfos} />
+                        </div>
 
-                    <div
-                        className="menu-icon-mobile"
-                        onClick={() => {
-                            setFocusMenu(true);
-                        }}
-                    >
-                        <MenuIcon />
+                        <div
+                            className="menu-icon-mobile"
+                            onClick={() => {
+                                setFocusMenu(true);
+                            }}
+                        >
+                            <MenuIcon />
+                        </div>
                     </div>
-                </div>
-                <div className="grid-frame -f2 align-center">
-                    <AppLogo />
-                </div>
-                <div className="grid-frame -f3 align-center">
-                    <div className="search-desktop">
-                        <SearchAppComponent listAppInfos={listAppInfos} isDesktop={isDesktop} />
+                    <div className="grid-frame -f2 align-center">
+                        <AppLogo />
                     </div>
-                    <div
-                        className="search-icon-mobile"
-                        onClick={() => {
-                            setFocusSearch(true);
-                        }}
-                    >
-                        <SearchIcon />
-                    </div>
-                </div>
-            </div>
-            <div
-                id="search-component-mobile"
-                style={{
-                    opacity: !isDesktop && focusSearch ? 1 : 0,
-                    height: !isDesktop && focusSearch ? "100vh" : 0,
-                    width: !isDesktop && focusSearch ? "100vw" : 0,
-                }}
-            >
-                {!isDesktop && focusSearch && (
-                    <div className="search-component-mobile">
-                        <div className="align-center">
+                    <div className="grid-frame -f3 align-center">
+                        <div className="search-desktop">
                             <SearchAppComponent listAppInfos={listAppInfos} isDesktop={isDesktop} />
-                            <div
-                                className="cancel-search-btn font-14"
-                                onClick={() => {
-                                    setFocusSearch(false);
-                                }}
-                            >
-                                Cancel
+                        </div>
+                        <div
+                            className="search-icon-mobile"
+                            onClick={() => {
+                                setFocusSearch(true);
+                            }}
+                        >
+                            <SearchIcon />
+                        </div>
+                    </div>
+                </div>
+                <div
+                    id="search-component-mobile"
+                    style={{
+                        opacity: !isDesktop && focusSearch ? 1 : 0,
+                        height: !isDesktop && focusSearch ? "100vh" : 0,
+                        width: !isDesktop && focusSearch ? "100vw" : 0,
+                    }}
+                >
+                    {!isDesktop && focusSearch && (
+                        <div className="search-component-mobile">
+                            <div className="align-center">
+                                <SearchAppComponent listAppInfos={listAppInfos} isDesktop={isDesktop} />
+                                <div
+                                    className="cancel-search-btn font-14"
+                                    onClick={() => {
+                                        setFocusSearch(false);
+                                    }}
+                                >
+                                    Cancel
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
-            </div>
+                    )}
+                </div>
 
-            <div
-                id="menu-component-mobile"
-                style={{
-                    opacity: !isDesktop && focusMenu ? 1 : 0,
-                    height: !isDesktop && focusMenu ? "100vh" : 0,
-                    width: !isDesktop && focusMenu ? "100vw" : 0,
-                }}
-            >
-                {!isDesktop && focusMenu && (
-                    <div className="menu-component-mobile">
-                        <div onClick={() => setFocusMenu(false)} style={{ marginBottom: "24px", padding: 16 }}>
-                            <CloseIcon />
+                <div
+                    id="menu-component-mobile"
+                    style={{
+                        opacity: !isDesktop && focusMenu ? 1 : 0,
+                        height: !isDesktop && focusMenu ? "100vh" : 0,
+                        width: !isDesktop && focusMenu ? "100vw" : 0,
+                    }}
+                >
+                    {!isDesktop && focusMenu && (
+                        <div className="menu-component-mobile">
+                            <div onClick={() => setFocusMenu(false)} style={{ marginBottom: "24px", padding: 16 }}>
+                                <CloseIcon />
+                            </div>
+                            <HeaderMenu isDesktop={isDesktop} listAppInfos={listAppInfos} />
                         </div>
-                        <HeaderMenu isDesktop={isDesktop} listAppInfos={listAppInfos} />
-                    </div>
-                )}
-            </div>
-        </header>
+                    )}
+                </div>
+            </header>
+            <div className="header-1-frame" />
+        </>
     );
 };
 

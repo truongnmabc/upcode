@@ -1,24 +1,19 @@
-// import { styled } from "@mui/material";
-// import LinearProgress, {
-//     linearProgressClasses,
-// } from "@mui/material/LinearProgress"; // import cai nay check trong network thấy tải file này mất 1.2mb, commnet lại thì còn 250kb thôi
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useDispatch, useSelector } from "react-redux";
 import { IAppInfo } from "../../../models/AppInfo";
-import { onRestartGame } from "../../../redux/actions/game.action";
-import { GameState } from "../../../redux/reducers/game.reducer";
+// import { onRestartGame } from "../../../redux/actions/game.action";
 import DownloadAppEndTest from "./DownloadAppEndTest";
 import ReviewAnswer from "./ReviewAnswer";
-import * as ga from "../../../lib/ga";
-import { getGameProgress, getHighhestLevelOfTopicBePassedSequentially } from "../../../utils/v4/v4_study";
+// import * as ga from "../../../lib/ga";
+import { getGameProgress, getHighhestLevelOfTopicBePassedSequentially } from "../../../utils/v4_study";
 import { ITopic } from "../../../models/Topic";
 import { APP_SHORT_NAME } from "../../../config_app";
-import { getStudyDataAction } from "../../../redux/actions/sync.action";
-import { SYNC_TYPE } from "../../../config_sync";
+import { SYNC_TYPE } from "../../../config/config_sync";
 import "./index.scss";
-import TargetIcon from "../../v4-material/v4-icon/TargetIcon";
-import { AppState } from "../../../redux/reducers/appState";
+import TargetIcon from "../../icon/TargetIcon";
+import AppState from "@/redux/appState";
+import { GameState, getStudyData } from "@/redux/features/game";
 
 const getDoneTestText = (isPass?: boolean, endLevelView?: string) => {
     const TITLE_PASSED = "Such an excellent performance";
@@ -62,7 +57,7 @@ const EndTestV4 = ({
 
     let nextLevelHref = ""; // cái này để dùng cho phần end của level topic
     let finalTestHref = ""; // cái này để dùng cho phần end của level topic
-    let listGameState: GameState[] = useSelector((state: AppState) => state.listGameState.games);
+    let listGameState: GameState[] = useSelector((state: AppState) => state.listGameReducer.games);
     if (currentTopic) {
         let currentLevelIndex = currentTopic.topics.findIndex((lv) => lv.id == gameState.id);
         let nextLevelIndex = currentLevelIndex;
@@ -150,7 +145,7 @@ const EndTestButton = ({
     const directHref = (_href: string) => {
         // hàm này chỉ được gọi khi làm topic => trường topicId luôn có giá trị khi cần dùng đến
         dispatch(
-            getStudyDataAction({
+            getStudyData({
                 slug: _href.slice(1, _href.length), // bỏ dấu / vì trong này đang không xử lý dấu đó
                 type: SYNC_TYPE.TYPE_LEARN_TEST,
                 topicId: topicId,
@@ -164,11 +159,11 @@ const EndTestButton = ({
                 <button
                     className={"btn v4-border-radius v4-button-animtaion " + (nextLevelHref ? "btn-theme-1" : "btn-theme-2")}
                     onClick={() => {
-                        ga.event({
-                            action: levelTag.includes("level") ? "restart_level" : "click_restart_test",
-                            params: { from: window.location.href, to: levelTag },
-                        });
-                        dispatch(onRestartGame());
+                        // ga.event({
+                        //     action: levelTag.includes("level") ? "restart_level" : "click_restart_test",
+                        //     params: { from: window.location.href, to: levelTag },
+                        // });
+                        // dispatch(onRestartGame());
                     }}
                 >
                     {levelTag.includes("level") ? "Restart Level" : "Restart Test"}
@@ -177,10 +172,10 @@ const EndTestButton = ({
                     <button
                         className="next-level btn v4-border-radius v4-button-animtaion"
                         onClick={() => {
-                            ga.event({
-                                action: "next_level",
-                                params: { from: window.location.href, to: nextLevelHref },
-                            });
+                            // ga.event({
+                            //     action: "next_level",
+                            //     params: { from: window.location.href, to: nextLevelHref },
+                            // });
                             directHref(nextLevelHref);
                             window.scrollTo({ top: 0 });
                         }}
@@ -195,10 +190,10 @@ const EndTestButton = ({
                         <button
                             className="final-test btn v4-border-radius v4-button-animtaion"
                             onClick={() => {
-                                ga.event({
-                                    action: "click_final_test_end",
-                                    params: { from: window.location.href, to: finalTestHref },
-                                });
+                                // ga.event({
+                                //     action: "click_final_test_end",
+                                //     params: { from: window.location.href, to: finalTestHref },
+                                // });
                                 directHref(finalTestHref);
                             }}
                         >

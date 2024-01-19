@@ -1,6 +1,6 @@
+import { GameState } from "@/redux/features/game";
 import { IAppInfo } from "../../../models/AppInfo";
-import { GameState } from "../../../redux/reducers/game.reducer";
-import DownloadAppV4 from "../../homepage-v4/DownloadAppV4";
+import DownloadAppV4 from "../../homepage/DownloadAppV4";
 import "./DownloadAppEndTest.scss";
 
 const DownloadAppEndTest = ({
@@ -15,15 +15,8 @@ const DownloadAppEndTest = ({
     return (
         <div className="v4-download-end-test v4-border-radius">
             <div className="v4-download-end-test-left">
-                <div className="text">
-                    Download App for more {gameState.gameTitle} questions
-                </div>
-                <DownloadAppV4
-                    appInfo={appInfo}
-                    direction="row"
-                    size={isDesktop ? "m" : "s"}
-                    place="end_test"
-                />
+                <div className="text">Download App for more {gameState.gameTitle} questions</div>
+                <DownloadAppV4 appInfo={appInfo} direction="row" size={isDesktop ? "m" : "s"} place="end_test" />
             </div>
             <div
                 className="v4-download-end-test-right"

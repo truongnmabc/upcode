@@ -196,6 +196,11 @@ function convertTime(time) {
         (seconds.toString().length == 2 ? seconds.toString() : "0" + seconds.toString())
     );
 }
+
+const getTitle = (appInfo) => {
+    return "Full-length " + appInfo.appName + " Practice Test";
+};
+
 export {
     parseBoolean,
     capitalizeFirstWord,
@@ -205,4 +210,5 @@ export {
     getLink,
     validateEmail,
     convertTime,
+    getTitle,
 };

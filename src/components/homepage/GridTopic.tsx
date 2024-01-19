@@ -3,16 +3,16 @@ import { APP_SHORT_NAME } from "../../config_app";
 // import * as ga from "../../lib/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
-import { GameState, getNumOfCorrectAnswer } from "../../redux/features/game";
+import { GameState, getNumOfCorrectAnswer, getStudyData } from "../../redux/features/game";
 import TargetIcon from "../icon/TargetIcon";
 import "./GridTopic.scss";
 import { getGameProgress, getHighhestLevelOfTopicBePassedSequentially } from "../../utils/v4_study";
-// import { getStudyDataAction } from "../../redux/actions/sync.action";
 import { SYNC_TYPE } from "../../config/config_sync";
 import { memo } from "react";
 import { render } from "react-dom";
 import getRawTopicsData from "../../utils/getRawTopicsData";
-import { AppState } from "@/redux/appState";
+import AppState from "@/redux/appState";
+
 const RANDOM_COLORS = [
     "#30749F",
     "#E68A4F",
@@ -124,7 +124,7 @@ const GridTopic = ({
                                                 place={place}
                                                 listGameState={listGameState}
                                                 dispatchAction={(data) => {
-                                                    // dispatch(getStudyDataAction(data));
+                                                    dispatch(getStudyData(data));
                                                 }}
                                             />,
                                             content
@@ -207,7 +207,7 @@ const GridTopic = ({
                                             place={place}
                                             listGameState={listGameState}
                                             dispatchAction={(data) => {
-                                                // dispatch(getStudyDataAction(data));
+                                                dispatch(getStudyData(data));
                                             }}
                                         />
                                     )}
@@ -322,7 +322,6 @@ const TopicLevelProgress = ({
 
                                             if (unlocked && !window.location.href.includes(_href)) {
                                                 if (_href.includes(window.location.pathname)) {
-                                                    // chọn level trong cùng 1 topic (không thay đổi path name nên không load lại trang)
                                                     let _action = "click_";
                                                     if (level.tag.includes("level")) _action += "level";
                                                     else _action = _action + level.tag.replace("-", "_") + "_round";
@@ -333,6 +332,7 @@ const TopicLevelProgress = ({
                                                     //         to: level.tag,
                                                     //     },
                                                     // });
+                                                    // chọn level trong cùng 1 topic (không thay đổi path name nên không load lại trang) nên cần dispatch lại action này
                                                     dispatchAction({
                                                         slug: _href.slice(1, _href.length), // bỏ dấu / vì trong này đang không xử lý dấu đó
                                                         type: SYNC_TYPE.TYPE_LEARN_TEST,

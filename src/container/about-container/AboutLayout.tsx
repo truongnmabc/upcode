@@ -1,8 +1,11 @@
-import Layout1 from "@/components/layout/layout-1/Layout1";
 import { IAppInfo } from "@/models/AppInfo";
 import React from "react";
 import "./AboutLayout.scss";
 import MyContainer from "@/components/v4-material/MyContainer";
+import dynamic from "next/dynamic";
+
+const Layout1 = dynamic(() => import("@/components/layout/layout-1/Layout1"));
+const Layout2 = dynamic(() => import("@/components/layout/layout-2/Layout2"));
 
 const LineDraw = (
     <div className="line-draw flex">
@@ -42,95 +45,117 @@ const featuresData = [
             "Through our analytical methodology, we equip users with valuable insights into their level of preparedness for achieving success.",
     },
 ];
-const AboutLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listAppInfos: IAppInfo[] }) => {
+const AboutLayout = ({
+    appInfo,
+    listAppInfos,
+    isParentApp,
+    listTopics,
+}: {
+    appInfo: IAppInfo;
+    listAppInfos: IAppInfo[];
+    isParentApp: boolean;
+    listTopics: any[];
+}) => {
+    if (isParentApp)
+        return (
+            <Layout1 listAppInfos={listAppInfos}>
+                <AboutContent />
+            </Layout1>
+        );
     return (
-        <Layout1 listAppInfos={listAppInfos}>
-            <div className="about-layout-container">
-                <div className="background-about-page align-center">
-                    <p className="p1">About Us</p>
-                    <p className="p2">
-                        Our unwavering mission is to simplify the learning journey for our users, providing them with the tools
-                        and resources they need to pass their tests with ease. 
-                    </p>
-                </div>
-                <MyContainer className="about-page-content">
-                    <p className="about-primary-title">Exam Success Guaranteed</p>
-                    {LineDraw}
-                    <div className="part-1 flex">
-                        <div className="subject-content">
-                            <p className="p-title">A Streamlined Path to Attain Desired Certificate</p>
-                            <div className="line-color" />
-                            <p className="p-description">
-                                Our platform offers users a carefully designed pathway that not only facilitates the attainment
-                                of their desired certificate but also ensures an effective journey towards achieving their
-                                academic or professional goals.
-                            </p>
-                            <button
-                                onClick={() => {
-                                    window.location.href = "/";
-                                }}
-                            >
-                                <div className="align-center">
-                                    View more <div className="shape-circle-1" /> <div className="shape-circle-2" />
-                                </div>
-                            </button>
-                        </div>
-                        <div className="blank-space" />
-                        <img src="/images/about/img1.png" alt="" />
-                    </div>
-                    <div className="part-2 flex">
-                        <img src="/images/about/img2.png" alt="" />
-                        <div className="blank-space" />
-                        <div className="subject-content">
-                            <p className="p-title">Dedicated Professionals Who Make a Difference</p>
-                            <div className="line-color" />
-                            <p className="p-description">
-                                We take pride in our exceptional team. Each member is a distinguished subject matter expert in
-                                their respective fields, equipped with a wealth of knowledge and possessing extensive experience
-                                in test preparation.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="part-3 flex">
-                        <div className="subject-content">
-                            <p className="p-title">A Trusted E-Learning Platform That Exceeds User Expectations</p>
-                            <div className="line-color" />
-                            <p className="p-description">
-                                We are diligently working towards the establishment of a reputable e-learning platform. Through
-                                continuous improvement, we strive to create an exceptional learning environment that
-                                consistently goes beyond the expectations of our esteemed users.
-                            </p>
-                            <button
-                                onClick={() => {
-                                    window.location.href = "/";
-                                }}
-                            >
-                                <div className="align-center">
-                                    View more
-                                    <div className="shape-circle-1" />
-                                    <div className="shape-circle-2" />
-                                </div>
-                            </button>
-                        </div>
-                        <div className="blank-space" />
-                        <img src="/images/about/img3.png" alt="" />
-                    </div>
-                    <p className="about-primary-title">Our Features</p>
-                    {LineDraw}
-                    <div className="grid-features">
-                        {featuresData.map((feature, index) => {
-                            return (
-                                <div key={index} className="align-center about-feature-item">
-                                    <img src={feature.img} alt="" height={100} />
-                                    <p className="feature-title">{feature.title}</p>
-                                    <p className="feature-description">{feature.description}</p>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </MyContainer>
+        <Layout2 appInfo={appInfo} listTopics={listTopics}>
+            <AboutContent />
+        </Layout2>
+    );
+};
+
+const AboutContent = () => {
+    return (
+        <div className="about-layout-container">
+            <div className="background-about-page align-center">
+                <p className="p1">About Us</p>
+                <p className="p2">
+                    Our unwavering mission is to simplify the learning journey for our users, providing them with the tools and
+                    resources they need to pass their tests with ease. 
+                </p>
             </div>
-        </Layout1>
+            <MyContainer className="about-page-content">
+                <p className="about-primary-title">Exam Success Guaranteed</p>
+                {LineDraw}
+                <div className="part-1 flex">
+                    <div className="subject-content">
+                        <p className="p-title">A Streamlined Path to Attain Desired Certificate</p>
+                        <div className="line-color" />
+                        <p className="p-description">
+                            Our platform offers users a carefully designed pathway that not only facilitates the attainment of
+                            their desired certificate but also ensures an effective journey towards achieving their academic or
+                            professional goals.
+                        </p>
+                        <button
+                            onClick={() => {
+                                window.location.href = "/";
+                            }}
+                        >
+                            <div className="align-center">
+                                View more <div className="shape-circle-1" /> <div className="shape-circle-2" />
+                            </div>
+                        </button>
+                    </div>
+                    <div className="blank-space" />
+                    <img src="/images/about/img1.png" alt="" />
+                </div>
+                <div className="part-2 flex">
+                    <img src="/images/about/img2.png" alt="" />
+                    <div className="blank-space" />
+                    <div className="subject-content">
+                        <p className="p-title">Dedicated Professionals Who Make a Difference</p>
+                        <div className="line-color" />
+                        <p className="p-description">
+                            We take pride in our exceptional team. Each member is a distinguished subject matter expert in their
+                            respective fields, equipped with a wealth of knowledge and possessing extensive experience in test
+                            preparation.
+                        </p>
+                    </div>
+                </div>
+                <div className="part-3 flex">
+                    <div className="subject-content">
+                        <p className="p-title">A Trusted E-Learning Platform That Exceeds User Expectations</p>
+                        <div className="line-color" />
+                        <p className="p-description">
+                            We are diligently working towards the establishment of a reputable e-learning platform. Through
+                            continuous improvement, we strive to create an exceptional learning environment that consistently
+                            goes beyond the expectations of our esteemed users.
+                        </p>
+                        <button
+                            onClick={() => {
+                                window.location.href = "/";
+                            }}
+                        >
+                            <div className="align-center">
+                                View more
+                                <div className="shape-circle-1" />
+                                <div className="shape-circle-2" />
+                            </div>
+                        </button>
+                    </div>
+                    <div className="blank-space" />
+                    <img src="/images/about/img3.png" alt="" />
+                </div>
+                <p className="about-primary-title">Our Features</p>
+                {LineDraw}
+                <div className="grid-features">
+                    {featuresData.map((feature, index) => {
+                        return (
+                            <div key={index} className="align-center about-feature-item">
+                                <img src={feature.img} alt="" height={100} />
+                                <p className="feature-title">{feature.title}</p>
+                                <p className="feature-description">{feature.description}</p>
+                            </div>
+                        );
+                    })}
+                </div>
+            </MyContainer>
+        </div>
     );
 };
 

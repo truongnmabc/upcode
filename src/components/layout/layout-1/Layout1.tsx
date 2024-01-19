@@ -7,7 +7,6 @@ const Layout1 = ({ children, listAppInfos }: { children: any; listAppInfos: IApp
     return (
         <div className="layout-1">
             <Header1 listAppInfos={listAppInfos} />
-            <div className="header-1-frame" />
             {children}
             <Footer1 />
         </div>

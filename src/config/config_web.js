@@ -18,13 +18,20 @@ export const isWebDMV = () => {
     return APP_SHORT_NAME.toLowerCase() == "dmv";
 };
 
-export function setSession(key: string, value: string) {
+export const isWebCDL = (appShortName) => {
+    if (appShortName == "cdl") {
+        return true;
+    }
+    return APP_SHORT_NAME.toLowerCase() == "cdl";
+};
+
+export function setSession(key, value) {
     if (typeof sessionStorage !== "undefined") {
         sessionStorage.setItem(key, value);
     }
 }
 
-export function getSession(key: string) {
+export function getSession(key) {
     if (typeof sessionStorage !== "undefined") {
         return sessionStorage.getItem(key);
     }

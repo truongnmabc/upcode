@@ -1,7 +1,7 @@
 import { ITestQuestionData } from "./TestQuestionData";
 
 export interface ITestInfo {
-    // slug: string; // lưu slug của bài test này
+    slug: string; // lưu slug của bài test này
     // topicId: number;
     appId: number; //
     id: number; //
@@ -17,7 +17,7 @@ export interface ITestInfo {
 }
 
 export default class TestInfo implements ITestInfo {
-    // slug: string;
+    slug: string;
     // topicId: number;
     appId: number;
     description: string;
@@ -33,7 +33,7 @@ export default class TestInfo implements ITestInfo {
     totalQuestion: number;
 
     constructor(object?: any) {
-        // this.slug = object.slug ?? "";
+        this.slug = object.slug ?? "";
         // this.topicId = object.topicId ?? -1;
         this.appId = object.appId ? object.appId : -1;
         this.description = object.description ? object.description : "";

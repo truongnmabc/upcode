@@ -4,6 +4,7 @@ class Config {
     static HTTP_REQUEST_SUCCESS = 200;
     static PREFIX_URL = "/wp-json/passemall/v1";
     static SECRET_KEY = "koolsoft-web";
+    static TIME_MEMORY_CACHE = 24 * 60 * 60 * 1000;
 
     static QUESTION_NOT_ANSWERED = 0;
     static QUESTION_ANSWERED_INCORRECT = 1;

@@ -120,7 +120,7 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                             <PlatformContactsLogo />
                         </div>
                         <div className="v4-footer-landing-container-121">
-                            <Link href={"/about-us"} prefetch={false}>
+                            <Link href={"/about"} prefetch={false}>
                                 About us
                             </Link>
                             <Link href={"/privacy"} prefetch={false}>

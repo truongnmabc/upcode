@@ -1,22 +1,20 @@
 import SEO from "../../components/seo/SEO";
-// import { SYNC_TYPE } from "../../config/config_sync";
-import { IAppInfo } from "../../models/AppInfo";
-import { getAppInfo } from "../../utils/getAppInfo";
+import { AppInfo, IAppInfo } from "../../models/AppInfo";
+import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
 import Question from "../../models/Question";
 import QuestionLayout from "../../container/question/QuestionLayout";
 // import * as ga from "../../lib/ga";
 import { useEffect } from "react";
-// import { GameState } from "../../redux/reducers/game.reducer";
 import Config from "../../config";
 import { isMathJaxContent } from "../../utils/v4_question";
 import Topic, { ITopic } from "../../models/Topic";
 import { useDispatch } from "react-redux";
-// import { getTopicsByParentIdSuccess } from "../../redux/actions/topic";
 import convertToJSONObject from "@/utils/convertToJSONObject";
 import { GameState } from "@/redux/features/game";
 import StoreProvider from "@/redux/StoreProvider";
 import { getQuestionDataApi, readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { getTopicByParentIdSuccess } from "@/redux/features/topic";
+import { isParentApp } from "@/config/config_web";
 const QuestionPage = ({
     appInfo,
     question,
@@ -25,6 +23,7 @@ const QuestionPage = ({
     addMathJax,
     anchorText,
     topics,
+    listAppInfos,
 }: {
     appInfo: IAppInfo;
     question: Question;
@@ -33,12 +32,8 @@ const QuestionPage = ({
     addMathJax: boolean;
     anchorText: string;
     topics: ITopic[];
+    listAppInfos: IAppInfo[];
 }) => {
-    // let webData = {
-    //     appId: appInfo.appId,
-    //     type: SYNC_TYPE.TYPE_QUESTION,
-    //     topicId: topic.id,
-    // };
     const dispatch = useDispatch();
     useEffect(() => {
         // ga.event({
@@ -60,8 +55,15 @@ const QuestionPage = ({
                     question.question + ", " + question.choices.map((c) => c.content).join(", ") + ", " + question.explanation
                 }
             ></SEO>
-            <StoreProvider />
-            <QuestionLayout appInfo={appInfo} anchorText={anchorText} gameState={gameState} topic={topic} listTopics={topics} />
+            <StoreProvider appInfo={appInfo} />
+            <QuestionLayout
+                appInfo={appInfo}
+                anchorText={anchorText}
+                gameState={gameState}
+                topic={topic}
+                listTopics={topics}
+                listAppInfos={listAppInfos}
+            />
         </>
     );
 };
@@ -122,8 +124,14 @@ export const getServerSideProps = async (context) => {
     // 10% là “Take more free practice tests for other ASVAB topics with our [ASVAB] prep now!”
     let anchorText = getAnchorText(type, appInfo.appName);
 
+    const _isParentApp = isParentApp();
+    let listAppInfos = [];
+    if (_isParentApp) {
+        listAppInfos = readAllAppInfos();
+        listAppInfos = listAppInfos.filter((w: any) => w.appId).map((w: any) => new AppInfo(w));
+    }
     return convertToJSONObject({
-        props: { appInfo, question, topic, gameState, addMathJax, anchorText, topics },
+        props: { appInfo, question, topic, gameState, addMathJax, anchorText, topics, listAppInfos },
     });
 };
 

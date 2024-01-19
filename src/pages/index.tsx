@@ -1,22 +1,18 @@
-import SeoHeader from "@/components/seo/SeoHeader";
-import { isParentApp, isWebASVAB } from "@/config/config_web";
 import { AppInfo, IAppInfo } from "@/models/AppInfo";
-import TestInfo, { ITestInfo } from "@/models/TestInfo";
-import { ITopic } from "@/models/Topic";
+import { getAppInfo, readAllAppInfos } from "@/utils/getAppInfo";
 import { getHomeSeoContentApi } from "@/services/home.service";
+import { GetStaticProps } from "next";
+import { isParentApp, isWebASVAB } from "@/config/config_web";
+import { ITopic } from "@/models/Topic";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { setScrollDownAuto } from "@/utils";
-import convertToJSONObject from "@/utils/convertToJSONObject";
-import { getAppInfo, readAllAppInfos } from "@/utils/getAppInfo";
-import replaceYear from "@/utils/replaceYear";
-import { GetStaticProps } from "next";
 import { useEffect } from "react";
+import convertToJSONObject from "@/utils/convertToJSONObject";
 import dynamic from "next/dynamic";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setAppInfo } from "@/redux/features/appInfo";
+import replaceYear from "@/utils/replaceYear";
+import SeoHeader from "@/components/seo/SeoHeader";
 import StoreProvider from "@/redux/StoreProvider";
-import { getTopicByParentIdSuccess } from "@/redux/features/topic";
-import { getTestSuccess } from "@/redux/features/test";
+import TestInfo, { ITestInfo } from "@/models/TestInfo";
 const HomeSingleApp = dynamic(() => import("@/container/single-app/HomeSingleApp"));
 const ParentAppLayout = dynamic(() => import("@/container/parent-app/ParentAppLayout"));
 
@@ -40,26 +36,14 @@ export default function Home({
     listAppInfo: IAppInfo[];
 }) {
     const _isParentApp = isParentApp();
-    const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(setAppInfo(appInfo));
         setScrollDownAuto("home");
-        if (listTopics.length > 0) {
-            // cẩn thận điều kiện
-            dispatch(getTopicByParentIdSuccess(listTopics)); // chỉ là để update vào redux thôi
-        }
-        if (tests.length) {
-            // cẩn thận điều kiện
-            dispatch(getTestSuccess(tests));
-        }
-    }, [dispatch]);
-    let topics = useAppSelector((state) => state.topicReducer);
-    // console.log(topics);
+    }, []);
 
     return (
         <>
             <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} />
-            <StoreProvider />
+            <StoreProvider appInfo={appInfo} webData={{ tests: tests, topics: listTopics }} />
             {_isParentApp ? (
                 <ParentAppLayout appInfo={appInfo} listAppInfos={listAppInfo} />
             ) : (

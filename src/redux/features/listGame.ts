@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { GameState } from "./game";
 import { REHYDRATE } from "redux-persist";
 
@@ -23,8 +23,8 @@ export const listGameSlice = createSlice({
     name: "listGame",
     initialState: ListGamesState.init(),
     reducers: {
-        updateToListGames: (state, action) => {
-            let newGameData: GameState = action.payload.gameState;
+        updateToListGames: (state, action: PayloadAction<GameState>) => {
+            let newGameData: GameState = action.payload;
             state = updateToState(state, newGameData);
         },
         // case Types.ON_CHOOSE_ANSWER_SUCCESS:
