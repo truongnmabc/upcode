@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import "./index.scss";
 import dynamic from "next/dynamic";
 const Image = dynamic(() => import("next/image"));
@@ -13,28 +13,28 @@ const SeoContentComponentV2 = ({
     srcFlag?: string;
     stateLayout?: boolean;
 }) => {
-    useEffect(() => {
-        let seoContentEle = document.querySelector(".seo-content .text");
-        let nodeLenght = seoContentEle?.childNodes?.length;
-        if (nodeLenght < 4) {
-            if (!homeSeoContent?.content) {
-                setReadMore();
-            }
-        }
-    }, []);
-    const setReadMore = () => {
-        let btnReadMore = document.getElementById("button-read-more");
-        btnReadMore.style.display = "none";
-        let content = document.getElementById("text-seo-content");
-        content.className = "text";
-    };
+    // useEffect(() => {
+    // let seoContentEle = document.querySelector(".seo-content .text");
+    // let nodeLenght = seoContentEle?.childNodes?.length;
+    // if (nodeLenght < 4) {
+    //     if (!homeSeoContent?.content) {
+    //         setReadMore();
+    //     }
+    // }
+    // }, []);
+    // const setReadMore = () => {
+    //     let btnReadMore = document.getElementById("button-read-more");
+    //     btnReadMore.style.display = "none";
+    //     let content = document.getElementById("text-seo-content");
+    //     content.className = "text";
+    // };
     return (
         <>
             {homeSeoContent?.content && (
                 <div className="seo-content-container-v2">
                     <div className="section seo-content-v2">
                         <div className={"content " + (stateLayout ? "state" : "")}>
-                            <div id="text-seo-content" className={"text read-more"}>
+                            <div id="text-seo-content" className={"text _read-more"}>
                                 {typeof window !== "undefined" ? (
                                     <div
                                         className="wrap-text"
@@ -60,7 +60,7 @@ const SeoContentComponentV2 = ({
                             ) : null}
                         </div>
 
-                        <div
+                        {/* <div
                             id="button-read-more"
                             className="button-read-more"
                             onClick={() => {
@@ -68,7 +68,7 @@ const SeoContentComponentV2 = ({
                             }}
                         >
                             Read more
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             )}

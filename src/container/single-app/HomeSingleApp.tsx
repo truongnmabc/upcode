@@ -12,6 +12,7 @@ import MyContainer from "@/components/v4-material/MyContainer";
 import "./HomeSingleApp.scss";
 import { useAppDispatch } from "@/redux/hooks";
 import { setAppInfo } from "@/redux/features/appInfo";
+import GridTopic from "@/components/homepage-v4/GridTopic";
 const HomeSingleApp = ({
     appInfo,
     listTopics,
@@ -65,7 +66,7 @@ const HomeSingleApp = ({
                     </div>
                     <div className="v4-landing-topic-0">
                         <h2>{`Practice ${appInfo.appName} Test By Topics`}</h2>
-                        {/* <GridTopic place="home" listTopics={listTopics} appInfo={appInfo} allowExpand={!isDesktop} /> */}
+                        <GridTopic place="home" listTopics={listTopics} appInfo={appInfo} allowExpand={!isDesktop} />
                     </div>
 
                     <div className="v4-landing-practice-test-0">

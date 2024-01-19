@@ -14,12 +14,12 @@ export interface ITimeTestState {
 export const timeTestSlice = createSlice({
     name: "timeTest",
     initialState: { loading: false, data: {}, list: [], error: null },
-    reducers: {},
-    extraReducers: (builder) => {
-        //TODO
-        // case Types.SET_TIME_TEST:
-        //     state = updateDataToState(action.timeTest, action.id, state);
-        //     return { ...state };
+    reducers: {
+        setTimeTest: (state, action) => {
+            if (action.payload.timeTest && action.payload.id) {
+                state = updateDataToState(action.payload.timeTest, action.payload.id, state);
+            }
+        },
     },
 });
 
@@ -45,4 +45,5 @@ const updateDataToState = (timeTest: number, id: string, state: ITimeTestState) 
     return state;
 };
 
+export const { setTimeTest } = timeTestSlice.actions;
 export default timeTestSlice.reducer;

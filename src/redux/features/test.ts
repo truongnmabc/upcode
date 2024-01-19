@@ -3,14 +3,31 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { REHYDRATE } from "redux-persist";
 import TestInfo from "@/models/TestInfo";
 
-export interface ITestInforV4State {
+export interface ITestState {
     list: TestInfo[];
 }
 
 export const testSlice = createSlice({
     name: "test",
     initialState: { list: [] },
-    reducers: {},
+    reducers: {
+        getTestSuccess: (state, action) => {
+            if (action.payload.testInfos) {
+                action.payload.testInfos.forEach((el) => {
+                    let testInfo = new TestInfo(el);
+                    let index = state.list.findIndex((t) => t.id == testInfo.id);
+                    if (index == -1) {
+                        state.list.push(testInfo);
+                    } else {
+                        state.list[index] = testInfo;
+                    }
+                });
+                if (action.payload.forceNew) {
+                    state.list = [...state.list];
+                }
+            }
+        },
+    },
     extraReducers: (builder) => {
         //TODO
         builder.addCase(REHYDRATE, (state, action) => {
@@ -27,27 +44,8 @@ export const testSlice = createSlice({
             }
             return state;
         });
-
-        // case Types.GET_TEST_INFO_BY_APP_ID_SUCCESS: {
-        //     if (action.testInfos) {
-        //         action.testInfos.forEach((el) => {
-        //             let testInfo = new TestInfo(el);
-        //             let index = state.list.findIndex((t) => t.id == testInfo.id);
-        //             if (index == -1) {
-        //                 state.list.push(testInfo);
-        //             } else {
-        //                 state.list[index] = testInfo;
-        //             }
-        //         });
-        //         if (action.forceNew) {
-        //             state.list = [...state.list];
-        //         }
-        //     }
-        //     return {
-        //         ...state,
-        //     };
-        // }
     },
 });
 
+export const { getTestSuccess } = testSlice.actions;
 export default testSlice.reducer;

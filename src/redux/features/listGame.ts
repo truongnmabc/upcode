@@ -22,7 +22,20 @@ export class ListGamesState {
 export const listGameSlice = createSlice({
     name: "listGame",
     initialState: ListGamesState.init(),
-    reducers: {},
+    reducers: {
+        updateToListGames: (state, action) => {
+            let newGameData: GameState = action.payload.gameState;
+            let isExisted = false;
+            state.games = state.games.map((game) => {
+                if (game.id == newGameData.id) {
+                    isExisted = true;
+                    return newGameData; //chý ý chỗ này (gán đè luôn)
+                }
+                return game;
+            });
+            if (!isExisted) state.games.push(newGameData);
+        },
+    },
     extraReducers: (builder) => {
         //TODO
         builder.addCase(REHYDRATE, (state, action) => {
@@ -32,20 +45,8 @@ export const listGameSlice = createSlice({
             }
             return state;
         });
-
-        // case Types.UPDATE_TO_LIST_GAME_STATE:
-        //     let newGameData: GameState = action.gameState;
-        //     let isExisted = false;
-        //     state.games = state.games.map((game) => {
-        //         if (game.id == newGameData.id) {
-        //             isExisted = true;
-        //             return newGameData; //chý ý chỗ này (gán đè luôn)
-        //         }
-        //         return game;
-        //     });
-        //     if (!isExisted) state.games.push(newGameData);
-        //     return { ...state };
     },
 });
 
+export const { updateToListGames } = listGameSlice.actions;
 export default listGameSlice.reducer;

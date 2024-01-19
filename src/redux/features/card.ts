@@ -27,10 +27,8 @@ export const cardSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(REHYDRATE, (state, action) => {
-            console.log("card");
             if (action["payload"]) {
                 let mapTopicQuestionsData = action["payload"]["cardReducer"]?.mapTopicQuestions ?? {};
-                console.log(mapTopicQuestionsData);
                 let _mapTopicQuestionsData = new Map<string, Question[]>();
                 for (let id in mapTopicQuestionsData) {
                     _mapTopicQuestionsData.set(

@@ -1,18 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import { APP_SHORT_NAME } from "../../config_app";
-import * as ga from "../../lib/ga";
+// import * as ga from "../../lib/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
-import { GameState, getNumOfCorrectAnswer } from "../../redux/reducers/game.reducer";
-import TargetIcon from "../v4-material/v4-icon/TargetIcon";
-import "./GridTopic.scss";
-import { AppState } from "../../redux/reducers/appState";
-import { getGameProgress, getHighhestLevelOfTopicBePassedSequentially } from "../../utils/v4/v4_study";
-import { getStudyDataAction } from "../../redux/actions/sync.action";
-import { SYNC_TYPE } from "../../config_sync";
+import { getGameProgress, getHighhestLevelOfTopicBePassedSequentially } from "../../utils/v4_study";
+// import { getStudyDataAction } from "../../redux/actions/sync.action";
+import { SYNC_TYPE } from "../../config/config_sync";
 import { memo } from "react";
 import { render } from "react-dom";
-import getRawTopicsData from "../../utils/v4/getRawTopicsData";
+import { GameState, getNumOfCorrectAnswer } from "@/redux/features/game";
+import TargetIcon from "../icon/TargetIcon";
+import getRawTopicsData from "@/utils/getRawTopicsData";
+import { AppState } from "@/redux/appState";
+import "./GridTopic.scss";
 const RANDOM_COLORS = [
     "#30749F",
     "#E68A4F",
@@ -68,7 +68,7 @@ const GridTopic = ({
     allowExpand?: boolean;
 }) => {
     let topics: ITopic[] | ITopicJson[] = listTopics;
-    let listGameState: GameState[] = useSelector((state: AppState) => state.listGameState.games);
+    let listGameState: GameState[] = useSelector((state: AppState) => state.listGameReducer.games);
     if (!topics.length) {
         // trường hợp listTopics chưa lấy được từ redux ra sẽ lấy topic từ file JSON
         // để hiển thị link và tên topic cho SEO
@@ -105,13 +105,13 @@ const GridTopic = ({
                             }}
                             onClick={(e) => {
                                 e.preventDefault();
-                                ga.event({
-                                    action: "click_topic",
-                                    params: {
-                                        from: window.location.href,
-                                        to: topic.tag,
-                                    },
-                                });
+                                // ga.event({
+                                //     action: "click_topic",
+                                //     params: {
+                                //         from: window.location.href,
+                                //         to: topic.tag,
+                                //     },
+                                // });
                                 if (allowExpand && place == "home") {
                                     let expandComponent = document.getElementById("expand-topic-" + index);
                                     let content = document.getElementById("topic-progress-" + index);
@@ -124,7 +124,7 @@ const GridTopic = ({
                                                 place={place}
                                                 listGameState={listGameState}
                                                 dispatchAction={(data) => {
-                                                    dispatch(getStudyDataAction(data));
+                                                    // dispatch(getStudyDataAction(data));
                                                 }}
                                             />,
                                             content
@@ -207,7 +207,7 @@ const GridTopic = ({
                                             place={place}
                                             listGameState={listGameState}
                                             dispatchAction={(data) => {
-                                                dispatch(getStudyDataAction(data));
+                                                // dispatch(getStudyDataAction(data));
                                             }}
                                         />
                                     )}
@@ -227,12 +227,12 @@ const GridTopic = ({
                         href={`/full-length-${appInfo.appShortName}-practice-test`}
                         onClick={(e) => {
                             e.preventDefault(); // viết như này để ga được thực hiện
-                            ga.event({
-                                action: "click_full_test_in_study",
-                                params: {
-                                    from: window.location.href,
-                                },
-                            });
+                            // ga.event({
+                            //     action: "click_full_test_in_study",
+                            //     params: {
+                            //         from: window.location.href,
+                            //     },
+                            // });
                             window.location.href = `/full-length-${appInfo.appShortName}-practice-test`;
                         }}
                     >
@@ -326,13 +326,13 @@ const TopicLevelProgress = ({
                                                     let _action = "click_";
                                                     if (level.tag.includes("level")) _action += "level";
                                                     else _action = _action + level.tag.replace("-", "_") + "_round";
-                                                    ga.event({
-                                                        action: _action,
-                                                        params: {
-                                                            from: window.location.href,
-                                                            to: level.tag,
-                                                        },
-                                                    });
+                                                    // ga.event({
+                                                    //     action: _action,
+                                                    //     params: {
+                                                    //         from: window.location.href,
+                                                    //         to: level.tag,
+                                                    //     },
+                                                    // });
                                                     dispatchAction({
                                                         slug: _href.slice(1, _href.length), // bỏ dấu / vì trong này đang không xử lý dấu đó
                                                         type: SYNC_TYPE.TYPE_LEARN_TEST,
@@ -551,7 +551,7 @@ export default memo(GridTopic, (prev, next) => {
     if ((prev.highlightedTopicId ?? "-1").localeCompare(next.highlightedTopicId ?? "-1") != 0) {
         return false;
     }
-    if (prev.appInfo.id != next.appInfo.id) {
+    if (prev.appInfo.appId != next.appInfo.appId) {
         return false;
     }
     if (prev.priority != next.priority) {

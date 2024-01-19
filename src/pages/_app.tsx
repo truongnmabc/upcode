@@ -2,15 +2,15 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Fragment, useEffect } from "react";
 import isMobileFunctionsWithUserAgent from "@/utils/isMobileFunctionsWithUserAgent";
 import getCountryAPI from "@/utils/getCountryAPI";
-// import { Provider } from "react-redux";
+import { Provider } from "react-redux";
 import mediaQuery from "css-mediaquery";
 import "../styles/index.css";
 import { wrapper } from "@/redux/store";
-function App(props: any) {
-    // function App({ Component, ...rest }: any) {
-    // const { store, props } = wrapper.useWrappedStore(rest);
-    const { Component, pageProps, deviceType } = props;
-    // const { pageProps, deviceType } = props;
+// function App(props: any) {
+function App({ Component, ...rest }: any) {
+    const { store, props } = wrapper.useWrappedStore(rest);
+    // const { Component, pageProps, deviceType } = props;
+    const { pageProps, deviceType } = props;
 
     const ssrMatchMedia = (query: any) => ({
         matches: mediaQuery.match(query, {
@@ -57,13 +57,13 @@ function App(props: any) {
     }, []);
 
     return (
-        // <Provider store={store}>
-        <Fragment>
-            <ThemeProvider theme={theme}>
-                <Component {...pageProps} />
-            </ThemeProvider>
-        </Fragment>
-        // </Provider>
+        <Provider store={store}>
+            <Fragment>
+                <ThemeProvider theme={theme}>
+                    <Component {...pageProps} />
+                </ThemeProvider>
+            </Fragment>
+        </Provider>
     );
 }
 
@@ -77,4 +77,4 @@ App.getInitialProps = async (context: any) => {
         deviceType,
     };
 };
-export default wrapper.withRedux(App);
+export default App;

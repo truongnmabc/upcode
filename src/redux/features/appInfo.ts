@@ -23,7 +23,6 @@ export const appInfoSlice = createSlice({
         setAppInfo: (state, action: PayloadAction<IAppInfo>) => {
             if (action.payload) {
                 let appInfo = action.payload;
-                console.log("setAppInfo", appInfo);
                 state.appInfo = new AppInfo(appInfo);
             }
         },
@@ -33,7 +32,6 @@ export const appInfoSlice = createSlice({
             if (action["payload"]) {
                 let appInfo = action["payload"]["appInfoReducer"]["appInfo"];
                 state.appInfo = new AppInfo(appInfo);
-                console.log(REHYDRATE, appInfo);
             }
             return state;
         });

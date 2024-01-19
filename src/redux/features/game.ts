@@ -5,9 +5,6 @@ import { IChoice } from "@/models/Choice";
 import Progress from "@/models/Progress";
 
 const DEFAULT_TIME_TEST = 0;
-export interface ICardState {
-    mapTopicQuestions: { [key: string]: Question[] };
-}
 export class GameState {
     id: string; // version cũ là id có thành phần level và appId | vesion mới thì k có cái đó mà chỉ còn mỗi studyId thôi ; bổ sung thêm -[level] cho topic
     answeredQuestionIds: number[]; // dùng để check xem câu hỏi đã được trả lời hay chưa (trong cùng 1 lần làm - trường hợp full test có thể chọn lại đáp án khác được) để đặt event tracking
@@ -211,4 +208,8 @@ export const gameSlice = createSlice({
     },
 });
 
+export const getNumOfCorrectAnswer = (questions: Question[]) => {
+    let numOfCorrectAnswer = questions.filter((q) => q.questionStatus == Config.QUESTION_ANSWERED_CORRECT).length;
+    return numOfCorrectAnswer;
+};
 export default gameSlice.reducer;

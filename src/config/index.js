@@ -12,5 +12,6 @@ class Config {
     static QUESTION_SELECTED = 4;
 
     static GAME_STATUS_TESTING = 0;
+    static GAME_STATUS_PASSED = 4;
 }
 export default Config;
