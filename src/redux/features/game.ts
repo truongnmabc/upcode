@@ -169,7 +169,6 @@ export const getStudyData = createAsyncThunk(
         let topics: ITopic[] = state.topicReducer.list;
         let mapTopicQuestions: Map<string, Question[]> = state.cardReducer.mapTopicQuestions;
         let appInfo: IAppInfo = state.appInfoReducer.appInfo;
-        console.log("dcmmmmm", appInfo);
         let tests: ITestInfo[] = state.testReducer.list;
         let lisGameStates: GameState[] = state.listGameReducer.games;
         // phải check xem đã tồn tại dữ liệu chưa thì mới gọi api (vđề là nếu dữ liệu có thay đổi thì không biết được)
@@ -188,7 +187,6 @@ export const getStudyData = createAsyncThunk(
                 let topic_tag = "";
                 let level_tag = "";
                 let forceLoad = false;
-                console.log(appInfo.appShortName);
                 let branchTopic = listAppTopics.find((app) => app.appName === appInfo.appShortName).topics;
                 branchTopic = branchTopic.filter((t) => t.isBranch);
                 let isBranch = branchTopic.find((t) => t.url === slug);
@@ -405,7 +403,6 @@ export const gameSlice = createSlice({
             .addCase(getStudyData.pending, (state) => {
                 state.isLoadedStudyData = false;
                 console.log("Pending");
-
                 return state;
             })
             .addCase(getStudyData.fulfilled, (state) => {

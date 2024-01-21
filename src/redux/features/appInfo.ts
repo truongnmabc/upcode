@@ -25,6 +25,7 @@ export const appInfoSlice = createSlice({
                 let appInfo = action.payload;
                 state.appInfo = new AppInfo(appInfo);
             }
+            return state;
         },
     },
     extraReducers: (builder) => {
