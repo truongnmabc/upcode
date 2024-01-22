@@ -1,4 +1,5 @@
 // import dataApp from "../../data/dataCDL.json";
+import Question from "@/models/Question";
 import { isProduction, isWebASVAB } from "../config/config_web";
 import { callApi } from "../services/index";
 export async function readFileAppFromGoogleStorage(appKey: string) {
@@ -43,6 +44,7 @@ export async function getTopicQuestionsFromGoogleStorage(appShortName: string, t
 
         return data;
     } catch (error) {
+        return [];
         console.log("getTopicQuestionsFromGoogleStorage error");
     }
 }

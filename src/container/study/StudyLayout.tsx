@@ -19,7 +19,7 @@ const StudyLayout = ({
     listTopics: ITopic[];
     contentData: IWebData;
 }) => {
-    const gameState: GameState = useSelector((state: AppState) => state.gameReducer);
+    const gameState: GameState = useSelector((state: AppState) => state.gameReducer.game);
     const isDesktop = useMediaQuery("(min-width:769px)");
     return (
         <div className="use-background">

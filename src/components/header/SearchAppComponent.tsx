@@ -83,8 +83,6 @@ const SearchAppComponent = ({ listAppInfos, isDesktop }: { listAppInfos: IAppInf
                 onChange={(e) => {
                     let input = e.currentTarget.value;
                     handleSearchInput(input);
-                    console.log("dcm");
-
                     onFocusSearch(input);
                 }}
                 onKeyDown={(e) => {

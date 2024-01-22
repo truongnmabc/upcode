@@ -4,17 +4,15 @@ import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
 import Question from "../../models/Question";
 import QuestionLayout from "../../container/question/QuestionLayout";
 // import * as ga from "../../lib/ga";
-import { useEffect } from "react";
 import Config from "../../config";
 import { isMathJaxContent } from "../../utils/v4_question";
 import Topic, { ITopic } from "../../models/Topic";
-import { useDispatch } from "react-redux";
 import convertToJSONObject from "@/utils/convertToJSONObject";
 import { GameState } from "@/redux/features/game";
 import StoreProvider from "@/redux/StoreProvider";
 import { getQuestionDataApi, readFileAppFromGoogleStorage } from "@/services/importAppData";
-import { getTopicByParentIdSuccess } from "@/redux/features/topic";
 import { isParentApp } from "@/config/config_web";
+import IWebData from "@/types/webData";
 const QuestionPage = ({
     appInfo,
     question,
@@ -34,17 +32,7 @@ const QuestionPage = ({
     topics: ITopic[];
     listAppInfos: IAppInfo[];
 }) => {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        // ga.event({
-        //     action: "users_exclude_blog",
-        //     params: { from: window.location.href },
-        // });
-        if (topics.length > 0) {
-            // cẩn thận điều kiện
-            dispatch(getTopicByParentIdSuccess(topics)); // chỉ là để update vào redux thôi
-        }
-    }, []);
+    const webData: IWebData = { topics: topics };
     return (
         <>
             <SEO
@@ -55,7 +43,7 @@ const QuestionPage = ({
                     question.question + ", " + question.choices.map((c) => c.content).join(", ") + ", " + question.explanation
                 }
             ></SEO>
-            <StoreProvider appInfo={appInfo} />
+            <StoreProvider appInfo={appInfo} webData={webData} />
             <QuestionLayout
                 appInfo={appInfo}
                 anchorText={anchorText}

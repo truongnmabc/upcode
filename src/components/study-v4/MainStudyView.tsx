@@ -2,9 +2,8 @@ import "./MainStudyView.scss";
 import { GameState, getNumOfCorrectAnswer } from "../../redux/features/game";
 import { IAppInfo } from "../../models/AppInfo";
 import { IChoice } from "../../models/Choice";
-// import { nextQuestion, onChooseAnswer, onGameSubmitted } from "../../redux/actions/game.action";
 import { TextContentType } from "../../utils/v4_question";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 // import { useEffect } from "react";
 // import * as ga from "../../lib/ga";
 import ChoicesPanelV4 from "./ChoicesPanelV4";
@@ -13,16 +12,19 @@ import dynamic from "next/dynamic";
 import QuestionMultipleChoiceV4 from "./QuestionMultipleChoiceV4";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import V4QuestionContent from "./V4QuestionContent";
+import { nextQuestion, onChooseAnswer, onGameSubmitted } from "@/redux/reporsitory/game.repository";
+
 const CancelRoundedIcon = dynamic(() => import("@mui/icons-material/CancelRounded"));
 const CheckCircleRoundedIcon = dynamic(() => import("@mui/icons-material/CheckCircleRounded"));
 const CountDownV4 = dynamic(() => import("./CountDownV4"));
 const ErrorRoundedIcon = dynamic(() => import("@mui/icons-material/ErrorRounded"));
 const InfoIcon = dynamic(() => import("../icon/InfoIcon"));
 const V4CircleProgress = dynamic(() => import("../v4-material/V4CircleProgress"));
+
 const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: IAppInfo }) => {
     let currentQuestion = gameState.currentQuestion;
     const isDesktop = useMediaQuery("(min-width:769px)");
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     let thisQuestionIsDone =
         currentQuestion.questionStatus == Config.QUESTION_ANSWERED_CORRECT ||
         currentQuestion.questionStatus == Config.QUESTION_ANSWERED_INCORRECT;
@@ -58,7 +60,7 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
         //         context_study_id: gameState.id,
         //     },
         // });
-        // dispatch(onChooseAnswer(choice));
+        dispatch(onChooseAnswer(choice));
     };
 
     return (
@@ -212,11 +214,11 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                                     onClick={(e) => {
                                         window.scrollTo({ top: 0, behavior: "smooth" });
                                         if (isLastQuestion) {
-                                            // dispatch(onGameSubmitted());
+                                            dispatch(onGameSubmitted());
                                             // chọn đáp án là xử lý xong hết rồi đến đây chỉ việc chuyển sang trang kết quả thôi
                                         } else {
                                             collapseParagraph(true);
-                                            // dispatch(nextQuestion(gameState));
+                                            dispatch(nextQuestion(gameState));
                                         }
                                     }}
                                 >

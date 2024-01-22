@@ -4,9 +4,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useStore } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { setAppInfo } from "./features/appInfo";
-import { getStudyData } from "./features/game";
 import { getTestSuccess } from "./features/test";
 import { getTopicByParentIdSuccess } from "./features/topic";
+import { getStudyData } from "./reporsitory/game.repository";
 
 /**
 // những action nào phải gọi ngay khi vào trang thì phải gọi ở trong này mới có tác dụng (vì persist đc khởi tạo ở client), gọi trong này để persist/HYDRATE được gọi đầu tiên rồi mới đến các action khác
@@ -37,17 +37,9 @@ const MyProvider = ({ children, appInfo, webData }: { children?: React.ReactNode
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setAppInfo(appInfo));
-    }, [dispatch]);
-    if (!!webData) return <LayoutChild webData={webData}>{children}</LayoutChild>;
-    return <>{children}</>;
-};
-
-const LayoutChild = ({ children, webData }: { children?: React.ReactNode; webData?: IWebData }) => {
-    const dispatch = useDispatch();
-    useEffect(() => {
         if (!!webData.type) dispatch(getStudyData(webData));
         if (!!webData.tests) dispatch(getTestSuccess(webData.tests));
         if (!!webData.topics) dispatch(getTopicByParentIdSuccess(webData.topics)); // chỉ là để update vào redux thôi
-    }, [dispatch]);
+    }, []);
     return <>{children}</>;
 };

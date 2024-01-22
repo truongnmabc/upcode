@@ -1,18 +1,16 @@
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import { useState } from "react";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Config from "../../config";
-// import { onGameSubmitted } from "../../redux/actions/game.action";
-
 import CountDownV4 from "./CountDownV4";
 // import * as ga from "../../lib/ga";
 import "./HeaderStudyV4.scss";
-// import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import MySwipeDownDrawer from "../v4-material/MySwipeDownDrawer";
 import { GameState } from "@/redux/features/game";
+import { onGameSubmitted } from "@/redux/reporsitory/game.repository";
 
 const HeaderStudyV4 = ({ gameState }: { gameState: GameState }) => {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const [openDrawer, setOpendrawer] = useState(false);
 
     const handleExitStudy = (event: "submit" | "exit") => {
@@ -25,7 +23,7 @@ const HeaderStudyV4 = ({ gameState }: { gameState: GameState }) => {
             //     action: "drawer_submit_mobile",
             //     params: { from: window.location.href },
             // });
-            // dispatch(onGameSubmitted());
+            dispatch(onGameSubmitted());
         }
     };
     return (

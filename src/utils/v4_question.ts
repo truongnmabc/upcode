@@ -73,7 +73,6 @@ const genImageTag = (str: string, bucket: string, folder = "") => {
 
 export const formatTextContent = (content: string, bucket: string, folder = "") => {
     let images = getImageFromString(content);
-    // console.log("images ", images);
     let newImages = [];
     for (const image of images) {
         if (!newImages.includes(image)) {

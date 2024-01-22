@@ -34,7 +34,8 @@ const StudyPage = ({
     descriptionSEO: string;
     keywordSEO: string;
 }) => {
-    const listTopics: ITopic[] = useAppSelector((state: AppState) => state.topicReducer.list);
+    const _listTopics: ITopic[] = useAppSelector((state: AppState) => state.topicReducer.list);
+    const listTopics = _listTopics.map((t) => t);
     const router = useRouter();
     useEffect(() => {
         // if (window) {

@@ -1,10 +1,10 @@
 import { GameState } from "../../redux/features/game";
-// import { useDispatch } from "react-redux";
-// import { goToQuestion } from "../../redux/actions/game.action";
+import { useDispatch } from "react-redux";
 import Config from "../../config";
 import Question from "../../models/Question";
 import IWebData from "@/types/webData";
 import "./AnswerSheet.scss";
+import { goToQuestion } from "@/redux/reporsitory/game.repository";
 
 const createTempData = (size: number) => {
     return Array.apply(null, Array(size)).map((t) => ({ questionStatus: Config.QUESTION_NOT_ANSWERED }));
@@ -13,7 +13,7 @@ const AnswerSheet = ({ gameState, contentData }: { gameState: GameState; content
     const isFinish = gameState.isFinish;
     let isTest = contentData.slug.includes("full-length") || !!contentData.isBranch;
     let questions = gameState.questions.length > 0 ? gameState.questions : createTempData(isTest ? 135 : 10);
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     let maximumQuestionIndexIsAnswered = 0;
     if (gameState.gameType == Config.TEST_GAME) {
         for (let q of gameState.questions) {
@@ -65,7 +65,7 @@ const AnswerSheet = ({ gameState, contentData }: { gameState: GameState; content
                                     if (index < maximumQuestionIndexIsAnswered) {
                                         if (index != gameState.indexActive && !isFinish) {
                                             // không cho bấm vào câu hiện tại đang làm
-                                            // dispatch(goToQuestion(index));
+                                            dispatch(goToQuestion(index));
                                         }
                                     }
                                 }

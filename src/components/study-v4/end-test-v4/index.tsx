@@ -2,7 +2,6 @@ import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRound
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useDispatch, useSelector } from "react-redux";
 import { IAppInfo } from "../../../models/AppInfo";
-// import { onRestartGame } from "../../../redux/actions/game.action";
 import DownloadAppEndTest from "./DownloadAppEndTest";
 import ReviewAnswer from "./ReviewAnswer";
 // import * as ga from "../../../lib/ga";
@@ -13,7 +12,8 @@ import { SYNC_TYPE } from "../../../config/config_sync";
 import "./index.scss";
 import TargetIcon from "../../icon/TargetIcon";
 import AppState from "@/redux/appState";
-import { GameState, getStudyData } from "@/redux/features/game";
+import { GameState } from "@/redux/features/game";
+import { getStudyData, onRestartGame } from "@/redux/reporsitory/game.repository";
 
 const getDoneTestText = (isPass?: boolean, endLevelView?: string) => {
     const TITLE_PASSED = "Such an excellent performance";
@@ -163,7 +163,7 @@ const EndTestButton = ({
                         //     action: levelTag.includes("level") ? "restart_level" : "click_restart_test",
                         //     params: { from: window.location.href, to: levelTag },
                         // });
-                        // dispatch(onRestartGame());
+                        dispatch(onRestartGame());
                     }}
                 >
                     {levelTag.includes("level") ? "Restart Level" : "Restart Test"}

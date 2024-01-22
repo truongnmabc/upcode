@@ -3,7 +3,7 @@ import { APP_SHORT_NAME } from "../../config_app";
 // import * as ga from "../../lib/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
-import { GameState, getNumOfCorrectAnswer, getStudyData } from "../../redux/features/game";
+import { GameState, getNumOfCorrectAnswer } from "../../redux/features/game";
 import TargetIcon from "../icon/TargetIcon";
 import "./GridTopic.scss";
 import { getGameProgress, getHighhestLevelOfTopicBePassedSequentially } from "../../utils/v4_study";
@@ -12,6 +12,7 @@ import { memo } from "react";
 import { render } from "react-dom";
 import getRawTopicsData from "../../utils/getRawTopicsData";
 import AppState from "@/redux/appState";
+import { getStudyData } from "@/redux/reporsitory/game.repository";
 
 const RANDOM_COLORS = [
     "#30749F",
@@ -74,9 +75,13 @@ const GridTopic = ({
         // để hiển thị link và tên topic cho SEO
         topics = getRawTopicsData(appInfo.appShortName);
     }
-    topics.sort((a, b) => {
-        return a.name.localeCompare(b.name);
-    });
+    try {
+        topics.sort((a, b) => {
+            return a.name.localeCompare(b.name);
+        });
+    } catch (e) {
+        console.log(e);
+    }
     topics = topics.map((t, i) => ({ ...t, color: RANDOM_COLORS[i] }));
     topics.sort((a, b) => {
         if (highlightedTopicId.includes(a.id + "")) return -1; // đưa topic đang làm lên đầu tiên

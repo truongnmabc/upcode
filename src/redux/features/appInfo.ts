@@ -1,5 +1,5 @@
 import { AppInfo, IAppInfo } from "../../models/AppInfo";
-import { PayloadAction, createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { REHYDRATE } from "redux-persist";
 
 export interface IAppInfoReducer {
@@ -8,8 +8,6 @@ export interface IAppInfoReducer {
     error: any;
     appInfos: IAppInfo[];
 }
-
-// const setAppInfo = createAction<IAppInfo>("appInfo/setAppInfo");
 
 export const appInfoSlice = createSlice({
     name: "appInfo",
@@ -25,7 +23,6 @@ export const appInfoSlice = createSlice({
                 let appInfo = action.payload;
                 state.appInfo = new AppInfo(appInfo);
             }
-            return state;
         },
     },
     extraReducers: (builder) => {
@@ -34,7 +31,6 @@ export const appInfoSlice = createSlice({
                 let appInfo = action["payload"]["appInfoReducer"]["appInfo"];
                 state.appInfo = new AppInfo(appInfo);
             }
-            return state;
         });
     },
 });

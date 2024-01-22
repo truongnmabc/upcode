@@ -42,7 +42,7 @@ export const makeStore = () => {
             storage: defaultStorage,
             stateReconciler: autoMergeLevel2,
             transform: [encryptor],
-            whitelist: ["appInfoReducer", "cardReducer", "listGameReducer", "testReducer", "topicReducer"], // các reducer được tự động load dữ liệu khi vào trang
+            whitelist: ["appInfoReducer", "cardReducer", "listGameReducer", "testReducer", "topicReducer", "timeLeftReducer"], // các reducer được tự động load dữ liệu khi vào trang
         };
         const persistedReducer = persistReducer(persistConfig, reducers);
         const store = configureStore({

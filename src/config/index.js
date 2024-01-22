@@ -12,6 +12,7 @@ class Config {
     static QUESTION_ANSWERED_SKIP = 3;
     static QUESTION_SELECTED = 4;
 
+    static GAME_STATUS_FAILED = -1;
     static GAME_STATUS_TESTING = 0;
     static GAME_STATUS_PASSED = 4;
 

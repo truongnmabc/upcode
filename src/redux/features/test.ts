@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { REHYDRATE } from "redux-persist";
 import TestInfo from "@/models/TestInfo";
@@ -11,9 +11,9 @@ export const testSlice = createSlice({
     name: "test",
     initialState: { list: [] },
     reducers: {
-        getTestSuccess: (state, action) => {
-            if (action.payload.testInfos) {
-                action.payload.testInfos.forEach((el) => {
+        getTestSuccess: (state, action: PayloadAction<TestInfo[]>) => {
+            if (action.payload) {
+                action.payload.forEach((el) => {
                     let testInfo = new TestInfo(el);
                     let index = state.list.findIndex((t) => t.id == testInfo.id);
                     if (index == -1) {
@@ -22,9 +22,6 @@ export const testSlice = createSlice({
                         state.list[index] = testInfo;
                     }
                 });
-                if (action.payload.forceNew) {
-                    state.list = [...state.list];
-                }
             }
         },
     },
@@ -42,7 +39,6 @@ export const testSlice = createSlice({
                     state.list = newList;
                 }
             }
-            return state;
         });
     },
 });

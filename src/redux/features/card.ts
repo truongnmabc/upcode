@@ -3,41 +3,41 @@ import { REHYDRATE } from "redux-persist";
 import Question from "../../models/Question";
 
 export interface ICardState {
-    mapTopicQuestions: Map<string, Question[]>;
+    mapTopicQuestions: { [key: string]: Question[] };
+    abc: boolean;
 }
 
 export const cardSlice = createSlice({
     name: "card",
     initialState: {
-        mapTopicQuestions: new Map<string, Question[]>(),
+        mapTopicQuestions: {},
+        abc: false,
     },
     reducers: {
         getQuestionsDataSuccess: (state, action: PayloadAction<{ parentId: string; questions: Question[] }>) => {
-            if (action["payload"]) {
-                let payload = action["payload"];
-                let questions = payload.questions;
-                let parentId = payload.parentId;
-                questions = questions.map((q) => new Question(q));
-                console.log(questions, parentId);
-                state.mapTopicQuestions.set(parentId, questions); // gán đè luôn, chú ý chỗ này!!
+            try {
+                if (action["payload"]) {
+                    let payload = action["payload"];
+                    let questions = payload.questions;
+                    let parentId = payload.parentId;
+                    questions = questions.map((q) => new Question(q));
+                    if (state.mapTopicQuestions) state.mapTopicQuestions[parentId] = questions; // gán đè luôn, chú ý chỗ này!! // gán đè luôn, chú ý chỗ này!!
+                }
+            } catch (e) {
+                console.log("error: ", e);
             }
-            return state;
         },
     },
     extraReducers: (builder) => {
         builder.addCase(REHYDRATE, (state, action) => {
             if (action["payload"]) {
                 let mapTopicQuestionsData = action["payload"]["cardReducer"]?.mapTopicQuestions ?? {};
-                let _mapTopicQuestionsData = new Map<string, Question[]>();
+                let _mapTopicQuestionsData = {};
                 for (let id in mapTopicQuestionsData) {
-                    _mapTopicQuestionsData.set(
-                        id + "",
-                        mapTopicQuestionsData[id].map((item) => new Question(item))
-                    );
+                    _mapTopicQuestionsData[id + ""] = mapTopicQuestionsData[id].map((item) => new Question(item));
                 }
                 state.mapTopicQuestions = _mapTopicQuestionsData;
             }
-            return state;
         });
     },
 });
