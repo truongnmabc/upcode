@@ -1,6 +1,6 @@
 import { IAppInfo } from "../../models/AppInfo";
 import { ITestInfo } from "../../models/TestInfo";
-// import * as ga from "../../lib/ga";
+import * as ga from "../../services/ga";
 import { APP_SHORT_NAME } from "../../config_app";
 import "./TestBanner.scss";
 const TestBanner = ({ appInfo, test }: { appInfo: IAppInfo; test: ITestInfo }) => {
@@ -11,12 +11,12 @@ const TestBanner = ({ appInfo, test }: { appInfo: IAppInfo; test: ITestInfo }) =
             style={{ textDecoration: "none" }}
             onClick={(e) => {
                 e.preventDefault(); // viết như này để ga được thực hiện
-                // ga.event({
-                //     action: "click_full_test",
-                //     params: {
-                //         from: window.location.href,
-                //     },
-                // });
+                ga.event({
+                    action: "click_full_test",
+                    params: {
+                        from: window.location.href,
+                    },
+                });
                 window.location.href = `/full-length-${APP_SHORT_NAME}-practice-test`;
             }}
         >

@@ -4,8 +4,7 @@ import { IAppInfo } from "../../models/AppInfo";
 import { IChoice } from "../../models/Choice";
 import { TextContentType } from "../../utils/v4_question";
 import { useDispatch } from "react-redux";
-// import { useEffect } from "react";
-// import * as ga from "../../lib/ga";
+import * as ga from "../../services/ga";
 import ChoicesPanelV4 from "./ChoicesPanelV4";
 import Config from "../../config";
 import dynamic from "next/dynamic";
@@ -50,16 +49,16 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
         }
     };
     const onChoiceSelected = (choice: IChoice) => {
-        // ga.event({
-        //     action: "v4_study_users_answer_quiz",
-        //     params: {
-        //         action_type: "click",
-        //         target_question_id: choice.questionId,
-        //         target_is_correct: choice.isCorrect,
-        //         context_page: gameState.gameType == Config.TEST_GAME ? "test" : "topic",
-        //         context_study_id: gameState.id,
-        //     },
-        // });
+        ga.event({
+            action: "v4_study_users_answer_quiz",
+            params: {
+                action_type: "click",
+                target_question_id: choice.questionId,
+                target_is_correct: choice.isCorrect,
+                context_page: gameState.gameType == Config.TEST_GAME ? "test" : "topic",
+                context_study_id: gameState.id,
+            },
+        });
         dispatch(onChooseAnswer(choice));
     };
 

@@ -11,6 +11,7 @@ import {
     readFileAppFromGoogleStorage,
 } from "@/services/importAppData";
 import IWebData from "@/types/webData";
+import * as ga from "../../services/ga";
 import { hasImage } from "@/utils/v4_question";
 import { getHighhestLevelOfTopicBePassedSequentially, shuffleV4 } from "@/utils/v4_study";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -355,19 +356,19 @@ const onChooseAnswer = createAsyncThunk(
 
             let answeredQuestionIds = gameState.answeredQuestionIds;
             if (!answeredQuestionIds.find((id) => id == _cQuestion.id)) {
-                // ga.event({
-                //     action: "question/user",
-                //     params: {
-                //         questionId: _cQuestion.id,
-                //     },
-                // });
-                // ga.event({
-                //     action:
-                //         gameState.gameType == Config.TEST_GAME ? "full_test_questions_per_user" : "topic_questions_per_user",
-                //     params: {
-                //         questionId: _cQuestion.id,
-                //     },
-                // });
+                ga.event({
+                    action: "question/user",
+                    params: {
+                        questionId: _cQuestion.id,
+                    },
+                });
+                ga.event({
+                    action:
+                        gameState.gameType == Config.TEST_GAME ? "full_test_questions_per_user" : "topic_questions_per_user",
+                    params: {
+                        questionId: _cQuestion.id,
+                    },
+                });
                 answeredQuestionIds.push(_cQuestion.id);
                 gameState.answeredQuestionIds = answeredQuestionIds;
             }
@@ -496,10 +497,10 @@ const nextQuestion = createAsyncThunk("game/nextQuestion", async (payload: GameS
 
 const onGameSubmitted = createAsyncThunk("game/onGameSubmitted", async (_, { getState, rejectWithValue, dispatch }) => {
     const state = getState() as AppState;
-    // ga.event({
-    //     action: "see_end_test",
-    //     params: { from: window.location.href },
-    // });
+    ga.event({
+        action: "see_end_test",
+        params: { from: window.location.href },
+    });
     let gameState = GameState.cloneGameState(state.gameReducer.game);
     try {
         const questions = gameState.questions;
@@ -530,16 +531,16 @@ const onGameSubmitted = createAsyncThunk("game/onGameSubmitted", async (_, { get
         if (totalQuestions > 0) {
             if (gameState.progress.correct < (totalQuestions * gameState.passPercent) / 100) {
                 gameState.status = Config.GAME_STATUS_FAILED;
-                // ga.event({
-                //     action: "fail_test",
-                //     params: { from: window.location.href },
-                // });
+                ga.event({
+                    action: "fail_test",
+                    params: { from: window.location.href },
+                });
             } else {
                 gameState.status = Config.GAME_STATUS_PASSED;
-                // ga.event({
-                //     action: "pass_test",
-                //     params: { from: window.location.href },
-                // });
+                ga.event({
+                    action: "pass_test",
+                    params: { from: window.location.href },
+                });
             }
         }
         dispatch(updateToListGames(gameState));

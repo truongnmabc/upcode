@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { APP_SHORT_NAME } from "../../config_app";
-// import * as ga from "../../lib/ga";
+import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import { GameState, getNumOfCorrectAnswer } from "../../redux/features/game";
@@ -110,13 +110,13 @@ const GridTopic = ({
                             }}
                             onClick={(e) => {
                                 e.preventDefault();
-                                // ga.event({
-                                //     action: "click_topic",
-                                //     params: {
-                                //         from: window.location.href,
-                                //         to: topic.tag,
-                                //     },
-                                // });
+                                ga.event({
+                                    action: "click_topic",
+                                    params: {
+                                        from: window.location.href,
+                                        to: topic.tag,
+                                    },
+                                });
                                 if (allowExpand && place == "home") {
                                     let expandComponent = document.getElementById("expand-topic-" + index);
                                     let content = document.getElementById("topic-progress-" + index);
@@ -232,12 +232,12 @@ const GridTopic = ({
                         href={`/full-length-${appInfo.appShortName}-practice-test`}
                         onClick={(e) => {
                             e.preventDefault(); // viết như này để ga được thực hiện
-                            // ga.event({
-                            //     action: "click_full_test_in_study",
-                            //     params: {
-                            //         from: window.location.href,
-                            //     },
-                            // });
+                            ga.event({
+                                action: "click_full_test_in_study",
+                                params: {
+                                    from: window.location.href,
+                                },
+                            });
                             window.location.href = `/full-length-${appInfo.appShortName}-practice-test`;
                         }}
                     >
@@ -330,13 +330,13 @@ const TopicLevelProgress = ({
                                                     let _action = "click_";
                                                     if (level.tag.includes("level")) _action += "level";
                                                     else _action = _action + level.tag.replace("-", "_") + "_round";
-                                                    // ga.event({
-                                                    //     action: _action,
-                                                    //     params: {
-                                                    //         from: window.location.href,
-                                                    //         to: level.tag,
-                                                    //     },
-                                                    // });
+                                                    ga.event({
+                                                        action: _action,
+                                                        params: {
+                                                            from: window.location.href,
+                                                            to: level.tag,
+                                                        },
+                                                    });
                                                     // chọn level trong cùng 1 topic (không thay đổi path name nên không load lại trang) nên cần dispatch lại action này
                                                     dispatchAction({
                                                         slug: _href.slice(1, _href.length), // bỏ dấu / vì trong này đang không xử lý dấu đó

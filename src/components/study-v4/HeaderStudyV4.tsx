@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Config from "../../config";
 import CountDownV4 from "./CountDownV4";
-// import * as ga from "../../lib/ga";
+import * as ga from "../../services/ga";
 import "./HeaderStudyV4.scss";
 import MySwipeDownDrawer from "../v4-material/MySwipeDownDrawer";
 import { GameState } from "@/redux/features/game";
@@ -19,10 +19,10 @@ const HeaderStudyV4 = ({ gameState }: { gameState: GameState }) => {
             window.location.href = "/";
         }
         if (event == "submit") {
-            // ga.event({
-            //     action: "drawer_submit_mobile",
-            //     params: { from: window.location.href },
-            // });
+            ga.event({
+                action: "drawer_submit_mobile",
+                params: { from: window.location.href },
+            });
             dispatch(onGameSubmitted());
         }
     };

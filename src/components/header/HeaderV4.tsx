@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { APP_SHORT_NAME } from "../../config_app";
-// import * as ga from "../../lib/ga";
+import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import "./HeaderV4.scss";
 import MySwipeableDrawer from "../v4-material/MySwipeableDrawer";
@@ -39,12 +39,12 @@ const HeaderV4 = ({
                     className="header-menu-v4"
                     onClick={() => {
                         setOpenMenuDrawer(true);
-                        // ga.event({
-                        //     action: "click_menu_header",
-                        //     params: {
-                        //         from: window.location.href,
-                        //     },
-                        // });
+                        ga.event({
+                            action: "click_menu_header",
+                            params: {
+                                from: window.location.href,
+                            },
+                        });
                     }}
                 >
                     <span>Menu</span>
@@ -64,12 +64,12 @@ const HeaderV4 = ({
                                 href={`/full-length-${appInfo.appShortName}-practice-test`}
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    // ga.event({
-                                    //     action: "click_menu_full_test",
-                                    //     params: {
-                                    //         from: window.location.href,
-                                    //     },
-                                    // });
+                                    ga.event({
+                                        action: "click_menu_full_test",
+                                        params: {
+                                            from: window.location.href,
+                                        },
+                                    });
                                     window.location.href = `/full-length-${appInfo.appShortName}-practice-test`;
                                 }}
                             >
@@ -107,13 +107,13 @@ const HeaderV4 = ({
                                                 href={`/${APP_SHORT_NAME}-${topic.tag}-practice-test`}
                                                 onClick={(e) => {
                                                     e.preventDefault();
-                                                    // ga.event({
-                                                    //     action: "click_menu_topic",
-                                                    //     params: {
-                                                    //         from: window.location.href,
-                                                    //         to: topic.tag,
-                                                    //     },
-                                                    // });
+                                                    ga.event({
+                                                        action: "click_menu_topic",
+                                                        params: {
+                                                            from: window.location.href,
+                                                            to: topic.tag,
+                                                        },
+                                                    });
                                                     window.location.href = `/${APP_SHORT_NAME}-${topic.tag}-practice-test`;
                                                 }}
                                             >

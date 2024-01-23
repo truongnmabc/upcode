@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IAppInfo } from "../../../models/AppInfo";
 import DownloadAppEndTest from "./DownloadAppEndTest";
 import ReviewAnswer from "./ReviewAnswer";
-// import * as ga from "../../../lib/ga";
+import * as ga from "../../../services/ga";
 import { getGameProgress, getHighhestLevelOfTopicBePassedSequentially } from "../../../utils/v4_study";
 import { ITopic } from "../../../models/Topic";
 import { APP_SHORT_NAME } from "../../../config_app";
@@ -159,10 +159,10 @@ const EndTestButton = ({
                 <button
                     className={"btn v4-border-radius v4-button-animtaion " + (nextLevelHref ? "btn-theme-1" : "btn-theme-2")}
                     onClick={() => {
-                        // ga.event({
-                        //     action: levelTag.includes("level") ? "restart_level" : "click_restart_test",
-                        //     params: { from: window.location.href, to: levelTag },
-                        // });
+                        ga.event({
+                            action: levelTag.includes("level") ? "restart_level" : "click_restart_test",
+                            params: { from: window.location.href, to: levelTag },
+                        });
                         dispatch(onRestartGame());
                     }}
                 >
@@ -172,10 +172,10 @@ const EndTestButton = ({
                     <button
                         className="next-level btn v4-border-radius v4-button-animtaion"
                         onClick={() => {
-                            // ga.event({
-                            //     action: "next_level",
-                            //     params: { from: window.location.href, to: nextLevelHref },
-                            // });
+                            ga.event({
+                                action: "next_level",
+                                params: { from: window.location.href, to: nextLevelHref },
+                            });
                             directHref(nextLevelHref);
                             window.scrollTo({ top: 0 });
                         }}
@@ -190,10 +190,10 @@ const EndTestButton = ({
                         <button
                             className="final-test btn v4-border-radius v4-button-animtaion"
                             onClick={() => {
-                                // ga.event({
-                                //     action: "click_final_test_end",
-                                //     params: { from: window.location.href, to: finalTestHref },
-                                // });
+                                ga.event({
+                                    action: "click_final_test_end",
+                                    params: { from: window.location.href, to: finalTestHref },
+                                });
                                 directHref(finalTestHref);
                             }}
                         >

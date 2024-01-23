@@ -1,6 +1,6 @@
 import { ANDROID_STORE_PATH, IOS_STORE_PATH } from "../../config/config_web";
 import { IAppInfo } from "../../models/AppInfo";
-// import * as ga from "../../lib/ga";
+import * as ga from "../../services/ga";
 import "./DownloadAppV4.scss";
 const DownloadAppV4 = ({
     appInfo,
@@ -26,14 +26,14 @@ const DownloadAppV4 = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
-                    // ga.event({
-                    //     action: "click_app_store",
-                    //     params: {},
-                    // });
-                    // ga.event({
-                    //     action: place + "_click_app_store",
-                    //     params: {},
-                    // });
+                    ga.event({
+                        action: "click_app_store",
+                        params: {},
+                    });
+                    ga.event({
+                        action: place + "_click_app_store",
+                        params: {},
+                    });
                 }}
             >
                 <img
@@ -50,14 +50,14 @@ const DownloadAppV4 = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
-                    // ga.event({
-                    //     action: "click_gg_store",
-                    //     params: {},
-                    // });
-                    // ga.event({
-                    //     action: place + "_click_gg_store",
-                    //     params: {},
-                    // });
+                    ga.event({
+                        action: "click_gg_store",
+                        params: {},
+                    });
+                    ga.event({
+                        action: place + "_click_gg_store",
+                        params: {},
+                    });
                 }}
             >
                 <img

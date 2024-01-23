@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import Config from "../../config";
 import { SYNC_TYPE } from "../../config/config_sync";
 import listAppTopic from "../../data/topic-landing-page.json";
-// import * as ga from "../../lib/ga";
+import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import "./StudyView.scss";
@@ -108,13 +108,13 @@ const StudyView = ({
                                                 href={t.url}
                                                 onClick={(e) => {
                                                     e.preventDefault();
-                                                    // ga.event({
-                                                    //     action: "click_menu_branch_test",
-                                                    //     params: {
-                                                    //         from: window.location.href,
-                                                    //         to: t.learnUrl,
-                                                    //     },
-                                                    // });
+                                                    ga.event({
+                                                        action: "click_menu_branch_test",
+                                                        params: {
+                                                            from: window.location.href,
+                                                            to: t.learnUrl,
+                                                        },
+                                                    });
                                                     window.location.href = t.url;
                                                 }}
                                             >
@@ -127,7 +127,6 @@ const StudyView = ({
                         </div>
                     )}
                     <div className="v4-main-study-content">
-                        {/* {!isFinish && !isDesktop && <HeaderStudyV4 gameState={gameState} />} */}
                         <h1
                             className={"v4-study-title v4-font-semi-bold " + (isFinish ? "" : "unfinish")}
                             onClick={() => {

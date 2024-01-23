@@ -1,11 +1,10 @@
-// import dynamic from "next/dynamic";
 import { useEffect } from "react";
 import SEO from "../../components/seo/SEO";
 import { SYNC_TYPE } from "../../config/config_sync";
 import { isWebASVAB } from "../../config/config_web";
 import StudyLayout from "../../container/study/StudyLayout";
 import listAppTopics from "../../data/topic-landing-page.json";
-// import * as ga from "../../lib/ga";
+import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import { getAppInfo } from "../../utils/getAppInfo";
@@ -39,12 +38,12 @@ const StudyPage = ({
     const listTopics = _listTopics.map((t) => t);
     const router = useRouter();
     useEffect(() => {
-        // if (window) {
-        //     ga.event({
-        //         action: "users_exclude_blog",
-        //         params: { from: window.location.href },
-        //     });
-        // }
+        if (window) {
+            ga.event({
+                action: "users_exclude_blog",
+                params: { from: window.location.href },
+            });
+        }
     }, []);
     if (isWebASVAB()) {
         let webData = {

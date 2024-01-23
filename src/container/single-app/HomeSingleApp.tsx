@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import { ITestInfo } from "../../models/TestInfo";
-// import * as ga from "../../lib/ga";
+import * as ga from "../../services/ga";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Layout2 from "@/components/layout/layout-2/Layout2";
 import TestBanner from "@/components/homepage/TestBanner";
@@ -22,18 +22,18 @@ const HomeSingleApp = ({
     homeSeoContent: any;
     tests: ITestInfo[];
 }) => {
-    // useEffect(() => {
-    //     if (window) {
-    //         ga.event({
-    //             action: "home_users",
-    //             params: { from: window.location.href },
-    //         });
-    //         ga.event({
-    //             action: "users_exclude_blog",
-    //             params: { from: window.location.href },
-    //         });
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (window) {
+            ga.event({
+                action: "home_users",
+                params: { from: window.location.href },
+            });
+            ga.event({
+                action: "users_exclude_blog",
+                params: { from: window.location.href },
+            });
+        }
+    }, []);
     const isDesktop = useMediaQuery("(min-width:769px)");
     return (
         <Layout2 appInfo={appInfo} listTopics={listTopics}>
