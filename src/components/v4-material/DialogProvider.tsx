@@ -79,8 +79,9 @@ const MyDialog = ({ open, onClose, children }: { open: boolean; onClose: any; ch
     }, [open]);
     React.useEffect(() => {
         if (_open) {
-            document.getElementById("__next").style.height = "-webkit-fill-available"; // chu y cho nay
-            document.getElementById("__next").style.overflow = "hidden";
+            let __next = document.getElementById("__next");
+            __next.style.height = "-webkit-fill-available"; // chu y cho nay
+            __next.style.overflow = "hidden";
             document.body.style.overflow = "hidden";
             presentation.current.style.zIndex = "1200";
             setTimeout(() => {
