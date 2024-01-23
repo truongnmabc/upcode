@@ -21,13 +21,13 @@ const Header1 = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
         let nextEle = document.getElementById("__next");
         if (!!nextEle) {
             if (focusMenu || focusSearch) {
-                nextEle.style.height = "-webkit-fill-available";
+                // nextEle.style.height = "-webkit-fill-available";
                 nextEle.style.overflow = "hidden";
-                document.body.style.overflow = "hidden";
+                // document.body.style.overflow = "hidden";
             } else {
-                nextEle.style.height = "100%";
-                nextEle.style.overflow = "";
-                document.body.style.overflow = "unset";
+                // nextEle.style.height = "100%";
+                nextEle.style.overflow = "auto";
+                // document.body.style.overflow = "unset";
             }
         }
     }, [focusMenu, focusSearch]);

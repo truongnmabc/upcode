@@ -67,9 +67,9 @@ const MyDialog = ({ open, onClose, children }: { open: boolean; onClose: any; ch
         if (open) {
             setOpen(true);
         } else {
-            document.body.style.overflow = "unset";
-            document.getElementById("__next").style.height = "100%";
-            document.getElementById("__next").style.overflow = "";
+            // document.body.style.overflow = "unset";
+            // document.getElementById("__next").style.height = "100%";
+            document.getElementById("__next").style.overflow = "auto";
             document.getElementById("v4-presentation-dialog_blank").style.backgroundColor = "rgba(33,33,33,0)";
             setTimeout(() => {
                 if (presentation?.current?.style) presentation.current.style.zIndex = "-9999";
@@ -80,9 +80,9 @@ const MyDialog = ({ open, onClose, children }: { open: boolean; onClose: any; ch
     React.useEffect(() => {
         if (_open) {
             let __next = document.getElementById("__next");
-            __next.style.height = "-webkit-fill-available"; // chu y cho nay
+            // __next.style.height = "-webkit-fill-available"; // chu y cho nay
             __next.style.overflow = "hidden";
-            document.body.style.overflow = "hidden";
+            // document.body.style.overflow = "hidden";
             presentation.current.style.zIndex = "1200";
             setTimeout(() => {
                 document.getElementById("v4-presentation-dialog_blank").style.backgroundColor = "rgba(33,33,33,0.3)";
