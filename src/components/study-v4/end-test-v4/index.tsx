@@ -107,13 +107,13 @@ const EndTestV4 = ({
                     )}
                 </div>
 
-                {isDesktop && (
+                {isDesktop && !gameState.levelTag.includes("level") && (
                     <div id="study_review">
                         <ReviewAnswer gameState={gameState} appInfo={appInfo} />
                     </div>
                 )}
             </div>
-            {!isDesktop && (
+            {!isDesktop && !gameState.levelTag.includes("level") && (
                 <>
                     <EndTestButton
                         levelTag={gameState.levelTag}

@@ -10,7 +10,7 @@ export function renderMath(callback?: any) {
         window.MathJax.startup.defaultReady();
         window.MathJax.startup.promise.then(() => {
             console.log("MathJax initial typesetting complete");
-            if (callback) callback();
+            if (callback) callback(4);
         });
     }
 }

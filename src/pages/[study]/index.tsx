@@ -18,9 +18,10 @@ import convertToJSONObject from "@/utils/convertToJSONObject";
 import StoreProvider from "@/redux/StoreProvider";
 import { getHomeSeoContentStateApi } from "@/services/home.service";
 import { getTitle } from "@/utils";
-// const ScrollToTopArrow = dynamic(() => import("../../components/common/scroll-to-top-arrow"), {
-//     ssr: false,
-// });
+import dynamic from "next/dynamic";
+const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
+    ssr: false,
+});
 const StudyPage = ({
     appInfo,
     topic,
@@ -66,7 +67,7 @@ const StudyPage = ({
                 <StoreProvider appInfo={appInfo} webData={webData}>
                     <StudyLayout appInfo={appInfo} listTopics={listTopics} contentData={webData} />
                 </StoreProvider>
-                {/* <ScrollToTopArrow /> */}
+                <ScrollToTopArrow />
             </>
         );
     }

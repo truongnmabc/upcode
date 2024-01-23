@@ -27,7 +27,7 @@ export default function Home({
     listAppInfo,
 }: {
     listTopics?: ITopic[];
-    tests: ITestInfo[];
+    tests?: ITestInfo[];
     keywordSEO: string;
     descriptionSEO: string;
     appInfo: IAppInfo;
@@ -43,7 +43,7 @@ export default function Home({
     return (
         <>
             <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} />
-            <StoreProvider appInfo={appInfo} webData={{ tests: tests, topics: listTopics }} />
+            <StoreProvider appInfo={appInfo} webData={_isParentApp ? {} : { tests: tests, topics: listTopics }} />
             {_isParentApp ? (
                 <ParentAppLayout appInfo={appInfo} listAppInfos={listAppInfo} />
             ) : (

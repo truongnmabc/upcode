@@ -12,6 +12,7 @@ import MyContainer from "../v4-material/MyContainer";
 import { useEffect, useRef } from "react";
 import IWebData from "@/types/webData";
 import { GameState } from "@/redux/features/game";
+import DialogProvider from "../v4-material/DialogProvider";
 
 const MainStudyView = dynamic(() => import("./MainStudyView"));
 const HeaderStudyV4 = dynamic(() => import("./HeaderStudyV4"));
@@ -135,36 +136,38 @@ const StudyView = ({
                         >
                             {contentData.title}
                         </h1>
-                        {isFinish ? (
-                            <EndTestV4
-                                gameState={gameState}
-                                appInfo={appInfo}
-                                currentTopic={listTopics.find((t) => gameState.id.includes(t.id))}
-                            />
-                        ) : (
-                            <>
-                                <MainStudyView gameState={gameState} appInfo={appInfo} />
-                                <div id="v4-main-study-other-content" ref={ref}>
-                                    <StudyBannerDownloadApp
-                                        appInfo={appInfo}
-                                        isDesktop={isDesktop}
-                                        place={
-                                            gameType == Config.TEST_GAME
-                                                ? "full_test"
-                                                : gameType == Config.STUDY_GAME
-                                                ? "topic"
-                                                : ""
-                                        }
-                                    />
-                                    <div
-                                        className="v4-study-topic-seo-content v4-border-radius"
-                                        dangerouslySetInnerHTML={{
-                                            __html: (contentData?.content ?? "").replace(/\[/g, "<").replace(/\]/g, ">"),
-                                        }}
-                                    />
-                                </div>
-                            </>
-                        )}
+                        <DialogProvider>
+                            {isFinish ? (
+                                <EndTestV4
+                                    gameState={gameState}
+                                    appInfo={appInfo}
+                                    currentTopic={listTopics.find((t) => gameState.id.includes(t.id))}
+                                />
+                            ) : (
+                                <>
+                                    <MainStudyView gameState={gameState} appInfo={appInfo} />
+                                    <div id="v4-main-study-other-content" ref={ref}>
+                                        <StudyBannerDownloadApp
+                                            appInfo={appInfo}
+                                            isDesktop={isDesktop}
+                                            place={
+                                                gameType == Config.TEST_GAME
+                                                    ? "full_test"
+                                                    : gameType == Config.STUDY_GAME
+                                                    ? "topic"
+                                                    : ""
+                                            }
+                                        />
+                                        <div
+                                            className="v4-study-topic-seo-content v4-border-radius"
+                                            dangerouslySetInnerHTML={{
+                                                __html: (contentData?.content ?? "").replace(/\[/g, "<").replace(/\]/g, ">"),
+                                            }}
+                                        />
+                                    </div>
+                                </>
+                            )}
+                        </DialogProvider>
                     </div>
                 </div>
             </MyContainer>

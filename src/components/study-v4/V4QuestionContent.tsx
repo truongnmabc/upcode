@@ -1,7 +1,5 @@
 import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { memo, useEffect, useRef } from "react";
-// import ReactHtmlParser from "react-html-parser"; // cái này rất nặng
-// import { useDialog } from "../mydialog";
 import "./V4QuestionContent.scss";
 import {
     TextContentType,
@@ -13,6 +11,7 @@ import {
     isMathJaxContent,
     renderMath,
 } from "../../utils/v4_question";
+import { useDialog } from "../v4-material/DialogProvider";
 const V4QuestionContent = ({
     content,
     image = "",
@@ -41,7 +40,7 @@ const V4QuestionContent = ({
             }
             // renderMath();
         }
-        onLoaded();
+        onLoaded(3);
     }, [content]);
 
     const onLoaded = (arg?: any) => {
@@ -75,17 +74,31 @@ const ImageDialog = ({ closeDialog, url }) => {
                 padding: "16px",
             }}
         >
-            <img
-                src={url}
-                alt="image"
+            <div
                 style={{
-                    width: "100%",
-                    height: "auto",
-                    minWidth: "300px",
-                    maxWidth: "100%",
+                    width: 300,
+                    height: 0,
+                    transition: "0.2s all ease-in-out",
                     maxHeight: "calc(100% - 100px)",
+                    overflow: "hidden",
+                    maxWidth: "100%",
                 }}
-            />
+            >
+                <img
+                    src={url}
+                    alt="image"
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        minWidth: "300px",
+                    }}
+                    onLoad={(e) => {
+                        e.currentTarget.parentElement.style.height = e.currentTarget.naturalHeight + "px";
+                        e.currentTarget.parentElement.style.width = e.currentTarget.naturalWidth + "px";
+                    }}
+                />
+            </div>
+
             <button
                 style={{
                     border: "none",
@@ -116,7 +129,7 @@ const _QuestionContent = ({
     type?: string;
     bucket: string;
     place: string;
-    onLoaded: () => void;
+    onLoaded: (arg?: any) => void;
 }) => {
     // content = "A right triangle has a leg of length $3$, a second leg of length $3x − 5$, and a hypotenuse of length $5$. What is the value of $x$?";
     content = formatTextContent(content, bucket);
@@ -126,9 +139,21 @@ const _QuestionContent = ({
             // .replace(/\n/g, "<br/>")
             .replace(/\\u(....)/g, "&#x$1;");
     }
-
+    const ref = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        // https://poe.com/s/CVfILhm0ZHQ4Z61lOmjX
+        // check element is resized
+        const ele = ref.current;
+        if (ele) {
+            const resizeObserver = new ResizeObserver(onLoaded);
+            resizeObserver.observe(ele);
+            return () => {
+                resizeObserver.disconnect();
+            };
+        }
+    }, [ref.current]);
+    const [openDialog, closeDialog] = useDialog();
     if (type === TextContentType.question) {
-        // const [openDialog, closeDialog] = useDialog();
         return (
             <TextContentQuestion
                 type={type}
@@ -136,16 +161,25 @@ const _QuestionContent = ({
                 content={content}
                 image={image}
                 showImageDialog={(url) => {
-                    // openDialog({
-                    //     children: <ImageDialog closeDialog={closeDialog} url={url} />,
-                    // });
+                    openDialog({
+                        children: <ImageDialog closeDialog={closeDialog} url={url} />,
+                    });
                 }}
                 place={place}
-                onLoaded={onLoaded}
+                // onLoaded={onLoaded}
+                contentRef={ref}
             />
         );
     }
-    return <TextContent content={content} type={type} bucket={bucket} onLoaded={onLoaded} />;
+    return (
+        <TextContent
+            content={content}
+            type={type}
+            bucket={bucket}
+            //  onLoaded={onLoaded}
+            contentRef={ref}
+        />
+    );
 };
 
 const TextContent = ({
@@ -153,13 +187,15 @@ const TextContent = ({
     type,
     bucket,
     showImageDialog,
-    onLoaded, // hàm này để gọi chỗ (****)
+    // onLoaded, // hàm này để gọi chỗ (****)
+    contentRef,
 }: {
     content: string;
     type: string;
     bucket: string;
     showImageDialog?: (agr: any) => void;
-    onLoaded: (arg?: any) => void;
+    // onLoaded: (arg?: any) => void;
+    contentRef: any;
 }) => {
     let result = content;
     if (!isMathJaxContent(content) && content.split("$")?.length > 2) {
@@ -175,7 +211,7 @@ const TextContent = ({
                         size.width +
                         '" height="' +
                         size.height +
-                        '" onload="onLoaded()"/></div>' // (****) không biết viết như này có được không
+                        '"/></div>' // (****) không biết viết như này có được không
                     );
                 }
                 return str;
@@ -184,21 +220,18 @@ const TextContent = ({
     }
     return (
         <div
+            ref={contentRef}
             style={type == TextContentType.explanation ? { marginBottom: "10px" } : {}}
             className={"v4-question-text"}
             onClick={(e) => {
                 if (e.currentTarget.nodeName == "IMG") {
-                    let img = (e.currentTarget as HTMLImageElement).currentSrc;
-                    showImageDialog(img);
+                    let img = e.currentTarget as HTMLImageElement;
+                    // img.onload = () => onLoaded(2);
+                    showImageDialog(img.currentSrc);
                 }
             }}
-            onLoad={() => {
-                onLoaded();
-            }}
             dangerouslySetInnerHTML={{ __html: result }}
-        >
-            {/* {ReactHtmlParser(result)} */}
-        </div>
+        />
     );
 };
 
@@ -209,7 +242,8 @@ const TextContentQuestion = ({
     type,
     bucket,
     place,
-    onLoaded,
+    // onLoaded,
+    contentRef,
 }: {
     content: string;
     image: string;
@@ -217,9 +251,9 @@ const TextContentQuestion = ({
     type: string;
     bucket: string;
     place: string;
-    onLoaded: () => void;
+    // onLoaded: (arg?: any) => void;
+    contentRef;
 }) => {
-    // const { theme } = useTheme();
     const isDesktop = useMediaQuery("(min-width:769px)");
     if (!image || image == "null") {
         if (hasImage(content)) {
@@ -229,22 +263,19 @@ const TextContentQuestion = ({
                     type={type}
                     bucket={bucket}
                     showImageDialog={(url) => showImageDialog(url)}
-                    onLoaded={onLoaded}
+                    // onLoaded={onLoaded}
+                    contentRef={contentRef}
                 />
             );
         }
         // (#####)
         return (
             <div
+                ref={contentRef}
                 key={new Date().getTime()}
                 dangerouslySetInnerHTML={{ __html: content }}
-                onLoad={() => {
-                    onLoaded();
-                }}
                 className={"v4-question-text"}
-            >
-                {/* {ReactHtmlParser(content)} */}
-            </div>
+            />
         );
     }
 
@@ -253,6 +284,7 @@ const TextContentQuestion = ({
     if (!isDesktop) {
         return (
             <div
+                ref={contentRef}
                 style={{
                     marginBottom: "10px",
                 }}
@@ -274,29 +306,19 @@ const TextContentQuestion = ({
                                 showImageDialog(imageUrl);
                             }}
                             onLoad={() => {
-                                onLoaded();
+                                // onLoaded();
                             }}
-                            // style={theme === "dark" ? { filter: "invert(1)" } : {}}
                         />
                     </div>
                 </div>
-                {content?.length ? (
-                    <div
-                        dangerouslySetInnerHTML={{ __html: content }}
-                        onLoad={() => {
-                            onLoaded();
-                        }}
-                        className={"v4-question-text"}
-                    >
-                        {/* {ReactHtmlParser(content)} */}
-                    </div>
-                ) : null}
+                {content?.length ? <div dangerouslySetInnerHTML={{ __html: content }} className={"v4-question-text"} /> : null}
             </div>
         );
     }
 
     return (
         <div
+            ref={contentRef}
             style={{
                 marginBottom: "10px",
                 display: "grid",
@@ -305,28 +327,19 @@ const TextContentQuestion = ({
                 gridGap: "6px",
             }}
         >
-            {content?.length ? (
-                <div
-                    dangerouslySetInnerHTML={{ __html: content }}
-                    onLoad={() => {
-                        onLoaded();
-                    }}
-                    className={"v4-question-text"}
-                /> //  {ReactHtmlParser(content)}
-            ) : null}
+            {content?.length ? <div dangerouslySetInnerHTML={{ __html: content }} className={"v4-question-text"} /> : null}
             <div style={{ display: "flex", justifyContent: "center" }}>
                 <div className={"v4-image-in-question " + "at-" + place}>
                     <img
                         className={"at-" + place}
                         src={imageUrl}
-                        // style={theme === "dark" ? { filter: "invert(1)" } : {}}
                         alt="question-img"
                         loading="lazy"
                         onClick={() => {
                             showImageDialog(imageUrl);
                         }}
                         onLoad={() => {
-                            onLoaded();
+                            // onLoaded();
                         }}
                     />
                 </div>
