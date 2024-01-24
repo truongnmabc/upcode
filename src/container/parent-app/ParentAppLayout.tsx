@@ -22,7 +22,7 @@ const ParentAppLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listApp
                             <img src="/info/images/logo60.png" alt="logo compact" />
                             <span className="-for-desktop">
                                 <span className="part-color-1">{`asy Prep`}</span>
-                                {": Take Tearning To The Next Level"}
+                                {": Take Learning To The Next Level"}
                             </span>
                             <span className="-for-mobile">
                                 <span className="part-color-1">{`asy `}</span>

@@ -10,8 +10,8 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /* position: absolute; */
-    height: 100%;
-    width: 100%;
+    /* height: 100%;
+    width: 100%; */
     background: var(--main-background-color);
 }
 /* font-family: 'Sora', sans-serif; */
@@ -113,10 +113,10 @@ p {
     opacity: 0.9;
 }
 
-#__next {
-    width: 100%;
-    height: 100vh;
-    overflow: auto;
+html {
+    /* width: 100%;
+    height: 100%; */
+    /* overflow: auto; */
     &::-webkit-scrollbar {
         width: 8px;
         display: block !important;

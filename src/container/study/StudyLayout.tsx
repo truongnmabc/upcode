@@ -10,16 +10,10 @@ import { ITopic } from "../../models/Topic";
 
 const HeaderV4 = dynamic(() => import("../../components/header/HeaderV4"));
 
-const StudyLayout = ({
-    appInfo,
-    listTopics,
-    contentData,
-}: {
-    appInfo: IAppInfo;
-    listTopics: ITopic[];
-    contentData: IWebData;
-}) => {
+const StudyLayout = ({ appInfo, contentData }: { appInfo: IAppInfo; contentData: IWebData }) => {
     const gameState: GameState = useSelector((state: AppState) => state.gameReducer.game);
+    const _listTopics: ITopic[] = useSelector((state: AppState) => state.topicReducer.list);
+    const listTopics = _listTopics.map((t) => t);
     const isDesktop = useMediaQuery("(min-width:769px)");
     return (
         <div className="use-background">

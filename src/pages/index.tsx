@@ -13,6 +13,7 @@ import replaceYear from "@/utils/replaceYear";
 import SeoHeader from "@/components/seo/SeoHeader";
 import StoreProvider from "@/redux/StoreProvider";
 import TestInfo, { ITestInfo } from "@/models/TestInfo";
+import { APP_SHORT_NAME } from "@/config_app";
 const HomeSingleApp = dynamic(() => import("@/container/single-app/HomeSingleApp"));
 const ParentAppLayout = dynamic(() => import("@/container/parent-app/ParentAppLayout"));
 
@@ -65,19 +66,19 @@ export const getStaticProps: GetStaticProps = async (context) => {
         listAppInfo = readAllAppInfos();
         listAppInfo = listAppInfo.filter((w: any) => w.appId).map((w: any) => new AppInfo(w));
     } else {
-        if (isAsvab) {
-            // làm giao diện mới cho asvab nên check riêng asvab
-            if (appInfo) {
-                let appData: any = await readFileAppFromGoogleStorage(appInfo.appId + "");
-                listTopics = appData?.topics ?? [];
-                listTopics.sort((a: any, b: any) => {
-                    return a.name.localeCompare(b.name);
-                });
-                let _tests = appData?.fullTests ?? [];
-                tests = _tests.map((t: any) => new TestInfo(t));
-            }
-            homeSeoContent = await getHomeSeoContentApi("home-seo-content");
+        // if (isAsvab) {
+        // làm giao diện mới cho asvab nên check riêng asvab
+        if (appInfo) {
+            let appData: any = await readFileAppFromGoogleStorage(APP_SHORT_NAME);
+            listTopics = appData?.topics ?? [];
+            listTopics.sort((a: any, b: any) => {
+                return a.name.localeCompare(b.name);
+            });
+            let _tests = appData?.fullTests ?? [];
+            tests = _tests.map((t: any) => new TestInfo(t));
         }
+        homeSeoContent = await getHomeSeoContentApi("home-seo-content");
+        // }
     }
 
     if (homeSeoContent) {

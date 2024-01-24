@@ -26,6 +26,7 @@ const getAppInfo = (appId = "") => {
         appInfo = mapAppInfos.find((appInfo) => appInfo.appId == appId);
     }
     if (isWebDMV() && !appInfo) {
+        appId = APP_NEW_DOMAIN + "";
         appInfo = mapAppInfos.find((appInfo) => appInfo.appNameId?.length > 0 && appId.includes(appInfo.appNameId));
     }
 
