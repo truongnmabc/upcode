@@ -5,9 +5,10 @@ import Config from "../../config";
 import CountDownV4 from "./CountDownV4";
 import * as ga from "../../services/ga";
 import "./HeaderStudyV4.scss";
-import MySwipeDownDrawer from "../v4-material/MySwipeDownDrawer";
+// import MySwipeDownDrawer from "../v4-material/MySwipeDownDrawer";
 import { GameState } from "@/redux/features/game";
 import { onGameSubmitted } from "@/redux/reporsitory/game.repository";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 
 const HeaderStudyV4 = ({ gameState }: { gameState: GameState }) => {
     const dispatch = useDispatch();
@@ -67,33 +68,44 @@ const MobileDrawerConfirmExit = ({
     allowSubmit: boolean;
 }) => {
     return (
-        <MySwipeDownDrawer open={open} onClose={() => setOpen(false)} anchor="bottom" className="v4-drawer-bottom-study">
-            <div className="v4-swipable-drawer-bottom-0">
-                <div className="v4-puller"></div>
-                <div className="really-want-to-exit">Do you really want to exit?</div>
-                <div className="progress-will-be-saved">Your progress will be saved!</div>
-                <div className="v4-swipable-drawer-bottom-button">
-                    {allowSubmit && (
+        <SwipeableDrawer
+            open={open}
+            onClose={() => setOpen(false)}
+            anchor="bottom"
+            onOpen={() => setOpen(true)}
+            className="customize-swipeable-drawer-bottom"
+        >
+            <div className="v4-drawer-bottom-study">
+                <div className="v4-swipable-drawer-bottom-0">
+                    <div className="v4-puller"></div>
+                    <div className="really-want-to-exit">Do you really want to exit?</div>
+                    <div className="progress-will-be-saved">Your progress will be saved!</div>
+                    <div className="v4-swipable-drawer-bottom-button">
+                        {allowSubmit && (
+                            <div
+                                className="v4-bottom-submit"
+                                onClick={() => {
+                                    handleEvent("submit");
+                                }}
+                            >
+                                Submit
+                            </div>
+                        )}
                         <div
-                            className="v4-bottom-submit"
+                            className="v4-bottom-exit"
                             onClick={() => {
-                                handleEvent("submit");
+                                handleEvent("exit");
                             }}
                         >
-                            Submit
+                            Exit
                         </div>
-                    )}
-                    <div
-                        className="v4-bottom-exit"
-                        onClick={() => {
-                            handleEvent("exit");
-                        }}
-                    >
-                        Exit
                     </div>
                 </div>
             </div>
-        </MySwipeDownDrawer>
+        </SwipeableDrawer>
+        // <MySwipeDownDrawer open={open} onClose={() => setOpen(false)} anchor="bottom" className="v4-drawer-bottom-study">
+
+        // </MySwipeDownDrawer>
     );
 };
 

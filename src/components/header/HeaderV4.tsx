@@ -4,13 +4,14 @@ import { APP_SHORT_NAME } from "../../config_app";
 import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import "./HeaderV4.scss";
-import MySwipeableDrawer from "../v4-material/MySwipeableDrawer";
+// import MySwipeableDrawer from "../v4-material/MySwipeableDrawer";
 import { ITopic } from "../../models/Topic";
 import MyContainer from "../v4-material/MyContainer";
 import CloseIcon from "../icon/CloseIcon";
 import MenuIcon from "../icon/MenuIcon";
 import ExpandMoreIcon from "../icon/ExpandMoreIcon";
 import Link from "next/link";
+import { SwipeableDrawer } from "@mui/material";
 
 const DownloadAppV4 = dynamic(() => import("../homepage/DownloadAppV4"));
 
@@ -50,93 +51,105 @@ const HeaderV4 = ({
                     <span>Menu</span>
                     <MenuIcon />
                 </div>
-                <MySwipeableDrawer
+                <SwipeableDrawer
+                    open={openMenuDrawer}
+                    onClose={() => setOpenMenuDrawer(false)}
+                    onOpen={() => {
+                        setOpenMenuDrawer(true);
+                    }}
+                    anchor="right"
+                >
+                    <div className="drawer-right-menu-header-v4">
+                        <div className="button-close-drawer-v4" onClick={() => setOpenMenuDrawer(false)}>
+                            <CloseIcon />
+                        </div>
+                        <div className="container-drawer-right-menu-header-v4">
+                            <div className="container-drawer-right-menu-header-v4-1">
+                                <a
+                                    href={`/full-length-${appInfo.appShortName}-practice-test`}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        ga.event({
+                                            action: "click_menu_full_test",
+                                            params: {
+                                                from: window.location.href,
+                                            },
+                                        });
+                                        window.location.href = `/full-length-${appInfo.appShortName}-practice-test`;
+                                    }}
+                                >
+                                    {`Full ${appInfo.appName} Practice Test`}
+                                </a>
+                            </div>
+                            <div
+                                className="container-drawer-right-menu-header-v4-1"
+                                onClick={() => {
+                                    let btn = document.getElementById("v4-icon-expand");
+                                    let collapse = document.getElementById("collapse-topic");
+                                    let content = document.getElementById("collapse-content");
+                                    let height = content.clientHeight;
+                                    if (btn.className.includes("true")) {
+                                        //close
+                                        btn.className = "v4-icon-expand false";
+                                        collapse.style.height = "0px";
+                                    } else {
+                                        btn.className = "v4-icon-expand true";
+                                        collapse.style.height = height + "px";
+                                    }
+                                }}
+                            >
+                                {`${appInfo.appName} Topics`}{" "}
+                                <div className={"v4-icon-expand"} id="v4-icon-expand">
+                                    <ExpandMoreIcon />
+                                </div>
+                            </div>
+                            <div id="collapse-topic">
+                                <div id="collapse-content">
+                                    {appTopics.map((topic) => {
+                                        return (
+                                            <div key={topic.id} className="v4-app-topic">
+                                                <a
+                                                    href={`/${APP_SHORT_NAME}-${topic.tag}-practice-test`}
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        ga.event({
+                                                            action: "click_menu_topic",
+                                                            params: {
+                                                                from: window.location.href,
+                                                                to: topic.tag,
+                                                            },
+                                                        });
+                                                        window.location.href = `/${APP_SHORT_NAME}-${topic.tag}-practice-test`;
+                                                    }}
+                                                >
+                                                    {topic.name}
+                                                </a>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                            <div className="container-drawer-right-menu-header-v4-1">
+                                <a
+                                    // prefetch={false}
+                                    href={"/blog"}
+                                >{`${appInfo.appName} Blog`}</a>
+                            </div>
+
+                            <div className="container-drawer-right-menu-header-v4-2">
+                                <div>Available on Android and Apple devices</div>
+                                <DownloadAppV4 appInfo={appInfo} place="menu" />
+                            </div>
+                        </div>
+                    </div>
+                </SwipeableDrawer>
+                {/* <MySwipeableDrawer
                     open={openMenuDrawer}
                     onClose={() => setOpenMenuDrawer(false)}
                     className="drawer-right-menu-header-v4"
                 >
-                    <div className="button-close-drawer-v4" onClick={() => setOpenMenuDrawer(false)}>
-                        <CloseIcon />
-                    </div>
-                    <div className="container-drawer-right-menu-header-v4">
-                        <div className="container-drawer-right-menu-header-v4-1">
-                            <a
-                                href={`/full-length-${appInfo.appShortName}-practice-test`}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    ga.event({
-                                        action: "click_menu_full_test",
-                                        params: {
-                                            from: window.location.href,
-                                        },
-                                    });
-                                    window.location.href = `/full-length-${appInfo.appShortName}-practice-test`;
-                                }}
-                            >
-                                {`Full ${appInfo.appName} Practice Test`}
-                            </a>
-                        </div>
-                        <div
-                            className="container-drawer-right-menu-header-v4-1"
-                            onClick={() => {
-                                let btn = document.getElementById("v4-icon-expand");
-                                let collapse = document.getElementById("collapse-topic");
-                                let content = document.getElementById("collapse-content");
-                                let height = content.clientHeight;
-                                if (btn.className.includes("true")) {
-                                    //close
-                                    btn.className = "v4-icon-expand false";
-                                    collapse.style.height = "0px";
-                                } else {
-                                    btn.className = "v4-icon-expand true";
-                                    collapse.style.height = height + "px";
-                                }
-                            }}
-                        >
-                            {`${appInfo.appName} Topics`}{" "}
-                            <div className={"v4-icon-expand"} id="v4-icon-expand">
-                                <ExpandMoreIcon />
-                            </div>
-                        </div>
-                        <div id="collapse-topic">
-                            <div id="collapse-content">
-                                {appTopics.map((topic) => {
-                                    return (
-                                        <div key={topic.id} className="v4-app-topic">
-                                            <a
-                                                href={`/${APP_SHORT_NAME}-${topic.tag}-practice-test`}
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    ga.event({
-                                                        action: "click_menu_topic",
-                                                        params: {
-                                                            from: window.location.href,
-                                                            to: topic.tag,
-                                                        },
-                                                    });
-                                                    window.location.href = `/${APP_SHORT_NAME}-${topic.tag}-practice-test`;
-                                                }}
-                                            >
-                                                {topic.name}
-                                            </a>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                        <div className="container-drawer-right-menu-header-v4-1">
-                            <a
-                                // prefetch={false}
-                                href={"/blog"}
-                            >{`${appInfo.appName} Blog`}</a>
-                        </div>
-
-                        <div className="container-drawer-right-menu-header-v4-2">
-                            <div>Available on Android and Apple devices</div>
-                            <DownloadAppV4 appInfo={appInfo} place="menu" />
-                        </div>
-                    </div>
-                </MySwipeableDrawer>
+                    
+                </MySwipeableDrawer> */}
             </MyContainer>
         </div>
     );

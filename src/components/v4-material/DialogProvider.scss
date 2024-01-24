@@ -1,34 +1,40 @@
-$time: 0.2s;
-.v4-presentation-dialog {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    #v4-presentation-dialog_blank {
-        position: absolute;
-        background-color: rgba($color: #212121, $alpha: 0);
-        width: 100%;
-        height: 100%;
-        transition: $time all;
-    }
-    .v4-presentation-dialog-content {
-        padding: 16px 0;
-        margin: 16px;
-        background-color: #fff;
-        width: fit-content;
-        border-radius: 12px;
-        opacity: 0;
-        transition: $time all;
-        z-index: 1;
-    }
+// $time: 0.2s;
+// .v4-presentation-dialog {
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     #v4-presentation-dialog_blank {
+//         position: absolute;
+//         background-color: rgba($color: #212121, $alpha: 0);
+//         width: 100%;
+//         height: 100%;
+//         transition: $time all;
+//     }
+//     .v4-presentation-dialog-content {
+//         padding: 16px 0;
+//         margin: 16px;
+//         background-color: #fff;
+//         width: fit-content;
+//         border-radius: 12px;
+//         opacity: 0;
+//         transition: $time all;
+//         z-index: 1;
+//     }
 
-    &.show {
-        .v4-presentation-dialog-content {
-            opacity: 1;
-        }
+//     &.show {
+//         .v4-presentation-dialog-content {
+//             opacity: 1;
+//         }
+//     }
+// }
+
+.customize-dialog {
+    .MuiDialog-paper {
+        margin: 16px;
     }
 }

@@ -113,7 +113,7 @@ const EndTestV4 = ({
                     </div>
                 )}
             </div>
-            {!isDesktop && !gameState.levelTag.includes("level") && (
+            {!isDesktop && (
                 <>
                     <EndTestButton
                         levelTag={gameState.levelTag}
@@ -121,9 +121,11 @@ const EndTestV4 = ({
                         finalTestHref={finalTestHref}
                         topicId={currentTopic?.id ?? ""}
                     />
-                    <div id="study_review">
-                        <ReviewAnswer gameState={gameState} appInfo={appInfo} />
-                    </div>
+                    {!gameState.levelTag.includes("level") && (
+                        <div id="study_review">
+                            <ReviewAnswer gameState={gameState} appInfo={appInfo} />
+                        </div>
+                    )}
                 </>
             )}
         </>

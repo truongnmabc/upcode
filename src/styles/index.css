@@ -3,7 +3,12 @@ html,
 body {
     scroll-behavior: smooth;
     box-sizing: border-box;
+}
+body {
     margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* position: absolute; */
     height: 100%;
     width: 100%;
     background: var(--main-background-color);

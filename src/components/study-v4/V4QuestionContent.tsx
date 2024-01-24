@@ -79,9 +79,7 @@ const ImageDialog = ({ closeDialog, url }) => {
                     width: 300,
                     height: 0,
                     transition: "0.2s all ease-in-out",
-                    maxHeight: "calc(100% - 100px)",
                     overflow: "hidden",
-                    maxWidth: "100%",
                 }}
             >
                 <img
@@ -90,16 +88,26 @@ const ImageDialog = ({ closeDialog, url }) => {
                     style={{
                         width: "100%",
                         height: "100%",
-                        minWidth: "300px",
                     }}
                     onLoad={(e) => {
-                        e.currentTarget.parentElement.style.height = e.currentTarget.naturalHeight + "px";
-                        e.currentTarget.parentElement.style.width = e.currentTarget.naturalWidth + "px";
+                        let screenWidth = window.innerWidth - 16 * 4;
+                        let screenHeight = window.innerHeight - 16 * 4 - 16 - 54;
+                        let naturalWidth = e.currentTarget.naturalWidth;
+                        let naturalHeight = e.currentTarget.naturalHeight;
+                        let r = naturalWidth / naturalHeight;
+                        let w = naturalWidth < screenWidth ? naturalWidth : screenWidth;
+                        let h = w / r;
+                        if (h > screenHeight) {
+                            w = screenHeight * r;
+                            h = screenHeight;
+                        }
+                        e.currentTarget.parentElement.style.height = h + "px";
+                        e.currentTarget.parentElement.style.width = w + "px";
                     }}
                 />
             </div>
 
-            <button
+            <div
                 style={{
                     border: "none",
                     padding: "6px",
@@ -111,7 +119,7 @@ const ImageDialog = ({ closeDialog, url }) => {
                 onClick={() => closeDialog()}
             >
                 Close
-            </button>
+            </div>
         </div>
     );
 };

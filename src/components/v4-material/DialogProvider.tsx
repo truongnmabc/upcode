@@ -1,6 +1,6 @@
-// import Dialog from "@material-ui/core/Dialog";
+import Dialog from "@mui/material/Dialog";
 import React from "react";
-import { createPortal } from "react-dom";
+// import { createPortal } from "react-dom";
 import "./DialogProvider.scss";
 const EMPTY_FUNC = (agr) => {};
 const DialogContext = React.createContext([EMPTY_FUNC, EMPTY_FUNC]);
@@ -8,24 +8,30 @@ export const useDialog = () => React.useContext(DialogContext);
 
 function DialogContainer(props) {
     const { children, open, onClose, onKill } = props;
-    const [mount, setMount] = React.useState<any>(null);
-    React.useEffect(() => {
-        if (typeof document !== "undefined") {
-            setMount(document.body);
-        }
-    }, []);
-    return mount ? (
-        <>
-            {createPortal(
-                <MyDialog open={open} onClose={onClose}>
-                    {children}
-                </MyDialog>,
-                mount
-            )}
-        </>
-    ) : (
-        <></>
+    // const [mount, setMount] = React.useState<any>(null);
+    // React.useEffect(() => {
+    //     if (typeof document !== "undefined") {
+    //         setMount(document.body);
+    //     }
+    // }, []);
+    return (
+        <Dialog open={open} onClose={onClose} className="customize-dialog">
+            {children}
+        </Dialog>
     );
+    // return mount ? (
+    //     <>
+    //         {createPortal(
+    //             <MyDialog open={open} onClose={onClose}>
+    //                 {children}
+    //             </MyDialog>,
+    //             mount
+    //         )}
+    //     </>
+
+    // ) : (
+    //     <></>
+    // );
 }
 
 const DialogProvider = ({ children }) => {
@@ -60,47 +66,48 @@ const DialogProvider = ({ children }) => {
     );
 };
 
-const MyDialog = ({ open, onClose, children }: { open: boolean; onClose: any; children: any }) => {
-    const presentation = React.useRef<HTMLDivElement>(null);
-    const [_open, setOpen] = React.useState(false);
-    React.useEffect(() => {
-        if (open) {
-            setOpen(true);
-        } else {
-            document.body.style.overflow = "unset";
-            document.getElementById("__next").style.height = "100%";
-            document.getElementById("__next").style.overflow = "";
-            document.getElementById("v4-presentation-dialog_blank").style.backgroundColor = "rgba(33,33,33,0)";
-            setTimeout(() => {
-                if (presentation?.current?.style) presentation.current.style.zIndex = "-9999";
-                setOpen(false);
-            }, 200);
-        }
-    }, [open]);
-    React.useEffect(() => {
-        if (_open) {
-            document.getElementById("__next").style.height = "-webkit-fill-available"; // chu y cho nay
-            document.getElementById("__next").style.overflow = "hidden";
-            document.body.style.overflow = "hidden";
-            presentation.current.style.zIndex = "1200";
-            setTimeout(() => {
-                document.getElementById("v4-presentation-dialog_blank").style.backgroundColor = "rgba(33,33,33,0.3)";
-            }, 1);
-        }
-    }, [_open]);
-    return _open ? (
-        <div className={"v4-presentation-dialog " + (open ? "show" : "")} ref={presentation}>
-            <div
-                id="v4-presentation-dialog_blank"
-                onClick={(e) => {
-                    onClose();
-                }}
-            ></div>
-            <div className="v4-presentation-dialog-content">{children}</div>
-        </div>
-    ) : (
-        <></>
-    );
-};
+// const MyDialog = ({ open, onClose, children }: { open: boolean; onClose: any; children: any }) => {
+//     const presentation = React.useRef<HTMLDivElement>(null);
+//     const [_open, setOpen] = React.useState(false);
+//     React.useEffect(() => {
+//         if (open) {
+//             setOpen(true);
+//         } else {
+//             document.body.style.overflow = "unset";
+//             document.getElementById("__next").style.height = "100%";
+//             document.getElementById("__next").style.overflow = "";
+//             document.getElementById("v4-presentation-dialog_blank").style.backgroundColor = "rgba(33,33,33,0)";
+//             setTimeout(() => {
+//                 if (presentation?.current?.style) presentation.current.style.zIndex = "-9999";
+//                 setOpen(false);
+//             }, 200);
+//         }
+//     }, [open]);
+//     React.useEffect(() => {
+//         if (_open) {
+//             let __next = document.getElementById("__next");
+//             __next.style.height = "-webkit-fill-available"; // chu y cho nay
+//             __next.style.overflow = "hidden";
+//             document.body.style.overflow = "hidden";
+//             presentation.current.style.zIndex = "1200";
+//             setTimeout(() => {
+//                 document.getElementById("v4-presentation-dialog_blank").style.backgroundColor = "rgba(33,33,33,0.3)";
+//             }, 1);
+//         }
+//     }, [_open]);
+//     return _open ? (
+//         <div className={"v4-presentation-dialog " + (open ? "show" : "")} ref={presentation}>
+//             <div
+//                 id="v4-presentation-dialog_blank"
+//                 onClick={(e) => {
+//                     onClose();
+//                 }}
+//             ></div>
+//             <div className="v4-presentation-dialog-content">{children}</div>
+//         </div>
+//     ) : (
+//         <></>
+//     );
+// };
 
 export default DialogProvider;

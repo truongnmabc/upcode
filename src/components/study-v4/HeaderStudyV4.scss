@@ -90,3 +90,10 @@
         // }
     }
 }
+
+.customize-swipeable-drawer-bottom {
+    .MuiDrawer-paper {
+        background: transparent !important;
+        overflow-y: visible !important;
+    }
+}
