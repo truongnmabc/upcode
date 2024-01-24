@@ -58,25 +58,25 @@ const _Drawer = ({
             setContainer(true);
             drawer.current.className = "open";
             drawer.current.style.transform = "translate( 0,calc(-100vh - 25px + 30px))"; // giống bên css
-            document.getElementById("__next").style.height = "-webkit-fill-available"; // chu y cho nay
+            // document.getElementById("__next").style.height = "-webkit-fill-available"; // chu y cho nay
             document.getElementById("__next").style.overflow = "hidden";
-            document.body.style.overflow = "hidden";
+            // document.body.style.overflow = "hidden";
             presentation.current.style.zIndex = "1200";
         } else {
             setContainer(false);
             drawer.current.className = "";
             drawer.current.style.transform = "translate(0, 0)"; // giống bên css
-            document.body.style.overflow = "unset";
-            document.getElementById("__next").style.height = "100%";
-            document.getElementById("__next").style.overflow = "";
+            // document.body.style.overflow = "unset";
+            // document.getElementById("__next").style.height = "100%";
+            document.getElementById("__next").style.overflow = "auto";
             setTimeout(() => {
                 if (presentation?.current?.style) presentation.current.style.zIndex = "-9999";
             }, 300);
         }
         return () => {
-            document.getElementById("__next").style.height = "100%";
-            document.getElementById("__next").style.overflow = "";
-            document.body.style.overflow = "unset";
+            // document.getElementById("__next").style.height = "100%";
+            document.getElementById("__next").style.overflow = "auto";
+            // document.body.style.overflow = "unset";
         };
     }, [open]);
 
