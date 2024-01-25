@@ -10,8 +10,8 @@ const createTempData = (size: number) => {
     return Array.apply(null, Array(size)).map((t) => ({ questionStatus: Config.QUESTION_NOT_ANSWERED }));
 };
 const AnswerSheet = ({ gameState, contentData }: { gameState: GameState; contentData: IWebData }) => {
-    const isFinish = gameState.isFinish;
-    let isTest = contentData.slug.includes("full-length") || !!contentData.isBranch;
+    const isTest = contentData.gameType != Config.TOPIC_GAME;
+    let isFinish = gameState.isFinishGame;
     let questions = gameState.questions.length > 0 ? gameState.questions : createTempData(isTest ? 135 : 10);
     const dispatch = useDispatch();
     let maximumQuestionIndexIsAnswered = 0;
@@ -48,7 +48,7 @@ const AnswerSheet = ({ gameState, contentData }: { gameState: GameState; content
                     )
                         status = " answered ";
 
-                    if (gameState.gameType == Config.STUDY_GAME || isFinish) {
+                    if (gameState.gameType == Config.TOPIC_GAME || isFinish == 1) {
                         // phần học hoặc finish sẽ hiện đáp án đúng sai
                         if (q.questionStatus == Config.QUESTION_ANSWERED_CORRECT) status = " correct ";
                         else if (q.questionStatus == Config.QUESTION_ANSWERED_INCORRECT) status = " incorrect ";
@@ -58,12 +58,12 @@ const AnswerSheet = ({ gameState, contentData }: { gameState: GameState; content
                             key={index}
                             // finish game bỏ active ở câu hỏi cuối và disable chọn câu khác ở phần test
                             className={`v4-answer-sheet-grid-item ${
-                                gameState.indexActive === index && !isFinish ? "current" : ""
-                            } ${disable || isFinish ? "disabled" : ""} ${status}`}
+                                gameState.indexActive === index && !(isFinish == 1) ? "current" : ""
+                            } ${disable || isFinish == 1 ? "disabled" : ""} ${status}`}
                             onClick={(e) => {
                                 if (gameState.gameType == Config.TEST_GAME) {
                                     if (index < maximumQuestionIndexIsAnswered) {
-                                        if (index != gameState.indexActive && !isFinish) {
+                                        if (index != gameState.indexActive && !(isFinish == 1)) {
                                             // không cho bấm vào câu hiện tại đang làm
                                             dispatch(goToQuestion(index));
                                         }

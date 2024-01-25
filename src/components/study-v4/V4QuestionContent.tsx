@@ -1,5 +1,5 @@
 import useMediaQuery from "@mui/material/useMediaQuery";
-import React, { memo, useEffect, useRef } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import "./V4QuestionContent.scss";
 import {
     TextContentType,
@@ -11,7 +11,9 @@ import {
     isMathJaxContent,
     renderMath,
 } from "../../utils/v4_question";
-import { useDialog } from "../v4-material/DialogProvider";
+import dynamic from "next/dynamic";
+const Dialog = dynamic(() => import("@mui/material/Dialog"), { ssr: false });
+
 const V4QuestionContent = ({
     content,
     image = "",
@@ -160,23 +162,31 @@ const _QuestionContent = ({
             };
         }
     }, [ref.current]);
-    const [openDialog, closeDialog] = useDialog();
+    const [openDialog, setOpenDialog] = useState("");
     if (type === TextContentType.question) {
         return (
-            <TextContentQuestion
-                type={type}
-                bucket={bucket}
-                content={content}
-                image={image}
-                showImageDialog={(url) => {
-                    openDialog({
-                        children: <ImageDialog closeDialog={closeDialog} url={url} />,
-                    });
-                }}
-                place={place}
-                // onLoaded={onLoaded}
-                contentRef={ref}
-            />
+            <>
+                <TextContentQuestion
+                    type={type}
+                    bucket={bucket}
+                    content={content}
+                    image={image}
+                    showImageDialog={(url) => {
+                        setOpenDialog(url);
+                        //     {
+                        //     children: <ImageDialog closeDialog={closeDialog} url={url} />,
+                        // }
+                    }}
+                    place={place}
+                    // onLoaded={onLoaded}
+                    contentRef={ref}
+                />
+                {!!openDialog && (
+                    <Dialog open={!!openDialog} onClose={() => setOpenDialog("")} className="customize-dialog">
+                        <ImageDialog closeDialog={() => setOpenDialog("")} url={openDialog} />,
+                    </Dialog>
+                )}
+            </>
         );
     }
     return (

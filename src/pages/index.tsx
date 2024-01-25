@@ -16,7 +16,9 @@ import TestInfo, { ITestInfo } from "@/models/TestInfo";
 import { APP_SHORT_NAME } from "@/config_app";
 const HomeSingleApp = dynamic(() => import("@/container/single-app/HomeSingleApp"));
 const ParentAppLayout = dynamic(() => import("@/container/parent-app/ParentAppLayout"));
-
+const ScrollToTopArrow = dynamic(() => import("../components/v4-material/ScrollToTopArrow"), {
+    ssr: false,
+});
 export default function Home({
     descriptionSEO,
     listTopics,
@@ -50,6 +52,7 @@ export default function Home({
             ) : (
                 <HomeSingleApp appInfo={appInfo} homeSeoContent={homeSeoContent} listTopics={listTopics} tests={tests} />
             )}
+            <ScrollToTopArrow />
         </>
     );
 }

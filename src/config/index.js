@@ -16,8 +16,9 @@ class Config {
     static GAME_STATUS_TESTING = 0;
     static GAME_STATUS_PASSED = 4;
 
-    static STUDY_GAME = 0;
+    static TOPIC_GAME = 0;
     static TEST_GAME = 1;
+    static BRANCH_TEST_GAME = 2;
 
     static TESTER_KEY = "TESTER_KEY";
 }

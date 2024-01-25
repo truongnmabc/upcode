@@ -182,7 +182,7 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                         <div
                             className={
                                 "v4-explanation-detail" +
-                                (thisQuestionIsDone && gameState.gameType == Config.STUDY_GAME ? " show " : "")
+                                (thisQuestionIsDone && gameState.gameType == Config.TOPIC_GAME ? " show " : "")
                             }
                         >
                             <div className={"v4-explanation-detail-title"}>Detailed Explanation</div>
@@ -191,7 +191,7 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                                     <div>
                                         <V4QuestionContent
                                             content={
-                                                thisQuestionIsDone && gameState.gameType == Config.STUDY_GAME
+                                                thisQuestionIsDone && gameState.gameType == Config.TOPIC_GAME
                                                     ? currentQuestion.explanation
                                                     : ""
                                             }

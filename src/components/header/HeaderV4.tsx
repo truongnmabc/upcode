@@ -4,7 +4,6 @@ import { APP_SHORT_NAME } from "../../config_app";
 import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import "./HeaderV4.scss";
-// import MySwipeableDrawer from "../v4-material/MySwipeableDrawer";
 import { ITopic } from "../../models/Topic";
 import MyContainer from "../v4-material/MyContainer";
 import CloseIcon from "../icon/CloseIcon";
@@ -12,6 +11,7 @@ import MenuIcon from "../icon/MenuIcon";
 import ExpandMoreIcon from "../icon/ExpandMoreIcon";
 import Link from "next/link";
 import { SwipeableDrawer } from "@mui/material";
+import { genFullStudyLink } from "@/utils/getStudyLink";
 
 const DownloadAppV4 = dynamic(() => import("../homepage/DownloadAppV4"));
 
@@ -27,7 +27,6 @@ const HeaderV4 = ({
         let logo = `/images/${APP_SHORT_NAME}/logo-light.png`;
         return logo;
     };
-    const appTopics = topics;
     return (
         <div className="container-header-v4">
             <MyContainer className="header-v4">
@@ -58,6 +57,7 @@ const HeaderV4 = ({
                         setOpenMenuDrawer(true);
                     }}
                     anchor="right"
+                    className="swipeable-drawer-header-v4"
                 >
                     <div className="drawer-right-menu-header-v4">
                         <div className="button-close-drawer-v4" onClick={() => setOpenMenuDrawer(false)}>
@@ -105,11 +105,11 @@ const HeaderV4 = ({
                             </div>
                             <div id="collapse-topic">
                                 <div id="collapse-content">
-                                    {appTopics.map((topic) => {
+                                    {topics.map((topic) => {
                                         return (
                                             <div key={topic.id} className="v4-app-topic">
                                                 <a
-                                                    href={`/${APP_SHORT_NAME}-${topic.tag}-practice-test`}
+                                                    href={genFullStudyLink(appInfo, topic.tag)}
                                                     onClick={(e) => {
                                                         e.preventDefault();
                                                         ga.event({
@@ -119,7 +119,7 @@ const HeaderV4 = ({
                                                                 to: topic.tag,
                                                             },
                                                         });
-                                                        window.location.href = `/${APP_SHORT_NAME}-${topic.tag}-practice-test`;
+                                                        window.location.href = genFullStudyLink(appInfo, topic.tag);
                                                     }}
                                                 >
                                                     {topic.name}

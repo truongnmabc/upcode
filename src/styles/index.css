@@ -138,3 +138,26 @@ html {
         background: #adadad;
     }
 }
+
+/*  _[x]: hiện ở màn có kích thước >= x */
+._769 {
+    display: none;
+}
+@media screen and (min-width: 769px) {
+    ._769 {
+        /* chỗ nào dùng class này thì chú ý thêm !important vào trường display */
+        display: block;
+    }
+}
+/*  _[x]: hiện ở màn có kích thước < x */
+
+.__768 {
+    /* chỗ nào dùng class này thì chú ý thêm !important vào trường display */
+    display: none;
+}
+@media screen and (max-width: 768px) {
+    .__768 {
+        /* chỗ nào dùng class này thì chú ý thêm !important vào trường display */
+        display: block;
+    }
+}

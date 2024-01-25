@@ -12,7 +12,8 @@
             transform: translate(-50%, -50%);
             img {
                 height: 32px;
-                width: 100px;
+                // width: 100px;
+                max-width: 128px;
             }
         }
         .header-menu-v4 {
@@ -41,8 +42,9 @@
                 top: 0;
                 transform: none;
                 img {
-                    height: 40px;
-                    width: 132px;
+                    height: 40px; //1:4
+                    // width: 132px;
+                    max-width: 160px;
                 }
             }
             .header-menu-v4 {
@@ -57,7 +59,7 @@
 // #navigation_drawer {
 .drawer-right-menu-header-v4 {
     max-width: 350px;
-    width: calc(100% - 25px);
+    // width: calc(100% - 25px);
     padding: 12px;
     background: #fff !important;
     .button-close-drawer-v4 {
@@ -156,3 +158,13 @@
     }
 }
 // }
+.swipeable-drawer-header-v4 {
+    // .MuiDrawer-paper {
+    //     width: 100%;
+    //     max-width: 350px;
+
+    //     @media screen and (min-width: 769px) {
+    //         max-width: 456px;
+    //     }
+    // }
+}

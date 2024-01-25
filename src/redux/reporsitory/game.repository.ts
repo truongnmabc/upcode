@@ -26,10 +26,15 @@ import { setTimeTest } from "../features/timeLeft";
 import { getTopicByParentIdSuccess } from "../features/topic";
 
 const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, { dispatch, getState, rejectWithValue }) => {
+    // tại version này phần học đc build static nên các url coi như là được xác định trước rồi!
     const state = getState() as AppState;
     // !! check nếu có dữ liệu thì thôi không gọi api, nếu chưa có thì mới gọi
-    let [slug, level]: string[] = (webData.slug ?? "").split("#"); // topic có đi kèm phần #level trong url
-
+    let [fullSlug, level]: string[] = (webData.fullSlug ?? "").split("#"); // topic có đi kèm phần #level trong url
+    let slashIndex = fullSlug.lastIndexOf("/");
+    let slug = fullSlug;
+    if (slashIndex !== -1) {
+        slug = slug.substring(slashIndex + 1, fullSlug.length);
+    }
     let topics: ITopic[] = state.topicReducer.list.map((a) => new Topic(a));
     let mapTopicQuestions: { [key: string]: Question[] } = state.cardReducer.mapTopicQuestions;
     let appInfo: IAppInfo = state.appInfoReducer.appInfo;
@@ -43,28 +48,28 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             let getTopic = false;
             let getTest = false;
             let getTopicQuestions = false;
-            let gameType = 0;
+            let gameType = webData.gameType ?? Config.TOPIC_GAME;
             let studyId = "";
             let passPercent = 70;
             let timeTest = 0;
             let topic_tag = "";
             let level_tag = "";
             let forceLoad = false; // biến này để xử lý trường hợp data cũ và data mới thôi, giờ nó cũng k còn tác dụng nữa nma cứ để đây
-            let branchTopic = listAppTopics.find((app) => app.appName === appInfo.appShortName).topics;
-            branchTopic = branchTopic.filter((t) => t.isBranch);
-            let isBranch = branchTopic.find((t) => t.url === slug);
             let gameTitle = "Full-length " + appInfo.appName + " Practice Test";
-            if (isBranch) {
-                gameTitle = isBranch.title;
+
+            if (gameType == Config.BRANCH_TEST_GAME) {
+                let branchTopic = listAppTopics.find((app) => app.appName === appInfo.appShortName)?.topics;
+                branchTopic = branchTopic?.filter((t) => t.isBranch);
+                let branch = branchTopic?.find((t) => t.url === slug);
+                gameTitle = branch.title;
             }
 
             // check dữ liệu hiện có ------------------------------------------------------------------------------
             //tạm thời xử lý như này, sau sẽ tổng quát dựa vào dữ liệu trả về từ server
-            if (slug == "full-length-" + appInfo.appShortName + "-practice-test" || !!isBranch) {
+            if (gameType === Config.TEST_GAME || gameType === Config.BRANCH_TEST_GAME) {
                 // phần branch dùng chung câu hỏi với test
                 // quy định slug này là vào practice-test
                 // design mới là sẽ chỉ còn 1 bài test ~ diagnosticTest nên testInfoV4Reducer.list chỉ có 1 phần tử thôi
-                gameType = Config.TEST_GAME;
                 let _test = tests.find((t) => t.slug == slug); // tim thong tin bai test (full-test va branch test)
                 if (!_test) {
                     //call api neu nh khong co
@@ -81,7 +86,6 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     }
                 }
             } else {
-                gameType = Config.STUDY_GAME;
                 let accessTopic = topics.find((t) => slug.includes(t.tag));
                 if (!accessTopic) {
                     // chưa có  thì gọi api
@@ -136,9 +140,11 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     let gameState = GameState.cloneGameState(_gameState);
                     // có rồi thì restore lại thôi
                     gameState.levelTag = level_tag; // gán lại chỗ này cho quá trình dev thôi
-                    if (gameType == Config.STUDY_GAME) window.location.href = slug + "#" + level_tag; // vì chỗ này đặt return nên phải thêm 1 dòng này ở đây
+                    if (gameType == Config.TOPIC_GAME) {
+                        // vì chỗ này đặt return nên phải thêm 1 dòng này ở đây
+                        history.replaceState(null, "", "/" + fullSlug + "#" + level_tag);
+                    }
                     gameState.timeTest = _timeTest;
-                    // dispatch(restoreGameState(gameState));
                     if (gameState.arrayIndexWrong.length) {
                         // cần xử lý đoạn này để tránh trường hợp bug đã làm đúng rồi nhưng vì lý do nào đó mà không update lại arrayIndexWrong
                         gameState.arrayIndexWrong = [];
@@ -161,7 +167,10 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             let questionsData = [];
             if (getTest) {
                 // vi api tra ve ca data cua test va question luon nen dung chung 1 bien getTest de check
-                let _test = await getTestDataFromGoogleStorage(appInfo.appShortName, isBranch ? slug : "");
+                let _test = await getTestDataFromGoogleStorage(
+                    appInfo.appShortName,
+                    gameType == Config.BRANCH_TEST_GAME ? slug : ""
+                );
 
                 let test = new TestInfo(_test[0]);
                 test.slug = slug;
@@ -180,9 +189,8 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             }
             if (getTopic) {
                 // mặc định coi vào trường hợp này là tải dữ liệu mới về => vào level thấp nhất
-                let data: any = await readFileAppFromGoogleStorage(""); // get data ve
+                let data: any = await readFileAppFromGoogleStorage(webData.currentAppShortName); // get data ve
                 topics = data?.topics ?? [];
-                // topics = topics.map((t) => new Topic(t));
                 dispatch(getTopicByParentIdSuccess(topics));
                 let accessTopic = topics.find((t) => slug.includes(t.tag));
                 if (!accessTopic) {
@@ -214,8 +222,8 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     getTopicQuestions = true;
                 }
             }
-            if (level_tag && gameType == Config.STUDY_GAME) {
-                window.location.href = slug + "#" + level_tag;
+            if (level_tag && gameType == Config.TOPIC_GAME) {
+                history.replaceState(null, "", "/" + fullSlug + "#" + level_tag);
             }
             if (getTopicQuestions) {
                 //chua co topic questions data
@@ -270,7 +278,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     };
                 });
                 gameState.currentQuestion = gameState.questions[0];
-                gameState.showAnswer = gameType == Config.STUDY_GAME;
+                gameState.showAnswer = gameType == Config.TOPIC_GAME;
                 gameState.gameTitle = gameTitle ?? "";
                 gameState.passPercent = passPercent;
                 gameState.appId = appId;
@@ -527,7 +535,7 @@ const onGameSubmitted = createAsyncThunk("game/onGameSubmitted", async (_, { get
             correct,
             total: totalQuestions,
         });
-        gameState.isFinish = true;
+        gameState.isFinishGame = 1;
         if (totalQuestions > 0) {
             if (gameState.progress.correct < (totalQuestions * gameState.passPercent) / 100) {
                 gameState.status = Config.GAME_STATUS_FAILED;
@@ -567,7 +575,7 @@ const onRestartGame = createAsyncThunk("game/onRestartGame", async (_, { getStat
     gameState.indexActive = 0;
     gameState.listSelected = [];
     gameState.arrayIndexWrong = [];
-    gameState.isFinish = false;
+    gameState.isFinishGame = 0;
     gameState.answeredQuestionIds = [];
     gameState.progress = new Progress({});
     gameState.timeTest = gameState.defaultTimeTest; // lấy lại giá trị mặc định ban đầu, trường defaultTimeTest cần đảm bảo chỉ được gán khi khởi tạo game mới

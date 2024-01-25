@@ -23,7 +23,7 @@ export class GameState {
     gameType: number; //
     id: string; // version cũ là id có thành phần level và appId | vesion mới thì k có cái đó mà chỉ còn mỗi studyId thôi ; bổ sung thêm -[level] cho topic
     indexActive: number; //
-    isFinish: boolean; //
+    isFinishGame: -1 | 0 | 1; // đánh dấu là đã kết thúc bài học hay chưa {-1: init, 0: chưa, 1: rồi}
     isLoadedStudyData: boolean; //
     levelTag: string; //
     listSelected: IChoice[]; //
@@ -46,7 +46,8 @@ export class GameState {
             this.currentQuestion = new Question(props.currentQuestion);
             this.gameType = props?.gameType;
             this.indexActive = props?.indexActive ?? 0;
-            this.isFinish = !!props?.isFinish;
+            this.isFinishGame = props?.isFinishGame ?? -1;
+            if (!!props?.isFinish) this.isFinishGame = 1;
             this.status = props?.status ?? Config.GAME_STATUS_TESTING;
             this.levelTag = props?.levelTag ?? "";
             this.listSelected = props?.listSelected ?? [];
@@ -79,7 +80,7 @@ export class GameState {
         gameState.defaultTimeTest = DEFAULT_TIME_TEST;
         gameState.id = "-1";
         gameState.indexActive = 0;
-        gameState.isFinish = false;
+        gameState.isFinishGame = -1;
         gameState.listSelected = new Array();
         gameState.passPercent = 0;
         gameState.questions = new Array();
@@ -105,6 +106,7 @@ export const gameSlice = createSlice({
         builder.addCase(getStudyData.fulfilled, (state, action) => {
             state.game = { ...action.payload };
             state.game.isLoadedStudyData = true;
+            if (state.game.isFinishGame == -1) state.game.isFinishGame = 0;
         });
         builder.addCase(getStudyData.rejected, (state, action) => {
             console.log(action.error);

@@ -20,7 +20,7 @@ export default class TestInfo implements ITestInfo {
     slug: string;
     // topicId: number;
     appId: number;
-    description: string;
+    // description: string;
     id: number;
     lastUpdate: number;
     passPercent: number;
@@ -36,7 +36,7 @@ export default class TestInfo implements ITestInfo {
         this.slug = object.slug ?? "";
         // this.topicId = object.topicId ?? -1;
         this.appId = object.appId ? object.appId : -1;
-        this.description = object.description ? object.description : "";
+        // this.description = object.description ? object.description : "";
         this.id = object.id ? object.id : -1;
         this.lastUpdate = object.lastUpdate ? object.lastUpdate : -1;
         this.passPercent = object.passPercent ? object.passPercent : 100;

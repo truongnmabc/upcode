@@ -1,33 +1,31 @@
-import { useEffect } from "react";
-import SEO from "../../components/seo/SEO";
+import { APP_SHORT_NAME } from "@/config_app";
+import TestInfo, { ITestInfo } from "@/models/TestInfo";
+import StoreProvider from "@/redux/StoreProvider";
+import { getHomeSeoContentStateApi } from "@/services/home.service";
+import { readFileAppFromGoogleStorage } from "@/services/importAppData";
+import IWebData from "@/types/webData";
+import { getLink, getTitle } from "@/utils";
+import convertToJSONObject from "@/utils/convertToJSONObject";
+import { genFullStudyLink, getAppShortName } from "@/utils/getStudyLink";
+import replaceYear from "@/utils/replaceYear";
+import { GetStaticPaths, GetStaticProps } from "next";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import { SYNC_TYPE } from "../../config/config_sync";
-import { isParentApp, isWebASVAB } from "../../config/config_web";
-import StudyLayout from "../../container/study/StudyLayout";
-import listAppTopics from "../../data/topic-landing-page.json";
-import * as ga from "../../services/ga";
+import { isParentApp } from "../../config/config_web";
+import { default as listAppTopic, default as listAppTopics } from "../../data/topic-landing-page.json";
 import { AppInfo, IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
-import { useRouter } from "next/router";
-import AppState from "@/redux/appState";
-import { useAppSelector } from "@/redux/hooks";
-import IWebData from "@/types/webData";
-import replaceYear from "@/utils/replaceYear";
-import convertToJSONObject from "@/utils/convertToJSONObject";
-import StoreProvider from "@/redux/StoreProvider";
-import { getHomeSeoContentApi, getHomeSeoContentStateApi } from "@/services/home.service";
-import { getLink, getTitle } from "@/utils";
-import dynamic from "next/dynamic";
-import { GetStaticPaths, GetStaticProps } from "next";
-import { readFileAppFromGoogleStorage } from "@/services/importAppData";
-import listAppTopic from "../../data/topic-landing-page.json";
-import { APP_SHORT_NAME } from "@/config_app";
-import TestInfo, { ITestInfo } from "@/models/TestInfo";
-import SeoHeader from "@/components/seo/SeoHeader";
-import HomeSingleApp from "@/container/single-app/HomeSingleApp";
+import Config from "@/config";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
+const SeoHeader = dynamic(() => import("@/components/seo/SeoHeader"));
+const SEO = dynamic(() => import("@/components/seo/SEO"));
+const HomeSingleApp = dynamic(() => import("@/container/single-app/HomeSingleApp"));
+const StudyLayout = dynamic(() => import("../../container/study/StudyLayout"));
+
 const StudyPage = ({
     childrenApp,
     study,
@@ -37,7 +35,7 @@ const StudyPage = ({
         tests?: ITestInfo[];
         keywordSEO: string;
         descriptionSEO: string;
-        appInfo: IAppInfo;
+        childAppInfo: IAppInfo;
         // homeSeoContent: string;
         titleSEO?: string;
     };
@@ -47,27 +45,30 @@ const StudyPage = ({
         titleSEO: string;
         descriptionSEO: string;
         keywordSEO: string;
+        gameType: number;
     };
 }) => {
     const router = useRouter();
     if (!!childrenApp) {
-        const { descriptionSEO, listTopics, tests, keywordSEO, appInfo, titleSEO } = childrenApp;
+        const { descriptionSEO, listTopics, tests, keywordSEO, childAppInfo, titleSEO } = childrenApp;
+        // appInfo ở đây là của app con nha
         return (
             <>
                 <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} />
-                <StoreProvider appInfo={appInfo} webData={{ tests: tests, topics: listTopics }} />
-                <HomeSingleApp appInfo={appInfo} homeSeoContent={""} listTopics={listTopics} tests={tests} />
+                <StoreProvider appInfo={childAppInfo} webData={{ tests: tests, topics: listTopics }} />
+                <HomeSingleApp appInfo={childAppInfo} homeSeoContent={""} listTopics={listTopics} tests={tests} />
+                <ScrollToTopArrow />
             </>
         );
     } else if (!!study) {
-        const { appInfo, topic, titleSEO, descriptionSEO, keywordSEO } = study;
+        const { appInfo, topic, titleSEO, descriptionSEO, keywordSEO, gameType } = study;
         let webData = {
             appId: appInfo.appId,
             type: SYNC_TYPE.TYPE_LEARN_TEST,
             slug: router.asPath.slice(1, router.asPath.length), // mô tả tại IWebData, trong asPath có phần #level, slice để bỏ đi dấu / ở đầu vì trước dùng slug của getServerSideProps không có
             content: topic.content,
-            isBranch: topic.isBranch,
             title: topic.title,
+            gameType,
         };
         return (
             <>
@@ -146,10 +147,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
     } else {
         let appData = listAppTopic.find((t) => t.appName === APP_SHORT_NAME);
         let _topics = appData.topics;
-        paths.push({});
         _topics.forEach((t) => {
             paths.push(formatData(t.url)); // trong này có cả branch và topic luôn
         });
+        let fullTestUrl = genFullStudyLink(appInfo);
+        paths.push(formatData(fullTestUrl));
         return { paths, fallback: false };
     }
 };
@@ -157,12 +159,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 const formatData = (url: string) => {
     return {
         params: {
-            study: url.replaceAll("/", ""),
+            studyOrChildrenApp: url.replaceAll("/", ""),
         },
     };
 };
 export const getStaticProps: GetStaticProps = async (context) => {
-    let slug = context.params.study as string;
+    let slug = context.params.studyOrChildrenApp as string;
     try {
         let _isParentApp = isParentApp();
         if (_isParentApp) {
@@ -171,12 +173,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
             let tests = []; // tests
             // let homeSeoContent;
             let listAppInfos = readAllAppInfos();
-            let appInfo = listAppInfos.find((a) => {
+            let childAppInfo = listAppInfos.find((a) => {
                 return slug === getLink(a).replaceAll("/", "");
             });
-            // console.log(appInfo);
-            if (appInfo) {
-                let _APP_SHORT_NAME = appInfo.appShortName.toLowerCase().replaceAll(" ", "-").replaceAll("_", "-");
+            if (childAppInfo) {
+                let _APP_SHORT_NAME = getAppShortName(childAppInfo.appShortName);
                 let appData: any = await readFileAppFromGoogleStorage(_APP_SHORT_NAME);
                 listTopics = appData?.topics ?? [];
                 listTopics.sort((a: any, b: any) => {
@@ -189,23 +190,23 @@ export const getStaticProps: GetStaticProps = async (context) => {
             // if (homeSeoContent) {
             //     homeSeoContent.content = replaceYear(homeSeoContent.content);
             // }
-            let rankMathTitle = appInfo?.rank_math_title;
-            if (appInfo && rankMathTitle) {
-                rankMathTitle = rankMathTitle?.replace("%title%", appInfo.title).replace("%page%", "");
+            let rankMathTitle = childAppInfo?.rank_math_title;
+            if (childAppInfo && rankMathTitle) {
+                rankMathTitle = rankMathTitle?.replace("%title%", childAppInfo.title).replace("%page%", "");
                 rankMathTitle = replaceYear(rankMathTitle);
             }
-            let titleSEO = !!rankMathTitle ? rankMathTitle : appInfo?.title;
+            let titleSEO = !!rankMathTitle ? rankMathTitle : childAppInfo?.title;
             if (titleSEO) titleSEO = replaceYear(titleSEO);
 
             return convertToJSONObject({
                 props: {
                     childrenApp: {
                         titleSEO: titleSEO,
-                        descriptionSEO: appInfo?.descriptionSEO,
+                        descriptionSEO: childAppInfo?.descriptionSEO,
                         listTopics,
                         tests: tests,
-                        keywordSEO: appInfo?.keywordSEO,
-                        appInfo,
+                        keywordSEO: childAppInfo?.keywordSEO,
+                        childAppInfo,
                         // homeSeoContent,
                     },
                 },
@@ -220,7 +221,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
             }
             let titleSEO = contentSEO?.titleSeo?.length > 0 ? contentSEO.titleSeo[0] : appInfo.title;
             let descriptionSEO = contentSEO?.descSeo?.length > 0 ? contentSEO.descSeo[0] : appInfo.descriptionSEO;
-            // if (topic || slug == "full-length-" + appInfo.appShortName + "-practice-test")
+            // ở đây có thể xác định được gameType luôn
+            let gameType = Config.TEST_GAME;
+            if (!!topic) {
+                if (topic.isBranch) gameType = Config.BRANCH_TEST_GAME;
+                else gameType = Config.TOPIC_GAME;
+            }
             return convertToJSONObject({
                 props: {
                     study: {
@@ -233,6 +239,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                             content: contentSEO?.content ?? "",
                             title: topic ? topic?.title : getTitle(appInfo),
                         },
+                        gameType,
                     },
                 },
             });

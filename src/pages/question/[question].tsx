@@ -104,7 +104,7 @@ export const getServerSideProps = async (context) => {
         },
         listSelected: question.choices.filter((c) => c.isCorrect),
         showAnswer: true,
-        gameType: Config.STUDY_GAME,
+        gameType: Config.TOPIC_GAME,
     });
     let type = data?.type ?? 70;
     // 70% là “Take more free practice tests for other ASVAB topics with our [ASVAB] practice test now!”

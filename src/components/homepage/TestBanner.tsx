@@ -1,13 +1,14 @@
+import { genFullStudyLink, getAppShortName } from "@/utils/getStudyLink";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITestInfo } from "../../models/TestInfo";
 import * as ga from "../../services/ga";
-import { APP_SHORT_NAME } from "../../config_app";
 import "./TestBanner.scss";
 const TestBanner = ({ appInfo, test }: { appInfo: IAppInfo; test: ITestInfo }) => {
     let timeTest = Math.floor(test?.timeTest / 60);
+    let _href = genFullStudyLink(appInfo);
     return (
         <a
-            href={`/full-length-${appInfo.appShortName}-practice-test`}
+            href={_href}
             style={{ textDecoration: "none" }}
             onClick={(e) => {
                 e.preventDefault(); // viết như này để ga được thực hiện
@@ -17,7 +18,7 @@ const TestBanner = ({ appInfo, test }: { appInfo: IAppInfo; test: ITestInfo }) =
                         from: window.location.href,
                     },
                 });
-                window.location.href = `/full-length-${APP_SHORT_NAME}-practice-test`;
+                window.location.href = _href;
             }}
         >
             <div className={"v4-test-banner-0 v4-border-radius"}>
@@ -50,7 +51,7 @@ const TestBanner = ({ appInfo, test }: { appInfo: IAppInfo; test: ITestInfo }) =
                 <figure
                     className="v4-test-banner-thumbnail-0"
                     style={{
-                        backgroundImage: `url(/images/${APP_SHORT_NAME}/test-card-desktop.webp)`,
+                        backgroundImage: `url(/images/${getAppShortName(appInfo.appShortName)}/test-card-desktop.webp)`,
                     }}
                 ></figure>
             </div>

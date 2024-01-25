@@ -5,12 +5,12 @@ import Config from "../../config";
 import CountDownV4 from "./CountDownV4";
 import * as ga from "../../services/ga";
 import "./HeaderStudyV4.scss";
-// import MySwipeDownDrawer from "../v4-material/MySwipeDownDrawer";
 import { GameState } from "@/redux/features/game";
 import { onGameSubmitted } from "@/redux/reporsitory/game.repository";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import MyContainer from "../v4-material/MyContainer";
 
-const HeaderStudyV4 = ({ gameState }: { gameState: GameState }) => {
+const HeaderStudyV4 = ({ gameState, showProgress }: { gameState: GameState; showProgress: boolean }) => {
     const dispatch = useDispatch();
     const [openDrawer, setOpendrawer] = useState(false);
 
@@ -28,31 +28,36 @@ const HeaderStudyV4 = ({ gameState }: { gameState: GameState }) => {
         }
     };
     return (
-        <div className="v4-main-study-view-top-mobile-0">
-            <div
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                    setOpendrawer(!openDrawer);
-                }}
-            >
-                <ArrowBackIosNewRoundedIcon htmlColor="#212121" />
-            </div>
-            {gameState.gameType == Config.TEST_GAME && (
-                <div className="v4-test-game-count-down-mobile-0">
-                    <CountDownV4 gameState={gameState} />
+        <>
+            <MyContainer style={{ background: "#fff" }}>
+                <div className="v4-main-study-view-top-mobile-0">
+                    <div
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                            setOpendrawer(!openDrawer);
+                        }}
+                    >
+                        <ArrowBackIosNewRoundedIcon htmlColor="#212121" />
+                    </div>
+                    {gameState.gameType == Config.TEST_GAME && (
+                        <div className="v4-test-game-count-down-mobile-0">
+                            <CountDownV4 gameState={gameState} />
+                        </div>
+                    )}
+                    {gameState.gameType == Config.TOPIC_GAME && (
+                        <div className="v4-test-game-level-tag-mobile-0">{gameState.levelTag.replace("-", " ").trim()}</div>
+                    )}
+                    <span className=" right ">{`Q${gameState.indexActive + 1}/${gameState.questions.length}`}</span>
+                    <MobileDrawerConfirmExit
+                        open={openDrawer}
+                        setOpen={setOpendrawer}
+                        handleEvent={handleExitStudy}
+                        allowSubmit={!gameState.levelTag.includes("level")}
+                    />
                 </div>
-            )}
-            {gameState.gameType == Config.STUDY_GAME && (
-                <div className="v4-test-game-level-tag-mobile-0">{gameState.levelTag.replace("-", " ").trim()}</div>
-            )}
-            <span className=" right ">{`Q${gameState.indexActive + 1}/${gameState.questions.length}`}</span>
-            <MobileDrawerConfirmExit
-                open={openDrawer}
-                setOpen={setOpendrawer}
-                handleEvent={handleExitStudy}
-                allowSubmit={!gameState.levelTag.includes("level")}
-            />
-        </div>
+            </MyContainer>
+            {showProgress && <LevelGameProgress gameState={gameState} />}
+        </>
     );
 };
 
@@ -103,10 +108,50 @@ const MobileDrawerConfirmExit = ({
                 </div>
             </div>
         </SwipeableDrawer>
-        // <MySwipeDownDrawer open={open} onClose={() => setOpen(false)} anchor="bottom" className="v4-drawer-bottom-study">
-
-        // </MySwipeDownDrawer>
     );
 };
 
+const LevelGameProgress = ({ gameState }: { gameState: GameState }) => {
+    let numOfCorrectAnswer = 0;
+    let numOfLearningAnswer = 0;
+    let totalQuestion = gameState.questions.length;
+    gameState.questions.forEach((q) => {
+        // điều kiện tương tự phần (**#**) bên MainStudyView
+        if (q.questionStatus == Config.QUESTION_ANSWERED_CORRECT) {
+            numOfCorrectAnswer++; // nếu trả lời đúng câu này
+        } else if (q.questionStatus == Config.QUESTION_ANSWERED_INCORRECT) {
+            numOfLearningAnswer++; // nếu trả lời sai câu này
+        } else if (q.questionStatus == Config.QUESTION_NOT_ANSWERED) {
+            // nếu chưa trả lời câu này (2 tình huống cần xét)
+            if (gameState.answeredQuestionIds.includes(q.id)) {
+                //trả lời lại:
+                if (gameState.arrayIndexWrong.includes(q.index)) {
+                    // [trả lời sai trước đó]
+                    numOfLearningAnswer++;
+                } else {
+                    //[trả lời đúng nhưng random lại khi mà tiếp tục sai câu cuối cùng]
+                    numOfCorrectAnswer++;
+                }
+            }
+        }
+    });
+    return (
+        <div style={{ height: "4px", background: "rgba(33, 33, 33, 0.2)", width: "100%", display: "flex" }}>
+            <div
+                style={{
+                    width: totalQuestion == 0 ? 0 : (numOfCorrectAnswer * 100) / totalQuestion + "%",
+                    background: "#00E291",
+                    transition: "0.1s width",
+                }}
+            />
+            <div
+                style={{
+                    width: totalQuestion == 0 ? 0 : (numOfLearningAnswer * 100) / totalQuestion + "%",
+                    background: gameState.levelTag.includes("level") ? "#EBAD34" : "#F58383",
+                    transition: "0.1s width",
+                }}
+            />
+        </div>
+    );
+};
 export default HeaderStudyV4;

@@ -51,7 +51,7 @@ const HomeSingleApp = ({
                         <div className="landing-title-12">
                             {"Our free " +
                                 appInfo.appName +
-                                " practice tests feature all 9 " +
+                                ` practice tests feature all ${listTopics.length} ` +
                                 appInfo.appName +
                                 " test subjects. We recommend taking at least one practice exam from every subject to guarantee your success at your local testing location. To get started, choose a category from the list below and practice them!"}
                         </div>

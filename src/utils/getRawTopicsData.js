@@ -7,7 +7,7 @@ const getRawTopicsData = (appShortName) => {
         listSubMenu = tempTopics.map((t, index) => {
             const name = t.learnUrl
                 .split("-")
-                .map((word) => word[0].toUpperCase() + word.slice(1))
+                .map((word) => (word[0] ? word[0].toUpperCase() : "" + word.slice(1)))
                 .join(" ");
             return {
                 icon: "",

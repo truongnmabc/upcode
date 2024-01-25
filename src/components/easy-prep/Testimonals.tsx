@@ -2,7 +2,6 @@ import React from "react";
 import MyContainer from "../v4-material/MyContainer";
 import Slider from "react-slick";
 import testimonals from "../../data/testimonals.json";
-import { APP_SHORT_NAME } from "@/config_app";
 import "./Testimonals.scss";
 import ArrowLeft from "../icon/ArrowLeft";
 import { useRef } from "react";

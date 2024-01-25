@@ -7,7 +7,7 @@ import ReviewAnswer from "./ReviewAnswer";
 import * as ga from "../../../services/ga";
 import { getGameProgress, getHighhestLevelOfTopicBePassedSequentially } from "../../../utils/v4_study";
 import { ITopic } from "../../../models/Topic";
-import { APP_SHORT_NAME } from "../../../config_app";
+import { genFullStudyLink } from "@/utils/getStudyLink";
 import { SYNC_TYPE } from "../../../config/config_sync";
 import "./index.scss";
 import TargetIcon from "../../icon/TargetIcon";
@@ -67,8 +67,8 @@ const EndTestV4 = ({
         if (nextLevelIndex < currentTopic.topics.length - 1) {
             //tại các level trước final test thì mới có nút next level và final test
             if (isPass)
-                nextLevelHref = `/${APP_SHORT_NAME}-${currentTopic.tag}-practice-test#${currentTopic.topics[nextLevelIndex].tag}`;
-            finalTestHref = `/${APP_SHORT_NAME}-${currentTopic.tag}-practice-test#final-test`;
+                nextLevelHref = `/${genFullStudyLink(appInfo, currentTopic.tag)}#${currentTopic.topics[nextLevelIndex].tag}`;
+            finalTestHref = `/${genFullStudyLink(appInfo, currentTopic.tag)}#final-test`;
         }
     }
     let isEndLevel = gameState.levelTag.includes("level");
@@ -103,6 +103,7 @@ const EndTestV4 = ({
                             nextLevelHref={nextLevelHref}
                             finalTestHref={finalTestHref}
                             topicId={currentTopic?.id ?? ""}
+                            appInfo={appInfo}
                         />
                     )}
                 </div>
@@ -120,6 +121,7 @@ const EndTestV4 = ({
                         nextLevelHref={nextLevelHref}
                         finalTestHref={finalTestHref}
                         topicId={currentTopic?.id ?? ""}
+                        appInfo={appInfo}
                     />
                     {!gameState.levelTag.includes("level") && (
                         <div id="study_review">
@@ -137,18 +139,20 @@ const EndTestButton = ({
     nextLevelHref,
     finalTestHref,
     topicId,
+    appInfo,
 }: {
     levelTag: string;
     nextLevelHref: string;
     finalTestHref: string;
     topicId: string;
+    appInfo: IAppInfo;
 }) => {
     const dispatch = useDispatch();
     const directHref = (_href: string) => {
         // hàm này chỉ được gọi khi làm topic => trường topicId luôn có giá trị khi cần dùng đến
         dispatch(
             getStudyData({
-                slug: _href.slice(1, _href.length), // bỏ dấu / vì trong này đang không xử lý dấu đó
+                fullSlug: _href.slice(1, _href.length), // bỏ dấu / vì trong này đang không xử lý dấu đó
                 type: SYNC_TYPE.TYPE_LEARN_TEST,
                 topicId: topicId,
             })
@@ -206,7 +210,7 @@ const EndTestButton = ({
                     <button
                         className="final-test btn v4-border-radius v4-button-animtaion"
                         onClick={() => {
-                            window.location.href = `/full-length-${APP_SHORT_NAME}-practice-test`;
+                            window.location.href = genFullStudyLink(appInfo);
                         }}
                     >
                         Full-length Test

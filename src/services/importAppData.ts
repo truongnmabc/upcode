@@ -15,6 +15,7 @@ export async function readFileAppFromGoogleStorage(appKey: string) {
         return data;
     } catch (error) {
         console.log("readFileAppFromGoogleStorage error");
+        return { topcis: [], fullTests: [], branchTests: [] };
     }
 }
 

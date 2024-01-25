@@ -200,7 +200,6 @@ function convertTime(time) {
 const getTitle = (appInfo) => {
     return "Full-length " + appInfo.appName + " Practice Test";
 };
-
 export {
     parseBoolean,
     capitalizeFirstWord,

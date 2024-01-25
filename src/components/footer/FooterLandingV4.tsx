@@ -73,7 +73,7 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                     <div className="v4-footer-landing-container-11">
                         <div className="v4-footer-landing-container-111">
                             <Link href="/" className={"logo-footer-v4"}>
-                                <img src={getSrcLogo()} alt={"logo-" + APP_SHORT_NAME} height={40} width={132} />
+                                <img className="img-logo-footer" src={getSrcLogo()} alt={"logo-" + APP_SHORT_NAME} />
                             </Link>
                             <img src={"/images/dmca_protected.png"} alt="certificate" width="121" height="24" />
                             <div className="v4-contact-social-desktop">

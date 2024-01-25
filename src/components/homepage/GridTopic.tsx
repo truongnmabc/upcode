@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { APP_SHORT_NAME } from "../../config_app";
 import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
@@ -13,6 +12,7 @@ import { render } from "react-dom";
 import getRawTopicsData from "../../utils/getRawTopicsData";
 import AppState from "@/redux/appState";
 import { getStudyData } from "@/redux/reporsitory/game.repository";
+import { genFullStudyLink } from "@/utils/getStudyLink";
 
 const RANDOM_COLORS = [
     "#30749F",
@@ -92,7 +92,7 @@ const GridTopic = ({
         <div className={`v4-grid-topic-0 ${place}`}>
             {topics.map((topic, index) => {
                 let isHighlighted = highlightedTopicId.includes(topic.id);
-                let _href = `/${APP_SHORT_NAME}-${topic.tag}-practice-test`;
+                let _href = genFullStudyLink(appInfo, topic.tag);
                 return (
                     <div key={topic.id}>
                         <a
@@ -131,18 +131,15 @@ const GridTopic = ({
                                                 dispatchAction={(data) => {
                                                     dispatch(getStudyData(data));
                                                 }}
+                                                topicUrl={_href}
                                             />,
                                             content
                                         );
                                     }
                                     if (expandComponent.className.includes("expand-topic-level")) {
                                         //đang mở thì đóng lại
-                                        // expandComponent.style.height = content.clientHeight + "px";
-                                        // setTimeout(() => {// viết như này vì trường hợp phần học thì vùng level của topic đang chọn sẽ được expand luôn
                                         expandComponent.style.height = "0";
                                         expandComponent.className = "topic-levels";
-                                        // }, 1);
-                                        // content.style.display = "none";
                                     } else {
                                         // đang đóng thì mở ra đồng thời đóng tất cả các cái khác (chỉ expand 1 topic 1 lần)
                                         let _h = 0; // độ cao của phần content đang được expand phía trước topic muốn expand
@@ -150,13 +147,9 @@ const GridTopic = ({
                                             let component = document.getElementById("expand-topic-" + i);
                                             if (component.className.includes("expand-topic-level")) {
                                                 let _content = document.getElementById("topic-progress-" + i);
-                                                // component.style.height = _content.clientHeight + "px";
                                                 if (i < index) _h += _content.clientHeight;
-                                                // setTimeout(() => {
                                                 component.style.height = "0";
                                                 component.className = "topic-levels";
-                                                // _content.style.display = "none";
-                                                // }, 1);
                                             }
                                         }
                                         let _y = expandComponent.getBoundingClientRect().y;
@@ -210,6 +203,7 @@ const GridTopic = ({
                                             levels={topic?.topics ?? []}
                                             currentTopic={topic}
                                             place={place}
+                                            topicUrl={_href}
                                             listGameState={listGameState}
                                             dispatchAction={(data) => {
                                                 dispatch(getStudyData(data));
@@ -256,12 +250,14 @@ const TopicLevelProgress = ({
     place,
     listGameState,
     dispatchAction,
+    topicUrl,
 }: {
     levels: ITopic[];
     currentTopic: ITopic;
     place: string;
     listGameState: GameState[];
     dispatchAction: any;
+    topicUrl: string;
 }) => {
     let sequence = 3;
     let arr: Array<ITopic[]> = [];
@@ -285,26 +281,26 @@ const TopicLevelProgress = ({
                                     (index == 0 && i == 0) ||
                                     level.tag == "mini-test" ||
                                     level.tag == "final-test"; // luôn mở level 0
-                                let _href = `/${APP_SHORT_NAME}-${currentTopic.tag}-practice-test#${level.tag}`;
+                                let _href = `${topicUrl}#${level.tag}`;
                                 let asPath = "";
                                 if (typeof window !== "undefined") {
                                     asPath = window.location.href;
                                 }
                                 let activeAnim =
                                     place == "study" ? asPath.includes(_href) : highestLevel == index * sequence + i;
-                                let isFinishThisLevel = false;
+                                let isFinishThisLevel = -1;
                                 let isPassThisLevel = false;
                                 let currentLevelScore = 0;
                                 let lvGame = listGameState.find((g) => g.id == level.id);
                                 if (lvGame) {
                                     // nếu nó đã làm level này rồi
-                                    isFinishThisLevel = lvGame.isFinish;
+                                    isFinishThisLevel = lvGame.isFinishGame;
                                     let _ = getGameProgress(lvGame);
                                     let numOfCorrectAnswer = getNumOfCorrectAnswer(lvGame.questions);
                                     currentLevelScore = lvGame.questions.length
                                         ? Math.floor((numOfCorrectAnswer / lvGame.questions.length) * 100 + 0.5)
                                         : 0;
-                                    if (isFinishThisLevel) {
+                                    if (isFinishThisLevel === 1) {
                                         isPassThisLevel = _.isPass;
                                     }
                                 }
@@ -312,6 +308,8 @@ const TopicLevelProgress = ({
                                 if (level.tag == "final-test") {
                                     if (listGameState.find((g) => g.id + "" == level.id)) thisFinalTestBePracticed = true;
                                 }
+                                if (level.tag) console.log(isFinishThisLevel, isPassThisLevel);
+
                                 return (
                                     <a
                                         className="v4-level-item"
@@ -339,7 +337,7 @@ const TopicLevelProgress = ({
                                                     });
                                                     // chọn level trong cùng 1 topic (không thay đổi path name nên không load lại trang) nên cần dispatch lại action này
                                                     dispatchAction({
-                                                        slug: _href.slice(1, _href.length), // bỏ dấu / vì trong này đang không xử lý dấu đó
+                                                        fullSlug: _href.slice(1, _href.length), // bỏ dấu / vì trong này đang không xử lý dấu đó
                                                         type: SYNC_TYPE.TYPE_LEARN_TEST,
                                                         topicId: currentTopic.id,
                                                     });
@@ -391,7 +389,7 @@ const TopicLevelProgress = ({
                                                         d="M49.6695 36.7343L35.1201 11.6958C32.6142 7.38341 26.3858 7.38341 23.8799 11.6958L9.33054 36.7343C6.81254 41.0676 9.93883 46.5 14.9506 46.5H44.0494C49.0612 46.5 52.1875 41.0676 49.6695 36.7343Z"
                                                         fill="white"
                                                         stroke={
-                                                            !isFinishThisLevel
+                                                            !(isFinishThisLevel == 1)
                                                                 ? strokeColor
                                                                 : isPassThisLevel
                                                                 ? "#00c17c"
@@ -414,7 +412,7 @@ const TopicLevelProgress = ({
                                                     )}
                                                 </svg>
                                                 <div className="v4-level-current">
-                                                    {isFinishThisLevel ? (
+                                                    {isFinishThisLevel == 1 ? (
                                                         <CheckedIcon color={isPassThisLevel ? "#00c17c" : "#fb7072"} />
                                                     ) : (
                                                         <span>
@@ -436,7 +434,7 @@ const TopicLevelProgress = ({
                                             >
                                                 <TargetIcon
                                                     color={
-                                                        !isFinishThisLevel
+                                                        !(isFinishThisLevel == 1)
                                                             ? strokeColor
                                                             : isPassThisLevel
                                                             ? "#00c17c"
@@ -446,7 +444,7 @@ const TopicLevelProgress = ({
                                                 />
                                                 {thisFinalTestBePracticed && (
                                                     <div className="v4-level-current">
-                                                        {isFinishThisLevel ? (
+                                                        {isFinishThisLevel == 1 ? (
                                                             <CheckedIcon color={isPassThisLevel ? "#00c17c" : "#fb7072"} />
                                                         ) : (
                                                             <span>
@@ -469,16 +467,16 @@ const TopicLevelProgress = ({
                                                         "v4-level-circle" + (activeAnim ? " anim-boundary anim-circle" : "")
                                                     }
                                                     style={{
-                                                        backgroundColor: !isFinishThisLevel
+                                                        backgroundColor: !(isFinishThisLevel == 1)
                                                             ? "#fff"
                                                             : isPassThisLevel
                                                             ? "#00c17c"
                                                             : "#fb7072",
-                                                        borderColor: isFinishThisLevel ? "#fff" : "rgba(245, 245, 245, 1)",
+                                                        borderColor: isFinishThisLevel == 1 ? "#fff" : "rgba(245, 245, 245, 1)",
                                                     }}
                                                 >
                                                     {unlocked ? (
-                                                        isFinishThisLevel ? (
+                                                        isFinishThisLevel == 1 ? (
                                                             <CheckedIcon />
                                                         ) : (
                                                             <span

@@ -32,7 +32,7 @@ const ParentAppLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listApp
 
                         <p>Our mission is to bring you the best online test prep that you can learn anytime, anywhere.</p>
                     </div>
-                    <img className="img-landing" src="/images/easy-prep/landing-img.png" alt="Take learning" />
+                    <img className="img-landing" src="/images/easyprep/landing-img.png" alt="Take learning" />
                 </div>
             </MyContainer>
             <ListApp listAppInfos={listAppInfos} />
