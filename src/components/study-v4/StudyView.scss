@@ -59,9 +59,21 @@
         min-height: calc(100vh - 52px - 1px); //52: header, 1: border
 
         .v4-study-main-view-left-bar-0 {
-            padding-top: 70px;
+            padding-top: 38px;
             width: 290px;
             min-width: 290px; //thêm phần text seo vào thì nó bị dãn ra nên phải đặt tạm thuộc tính này để xử lý;
+            padding-bottom: 36px;
+
+            .v4-study-breadcum {
+                a {
+                    line-height: 20px;
+                    color: #212121 !important;
+                }
+                img {
+                    padding: 0 4px;
+                }
+                padding-bottom: 12px;
+            }
 
             .v4-study-list-topics-0 {
                 padding-top: 16px;
@@ -100,5 +112,27 @@
         .v4-main-study-content {
             padding-left: 16px;
         }
+    }
+}
+
+.v4-end-test-frame {
+    height: 241px;
+    background: #fff;
+}
+.header-study-v4-frame {
+    height: 60px;
+    background-color: #fff;
+}
+.study-banner-download-frame {
+    height: 345px;
+    background: #fff;
+}
+
+@media screen and (min-width: 769px) {
+    .v4-end-test-frame {
+        height: 475px;
+    }
+    .study-banner-download-frame {
+        height: 200px;
     }
 }

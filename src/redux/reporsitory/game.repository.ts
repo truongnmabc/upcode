@@ -66,7 +66,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
 
             // check dữ liệu hiện có ------------------------------------------------------------------------------
             //tạm thời xử lý như này, sau sẽ tổng quát dựa vào dữ liệu trả về từ server
-            if (gameType === Config.TEST_GAME || gameType === Config.BRANCH_TEST_GAME) {
+            if (gameType !== Config.TOPIC_GAME) {
                 // phần branch dùng chung câu hỏi với test
                 // quy định slug này là vào practice-test
                 // design mới là sẽ chỉ còn 1 bài test ~ diagnosticTest nên testInfoV4Reducer.list chỉ có 1 phần tử thôi
@@ -142,7 +142,8 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     gameState.levelTag = level_tag; // gán lại chỗ này cho quá trình dev thôi
                     if (gameType == Config.TOPIC_GAME) {
                         // vì chỗ này đặt return nên phải thêm 1 dòng này ở đây
-                        history.replaceState(null, "", "/" + fullSlug + "#" + level_tag);
+                        window.location.href = "/" + fullSlug + "#" + level_tag;
+                        // history.replaceState(null, "", "/" + fullSlug + "#" + level_tag);
                     }
                     gameState.timeTest = _timeTest;
                     if (gameState.arrayIndexWrong.length) {
@@ -157,7 +158,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                         }
                     }
                     console.log("Restore game!");
-                    if (gameType === Config.TEST_GAME)
+                    if (gameType !== Config.TOPIC_GAME)
                         dispatch(setTimeTest({ id: gameState.id, timeTest: gameState.timeTest }));
                     return gameState;
                 }
@@ -223,7 +224,8 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 }
             }
             if (level_tag && gameType == Config.TOPIC_GAME) {
-                history.replaceState(null, "", "/" + fullSlug + "#" + level_tag);
+                window.location.href = "/" + fullSlug + "#" + level_tag;
+                // history.replaceState(null, "", "/" + fullSlug + "#" + level_tag);
             }
             if (getTopicQuestions) {
                 //chua co topic questions data
@@ -289,7 +291,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 console.log("Start new game!");
 
                 dispatch(updateToListGames(gameState));
-                if (gameState.gameType == Config.TEST_GAME)
+                if (gameState.gameType !== Config.TOPIC_GAME)
                     dispatch(setTimeTest({ id: gameState.id, timeTest: gameState.timeTest }));
                 return gameState;
             } catch (err) {
@@ -328,7 +330,7 @@ const onChooseAnswer = createAsyncThunk(
             let _cQuestion = new Question(gameState.currentQuestion);
             let correctNum = _cQuestion.getCorrectNum(); // số đáp án đúng của câu hỏi
 
-            if (gameState.gameType == Config.TEST_GAME) {
+            if (gameState.gameType !== Config.TOPIC_GAME) {
                 // test được chọn lại đáp án (theo kiểu queue),
                 // bấm chọn lại đáp án đã chọn rồi thì tức là bỏ nó đi
                 let isExisted = false;
@@ -372,7 +374,7 @@ const onChooseAnswer = createAsyncThunk(
                 });
                 ga.event({
                     action:
-                        gameState.gameType == Config.TEST_GAME ? "full_test_questions_per_user" : "topic_questions_per_user",
+                        gameState.gameType !== Config.TOPIC_GAME ? "full_test_questions_per_user" : "topic_questions_per_user",
                     params: {
                         questionId: _cQuestion.id,
                     },
@@ -481,7 +483,7 @@ const nextQuestion = createAsyncThunk("game/nextQuestion", async (payload: GameS
         let forceReset = false;
         if (
             !(
-                gameState.gameType == Config.TEST_GAME &&
+                gameState.gameType !== Config.TOPIC_GAME &&
                 gameState.answeredQuestionIds.includes(gameState.questions[indexActive].id)
             )
         ) {

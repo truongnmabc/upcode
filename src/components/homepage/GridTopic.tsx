@@ -13,6 +13,7 @@ import getRawTopicsData from "../../utils/getRawTopicsData";
 import AppState from "@/redux/appState";
 import { getStudyData } from "@/redux/reporsitory/game.repository";
 import { genFullStudyLink } from "@/utils/getStudyLink";
+import Config from "@/config";
 
 const RANDOM_COLORS = [
     "#30749F",
@@ -184,19 +185,22 @@ const GridTopic = ({
                             {priority == 3 && <h3 className="-h_i v4-font-semi-bold">{topic.name}</h3>}
                             {priority == 4 && <h4 className="-h_i v4-font-semi-bold">{topic.name}</h4>}
                         </a>
-                        {allowExpand && topic?.topics?.length && (place == "home" ? true : isHighlighted) ? (
-                            <div
-                                id={"expand-topic-" + index}
-                                className={
-                                    "topic-levels" +
-                                    (place != "home" && // không phải trang home và cho phép expand và đang highlight thì expand luôn
-                                    allowExpand &&
-                                    isHighlighted
-                                        ? " expand-topic-level"
-                                        : "")
-                                }
-                                style={{ height: place != "home" && allowExpand && isHighlighted ? "fit-content" : "" }}
-                            >
+
+                        <div
+                            id={"expand-topic-" + index}
+                            className={
+                                "topic-levels" +
+                                (place != "home" && // không phải trang home và cho phép expand và đang highlight thì expand luôn
+                                allowExpand &&
+                                isHighlighted
+                                    ? " expand-topic-level"
+                                    : "")
+                            }
+                            style={{
+                                height: place != "home" && allowExpand && isHighlighted ? "248px" : "0",
+                            }}
+                        >
+                            {allowExpand && topic?.topics?.length && (place == "home" ? true : isHighlighted) ? (
                                 <div id={"topic-progress-" + index} className="topic-progress">
                                     {place != "home" && ( // các trang khác trang home cần expand luôn nên viết như này
                                         <TopicLevelProgress
@@ -211,10 +215,10 @@ const GridTopic = ({
                                         />
                                     )}
                                 </div>
-                            </div>
-                        ) : (
-                            <></>
-                        )}
+                            ) : (
+                                <></>
+                            )}
+                        </div>
                     </div>
                 );
             })}
@@ -223,7 +227,7 @@ const GridTopic = ({
                     <div className="separate-line" />
                     <a
                         className="v4-grid-topic-full-leng-test v4-border-radius"
-                        href={`/full-length-${appInfo.appShortName}-practice-test`}
+                        href={genFullStudyLink(appInfo)}
                         onClick={(e) => {
                             e.preventDefault(); // viết như này để ga được thực hiện
                             ga.event({
@@ -232,7 +236,7 @@ const GridTopic = ({
                                     from: window.location.href,
                                 },
                             });
-                            window.location.href = `/full-length-${appInfo.appShortName}-practice-test`;
+                            window.location.href = genFullStudyLink(appInfo);
                         }}
                     >
                         {`${appInfo.appName.toUpperCase()} Full-length Test`}
@@ -308,7 +312,6 @@ const TopicLevelProgress = ({
                                 if (level.tag == "final-test") {
                                     if (listGameState.find((g) => g.id + "" == level.id)) thisFinalTestBePracticed = true;
                                 }
-                                if (level.tag) console.log(isFinishThisLevel, isPassThisLevel);
 
                                 return (
                                     <a
@@ -340,9 +343,11 @@ const TopicLevelProgress = ({
                                                         fullSlug: _href.slice(1, _href.length), // bỏ dấu / vì trong này đang không xử lý dấu đó
                                                         type: SYNC_TYPE.TYPE_LEARN_TEST,
                                                         topicId: currentTopic.id,
+                                                        gameType: Config.TOPIC_GAME,
                                                     });
                                                 }
-                                                window.location.href = _href;
+                                                console.log("kkkkkkkkk", unlocked, _href);
+                                                // window.location.href = _href;
                                             }
                                         }}
                                     >

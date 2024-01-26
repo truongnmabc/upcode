@@ -15,7 +15,7 @@ const AnswerSheet = ({ gameState, contentData }: { gameState: GameState; content
     let questions = gameState.questions.length > 0 ? gameState.questions : createTempData(isTest ? 135 : 10);
     const dispatch = useDispatch();
     let maximumQuestionIndexIsAnswered = 0;
-    if (gameState.gameType == Config.TEST_GAME) {
+    if (isTest) {
         for (let q of gameState.questions) {
             // phải trả lời xong thì mới next sang câu tiếp nên cần
             // đảm bảo question nào có tồn tại choice được selected thì tức là nó đã được trả lời
@@ -40,7 +40,7 @@ const AnswerSheet = ({ gameState, contentData }: { gameState: GameState; content
             <div className="v4-answer-sheet-grid-question-0">
                 {questions.map((q, index) => {
                     // chỉ có phần test được phép chọn và chỉ được chọn câu hỏi đã trả lời qua rồi => disable các câu còn lại
-                    let disable = gameState.gameType == Config.TEST_GAME ? index >= maximumQuestionIndexIsAnswered : true;
+                    let disable = isTest ? index >= maximumQuestionIndexIsAnswered : true;
                     let status = "";
                     if (
                         q.questionStatus == Config.QUESTION_ANSWERED_CORRECT ||
@@ -61,7 +61,7 @@ const AnswerSheet = ({ gameState, contentData }: { gameState: GameState; content
                                 gameState.indexActive === index && !(isFinish == 1) ? "current" : ""
                             } ${disable || isFinish == 1 ? "disabled" : ""} ${status}`}
                             onClick={(e) => {
-                                if (gameState.gameType == Config.TEST_GAME) {
+                                if (isTest) {
                                     if (index < maximumQuestionIndexIsAnswered) {
                                         if (index != gameState.indexActive && !(isFinish == 1)) {
                                             // không cho bấm vào câu hiện tại đang làm

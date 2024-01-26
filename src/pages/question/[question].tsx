@@ -57,6 +57,8 @@ const QuestionPage = ({
 };
 
 export const getServerSideProps = async (context) => {
+    let _isParentApp = isParentApp();
+    if (_isParentApp) context.res.writeHead(302, { Location: "/" }).end();
     let questionPath = context.params.question as string;
     let appInfo: IAppInfo | null = getAppInfo();
     let slugParts = questionPath.split("-");
@@ -111,8 +113,6 @@ export const getServerSideProps = async (context) => {
     // 20% là “Take more free practice tests for other ASVAB topics with our [ASVAB] practice tests now!”
     // 10% là “Take more free practice tests for other ASVAB topics with our [ASVAB] prep now!”
     let anchorText = getAnchorText(type, appInfo.appName);
-
-    const _isParentApp = isParentApp();
     let listAppInfos = [];
     if (_isParentApp) {
         listAppInfos = readAllAppInfos();

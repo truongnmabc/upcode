@@ -76,6 +76,12 @@
                 "url": "air-force-asvab-practice-test",
                 "learnUrl": "arithmetic-reasoning",
                 "isBranch": true
+            },
+            {
+                "title": "National Guard ASVAB Practice Test",
+                "url": "national-guard-asvab-practice-test",
+                "learnUrl": "arithmetic-reasoning",
+                "isBranch": true
             }
         ]
     },
@@ -155,17 +161,17 @@
             {
                 "title": "PMP People Practice Test",
                 "url": "pmp-people-practice-test",
-                "learnUrl": "chapter-1-people-domain-1-0-"
+                "learnUrl": "chapter-1-people-domain-1-0"
             },
             {
                 "title": "PMP Process Practice Test",
                 "url": "pmp-process-practice-test",
-                "learnUrl": "chapter-2-process-domain-2-0-"
+                "learnUrl": "chapter-2-process-domain-2-0"
             },
             {
                 "title": "PMP Business Environment Practice Test",
                 "url": "pmp-business-environment-practice-test",
-                "learnUrl": "chapter-3-business-environment-domain-3-0-"
+                "learnUrl": "chapter-3-business-environment-domain-3-0"
             }
         ]
     },

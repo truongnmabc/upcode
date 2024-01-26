@@ -12,10 +12,22 @@ import { useEffect, useRef } from "react";
 import IWebData from "@/types/webData";
 import { GameState } from "@/redux/features/game";
 import V4CircleProgress from "../v4-material/V4CircleProgress";
+import Link from "next/link";
+import { getLink } from "@/utils";
+import ArrowLeft from "../icon/ArrowLeft";
 const MainStudyView = dynamic(() => import("./MainStudyView"));
-const HeaderStudyV4 = dynamic(() => import("./HeaderStudyV4"), { ssr: false });
-const StudyBannerDownloadApp = dynamic(() => import("./StudyBannerDownloadApp"));
-const EndTestV4 = dynamic(() => import("./end-test-v4"));
+const HeaderStudyV4 = dynamic(() => import("./HeaderStudyV4"), {
+    ssr: false,
+    loading: () => <div className="header-study-v4-frame" />,
+});
+const StudyBannerDownloadApp = dynamic(() => import("./StudyBannerDownloadApp"), {
+    ssr: false,
+    loading: () => <div className="study-banner-download-frame" />,
+});
+const EndTestV4 = dynamic(() => import("./end-test-v4"), {
+    ssr: false,
+    loading: () => <div className="v4-end-test-frame"></div>,
+});
 const AnswerSheet = dynamic(() => import("./AnswerSheet"));
 const GridTopic = dynamic(() => import("../homepage/GridTopic"));
 
@@ -72,9 +84,9 @@ const StudyView = ({
         <>
             <div className="__768" style={{ height: 60 }}>
                 {isFinish == 0 ? (
-                    <HeaderStudyV4 gameState={gameState} showProgress={gameType == Config.TOPIC_GAME} />
+                    <HeaderStudyV4 gameState={gameState} isTopicTest={gameType == Config.TOPIC_GAME} appInfo={appInfo} />
                 ) : isFinish == 1 ? (
-                    <div>{contentData.title}</div>
+                    <div style={{ lineHeight: "60px", textAlign: "center", fontWeight: 600 }}>{contentData.title}</div>
                 ) : (
                     <></>
                 )}
@@ -83,6 +95,13 @@ const StudyView = ({
             <MyContainer>
                 <div className="v4-study-main-view-0" id="v4-study-main-view-0">
                     <div className="v4-study-main-view-left-bar-0 _769">
+                        <div className="v4-study-breadcum">
+                            <Link href="/" prefetch={false}>
+                                Home
+                            </Link>
+                            <img src="/images/arrow-left.png" alt="" width={12} height={12} />
+                            <Link href={getLink(appInfo)}>{appInfo.appName}</Link>
+                        </div>
                         {showAnswerSheet && <AnswerSheet gameState={gameState} contentData={contentData} />}
                         {gameType === Config.TOPIC_GAME ? (
                             <div className="v4-study-list-topics-0">
@@ -148,7 +167,7 @@ const StudyView = ({
                                                 ? "full_test"
                                                 : gameType == Config.TOPIC_GAME
                                                 ? "topic"
-                                                : ""
+                                                : "branch_test"
                                         }
                                     />
                                     {!!contentData?.content && (

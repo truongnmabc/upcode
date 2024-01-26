@@ -133,12 +133,14 @@ const SearchAppComponent = ({ listAppInfos, isDesktop }: { listAppInfos: IAppInf
                         handleSearchInput(res.search);
                         localStorage.setItem(KEY, JSON.stringify(_nh)); // đưa lựa chọn lên đầu danh sách
                         setHistorySearchedLocalStorage(_nh);
+                        if (res.link) window.location.href = res.link;
                     }}
                     onSelectAppResult={(res: HistorySearched) => {
                         let _h = historySearchedLocalStorage.filter((h) => h.search !== res.search);
                         let _nh = [res, ..._h];
                         localStorage.setItem(KEY, JSON.stringify(_nh)); // đưa lựa chọn lên đầu danh sách
                         setHistorySearchedLocalStorage(_nh);
+                        window.location.href = res.link;
                     }}
                 />
             ) : (
@@ -179,6 +181,11 @@ const SearchResult = ({
             window.removeEventListener("mousedown", clickEvent);
         };
     }, []);
+    const stateName = localStorage.getItem("stateSlug");
+    let _searchValue = searchValue.filter((v) => {
+        if (typeof v != "string") return !histories.find((h) => h.link === getLink(v, stateName));
+        return true;
+    });
     return (
         <div className="search-result-container overflow-auto" ref={areaRef}>
             {!!histories.length && (
@@ -189,9 +196,6 @@ const SearchResult = ({
                                 key={index}
                                 className="align-center history-item"
                                 onClick={() => {
-                                    if (hist.link) {
-                                        window.open("https://www.google.com/", "_blank");
-                                    }
                                     onSelectHistorySearched(hist);
                                 }}
                             >
@@ -239,9 +243,9 @@ const SearchResult = ({
                     })}
                 </div>
             )}
-            {!!searchValue.length && (
+            {!!_searchValue.length && (
                 <div id="_search-result-container">
-                    {searchValue.map((res: IAppInfo | string, index) => {
+                    {_searchValue.map((res: IAppInfo | string, index) => {
                         if (typeof res === "string")
                             return (
                                 <div key={index} className="no-result">
@@ -255,7 +259,6 @@ const SearchResult = ({
                                     key={index}
                                     className="result-item align-center"
                                     onClick={() => {
-                                        let stateName = localStorage.getItem("stateSlug");
                                         let link = getLink(res, stateName);
                                         let _h = { timeStamp: Date.now(), search: res.appName, link: link, img: srcImg };
                                         onSelectAppResult(_h);

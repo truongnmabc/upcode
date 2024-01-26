@@ -45,7 +45,7 @@ const StudyPage = ({
         titleSEO: string;
         descriptionSEO: string;
         keywordSEO: string;
-        gameType: number;
+        gameType: -1 | 0 | 1;
     };
 }) => {
     const router = useRouter();

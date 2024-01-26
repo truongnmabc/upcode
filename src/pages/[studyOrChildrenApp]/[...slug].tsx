@@ -16,6 +16,7 @@ import StudyLayout from "../../container/study/StudyLayout";
 import { default as listAppTopic, default as listAppTopics } from "../../data/topic-landing-page.json";
 import { AppInfo, IAppInfo } from "../../models/AppInfo";
 import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
+import { useEffect } from "react";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -32,7 +33,7 @@ const StudyPage = ({
     titleSEO: string;
     descriptionSEO: string;
     keywordSEO: string;
-    gameType: number;
+    gameType: -1 | 0 | 1;
 }) => {
     const router = useRouter();
     let _slug = router.asPath.slice(1, router.asPath.length); // mô tả tại IWebData, trong asPath có phần #level, slice để bỏ đi dấu / ở đầu vì trước dùng slug của getServerSideProps không có
@@ -45,8 +46,6 @@ const StudyPage = ({
         gameType,
         currentAppShortName: getAppShortName(appInfo.appShortName),
     };
-    console.log("dcmmmmmmmmmmmm");
-
     return (
         <>
             <SEO

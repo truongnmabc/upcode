@@ -5,10 +5,7 @@ const getRawTopicsData = (appShortName) => {
     if (appTopic) {
         const tempTopics = appTopic.topics.filter((topic) => !topic.isBranch);
         listSubMenu = tempTopics.map((t, index) => {
-            const name = t.learnUrl
-                .split("-")
-                .map((word) => (word[0] ? word[0].toUpperCase() : "" + word.slice(1)))
-                .join(" ");
+            const name = t.title;
             return {
                 icon: "",
                 tag: t.learnUrl,

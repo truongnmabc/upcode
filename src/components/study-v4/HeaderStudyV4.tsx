@@ -9,15 +9,31 @@ import { GameState } from "@/redux/features/game";
 import { onGameSubmitted } from "@/redux/reporsitory/game.repository";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import MyContainer from "../v4-material/MyContainer";
+import { IAppInfo } from "@/models/AppInfo";
+import { isParentApp } from "@/config/config_web";
+import { getLink } from "@/utils";
 
-const HeaderStudyV4 = ({ gameState, showProgress }: { gameState: GameState; showProgress: boolean }) => {
+const HeaderStudyV4 = ({
+    gameState,
+    isTopicTest,
+    appInfo,
+}: {
+    gameState: GameState;
+    isTopicTest: boolean;
+    appInfo: IAppInfo;
+}) => {
     const dispatch = useDispatch();
     const [openDrawer, setOpendrawer] = useState(false);
 
     const handleExitStudy = (event: "submit" | "exit") => {
         setOpendrawer(false);
         if (event == "exit") {
-            window.location.href = "/";
+            let stateName = localStorage.getItem("stateSlug");
+            let url = "/";
+            if (isParentApp()) {
+                url = getLink(appInfo, stateName);
+            }
+            window.location.href = url;
         }
         if (event == "submit") {
             ga.event({
@@ -39,12 +55,12 @@ const HeaderStudyV4 = ({ gameState, showProgress }: { gameState: GameState; show
                     >
                         <ArrowBackIosNewRoundedIcon htmlColor="#212121" />
                     </div>
-                    {gameState.gameType == Config.TEST_GAME && (
+                    {!isTopicTest && (
                         <div className="v4-test-game-count-down-mobile-0">
                             <CountDownV4 gameState={gameState} />
                         </div>
                     )}
-                    {gameState.gameType == Config.TOPIC_GAME && (
+                    {isTopicTest && (
                         <div className="v4-test-game-level-tag-mobile-0">{gameState.levelTag.replace("-", " ").trim()}</div>
                     )}
                     <span className=" right ">{`Q${gameState.indexActive + 1}/${gameState.questions.length}`}</span>
@@ -56,7 +72,7 @@ const HeaderStudyV4 = ({ gameState, showProgress }: { gameState: GameState; show
                     />
                 </div>
             </MyContainer>
-            {showProgress && <LevelGameProgress gameState={gameState} />}
+            {isTopicTest && <LevelGameProgress gameState={gameState} />}
         </>
     );
 };

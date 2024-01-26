@@ -13,11 +13,11 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import V4QuestionContent from "./V4QuestionContent";
 import { nextQuestion, onChooseAnswer, onGameSubmitted } from "@/redux/reporsitory/game.repository";
 
-const CancelRoundedIcon = dynamic(() => import("@mui/icons-material/CancelRounded"));
-const CheckCircleRoundedIcon = dynamic(() => import("@mui/icons-material/CheckCircleRounded"));
-const CountDownV4 = dynamic(() => import("./CountDownV4"));
-const ErrorRoundedIcon = dynamic(() => import("@mui/icons-material/ErrorRounded"));
-const InfoIcon = dynamic(() => import("../icon/InfoIcon"));
+const CancelRoundedIcon = dynamic(() => import("@mui/icons-material/CancelRounded"), { ssr: false });
+const CheckCircleRoundedIcon = dynamic(() => import("@mui/icons-material/CheckCircleRounded"), { ssr: false });
+const CountDownV4 = dynamic(() => import("./CountDownV4"), { ssr: false, loading: () => <div style={{ height: 29 }} /> });
+const ErrorRoundedIcon = dynamic(() => import("@mui/icons-material/ErrorRounded"), { ssr: false });
+const InfoIcon = dynamic(() => import("../icon/InfoIcon"), { ssr: false });
 const V4CircleProgress = dynamic(() => import("../v4-material/V4CircleProgress"));
 
 const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: IAppInfo }) => {
@@ -55,7 +55,7 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                 action_type: "click",
                 target_question_id: choice.questionId,
                 target_is_correct: choice.isCorrect,
-                context_page: gameState.gameType == Config.TEST_GAME ? "test" : "topic",
+                context_page: gameState.gameType == Config.TOPIC_GAME ? "topic" : "test",
                 context_study_id: gameState.id,
             },
         });
@@ -69,8 +69,8 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                     <V4CircleProgress />
                 ) : (
                     <>
-                        {gameState.gameType == Config.TEST_GAME && isDesktop && (
-                            <div className="v4-test-game-count-down-desktop-0 v4-flex">
+                        {gameState.gameType !== Config.TOPIC_GAME && (
+                            <div className="v4-test-game-count-down-desktop-0 _769">
                                 <CountDownV4 gameState={gameState} />
                             </div>
                         )}
@@ -123,7 +123,9 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                                         {!gameState.answeredQuestionIds.includes(gameState.currentQuestion.id)}
                                         {gameState.currentQuestion.questionStatus == Config.QUESTION_ANSWERED_INCORRECT && (
                                             <>
-                                                <CancelRoundedIcon htmlColor="#fb7072" />
+                                                <div style={{ width: 24, height: 24 }}>
+                                                    <CancelRoundedIcon htmlColor="#fb7072" />
+                                                </div>
                                                 <span style={{ color: "#fb7072" }}>
                                                     <div>INCORRECT</div>
                                                     <span>You will see this question soon</span>
@@ -132,7 +134,9 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                                         )}
                                         {gameState.currentQuestion.questionStatus == Config.QUESTION_ANSWERED_CORRECT && (
                                             <>
-                                                <CheckCircleRoundedIcon htmlColor="#00c17c" />
+                                                <div style={{ width: 24, height: 24 }}>
+                                                    <CheckCircleRoundedIcon htmlColor="#00c17c" />
+                                                </div>
                                                 <span style={{ color: "#00c17c" }}>
                                                     <div>CORRECT</div>
                                                     <span>You will not see this question for a while</span>
@@ -144,7 +148,9 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                                         (gameState.answeredQuestionIds.includes(gameState.currentQuestion.id) ? (
                                             gameState.arrayIndexWrong.includes(gameState.indexActive) ? (
                                                 <div className="v4-got-this-question-wrong-last-time-or-new-question">
-                                                    <ErrorRoundedIcon htmlColor="#E3A651" />
+                                                    <div style={{ width: 24, height: 24 }}>
+                                                        <ErrorRoundedIcon htmlColor="#E3A651" />
+                                                    </div>
                                                     <span style={{ color: "#E3A651" }}>
                                                         <div>LEARNING</div>
                                                         <span>You got this question wrong last time</span>
@@ -152,7 +158,9 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                                                 </div>
                                             ) : (
                                                 <div className="v4-got-this-question-wrong-last-time-or-new-question">
-                                                    <CheckCircleRoundedIcon htmlColor="#00c17c" />
+                                                    <div style={{ width: 24, height: 24 }}>
+                                                        <CheckCircleRoundedIcon htmlColor="#00c17c" />
+                                                    </div>
                                                     <span style={{ color: "#00c17c" }}>
                                                         <div>REVIEWING</div>
                                                         <span>You got this question last time</span>
@@ -161,7 +169,9 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                                             )
                                         ) : (
                                             <div className="v4-got-this-question-wrong-last-time-or-new-question">
-                                                <InfoIcon color="#6BA6FF" />
+                                                <div style={{ width: 24, height: 24 }}>
+                                                    <InfoIcon color="#6BA6FF" />
+                                                </div>
                                                 <span style={{ color: "#6BA6FF" }}>
                                                     <div>NEW QUESTION</div>
                                                 </span>

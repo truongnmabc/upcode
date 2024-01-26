@@ -34,10 +34,10 @@ const V4QuestionContent = ({
     useEffect(() => {
         if (renderMathJax && isMathJaxContent(content)) {
             if (window.MathJax) {
-                renderMath(onLoaded); // vì nội dung mathjax tải lâu hơn nên phải truyền hàm này vào
+                renderMath(onLoaded(1)); // vì nội dung mathjax tải lâu hơn nên phải truyền hàm này vào
             } else {
                 setTimeout(() => {
-                    renderMath(onLoaded);
+                    renderMath(onLoaded(2));
                 }, 1500);
             }
             // renderMath();
@@ -149,19 +149,6 @@ const _QuestionContent = ({
             // .replace(/\n/g, "<br/>")
             .replace(/\\u(....)/g, "&#x$1;");
     }
-    const ref = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-        // https://poe.com/s/CVfILhm0ZHQ4Z61lOmjX
-        // check element is resized
-        const ele = ref.current;
-        if (ele) {
-            const resizeObserver = new ResizeObserver(onLoaded);
-            resizeObserver.observe(ele);
-            return () => {
-                resizeObserver.disconnect();
-            };
-        }
-    }, [ref.current]);
     const [openDialog, setOpenDialog] = useState("");
     if (type === TextContentType.question) {
         return (
@@ -173,13 +160,9 @@ const _QuestionContent = ({
                     image={image}
                     showImageDialog={(url) => {
                         setOpenDialog(url);
-                        //     {
-                        //     children: <ImageDialog closeDialog={closeDialog} url={url} />,
-                        // }
                     }}
                     place={place}
-                    // onLoaded={onLoaded}
-                    contentRef={ref}
+                    onLoaded={onLoaded}
                 />
                 {!!openDialog && (
                     <Dialog open={!!openDialog} onClose={() => setOpenDialog("")} className="customize-dialog">
@@ -189,15 +172,7 @@ const _QuestionContent = ({
             </>
         );
     }
-    return (
-        <TextContent
-            content={content}
-            type={type}
-            bucket={bucket}
-            //  onLoaded={onLoaded}
-            contentRef={ref}
-        />
-    );
+    return <TextContent content={content} type={type} bucket={bucket} onLoaded={onLoaded} />;
 };
 
 const TextContent = ({
@@ -205,17 +180,26 @@ const TextContent = ({
     type,
     bucket,
     showImageDialog,
-    // onLoaded, // hàm này để gọi chỗ (****)
-    contentRef,
+    onLoaded, // hàm này để gọi chỗ (****)
 }: {
     content: string;
     type: string;
     bucket: string;
     showImageDialog?: (agr: any) => void;
-    // onLoaded: (arg?: any) => void;
-    contentRef: any;
+    onLoaded: (arg?: any) => void;
 }) => {
     let result = content;
+    const contentRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        const ele = contentRef.current;
+        if (ele) {
+            const resizeObserver = new ResizeObserver(onLoaded);
+            resizeObserver.observe(ele);
+            return () => {
+                resizeObserver.disconnect();
+            };
+        }
+    }, [contentRef.current]);
     if (!isMathJaxContent(content) && content.split("$")?.length > 2) {
         result = content
             .split("$")
@@ -260,8 +244,7 @@ const TextContentQuestion = ({
     type,
     bucket,
     place,
-    // onLoaded,
-    contentRef,
+    onLoaded,
 }: {
     content: string;
     image: string;
@@ -269,10 +252,21 @@ const TextContentQuestion = ({
     type: string;
     bucket: string;
     place: string;
-    // onLoaded: (arg?: any) => void;
-    contentRef;
+    onLoaded: (arg?: any) => void;
 }) => {
     const isDesktop = useMediaQuery("(min-width:769px)");
+    const contentRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        const ele = contentRef.current;
+        if (ele) {
+            const resizeObserver = new ResizeObserver(onLoaded);
+            resizeObserver.observe(ele);
+            return () => {
+                resizeObserver.disconnect();
+            };
+        }
+    }, [contentRef.current]);
+
     if (!image || image == "null") {
         if (hasImage(content)) {
             return (
@@ -281,8 +275,7 @@ const TextContentQuestion = ({
                     type={type}
                     bucket={bucket}
                     showImageDialog={(url) => showImageDialog(url)}
-                    // onLoaded={onLoaded}
-                    contentRef={contentRef}
+                    onLoaded={onLoaded}
                 />
             );
         }

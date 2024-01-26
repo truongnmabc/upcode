@@ -67,8 +67,8 @@ const EndTestV4 = ({
         if (nextLevelIndex < currentTopic.topics.length - 1) {
             //tại các level trước final test thì mới có nút next level và final test
             if (isPass)
-                nextLevelHref = `/${genFullStudyLink(appInfo, currentTopic.tag)}#${currentTopic.topics[nextLevelIndex].tag}`;
-            finalTestHref = `/${genFullStudyLink(appInfo, currentTopic.tag)}#final-test`;
+                nextLevelHref = `${genFullStudyLink(appInfo, currentTopic.tag)}#${currentTopic.topics[nextLevelIndex].tag}`;
+            finalTestHref = `${genFullStudyLink(appInfo, currentTopic.tag)}#final-test`;
         }
     }
     let isEndLevel = gameState.levelTag.includes("level");
@@ -104,6 +104,7 @@ const EndTestV4 = ({
                             finalTestHref={finalTestHref}
                             topicId={currentTopic?.id ?? ""}
                             appInfo={appInfo}
+                            gameType={gameState.gameType}
                         />
                     )}
                 </div>
@@ -122,6 +123,7 @@ const EndTestV4 = ({
                         finalTestHref={finalTestHref}
                         topicId={currentTopic?.id ?? ""}
                         appInfo={appInfo}
+                        gameType={gameState.gameType}
                     />
                     {!gameState.levelTag.includes("level") && (
                         <div id="study_review">
@@ -140,12 +142,14 @@ const EndTestButton = ({
     finalTestHref,
     topicId,
     appInfo,
+    gameType,
 }: {
     levelTag: string;
     nextLevelHref: string;
     finalTestHref: string;
     topicId: string;
     appInfo: IAppInfo;
+    gameType: number;
 }) => {
     const dispatch = useDispatch();
     const directHref = (_href: string) => {
