@@ -165,88 +165,83 @@ const formatData = (url: string) => {
 };
 export const getStaticProps: GetStaticProps = async (context) => {
     let slug = context.params.studyOrChildrenApp as string;
-    try {
-        let _isParentApp = isParentApp();
-        if (_isParentApp) {
-            // vaof app con, làm tương tự như ở /pages/index.tsx
-            let listTopics = []; // topics
-            let tests = []; // tests
-            // let homeSeoContent;
-            let listAppInfos = readAllAppInfos();
-            let childAppInfo = listAppInfos.find((a) => {
-                return slug === getLink(a).replaceAll("/", "");
+    let _isParentApp = isParentApp();
+    if (_isParentApp) {
+        // vaof app con, làm tương tự như ở /pages/index.tsx
+        let listTopics = []; // topics
+        let tests = []; // tests
+        // let homeSeoContent;
+        let listAppInfos = readAllAppInfos();
+        let childAppInfo = listAppInfos.find((a) => {
+            return slug === getLink(a).replaceAll("/", "");
+        });
+        if (childAppInfo) {
+            let _APP_SHORT_NAME = getAppShortName(childAppInfo.appShortName);
+            let appData: any = await readFileAppFromGoogleStorage(_APP_SHORT_NAME);
+            listTopics = appData?.topics ?? [];
+            listTopics.sort((a: any, b: any) => {
+                return a.name.localeCompare(b.name);
             });
-            if (childAppInfo) {
-                let _APP_SHORT_NAME = getAppShortName(childAppInfo.appShortName);
-                let appData: any = await readFileAppFromGoogleStorage(_APP_SHORT_NAME);
-                listTopics = appData?.topics ?? [];
-                listTopics.sort((a: any, b: any) => {
-                    return a.name.localeCompare(b.name);
-                });
-                let _tests = appData?.fullTests ?? [];
-                tests = _tests.map((t: any) => new TestInfo(t));
-            }
-            // homeSeoContent = await getHomeSeoContentApi("home-seo-content");
-            // if (homeSeoContent) {
-            //     homeSeoContent.content = replaceYear(homeSeoContent.content);
-            // }
-            let rankMathTitle = childAppInfo?.rank_math_title;
-            if (childAppInfo && rankMathTitle) {
-                rankMathTitle = rankMathTitle?.replace("%title%", childAppInfo.title).replace("%page%", "");
-                rankMathTitle = replaceYear(rankMathTitle);
-            }
-            let titleSEO = !!rankMathTitle ? rankMathTitle : childAppInfo?.title;
-            if (titleSEO) titleSEO = replaceYear(titleSEO);
-
-            return convertToJSONObject({
-                props: {
-                    childrenApp: {
-                        titleSEO: titleSEO,
-                        descriptionSEO: childAppInfo?.descriptionSEO,
-                        listTopics,
-                        tests: tests,
-                        keywordSEO: childAppInfo?.keywordSEO,
-                        childAppInfo,
-                        // homeSeoContent,
-                    },
-                },
-            });
-        } else {
-            let appInfo = getAppInfo();
-            let topics = listAppTopics.find((app) => app.appName === APP_SHORT_NAME).topics;
-            const topic = topics.find((topic) => topic.url === slug); // chắc chắn có giá trị vì url đã được xác định từ getStaticPaths
-            const contentSEO = await getHomeSeoContentStateApi(slug);
-            if (contentSEO) {
-                contentSEO.content = replaceYear(contentSEO.content);
-            }
-            let titleSEO = contentSEO?.titleSeo?.length > 0 ? contentSEO.titleSeo[0] : appInfo.title;
-            let descriptionSEO = contentSEO?.descSeo?.length > 0 ? contentSEO.descSeo[0] : appInfo.descriptionSEO;
-            // ở đây có thể xác định được gameType luôn
-            let gameType = Config.TEST_GAME;
-            if (!!topic) {
-                if (topic.isBranch) gameType = Config.BRANCH_TEST_GAME;
-                else gameType = Config.TOPIC_GAME;
-            }
-            return convertToJSONObject({
-                props: {
-                    study: {
-                        appInfo,
-                        titleSEO,
-                        descriptionSEO,
-                        keywordSEO: appInfo.keywordSEO,
-                        topic: {
-                            ...topic,
-                            content: contentSEO?.content ?? "",
-                            title: topic ? topic?.title : getTitle(appInfo),
-                        },
-                        gameType,
-                    },
-                },
-            });
+            let _tests = appData?.fullTests ?? [];
+            tests = _tests.map((t: any) => new TestInfo(t));
         }
-    } catch (err) {
-        console.log("get Error when access " + slug);
-        return { redirect: { destination: "/", permanent: false } };
+        // homeSeoContent = await getHomeSeoContentApi("home-seo-content");
+        // if (homeSeoContent) {
+        //     homeSeoContent.content = replaceYear(homeSeoContent.content);
+        // }
+        let rankMathTitle = childAppInfo?.rank_math_title;
+        if (childAppInfo && rankMathTitle) {
+            rankMathTitle = rankMathTitle?.replace("%title%", childAppInfo.title).replace("%page%", "");
+            rankMathTitle = replaceYear(rankMathTitle);
+        }
+        let titleSEO = !!rankMathTitle ? rankMathTitle : childAppInfo?.title;
+        if (titleSEO) titleSEO = replaceYear(titleSEO);
+
+        return convertToJSONObject({
+            props: {
+                childrenApp: {
+                    titleSEO: titleSEO,
+                    descriptionSEO: childAppInfo?.descriptionSEO,
+                    listTopics,
+                    tests: tests,
+                    keywordSEO: childAppInfo?.keywordSEO,
+                    childAppInfo,
+                    // homeSeoContent,
+                },
+            },
+        });
+    } else {
+        let appInfo = getAppInfo();
+        let topics = listAppTopics.find((app) => app.appName === APP_SHORT_NAME).topics;
+        const topic = topics.find((topic) => topic.url === slug); // chắc chắn có giá trị vì url đã được xác định từ getStaticPaths
+        const contentSEO = await getHomeSeoContentStateApi(slug);
+        if (contentSEO) {
+            contentSEO.content = replaceYear(contentSEO.content);
+        }
+        let titleSEO = contentSEO?.titleSeo?.length > 0 ? contentSEO.titleSeo[0] : appInfo.title;
+        let descriptionSEO = contentSEO?.descSeo?.length > 0 ? contentSEO.descSeo[0] : appInfo.descriptionSEO;
+        // ở đây có thể xác định được gameType luôn
+        let gameType = Config.TEST_GAME;
+        if (!!topic) {
+            if (topic.isBranch) gameType = Config.BRANCH_TEST_GAME;
+            else gameType = Config.TOPIC_GAME;
+        }
+        return convertToJSONObject({
+            props: {
+                study: {
+                    appInfo,
+                    titleSEO,
+                    descriptionSEO,
+                    keywordSEO: appInfo.keywordSEO,
+                    topic: {
+                        ...topic,
+                        content: contentSEO?.content ?? "",
+                        title: topic ? topic?.title : getTitle(appInfo),
+                    },
+                    gameType,
+                },
+            },
+        });
     }
 };
 // export const getServerSideProps = async (context) => {

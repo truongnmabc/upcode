@@ -45,24 +45,27 @@ export default class TestInfo implements ITestInfo {
         this.testQuestionData = new Array();
         this.timeTest = object.timeTest ?? -1;
         this.title = object.title ? object.title : "";
-        if (typeof object.testQuestionData === "string") {
-            let totalQuestion = 0;
-            let testQuestionDataJson = JSON.parse(object.testQuestionData);
-            testQuestionDataJson?.forEach((el: any) => {
-                this.testQuestionData.push(el);
-                totalQuestion += el.questionIds?.length ?? 0;
-                if (!el.correctQuestion) {
-                    el.correctQuestion = [0, 0, 0];
-                }
-            });
+        this.totalQuestion = 0;
+        if (!!object.testQuestionData) {
+            if (typeof object.testQuestionData === "string") {
+                let totalQuestion = 0;
+                let testQuestionDataJson = JSON.parse(object.testQuestionData);
+                testQuestionDataJson?.forEach((el: any) => {
+                    this.testQuestionData.push(el);
+                    totalQuestion += el.questionIds?.length ?? 0;
+                    if (!el.correctQuestion) {
+                        el.correctQuestion = [0, 0, 0];
+                    }
+                });
 
-            this.totalQuestion = totalQuestion;
-        } else {
-            this.totalQuestion = object.totalQuestion ?? 0;
-            this.testQuestionData = new Array();
-            object.testQuestionData?.forEach((el: any) => {
-                this.testQuestionData.push(el);
-            });
+                this.totalQuestion = totalQuestion;
+            } else {
+                this.totalQuestion = object.totalQuestion ?? 0;
+                this.testQuestionData = new Array();
+                object.testQuestionData?.forEach((el: any) => {
+                    this.testQuestionData.push(el);
+                });
+            }
         }
         if (object.questionIds) {
             this.questionIds = object.questionIds;
