@@ -43,3 +43,11 @@
         }
     }
 }
+
+.customize-dialog {
+    .MuiDialog-paper {
+        margin: 16px;
+        max-width: unset;
+        max-height: unset;
+    }
+}

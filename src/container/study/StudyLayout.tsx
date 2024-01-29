@@ -12,7 +12,7 @@ const StudyLayout = ({ appInfo, contentData }: { appInfo: IAppInfo; contentData:
     // chú ý là phần học này đã được chuyển qua build static
     const gameState: GameState = useSelector((state: AppState) => state.gameReducer.game);
     const _listTopics: ITopic[] = useSelector((state: AppState) => state.topicReducer.list);
-    const listTopics = _listTopics.filter((t) => t);
+    const listTopics = _listTopics.filter((t) => t && t.rootTopicId + "" === appInfo.appId + "");
     return (
         <div className="use-background">
             <div className="_769">

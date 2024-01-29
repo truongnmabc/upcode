@@ -14,6 +14,8 @@ import TargetIcon from "../../icon/TargetIcon";
 import AppState from "@/redux/appState";
 import { GameState } from "@/redux/features/game";
 import { getStudyData, onRestartGame } from "@/redux/reporsitory/game.repository";
+import { isParentApp } from "@/config/config_web";
+import { getLink } from "@/utils";
 
 const getDoneTestText = (isPass?: boolean, endLevelView?: string) => {
     const TITLE_PASSED = "Such an excellent performance";
@@ -83,7 +85,12 @@ const EndTestV4 = ({
                                 className="v4-end-test-container-title-icon"
                                 style={{ cursor: "pointer" }}
                                 onClick={() => {
-                                    window.location.href = "/";
+                                    let stateName = localStorage.getItem("stateSlug");
+                                    let url = "/";
+                                    if (isParentApp()) {
+                                        url = getLink(appInfo, stateName);
+                                    }
+                                    window.location.href = url;
                                 }}
                             >
                                 <ArrowBackIosNewRoundedIcon htmlColor="#212121" />

@@ -38,7 +38,7 @@ const QuestionPanelV4 = ({
                             style={{
                                 marginBottom: "10px",
                                 marginTop: "16px",
-                                color: "var(--main-color)",
+                                color: "#7c6f5b",
                                 textDecoration: "underline",
                                 cursor: "pointer",
                             }}
@@ -46,7 +46,7 @@ const QuestionPanelV4 = ({
                                 setExpandParagraph(!expandParagraph);
                             }}
                         >
-                            {expandParagraph ? "Read more" : "Show less"}
+                            {!expandParagraph ? "Read more" : "Show less"}
                         </div>
                         <MyCollapse expand={expandParagraph}>
                             <V4QuestionContent

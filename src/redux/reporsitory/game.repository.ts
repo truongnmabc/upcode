@@ -70,7 +70,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 // phần branch dùng chung câu hỏi với test
                 // quy định slug này là vào practice-test
                 // design mới là sẽ chỉ còn 1 bài test ~ diagnosticTest nên testInfoV4Reducer.list chỉ có 1 phần tử thôi
-                let _test = tests.find((t) => t.slug == slug); // tim thong tin bai test (full-test va branch test)
+                let _test = tests.find((t) => t.slug.includes(slug)); // tim thong tin bai test (full-test va branch test)
                 if (!_test) {
                     //call api neu nh khong co
                     getTest = true;

@@ -26,7 +26,7 @@ const TestBanner = ({ appInfo, test }: { appInfo: IAppInfo; test: ITestInfo }) =
                     <h3 className="v4-font-semi-bold">{`Full-length ${appInfo.appName} Test`}</h3>
                     <div className="v4-test-banner-content-1">
                         <div className="v4-test-banner-content-21">
-                            <strong className="v4-font-semi-bold">{test?.totalQuestion}</strong>
+                            <strong className="v4-font-semi-bold">{test?.totalQuestion ? test.totalQuestion : 0}</strong>
                             <div>questions</div>
                         </div>
                         <div className="v4-test-banner-content-22">
@@ -43,7 +43,7 @@ const TestBanner = ({ appInfo, test }: { appInfo: IAppInfo; test: ITestInfo }) =
                         ${timeTest > 60 ? `(${Math.floor(timeTest / 60)} hours and ${timeTest % 60} minutes)` : ""} to finish ${
                             test?.totalQuestion
                         } questions 
-                        from all ${test?.testQuestionData.length} ${appInfo.appName} sections.`}
+                        from all ${test?.totalQuestion} ${appInfo.appName} sections.`}
                     </span>
 
                     <div className="v4-test-banner-content-button-practice v4-border-radius">Practice now!</div>

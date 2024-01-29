@@ -56,7 +56,7 @@ const QuestionPageView = ({
                         currentTopic={topic}
                         anchorText={anchorText}
                     />
-                    {isDesktop ? <></> : <StudyBannerDownloadApp appInfo={appInfo} isDesktop={isDesktop} place="question" />}
+                    {isDesktop ? <></> : <StudyBannerDownloadApp appInfo={appInfo} place="question" />}
                 </div>
             </div>
         </MyContainer>

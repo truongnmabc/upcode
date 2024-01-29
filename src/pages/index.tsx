@@ -14,6 +14,7 @@ import SeoHeader from "@/components/seo/SeoHeader";
 import StoreProvider from "@/redux/StoreProvider";
 import TestInfo, { ITestInfo } from "@/models/TestInfo";
 import { APP_SHORT_NAME } from "@/config_app";
+import { genFullStudyLink } from "@/utils/getStudyLink";
 const HomeSingleApp = dynamic(() => import("@/container/single-app/HomeSingleApp"));
 const ParentAppLayout = dynamic(() => import("@/container/parent-app/ParentAppLayout"));
 const ScrollToTopArrow = dynamic(() => import("../components/v4-material/ScrollToTopArrow"), {
@@ -69,7 +70,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
         listAppInfo = readAllAppInfos();
         listAppInfo = listAppInfo.filter((w: any) => w.appId).map((w: any) => new AppInfo(w));
     } else {
-        // if (isAsvab) {
         // làm giao diện mới cho asvab nên check riêng asvab
         if (appInfo) {
             let appData: any = await readFileAppFromGoogleStorage(APP_SHORT_NAME);
@@ -78,10 +78,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 return a.name.localeCompare(b.name);
             });
             let _tests = appData?.fullTests ?? [];
-            tests = _tests.map((t: any) => new TestInfo(t));
+            tests = _tests.map((t: any) => new TestInfo({ ...t, slug: genFullStudyLink(appInfo) }));
         }
         homeSeoContent = await getHomeSeoContentApi("home-seo-content");
-        // }
     }
 
     if (homeSeoContent) {

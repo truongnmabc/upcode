@@ -221,7 +221,7 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                                         "v4-main-study-view-btn-0 v4-border-radius" + (thisQuestionIsDone ? " show " : "")
                                     }
                                     onClick={(e) => {
-                                        document.getElementById("__next").scrollTo({ top: 0, behavior: "smooth" });
+                                        window.scrollTo({ top: 0, behavior: "smooth" });
                                         if (isLastQuestion) {
                                             dispatch(onGameSubmitted());
                                             // chọn đáp án là xử lý xong hết rồi đến đây chỉ việc chuyển sang trang kết quả thôi

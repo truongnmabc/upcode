@@ -166,7 +166,7 @@ const _QuestionContent = ({
                 />
                 {!!openDialog && (
                     <Dialog open={!!openDialog} onClose={() => setOpenDialog("")} className="customize-dialog">
-                        <ImageDialog closeDialog={() => setOpenDialog("")} url={openDialog} />,
+                        <ImageDialog closeDialog={() => setOpenDialog("")} url={openDialog} />
                     </Dialog>
                 )}
             </>

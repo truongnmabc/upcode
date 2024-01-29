@@ -183,7 +183,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 return a.name.localeCompare(b.name);
             });
             let _tests = appData?.fullTests ?? [];
-            tests = _tests.map((t: any) => new TestInfo(t));
+            tests = _tests.map((t: any) => new TestInfo({ ...t, slug: genFullStudyLink(childAppInfo) }));
         }
         // homeSeoContent = await getHomeSeoContentApi("home-seo-content");
         // if (homeSeoContent) {

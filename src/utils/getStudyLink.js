@@ -18,11 +18,9 @@ const genFullStudyLink = (appInfo, topicTag) => {
     return prefix + url;
 };
 const genStudyLink = (appInfo, topicTag) => {
-    //trường hợp topic
     let url = "";
-    if (!!topicTag) url = `/${getAppShortName(appInfo.appShortName)}-${topicTag}-practice-test`;
-    else url = `/full-length-${getAppShortName(appInfo.appShortName)}-practice-test`;
-    // trường hợp full-length test
+    if (!!topicTag) url = `/${getAppShortName(appInfo.appShortName)}-${topicTag}-practice-test`; //trường hợp topic
+    else url = `/full-length-${getAppShortName(appInfo.appShortName)}-practice-test`; // trường hợp full-length test
     // trường hợp branch
     return url;
 };

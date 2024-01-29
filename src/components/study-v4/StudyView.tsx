@@ -86,7 +86,19 @@ const StudyView = ({
                 {isFinish == 0 ? (
                     <HeaderStudyV4 gameState={gameState} isTopicTest={gameType == Config.TOPIC_GAME} appInfo={appInfo} />
                 ) : isFinish == 1 ? (
-                    <div style={{ lineHeight: "60px", textAlign: "center", fontWeight: 600 }}>{contentData.title}</div>
+                    <div
+                        className="align-center"
+                        style={{
+                            lineHeight: "23px",
+                            height: 60,
+                            justifyContent: "center",
+                            textAlign: "center",
+                            fontWeight: 600,
+                            padding: "0 16px",
+                        }}
+                    >
+                        {contentData.title}
+                    </div>
                 ) : (
                     <></>
                 )}
@@ -170,13 +182,15 @@ const StudyView = ({
                                                 : "branch_test"
                                         }
                                     />
-                                    {!!contentData?.content && (
+                                    {!!contentData?.content ? (
                                         <div
                                             className="v4-study-topic-seo-content v4-border-radius"
                                             dangerouslySetInnerHTML={{
                                                 __html: (contentData?.content ?? "").replace(/\[/g, "<").replace(/\]/g, ">"),
                                             }}
                                         />
+                                    ) : (
+                                        <div style={{ height: 64 }} />
                                     )}
                                 </div>
                             </>
