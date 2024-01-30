@@ -13,7 +13,7 @@ import SEO from "../../components/seo/SEO";
 import { SYNC_TYPE } from "../../config/config_sync";
 import { isParentApp } from "../../config/config_web";
 import StudyLayout from "../../container/study/StudyLayout";
-import { default as listAppTopic, default as listAppTopics } from "../../data/topic-landing-page.json";
+import { default as listAppTopics } from "../../data/topic-landing-page.json";
 import { AppInfo, IAppInfo } from "../../models/AppInfo";
 import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
 import { useEffect } from "react";
@@ -50,7 +50,7 @@ const StudyPage = ({
         <>
             <SEO
                 appInfo={appInfo}
-                addMathJax={!!appInfo.usingMathJax}
+                addMathJax={!!appInfo.usingMathJax || true}
                 title={titleSEO}
                 descriptionSEO={descriptionSEO}
                 keywordsSeo={keywordSEO}
@@ -79,7 +79,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
             let url = getLink(app, ""); // link của chứng chỉ
             if (url.includes("https:")) return null; // bỏ qua mấy app có link sang web riêng của nó
             let _APP_SHORT_NAME = getAppShortName(app.appShortName);
-            let appData = listAppTopic.find((t) => t.appName === _APP_SHORT_NAME); // tìm ds topic của app trong file data
+            let appData = listAppTopics.find((t) => t.appName === _APP_SHORT_NAME); // tìm ds topic của app trong file data
             let _topics = appData?.topics ?? [];
             _topics.forEach((t) => {
                 //trong này có cả branch và topic luôn
