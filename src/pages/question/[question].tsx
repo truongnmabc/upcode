@@ -69,7 +69,7 @@ export const getServerSideProps = async (context) => {
         context.res.writeHead(302, { Location: "/" }).end();
         return { props: {} };
     }
-    let appData: any = await readFileAppFromGoogleStorage(""); // get data ve
+    let appData: any = await readFileAppFromGoogleStorage(appInfo.bucket); // get data ve
     let { topics } = appData;
     if (topics) {
         topics = topics.map((t) => new Topic(t));

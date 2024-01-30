@@ -1,3 +1,4 @@
+import { getAppShortName } from "@/utils/getStudyLink";
 import { IAppInfo } from "../../models/AppInfo";
 import QRCodeComponent from "../qr-code";
 import "./BannerDownloadApp.scss";
@@ -89,8 +90,12 @@ const BannerDownloadApp = ({ appInfo, device }: { appInfo: IAppInfo; device: "de
                 <div className="v4-banner-download-app-12">
                     <figure
                         style={{
-                            "--img-mobile-url": `url(/images/${appInfo.appShortName}/banner-download-app-mobile.webp)`,
-                            "--img-desktop-url": `url(/images/${appInfo.appShortName}/banner-download-app-desktop.webp)`,
+                            "--img-mobile-url": `url(/images/${getAppShortName(
+                                appInfo.appShortName
+                            )}/banner-download-app-mobile.png)`,
+                            "--img-desktop-url": `url(/images/${getAppShortName(
+                                appInfo.appShortName
+                            )}/banner-download-app-desktop.png)`,
                         }}
                     />
                 </div>

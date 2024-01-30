@@ -1,20 +1,19 @@
+import SeoHeader from "@/components/seo/SeoHeader";
+import { isParentApp } from "@/config/config_web";
 import { AppInfo, IAppInfo } from "@/models/AppInfo";
-import { getAppInfo, readAllAppInfos } from "@/utils/getAppInfo";
-import { getHomeSeoContentApi } from "@/services/home.service";
-import { GetStaticProps } from "next";
-import { isParentApp, isWebASVAB } from "@/config/config_web";
+import TestInfo, { ITestInfo } from "@/models/TestInfo";
 import { ITopic } from "@/models/Topic";
+import StoreProvider from "@/redux/StoreProvider";
+import { getHomeSeoContentApi } from "@/services/home.service";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { setScrollDownAuto } from "@/utils";
-import { useEffect } from "react";
 import convertToJSONObject from "@/utils/convertToJSONObject";
-import dynamic from "next/dynamic";
-import replaceYear from "@/utils/replaceYear";
-import SeoHeader from "@/components/seo/SeoHeader";
-import StoreProvider from "@/redux/StoreProvider";
-import TestInfo, { ITestInfo } from "@/models/TestInfo";
-import { APP_SHORT_NAME } from "@/config_app";
+import { getAppInfo, readAllAppInfos } from "@/utils/getAppInfo";
 import { genFullStudyLink } from "@/utils/getStudyLink";
+import replaceYear from "@/utils/replaceYear";
+import { GetStaticProps } from "next";
+import dynamic from "next/dynamic";
+import { useEffect } from "react";
 const HomeSingleApp = dynamic(() => import("@/container/single-app/HomeSingleApp"));
 const ParentAppLayout = dynamic(() => import("@/container/parent-app/ParentAppLayout"));
 const ScrollToTopArrow = dynamic(() => import("../components/v4-material/ScrollToTopArrow"), {
@@ -59,7 +58,6 @@ export default function Home({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-    const isAsvab = isWebASVAB();
     let listTopics = []; // topics
     let appInfo: IAppInfo | null = getAppInfo();
     let tests = []; // tests
@@ -72,7 +70,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     } else {
         // làm giao diện mới cho asvab nên check riêng asvab
         if (appInfo) {
-            let appData: any = await readFileAppFromGoogleStorage(APP_SHORT_NAME);
+            let appData: any = await readFileAppFromGoogleStorage(appInfo.bucket);
             listTopics = appData?.topics ?? [];
             listTopics.sort((a: any, b: any) => {
                 return a.name.localeCompare(b.name);

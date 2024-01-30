@@ -1,12 +1,13 @@
 import { isProduction } from "../config/config_web";
 import { callApi } from "../services/index";
-export async function readFileAppFromGoogleStorage(appKey: string) {
+export async function readFileAppFromGoogleStorage(bucket: string) {
     //storage.googleapis.com/micro-enigma-235001.appspot.com/data-app/data-4878338973761536.json
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab_new/datacdl.txt
     try {
+        console.log("---" + bucket);
         //https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/topics-and-tests.json
         let data = await callApi({
-            url: "new-data-web/" + appKey + "/topics-and-tests.json?t=" + new Date().getTime(), // sau bo sung tham so vao url cho tong quat
+            url: "new-data-web/" + bucket + "/topics-and-tests.json?t=" + new Date().getTime(), // sau bo sung tham so vao url cho tong quat
             params: null,
             method: "get",
             baseURl: "https://storage.googleapis.com/micro-enigma-235001.appspot.com/",
@@ -14,16 +15,16 @@ export async function readFileAppFromGoogleStorage(appKey: string) {
         });
         return data;
     } catch (error) {
-        console.log("readFileAppFromGoogleStorage error");
-        return { topcis: [], fullTests: [], branchTests: [] };
+        console.log("readFileAppFromGoogleStorage error", error);
+        return { topics: [], fullTests: [], branchTests: [] };
     }
 }
 
-export async function getTopicQuestionsFromGoogleStorage(appShortName: string, topicTag: string) {
+export async function getTopicQuestionsFromGoogleStorage(bucket: string, topicTag: string) {
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/general-science-questions.json
     try {
         let data = await callApi({
-            url: `new-data-web/${appShortName}/${topicTag}.json?t=${new Date().getTime()}`,
+            url: `new-data-web/${bucket}/${topicTag}.json?t=${new Date().getTime()}`,
             params: null,
             method: "get",
             baseURl: "https://storage.googleapis.com/micro-enigma-235001.appspot.com/",
@@ -32,15 +33,15 @@ export async function getTopicQuestionsFromGoogleStorage(appShortName: string, t
 
         return data;
     } catch (error) {
-        return [];
         console.log("getTopicQuestionsFromGoogleStorage error");
+        return [];
     }
 }
-export async function getTestDataFromGoogleStorage(appShortName: string, branchSlug: string) {
+export async function getTestDataFromGoogleStorage(bucket: string, branchSlug: string) {
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/full-tests.json
     try {
         let data = await callApi({
-            url: `new-data-web/${appShortName}/${branchSlug ? branchSlug : "full-tests"}.json?t=${Date.now()}`,
+            url: `new-data-web/${bucket}/${branchSlug ? branchSlug : "full-tests"}.json?t=${Date.now()}`,
             params: null,
             method: "get",
             baseURl: "https://storage.googleapis.com/micro-enigma-235001.appspot.com/",

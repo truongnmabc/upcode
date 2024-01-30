@@ -36,7 +36,6 @@ const getAppInfo = (appId = "") => {
     if (appInfo) {
         appInfo = new AppInfo(appInfo);
         appInfo.id = appInfo.appId;
-        appInfo.currentTime = new Date().getTime();
     }
     return appInfo;
 };

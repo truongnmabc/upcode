@@ -21,7 +21,7 @@ const DownloadAppEndTest = ({
             <div
                 className="v4-download-end-test-right"
                 style={{
-                    backgroundImage: `url(/images/${appInfo.appShortName}/study-banner-download-app.webp)`,
+                    backgroundImage: `url(/images/${appInfo.appShortName}/study-banner-download-app.png)`,
                 }}
             ></div>
         </div>

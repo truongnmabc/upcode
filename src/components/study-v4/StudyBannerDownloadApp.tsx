@@ -21,7 +21,7 @@ const StudyBannerDownloadApp = ({
             <div
                 className="v4-study-banner-download-app-thumbnail"
                 style={{
-                    backgroundImage: `url(/images/${appInfo.appShortName}/study-banner-download-app.webp)`,
+                    backgroundImage: `url(/images/${appInfo.appShortName}/study-banner-download-app.png)`,
                 }}
             />
             <div style={{ padding: "16px" }} className="__768">

@@ -168,10 +168,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             let questionsData = [];
             if (getTest) {
                 // vi api tra ve ca data cua test va question luon nen dung chung 1 bien getTest de check
-                let _test = await getTestDataFromGoogleStorage(
-                    appInfo.appShortName,
-                    gameType == Config.BRANCH_TEST_GAME ? slug : ""
-                );
+                let _test = await getTestDataFromGoogleStorage(appInfo.bucket, gameType == Config.BRANCH_TEST_GAME ? slug : "");
 
                 let test = new TestInfo(_test[0]);
                 test.slug = slug;
@@ -190,7 +187,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             }
             if (getTopic) {
                 // mặc định coi vào trường hợp này là tải dữ liệu mới về => vào level thấp nhất
-                let data: any = await readFileAppFromGoogleStorage(webData.currentAppShortName); // get data ve
+                let data: any = await readFileAppFromGoogleStorage(webData.bucket); // get data ve
                 topics = data?.topics ?? [];
                 dispatch(getTopicByParentIdSuccess(topics));
                 let accessTopic = topics.find((t) => slug.includes(t.tag));
@@ -230,7 +227,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             if (getTopicQuestions) {
                 //chua co topic questions data
                 questionsData = await getTopicQuestionsFromGoogleStorage(
-                    appInfo.appShortName,
+                    appInfo.bucket,
                     topic_tag + (level_tag ? "-" + level_tag : "")
                 );
 

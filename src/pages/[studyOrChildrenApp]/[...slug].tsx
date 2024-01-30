@@ -44,7 +44,7 @@ const StudyPage = ({
         content: topic.content,
         title: topic.title,
         gameType,
-        currentAppShortName: getAppShortName(appInfo.appShortName),
+        bucket: appInfo.bucket,
     };
     return (
         <>

@@ -6,7 +6,7 @@ import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import IWebData from "@/types/webData";
 import { getLink, getTitle } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
-import { genFullStudyLink, getAppShortName } from "@/utils/getStudyLink";
+import { genFullStudyLink, genStudyLink, getAppShortName } from "@/utils/getStudyLink";
 import replaceYear from "@/utils/replaceYear";
 import { GetStaticPaths, GetStaticProps } from "next";
 import dynamic from "next/dynamic";
@@ -177,7 +177,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
         });
         if (childAppInfo) {
             let _APP_SHORT_NAME = getAppShortName(childAppInfo.appShortName);
-            let appData: any = await readFileAppFromGoogleStorage(_APP_SHORT_NAME);
+            let appData: any = await readFileAppFromGoogleStorage(
+                !!childAppInfo.bucket ? childAppInfo.bucket : _APP_SHORT_NAME
+            );
             listTopics = appData?.topics ?? [];
             listTopics.sort((a: any, b: any) => {
                 return a.name.localeCompare(b.name);

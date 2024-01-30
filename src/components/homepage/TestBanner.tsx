@@ -51,7 +51,7 @@ const TestBanner = ({ appInfo, test }: { appInfo: IAppInfo; test: ITestInfo }) =
                 <figure
                     className="v4-test-banner-thumbnail-0"
                     style={{
-                        backgroundImage: `url(/images/${getAppShortName(appInfo.appShortName)}/test-card-desktop.webp)`,
+                        backgroundImage: `url(/images/${getAppShortName(appInfo.appShortName)}/test-card-desktop.png)`,
                     }}
                 ></figure>
             </div>

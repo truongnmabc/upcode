@@ -1,12 +1,71 @@
 [
-    { "appId": 4561360798089216, "topics": [], "fullTests": [], "branchTests": [] },
-    { "appId": 5551925043920896, "topics": [], "fullTests": [], "branchTests": [] },
+    {
+        "appId": 4561360798089216,
+        "topics": [
+            "appsychology-individual-psychology-and-behavior-practice-test",
+            "appsychology-social-psychology-practice-test",
+            "appsychology-psychological-abnormalities-practice-test",
+            "appsychology-history-and-research-practice-test"
+        ],
+        "fullTests": ["full-length-appsychology-practice-test"],
+        "branchTests": []
+    },
+    {
+        "appId": 5551925043920896,
+        "topics": [
+            "comptiaa-chapter-6-operating-systems-practice-test",
+            "comptiaa-chapter-4-virtualization-and-cloud-computing-practice-test",
+            "comptiaa-practice-exam-220--1102-practice-test",
+            "comptiaa-chapter-2-networking-practice-test",
+            "comptiaa-chapter-8-software-troubleshooting-practice-test",
+            "comptiaa-chapter-9-operational-procedures-practice-test",
+            "comptiaa-chapter-7-security-practice-test",
+            "comptiaa-chapter-3-hardware-practice-test",
+            "comptiaa-practice-exam-220--1101-practice-test",
+            "comptiaa-chapter-5-hardware-and-network-troubleshooting-practice-test",
+            "comptiaa-chapter-1--mobile-devices-practice-test"
+        ],
+        "fullTests": ["full-length-comptiaa-practice-test"],
+        "branchTests": []
+    },
     { "appId": 4856116048560128, "topics": [], "fullTests": [], "branchTests": [] },
-    { "appId": 6536271351513088, "topics": [], "fullTests": [], "branchTests": [] },
-    { "appId": 6552799815925760, "topics": [], "fullTests": [], "branchTests": [] },
+    {
+        "appId": 6536271351513088,
+        "topics": ["ccsp-ccsp-practice-test-practice-test"],
+        "fullTests": ["full-length-ccsp-practice-test"],
+        "branchTests": []
+    },
+    {
+        "appId": 6552799815925760,
+        "topics": ["ceh-practice-questions-practice-test"],
+        "fullTests": ["full-length-ceh-practice-test"],
+        "branchTests": []
+    },
     { "appId": 5316459300388864, "topics": [], "fullTests": [], "branchTests": [] },
-    { "appId": 5962925959282688, "topics": [], "fullTests": [], "branchTests": [] },
-    { "appId": 6119576033034240, "topics": [], "fullTests": [], "branchTests": [] },
+    {
+        "appId": 5962925959282688,
+        "topics": [
+            "aws-define-operationally-excellent-architectures-practice-test",
+            "aws-design-secure-applications-and-architectures-practice-test",
+            "aws-design-high-performing-architectures-practice-test",
+            "aws-design-resilient-architectures-practice-test",
+            "aws-design-cost-optimized-architectures-practice-test"
+        ],
+        "fullTests": ["full-length-aws-practice-test"],
+        "branchTests": []
+    },
+    {
+        "appId": 6119576033034240,
+        "topics": [
+            "accuplacer-next-generation-writing-practice-test",
+            "accuplacer-next-generation-advanced-algebra-and-functions-practice-test",
+            "accuplacer-next-generation-arithmetic-practice-test",
+            "accuplacer-next-generation-quantitative-reasoning-algebra-and-statistics-practice-test",
+            "accuplacer-next-generation-reading-practice-test"
+        ],
+        "fullTests": ["full-length-accuplacer-practice-test"],
+        "branchTests": []
+    },
     { "appId": 5881924151148544, "topics": [], "fullTests": [], "branchTests": [] },
     {
         "appId": 4878338973761536,

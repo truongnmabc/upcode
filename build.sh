@@ -8,17 +8,22 @@ typeDeploy=$2
 APP_INFOS_FILE="src/data/AppConfig.json"
 envFile="./.env.local"
 downloadFile() {
+    appName=$1
     . $envFile
       
-    curl -o "$DATA_PATH/appInfos.json" --location --request POST  "$NEXT_PUBLIC_WORDPRESS_API_URL/wp-json/passemall/v1/get-list-app" \
-    --header 'Content-Type: application/json' \
-    --data-raw '{
-        "isParentApp": false
-    }'
-    curl -o "$DATA_PATH/footerMenus.json" "$NEXT_PUBLIC_WORDPRESS_API_URL/wp-json/passemall/v1/menus"
+    url="https://api-cms-v2-dot-micro-enigma-235001.appspot.com/api/app/config/get-all-web-config?bucket=$appName"
+    response=$(curl -s -X GET "$url")
+    echo "$response" > "$DATA_PATH/appInfos.json"
 
-    APP_NAME_HAS_STATE=$(jq -c 'map(select(.hasState == "true").appId)' "$DATA_PATH/appInfos.json")
-    curl --globoff -o "$DATA_PATH/stateData.json"  "https://dev-dot-micro-enigma-235001.appspot.com/data?type=get_states_build&appIds=$APP_NAME_HAS_STATE"
+    # curl -o "$DATA_PATH/appInfos.json" --location --request POST  "$NEXT_PUBLIC_WORDPRESS_API_URL/wp-json/passemall/v1/get-list-app" \
+    # --header 'Content-Type: application/json' \
+    # --data-raw '{
+    #     "isParentApp": false
+    # }'
+    # curl -o "$DATA_PATH/footerMenus.json" "$NEXT_PUBLIC_WORDPRESS_API_URL/wp-json/passemall/v1/menus"
+
+    # APP_NAME_HAS_STATE=$(jq -c 'map(select(.hasState == "true").appId)' "$DATA_PATH/appInfos.json")
+    # curl --globoff -o "$DATA_PATH/stateData.json"  "https://dev-dot-micro-enigma-235001.appspot.com/data?type=get_states_build&appIds=$APP_NAME_HAS_STATE"
 
 }
 
@@ -161,7 +166,7 @@ deploy() {
         logoPath=$appName
         appPath="-$appName"
     fi
-    downloadFile
+    downloadFile $appName
     cp -r "$ROOT_PATH/images/$logoPath/logo60.png" "$ROOT_PATH/images/logo60.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo192.png" "$ROOT_PATH/images/logo192.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo512.png" "$ROOT_PATH/images/logo512.png"
