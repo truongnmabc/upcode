@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { SYNC_TYPE } from "../../config/config_sync";
 import { isParentApp } from "../../config/config_web";
-import { default as listAppTopic, default as listAppTopics } from "../../data/topic-landing-page.json";
+import { default as listAppTopics } from "../../data/studyData.json";
 import { AppInfo, IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
@@ -145,7 +145,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
             fallback: false,
         };
     } else {
-        let appData = listAppTopic.find((t) => t.appName === APP_SHORT_NAME);
+        let appData = listAppTopics.find((t) => t.appId === appInfo.appId);
         let _topics = appData.topics;
         _topics.forEach((t) => {
             paths.push(formatData(t.url)); // trong này có cả branch và topic luôn
@@ -176,10 +176,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
             return slug === getLink(a).replaceAll("/", "");
         });
         if (childAppInfo) {
-            let _APP_SHORT_NAME = getAppShortName(childAppInfo.appShortName);
-            let appData: any = await readFileAppFromGoogleStorage(
-                !!childAppInfo.bucket ? childAppInfo.bucket : _APP_SHORT_NAME
-            );
+            // let _APP_SHORT_NAME = getAppShortName(childAppInfo.appShortName);
+            let appData: any = await readFileAppFromGoogleStorage(childAppInfo.bucket.toLowerCase());
             listTopics = appData?.topics ?? [];
             listTopics.sort((a: any, b: any) => {
                 return a.name.localeCompare(b.name);
@@ -199,6 +197,22 @@ export const getStaticProps: GetStaticProps = async (context) => {
         let titleSEO = !!rankMathTitle ? rankMathTitle : childAppInfo?.title;
         if (titleSEO) titleSEO = replaceYear(titleSEO);
 
+        // let buckets = ["accuplacer", "apsychology", "apush", "ase", "asvab", "aws", "ccsp", "ceh", "comptiaa"];
+        // for (let bucket of buckets) {
+        //     try {
+        //         let appData: any = await readFileAppFromGoogleStorage(bucket);
+        //         listTopics = appData?.topics ?? [];
+        //         console.log(
+        //             JSON.stringify({
+        //                 topics: listTopics.map((t) => ({ title: t.name, url: genStudyLink(childAppInfo, t.tag, bucket) })),
+        //                 fullTests: [genStudyLink(childAppInfo, "", bucket)],
+        //             }).replaceAll("/", "")
+        //         );
+        //     } catch (e) {
+        //         console.log("error");
+        //     }
+        // }
+
         return convertToJSONObject({
             props: {
                 childrenApp: {
@@ -214,7 +228,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         });
     } else {
         let appInfo = getAppInfo();
-        let topics = listAppTopics.find((app) => app.appName === APP_SHORT_NAME).topics;
+        let topics = listAppTopics.find((app) => app.appId === appInfo.appId).topics;
         const topic = topics.find((topic) => topic.url === slug); // chắc chắn có giá trị vì url đã được xác định từ getStaticPaths
         const contentSEO = await getHomeSeoContentStateApi(slug);
         if (contentSEO) {

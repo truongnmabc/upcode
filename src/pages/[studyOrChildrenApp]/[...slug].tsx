@@ -13,7 +13,7 @@ import SEO from "../../components/seo/SEO";
 import { SYNC_TYPE } from "../../config/config_sync";
 import { isParentApp } from "../../config/config_web";
 import StudyLayout from "../../container/study/StudyLayout";
-import { default as listAppTopics } from "../../data/topic-landing-page.json";
+import { default as listAppTopics } from "../../data/studyData.json";
 import { AppInfo, IAppInfo } from "../../models/AppInfo";
 import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
 import { useEffect } from "react";
@@ -78,8 +78,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
             // duyệt từng chứng chỉ con
             let url = getLink(app, ""); // link của chứng chỉ
             if (url.includes("https:")) return null; // bỏ qua mấy app có link sang web riêng của nó
-            let _APP_SHORT_NAME = getAppShortName(app.appShortName);
-            let appData = listAppTopics.find((t) => t.appName === _APP_SHORT_NAME); // tìm ds topic của app trong file data
+            // let _APP_SHORT_NAME = getAppShortName(app.appShortName);
+            let appData = listAppTopics.find((t) => t.appId === app.appId); // tìm ds topic của app trong file data
             let _topics = appData?.topics ?? [];
             _topics.forEach((t) => {
                 //trong này có cả branch và topic luôn
@@ -119,7 +119,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         listAppInfo = listAppInfo.map((app) => new AppInfo(app));
         let appInfo = listAppInfo.find((app) => getLink(app) === "/" + studyOrChildrenApp);
         if (!!appInfo) {
-            let topics = listAppTopics.find((app) => app.appName === getAppShortName(appInfo.appShortName))?.topics;
+            let topics = listAppTopics.find((app) => app.appId === appInfo.appId)?.topics;
             const topic = topics?.find((topic) => topic.url === slug); // chắc chắn có giá trị vì url đã được xác định từ getStaticPaths
             const contentSEO = await getHomeSeoContentStateApi(slug);
             if (contentSEO) {
@@ -129,7 +129,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
             let descriptionSEO = contentSEO?.descSeo?.length > 0 ? contentSEO.descSeo[0] : appInfo.descriptionSEO;
             let gameType = Config.TEST_GAME;
             if (!!topic) {
-                if (topic.isBranch) gameType = Config.BRANCH_TEST_GAME;
+                if (topic?.isBranch) gameType = Config.BRANCH_TEST_GAME;
                 else gameType = Config.TOPIC_GAME;
             }
             return convertToJSONObject({
