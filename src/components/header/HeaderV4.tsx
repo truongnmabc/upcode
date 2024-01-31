@@ -10,7 +10,7 @@ import CloseIcon from "../icon/CloseIcon";
 import MenuIcon from "../icon/MenuIcon";
 import ExpandMoreIcon from "../icon/ExpandMoreIcon";
 import Link from "next/link";
-import { SwipeableDrawer } from "@mui/material";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { genFullStudyLink } from "@/utils/getStudyLink";
 
 const DownloadAppV4 = dynamic(() => import("../homepage/DownloadAppV4"));
@@ -66,7 +66,7 @@ const HeaderV4 = ({
                         <div className="container-drawer-right-menu-header-v4">
                             <div className="container-drawer-right-menu-header-v4-1">
                                 <a
-                                    href={`/full-length-${appInfo.appShortName}-practice-test`}
+                                    href={genFullStudyLink(appInfo)}
                                     onClick={(e) => {
                                         e.preventDefault();
                                         ga.event({
@@ -75,7 +75,7 @@ const HeaderV4 = ({
                                                 from: window.location.href,
                                             },
                                         });
-                                        window.location.href = `/full-length-${appInfo.appShortName}-practice-test`;
+                                        window.location.href = genFullStudyLink(appInfo);
                                     }}
                                 >
                                     {`Full ${appInfo.appName} Practice Test`}
