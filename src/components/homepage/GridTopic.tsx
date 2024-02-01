@@ -69,12 +69,14 @@ const GridTopic = ({
     place?: string;
     allowExpand?: boolean;
 }) => {
-    let topics: ITopic[] | ITopicJson[] = listTopics;
+    let topics: ITopic[] | ITopicJson[] = listTopics.map((a) => {
+        return { ...a };
+    });
     let listGameState: GameState[] = useSelector((state: AppState) => state.listGameReducer.games);
     if (!topics.length) {
         // trường hợp listTopics chưa lấy được từ redux ra sẽ lấy topic từ file JSON
         // để hiển thị link và tên topic cho SEO
-        topics = getRawTopicsData(appInfo.appShortName);
+        topics = getRawTopicsData(appInfo.appId);
     }
     try {
         topics.sort((a, b) => {
@@ -95,7 +97,7 @@ const GridTopic = ({
                 let isHighlighted = highlightedTopicId.includes(topic.id);
                 let _href = genFullStudyLink(appInfo, topic.tag);
                 return (
-                    <div key={topic.id}>
+                    <div key={index}>
                         <a
                             className="v4-grid-topic-item-0 v4-border-radius"
                             href={_href}

@@ -15,7 +15,7 @@ export async function readFileAppFromGoogleStorage(bucket: string) {
         });
         return data;
     } catch (error) {
-        console.log("readFileAppFromGoogleStorage error");
+        console.log("readFileAppFromGoogleStorage error", bucket);
         return { topics: [], fullTests: [], branchTests: [] };
     }
 }

@@ -2,6 +2,9 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const withImages = require("next-images");
 const appInfos = require("./src/data/appInfos.json");
+const is_parent_app =
+    process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.includes("passemall") ||
+    process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.includes("easy-prep");
 module.exports = () => {
     const plugins = [withImages];
     return plugins.reduce((acc, next) => next(acc), {
@@ -39,6 +42,33 @@ module.exports = () => {
             ignoreBuildErrors: true,
         },
         distDir: process.env.BUILD_DIR || ".next",
+        // exportPathMap: function (defaultPathMap, { dev, dir, outDir, distDir, buildId }) {
+        //     let paths = {};
+        //     if (is_parent_app) {
+        //         appInfos.forEach((app) => {
+        //             let path = "";
+        //             if (app.appNameId && !app.appNameId.startsWith("http")) {
+        //                 path = "/" + app.appNameId;
+        //                 paths[path] = { page: "/childrenApp" + path };
+        //             }
+        //         });
+        //     }
+        //     return paths;
+        // },
+        async rewrites() {
+            let paths = [];
+            if (is_parent_app) {
+                appInfos.forEach((app) => {
+                    let path = "";
+                    if (app.appNameId && !app.appNameId.startsWith("http")) {
+                        path = "/" + app.appNameId;
+                        let _ = { source: path, destination: "/childrenApp" + path };
+                        paths.push(_);
+                    }
+                });
+            }
+            return paths;
+        },
         async redirects() {
             let config_2 = getLinkToStore();
             return config_2;
