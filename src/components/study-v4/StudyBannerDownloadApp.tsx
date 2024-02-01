@@ -1,7 +1,6 @@
 import { IAppInfo } from "../../models/AppInfo";
-import "./StudyBannerDownloadApp.scss";
 import DownloadAppV4 from "../homepage/DownloadAppV4";
-import { getAppShortName } from "@/utils/getStudyLink";
+import "./StudyBannerDownloadApp.scss";
 const StudyBannerDownloadApp = ({
     appInfo,
     place,
@@ -22,7 +21,7 @@ const StudyBannerDownloadApp = ({
             <div
                 className="v4-study-banner-download-app-thumbnail"
                 style={{
-                    backgroundImage: `url(/images/${getAppShortName(appInfo.appShortName)}/study-banner-download-app.png)`,
+                    backgroundImage: `url(/images/${appInfo.bucket}/study-banner-download-app.png)`,
                 }}
             />
             <div style={{ padding: "16px" }} className="__768">

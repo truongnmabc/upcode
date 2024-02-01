@@ -1,15 +1,6 @@
 import { isParentApp } from "@/config/config_web";
 import { getLink } from ".";
 
-/**
- * vì app đặt appShortName rất là lung tung nên phải có hàm xử lý tạm này
- * @param {*} appshortName trường appShortName trogn appInfo
- */
-const getAppShortName = (appshortName) => {
-    if (!appshortName) return "";
-    return appshortName.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-");
-};
-
 const genFullStudyLink = (appInfo, topicTag) => {
     // gen link cho app cha và app con
     let _isParentApp = isParentApp();
@@ -29,4 +20,4 @@ const genStudyLink = (appShortName, topicTag) => {
     // trường hợp branch
     return url;
 };
-export { getAppShortName, genFullStudyLink, genStudyLink };
+export { genFullStudyLink, genStudyLink };

@@ -15,7 +15,7 @@ import * as ga from "../../services/ga";
 import { hasImage } from "@/utils/v4_question";
 import { getHighhestLevelOfTopicBePassedSequentially, shuffleV4 } from "@/utils/v4_study";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import listAppTopics from "../../data/topic-landing-page.json";
+import listAppTopics from "../../data/studyData.json";
 import Question from "../../models/Question";
 import AppState from "../appState";
 import { getQuestionsDataSuccess } from "../features/card";
@@ -58,7 +58,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             let gameTitle = "Full-length " + appInfo.appName + " Practice Test";
 
             if (gameType == Config.BRANCH_TEST_GAME) {
-                let branchTopic = listAppTopics.find((app) => app.appName === appInfo.appShortName)?.topics;
+                let branchTopic = listAppTopics.find((app) => app.appId === appInfo.appId)?.topics;
                 branchTopic = branchTopic?.filter((t) => t.isBranch);
                 let branch = branchTopic?.find((t) => t.url === slug);
                 gameTitle = branch.title;

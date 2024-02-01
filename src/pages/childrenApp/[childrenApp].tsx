@@ -3,7 +3,7 @@ import StoreProvider from "@/redux/StoreProvider";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { getLink } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
-import { genFullStudyLink } from "@/utils/getStudyLink";
+import { genFullStudyLink, genStudyLink } from "@/utils/getStudyLink";
 import replaceYear from "@/utils/replaceYear";
 import { GetStaticPaths, GetStaticProps } from "next";
 import dynamic from "next/dynamic";
@@ -91,7 +91,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
         return slug === getLink(a).replaceAll("/", "");
     });
     if (childAppInfo) {
-        // let _APP_SHORT_NAME = getAppShortName(childAppInfo.appShortName);
         let appData: any = await readFileAppFromGoogleStorage(childAppInfo.bucket.toLowerCase());
         listTopics = appData?.topics ?? [];
         listTopics.sort((a: any, b: any) => {
@@ -112,23 +111,21 @@ export const getStaticProps: GetStaticProps = async (context) => {
     let titleSEO = !!rankMathTitle ? rankMathTitle : childAppInfo?.title;
     if (titleSEO) titleSEO = replaceYear(titleSEO);
 
-    // let buckets = ["accuplacer", "apsychology", "apush", "ase", "asvab", "aws", "ccsp", "ceh", "comptiaa"];
     // let r = "[";
-    // for (let app of listAppInfos) {
-    //     let bucket = app.bucket;
-    //     try {
-    //         let appData: any = await readFileAppFromGoogleStorage(bucket);
-    //         listTopics = appData?.topics ?? [];
-    //         r +=
-    //             JSON.stringify({
-    //                 appId: app.appId,
-    //                 topics: listTopics.map((t) => ({ title: t.name, url: genStudyLink(app.appShortName, t.tag) })),
-    //                 fullTests: [genStudyLink(app.appShortName, "")],
-    //             }).replaceAll("/", "") + ",";
-    //     } catch (e) {
-    //         console.log("error", bucket);
-    //     }
+    // // for (let app of listAppInfos) {
+    // let bucket = "ptce";
+    // try {
+    //     let appData: any = await readFileAppFromGoogleStorage(bucket);
+    //     let _listTopics = appData?.topics ?? [];
+    //     r +=
+    //         JSON.stringify({
+    //             topics: _listTopics.map((t) => ({ title: t.name, url: genStudyLink("ptce", t.tag) })),
+    //             fullTests: [genStudyLink("ptce", "")],
+    //         }).replaceAll("/", "") + ",";
+    // } catch (e) {
+    //     console.log("error", bucket);
     // }
+    // // }
     // r += "]";
     // console.log(r);
 

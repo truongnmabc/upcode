@@ -1,4 +1,4 @@
-import { genFullStudyLink, getAppShortName } from "@/utils/getStudyLink";
+import { genFullStudyLink } from "@/utils/getStudyLink";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITestInfo } from "../../models/TestInfo";
 import * as ga from "../../services/ga";
@@ -51,7 +51,7 @@ const TestBanner = ({ appInfo, test }: { appInfo: IAppInfo; test: ITestInfo }) =
                 <figure
                     className="v4-test-banner-thumbnail-0"
                     style={{
-                        backgroundImage: `url(/images/${getAppShortName(appInfo.appShortName)}/test-card-desktop.png)`,
+                        backgroundImage: `url(/images/${appInfo.bucket}/test-card-desktop.png)`,
                     }}
                 ></figure>
             </div>

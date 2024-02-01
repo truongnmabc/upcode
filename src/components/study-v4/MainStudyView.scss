@@ -1,6 +1,7 @@
 .v4-main-study-view-0 {
     .v4-main-study-view-1 {
-        min-height: 360px; // cái này để hiện loading nhìn đỡ bị giật hơn
+        min-height: calc(100vh - 60px - 52px - 24px - 345px);
+        // min-height: 360px; // cái này để hiện loading nhìn đỡ bị giật hơn
         .v4-main-study-view-question-content-0 {
             background-color: #fff;
             padding: 12px;
@@ -121,7 +122,7 @@
 
     @media screen and (min-width: 769px) {
         .v4-main-study-view-1 {
-            min-height: 320px;
+            min-height: calc(100vh - 53px - 70px - 16px - 200px - 24px - 24px - 16px);
             padding: 24px;
             background-color: #fff;
             .v4-test-game-count-down-desktop-0 {

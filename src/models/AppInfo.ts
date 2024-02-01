@@ -2,22 +2,22 @@ import { parseBoolean } from "../utils";
 
 export interface IAppInfo {
     appId: number | null; // phải để như này vì hàm getAppInfo viết hơi dở
-    appName: string;
-    appNameId: string;
-    appShortName: string;
-    bucket: string;
-    categoryId: number;
-    description: string;
-    descriptionSEO: string;
-    // hasState: boolean;
-    keywordSEO: string;
+    appName: string; // tên
+    appNameId: string; // biến này đến gen ra đường link từ app cha đến các app con
+    appShortName: string; // vai trò của biến này là sử dụng trong đường link tới các phần học
+    bucket: string; // folder trên gg cloud
+    categoryId: number; // phân loại mục hiển thị tại trang home app cha
+    description: string; // seo
+    descriptionSEO: string; // seo
+    hasState: boolean; //
+    keywordSEO: string; // seo
     linkAndroid: string;
     linkIos: string;
-    rank_math_title?: string;
+    rank_math_title?: string; // seo
     // stateId?: number;
     // stateName?: string;
-    title: string;
-    totalQuestion: number;
+    title: string; // seo
+    totalQuestion: number; // tổng số lượng câu hỏi (để hiện ở trang home app cha)
     usingMathJax: boolean;
 }
 export class AppInfo implements IAppInfo {

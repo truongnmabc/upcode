@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import Config from "../../config";
 import { SYNC_TYPE } from "../../config/config_sync";
-import listAppTopic from "../../data/topic-landing-page.json";
+import listAppTopic from "../../data/studyData.json";
 import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
@@ -44,8 +44,7 @@ const StudyView = ({
 }) => {
     let isFinish = gameState.isFinishGame;
     const gameType = contentData.gameType;
-    const listBranchs =
-        listAppTopic.find((app) => app.appName == appInfo.appShortName)?.topics?.filter((t) => t.isBranch) ?? [];
+    const listBranchs = listAppTopic.find((app) => app.appId == appInfo.appId)?.topics?.filter((t) => t.isBranch) ?? [];
     const showAnswerSheet = contentData.type == SYNC_TYPE.TYPE_LEARN_TEST;
     const ref = useRef<HTMLDivElement>(null);
     // SEO
@@ -144,7 +143,7 @@ const StudyView = ({
                                                     action: "click_menu_branch_test",
                                                     params: {
                                                         from: window.location.href,
-                                                        to: t.learnUrl,
+                                                        to: t.url,
                                                     },
                                                 });
                                                 window.location.href = t.url;

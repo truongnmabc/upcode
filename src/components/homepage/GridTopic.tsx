@@ -97,7 +97,7 @@ const GridTopic = ({
                 let isHighlighted = highlightedTopicId.includes(topic.id);
                 let _href = genFullStudyLink(appInfo, topic.tag);
                 return (
-                    <div key={index}>
+                    <div key={index} id={index}>
                         <a
                             className="v4-grid-topic-item-0 v4-border-radius"
                             href={_href}

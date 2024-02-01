@@ -11,6 +11,7 @@ import { SYNC_TYPE } from "../../config/config_sync";
 import { default as listAppTopics } from "../../data/studyData.json";
 import { IAppInfo } from "../../models/AppInfo";
 import { getAppInfo } from "../../utils/getAppInfo";
+import { genStudyLink } from "@/utils/getStudyLink";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -53,7 +54,7 @@ const StudyPage = ({
         <>
             <SEO
                 appInfo={appInfo}
-                addMathJax={appInfo.usingMathJax || true}
+                addMathJax={appInfo.usingMathJax}
                 title={titleSEO}
                 descriptionSEO={descriptionSEO}
                 keywordsSeo={keywordSEO}
@@ -78,7 +79,7 @@ export const getServerSideProps = async (context) => {
         }
         let titleSEO = contentSEO?.titleSeo?.length > 0 ? contentSEO.titleSeo[0] : appInfo.title;
         let descriptionSEO = contentSEO?.descSeo?.length > 0 ? contentSEO.descSeo[0] : appInfo.descriptionSEO;
-        if (topic || slug == "full-length-" + appInfo.appShortName + "-practice-test") {
+        if (topic || "/" + slug == genStudyLink(appInfo.appShortName)) {
             // đúng đường dẫn
             // quy định full-length-[APP_SHORT_NAME]-practice-test là vào phần test
             let gameType = Config.TEST_GAME;

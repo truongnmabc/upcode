@@ -144,26 +144,14 @@
         "topics": [
             { "title": "Bonus Questions", "url": "cna-practice-test" },
             { "title": "Psychosocial Care Skills", "url": "cna-emotional-and-mental-health-needs-practice-test" },
-            { "title": "Activities of Daily Living", "url": "cna-activities-of-daily-living-practice-test" },
-            { "title": "Spiritual and Cultural Issues", "url": "cna-spiritual-and-cultural-issues-practice-test" },
-            { "title": "Client Rights", "url": "cna-client-rights-practice-test" },
-            { "title": "Restorative Skills", "url": "cna-restorative-skills-practice-test" },
-            { "title": "Member of a Healthcare Team", "url": "cna-member-of-a-healthcare-team-practice-test" },
             { "title": "Role of the Nurse Aide", "url": "cna-communication-practice-test" },
-            { "title": "Legal and Ethical Behavior", "url": "cna-legal-and-ethical-behavior-practice-test" },
             { "title": "Physical Care Skills", "url": "cna-basic-nursing-skills-practice-test" }
         ],
         "fullTests": ["full-length-cna-practice-test"]
     },
     {
         "appId": 6391284127236096,
-        "topics": [
-            { "title": "Practice questions", "url": "cfa-level-2-cfa-lv2--suong-practice-test" },
-            { "title": "Mathematics", "url": "cfa-level-2-mathematics-practice-test" },
-            { "title": "CFA lvl2 practice", "url": "cfa-level-2-cfa-lvl2-practice" },
-            { "title": "English Language Arts", "url": "cfa-level-2-english-language-arts-practice-test" },
-            { "title": "Reading", "url": "cfa-level-2-reading-practice-test" }
-        ],
+        "topics": [{ "title": "Practice questions", "url": "cfa-level-2-cfa-lv2-practice-test" }],
         "fullTests": ["full-length-cfa-level-2-practice-test"]
     },
     {
@@ -193,7 +181,6 @@
         "topics": [
             { "title": "Reading", "url": "tabe-reading-practice-test" },
             { "title": "Math", "url": "tabe-math-with-ex--practice-test" },
-            { "title": "TABE Math (No ex)", "url": "tabe-math-no-ex--practice-test" },
             { "title": "Language", "url": "tabe-language-practice-test" }
         ],
         "fullTests": ["full-length-tabe-practice-test"]
@@ -263,7 +250,6 @@
                 "url": "fsc-chapter-3-firearm-operation-and-safe-handling-practice-test"
             },
             { "title": "Firearm Ownership", "url": "fsc-chapter-4-firearm-ownership-practice-test" },
-            { "title": "Parts of Gun", "url": "fsc-parts-of-gun-practice-test" },
             { "title": "Firearm and Children", "url": "fsc-chapter-2-firearm-and-children-practice-test" },
             { "title": "Gun Safety Rules", "url": "fsc-chapter-1-gun-safety-rules-practice-test" },
             { "title": "Firearm Laws", "url": "fsc-chapter-5-firearm-laws-practice-test" }
@@ -363,7 +349,6 @@
     {
         "appId": 5278385414602752,
         "topics": [
-            { "title": "TSI writing practice test", "url": "tsi-writing-practice-test" },
             { "title": "Writing", "url": "tsi-tst-writing-practice-test" },
             { "title": "Math", "url": "tsi-math-practice-test" },
             { "title": "Reading", "url": "tsi-reading-practice-test" }
@@ -414,16 +399,9 @@
             { "title": "Practice Exam 2", "url": "comptia-network-practice-exam-2" },
             { "title": "Practice Exam 1", "url": "comptia-network-practice-exam-1" },
             { "title": "Network Security", "url": "comptia-network-network-security-practice-test" },
-            { "title": "Network Security", "url": "comptia-network-network-security-practice-test" },
             { "title": "Network Operations", "url": "comptia-network-network-operations-practice-test" },
             { "title": "Network Fundamentals", "url": "comptia-network-network-fundamentals-practice-test" },
-            { "title": "Network Fundamentals", "url": "comptia-network-network-fundamentals-practice-test" },
-            { "title": "Practice Exam 1", "url": "comptia-network-practice-exam-1" },
             { "title": "Network Implementations", "url": "comptia-network-network-implementations-practice-test" },
-            { "title": "Network Troubleshooting", "url": "comptia-network-network-troubleshooting-practice-test" },
-            { "title": "Practice Exam 2", "url": "comptia-network-practice-exam-2" },
-            { "title": "Network Implementations", "url": "comptia-network-network-implementations-practice-test" },
-            { "title": "Network Operations", "url": "comptia-network-network-operations-practice-test" },
             { "title": "Network Troubleshooting", "url": "comptia-network-network-troubleshooting-practice-test" }
         ],
         "fullTests": ["full-length-comptia-network-practice-test"]
@@ -530,10 +508,6 @@
             { "title": "Period 2 (1608–1754)", "url": "apush-period-2-1608-1754--practice-test" },
             { "title": "Period 9 (1980–Present)", "url": "apush-period-9-1980-present--practice-test" },
             { "title": "Period 8 (1946–1980)", "url": "apush-period-8-1946-1980--practice-test" },
-            { "title": "Period 1 (1491–1607)", "url": "apush-period-1-1491-1607--practice-test" },
-            { "title": "Period 7 (1890–1945)", "url": "apush-period-7-1890-1945--practice-test" },
-            { "title": "Period 8 (1946–1980)", "url": "apush-period-8-1946-1980--practice-test" },
-            { "title": "Period 9 (1980–Present)", "url": "apush-period-9-1980-present--practice-test" },
             { "title": "Period 7 (1890–1945)", "url": "apush-period-7-1890-1945--practice-test" },
             { "title": "Period 6 (1865–1898)", "url": "apush-period-6-1865-1898--practice-test" }
         ],
@@ -675,38 +649,26 @@
     {
         "appId": 5881924151148544,
         "topics": [
-            { "title": "A3: Manual Transmission", "url": "ase-a3-practice-test" },
             { "title": "A1: Engine Repair", "url": "ase-series-a-practice-test" },
-            { "title": "A4", "url": "ase-a4-practice-test" },
-            { "title": "A5: Brakes", "url": "ase-a5-practice-test" },
-            { "title": "A8", "url": "ase-a8-practice-test" },
             { "title": "A2: Automatic Transmission", "url": "ase-a2-practice-test" },
-            { "title": "A6", "url": "ase-a6-practice-test" },
-            { "title": "A7: Heating & Air Conditioning", "url": "ase-a7-practice-test" },
-            { "title": "A3", "url": "ase-a3-practice-test" },
-            { "title": "A6: Electrical & Electronic Systems", "url": "ase-a6-practice-test" },
-            { "title": "A4", "url": "ase-a4-practice-test" },
-            { "title": "A9: Light Vehicle Diesel Engines", "url": "ase-a9-practice-test" },
-            { "title": "A5", "url": "ase-a5-practice-test" },
+            { "title": "A3: Manual Transmission", "url": "ase-a3-practice-test" },
             { "title": "A4: Suspension & Steering", "url": "ase-a4-practice-test" },
-            { "title": "A7", "url": "ase-a7-practice-test" },
-            { "title": "A8: Engine Performance", "url": "ase-a8-practice-test" }
+            { "title": "A5: Brakes", "url": "ase-a5-practice-test" },
+            { "title": "A6: Electrical & Electronic Systems", "url": "ase-a6-practice-test" },
+            { "title": "A7: Heating & Air Conditioning", "url": "ase-a7-practice-test" },
+            { "title": "A8: Engine Performance", "url": "ase-a8-practice-test" },
+            { "title": "A9: Light Vehicle Diesel Engines", "url": "ase-a9-practice-test" }
         ],
         "fullTests": ["full-length-ase-practice-test"]
     },
     {
         "appId": 5753091221618688,
         "topics": [
-            { "title": "Information Systems", "url": "ptce-information-systems-practice-test" },
             { "title": "Patient Safety and Quality Assurance", "url": "ptce-quality-assurance-practice-test" },
             { "title": "Order Entry and Processing", "url": "ptce-order-entry-and-fill-process-practice-test" },
-            { "title": "Sterile and Non-Sterile Compounding", "url": "ptce-sterile-and-non-sterile-compounding-practice-test" },
-            { "title": "Inventory Management", "url": "ptce-inventory-management-practice-test" },
-            { "title": "Billing and Reimbursement", "url": "ptce-billing-and-reimbursement-practice-test" },
             { "title": "Top 200 Drugs Test", "url": "ptce-drug-quiz-practice-test" },
             { "title": "Medications", "url": "ptce-medication-safety-practice-test" },
-            { "title": "Federal Requirements", "url": "ptce-laws-and-regulations-practice-test" },
-            { "title": "Pharmacology", "url": "ptce-pharmacology-practice-test" }
+            { "title": "Federal Requirements", "url": "ptce-laws-and-regulations-practice-test" }
         ],
         "fullTests": ["full-length-ptce-practice-test"]
     },
@@ -753,5 +715,18 @@
             { "title": "220-1101:  Mobile devices", "url": "comptia-a-chapter-1--mobile-devices-practice-test" }
         ],
         "fullTests": ["full-length-comptia-a-practice-test"]
+    },
+    {
+        "appId": 5017963709071360,
+        "topics": [
+            { "title": "Physiological Integrity", "url": "nclex-rn-physiological-integrity-practice-test" },
+            { "title": "Health Promotion and Maintenance", "url": "nclex-rn-health-promotion-and-maintenance-practice-test" },
+            {
+                "title": "Safe and Effective Care Environment",
+                "url": "nclex-rn-safe-and-effective-care-environment-practice-test"
+            },
+            { "title": "Psychosocial Integrity", "url": "nclex-rn-psychosocial-integrity-practice-test" }
+        ],
+        "fullTests": ["full-length-nclex-rn-practice-test"]
     }
 ]

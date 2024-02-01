@@ -49,7 +49,7 @@ const StudyPage = ({
         <>
             <SEO
                 appInfo={appInfo}
-                addMathJax={!!appInfo.usingMathJax || true}
+                addMathJax={!!appInfo.usingMathJax}
                 title={titleSEO}
                 descriptionSEO={descriptionSEO}
                 keywordsSeo={keywordSEO}

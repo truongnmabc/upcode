@@ -253,7 +253,7 @@ const SearchResult = ({
                                 </div>
                             );
                         else {
-                            let srcImg = `/info/images/${res.appShortName}/logo60.png`;
+                            let srcImg = `/info/images/${res.bucket}/logo60.png`;
                             return (
                                 <div
                                     key={index}
