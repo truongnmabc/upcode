@@ -1,4 +1,4 @@
-import { APP_SHORT_NAME } from "@/config_app";
+import Config from "@/config";
 import TestInfo, { ITestInfo } from "@/models/TestInfo";
 import StoreProvider from "@/redux/StoreProvider";
 import { getHomeSeoContentStateApi } from "@/services/home.service";
@@ -6,7 +6,7 @@ import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import IWebData from "@/types/webData";
 import { getLink, getTitle } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
-import { genFullStudyLink, genStudyLink, getAppShortName } from "@/utils/getStudyLink";
+import { genFullStudyLink } from "@/utils/getStudyLink";
 import replaceYear from "@/utils/replaceYear";
 import { GetStaticPaths, GetStaticProps } from "next";
 import dynamic from "next/dynamic";
@@ -17,7 +17,6 @@ import { default as listAppTopics } from "../../data/studyData.json";
 import { AppInfo, IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
-import Config from "@/config";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -65,10 +64,11 @@ const StudyPage = ({
         let webData = {
             appId: appInfo.appId,
             type: SYNC_TYPE.TYPE_LEARN_TEST,
-            slug: router.asPath.slice(1, router.asPath.length), // mô tả tại IWebData, trong asPath có phần #level, slice để bỏ đi dấu / ở đầu vì trước dùng slug của getServerSideProps không có
+            fullSlug: router.asPath.slice(1, router.asPath.length), // mô tả tại IWebData, trong asPath có phần #level, slice để bỏ đi dấu / ở đầu vì trước dùng slug của getServerSideProps không có
             content: topic.content,
             title: topic.title,
             gameType,
+            bucket: appInfo.bucket,
         };
         return (
             <>

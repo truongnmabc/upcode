@@ -6,7 +6,7 @@ import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import "./StudyView.scss";
-import { setSession } from "../../config/config_web";
+import { isParentApp, setSession } from "../../config/config_web";
 import MyContainer from "../v4-material/MyContainer";
 import { useEffect, useRef } from "react";
 import IWebData from "@/types/webData";
@@ -111,8 +111,12 @@ const StudyView = ({
                             <Link href="/" prefetch={false}>
                                 Home
                             </Link>
-                            <img src="/images/arrow-left.png" alt="" width={12} height={12} />
-                            <Link href={getLink(appInfo)}>{appInfo.appName}</Link>
+                            {isParentApp() && (
+                                <>
+                                    <img src="/images/arrow-left.png" alt="" width={12} height={12} />
+                                    <Link href={getLink(appInfo)}>{appInfo.appName}</Link>
+                                </>
+                            )}
                         </div>
                         {showAnswerSheet && <AnswerSheet gameState={gameState} contentData={contentData} />}
                         {gameType === Config.TOPIC_GAME ? (

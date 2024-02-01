@@ -1,7 +1,7 @@
-import listAppTopic from "../data/topic-landing-page.json";
-const getRawTopicsData = (appShortName) => {
+import listAppTopic from "../data/studyData.json";
+const getRawTopicsData = (appId) => {
     let listSubMenu = [];
-    const appTopic = listAppTopic.find((topic) => topic.appName === appShortName);
+    const appTopic = listAppTopic.find((topic) => topic.appId === appId);
     if (appTopic) {
         const tempTopics = appTopic.topics.filter((topic) => !topic.isBranch);
         listSubMenu = tempTopics.map((t, index) => {

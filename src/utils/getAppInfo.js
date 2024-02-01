@@ -1,6 +1,7 @@
 import { isWebDMV } from "@/config/config_web";
 import { AppInfo } from "@/models/AppInfo";
 import fs from "fs";
+import { APP_NEW_DOMAIN } from "@/config_app";
 import path from "path";
 let mapAppInfos;
 const readAllAppInfos = () => {
