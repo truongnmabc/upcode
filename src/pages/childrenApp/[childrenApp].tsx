@@ -91,13 +91,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
         return slug === getLink(a).replaceAll("/", "");
     });
     if (childAppInfo) {
-        let appData: any = await readFileAppFromGoogleStorage(childAppInfo.bucket.toLowerCase());
+        let appData: any = await readFileAppFromGoogleStorage(childAppInfo);
         listTopics = appData?.topics ?? [];
-        listTopics.sort((a: any, b: any) => {
-            return a.name.localeCompare(b.name);
-        });
-        let _tests = appData?.fullTests ?? [];
-        tests = _tests.map((t: any) => new TestInfo({ ...t, slug: genFullStudyLink(childAppInfo) }));
+        tests = appData?.fullTests ?? [];
     }
     // homeSeoContent = await getHomeSeoContentApi("home-seo-content");
     // if (homeSeoContent) {

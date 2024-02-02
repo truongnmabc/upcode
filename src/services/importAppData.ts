@@ -1,21 +1,31 @@
+import Topic from "@/models/Topic";
 import { isProduction } from "../config/config_web";
 import { callApi } from "../services/index";
-export async function readFileAppFromGoogleStorage(bucket: string) {
+import TestInfo from "@/models/TestInfo";
+import { genFullStudyLink } from "@/utils/getStudyLink";
+import { IAppInfo } from "@/models/AppInfo";
+export async function readFileAppFromGoogleStorage(appInfo: IAppInfo) {
     //storage.googleapis.com/micro-enigma-235001.appspot.com/data-app/data-4878338973761536.json
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab_new/datacdl.txt
     try {
-        console.log("---" + bucket);
+        console.log("---" + appInfo.bucket);
         //https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/topics-and-tests.json
         let data = await callApi({
-            url: "new-data-web/" + bucket + "/topics-and-tests.json?t=" + new Date().getTime(), // sau bo sung tham so vao url cho tong quat
+            url: "new-data-web/" + appInfo.bucket + "/topics-and-tests.json?t=" + new Date().getTime(), // sau bo sung tham so vao url cho tong quat
             params: null,
             method: "get",
             baseURl: "https://storage.googleapis.com/micro-enigma-235001.appspot.com/",
             headers: null,
         });
-        return data;
+        let topics = (data?.topics ?? []).map((t) => new Topic(t));
+        topics.sort((a: any, b: any) => {
+            return a.name.localeCompare(b.name);
+        });
+        let _tests = data?.fullTests ?? [];
+        let tests = _tests.map((t: any) => new TestInfo({ ...t, slug: genFullStudyLink(appInfo, t?.tag, true) }));
+        return { ...data, fullTests: tests, topics };
     } catch (error) {
-        console.log("readFileAppFromGoogleStorage error", bucket);
+        console.log("readFileAppFromGoogleStorage error", appInfo.bucket);
         return { topics: [], fullTests: [], branchTests: [] };
     }
 }

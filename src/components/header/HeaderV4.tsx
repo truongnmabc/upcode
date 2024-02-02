@@ -12,14 +12,17 @@ import ExpandMoreIcon from "../icon/ExpandMoreIcon";
 import Link from "next/link";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { genFullStudyLink } from "@/utils/getStudyLink";
+import { ITestInfo } from "@/models/TestInfo";
 
 const DownloadAppV4 = dynamic(() => import("../homepage/DownloadAppV4"));
 
 const HeaderV4 = ({
     appInfo,
     topics,
+    tests,
 }: {
     appInfo: IAppInfo;
+    tests: ITestInfo[];
     topics: ITopic[]; // cần truyền và cái này để trang Home không cần phụ thuộc vào redux nữa => tránh mount 2 lần và bị nháy màn hình khi truy cập (do logic của file LayoutV4)
 }) => {
     const [openMenuDrawer, setOpenMenuDrawer] = useState(false);
@@ -64,9 +67,9 @@ const HeaderV4 = ({
                             <CloseIcon />
                         </div>
                         <div className="container-drawer-right-menu-header-v4">
-                            <div className="container-drawer-right-menu-header-v4-1">
+                            {/* <div className="container-drawer-right-menu-header-v4-1">
                                 <a
-                                    href={genFullStudyLink(appInfo)}
+                                    href={genFullStudyLink(appInfo, "", true)}
                                     onClick={(e) => {
                                         e.preventDefault();
                                         ga.event({
@@ -75,11 +78,61 @@ const HeaderV4 = ({
                                                 from: window.location.href,
                                             },
                                         });
-                                        window.location.href = genFullStudyLink(appInfo);
+                                        window.location.href = genFullStudyLink(appInfo, "", true);
                                     }}
                                 >
                                     {`Full ${appInfo.appName} Practice Test`}
                                 </a>
+                            </div>
+                             */}
+                            <div
+                                className="container-drawer-right-menu-header-v4-1"
+                                onClick={() => {
+                                    let btn = document.getElementById("v4-icon-expand-test");
+                                    let collapse = document.getElementById("collapse-test");
+                                    let content = document.getElementById("collapse-content-test");
+                                    let height = content.clientHeight;
+                                    if (btn.className.includes("true")) {
+                                        //close
+                                        btn.className = "v4-icon-expand false";
+                                        collapse.style.height = "0px";
+                                    } else {
+                                        btn.className = "v4-icon-expand true";
+                                        collapse.style.height = height + "px";
+                                    }
+                                }}
+                            >
+                                {`Full ${appInfo.appName} Practice Test`}
+                                <div className={"v4-icon-expand"} id="v4-icon-expand-test">
+                                    <ExpandMoreIcon />
+                                </div>
+                            </div>
+                            <div id="collapse-test">
+                                <div id="collapse-content-test">
+                                    {tests.map((test, index) => {
+                                        let _link = genFullStudyLink(appInfo, test.tag, true);
+                                        return (
+                                            <div key={index} className="v4-app-test">
+                                                <a
+                                                    href={_link}
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        ga.event({
+                                                            action: "click_menu_test",
+                                                            params: {
+                                                                from: window.location.href,
+                                                                to: test.tag,
+                                                            },
+                                                        });
+                                                        window.location.href = _link;
+                                                    }}
+                                                >
+                                                    {`${test.title} Test`}
+                                                </a>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
                             <div
                                 className="container-drawer-right-menu-header-v4-1"

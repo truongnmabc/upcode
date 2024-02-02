@@ -105,12 +105,14 @@
                 }
             }
         }
-        #collapse-topic {
+        #collapse-topic,
+        #collapse-test {
             height: 0;
             overflow: hidden;
             transition: all 0.2s;
         }
-        .v4-app-topic {
+        .v4-app-topic,
+        .v4-app-test {
             font-size: 14px;
             padding: 12px;
             margin-left: 12px;
@@ -151,7 +153,8 @@
                 text-decoration: none;
             }
 
-            .v4-app-topic {
+            .v4-app-topic,
+            .v4-app-test {
                 font-size: 18px;
             }
         }

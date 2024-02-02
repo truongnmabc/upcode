@@ -36,7 +36,7 @@ const HomeSingleApp = ({
     }, []);
     const isDesktop = useMediaQuery("(min-width:769px)");
     return (
-        <Layout2 appInfo={appInfo} listTopics={listTopics}>
+        <Layout2 appInfo={appInfo} listTopics={listTopics} tests={tests}>
             <div className="v4-home-landing-0">
                 <MyContainer>
                     <div className="landing-title-0">
@@ -63,7 +63,11 @@ const HomeSingleApp = ({
 
                     <div className="v4-landing-practice-test-0">
                         <h2>{`Take Full ${appInfo.appName} Practice Test`}</h2>
-                        <TestBanner appInfo={appInfo} test={tests[0]} />
+                        {tests.map((test, index) => (
+                            <div key={index} style={{ marginTop: index != 0 ? 16 : 0 }}>
+                                <TestBanner key={index} appInfo={appInfo} test={test} />
+                            </div>
+                        ))}
                     </div>
                     <div className="v4-landing-banner-download-app-0">
                         <h2>{`Prepare to Pass ${isDesktop ? appInfo.appName : ""} on Any Devices`}</h2>

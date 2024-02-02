@@ -5,7 +5,7 @@ import * as ga from "../../services/ga";
 import "./TestBanner.scss";
 const TestBanner = ({ appInfo, test }: { appInfo: IAppInfo; test: ITestInfo }) => {
     let timeTest = Math.floor(test?.timeTest / 60);
-    let _href = genFullStudyLink(appInfo);
+    let _href = test.slug;
     return (
         <a
             href={_href}
@@ -23,7 +23,7 @@ const TestBanner = ({ appInfo, test }: { appInfo: IAppInfo; test: ITestInfo }) =
         >
             <div className={"v4-test-banner-0 v4-border-radius"}>
                 <div className="v4-test-banner-content-0">
-                    <h3 className="v4-font-semi-bold">{`Full-length ${appInfo.appName} Test`}</h3>
+                    <h3 className="v4-font-semi-bold">{`${test.title} Test`}</h3>
                     <div className="v4-test-banner-content-1">
                         <div className="v4-test-banner-content-21">
                             <strong className="v4-font-semi-bold">{test?.totalQuestion ? test.totalQuestion : 0}</strong>

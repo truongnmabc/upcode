@@ -224,12 +224,12 @@ const GridTopic = ({
                     </div>
                 );
             })}
-            {place != "home" && (
+            {/* {place != "home" && (
                 <>
                     <div className="separate-line" />
                     <a
                         className="v4-grid-topic-full-leng-test v4-border-radius"
-                        href={genFullStudyLink(appInfo)}
+                        href={genFullStudyLink(appInfo, "", true)}
                         onClick={(e) => {
                             e.preventDefault(); // viết như này để ga được thực hiện
                             ga.event({
@@ -238,13 +238,13 @@ const GridTopic = ({
                                     from: window.location.href,
                                 },
                             });
-                            window.location.href = genFullStudyLink(appInfo);
+                            window.location.href = genFullStudyLink(appInfo, "", true);
                         }}
                     >
                         {`${appInfo.appName.toUpperCase()} Full-length Test`}
                     </a>
                 </>
-            )}
+            )} */}
         </div>
     );
 };

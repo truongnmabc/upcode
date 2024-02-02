@@ -10,6 +10,7 @@ export interface ITestInfo {
     questionIds: number[];
     shortId: number;
     stateId: number;
+    tag: string;
     testQuestionData: ITestQuestionData[];
     timeTest: number;
     title: string;
@@ -27,6 +28,7 @@ export default class TestInfo implements ITestInfo {
     questionIds: number[];
     shortId: number;
     stateId: number;
+    tag: string;
     testQuestionData: ITestQuestionData[];
     timeTest: number;
     title: string;
@@ -42,6 +44,7 @@ export default class TestInfo implements ITestInfo {
         this.passPercent = object.passPercent ? object.passPercent : 100;
         this.shortId = object.shortId ? object.shortId : -1;
         this.stateId = object.stateId ? object.stateId : -1;
+        this.tag = object.tag ?? "";
         this.testQuestionData = new Array();
         this.timeTest = object.timeTest ?? -1;
         this.title = object.title ? object.title : "";

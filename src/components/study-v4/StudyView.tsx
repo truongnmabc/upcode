@@ -14,7 +14,7 @@ import { GameState } from "@/redux/features/game";
 import V4CircleProgress from "../v4-material/V4CircleProgress";
 import Link from "next/link";
 import { getLink } from "@/utils";
-import ArrowLeft from "../icon/ArrowLeft";
+import { ITestInfo } from "@/models/TestInfo";
 const MainStudyView = dynamic(() => import("./MainStudyView"));
 const HeaderStudyV4 = dynamic(() => import("./HeaderStudyV4"), {
     ssr: false,
@@ -36,11 +36,13 @@ const StudyView = ({
     listTopics,
     gameState,
     contentData,
+    tests,
 }: {
     appInfo: IAppInfo;
     listTopics: ITopic[];
     gameState: GameState;
     contentData: IWebData;
+    tests: ITestInfo[];
 }) => {
     let isFinish = gameState.isFinishGame;
     const gameType = contentData.gameType;
@@ -118,7 +120,7 @@ const StudyView = ({
                             )}
                         </div>
                         {showAnswerSheet && <AnswerSheet gameState={gameState} contentData={contentData} />}
-                        {gameType === Config.TOPIC_GAME ? (
+                        {!!(gameType === Config.TOPIC_GAME) && (
                             <div className="v4-study-list-topics-0">
                                 <h3 className="v4-font-semi-bold">{`More ${appInfo.appName} Topics`}</h3>
                                 <GridTopic
@@ -129,32 +131,40 @@ const StudyView = ({
                                     place="study"
                                 />
                             </div>
-                        ) : (
-                            gameType === Config.BRANCH_TEST_GAME && (
-                                <div className="v4-study-list-branches-0 v4-border-radius">
-                                    <h3 className="v4-font-semi-bold">{`More ${appInfo.appName} Tests`}</h3>
-                                    {listBranchs.map((t, i) => (
-                                        <a
-                                            key={i}
-                                            href={t.url}
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                ga.event({
-                                                    action: "click_menu_branch_test",
-                                                    params: {
-                                                        from: window.location.href,
-                                                        to: t.url,
-                                                    },
-                                                });
-                                                window.location.href = t.url;
-                                            }}
-                                        >
-                                            {t.title}
-                                        </a>
-                                    ))}
-                                </div>
-                            )
                         )}
+                        <div className="v4-study-list-branches-0 v4-border-radius">
+                            <h3 className="v4-font-semi-bold">{`More ${appInfo.appName} Tests`}</h3>
+                            {(gameType === Config.BRANCH_TEST_GAME ? listBranchs : tests).map((t, i) => {
+                                let url = "";
+                                let title = "";
+                                if (gameType === Config.BRANCH_TEST_GAME) {
+                                    url = t.url;
+                                    title = t.title;
+                                } else {
+                                    url = t.slug;
+                                    title = t.title + " Test";
+                                }
+                                return (
+                                    <a
+                                        key={i}
+                                        href={url}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            ga.event({
+                                                action: "click_menu_branch_test",
+                                                params: {
+                                                    from: window.location.href,
+                                                    to: t.url,
+                                                },
+                                            });
+                                            window.location.href = t.url;
+                                        }}
+                                    >
+                                        {title}
+                                    </a>
+                                );
+                            })}
+                        </div>
                     </div>
                     <div className="v4-main-study-content">
                         <h1

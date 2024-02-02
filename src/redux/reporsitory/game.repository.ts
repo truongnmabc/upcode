@@ -181,13 +181,13 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     dispatch(getQuestionsDataSuccess({ parentId: studyId, questions: questionsData }));
                 } else
                     throw {
-                        err: "Topic question reponse by api is empty!",
+                        err: "Test question reponse by api is empty!",
                     };
                 dispatch(getTestSuccess([test]));
             }
             if (getTopic) {
                 // mặc định coi vào trường hợp này là tải dữ liệu mới về => vào level thấp nhất
-                let data: any = await readFileAppFromGoogleStorage(webData.bucket); // get data ve
+                let data: any = await readFileAppFromGoogleStorage(appInfo); // get data ve
                 topics = data?.topics ?? [];
                 dispatch(getTopicByParentIdSuccess(topics));
                 let accessTopic = topics.find((t) => slug.includes(t.tag));

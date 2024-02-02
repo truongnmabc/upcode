@@ -7,7 +7,6 @@ export default interface IWebData {
     fullSlug?: string; //để check lấy dữ liệu
     topicId?: string;
     content?: string; // text seo
-    isQuestionPage?: boolean; // is question page
     title?: string; // SEO
     gameType?: 0 | 1 | -1;
     bucket?: string;

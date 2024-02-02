@@ -69,15 +69,8 @@ export const getServerSideProps = async (context) => {
         context.res.writeHead(302, { Location: "/" }).end();
         return { props: {} };
     }
-    let appData: any = await readFileAppFromGoogleStorage(appInfo.bucket); // get data ve
-    let { topics } = appData;
-    if (topics) {
-        topics = topics.map((t) => new Topic(t));
-        topics.sort((a, b) => {
-            return a.name.localeCompare(b.name);
-        });
-    } else topics = [];
-
+    let appData: any = await readFileAppFromGoogleStorage(appInfo); // get data ve
+    let { topics, fullTests } = appData;
     // fullTests và branchTests thì thôi vì từ trang question khả năng đi sang trang branchTest thấp, và cũng không có data câu hỏi đi kèm thì nếu k có mà vào trang cũng tải lại từ đầu
 
     let question = new Question(data?.question);

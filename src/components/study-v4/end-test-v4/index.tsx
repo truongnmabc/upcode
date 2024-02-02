@@ -218,15 +218,19 @@ const EndTestButton = ({
                         </button>
                     )
                 ) : (
-                    <button
-                        className="final-test btn v4-border-radius v4-button-animtaion"
-                        onClick={() => {
-                            window.location.href = genFullStudyLink(appInfo);
-                        }}
-                    >
-                        Full-length Test
-                    </button>
-                ))}
+                    <></>
+                ))
+                // (
+                //     <button
+                //         className="final-test btn v4-border-radius v4-button-animtaion"
+                //         onClick={() => {
+                //             window.location.href = genFullStudyLink(appInfo, "", true);
+                //         }}
+                //     >
+                //         Full-length Test
+                //     </button>
+                // )
+            }
         </div>
     );
 };

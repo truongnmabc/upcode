@@ -70,13 +70,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
     } else {
         // làm giao diện mới cho asvab nên check riêng asvab
         if (appInfo) {
-            let appData: any = await readFileAppFromGoogleStorage(appInfo.bucket);
+            let appData: any = await readFileAppFromGoogleStorage(appInfo);
             listTopics = appData?.topics ?? [];
-            listTopics.sort((a: any, b: any) => {
-                return a.name.localeCompare(b.name);
-            });
-            let _tests = appData?.fullTests ?? [];
-            tests = _tests.map((t: any) => new TestInfo({ ...t, slug: genFullStudyLink(appInfo) }));
+            tests = appData?.fullTests ?? [];
         }
         homeSeoContent = await getHomeSeoContentApi("home-seo-content");
     }
