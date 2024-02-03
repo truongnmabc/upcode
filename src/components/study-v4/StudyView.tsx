@@ -157,7 +157,7 @@ const StudyView = ({
                                                     to: t.url,
                                                 },
                                             });
-                                            window.location.href = t.url;
+                                            window.location.href = url;
                                         }}
                                     >
                                         {title}

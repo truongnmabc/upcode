@@ -47,18 +47,20 @@ export async function getTopicQuestionsFromGoogleStorage(bucket: string, topicTa
         return [];
     }
 }
-export async function getTestDataFromGoogleStorage(bucket: string, branchSlug: string) {
+export async function getTestDataFromGoogleStorage(bucket: string, url: string) {
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/full-tests.json
     try {
         let data = await callApi({
-            url: `new-data-web/${bucket}/${branchSlug ? branchSlug : "full-tests"}.json?t=${Date.now()}`,
+            url: `new-data-web/${bucket}/${url}.json?t=${Date.now()}`,
             params: null,
             method: "get",
             baseURl: "https://storage.googleapis.com/micro-enigma-235001.appspot.com/",
             headers: null,
         });
 
-        return data;
+        return data.map((_) => {
+            return { test: new TestInfo(_), cards: _.cards };
+        });
     } catch (error) {
         console.log("getTestDataFromGoogleStorage error");
     }

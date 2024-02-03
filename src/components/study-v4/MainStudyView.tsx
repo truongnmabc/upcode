@@ -2,16 +2,16 @@ import "./MainStudyView.scss";
 import { GameState, getNumOfCorrectAnswer } from "../../redux/features/game";
 import { IAppInfo } from "../../models/AppInfo";
 import { IChoice } from "../../models/Choice";
-import { TextContentType } from "../../utils/v4_question";
+import { TextContentType, renderMath } from "../../utils/v4_question";
 import { useDispatch } from "react-redux";
 import * as ga from "../../services/ga";
 import ChoicesPanelV4 from "./ChoicesPanelV4";
 import Config from "../../config";
 import dynamic from "next/dynamic";
 import QuestionMultipleChoiceV4 from "./QuestionMultipleChoiceV4";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import V4QuestionContent from "./V4QuestionContent";
 import { nextQuestion, onChooseAnswer, onGameSubmitted } from "@/redux/reporsitory/game.repository";
+import { useEffect } from "react";
 
 const CancelRoundedIcon = dynamic(() => import("@mui/icons-material/CancelRounded"), { ssr: false });
 const CheckCircleRoundedIcon = dynamic(() => import("@mui/icons-material/CheckCircleRounded"), { ssr: false });
@@ -22,7 +22,7 @@ const V4CircleProgress = dynamic(() => import("../v4-material/V4CircleProgress")
 
 const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: IAppInfo }) => {
     let currentQuestion = gameState.currentQuestion;
-    const isDesktop = useMediaQuery("(min-width:769px)");
+    // const isDesktop = useMediaQuery("(min-width:769px)");
     const dispatch = useDispatch();
     let thisQuestionIsDone =
         currentQuestion.questionStatus == Config.QUESTION_ANSWERED_CORRECT ||
@@ -62,6 +62,15 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
         dispatch(onChooseAnswer(choice));
     };
 
+    useEffect(() => {
+        if (window.MathJax) {
+            renderMath(); // vì nội dung mathjax tải lâu hơn nên phải truyền hàm này vào
+        } else {
+            setTimeout(() => {
+                renderMath();
+            }, 1500);
+        }
+    }, [JSON.stringify(gameState)]);
     return (
         <div className="v4-main-study-view-0">
             <div className="v4-main-study-view-1 v4-border-radius">

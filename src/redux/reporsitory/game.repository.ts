@@ -3,7 +3,7 @@ import { SYNC_TYPE } from "@/config/config_sync";
 import { IAppInfo } from "@/models/AppInfo";
 import { IChoice } from "@/models/Choice";
 import Progress from "@/models/Progress";
-import TestInfo, { ITestInfo } from "@/models/TestInfo";
+import { ITestInfo } from "@/models/TestInfo";
 import Topic, { ITopic } from "@/models/Topic";
 import {
     getTestDataFromGoogleStorage,
@@ -168,14 +168,18 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             let questionsData = [];
             if (getTest) {
                 // vi api tra ve ca data cua test va question luon nen dung chung 1 bien getTest de check
-                let _test = await getTestDataFromGoogleStorage(appInfo.bucket, gameType == Config.BRANCH_TEST_GAME ? slug : "");
+                let testTag = slug.replace("full-length-" + appInfo.appShortName, "").replace("-practice-test", "");
+                let data = await getTestDataFromGoogleStorage(
+                    appInfo.bucket,
+                    gameType == Config.BRANCH_TEST_GAME ? slug : "full-tests" + (testTag ? testTag : "")
+                );
 
-                let test = new TestInfo(_test[0]);
-                test.slug = slug;
+                let test = data[0].test;
+                test.slug = "/" + fullSlug;
                 studyId = test.id + "";
                 passPercent = test.passPercent;
                 timeTest = test.timeTest;
-                questionsData = _test[0].cards;
+                questionsData = data[0].cards;
                 if (questionsData.length) {
                     // update vao redux; cho nay can chu y check truong hop co data nhung khong du so luong!!
                     dispatch(getQuestionsDataSuccess({ parentId: studyId, questions: questionsData }));

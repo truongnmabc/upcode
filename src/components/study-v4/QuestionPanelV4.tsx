@@ -1,13 +1,13 @@
-import "./QuestionPanelV4.scss";
-import { TextContentType, isMathJaxContent } from "../../utils/v4_question";
 import { useState } from "react";
+import Config from "../../config";
+import { getSession } from "../../config/config_web";
+import Question from "../../models/Question";
+import { TextContentType, isMathJaxContent } from "../../utils/v4_question";
+import MyCollapse from "../v4-material/MyCollapse";
 import ChoicesPanelV4 from "./ChoicesPanelV4";
 import QuestionMultipleChoiceV4 from "./QuestionMultipleChoiceV4";
+import "./QuestionPanelV4.scss";
 import V4QuestionContent from "./V4QuestionContent";
-import Question from "../../models/Question";
-import MyCollapse from "../v4-material/MyCollapse";
-import { getSession } from "../../config/config_web";
-import Config from "../../config";
 const tester = getSession(Config.TESTER_KEY);
 const QuestionPanelV4 = ({
     question,

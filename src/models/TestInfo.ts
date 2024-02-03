@@ -4,7 +4,7 @@ export interface ITestInfo {
     slug: string; // lưu slug của bài test này
     // topicId: number;
     appId: number; //
-    id: number; //
+    id: string; //
     lastUpdate: number; //
     passPercent: number; //
     questionIds: number[];
@@ -22,7 +22,7 @@ export default class TestInfo implements ITestInfo {
     // topicId: number;
     appId: number;
     // description: string;
-    id: number;
+    id: string;
     lastUpdate: number;
     passPercent: number;
     questionIds: number[];
@@ -39,7 +39,7 @@ export default class TestInfo implements ITestInfo {
         // this.topicId = object.topicId ?? -1;
         this.appId = object.appId ? object.appId : -1;
         // this.description = object.description ? object.description : "";
-        this.id = object.id ? object.id : -1;
+        this.id = object.appId + "-" + object.tag ?? "-1";
         this.lastUpdate = object.lastUpdate ? object.lastUpdate : -1;
         this.passPercent = object.passPercent ? object.passPercent : 100;
         this.shortId = object.shortId ? object.shortId : -1;
