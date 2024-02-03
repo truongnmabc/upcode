@@ -17,7 +17,7 @@ const ReviewAnswer = ({ gameState, appInfo }: { gameState: GameState; appInfo: I
                 }, 1500);
             }
         }
-    }, []);
+    }, [JSON.stringify(gameState)]);
     return (
         <div className="v4-review-answer">
             <div className="v4-review-answer-title">Review Your Answers</div>
