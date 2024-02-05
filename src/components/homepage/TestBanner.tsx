@@ -3,7 +3,7 @@ import { IAppInfo } from "../../models/AppInfo";
 import { ITestInfo } from "../../models/TestInfo";
 import * as ga from "../../services/ga";
 import "./TestBanner.scss";
-const TestBanner = ({ appInfo, test }: { appInfo: IAppInfo; test: ITestInfo }) => {
+const TestBanner = ({ appInfo, test, index }: { appInfo: IAppInfo; test: ITestInfo; index: number }) => {
     let timeTest = Math.floor(test?.timeTest / 60);
     let _href = test.slug;
     return (
@@ -51,7 +51,10 @@ const TestBanner = ({ appInfo, test }: { appInfo: IAppInfo; test: ITestInfo }) =
                 <figure
                     className="v4-test-banner-thumbnail-0"
                     style={{
-                        backgroundImage: `url(/images/${appInfo.bucket}/test-card-desktop.png)`,
+                        backgroundImage:
+                            index === 0
+                                ? `url(/images/${appInfo.bucket}/test-card-desktop.png)`
+                                : `url(/images/test-card-desktop-${index}.png)`,
                     }}
                 ></figure>
             </div>

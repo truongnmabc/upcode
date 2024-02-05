@@ -7,14 +7,32 @@ import "./ParentAppLayout.scss";
 import ListApp from "../../components/easy-prep/ListApp";
 import AppAchievement from "../../components/easy-prep/AppAchievement";
 import Testimonals from "../../components/easy-prep/Testimonals";
+// import { callApi } from "@/services";
 
 const ParentAppLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listAppInfos: IAppInfo[] }) => {
     const isDesktop = useMediaQuery("(min-width: 769px)");
+    const exportData = async () => {
+        // for (let app of listAppInfos) {
+        //     await callApi({
+        //         url: `api/web?type=export-new-app&appId=${app.appId}&appName=${app.bucket}`,
+        //         params: null,
+        //         method: "get",
+        //         baseURl: "https://test-dot-micro-enigma-235001.appspot.com/",
+        //         headers: null,
+        //     })
+        //         .then(() => {
+        //             console.log("ok", app.appId, app.bucket);
+        //         })
+        //         .catch((err) => {
+        //             console.log("error", app.appId, app.bucket);
+        //         });
+        // }
+    };
     return (
         <Layout1 listAppInfos={listAppInfos}>
             <MyContainer className="take-learning-to-the-next-level ">
                 <div className="align-center -container">
-                    <div className="landing-title">
+                    <div className="landing-title" onClick={() => exportData()}>
                         <h1 style={{ display: "none" }}>
                             {isDesktop ? "Easy Prep: take learning to the next level" : "Easy Solution For Teaching & Learning"}
                         </h1>

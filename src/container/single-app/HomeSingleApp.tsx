@@ -65,7 +65,7 @@ const HomeSingleApp = ({
                         <h2>{`Take Full ${appInfo.appName} Practice Test`}</h2>
                         {tests.map((test, index) => (
                             <div key={index} style={{ marginTop: index != 0 ? 16 : 0 }}>
-                                <TestBanner key={index} appInfo={appInfo} test={test} />
+                                <TestBanner key={index} appInfo={appInfo} test={test} index={index} />
                             </div>
                         ))}
                     </div>
