@@ -1,7 +1,7 @@
 import SeoHeader from "@/components/seo/SeoHeader";
 import { isParentApp } from "@/config/config_web";
 import { AppInfo, IAppInfo } from "@/models/AppInfo";
-import TestInfo, { ITestInfo } from "@/models/TestInfo";
+import { ITestInfo } from "@/models/TestInfo";
 import { ITopic } from "@/models/Topic";
 import StoreProvider from "@/redux/StoreProvider";
 import { getHomeSeoContentApi } from "@/services/home.service";
@@ -9,7 +9,6 @@ import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { setScrollDownAuto } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
 import { getAppInfo, readAllAppInfos } from "@/utils/getAppInfo";
-import { genFullStudyLink } from "@/utils/getStudyLink";
 import replaceYear from "@/utils/replaceYear";
 import { GetStaticProps } from "next";
 import dynamic from "next/dynamic";

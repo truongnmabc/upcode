@@ -12,7 +12,7 @@ const createTempData = (size: number) => {
 const AnswerSheet = ({ gameState, contentData }: { gameState: GameState; contentData: IWebData }) => {
     const isTest = contentData.gameType != Config.TOPIC_GAME;
     let isFinish = gameState.isFinishGame;
-    let questions = gameState.questions.length > 0 ? gameState.questions : createTempData(isTest ? 135 : 10);
+    let questions = gameState.questions.length > 0 ? gameState.questions : createTempData(isTest ? 50 : 10);
     const dispatch = useDispatch();
     let maximumQuestionIndexIsAnswered = 0;
     if (isTest) {

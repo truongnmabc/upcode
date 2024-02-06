@@ -4,7 +4,6 @@ import { getHomeSeoContentStateApi } from "@/services/home.service";
 import IWebData from "@/types/webData";
 import { getLink, getTitle } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
-import { genFullStudyLink, genStudyLink } from "@/utils/getStudyLink";
 import replaceYear from "@/utils/replaceYear";
 import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
@@ -17,8 +16,8 @@ import StudyLayout from "../../container/study/StudyLayout";
 import { AppInfo, IAppInfo } from "../../models/AppInfo";
 import { readAllAppInfos } from "../../utils/getAppInfo";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
-import TestInfo, { ITestInfo } from "@/models/TestInfo";
-import Topic, { ITopic } from "@/models/Topic";
+import { ITestInfo } from "@/models/TestInfo";
+import { ITopic } from "@/models/Topic";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
