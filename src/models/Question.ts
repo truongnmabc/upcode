@@ -105,12 +105,13 @@ class Question {
             return new Question(Object.assign(question, questionJS));
         }
     }
-    getNumberChoiceSelected() {
-        let num = 0;
-        for (let i = 0; i < this.choices.length; i++) {
-            if (this.choices[i].selected) num++;
-        }
-        return num;
-    }
 }
 export default Question;
+
+export const getNumberChoiceSelected = (choices: IChoice[]) => {
+    let num = 0;
+    for (let i = 0; i < choices.length; i++) {
+        if (choices[i].selected) num++;
+    }
+    return num;
+};

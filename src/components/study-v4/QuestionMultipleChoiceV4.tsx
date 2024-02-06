@@ -1,13 +1,13 @@
-import Question from "../../models/Question";
+import Question, { getNumberChoiceSelected } from "../../models/Question";
 
-const QuestionMutipleChoiceV4 = ({ currentQuestion }: { currentQuestion: Question }) => {
+const QuestionMultipleChoiceV4 = ({ currentQuestion }: { currentQuestion: Question }) => {
     return (
         currentQuestion.correctNums > 1 && (
             <div className="select-multiple-question-title">
-                Correct answers: {currentQuestion.getNumberChoiceSelected()}/{currentQuestion.correctNums} selected
+                Correct answers: {getNumberChoiceSelected(currentQuestion.choices)}/{currentQuestion.correctNums} selected
             </div>
         )
     );
 };
 
-export default QuestionMutipleChoiceV4;
+export default QuestionMultipleChoiceV4;
