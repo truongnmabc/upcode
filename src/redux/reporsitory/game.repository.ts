@@ -86,7 +86,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     }
                 }
             } else {
-                let accessTopic = topics.find((t) => slug.includes(t.tag));
+                let accessTopic = topics.find((t) => slug.includes(t.tag) && appInfo.appId + "" == t.rootTopicId + "");
                 if (!accessTopic) {
                     // chưa có  thì gọi api
                     getTopic = true;

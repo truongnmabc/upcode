@@ -196,6 +196,8 @@ const SearchResult = ({
                                 key={index}
                                 className="align-center history-item"
                                 onClick={() => {
+                                    console.log(hist);
+
                                     onSelectHistorySearched(hist);
                                 }}
                             >

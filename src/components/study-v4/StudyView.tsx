@@ -142,7 +142,7 @@ const StudyView = ({
                                     title = t.title;
                                 } else {
                                     url = t.slug;
-                                    title = t.title + " Test";
+                                    title = t.title + ((t.title as string).toLowerCase().endsWith("test") ? "" : " Test");
                                 }
                                 return (
                                     <a
