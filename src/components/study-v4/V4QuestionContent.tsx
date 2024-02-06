@@ -226,9 +226,8 @@ const TextContent = ({
             style={type == TextContentType.explanation ? { marginBottom: "10px" } : {}}
             className={"v4-question-text"}
             onClick={(e) => {
-                if (e.currentTarget.nodeName == "IMG") {
-                    let img = e.currentTarget as HTMLImageElement;
-                    // img.onload = () => onLoaded(2);
+                if ((e.target as HTMLImageElement).nodeName == "IMG") {
+                    let img = e.target as HTMLImageElement;
                     showImageDialog(img.currentSrc);
                 }
             }}
