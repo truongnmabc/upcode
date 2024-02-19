@@ -15,7 +15,6 @@ import * as ga from "../../services/ga";
 import { hasImage } from "@/utils/v4_question";
 import { getHighhestLevelOfTopicBePassedSequentially, shuffleV4 } from "@/utils/v4_study";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import listAppTopics from "../../data/studyData.json";
 import Question from "../../models/Question";
 import AppState from "../appState";
 import { getQuestionsDataSuccess } from "../features/card";
@@ -24,6 +23,7 @@ import { updateToListGames } from "../features/listGame";
 import { getTestSuccess } from "../features/test";
 import { setTimeTest } from "../features/timeLeft";
 import { getTopicByParentIdSuccess } from "../features/topic";
+import { getAppTopics } from "@/utils/getRawTopicsData";
 
 const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, { dispatch, getState, rejectWithValue }) => {
     // tại version này phần học đc build static nên các url coi như là được xác định trước rồi!
@@ -58,7 +58,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             let gameTitle = "Full-length " + appInfo.appName + " Practice Test";
 
             if (gameType == Config.BRANCH_TEST_GAME) {
-                let branchTopic = listAppTopics.find((app) => app.appId === appInfo.appId)?.topics;
+                let branchTopic = getAppTopics().find((app) => app.appId === appInfo.appId)?.topics;
                 branchTopic = branchTopic?.filter((t) => t.isBranch);
                 let branch = branchTopic?.find((t) => t.url === slug);
                 gameTitle = branch.title;

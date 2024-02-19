@@ -8,13 +8,15 @@ const getRawTopicsData = (appId) => {
             const name = t.title;
             return {
                 icon: "",
-                tag: t.learnUrl,
+                tag: t.tag,
                 name: name,
-                id: t.learnUrl + index,
+                id: t.tag + index,
                 topics: [],
             };
         });
     }
     return listSubMenu;
 };
+
+export const getAppTopics = () => listAppTopic;
 export default getRawTopicsData;

@@ -12,7 +12,6 @@ import SEO from "../../components/seo/SEO";
 import { SYNC_TYPE } from "../../config/config_sync";
 import { isParentApp } from "../../config/config_web";
 import StudyLayout from "../../container/study/StudyLayout";
-// import { default as listAppTopics } from "../../data/studyData.json";
 import { AppInfo, IAppInfo } from "../../models/AppInfo";
 import { readAllAppInfos } from "../../utils/getAppInfo";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";

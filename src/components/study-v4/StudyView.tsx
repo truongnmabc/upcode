@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import Config from "../../config";
 import { SYNC_TYPE } from "../../config/config_sync";
-import listAppTopic from "../../data/studyData.json";
 import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
@@ -15,6 +14,7 @@ import V4CircleProgress from "../v4-material/V4CircleProgress";
 import Link from "next/link";
 import { getLink } from "@/utils";
 import { ITestInfo } from "@/models/TestInfo";
+import { getAppTopics } from "@/utils/getRawTopicsData";
 const MainStudyView = dynamic(() => import("./MainStudyView"));
 const HeaderStudyV4 = dynamic(() => import("./HeaderStudyV4"), {
     ssr: false,
@@ -46,7 +46,10 @@ const StudyView = ({
 }) => {
     let isFinish = gameState.isFinishGame;
     const gameType = contentData.gameType;
-    const listBranchs = listAppTopic.find((app) => app.appId == appInfo.appId)?.topics?.filter((t) => t.isBranch) ?? [];
+    const listBranchs =
+        getAppTopics()
+            .find((app) => app.appId == appInfo.appId)
+            ?.topics?.filter((t) => t.isBranch) ?? [];
     const showAnswerSheet = contentData.type == SYNC_TYPE.TYPE_LEARN_TEST;
     const ref = useRef<HTMLDivElement>(null);
     // SEO

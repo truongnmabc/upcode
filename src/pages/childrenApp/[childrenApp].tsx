@@ -108,20 +108,25 @@ export const getStaticProps: GetStaticProps = async (context) => {
     if (titleSEO) titleSEO = replaceYear(titleSEO);
 
     // let r = "[";
-    // // for (let app of listAppInfos) {
-    // let bucket = "ptce";
-    // try {
-    //     let appData: any = await readFileAppFromGoogleStorage(bucket);
-    //     let _listTopics = appData?.topics ?? [];
-    //     r +=
-    //         JSON.stringify({
-    //             topics: _listTopics.map((t) => ({ title: t.name, url: genStudyLink("ptce", t.tag) })),
-    //             fullTests: [genStudyLink("ptce", "")],
-    //         }).replaceAll("/", "") + ",";
-    // } catch (e) {
-    //     console.log("error", bucket);
+    // for (let app of listAppInfos) {
+    //     try {
+    //         let appData: any = await readFileAppFromGoogleStorage(app);
+    //         let _listTopics = appData?.topics ?? [];
+    //         let _tests = appData?.fullTests ?? [];
+    //         r +=
+    //             JSON.stringify({
+    //                 appId: app.appId,
+    //                 topics: _listTopics.map((t) => ({
+    //                     title: t.name,
+    //                     url: genStudyLink(app.appShortName, t.tag, false),
+    //                     tag: t.tag,
+    //                 })),
+    //                 fullTests: _tests.map((t) => genStudyLink(app.appShortName, t?.tag, true)), //[genStudyLink(bucket, "")],
+    //             }).replaceAll("/", "") + ",";
+    //     } catch (e) {
+    //         console.log("error", app.bucket);
+    //     }
     // }
-    // // }
     // r += "]";
     // console.log(r);
 
