@@ -10,7 +10,7 @@ const QRCodeComponent = ({ isParentApp, appInfo }: { isParentApp?: boolean; appI
         if (typeof window != "undefined") {
             if (!isParentApp) {
                 setValueQR(
-                    (isProduction() ? window.location.origin : "http://192.168.2.139:3000") +
+                    (isProduction() ? window.location.origin : "http://192.168.2.208:3006") +
                         Routes.QR_CODE_REDIRECT +
                         (appInfo.appNameId ? "?appNameId=" + appInfo.appNameId : "")
                 );

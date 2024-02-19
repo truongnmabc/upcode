@@ -15,7 +15,7 @@ const DownloadAppEndTest = ({
     return (
         <div className="v4-download-end-test v4-border-radius">
             <div className="v4-download-end-test-left">
-                <div className="text">Download App for more {gameState.gameTitle} questions</div>
+                <div className="text">Download App for more {appInfo.appName} practice questions</div>
                 <DownloadAppV4 appInfo={appInfo} direction="row" size={isDesktop ? "m" : "s"} place="end_test" />
             </div>
             <div

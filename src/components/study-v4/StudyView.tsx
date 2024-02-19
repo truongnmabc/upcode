@@ -67,23 +67,23 @@ const StudyView = ({
             location.reload();
         }
     };
-    useEffect(() => {
-        if (typeof window != "undefined") {
-            // khi có tương tác với trang thì sẽ kéo phần nội dung (banner download, seo) ở dưới màn hình lên
-            window.onscroll = (e) => {
-                if (ref?.current?.className != undefined)
-                    if (!ref.current.className.includes("nested")) ref.current.className = "nested";
-            };
-            window.onclick = (e) => {
-                if (ref?.current?.className != undefined)
-                    if (!ref.current.className.includes("nested")) ref.current.className = "nested";
-            };
-            window.ontouchstart = (e) => {
-                if (ref?.current?.className != undefined)
-                    if (!ref.current.className.includes("nested")) ref.current.className = "nested";
-            };
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (typeof window != "undefined") {
+    //         // khi có tương tác với trang thì sẽ kéo phần nội dung (banner download, seo) ở dưới màn hình lên
+    //         window.onscroll = (e) => {
+    //             if (ref?.current?.className != undefined)
+    //                 if (!ref.current.className.includes("nested")) ref.current.className = "nested";
+    //         };
+    //         window.onclick = (e) => {
+    //             if (ref?.current?.className != undefined)
+    //                 if (!ref.current.className.includes("nested")) ref.current.className = "nested";
+    //         };
+    //         window.ontouchstart = (e) => {
+    //             if (ref?.current?.className != undefined)
+    //                 if (!ref.current.className.includes("nested")) ref.current.className = "nested";
+    //         };
+    //     }
+    // }, []);
     return (
         <>
             <div className="__768" style={{ height: 60 }}>
@@ -187,7 +187,7 @@ const StudyView = ({
                         ) : isFinish == 0 ? (
                             <>
                                 <MainStudyView gameState={gameState} appInfo={appInfo} />
-                                <div id="v4-main-study-other-content" ref={ref}>
+                                <div id="v4-main-study-other-content" ref={ref} className="nested">
                                     <StudyBannerDownloadApp
                                         appInfo={appInfo}
                                         place={

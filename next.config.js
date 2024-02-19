@@ -67,6 +67,10 @@ module.exports = () => {
                     }
                 });
             }
+            // paths.push({
+            //     source: "/privacy",
+            //     destination: "/privacy",
+            // });
             return paths;
         },
         async redirects() {

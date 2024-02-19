@@ -564,7 +564,7 @@ const onGameSubmitted = createAsyncThunk("game/onGameSubmitted", async (_, { get
 const onRestartGame = createAsyncThunk("game/onRestartGame", async (_, { getState, dispatch, rejectWithValue }) => {
     const state = getState() as AppState;
     let gameState = GameState.cloneGameState(state.gameReducer.game);
-    console.log(gameState);
+    // console.log(gameState);
 
     gameState.questions = gameState.questions.map((question) => {
         question.choices = question.choices.map((choice) => ({
@@ -572,6 +572,7 @@ const onRestartGame = createAsyncThunk("game/onRestartGame", async (_, { getStat
             selected: false,
         }));
         question.questionStatus = Config.QUESTION_NOT_ANSWERED;
+        question.choices = shuffleV4(question.choices);
         return question;
     });
     gameState.currentQuestion = gameState.questions[0];

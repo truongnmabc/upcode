@@ -49,11 +49,9 @@ const HomeSingleApp = ({
                             </h1>
                         </div>
                         <div className="landing-title-12">
-                            {"Our free " +
-                                appInfo.appName +
-                                ` practice tests feature all ${listTopics.length} ` +
-                                appInfo.appName +
-                                " test subjects. We recommend taking at least one practice exam from every subject to guarantee your success at your local testing location. To get started, choose a category from the list below and practice them!"}
+                            {listTopics.length > 1
+                                ? `Our free ${appInfo.appName} practice tests feature all ${appInfo.appName} test subjects. We recommend taking at least one practice exam from every subject to guarantee your success at your local testing location. To get started, choose a category from the list below and practice them!`
+                                : `Our free ${appInfo.appName} practice tests feature all ${appInfo.appName} test subjects. We recommend taking all practice questions to guarantee your success at your local testing location.`}
                         </div>
                     </div>
                     <div className="v4-landing-topic-0">
