@@ -1,10 +1,8 @@
-import TestInfo, { ITestInfo } from "@/models/TestInfo";
+import { ITestInfo } from "@/models/TestInfo";
 import StoreProvider from "@/redux/StoreProvider";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { getLink } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
-import { genFullStudyLink, genStudyLink } from "@/utils/getStudyLink";
-import replaceYear from "@/utils/replaceYear";
 import { GetStaticPaths, GetStaticProps } from "next";
 import dynamic from "next/dynamic";
 import { isParentApp } from "../../config/config_web";
@@ -99,13 +97,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
     // if (homeSeoContent) {
     //     homeSeoContent.content = replaceYear(homeSeoContent.content);
     // }
-    let rankMathTitle = childAppInfo?.rank_math_title;
-    if (childAppInfo && rankMathTitle) {
-        rankMathTitle = rankMathTitle?.replace("%title%", childAppInfo.title).replace("%page%", "");
-        rankMathTitle = replaceYear(rankMathTitle);
-    }
-    let titleSEO = !!rankMathTitle ? rankMathTitle : childAppInfo?.title;
-    if (titleSEO) titleSEO = replaceYear(titleSEO);
+    // let rankMathTitle = childAppInfo?.rank_math_title;
+    // if (childAppInfo && rankMathTitle) {
+    //     rankMathTitle = rankMathTitle?.replace("%title%", childAppInfo.title).replace("%page%", "");
+    //     rankMathTitle = replaceYear(rankMathTitle);
+    // }
+    let titleSEO = childAppInfo?.appName + " Practice Test";
+    let descriptionSEO = `Ace The ${childAppInfo?.appName} On First Try`;
+    // if (titleSEO) titleSEO = replaceYear(titleSEO);
 
     // let r = "[";
     // for (let app of listAppInfos) {
@@ -133,7 +132,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     return convertToJSONObject({
         props: {
             titleSEO: titleSEO,
-            descriptionSEO: childAppInfo?.descriptionSEO,
+            descriptionSEO: descriptionSEO,
             listTopics,
             tests: tests,
             keywordSEO: childAppInfo?.keywordSEO,

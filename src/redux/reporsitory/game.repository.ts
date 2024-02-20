@@ -463,8 +463,10 @@ const onChooseAnswer = createAsyncThunk(
     }
 );
 
-const nextQuestion = createAsyncThunk("game/nextQuestion", async (payload: GameState, { dispatch, rejectWithValue }) => {
-    let gameState = GameState.cloneGameState(payload);
+const nextQuestion = createAsyncThunk("game/nextQuestion", async (_, { dispatch, getState, rejectWithValue }) => {
+    // let gameState = GameState.cloneGameState(payload);
+    const state = getState() as AppState;
+    let gameState = GameState.cloneGameState(state.gameReducer.game);
     try {
         let indexActive = gameState.indexActive + 1; // mặc định là next sang câu kế tiếp
         if (gameState.levelTag.includes("level")) {

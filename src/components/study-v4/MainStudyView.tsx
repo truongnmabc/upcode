@@ -71,6 +71,42 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
             }, 1500);
         }
     }, [JSON.stringify(gameState)]);
+
+    const submitGame = () => {
+        dispatch(onGameSubmitted());
+    };
+
+    const _nextQuestion = () => {
+        collapseParagraph(true);
+        dispatch(nextQuestion());
+    };
+
+    useEffect(() => {
+        const handleEnterEvent = (event: KeyboardEvent) => {
+            // if (Config.KEYBOARD.includes(event.code)) {
+            //     localStorage.setItem("useKeyboard", "true");
+            // }
+            if (event.code == "Space") {
+                if (isLastQuestion) {
+                    submitGame();
+                    return;
+                }
+
+                _nextQuestion();
+            }
+        };
+        document.removeEventListener("keydown", handleEnterEvent, true);
+        if (thisQuestionIsDone) {
+            if (!gameState.isFinishGame) {
+                document.addEventListener("keydown", handleEnterEvent, true);
+            }
+        }
+
+        return () => {
+            document.removeEventListener("keydown", handleEnterEvent, true);
+        };
+    }, [thisQuestionIsDone, isLastQuestion]);
+
     return (
         <div className="v4-main-study-view-0">
             <div className="v4-main-study-view-1 v4-border-radius">
@@ -121,7 +157,7 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
 
                             {gameState?.levelTag?.includes("level") && (
                                 // (**#**)
-                                <>
+                                <div style={{ height: "36px" }}>
                                     <div
                                         className={`v4-see-this-question-soon ${
                                             gameState.currentQuestion.questionStatus != Config.QUESTION_NOT_ANSWERED
@@ -186,7 +222,7 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                                                 </span>
                                             </div>
                                         ))}
-                                </>
+                                </div>
                             )}
                         </div>
 
@@ -232,11 +268,10 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                                     onClick={(e) => {
                                         window.scrollTo({ top: 0, behavior: "smooth" });
                                         if (isLastQuestion) {
-                                            dispatch(onGameSubmitted());
+                                            submitGame();
                                             // chọn đáp án là xử lý xong hết rồi đến đây chỉ việc chuyển sang trang kết quả thôi
                                         } else {
-                                            collapseParagraph(true);
-                                            dispatch(nextQuestion(gameState));
+                                            _nextQuestion();
                                         }
                                     }}
                                 >
