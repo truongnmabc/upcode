@@ -479,6 +479,7 @@ const nextQuestion = createAsyncThunk("game/nextQuestion", async (_, { dispatch,
                     if (indexActive == gameState.indexActive) indexActive--;
                     if (indexActive < 0) indexActive = gameState.questions.length - 1;
                 } else indexActive = gameState.arrayIndexWrong[0]; // lấy ra index đầu tiên trong arrayIndexWrong để làm lại
+                gameState.questions[indexActive].choices = shuffleV4(gameState.questions[indexActive].choices); // đảo lại vị trí các đáp án của câu bị làm lại
             }
         }
         // reset lại câu hỏi đó (vì trường hợp topic [level] là làm đến khi nào đúng hết thì thôi nên sẽ next qua các câu đã từng làm)
