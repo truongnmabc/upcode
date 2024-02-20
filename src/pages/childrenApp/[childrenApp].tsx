@@ -102,8 +102,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     //     rankMathTitle = rankMathTitle?.replace("%title%", childAppInfo.title).replace("%page%", "");
     //     rankMathTitle = replaceYear(rankMathTitle);
     // }
-    let titleSEO = childAppInfo?.appName + " Practice Test";
-    let descriptionSEO = `Ace The ${childAppInfo?.appName} On First Try`;
+    let titleSEO = `${childAppInfo?.appName} Practice Test Ace The ${childAppInfo?.appName} On First Try`; //landing-title-11
+    let descriptionSEO =
+        listTopics.length > 1 //landing-title-12
+            ? `Our free ${childAppInfo.appName} practice tests feature all ${childAppInfo.appName} test subjects. We recommend taking at least one practice exam from every subject to guarantee your success at your local testing location. To get started, choose a category from the list below and practice them!`
+            : `Our free ${childAppInfo.appName} practice tests feature all ${childAppInfo.appName} test subjects. We recommend taking all practice questions to guarantee your success at your local testing location.`;
     // if (titleSEO) titleSEO = replaceYear(titleSEO);
 
     // let r = "[";
