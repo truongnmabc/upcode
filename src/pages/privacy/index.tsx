@@ -76,7 +76,7 @@ const Privacy = ({ isParentApp, listAppInfo }: { isParentApp: boolean; listAppIn
                         </li>
                         <li>
                             <strong>Website</strong> refers to Easy Prep, accessible from{" "}
-                            <a href="https://easy-prep.org/" target="_blank" rel="external nofollow noopener">
+                            <a href="https://easy-prep.org/" target="_blank" rel="external nofollow noopener noreferrer">
                                 https://easy-prep.org/
                             </a>
                         </li>
@@ -142,7 +142,7 @@ const Privacy = ({ isParentApp, listAppInfo }: { isParentApp: boolean; listAppIn
                         <a
                             href="https://www.freeprivacypolicy.com/blog/sample-privacy-policy-template/#Use_Of_Cookies_And_Tracking"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                         >
                             Free Privacy Policy website
                         </a>{" "}
@@ -374,7 +374,7 @@ const Privacy = ({ isParentApp, listAppInfo }: { isParentApp: boolean; listAppIn
                         <li>By email: contact@easy-prep.org</li>
                         <li>
                             By visiting this page on our website:{" "}
-                            <a href="https://easy-prep.org/contact" target="_blank" rel="external nofollow noopener">
+                            <a href="https://easy-prep.org/contact" target="_blank" rel="external noreferrer nofollow noopener">
                                 https://easy-prep.org/contact
                             </a>
                         </li>
