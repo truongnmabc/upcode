@@ -73,17 +73,18 @@ const getHighhestLevelOfTopicBePassedSequentially = (listGameState: GameState[],
 
 function shuffleV4(list: any[]) {
     return list.sort((a, b) => {
-        let t = (Date.now() % 100) + 100;
-        console.log(t);
-
-        let num = Math.floor(Math.random() * t);
-        if (num % 3 === 0) {
-            return -1;
+        let num = Math.floor(Math.random() * 101);
+        switch (num % 6) {
+            case 0:
+            case 1:
+                return 0;
+            case 2:
+            case 3:
+                return 1;
+            case 4:
+            case 5:
+                return -1;
         }
-        if (num % 3 === 1) {
-            return 1;
-        }
-        return 0;
     });
 }
 export { getGameProgress, getHighhestLevelOfTopicBePassedSequentially, shuffleV4 };

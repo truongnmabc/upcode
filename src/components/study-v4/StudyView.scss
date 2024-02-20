@@ -126,6 +126,11 @@
 .study-banner-download-frame {
     height: 345px;
     background: #fff;
+    margin-top: 24px;
+}
+
+.main-study-frame {
+    height: calc(100vh - 60px - 52px - 24px - 345px);
 }
 
 @media screen and (min-width: 769px) {
@@ -134,5 +139,10 @@
     }
     .study-banner-download-frame {
         height: 200px;
+        margin-top: 16px;
+    }
+    .main-study-frame {
+        background: #fff;
+        height: calc(100vh - 53px - 70px - 16px - 200px - 16px);
     }
 }

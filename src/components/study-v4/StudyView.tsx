@@ -15,14 +15,17 @@ import Link from "next/link";
 import { getLink } from "@/utils";
 import { ITestInfo } from "@/models/TestInfo";
 import { getAppTopics } from "@/utils/getRawTopicsData";
-const MainStudyView = dynamic(() => import("./MainStudyView"));
+const MainStudyView = dynamic(() => import("./MainStudyView"), {
+    ssr: false,
+    loading: () => <div className="main-study-frame v4-border-radius" />,
+});
 const HeaderStudyV4 = dynamic(() => import("./HeaderStudyV4"), {
     ssr: false,
     loading: () => <div className="header-study-v4-frame" />,
 });
 const StudyBannerDownloadApp = dynamic(() => import("./StudyBannerDownloadApp"), {
     ssr: false,
-    loading: () => <div className="study-banner-download-frame" />,
+    loading: () => <div className="study-banner-download-frame v4-border-radius" />,
 });
 const EndTestV4 = dynamic(() => import("./end-test-v4"), {
     ssr: false,
