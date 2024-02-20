@@ -1,8 +1,7 @@
-import { isWebPASSEMALL } from "@/config/config_web";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import React from "react";
 import { ServerStyleSheets } from "@mui/styles";
-import { GA4_ID, TAG_MANAGER_ID } from "@/config_app";
+import { GA4_ID } from "@/config_app";
 class MyDocument extends Document {
     render() {
         return (
@@ -17,28 +16,6 @@ class MyDocument extends Document {
                     />
                 </Head>
                 <body id="canvas">
-                    {isWebPASSEMALL() && (
-                        <script
-                            type="text/javascript"
-                            src="https://s.skimresources.com/js/221681X1703163.skimlinks.js"
-                            async
-                        ></script>
-                    )}
-
-                    <noscript>
-                        {TAG_MANAGER_ID?.length ? (
-                            <iframe
-                                src={`https://www.googletagmanager.com/ns.html?id=${TAG_MANAGER_ID}`}
-                                height="0"
-                                width="0"
-                                style={{
-                                    display: "none",
-                                    visibility: "hidden",
-                                }}
-                            />
-                        ) : null}
-                    </noscript>
-
                     <script rel="preconnect" async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`} />
                     <script
                         dangerouslySetInnerHTML={{
