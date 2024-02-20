@@ -78,7 +78,7 @@ export const getServerSideProps = async (context) => {
     try {
         let slug = context.params.study;
         let appInfo = getAppInfo();
-        const contentSEO = await getHomeSeoContentStateApi(slug);
+        const contentSEO = await getHomeSeoContentStateApi(slug, "https://passemall.com");
         if (contentSEO) {
             contentSEO.content = replaceYear(contentSEO.content);
         }

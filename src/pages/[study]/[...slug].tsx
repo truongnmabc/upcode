@@ -88,7 +88,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             listTopics = appData?.topics ?? [];
             tests = appData?.fullTests ?? [];
 
-            const contentSEO = await getHomeSeoContentStateApi(slug);
+            const contentSEO = await getHomeSeoContentStateApi(slug, "https://passemall.com");
             if (contentSEO) {
                 contentSEO.content = replaceYear(contentSEO.content);
             }
@@ -140,7 +140,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         } else throw { p: 3 };
     } catch (error) {
         console.log(error);
-
         context.res.writeHead(302, { Location: "/" }).end();
         return { props: {} };
     }
