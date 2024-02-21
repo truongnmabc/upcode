@@ -10,6 +10,7 @@ import { AppInfo, IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
 import replaceYear from "@/utils/replaceYear";
+import states from "../../data/statesName.json";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -64,6 +65,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
             })
             .filter((p) => p);
         paths.push(...listAppLink);
+        // listAppInfo.forEach((app) => {
+        //     if (app.hasState) {
+        //         states.forEach((state) => {
+        //             let url = getLink(app, state.toLowerCase().trim().replaceAll(" ", "-"));
+        //             if (!url.includes("https:")) paths.push(formatData(url));
+        //         });
+        //     }
+        // });
         return {
             paths,
             fallback: false,

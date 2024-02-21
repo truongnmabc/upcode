@@ -92,3 +92,42 @@
         }
     }
 }
+
+.v4-home-landing-0 {
+    .app-state-backround-0 {
+        height: 350px;
+        background: #e6ded7;
+        background-image: url("public/images/state-background.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+
+        .get-started-btn {
+            background-color: rgba(33, 33, 33, 0.96);
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 23px;
+            text-align: center;
+            color: #fff;
+            padding: 12px 0;
+            width: 224px;
+            margin: 52px auto 18px;
+            cursor: pointer;
+        }
+    }
+
+    @media screen and (min-width: 769px) {
+        .app-state-backround-0 {
+            height: 735px;
+
+            .get-started-btn {
+                font-size: 24px;
+                line-height: 30px;
+                transition: 0.2s all;
+                &:hover {
+                    background-color: #212121;
+                }
+            }
+        }
+    }
+}

@@ -2,6 +2,7 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const withImages = require("next-images");
 const appInfos = require("./src/data/appInfos.json");
+const states = require("./src/data/statesName.json");
 const is_parent_app =
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.includes("passemall") ||
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.includes("easy-prep");
@@ -42,19 +43,7 @@ module.exports = () => {
             ignoreBuildErrors: true,
         },
         distDir: process.env.BUILD_DIR || ".next",
-        // exportPathMap: function (defaultPathMap, { dev, dir, outDir, distDir, buildId }) {
-        //     let paths = {};
-        //     if (is_parent_app) {
-        //         appInfos.forEach((app) => {
-        //             let path = "";
-        //             if (app.appNameId && !app.appNameId.startsWith("http")) {
-        //                 path = "/" + app.appNameId;
-        //                 paths[path] = { page: "/childrenApp" + path };
-        //             }
-        //         });
-        //     }
-        //     return paths;
-        // },
+
         async rewrites() {
             let paths = [];
             if (is_parent_app) {
@@ -62,15 +51,23 @@ module.exports = () => {
                     let path = "";
                     if (app.appNameId && !app.appNameId.startsWith("http")) {
                         path = "/" + app.appNameId;
-                        let _ = { source: path, destination: "/childrenApp" + path };
+                        let _ = { source: path, destination: "/childrenApp" + path }; // điều hướng các trang của app con sang file theo đường dẫn này
                         paths.push(_);
+
+                        if (app.hasState) {
+                            // điều hướng các trang state của app con sang file theo đường dẫn này
+                            states.forEach((state) => {
+                                let __ = {
+                                    source: path,
+                                    destination: "/childrenApp" + _getLink(app, state.toLowerCase().trim().replace(" ", "-")),
+                                };
+                                paths.push(__);
+                            });
+                        }
                     }
                 });
             }
-            // paths.push({
-            //     source: "/privacy",
-            //     destination: "/privacy",
-            // });
+
             return paths;
         },
         async redirects() {
@@ -111,3 +108,15 @@ const getLinkToStore = () => {
 //       /* normal nextjs config options here */
 //     })
 //   }
+
+const _getLink = (app, stateSlug = "") => {
+    let link = "/";
+    if (app.appNameId.startsWith("http")) {
+    } else {
+        link = "/" + app.appNameId;
+        if (stateSlug && app.hasState) {
+            link += "/" + stateSlug;
+        }
+    }
+    return link;
+};
