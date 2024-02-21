@@ -2,7 +2,6 @@ import { ITestQuestionData } from "./TestQuestionData";
 
 export interface ITestInfo {
     slug: string; // lưu slug của bài test này
-    // topicId: number;
     appId: number; //
     id: string; //
     lastUpdate: number; //
@@ -19,9 +18,7 @@ export interface ITestInfo {
 
 export default class TestInfo implements ITestInfo {
     slug: string;
-    // topicId: number;
     appId: number;
-    // description: string;
     id: string;
     lastUpdate: number;
     passPercent: number;
@@ -36,9 +33,7 @@ export default class TestInfo implements ITestInfo {
 
     constructor(object?: any) {
         this.slug = object.slug ?? "";
-        // this.topicId = object.topicId ?? -1;
         this.appId = object.appId ? object.appId : -1;
-        // this.description = object.description ? object.description : "";
         this.id = object.appId + "-" + object.tag ?? "-1";
         this.lastUpdate = object.lastUpdate ? object.lastUpdate : -1;
         this.passPercent = object.passPercent ? object.passPercent : 100;

@@ -9,6 +9,7 @@ import { isParentApp } from "../../config/config_web";
 import { AppInfo, IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
+import replaceYear from "@/utils/replaceYear";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -102,12 +103,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
     //     rankMathTitle = rankMathTitle?.replace("%title%", childAppInfo.title).replace("%page%", "");
     //     rankMathTitle = replaceYear(rankMathTitle);
     // }
-    let titleSEO = `${childAppInfo?.appName} Practice Test Ace The ${childAppInfo?.appName} On First Try`; //landing-title-11
-    let descriptionSEO =
-        listTopics.length > 1 //landing-title-12
-            ? `Our free ${childAppInfo.appName} practice tests feature all ${childAppInfo.appName} test subjects. We recommend taking at least one practice exam from every subject to guarantee your success at your local testing location. To get started, choose a category from the list below and practice them!`
-            : `Our free ${childAppInfo.appName} practice tests feature all ${childAppInfo.appName} test subjects. We recommend taking all practice questions to guarantee your success at your local testing location.`;
-    // if (titleSEO) titleSEO = replaceYear(titleSEO);
+    let titleSEO = replaceYear(childAppInfo.title);
+    let descriptionSEO = replaceYear(childAppInfo.descriptionSEO);
+    // if (titleSEO) titleSEO = titleSEO);
 
     // let r = "[";
     // for (let app of listAppInfos) {

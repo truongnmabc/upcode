@@ -79,12 +79,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
     if (homeSeoContent) {
         homeSeoContent.content = replaceYear(homeSeoContent.content);
     }
-    let rankMathTitle = appInfo?.rank_math_title;
-    if (appInfo && rankMathTitle) {
-        rankMathTitle = rankMathTitle?.replace("%title%", appInfo.title).replace("%page%", "");
-        rankMathTitle = replaceYear(rankMathTitle);
-    }
-    let titleSEO = !!rankMathTitle ? rankMathTitle : appInfo?.title;
+    // let rankMathTitle = appInfo?.rank_math_title;
+    // if (appInfo && rankMathTitle) {
+    //     rankMathTitle = rankMathTitle?.replace("%title%", appInfo.title).replace("%page%", "");
+    //     rankMathTitle = replaceYear(rankMathTitle);
+    // }
+    // let titleSEO = !!rankMathTitle ? rankMathTitle : appInfo?.title;
+    let titleSEO = appInfo.title;
     if (titleSEO) titleSEO = replaceYear(titleSEO);
     return convertToJSONObject({
         props: {

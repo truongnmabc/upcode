@@ -12,6 +12,7 @@ downloadFile() {
     url="https://api-cms-v2-dot-micro-enigma-235001.appspot.com/api/app/config/get-all-web-config?bucket=$appName"
     response=$(curl -s -X GET "$url")
     echo "$response" > "$DATA_PATH/appInfos.json"
+    node -e "const  {genXMLFunc}  = require('./genxml.js'); genXMLFunc($response, '$NEXT_PUBLIC_WORDPRESS_API_URL');"
 }
 
 genConfigApp() {
@@ -139,12 +140,12 @@ deploy() {
         logoPath=$appName
         appPath="-$appName"
     fi
-    downloadFile $appName
     cp -r "$ROOT_PATH/images/$logoPath/logo60.png" "$ROOT_PATH/images/logo60.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo192.png" "$ROOT_PATH/images/logo192.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo512.png" "$ROOT_PATH/images/logo512.png"
     genConfigApp $appId $googleVerifyId $appName $mainColor $mainBackgroundColor $GA4ID $mainColorBold
     genConfigCssApp $mainColor $mainBackgroundColor $mainColorBold $appName $cookie $bgColorStartTest $bgColorCloseCookie $mainColorUpgradePro $colorClockDiscount 
+    downloadFile $appName
     # yarn build
 }
 

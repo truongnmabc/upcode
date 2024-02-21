@@ -63,7 +63,7 @@ const AboutLayout = ({
             </Layout1>
         );
     return (
-        <Layout2 appInfo={appInfo} listTopics={listTopics}>
+        <Layout2 appInfo={appInfo} listTopics={listTopics} tests={[]}>
             <AboutContent />
         </Layout2>
     );

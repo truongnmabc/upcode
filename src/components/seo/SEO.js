@@ -22,7 +22,7 @@ const SEO = ({ appInfo, title = "", descriptionSEO = "", addMathJax = false, key
         if (!title?.length) {
             title = "ABC Elearning - Free Practice Questions and Exam Prep";
         }
-        appInfo.description && (description = appInfo.description.replace(/(<([^>]+)>)/gi, "").replace(/&nbsp;/g, " "));
+        // appInfo.description && (description = appInfo.description.replace(/(<([^>]+)>)/gi, "").replace(/&nbsp;/g, " "));
 
         if (descriptionSEO === undefined) {
             if (appInfo.descriptionSEO) {
