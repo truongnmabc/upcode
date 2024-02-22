@@ -87,6 +87,7 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
             //     localStorage.setItem("useKeyboard", "true");
             // }
             if (event.code == "Space") {
+                event.preventDefault();
                 if (isLastQuestion) {
                     submitGame();
                     return;
