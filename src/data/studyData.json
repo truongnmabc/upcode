@@ -649,7 +649,7 @@
         "fullTests": ["full-length-comptia-network-practice-test"]
     },
     {
-        "appId": 5594844875456512,
+        "appId": 5794588703850496,
         "topics": [{ "title": "NASM-CPT questions", "url": "nasm-cpt-practice-test", "tag": "nasm-cpt-practice-test" }],
         "fullTests": ["full-length-nasm-cpt-practice-test"]
     },
@@ -1002,7 +1002,7 @@
             { "title": "Exam 2", "url": "cfa-exam-2-practice-test", "tag": "exam-2" },
             { "title": "Exam 3", "url": "cfa-exam-3-practice-test", "tag": "exam-3" },
             { "title": "Exam 4", "url": "cfa-exam-4-practice-test", "tag": "exam-4" },
-            { "title": "Exam 5", "url": "cfa-exam-1-practice-test", "tag": "exam-1" }
+            { "title": "Exam 5", "url": "cfa-exam-5-practice-test", "tag": "exam-5" }
         ],
         "fullTests": ["full-length-cfa-practice-test"]
     },
