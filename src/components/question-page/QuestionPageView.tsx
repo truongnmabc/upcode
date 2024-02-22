@@ -33,7 +33,7 @@ const QuestionPageView = ({
                         {!_isParentApp && (
                             <div className="v4-left-banner-download-0 v4-border-radius">
                                 <h3 className="v4-font-semi-bold">{`Get all ${
-                                    appInfo.totalQuestion
+                                    appInfo.totalQuestion - (appInfo.totalQuestion % 10)
                                 }+ ${appInfo.appName.toUpperCase()} exam-like questions with our mobile apps!`}</h3>
                                 <DownloadAppV4 appInfo={appInfo} direction="row" size="m" place="question" />
                             </div>

@@ -649,11 +649,10 @@
         "fullTests": ["full-length-comptia-network-practice-test"]
     },
     {
-        "appId": 5594844875456512,
+        "appId": 5794588703850496,
         "topics": [{ "title": "NASM-CPT questions", "url": "nasm-cpt-practice-test", "tag": "nasm-cpt-practice-test" }],
         "fullTests": ["full-length-nasm-cpt-practice-test"]
     },
-    { "appId": -1, "topics": [], "fullTests": [] },
     {
         "appId": 5252858371899392,
         "topics": [

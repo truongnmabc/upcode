@@ -1,5 +1,5 @@
 import { IAppInfo } from "@/models/AppInfo";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import states from "../../data/statesName.json";
 import "./ListState.scss";
 import dynamic from "next/dynamic";
@@ -22,8 +22,25 @@ const ListState = ({
             let cl = document.getElementById("collapse-list-state");
             let ls = document.getElementById("list-state-content");
             cl.style.height = ls.offsetHeight + "px";
+
+            const clickEvent = (e: MouseEvent) => {
+                if (e.target) {
+                    if (!ls?.contains(e.target as Node)) {
+                        cl.style.height = 0 + "px";
+                        setTimeout(() => {
+                            setOpenListState(0);
+                        }, 400);
+                    }
+                }
+            };
+
+            window.addEventListener("mousedown", clickEvent);
+            return () => {
+                window.removeEventListener("mousedown", clickEvent);
+            };
         }
     }, [openListState]);
+
     return isDesktop ? (
         <div id="collapse-list-state">
             <div className="select-state v4-border-radius" id="list-state-content">
@@ -31,6 +48,12 @@ const ListState = ({
                     return (
                         <a
                             href={getLink(appInfo, state.toLowerCase().trim().replaceAll(" ", "-"))}
+                            onClick={() => {
+                                localStorage.setItem(
+                                    "select-state-" + appInfo.appNameId,
+                                    state.toLowerCase().trim().replaceAll(" ", "-")
+                                );
+                            }}
                             className="state"
                             key={index}
                         >
@@ -50,6 +73,12 @@ const ListState = ({
                                 href={getLink(appInfo, state.toLowerCase().trim().replaceAll(" ", "-"))}
                                 className="state"
                                 key={index}
+                                onClick={() => {
+                                    localStorage.setItem(
+                                        "select-state-" + appInfo.appNameId,
+                                        state.toLowerCase().trim().replaceAll(" ", "-")
+                                    );
+                                }}
                             >
                                 {state}
                             </a>

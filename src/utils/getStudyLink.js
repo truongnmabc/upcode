@@ -4,7 +4,7 @@ import { getLink } from ".";
 const genFullStudyLink = (appInfo, tag, fullTest) => {
     // gen link cho app cha và app con
     let _isParentApp = isParentApp();
-    let prefix = _isParentApp ? getLink(appInfo, "") : "";
+    let prefix = _isParentApp ? getLink(appInfo, "") : ""; // chú ý là link phần học sẽ không lấy state ở chỗ này, state sẽ nằm trong phần url bên dưới
     let url = genStudyLink(appInfo.appShortName, tag, fullTest);
     return prefix + url;
 };

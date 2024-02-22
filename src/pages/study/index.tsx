@@ -75,6 +75,7 @@ const StudyPage = ({
 };
 
 export const getServerSideProps = async (context) => {
+    // file này không dùng đến nữa
     try {
         let slug = context.params.study;
         let appInfo = getAppInfo();

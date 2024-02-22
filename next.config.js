@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const withImages = require("next-images");
 const appInfos = require("./src/data/appInfos.json");
 const states = require("./src/data/statesName.json");
+const studyData = require("./src/data/studyData.json");
 const is_parent_app =
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.includes("passemall") ||
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.includes("easy-prep");
@@ -45,29 +46,90 @@ module.exports = () => {
         distDir: process.env.BUILD_DIR || ".next",
 
         async rewrites() {
+            // định tuyến trong project (điều hướng url nào đi vào file giao diện nào)
             let paths = [];
             if (is_parent_app) {
                 appInfos.forEach((app) => {
-                    let path = "";
-                    if (app.appNameId && !app.appNameId.startsWith("http")) {
-                        path = "/" + app.appNameId;
-                        let _ = { source: path, destination: "/childrenApp" + path }; // điều hướng các trang của app con sang file theo đường dẫn này
-                        paths.push(_);
+                    if (app.appId !== -1) {
+                        let path = "";
+                        if (app.appNameId && !app.appNameId.startsWith("http")) {
+                            path = "/" + app.appNameId;
+                            let _ = { source: path, destination: "/stateAndChildrenApp" + path }; // điều hướng các trang của app con sang file theo đường dẫn này
+                            paths.push(_);
 
-                        if (app.hasState) {
-                            // điều hướng các trang state của app con sang file theo đường dẫn này
-                            states.forEach((state) => {
-                                let __ = {
-                                    source: path,
-                                    destination: "/childrenApp" + _getLink(app, state.toLowerCase().trim().replace(" ", "-")),
-                                };
-                                paths.push(__);
-                            });
+                            if (app.hasState) {
+                                // điều hướng các trang state của app con sang file theo đường dẫn này
+                                states.forEach((state) => {
+                                    let __ = {
+                                        source: _getLink(app, state.toLowerCase().trim().replace(" ", "-")),
+                                        destination:
+                                            "/stateAndChildrenApp" +
+                                            _getLink(app, state.toLowerCase().trim().replace(" ", "-")),
+                                    };
+                                    paths.push(__);
+                                });
+                            }
+
+                            let study = studyData.find((s) => s.appId === app.appId); // cần đảm bảo dữ liệu trong này đúng (dữ liệu được sinh ra từ genstudyDataJSON)
+                            if (study) {
+                                let { topics, fullTests } = study;
+                                if (app.hasState) {
+                                    // các app có state
+                                    topics.forEach((t) => {
+                                        states.forEach((state) => {
+                                            let s = state.toLowerCase().trim().replace(" ", "-");
+                                            let p =
+                                                _getLink(app) +
+                                                "/" +
+                                                t.url.replace(app.appShortName, s + "-" + app.appShortName);
+                                            let _ = { source: p, destination: "/study" + p };
+                                            paths.push(_);
+                                        });
+                                    });
+
+                                    fullTests.forEach((t) => {
+                                        states.forEach((state) => {
+                                            let s = state.toLowerCase().trim().replace(" ", "-");
+                                            let p =
+                                                _getLink(app) + "/" + t.replace(app.appShortName, s + "-" + app.appShortName);
+                                            let _ = { source: p, destination: "/study" + p };
+                                            paths.push(_);
+                                        });
+                                    });
+                                } else {
+                                    // các app k có state
+                                    topics.forEach((t) => {
+                                        let p = _getLink(app) + "/" + t.url;
+                                        let _ = { source: p, destination: "/study" + p };
+                                        paths.push(_);
+                                    });
+
+                                    fullTests.forEach((t) => {
+                                        let p = _getLink(app) + "/" + t;
+                                        let _ = { source: p, destination: "/study" + p };
+                                        paths.push(_);
+                                    });
+                                }
+                            }
                         }
                     }
                 });
+            } else {
+                // là web con được build riêng thì trường hợp có state sẽ trỏ trang state về file này
+                appInfos.forEach((app) => {
+                    if (app.hasState) {
+                        // điều hướng các trang state sang file theo đường dẫn này
+                        states.forEach((state) => {
+                            let path = "/" + state.toLowerCase().trim().replace(" ", "-");
+                            let __ = {
+                                source: path,
+                                destination: "/stateAndChildrenApp" + path,
+                            };
+                            paths.push(__);
+                        });
+                    }
+                });
             }
-
             return paths;
         },
         async redirects() {
@@ -109,6 +171,7 @@ const getLinkToStore = () => {
 //     })
 //   }
 
+/** link được return ra có / ở đầu */
 const _getLink = (app, stateSlug = "") => {
     let link = "/";
     if (app.appNameId.startsWith("http")) {

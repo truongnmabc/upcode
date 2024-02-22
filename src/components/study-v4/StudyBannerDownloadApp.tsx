@@ -12,7 +12,7 @@ const StudyBannerDownloadApp = ({
         <div className="v4-study-banner-download-app-0 v4-border-radius">
             <div className="v4-study-banner-download-app-content">
                 <h2 className="v4-study-banner-download-app-content-title v4-font-semi-bold">{`Get all ${
-                    appInfo.totalQuestion
+                    appInfo.totalQuestion - (appInfo.totalQuestion % 10)
                 }+ ${appInfo.appName.toUpperCase()} exam-like questions with our mobile apps!`}</h2>
                 <div className="_769">
                     <DownloadAppV4 appInfo={appInfo} direction="row" size="l" place={place} />

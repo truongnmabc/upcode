@@ -11,7 +11,7 @@ const BannerDownloadApp = ({ appInfo, device }: { appInfo: IAppInfo; device: "de
             mobile: false,
         },
         {
-            title: appInfo.totalQuestion + "+ unique questions",
+            title: appInfo.totalQuestion - (appInfo.totalQuestion % 10) + "+ unique questions",
             icon: <img alt="unique questions" src="/images/v4-unique-questions.webp" width={24} height={24} />,
             mobile: true,
         },

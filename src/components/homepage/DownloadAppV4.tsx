@@ -20,54 +20,58 @@ const DownloadAppV4 = ({
     };
     return (
         <div className={"v4-platform-download-app " + direction}>
-            <a
-                className="v4-button-animtaion"
-                href={"/" + (appInfo?.appNameId ? appInfo?.appNameId + "/" : "") + IOS_STORE_PATH}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => {
-                    ga.event({
-                        action: "click_app_store",
-                        params: {},
-                    });
-                    ga.event({
-                        action: place + "_click_app_store",
-                        params: {},
-                    });
-                }}
-            >
-                <img
-                    src="/images/download_ios.webp"
-                    // loading="lazy"
-                    width={sizeMap[size].w}
-                    height={sizeMap[size].h}
-                    alt="ios_download"
-                />
-            </a>
-            <a
-                className="v4-button-animtaion"
-                href={"/" + (appInfo?.appNameId ? appInfo?.appNameId + "/" : "") + ANDROID_STORE_PATH}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => {
-                    ga.event({
-                        action: "click_gg_store",
-                        params: {},
-                    });
-                    ga.event({
-                        action: place + "_click_gg_store",
-                        params: {},
-                    });
-                }}
-            >
-                <img
-                    src="/images/download_android.webp"
-                    // loading="lazy"
-                    alt="android_download"
-                    height={sizeMap[size].h}
-                    width={sizeMap[size].w}
-                />
-            </a>
+            {!!appInfo.linkIos && (
+                <a
+                    className="v4-button-animtaion"
+                    href={"/" + (appInfo?.appNameId ? appInfo?.appNameId + "/" : "") + IOS_STORE_PATH}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                        ga.event({
+                            action: "click_app_store",
+                            params: {},
+                        });
+                        ga.event({
+                            action: place + "_click_app_store",
+                            params: {},
+                        });
+                    }}
+                >
+                    <img
+                        src="/images/download_ios.webp"
+                        // loading="lazy"
+                        width={sizeMap[size].w}
+                        height={sizeMap[size].h}
+                        alt="ios_download"
+                    />
+                </a>
+            )}
+            {!!appInfo.linkAndroid && (
+                <a
+                    className="v4-button-animtaion"
+                    href={"/" + (appInfo?.appNameId ? appInfo?.appNameId + "/" : "") + ANDROID_STORE_PATH}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                        ga.event({
+                            action: "click_gg_store",
+                            params: {},
+                        });
+                        ga.event({
+                            action: place + "_click_gg_store",
+                            params: {},
+                        });
+                    }}
+                >
+                    <img
+                        src="/images/download_android.webp"
+                        // loading="lazy"
+                        alt="android_download"
+                        height={sizeMap[size].h}
+                        width={sizeMap[size].w}
+                    />
+                </a>
+            )}
         </div>
     );
 };

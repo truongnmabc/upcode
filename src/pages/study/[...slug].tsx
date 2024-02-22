@@ -70,9 +70,8 @@ const StudyPage = ({
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
-        let study = context.params.study as string;
-        let slug = context.params.slug[0];
-        // asvab-practice-test : asvab-arithmetic-reasoning-practice-test
+        // các trang học đều được định tuyến về đây trong next.config.js (rewrites)
+        let [study, slug] = context.params.slug;
         let _isParentApp = isParentApp();
         if (!_isParentApp) {
             throw { p: 1 };
@@ -113,14 +112,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             } else if (!!test) {
                 title = test.title;
             }
-            // if (topic || "/" + slug == genStudyLink(appInfo.appShortName)) {
-            // đúng đường dẫn
-            // quy định full-length-[APP_SHORT_NAME]-practice-test là vào phần test
-            // let gameType = Config.TEST_GAME;
-            // if (!!topic) {
-            //     if (topic.isBranch) gameType = Config.BRANCH_TEST_GAME;
-            //     else gameType = Config.TOPIC_GAME;
-            // }
+
             return convertToJSONObject({
                 props: {
                     appInfo,
@@ -136,7 +128,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                     tests,
                 },
             });
-            // } else throw { p: 2 };
         } else throw { p: 3 };
     } catch (error) {
         console.log(error);
