@@ -117,7 +117,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         if (childAppInfo) {
             if (!childAppInfo.hasState || (childAppInfo.hasState && state)) {
                 // nếu là trang app con không có state hoặc trang state của app con thì mới lấy dữ liệu test/topic về
-                let appData: any = await readFileAppFromGoogleStorage(childAppInfo);
+                let appData: any = await readFileAppFromGoogleStorage(childAppInfo, state ?? "");
                 listTopics = appData?.topics ?? [];
                 tests = appData?.fullTests ?? [];
             }

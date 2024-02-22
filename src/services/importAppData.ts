@@ -4,14 +4,22 @@ import { callApi } from "../services/index";
 import TestInfo from "@/models/TestInfo";
 import { genFullStudyLink } from "@/utils/getStudyLink";
 import { IAppInfo } from "@/models/AppInfo";
-export async function readFileAppFromGoogleStorage(appInfo: IAppInfo) {
+export async function readFileAppFromGoogleStorage(appInfo: IAppInfo, state?: string) {
     //storage.googleapis.com/micro-enigma-235001.appspot.com/data-app/data-4878338973761536.json
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab_new/datacdl.txt
     try {
-        console.log("---" + appInfo.bucket);
+        console.log(
+            "---" + appInfo.bucket,
+            "new-data-web/" + appInfo.bucket + (state ? "/" + state : "") + "/topics-and-tests.json?t=" + new Date().getTime()
+        );
         //https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/topics-and-tests.json
         let data = await callApi({
-            url: "new-data-web/" + appInfo.bucket + "/topics-and-tests.json?t=" + new Date().getTime(), // sau bo sung tham so vao url cho tong quat
+            url:
+                "new-data-web/" +
+                appInfo.bucket +
+                (state ? "/" + state : "") +
+                "/topics-and-tests.json?t=" +
+                new Date().getTime(), // sau bo sung tham so vao url cho tong quat
             params: null,
             method: "get",
             baseURl: "https://storage.googleapis.com/micro-enigma-235001.appspot.com/",
