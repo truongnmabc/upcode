@@ -9,7 +9,6 @@ import {
     hasImage,
     isImage,
     isMathJaxContent,
-    renderMath,
 } from "../../utils/v4_question";
 import dynamic from "next/dynamic";
 const Dialog = dynamic(() => import("@mui/material/Dialog"), { ssr: false });
@@ -32,16 +31,6 @@ const V4QuestionContent = ({
     let mainViewPanel = useRef<HTMLDivElement>(null);
     const _ref = useRef<HTMLDivElement>(null);
     useEffect(() => {
-        // if (renderMathJax && isMathJaxContent(content)) {
-        //     if (window.MathJax) {
-        //         renderMath(); // vì nội dung mathjax tải lâu hơn nên phải truyền hàm này vào
-        //     } else {
-        //         setTimeout(() => {
-        //             renderMath();
-        //         }, 1500);
-        //     }
-        //     // renderMath();
-        // }
         onLoaded(3);
     }, [content]);
 

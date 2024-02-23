@@ -21,5 +21,19 @@ class Config {
     static BRANCH_TEST_GAME = 2;
 
     static TESTER_KEY = "TESTER_KEY";
+    static V4KEYBOARD = [
+        "Enter",
+        "Digit1",
+        "Digit2",
+        "Digit3",
+        "Digit4",
+        "Digit5",
+        "Numpad1",
+        "Numpad2",
+        "Numpad3",
+        "Numpad4",
+        "Numpad5",
+        "NumpadEnter",
+    ];
 }
 export default Config;

@@ -28,7 +28,7 @@ const ChoicesPanelV4 = ({
     bucket: string;
     isReviewAnswer?: boolean;
     currentQuestion: Question;
-    onChoiceSelected?: (choice: IChoice) => void;
+    onChoiceSelected?: (choice: IChoice, useKeyboard?: boolean) => void;
     allowShowAnswer?: boolean;
     place?: "question" | "study" | "review";
 }) => {
@@ -143,12 +143,12 @@ const AnswerPanel = ({
 
     useEffect(() => {
         const handleEnterEvent = (event: KeyboardEvent) => {
-            // if (Config.KEYBOARD.includes(event.code)) {
-            //     localStorage.setItem("useKeyboard", "true");
-            // }
+            if (Config.V4KEYBOARD.includes(event.code)) {
+                localStorage.setItem("useKeyboard", "true");
+            }
             if (event.key === (index + 1).toString()) {
                 if (onChoiceSelected) {
-                    onChoiceSelected(choice);
+                    onChoiceSelected(choice, true);
                 }
             }
         };

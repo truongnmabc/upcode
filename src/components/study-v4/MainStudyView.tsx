@@ -11,7 +11,7 @@ import dynamic from "next/dynamic";
 import QuestionMultipleChoiceV4 from "./QuestionMultipleChoiceV4";
 import V4QuestionContent from "./V4QuestionContent";
 import { nextQuestion, onChooseAnswer, onGameSubmitted } from "@/redux/reporsitory/game.repository";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const CancelRoundedIcon = dynamic(() => import("@mui/icons-material/CancelRounded"), { ssr: false });
 const CheckCircleRoundedIcon = dynamic(() => import("@mui/icons-material/CheckCircleRounded"), { ssr: false });
@@ -23,6 +23,7 @@ const V4CircleProgress = dynamic(() => import("../v4-material/V4CircleProgress")
 const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: IAppInfo }) => {
     let currentQuestion = gameState.currentQuestion;
     // const isDesktop = useMediaQuery("(min-width:769px)");
+    const [showKeyboard, setShowKeyboard] = useState(true);
     const dispatch = useDispatch();
     let thisQuestionIsDone =
         currentQuestion.questionStatus == Config.QUESTION_ANSWERED_CORRECT ||
@@ -48,7 +49,8 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
             collapse.style.height = pgWrapper.clientHeight + "px";
         }
     };
-    const onChoiceSelected = (choice: IChoice) => {
+    const onChoiceSelected = (choice: IChoice, useKeyboard?: boolean) => {
+        if (useKeyboard) setShowKeyboard(false);
         ga.event({
             action: "v4_study_users_answer_quiz",
             params: {
@@ -83,10 +85,11 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
 
     useEffect(() => {
         const handleEnterEvent = (event: KeyboardEvent) => {
-            // if (Config.KEYBOARD.includes(event.code)) {
-            //     localStorage.setItem("useKeyboard", "true");
-            // }
-            if (event.code == "Space") {
+            if (Config.V4KEYBOARD.includes(event.code)) {
+                localStorage.setItem("useKeyboard", "true");
+                if (showKeyboard) setShowKeyboard(false);
+            }
+            if (event.code == "Enter" || event.code === "NumpadEnter") {
                 event.preventDefault();
                 if (isLastQuestion) {
                     submitGame();
@@ -107,6 +110,11 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
             document.removeEventListener("keydown", handleEnterEvent, true);
         };
     }, [thisQuestionIsDone, isLastQuestion]);
+
+    useEffect(() => {
+        let _showKeyboard = localStorage.getItem("useKeyboard");
+        if (_showKeyboard === "true") setShowKeyboard(false);
+    }, []);
 
     return (
         <div className="v4-main-study-view-0">
@@ -158,7 +166,7 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
 
                             {gameState?.levelTag?.includes("level") && (
                                 // (**#**)
-                                <div style={{ height: "36px" }}>
+                                <div style={{ height: "54px" }}>
                                     <div
                                         className={`v4-see-this-question-soon ${
                                             gameState.currentQuestion.questionStatus != Config.QUESTION_NOT_ANSWERED
@@ -261,6 +269,15 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                         </div>
 
                         <div className="v4-main-study-view-btn-wrapper" id="v4-sticky" style={{ textAlign: "right" }}>
+                            {showKeyboard && (
+                                <div className="keyboard">
+                                    <div className="border-1">
+                                        <div className="border-2 align-center">
+                                            <img src="/images/keyboard.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                             <div id="v4-btn-sticky" className={thisQuestionIsDone ? " show " : ""}>
                                 <button
                                     className={
