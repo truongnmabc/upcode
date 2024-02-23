@@ -38,7 +38,7 @@ const SeoHeader = ({
             <link rel="preconnect" href="https://www.googletagmanager.com" />
             <link rel="profile" href="https://gmpg.org/xfn/11" />
             <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
-            {ads ? (
+            {/* {ads ? (
                 <script
                     async
                     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2131195938375129"
@@ -46,7 +46,7 @@ const SeoHeader = ({
                 ></script>
             ) : (
                 <></>
-            )}
+            )} */}
             {children}
         </Head>
     );
