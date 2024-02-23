@@ -49,7 +49,13 @@ export default function Home({
             {_isParentApp ? (
                 <ParentAppLayout appInfo={appInfo} listAppInfos={listAppInfo} />
             ) : (
-                <HomeSingleApp appInfo={appInfo} homeSeoContent={homeSeoContent} listTopics={listTopics} tests={tests} />
+                <HomeSingleApp
+                    appInfo={appInfo}
+                    homeSeoContent={homeSeoContent}
+                    listTopics={listTopics}
+                    tests={tests}
+                    _state=""
+                />
             )}
             <ScrollToTopArrow />
         </>

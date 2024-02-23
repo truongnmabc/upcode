@@ -371,7 +371,37 @@
         ],
         "fullTests": ["full-length-phr-practice-test"]
     },
-    { "appId": 5547514306494464, "topics": [], "fullTests": ["full-length-cdl-practice-test"] },
+    {
+        "appId": 6540077669810176,
+        "topics": [
+            { "title": "Air Brakes", "url": "alabama-cdl-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Combination Vehicles",
+                "url": "alabama-cdl-combination-vehicles-practice-test",
+                "tag": "combination-vehicles"
+            },
+            {
+                "title": "Doubles Triples Trailers",
+                "url": "alabama-cdl-doubles-triples-trailers-practice-test",
+                "tag": "doubles-triples-trailers"
+            },
+            { "title": "General Knowledge", "url": "alabama-cdl-general-knowledge-practice-test", "tag": "general-knowledge" },
+            { "title": "HazMat", "url": "alabama-cdl-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "Passenger Vehicles",
+                "url": "alabama-cdl-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Pre-Trip Inspection",
+                "url": "alabama-cdl-pre-trip-inspection-practice-test",
+                "tag": "pre-trip-inspection"
+            },
+            { "title": "School Bus", "url": "alabama-cdl-school-bus-practice-test", "tag": "school-bus" },
+            { "title": "Tanker Vehicles", "url": "alabama-cdl-tanker-vehicles-practice-test", "tag": "tanker-vehicles" }
+        ],
+        "fullTests": ["full-length-alabama-cdl-practice-test"]
+    },
     {
         "appId": 6482106442055680,
         "topics": [{ "title": "Practice Questions", "url": "sie-practice-questions", "tag": "practice-questions" }],
@@ -650,7 +680,30 @@
     },
     {
         "appId": 5794588703850496,
-        "topics": [{ "title": "NASM-CPT questions", "url": "nasm-cpt-practice-test", "tag": "nasm-cpt-practice-test" }],
+        "topics": [
+            { "title": "Assessment", "url": "nasm-cpt-assessment-practice-test", "tag": "assessment" },
+            {
+                "title": "Basic and applied sciences and nutritional concepts",
+                "url": "nasm-cpt-basic-and-applied-sciences-and-nutritional-concepts-practice-test",
+                "tag": "basic-and-applied-sciences-and-nutritional-concepts"
+            },
+            {
+                "title": "Client relations and behavioral coaching",
+                "url": "nasm-cpt-client-relations-and-behavioral-coaching-practice-test",
+                "tag": "client-relations-and-behavioral-coaching"
+            },
+            {
+                "title": "Exercise technique and training instruction",
+                "url": "nasm-cpt-exercise-technique-and-training-instruction-practice-test",
+                "tag": "exercise-technique-and-training-instruction"
+            },
+            {
+                "title": "Professional development and responsibility",
+                "url": "nasm-cpt-professional-development-and-responsibility-practice-test",
+                "tag": "professional-development-and-responsibility"
+            },
+            { "title": "Program design", "url": "nasm-cpt-program-design-practice-test", "tag": "program-design" }
+        ],
         "fullTests": ["full-length-nasm-cpt-practice-test"]
     },
     {
@@ -660,11 +713,7 @@
             { "title": "Road Safety", "url": "dkt-road-safety-practice-test", "tag": "road-safety" },
             { "title": "Traffic Signs", "url": "dkt-traffic-signs-practice-test", "tag": "traffic-signs" }
         ],
-        "fullTests": [
-            "full-length-dkt-general-knowledge-practice-test",
-            "full-length-dkt-road-safety-practice-test",
-            "full-length-dkt-traffic-signs-practice-test"
-        ]
+        "fullTests": ["full-length-dkt-practice-test"]
     },
     {
         "appId": 4878338973761536,
@@ -902,64 +951,6 @@
             { "title": "Verbal", "url": "hspt-verbal-practice-test", "tag": "verbal" }
         ],
         "fullTests": ["full-length-hspt-practice-test"]
-    },
-    {
-        "appId": 6309732366155776,
-        "topics": [],
-        "fullTests": [
-            "full-length-dmv-ak-fines--limits-practice-test",
-            "full-length-dmv-al-fines--limits-practice-test",
-            "full-length-dmv-ar-fines--limits-practice-test",
-            "full-length-dmv-az-fines--limits-practice-test",
-            "full-length-dmv-ca-fines--limits-practice-test",
-            "full-length-dmv-co-fines--limits-practice-test",
-            "full-length-dmv-ct-fines--limits-practice-test",
-            "full-length-dmv-dc-fines--limits-practice-test",
-            "full-length-dmv-de-fines--limits-practice-test",
-            "full-length-dmv-ga-fines--limits-practice-test",
-            "full-length-dmv-general-knowledge-practice-test",
-            "full-length-dmv-hi-fines--limits-practice-test",
-            "full-length-dmv-ia-fines--limits-practice-test",
-            "full-length-dmv-id-fines--limits-practice-test",
-            "full-length-dmv-il-fines--limits-practice-test",
-            "full-length-dmv-in-fines--limits-practice-test",
-            "full-length-dmv-ks-fines--limits-practice-test",
-            "full-length-dmv-ky-fines--limits-practice-test",
-            "full-length-dmv-la-fines--limits-practice-test",
-            "full-length-dmv-ma-fines--limits-practice-test",
-            "full-length-dmv-md-fines--limits-practice-test",
-            "full-length-dmv-me-fines--limits-practice-test",
-            "full-length-dmv-mi-fines--limits-practice-test",
-            "full-length-dmv-mn-fines--limits-practice-test",
-            "full-length-dmv-mo-fines--limits-practice-test",
-            "full-length-dmv-ms-fines--limits-practice-test",
-            "full-length-dmv-mt-fines--limits-practice-test",
-            "full-length-dmv-nc-fines--limits-practice-test",
-            "full-length-dmv-nd-fines--limits-practice-test",
-            "full-length-dmv-ne-fines--limits-practice-test",
-            "full-length-dmv-nh-fines--limits-practice-test",
-            "full-length-dmv-nj-fines--limits-practice-test",
-            "full-length-dmv-nm-fines--limits-practice-test",
-            "full-length-dmv-nv-fines--limits-practice-test",
-            "full-length-dmv-ny-fines--limits-practice-test",
-            "full-length-dmv-oh-fines--limits-practice-test",
-            "full-length-dmv-oh-fines--limits-practice-test",
-            "full-length-dmv-or-fines--limits-practice-test",
-            "full-length-dmv-pa-fines--limits-practice-test",
-            "full-length-dmv-ri-fines--limits-practice-test",
-            "full-length-dmv-sc-fines--limits-practice-test",
-            "full-length-dmv-sd-fines--limits-practice-test",
-            "full-length-dmv-signs-practice-test",
-            "full-length-dmv-tn-fines--limits-practice-test",
-            "full-length-dmv-tx-fines--limits-practice-test",
-            "full-length-dmv-ut-fines--limits-practice-test",
-            "full-length-dmv-va-fines--limits-practice-test",
-            "full-length-dmv-vt-fines--limits-practice-test",
-            "full-length-dmv-wa-fines--limits-practice-test",
-            "full-length-dmv-wi-fines--limits-practice-test",
-            "full-length-dmv-wv-fines--limits-practice-test",
-            "full-length-dmv-wy-fines--limits-practice-test"
-        ]
     },
     {
         "appId": 6465005999357952,

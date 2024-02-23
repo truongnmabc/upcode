@@ -7,7 +7,6 @@ import ReviewAnswer from "./ReviewAnswer";
 import * as ga from "../../../services/ga";
 import { getGameProgress, getHighhestLevelOfTopicBePassedSequentially } from "../../../utils/v4_study";
 import { ITopic } from "../../../models/Topic";
-import { genFullStudyLink } from "@/utils/getStudyLink";
 import { SYNC_TYPE } from "../../../config/config_sync";
 import "./index.scss";
 import TargetIcon from "../../icon/TargetIcon";
@@ -49,10 +48,12 @@ const EndTestV4 = ({
     gameState,
     appInfo,
     currentTopic,
+    _state,
 }: {
     gameState: GameState;
     appInfo: IAppInfo;
     currentTopic?: ITopic;
+    _state: string;
 }) => {
     const isDesktop = useMediaQuery("(min-width:769px)");
     const { isPass, passPercent, currentScore, correctNum } = getGameProgress(gameState);
@@ -68,9 +69,8 @@ const EndTestV4 = ({
         if (nextLevelIndex > highestLevel) nextLevelIndex = highestLevel; // trường hợp nhảy cóc sang mini test thì next level sẽ là level tiếp theo theo tuần tự
         if (nextLevelIndex < currentTopic.topics.length - 1) {
             //tại các level trước final test thì mới có nút next level và final test
-            if (isPass)
-                nextLevelHref = `${genFullStudyLink(appInfo, currentTopic.tag)}#${currentTopic.topics[nextLevelIndex].tag}`;
-            finalTestHref = `${genFullStudyLink(appInfo, currentTopic.tag)}#final-test`;
+            if (isPass) nextLevelHref = `${currentTopic.slug}#${currentTopic.topics[nextLevelIndex].tag}`;
+            finalTestHref = `${currentTopic.slug}#final-test`;
         }
     }
     let isEndLevel = gameState.levelTag.includes("level");
@@ -110,8 +110,7 @@ const EndTestV4 = ({
                             nextLevelHref={nextLevelHref}
                             finalTestHref={finalTestHref}
                             topicId={currentTopic?.id ?? ""}
-                            appInfo={appInfo}
-                            gameType={gameState.gameType}
+                            _state={_state}
                         />
                     )}
                 </div>
@@ -129,8 +128,7 @@ const EndTestV4 = ({
                         nextLevelHref={nextLevelHref}
                         finalTestHref={finalTestHref}
                         topicId={currentTopic?.id ?? ""}
-                        appInfo={appInfo}
-                        gameType={gameState.gameType}
+                        _state={_state}
                     />
                     {!gameState.levelTag.includes("level") && (
                         <div id="study_review">
@@ -148,15 +146,13 @@ const EndTestButton = ({
     nextLevelHref,
     finalTestHref,
     topicId,
-    appInfo,
-    gameType,
+    _state,
 }: {
     levelTag: string;
     nextLevelHref: string;
     finalTestHref: string;
     topicId: string;
-    appInfo: IAppInfo;
-    gameType: number;
+    _state: string;
 }) => {
     const dispatch = useDispatch();
     const directHref = (_href: string) => {
@@ -166,6 +162,7 @@ const EndTestButton = ({
                 fullSlug: _href.slice(1, _href.length), // bỏ dấu / vì trong này đang không xử lý dấu đó
                 type: SYNC_TYPE.TYPE_LEARN_TEST,
                 topicId: topicId,
+                _state: _state,
             })
         );
         window.location.href = _href;
@@ -219,18 +216,7 @@ const EndTestButton = ({
                     )
                 ) : (
                     <></>
-                ))
-                // (
-                //     <button
-                //         className="final-test btn v4-border-radius v4-button-animtaion"
-                //         onClick={() => {
-                //             window.location.href = genFullStudyLink(appInfo, "", true);
-                //         }}
-                //     >
-                //         Full-length Test
-                //     </button>
-                // )
-            }
+                ))}
         </div>
     );
 };

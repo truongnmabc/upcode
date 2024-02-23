@@ -12,4 +12,5 @@ export default interface IWebData {
     bucket?: string;
     topics?: ITopic[]; // truyền cái này để update vào redux
     tests?: ITestInfo[]; // truyền cái này để update vào redux
+    _state?: string;
 }

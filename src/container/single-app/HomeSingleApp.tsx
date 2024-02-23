@@ -23,13 +23,13 @@ const HomeSingleApp = ({
     listTopics,
     homeSeoContent,
     tests,
-    state = "",
+    _state = "",
 }: {
     appInfo: IAppInfo;
     listTopics: ITopic[];
     homeSeoContent: any;
     tests: ITestInfo[];
-    state?: string;
+    _state: string;
 }) => {
     useEffect(() => {
         if (window) {
@@ -56,7 +56,7 @@ const HomeSingleApp = ({
     return (
         <Layout2 appInfo={appInfo} listTopics={listTopics} tests={tests}>
             <div className="v4-home-landing-0">
-                {appHasState && !!!state ? (
+                {appHasState && !!!_state ? (
                     <>
                         <div className="app-state-backround-0">
                             <MyContainer>
@@ -116,7 +116,7 @@ const HomeSingleApp = ({
                         <div className="landing-title-0">
                             <div className="landing-title-11">
                                 <h1 className="title-h1">
-                                    <span className="landing-title-21">{`${_state(state)} ${
+                                    <span className="landing-title-21">{`${stateName(_state)} ${
                                         appInfo?.appName
                                     } Practice Test`}</span>
                                     <span className="landing-title-22">
@@ -126,33 +126,39 @@ const HomeSingleApp = ({
                             </div>
                             <div className="landing-title-12">
                                 {listTopics.length > 1
-                                    ? `Our free ${_state(state)} ${appInfo.appName} practice tests feature all ${_state(
-                                          state
+                                    ? `Our free ${stateName(_state)} ${appInfo.appName} practice tests feature all ${stateName(
+                                          _state
                                       )} ${
                                           appInfo.appName
                                       } test subjects. We recommend taking at least one practice exam from every subject to guarantee your success at your local testing location. To get started, choose a category from the list below and practice them!`
-                                    : `Our free ${_state(state)} ${appInfo.appName} practice tests feature all ${_state(
-                                          state
+                                    : `Our free ${stateName(_state)} ${appInfo.appName} practice tests feature all ${stateName(
+                                          _state
                                       )} ${
                                           appInfo.appName
                                       } test subjects. We recommend taking all practice questions to guarantee your success at your local testing location.`}
                             </div>
                         </div>
                         <div className="v4-landing-topic-0">
-                            <h2>{`Practice ${_state(state)} ${appInfo.appName} Test By Topics`}</h2>
-                            <GridTopic place="home" listTopics={listTopics} appInfo={appInfo} allowExpand={!isDesktop} />
+                            <h2>{`Practice ${stateName(_state)} ${appInfo.appName} Test By Topics`}</h2>
+                            <GridTopic
+                                place="home"
+                                listTopics={listTopics}
+                                appInfo={appInfo}
+                                allowExpand={!isDesktop}
+                                _state={_state}
+                            />
                         </div>
 
                         <div className="v4-landing-practice-test-0">
-                            <h2>{`Take Full ${_state(state)} ${appInfo.appName} Practice Test`}</h2>
+                            <h2>{`Take Full ${stateName(_state)} ${appInfo.appName} Practice Test`}</h2>
                             {tests.map((test, index) => (
                                 <div key={index} style={{ marginTop: index != 0 ? 16 : 0 }}>
-                                    <TestBanner key={index} appInfo={appInfo} test={test} index={index} state={state} />
+                                    <TestBanner key={index} appInfo={appInfo} test={test} index={index} />
                                 </div>
                             ))}
                         </div>
                         <div className="v4-landing-banner-download-app-0">
-                            <h2>{`Prepare to Pass ${_state(state)} ${appInfo.appName} on Any Devices`}</h2>
+                            <h2>{`Prepare to Pass ${stateName(_state)} ${appInfo.appName} on Any Devices`}</h2>
                             <BannerDownloadApp appInfo={appInfo} device={isDesktop ? "desktop" : "mobile"} />
                         </div>
                         <div className="v4-landing-seo-content-0">
@@ -165,7 +171,7 @@ const HomeSingleApp = ({
     );
 };
 
-const _state = (state: string) => {
+const stateName = (state: string) => {
     return capitalizeFirstWord(state.replaceAll("-", " "));
 };
 export default HomeSingleApp;

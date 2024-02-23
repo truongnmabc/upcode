@@ -1,9 +1,8 @@
-import { genFullStudyLink } from "@/utils/getStudyLink";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITestInfo } from "../../models/TestInfo";
 import * as ga from "../../services/ga";
 import "./TestBanner.scss";
-const TestBanner = ({ appInfo, test, index, state }: { appInfo: IAppInfo; test: ITestInfo; index: number; state: string }) => {
+const TestBanner = ({ appInfo, test, index }: { appInfo: IAppInfo; test: ITestInfo; index: number }) => {
     let timeTest = Math.floor(test?.timeTest / 60);
     let _href = test.slug;
     return (

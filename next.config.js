@@ -76,25 +76,15 @@ module.exports = () => {
                                 if (app.hasState) {
                                     // các app có state
                                     topics.forEach((t) => {
-                                        states.forEach((state) => {
-                                            let s = state.toLowerCase().trim().replace(" ", "-");
-                                            let p =
-                                                _getLink(app) +
-                                                "/" +
-                                                t.url.replace(app.appShortName, s + "-" + app.appShortName);
-                                            let _ = { source: p, destination: "/study" + p };
-                                            paths.push(_);
-                                        });
+                                        let p = _getLink(app) + "/" + t.url;
+                                        let _ = { source: p, destination: "/study" + p };
+                                        paths.push(_);
                                     });
 
                                     fullTests.forEach((t) => {
-                                        states.forEach((state) => {
-                                            let s = state.toLowerCase().trim().replace(" ", "-");
-                                            let p =
-                                                _getLink(app) + "/" + t.replace(app.appShortName, s + "-" + app.appShortName);
-                                            let _ = { source: p, destination: "/study" + p };
-                                            paths.push(_);
-                                        });
+                                        let p = _getLink(app) + "/" + t;
+                                        let _ = { source: p, destination: "/study" + p };
+                                        paths.push(_);
                                     });
                                 } else {
                                     // các app k có state

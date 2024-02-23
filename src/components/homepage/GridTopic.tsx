@@ -52,6 +52,7 @@ interface ITopicJson {
     name: string;
     topics: any[];
     id: string;
+    slug: string;
 }
 
 const GridTopic = ({
@@ -61,6 +62,7 @@ const GridTopic = ({
     priority = 3,
     place = "",
     allowExpand = true,
+    _state,
 }: {
     listTopics: ITopic[]; // cân nhắc trường hợp lấy từ redux ra, không truyền tham số như này nữa
     highlightedTopicId?: string;
@@ -68,6 +70,7 @@ const GridTopic = ({
     priority?: 1 | 2 | 3 | 4;
     place?: string;
     allowExpand?: boolean;
+    _state: string;
 }) => {
     let topics: ITopic[] | ITopicJson[] = listTopics.map((a) => {
         return { ...a };
@@ -76,7 +79,7 @@ const GridTopic = ({
     if (!topics.length) {
         // trường hợp listTopics chưa lấy được từ redux ra sẽ lấy topic từ file JSON
         // để hiển thị link và tên topic cho SEO
-        topics = getRawTopicsData(appInfo.appId);
+        topics = getRawTopicsData(appInfo, _state);
     }
     try {
         topics.sort((a, b) => {
@@ -91,11 +94,14 @@ const GridTopic = ({
         return 1;
     });
     const dispatch = useDispatch();
+    const dispatchAction = (data: any) => {
+        dispatch(getStudyData({ ...data, _state: _state }));
+    };
     return (
         <div className={`v4-grid-topic-0 ${place}`}>
             {topics.map((topic, index) => {
                 let isHighlighted = highlightedTopicId.includes(topic.id);
-                let _href = genFullStudyLink(appInfo, topic.tag);
+                let _href = topic.slug;
                 return (
                     <div key={index} id={index}>
                         <a
@@ -131,9 +137,7 @@ const GridTopic = ({
                                                 currentTopic={topic}
                                                 place={place}
                                                 listGameState={listGameState}
-                                                dispatchAction={(data) => {
-                                                    dispatch(getStudyData(data));
-                                                }}
+                                                dispatchAction={dispatchAction}
                                                 topicUrl={_href}
                                             />,
                                             content
@@ -211,9 +215,7 @@ const GridTopic = ({
                                             place={place}
                                             topicUrl={_href}
                                             listGameState={listGameState}
-                                            dispatchAction={(data) => {
-                                                dispatch(getStudyData(data));
-                                            }}
+                                            dispatchAction={dispatchAction}
                                         />
                                     )}
                                 </div>
@@ -224,27 +226,6 @@ const GridTopic = ({
                     </div>
                 );
             })}
-            {/* {place != "home" && (
-                <>
-                    <div className="separate-line" />
-                    <a
-                        className="v4-grid-topic-full-leng-test v4-border-radius"
-                        href={genFullStudyLink(appInfo, "", true)}
-                        onClick={(e) => {
-                            e.preventDefault(); // viết như này để ga được thực hiện
-                            ga.event({
-                                action: "click_full_test_in_study",
-                                params: {
-                                    from: window.location.href,
-                                },
-                            });
-                            window.location.href = genFullStudyLink(appInfo, "", true);
-                        }}
-                    >
-                        {`${appInfo.appName.toUpperCase()} Full-length Test`}
-                    </a>
-                </>
-            )} */}
         </div>
     );
 };

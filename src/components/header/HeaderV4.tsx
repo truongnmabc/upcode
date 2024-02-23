@@ -11,7 +11,6 @@ import MenuIcon from "../icon/MenuIcon";
 import ExpandMoreIcon from "../icon/ExpandMoreIcon";
 import Link from "next/link";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { genFullStudyLink } from "@/utils/getStudyLink";
 import { ITestInfo } from "@/models/TestInfo";
 
 const DownloadAppV4 = dynamic(() => import("../homepage/DownloadAppV4"));
@@ -67,24 +66,6 @@ const HeaderV4 = ({
                             <CloseIcon />
                         </div>
                         <div className="container-drawer-right-menu-header-v4">
-                            {/* <div className="container-drawer-right-menu-header-v4-1">
-                                <a
-                                    href={genFullStudyLink(appInfo, "", true)}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        ga.event({
-                                            action: "click_menu_full_test",
-                                            params: {
-                                                from: window.location.href,
-                                            },
-                                        });
-                                        window.location.href = genFullStudyLink(appInfo, "", true);
-                                    }}
-                                >
-                                    {`Full ${appInfo.appName} Practice Test`}
-                                </a>
-                            </div>
-                             */}
                             <div
                                 className="container-drawer-right-menu-header-v4-1"
                                 onClick={() => {
@@ -110,7 +91,7 @@ const HeaderV4 = ({
                             <div id="collapse-test">
                                 <div id="collapse-content-test">
                                     {tests.map((test, index) => {
-                                        let _link = genFullStudyLink(appInfo, test.tag, true);
+                                        let _link = test.slug;
                                         return (
                                             <div key={index} className="v4-app-test">
                                                 <a
@@ -159,10 +140,11 @@ const HeaderV4 = ({
                             <div id="collapse-topic">
                                 <div id="collapse-content">
                                     {topics.map((topic) => {
+                                        let _link = topic.slug;
                                         return (
                                             <div key={topic.id} className="v4-app-topic">
                                                 <a
-                                                    href={genFullStudyLink(appInfo, topic.tag)}
+                                                    href={_link}
                                                     onClick={(e) => {
                                                         e.preventDefault();
                                                         ga.event({
@@ -172,7 +154,7 @@ const HeaderV4 = ({
                                                                 to: topic.tag,
                                                             },
                                                         });
-                                                        window.location.href = genFullStudyLink(appInfo, topic.tag);
+                                                        window.location.href = _link;
                                                     }}
                                                 >
                                                     {topic.name}

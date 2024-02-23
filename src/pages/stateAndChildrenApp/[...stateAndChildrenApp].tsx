@@ -11,6 +11,7 @@ import { ITopic } from "../../models/Topic";
 import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
 import replaceYear from "@/utils/replaceYear";
 import states from "../../data/statesName.json";
+import { genStudyLink } from "@/utils/getStudyLink";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -25,7 +26,7 @@ const ChildrenApp = ({
     childAppInfo,
     // homeSeoContent,
     titleSEO,
-    state,
+    _state,
 }: {
     listTopics?: ITopic[];
     tests?: ITestInfo[];
@@ -34,14 +35,14 @@ const ChildrenApp = ({
     childAppInfo: IAppInfo;
     // homeSeoContent: string;
     titleSEO?: string;
-    state: string;
+    _state: string; // '_state' là dang slug, 'state' là dạng tên riêng
 }) => {
     // appInfo ở đây là của app con nha
     return (
         <>
             <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} />
             <StoreProvider appInfo={childAppInfo} webData={{ tests: tests, topics: listTopics }} />
-            <HomeSingleApp appInfo={childAppInfo} homeSeoContent={""} listTopics={listTopics} tests={tests} state={state} />
+            <HomeSingleApp appInfo={childAppInfo} homeSeoContent={""} listTopics={listTopics} tests={tests} _state={_state} />
             <ScrollToTopArrow />
         </>
     );
@@ -92,14 +93,14 @@ const formatData = (url: string) => {
 export const getStaticProps: GetStaticProps = async (context) => {
     // trang giao diện các chứng chỉ con, được định tuyến trong exportPathMap tại next.config.js
     let stateAndChildrenApp = context.params.stateAndChildrenApp;
-    let [slug, state] = stateAndChildrenApp;
+    let [slug, _state] = stateAndChildrenApp;
     let isParent = isParentApp();
     if (!isParent) {
         // chỗ này chưa bổ sung, sau làm riêng app con thì bổ sung vào
         if (stateAndChildrenApp.length == 1) {
             if (states.find((state) => state.toLowerCase().trim().replace(" ", "-") === slug)) {
                 // trường hợp web được build ra là một web con có state thì đang config để trỏ url trang state về route này
-                state = slug;
+                _state = slug;
                 slug = "";
             }
         }
@@ -115,9 +116,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
             return slug === getLink(a).replaceAll("/", "");
         });
         if (childAppInfo) {
-            if (!childAppInfo.hasState || (childAppInfo.hasState && state)) {
+            if (!childAppInfo.hasState || (childAppInfo.hasState && _state)) {
                 // nếu là trang app con không có state hoặc trang state của app con thì mới lấy dữ liệu test/topic về
-                let appData: any = await readFileAppFromGoogleStorage(childAppInfo, state ?? "");
+                let appData: any = await readFileAppFromGoogleStorage(childAppInfo, _state ?? "");
                 listTopics = appData?.topics ?? [];
                 tests = appData?.fullTests ?? [];
             }
@@ -127,6 +128,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         //     homeSeoContent.content = replaceYear(homeSeoContent.content);
         // }
 
+        // await genstudyDataJSON(listAppInfos);
         let titleSEO = replaceYear(childAppInfo.title);
         let descriptionSEO = replaceYear(childAppInfo.descriptionSEO);
 
@@ -138,7 +140,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 tests: tests,
                 keywordSEO: childAppInfo?.keywordSEO,
                 childAppInfo,
-                state: state ?? "",
+                _state: _state ?? "",
                 // homeSeoContent,
             },
         });
@@ -147,68 +149,93 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export default ChildrenApp;
 
-// let genstudyDataJSON = async (listAppInfos) => {
-//     let r = "[";
-//     let branchs = [
-//         {
-//             title: "Marine ASVAB Practice Test",
-//             url: "marine-asvab-practice-test",
-//             tag: "arithmetic-reasoning",
-//             isBranch: true,
-//         },
-//         {
-//             title: "Navy ASVAB Practice Test",
-//             url: "navy-asvab-practice-test",
-//             tag: "arithmetic-reasoning",
-//             isBranch: true,
-//         },
-//         {
-//             title: "Army ASVAB Practice Test",
-//             url: "army-asvab-practice-test",
-//             tag: "arithmetic-reasoning",
-//             isBranch: true,
-//         },
-//         {
-//             title: "Coast Guard ASVAB Practice Test",
-//             url: "asvab-coast-guard-practice-test",
-//             tag: "arithmetic-reasoning",
-//             isBranch: true,
-//         },
-//         {
-//             title: "Air Force ASVAB Practice Test",
-//             url: "air-force-asvab-practice-test",
-//             tag: "arithmetic-reasoning",
-//             isBranch: true,
-//         },
-//         {
-//             title: "National Guard ASVAB Practice Test",
-//             url: "national-guard-asvab-practice-test",
-//             tag: "arithmetic-reasoning",
-//             isBranch: true,
-//         },
-//     ];
-//     for (let app of listAppInfos) {
-//         if (app.appId !== -1)
-//             try {
-//                 let appData: any = await readFileAppFromGoogleStorage(app);
-//                 let _listTopics = appData?.topics ?? [];
-//                 let _tests = appData?.fullTests ?? [];
-//                 r +=
-//                     JSON.stringify({
-//                         appId: app.appId,
-//                         topics: _listTopics
-//                             .map((t) => ({
-//                                 title: t.name,
-//                                 url: genStudyLink(app.appShortName, t.tag, false),
-//                                 tag: t.tag,
-//                             }))
-//                             .push(...(app.appShortName === "asvab" ? branchs : [])),
-//                         fullTests: _tests.map((t) => genStudyLink(app.appShortName, t?.tag, true)), //[genStudyLink(bucket, "")],
-//                     }).replaceAll("/", "") + ",";
-//             } catch (e) {
-//                 console.log("error", app.bucket);
-//             }
-//     }
-//     r += "]";
-//     console.log(r);
-// };
+let genstudyDataJSON = async (listAppInfos) => {
+    let r = "[";
+    let branchs = [
+        {
+            title: "Marine ASVAB Practice Test",
+            url: "marine-asvab-practice-test",
+            tag: "arithmetic-reasoning",
+            isBranch: true,
+        },
+        {
+            title: "Navy ASVAB Practice Test",
+            url: "navy-asvab-practice-test",
+            tag: "arithmetic-reasoning",
+            isBranch: true,
+        },
+        {
+            title: "Army ASVAB Practice Test",
+            url: "army-asvab-practice-test",
+            tag: "arithmetic-reasoning",
+            isBranch: true,
+        },
+        {
+            title: "Coast Guard ASVAB Practice Test",
+            url: "asvab-coast-guard-practice-test",
+            tag: "arithmetic-reasoning",
+            isBranch: true,
+        },
+        {
+            title: "Air Force ASVAB Practice Test",
+            url: "air-force-asvab-practice-test",
+            tag: "arithmetic-reasoning",
+            isBranch: true,
+        },
+        {
+            title: "National Guard ASVAB Practice Test",
+            url: "national-guard-asvab-practice-test",
+            tag: "arithmetic-reasoning",
+            isBranch: true,
+        },
+    ];
+    for (let app of listAppInfos) {
+        if (app.appId !== -1)
+            try {
+                if (app.hasState) {
+                    if (app.appShortName === "cdl") {
+                        for (let s of states) {
+                            let _s = s.trim().toLowerCase().replaceAll(" ", "-");
+                            if (_s === "alabama") {
+                                let appData: any = await readFileAppFromGoogleStorage(app, _s);
+                                let _listTopics = appData?.topics ?? [];
+                                let _tests = appData?.fullTests ?? [];
+                                let t = _listTopics.map((t) => ({
+                                    title: t.name,
+                                    url: genStudyLink(app.appShortName, t.tag, false, _s),
+                                    tag: t.tag,
+                                }));
+                                r +=
+                                    JSON.stringify({
+                                        appId: app.appId,
+                                        topics: t,
+                                        fullTests: _tests.map((t) => genStudyLink(app.appShortName, t.tag, true, _s)),
+                                    }).replaceAll("/", "") + ",";
+                            }
+                        }
+                    }
+                } else {
+                    let appData: any = await readFileAppFromGoogleStorage(app);
+                    let _listTopics = appData?.topics ?? [];
+                    let _tests = appData?.fullTests ?? [];
+                    let t = _listTopics.map((t) => ({
+                        title: t.name,
+                        url: genStudyLink(app.appShortName, t.tag, false),
+                        tag: t.tag,
+                    }));
+                    if (app.appShortName === "asvab") t.push(...branchs);
+
+                    r +=
+                        JSON.stringify({
+                            appId: app.appId,
+                            topics: t,
+                            fullTests: _tests.map((t) => genStudyLink(app.appShortName, t.tag, true)),
+                        }).replaceAll("/", "") + ",";
+                }
+            } catch (e) {
+                console.log("error", app.bucket);
+            }
+    }
+    r += "]";
+    console.log(r);
+};

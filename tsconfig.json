@@ -18,6 +18,6 @@
         },
         "forceConsistentCasingInFileNames": true
     },
-    "include": ["next-env.d.ts", "**/*.ts", "src", "genxml.js"],
+    "include": ["next-env.d.ts", "**/*.ts", "src", "gen-sitemap.js"],
     "exclude": ["node_modules"]
 }

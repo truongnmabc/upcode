@@ -40,6 +40,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
     let appInfo: IAppInfo = state.appInfoReducer.appInfo;
     let tests: ITestInfo[] = state.testReducer.list;
     let lisGameStates: GameState[] = state.listGameReducer.games.map((g) => new GameState(g));
+    let _state = webData._state;
     // phải check xem đã tồn tại dữ liệu chưa thì mới gọi api (vđề là nếu dữ liệu có thay đổi thì không biết được)
     // dữ liệu topic được lưu trong topicV4Reducer.list
     // dữ liệu test lưu trong testInfoV4Reducer.list
@@ -168,10 +169,15 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             let questionsData = [];
             if (getTest) {
                 // vi api tra ve ca data cua test va question luon nen dung chung 1 bien getTest de check
-                let testTag = slug.replace("full-length-" + appInfo.appShortName, "").replace("-practice-test", "");
+                let testTag = slug
+                    .replace("full-length-" + (_state ? _state + "-" : "") + appInfo.appShortName, "")
+                    .replace("-practice-test", "");
+                console.log(slug, testTag);
+
                 let data = await getTestDataFromGoogleStorage(
                     appInfo.bucket,
-                    gameType == Config.BRANCH_TEST_GAME ? slug : "full-tests" + (testTag ? testTag : "")
+                    gameType == Config.BRANCH_TEST_GAME ? slug : "full-tests" + (testTag ? testTag : ""),
+                    _state
                 );
 
                 let test = data[0].test;
@@ -191,7 +197,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             }
             if (getTopic) {
                 // mặc định coi vào trường hợp này là tải dữ liệu mới về => vào level thấp nhất
-                let data: any = await readFileAppFromGoogleStorage(appInfo); // get data ve
+                let data: any = await readFileAppFromGoogleStorage(appInfo, _state); // get data ve
                 topics = data?.topics ?? [];
                 dispatch(getTopicByParentIdSuccess(topics));
                 let accessTopic = topics.find((t) => slug.includes(t.tag));
@@ -232,7 +238,8 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 //chua co topic questions data
                 questionsData = await getTopicQuestionsFromGoogleStorage(
                     appInfo.bucket,
-                    topic_tag + (level_tag ? "-" + level_tag : "")
+                    topic_tag + (level_tag ? "-" + level_tag : ""),
+                    _state
                 );
 
                 if (questionsData?.length) {

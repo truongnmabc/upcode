@@ -12,11 +12,10 @@ export const topicSlice = createSlice({
     initialState: { list: [] },
     reducers: {
         getTopicByParentIdSuccess: (state, action: PayloadAction<ITopic[]>) => {
-            let topics = action.payload;
+            let topics = action.payload; // dữ liệu vào đến đây cần được đảm bảo đã convert theo đúng model
             if (topics) {
                 let a = JSON.parse(JSON.stringify(state.list)).map((t) => new Topic(t));
                 topics.forEach((topic) => {
-                    topic = new Topic(topic);
                     let indexTopic = a.findIndex((t) => t.id + "" == topic.id + "");
                     if (indexTopic == -1) {
                         a.push(topic);

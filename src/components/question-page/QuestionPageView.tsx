@@ -45,6 +45,7 @@ const QuestionPageView = ({
                                 highlightedTopicId={gameState.id}
                                 appInfo={appInfo}
                                 priority={4}
+                                _state=""
                             />
                         </div>
                     </div>

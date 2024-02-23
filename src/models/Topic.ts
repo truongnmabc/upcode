@@ -6,6 +6,7 @@ export interface ITopic {
     tag: string;
     icon: string;
     topics: ITopic[];
+    slug: string;
 }
 export default class Topic implements ITopic {
     id: string;
@@ -15,6 +16,7 @@ export default class Topic implements ITopic {
     tag: string;
     icon: string;
     topics: ITopic[];
+    slug: string;
 
     constructor(object?: any) {
         this.id = object.id + "" ?? "-1";
@@ -23,6 +25,8 @@ export default class Topic implements ITopic {
         this.name = object.name ?? "";
         this.tag = object.tag ?? "";
         this.icon = object.icon ?? "";
+        this.slug = object.slug ?? "/";
+        if (this.tag.includes("level")) this.slug = ""; // để nếu xảy ra lỗi thì còn phần biệt được với topic tổng
         this.topics = object.topics?.map((t: any) => new Topic(t)); // để như này cho nếu trường này null thì biết nó là dữ liệu tại local đang là dữ liệu cũ (data cũ không có trường này) thì còn biết đường để xử lý; không được gán mặc định là [] vì có thể có app không có level!!
         try {
             if (this.topics?.length > 1) {

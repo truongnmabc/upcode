@@ -76,8 +76,8 @@ function shuffleV4(list: any[]) {
         let num = Math.floor(Math.random() * 101);
         switch (num % 6) {
             case 0:
-            case 1:
                 return 0;
+            case 1:
             case 2:
             case 3:
                 return 1;

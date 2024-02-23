@@ -13,10 +13,11 @@ import { SYNC_TYPE } from "../../config/config_sync";
 import { isParentApp } from "../../config/config_web";
 import StudyLayout from "../../container/study/StudyLayout";
 import { AppInfo, IAppInfo } from "../../models/AppInfo";
-import { readAllAppInfos } from "../../utils/getAppInfo";
+import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { ITestInfo } from "@/models/TestInfo";
 import { ITopic } from "@/models/Topic";
+import states from "../../data/statesName.json";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -29,6 +30,7 @@ const StudyPage = ({
     gameType,
     topics,
     tests,
+    _state,
 }: {
     appInfo: IAppInfo;
     data: IWebData;
@@ -38,6 +40,7 @@ const StudyPage = ({
     gameType: -1 | 0 | 1;
     topics: ITopic[];
     tests: ITestInfo[];
+    _state: string;
 }) => {
     const router = useRouter();
     let _slug = router.asPath.slice(1, router.asPath.length); // mô tả tại IWebData, trong asPath có phần #level, slice để bỏ đi dấu / ở đầu vì trước dùng slug của getServerSideProps không có
@@ -51,6 +54,7 @@ const StudyPage = ({
         bucket: appInfo.bucket,
         topics,
         tests,
+        _state,
     };
     return (
         <>
@@ -71,19 +75,27 @@ const StudyPage = ({
 export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
         // các trang học đều được định tuyến về đây trong next.config.js (rewrites)
-        let [study, slug] = context.params.slug;
+        let [appNameId, slug] = context.params.slug;
+        if (!slug) slug = appNameId; // trường hợp web được build là một single app thì trang học sẽ là /[study]
+
+        console.log(appNameId, slug);
+
         let _isParentApp = isParentApp();
-        if (!_isParentApp) {
-            throw { p: 1 };
-        }
         let listAppInfo: any[] = readAllAppInfos();
         listAppInfo = listAppInfo.map((app) => new AppInfo(app));
-        let appInfo = listAppInfo.find((app) => getLink(app) === "/" + study);
+
+        let appInfo = getAppInfo();
+        if (_isParentApp) appInfo = listAppInfo.find((app) => getLink(app) === "/" + appNameId);
 
         if (!!appInfo) {
             let listTopics = [];
             let tests = [];
-            let appData: any = await readFileAppFromGoogleStorage(appInfo);
+            let _state = "";
+            if (appInfo.hasState) {
+                // nếu app có state (thì url dẫn đến trang học này có chứa state trong đó)
+                _state = states.map((s) => s.trim().toLowerCase().replaceAll(" ", "-")).find((s) => slug.includes(s));
+            }
+            let appData: any = await readFileAppFromGoogleStorage(appInfo, _state);
             listTopics = appData?.topics ?? [];
             tests = appData?.fullTests ?? [];
 
@@ -126,6 +138,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                     gameType,
                     topics: listTopics,
                     tests,
+                    _state,
                 },
             });
         } else throw { p: 3 };

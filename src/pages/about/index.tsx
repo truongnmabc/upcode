@@ -35,7 +35,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         listAppInfo = readAllAppInfos();
         listAppInfo = listAppInfo.filter((w: any) => w.appId).map((w: any) => new AppInfo(w));
     } else {
-        listTopics = getRawTopicsData(appInfo.appId);
+        listTopics = getRawTopicsData(appInfo, "");
     }
     return convertToJSONObject({
         props: {

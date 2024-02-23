@@ -135,6 +135,7 @@ const StudyView = ({
                                     appInfo={appInfo}
                                     priority={4}
                                     place="study"
+                                    _state={contentData._state}
                                 />
                             </div>
                         )}
@@ -186,6 +187,7 @@ const StudyView = ({
                                 gameState={gameState}
                                 appInfo={appInfo}
                                 currentTopic={listTopics.find((t) => gameState.id.includes(t.id))}
+                                _state={contentData._state}
                             />
                         ) : isFinish == 0 ? (
                             <>
