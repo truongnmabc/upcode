@@ -85,6 +85,10 @@ const StudyView = ({
                 if (ref?.current?.className != undefined)
                     if (!ref.current.className.includes("nested")) ref.current.className = "nested";
             };
+            window.onkeydown = (e) => {
+                if (ref?.current?.className != undefined)
+                    if (!ref.current.className.includes("nested")) ref.current.className = "nested";
+            };
         }
     }, []);
     return (

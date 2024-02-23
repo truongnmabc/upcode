@@ -9,11 +9,13 @@ const SeoHeader = ({
     title,
     description,
     keyword,
+    ads,
 }: {
     children?: any;
     title: string;
     description: string;
     keyword: string;
+    ads?: boolean;
 }) => {
     const router = useRouter();
     let image = `/info/images/${APP_SHORT_NAME}/logo60.png`;
@@ -36,6 +38,15 @@ const SeoHeader = ({
             <link rel="preconnect" href="https://www.googletagmanager.com" />
             <link rel="profile" href="https://gmpg.org/xfn/11" />
             <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
+            {ads ? (
+                <script
+                    async
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2131195938375129"
+                    crossOrigin="anonymous"
+                ></script>
+            ) : (
+                <></>
+            )}
             {children}
         </Head>
     );

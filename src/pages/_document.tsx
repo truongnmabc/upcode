@@ -25,6 +25,12 @@ class MyDocument extends Document {
                                       gtag('config', "${GA4_ID}");`,
                         }}
                     />
+                    {/* quảng cáo tự động */}
+                    <script
+                        async
+                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2131195938375129"
+                        crossOrigin="anonymous"
+                    ></script>
                     <Main />
                     <NextScript />
                 </body>

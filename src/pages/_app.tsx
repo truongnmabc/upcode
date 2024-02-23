@@ -53,7 +53,7 @@ function App({ Component, ...rest }: any) {
                 }
             }
         }
-        getCountryFC();
+        // getCountryFC();
     }, []);
 
     return (

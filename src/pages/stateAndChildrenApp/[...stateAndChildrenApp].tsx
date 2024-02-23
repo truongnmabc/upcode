@@ -40,7 +40,7 @@ const ChildrenApp = ({
     // appInfo ở đây là của app con nha
     return (
         <>
-            <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} />
+            <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} ads />
             <StoreProvider appInfo={childAppInfo} webData={{ tests: tests, topics: listTopics }} />
             <HomeSingleApp appInfo={childAppInfo} homeSeoContent={""} listTopics={listTopics} tests={tests} _state={_state} />
             <ScrollToTopArrow />

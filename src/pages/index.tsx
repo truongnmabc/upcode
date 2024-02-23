@@ -44,7 +44,7 @@ export default function Home({
 
     return (
         <>
-            <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} />
+            <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} ads />
             <StoreProvider appInfo={appInfo} webData={_isParentApp ? {} : { tests: tests, topics: listTopics }} />
             {_isParentApp ? (
                 <ParentAppLayout appInfo={appInfo} listAppInfos={listAppInfo} />
