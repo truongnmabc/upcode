@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 const ScrollTopTopArrow = dynamic(() => import("../../v4-material/ScrollToTopArrow"), { ssr: false });
 import "./Layout1.scss";
 import { CheckAndAddAds } from "@/components/ads/ads";
-const Layout1 = ({ children, listAppInfos, ads }: { children: any; listAppInfos: IAppInfo[]; ads?: boolean }) => {
+const Layout1 = ({ children, listAppInfos, ads = true }: { children: any; listAppInfos: IAppInfo[]; ads?: boolean }) => {
     return (
         <div className="layout-1">
             <Header1 listAppInfos={listAppInfos} />

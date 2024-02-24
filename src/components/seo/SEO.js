@@ -11,7 +11,7 @@ const SEO = ({
     addMathJax = false,
     keywordsSeo = "",
     children = null,
-    ads = false,
+    ads = true,
 }) => {
     const router = useRouter();
     let description;

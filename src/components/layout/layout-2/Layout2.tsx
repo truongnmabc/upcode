@@ -15,7 +15,7 @@ const Layout2 = ({
     appInfo,
     listTopics,
     tests,
-    ads,
+    ads = true,
 }: {
     children: any;
     appInfo: IAppInfo;

@@ -9,7 +9,7 @@ const SeoHeader = ({
     title,
     description,
     keyword,
-    ads,
+    ads = true,
 }: {
     children?: any;
     title: string;
