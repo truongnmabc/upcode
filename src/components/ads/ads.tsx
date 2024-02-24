@@ -11,8 +11,6 @@ const CheckAndAddAds = () => {
         }
         const src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
         if ((isProduction() && isWebEASYPREP() && !isRemoveAds(paymentInfo) && !checkCountryVN()) || true) {
-            console.log("hereeeeeeeee");
-
             const elements = document.getElementsByTagName("script");
             let hasScript = false;
             for (let i = 0; i < elements.length; i++) {
@@ -21,6 +19,7 @@ const CheckAndAddAds = () => {
                 }
             }
             if (!hasScript) {
+                console.log("hereeeeeeeee");
                 const elem = document.createElement("script");
                 elem.setAttribute("data-ad-client", getAdClientId());
                 elem.src = src;
@@ -86,4 +85,4 @@ export const isRemoveAds = (paymentInfo: any) => {
     return false;
 };
 
-export { CheckAndAddAds, HorizontalBannerAds };
+export { CheckAndAddAds, HorizontalBannerAds, getAdClientId };

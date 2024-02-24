@@ -13,6 +13,7 @@ import { ITopic } from "@/models/Topic";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { IAppInfo } from "../../models/AppInfo";
 import { getAppInfo } from "../../utils/getAppInfo";
+import { CheckAndAddAds } from "@/components/ads/ads";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -70,6 +71,7 @@ const StudyPage = ({
             <StoreProvider appInfo={appInfo} webData={webData} />
             <StudyLayout appInfo={appInfo} contentData={webData} />
             <ScrollToTopArrow />
+            <CheckAndAddAds />
         </>
     );
 };

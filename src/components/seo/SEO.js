@@ -3,6 +3,7 @@ import { APP_SHORT_NAME, GOOGLE_SITE_VERIFICATION } from "../../config_app";
 import { capitalizeFirstWord, getDomainName } from "../../utils";
 import Head from "next/head";
 import replaceYear from "@/utils/replaceYear";
+import { getAdClientId } from "../ads/ads";
 
 const SEO = ({
     appInfo,
@@ -83,6 +84,7 @@ const SEO = ({
                         async
                         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
                         crossOrigin="anonymous"
+                        data-ad-client={getAdClientId()}
                     ></script>
                 ) : (
                     <></>

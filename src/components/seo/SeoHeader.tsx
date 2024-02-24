@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { APP_SHORT_NAME, GOOGLE_SITE_VERIFICATION } from "../../config_app";
 import { getDomainName } from "../../utils";
 import replaceYear from "@/utils/replaceYear";
+import { getAdClientId } from "../ads/ads";
 
 const SeoHeader = ({
     children,
@@ -42,8 +43,9 @@ const SeoHeader = ({
                 {ads ? (
                     <script
                         async
-                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2131195938375129"
+                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
                         crossOrigin="anonymous"
+                        data-ad-client={getAdClientId()}
                     ></script>
                 ) : (
                     <></>
