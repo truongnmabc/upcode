@@ -31,6 +31,21 @@ const CheckAndAddAds = () => {
     return null;
 };
 
+const HorizontalBannerAds = () => {
+    return (
+        <>
+            <ins
+                className="adsbygoogle"
+                style={{ display: "block" }}
+                data-ad-client="ca-pub-2131195938375129"
+                data-ad-slot="9812116074"
+                data-ad-format="auto"
+                data-full-width-responsive="true"
+            ></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </>
+    );
+};
 function getAdClientId() {
     if (isWebEASYPREP()) {
         return "ca-pub-2131195938375129";
@@ -67,4 +82,4 @@ export const isRemoveAds = (paymentInfo: any) => {
     return false;
 };
 
-export { CheckAndAddAds };
+export { CheckAndAddAds, HorizontalBannerAds };

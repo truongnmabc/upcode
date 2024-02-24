@@ -3,6 +3,7 @@ import { APP_SHORT_NAME, GOOGLE_SITE_VERIFICATION } from "../../config_app";
 import { capitalizeFirstWord, getDomainName } from "../../utils";
 import Head from "next/head";
 import replaceYear from "@/utils/replaceYear";
+import { CheckAndAddAds } from "../ads/ads";
 
 const SEO = ({
     appInfo,
@@ -56,37 +57,40 @@ const SEO = ({
     let urlCanonical = getDomainName(router);
 
     return (
-        <Head>
-            {!!(imageShare || image) ? <meta property="og:image" content={imageShare || image} /> : null}
-            {addMathJax && (
-                <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-            )}
-            {children}
-            {urlCanonical?.length && <link rel="canonical" href={urlCanonical}></link>}
-            <link rel="icon" href={image} />
-            {/* <link rel="manifest" href={router.basePath + "/manifest.json"} /> */}
-            <link rel="preconnect" href="https://micro-enigma-235001.appspot.com" />
-            <link rel="preconnect" href="https://www.googletagmanager.com" />
-            <meta name="description" content={description} />
-            <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
-            <meta name="keywords" content={keywords} />
-            <meta name="theme-color" content="#000000" />
-            <meta name="title" content={title} />
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <meta property="og:description" content={description} />
-            <meta property="og:title" content={title} />
-            <meta property="og:type" content="website" />
-            <title>{title}</title>
-            {ads ? (
-                <script
-                    async
-                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-                    crossOrigin="anonymous"
-                ></script>
-            ) : (
-                <></>
-            )}
-        </Head>
+        <>
+            <Head>
+                {!!(imageShare || image) ? <meta property="og:image" content={imageShare || image} /> : null}
+                {addMathJax && (
+                    <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+                )}
+                {children}
+                {urlCanonical?.length && <link rel="canonical" href={urlCanonical}></link>}
+                <link rel="icon" href={image} />
+                {/* <link rel="manifest" href={router.basePath + "/manifest.json"} /> */}
+                <link rel="preconnect" href="https://micro-enigma-235001.appspot.com" />
+                <link rel="preconnect" href="https://www.googletagmanager.com" />
+                <meta name="description" content={description} />
+                <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
+                <meta name="keywords" content={keywords} />
+                <meta name="theme-color" content="#000000" />
+                <meta name="title" content={title} />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta property="og:description" content={description} />
+                <meta property="og:title" content={title} />
+                <meta property="og:type" content="website" />
+                <title>{title}</title>
+                {ads ? (
+                    <script
+                        async
+                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+                        crossOrigin="anonymous"
+                    ></script>
+                ) : (
+                    <></>
+                )}
+            </Head>
+            {ads && <CheckAndAddAds />}
+        </>
     );
 };
 
