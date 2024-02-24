@@ -28,7 +28,7 @@ const HeaderStudyV4 = ({
     const handleExitStudy = (event: "submit" | "exit") => {
         setOpendrawer(false);
         if (event == "exit") {
-            let stateName = localStorage.getItem("stateSlug");
+            let stateName = localStorage.getItem("select-state-" + appInfo.appNameId);
             let url = "/";
             if (isParentApp()) {
                 url = getLink(appInfo, stateName);

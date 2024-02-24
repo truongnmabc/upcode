@@ -144,39 +144,41 @@ const StudyView = ({
                                 />
                             </div>
                         )}
-                        <div className="v4-study-list-branches-0 v4-border-radius">
-                            <h3 className="v4-font-semi-bold">{`More ${appInfo.appName} Tests`}</h3>
-                            {(gameType === Config.BRANCH_TEST_GAME ? listBranchs : tests).map((t, i) => {
-                                let url = "";
-                                let title = "";
-                                if (gameType === Config.BRANCH_TEST_GAME) {
-                                    url = t.url;
-                                    title = t.title;
-                                } else {
-                                    url = t.slug;
-                                    title = t.title + ((t.title as string).toLowerCase().endsWith("test") ? "" : " Test");
-                                }
-                                return (
-                                    <a
-                                        key={i}
-                                        href={url}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            ga.event({
-                                                action: "click_menu_branch_test",
-                                                params: {
-                                                    from: window.location.href,
-                                                    to: t.url,
-                                                },
-                                            });
-                                            window.location.href = url;
-                                        }}
-                                    >
-                                        {title}
-                                    </a>
-                                );
-                            })}
-                        </div>
+                        {(gameType === Config.BRANCH_TEST_GAME ? listBranchs : tests).length > 1 && (
+                            <div className="v4-study-list-branches-0 v4-border-radius">
+                                <h3 className="v4-font-semi-bold">{`More ${appInfo.appName} Tests`}</h3>
+                                {(gameType === Config.BRANCH_TEST_GAME ? listBranchs : tests).map((t, i) => {
+                                    let url = "";
+                                    let title = "";
+                                    if (gameType === Config.BRANCH_TEST_GAME) {
+                                        url = t.url;
+                                        title = t.title;
+                                    } else {
+                                        url = t.slug;
+                                        title = t.title + ((t.title as string).toLowerCase().endsWith("test") ? "" : " Test");
+                                    }
+                                    return (
+                                        <a
+                                            key={i}
+                                            href={url}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                ga.event({
+                                                    action: "click_menu_branch_test",
+                                                    params: {
+                                                        from: window.location.href,
+                                                        to: t.url,
+                                                    },
+                                                });
+                                                window.location.href = url;
+                                            }}
+                                        >
+                                            {title}
+                                        </a>
+                                    );
+                                })}
+                            </div>
+                        )}
                     </div>
                     <div className="v4-main-study-content">
                         <h1

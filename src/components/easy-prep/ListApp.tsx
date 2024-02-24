@@ -65,13 +65,13 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
         }
     };
 
-    const [stateSlug, setStateSlug] = useState("");
-    useEffect(() => {
-        let stateName = localStorage.getItem("stateSlug");
-        if (stateName?.length) {
-            setStateSlug(stateName);
-        }
-    }, []);
+    // const [stateSlug, setStateSlug] = useState("");
+    // useEffect(() => {
+    //     let stateName = localStorage.getItem("stateSlug");
+    //     if (stateName?.length) {
+    //         setStateSlug(stateName);
+    //     }
+    // }, []);
 
     useEffect(() => {
         const element = navRef.current;
@@ -151,7 +151,7 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
                         ?.sort((a, b) => a.appName.length - b.appName.length)
                         .map((app, index) => {
                             return (
-                                <a className="align-center list-app-item" key={index} href={getLink(app, stateSlug)}>
+                                <a className="align-center list-app-item" key={index} href={getLink(app, "")}>
                                     <div className="font-14 app-name">{app.appName.toUpperCase()}</div>
                                     <div className="font-14 dot">&middot;</div>
                                     <div className="font-14 total-questions">{app.totalQuestion}</div>

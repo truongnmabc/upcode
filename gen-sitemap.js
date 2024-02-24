@@ -1,12 +1,68 @@
 const fs = require("fs");
 const appStudyUrl = require("./src/data/studyData.json");
 
+exports.genDataFunc = (appInfos = [], origin = "") => {
+    genXMLFunc(appInfos, origin);
+    // genStudyData(appInfos);
+};
+
+const genStudyData = async (listAppInfos = []) => {
+    for (let app of listAppInfos) {
+        if (app.appId !== -1)
+            try {
+                if (app.hasState) {
+                    if (app.appShortName === "cdl") {
+                        for (let s of states) {
+                            let _s = s.trim().toLowerCase().replaceAll(" ", "-");
+                            if (_s === "alabama") {
+                                let appData = await readFileAppFromGoogleStorage(app, _s);
+                                let _listTopics = appData?.topics ?? [];
+                                let _tests = appData?.fullTests ?? [];
+                                let t = _listTopics.map((t) => ({
+                                    title: t.name,
+                                    url: _genStudyLink(app.appShortName, t.tag, false, _s),
+                                    tag: t.tag,
+                                }));
+                                r +=
+                                    JSON.stringify({
+                                        appId: app.appId,
+                                        topics: t,
+                                        fullTests: _tests.map((t) => _genStudyLink(app.appShortName, t.tag, true, _s)),
+                                    }).replaceAll("/", "") + ",";
+                            }
+                        }
+                    }
+                } else {
+                    let appData = await readFileAppFromGoogleStorage(app);
+                    let _listTopics = appData?.topics ?? [];
+                    let _tests = appData?.fullTests ?? [];
+                    let t = _listTopics.map((t) => ({
+                        title: t.name,
+                        url: _genStudyLink(app.appShortName, t.tag, false),
+                        tag: t.tag,
+                    }));
+                    if (app.appShortName === "asvab") t.push(...branchs);
+
+                    r +=
+                        JSON.stringify({
+                            appId: app.appId,
+                            topics: t,
+                            fullTests: _tests.map((t) => _genStudyLink(app.appShortName, t.tag, true)),
+                        }).replaceAll("/", "") + ",";
+                }
+            } catch (e) {
+                console.log("error", app.bucket);
+            }
+    }
+    r += "]";
+    console.log(r);
+};
 /**
  * gen ra file sitemap.xml
  * @param {*} appInfos
  * @param {*} origin: hiện tại chỉ đúng cho easyprep thôi vì wpDomain của nó là domain luôn, còn vd như asvab thì không phải
  */
-exports.genXMLFunc = (appInfos = "", origin = "") => {
+const genXMLFunc = (appInfos = [], origin = "") => {
     const is_parent_app = origin?.includes("passemall") || origin?.includes("easy-prep");
     let urls = "";
     urls += genUrl(origin); // trang home
@@ -86,4 +142,22 @@ const _getLink = (app, stateSlug = "") => {
         }
     }
     return link;
+};
+
+const _genStudyLink = (appShortName, tag, fullTest, _state = "") => {
+    // trong đường dẫn có cả thành phần state
+    let url = "";
+    if (!fullTest) {
+        url = tag;
+        if (!tag?.includes(appShortName)) url = appShortName + "-" + url;
+        if (!tag?.includes("practice")) url = url + "-" + "practice-test";
+        if (_state) url = url.replace(appShortName, _state + "-" + appShortName);
+        url = "/" + url;
+    } else {
+        if (!!tag) url = `/full-length-${_state ? _state + "-" + appShortName : appShortName}-${tag}-practice-test`;
+        // trường hợp full-length test
+        else url = `/full-length-${_state ? _state + "-" + appShortName : appShortName}-practice-test`; // trường hợp full-length test
+    }
+    // trường hợp branch
+    return url;
 };

@@ -181,9 +181,9 @@ const SearchResult = ({
             window.removeEventListener("mousedown", clickEvent);
         };
     }, []);
-    const stateName = localStorage.getItem("stateSlug");
+    // const stateName = localStorage.getItem("stateSlug");
     let _searchValue = searchValue.filter((v) => {
-        if (typeof v != "string") return !histories.find((h) => h.link === getLink(v, stateName));
+        if (typeof v != "string") return !histories.find((h) => h.link === getLink(v, ""));
         return true;
     });
     return (
@@ -261,7 +261,7 @@ const SearchResult = ({
                                     key={index}
                                     className="result-item align-center"
                                     onClick={() => {
-                                        let link = getLink(res, stateName);
+                                        let link = getLink(res, "");
                                         let _h = { timeStamp: Date.now(), search: res.appName, link: link, img: srcImg };
                                         onSelectAppResult(_h);
                                     }}

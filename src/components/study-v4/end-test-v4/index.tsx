@@ -5,7 +5,7 @@ import { IAppInfo } from "../../../models/AppInfo";
 import DownloadAppEndTest from "./DownloadAppEndTest";
 import ReviewAnswer from "./ReviewAnswer";
 import * as ga from "../../../services/ga";
-import { getGameProgress, getHighhestLevelOfTopicBePassedSequentially } from "../../../utils/v4_study";
+import { getGameProgress, getHighhestLevelOfTopicBePracticed } from "../../../utils/v4_study";
 import { ITopic } from "../../../models/Topic";
 import { SYNC_TYPE } from "../../../config/config_sync";
 import "./index.scss";
@@ -64,7 +64,7 @@ const EndTestV4 = ({
     if (currentTopic) {
         let currentLevelIndex = currentTopic.topics.findIndex((lv) => lv.id == gameState.id);
         let nextLevelIndex = currentLevelIndex;
-        let highestLevel = getHighhestLevelOfTopicBePassedSequentially(listGameState, currentTopic);
+        let highestLevel = getHighhestLevelOfTopicBePracticed(listGameState, currentTopic);
         if (currentLevelIndex < currentTopic.topics.length - 1) nextLevelIndex = currentLevelIndex + 1;
         if (nextLevelIndex > highestLevel) nextLevelIndex = highestLevel; // trường hợp nhảy cóc sang mini test thì next level sẽ là level tiếp theo theo tuần tự
         if (nextLevelIndex <= currentTopic.topics.length - 1) {
@@ -85,7 +85,7 @@ const EndTestV4 = ({
                                 className="v4-end-test-container-title-icon"
                                 style={{ cursor: "pointer" }}
                                 onClick={() => {
-                                    let stateName = localStorage.getItem("stateSlug");
+                                    let stateName = localStorage.getItem("select-state-" + appInfo.appNameId);
                                     let url = "/";
                                     if (isParentApp()) {
                                         url = getLink(appInfo, stateName);

@@ -33,6 +33,7 @@ export class GameState {
     showAnswer: boolean; // trường này để check xem màn học này có cho hiện kết quả hay không
     status: number;
     timeTest: number; //
+    unlock: boolean;
     constructor(props?: any) {
         if (!!props) {
             this.id = props?.id + "" ?? "-1";
@@ -71,6 +72,7 @@ export class GameState {
             this.answeredQuestionIds = [];
             this.defaultTimeTest = DEFAULT_TIME_TEST;
         }
+        this.unlock = !!props.unlock;
     }
     static init() {
         let gameState = new GameState({});
@@ -107,6 +109,7 @@ export const gameSlice = createSlice({
             state.game = { ...action.payload };
             state.game.isLoadedStudyData = true;
             if (state.game.isFinishGame == -1) state.game.isFinishGame = 0;
+            if (!!state.game.levelTag) state.game.unlock = true; // có dữ liệu game tức là unlock
         });
         builder.addCase(getStudyData.rejected, (state, action) => {
             console.log(action.error);
@@ -130,6 +133,7 @@ export const gameSlice = createSlice({
 
         builder.addCase(onRestartGame.fulfilled, (state, action) => {
             state.game = action.payload;
+            if (!!state.game.levelTag) state.game.unlock = true; // có dữ liệu game tức là unlock
         });
     },
 });

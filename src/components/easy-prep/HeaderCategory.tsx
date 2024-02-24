@@ -20,7 +20,7 @@ const HeaderCategory = ({
 }) => {
     const [activeCategory, setActiveCategory] = useState(-1);
     const areaRef = useRef<HTMLDivElement>(null);
-    const [stateSlug, setStateSlug] = useState("");
+    // const [stateSlug, setStateSlug] = useState("");
     useEffect(() => {
         if (isDesktop) {
             const clickEvent = (e: MouseEvent) => {
@@ -37,12 +37,12 @@ const HeaderCategory = ({
         }
     }, [isDesktop]);
 
-    useEffect(() => {
-        let stateName = localStorage.getItem("stateSlug");
-        if (stateName?.length) {
-            setStateSlug(stateName);
-        }
-    }, []);
+    // useEffect(() => {
+    //     let stateName = localStorage.getItem("stateSlug");
+    //     if (stateName?.length) {
+    //         setStateSlug(stateName);
+    //     }
+    // }, []);
 
     if (!isDesktop) {
         return (
@@ -70,11 +70,7 @@ const HeaderCategory = ({
                                             .sort((a, b) => a.appName.localeCompare(b.appName))
                                             .map((app, index) => {
                                                 return (
-                                                    <a
-                                                        className="app-name align-center"
-                                                        href={getLink(app, stateSlug)}
-                                                        key={index}
-                                                    >
+                                                    <a className="app-name align-center" href={getLink(app, "")} key={index}>
                                                         {app.appName.toUpperCase()}
                                                     </a>
                                                 );
@@ -119,7 +115,7 @@ const HeaderCategory = ({
                             .sort((a, b) => a.appName.length - b.appName.length)
                             .map((app, index) => {
                                 return (
-                                    <a className="app-name align-center" href={getLink(app, stateSlug)} key={index}>
+                                    <a className="app-name align-center" href={getLink(app, "")} key={index}>
                                         {app.appName.toUpperCase()}
                                     </a>
                                 );

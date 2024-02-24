@@ -13,7 +13,7 @@ import {
 import IWebData from "@/types/webData";
 import * as ga from "../../services/ga";
 import { hasImage } from "@/utils/v4_question";
-import { getHighhestLevelOfTopicBePassedSequentially, shuffleV4 } from "@/utils/v4_study";
+import { getHighhestLevelOfTopicBePracticed, shuffleV4 } from "@/utils/v4_study";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Question from "../../models/Question";
 import AppState from "../appState";
@@ -104,7 +104,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     // trường hợp vào bằng link không có # hoặc có # nhưng # chưa được mở khoá thì đi vào level cao nhất (THEO TUẦN TỰ) có thể làm trước đó
                     if (accessTopic?.topics.length > 0) {
                         // nếu topic được chia level
-                        let maxLevel = getHighhestLevelOfTopicBePassedSequentially(lisGameStates, accessTopic);
+                        let maxLevel = getHighhestLevelOfTopicBePracticed(lisGameStates, accessTopic);
                         let highestLevelTopic = accessTopic?.topics.find((t) => t.id === accessTopic.id + "-" + maxLevel);
                         let accessLevelTopic = accessTopic?.topics.find((l) => l.tag === level) ?? highestLevelTopic; // nếu không xác định được level truy cập thì đưa ra level cao nhất theo tuần tự có thể làm
                         if (!(level == "mini-test" || level == "final-test")) {

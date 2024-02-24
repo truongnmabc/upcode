@@ -5,7 +5,7 @@ import { ITopic } from "../../models/Topic";
 import { GameState, getNumOfCorrectAnswer } from "../../redux/features/game";
 import TargetIcon from "../icon/TargetIcon";
 import "./GridTopic.scss";
-import { getGameProgress, getHighhestLevelOfTopicBePassedSequentially } from "../../utils/v4_study";
+import { getGameProgress, getHighhestLevelOfTopicBePracticed } from "../../utils/v4_study";
 import { SYNC_TYPE } from "../../config/config_sync";
 import { memo } from "react";
 import { render } from "react-dom";
@@ -255,7 +255,7 @@ const TopicLevelProgress = ({
         if (arr[idx].length == sequence) idx++;
     }
     const strokeColor = "#E3A651";
-    let highestLevel = getHighhestLevelOfTopicBePassedSequentially(listGameState, currentTopic);
+    let highestLevel = getHighhestLevelOfTopicBePracticed(listGameState, currentTopic);
     return (
         <div className="v4-topic-level-container v4-border-radius">
             <div className="v4-topic-level">
@@ -308,6 +308,7 @@ const TopicLevelProgress = ({
                                         }}
                                         onClick={(e) => {
                                             e.preventDefault();
+                                            console.log(unlocked, _href);
 
                                             if (unlocked && !window.location.href.includes(_href)) {
                                                 if (_href.includes(window.location.pathname)) {

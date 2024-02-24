@@ -15,11 +15,12 @@ export const listGameSlice = createSlice({
         //TODO
         builder.addCase(REHYDRATE, (state, action) => {
             if (action["payload"]) {
-                let localList = action["payload"]["listGameState"];
+                let localList = action["payload"]["listGameReducer"];
                 if (localList && localList.games) {
                     for (let i = 0; i < localList.games.length; i++) {
                         const element = localList.games[i];
                         let game = GameState.cloneGameState(element);
+                        if (!!game.levelTag) game.unlock = true;
                         state.games.push(game);
                     }
                 }

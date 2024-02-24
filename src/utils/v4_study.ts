@@ -31,7 +31,7 @@ const getGameProgress = (gameState: GameState) => {
  * @param accessTopic
  * @returns level (number) cao nhất của topic có thể làm (theo tuần tự)
  */
-const getHighhestLevelOfTopicBePassedSequentially = (listGameState: GameState[], accessTopic: ITopic, k?: string) => {
+const getHighhestLevelOfTopicBePracticed = (listGameState: GameState[], accessTopic: ITopic, k?: string) => {
     try {
         let maxLevel = 0;
         let maxGame: GameState;
@@ -52,21 +52,26 @@ const getHighhestLevelOfTopicBePassedSequentially = (listGameState: GameState[],
                 // vì data cũ có trường này là number, data mới đổi sang string kèm -[level] nên cần check phần level tồn tại hay không
                 let lv = parseInt(_lv);
                 if (i == lv) {
-                    let { isPass } = getGameProgress(games[i]);
-                    if (isPass) {
-                        // nếu đã pass level đó thì được phép duyệt level tiếp theo (chỉ set pass khi submit (trong action ON_GAME_SUBMITTED))
+                    if (games[i].unlock) {
                         maxLevel = lv;
                         maxGame = games[i];
                     } else break;
+                    // let { isPass } = getGameProgress(games[i]);
+                    // if (isPass && ) {
+                    //     // nếu đã pass level đó thì được phép duyệt level tiếp theo (chỉ set pass khi submit (trong action ON_GAME_SUBMITTED))
+                    //     maxLevel = lv;
+                    //     maxGame = games[i];
+                    // } else break;
                 } else break;
             }
         }
         if (maxGame) {
-            if (accessTopic?.topics.length > maxLevel + 1) maxLevel += 1; // level không vượt quá topic hiện có
+            let { isPass } = getGameProgress(maxGame); // nếu game cuối cùng được unlock và pass thì sẽ mở lv tiếp theo
+            if (isPass && accessTopic?.topics.length > maxLevel + 1) maxLevel += 1; // level không vượt quá topic hiện có
         }
         return maxLevel;
     } catch (e) {
-        console.log("getHighhestLevelOfTopicBePassedSequentially", e);
+        console.log("getHighhestLevelOfTopicBePracticed", e);
         return 0;
     }
 };
@@ -87,4 +92,4 @@ function shuffleV4(list: any[]) {
         }
     });
 }
-export { getGameProgress, getHighhestLevelOfTopicBePassedSequentially, shuffleV4 };
+export { getGameProgress, getHighhestLevelOfTopicBePracticed, shuffleV4 };
