@@ -35,5 +35,10 @@ class Config {
         "Numpad5",
         "NumpadEnter",
     ];
+
+    static KEY_CLICK_ADS = "sdakcilc";
+    static MAX_CLICK_ADS_PER_USER = 3;
+    static COUNT_ADS_KEY = "COUNT_ADS_KEY";
+    static MAX_TIMES_DISPLAY_ADS = 100;
 }
 export default Config;

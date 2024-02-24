@@ -5,13 +5,15 @@ import React from "react";
 import dynamic from "next/dynamic";
 const ScrollTopTopArrow = dynamic(() => import("../../v4-material/ScrollToTopArrow"), { ssr: false });
 import "./Layout1.scss";
-const Layout1 = ({ children, listAppInfos }: { children: any; listAppInfos: IAppInfo[] }) => {
+import { CheckAndAddAds } from "@/components/ads/ads";
+const Layout1 = ({ children, listAppInfos, ads }: { children: any; listAppInfos: IAppInfo[]; ads?: boolean }) => {
     return (
         <div className="layout-1">
             <Header1 listAppInfos={listAppInfos} />
             {children}
             <Footer1 />
             <ScrollTopTopArrow />
+            {ads && <CheckAndAddAds />}
         </div>
     );
 };

@@ -4,7 +4,15 @@ import { capitalizeFirstWord, getDomainName } from "../../utils";
 import Head from "next/head";
 import replaceYear from "@/utils/replaceYear";
 
-const SEO = ({ appInfo, title = "", descriptionSEO = "", addMathJax = false, keywordsSeo = "", children = null }) => {
+const SEO = ({
+    appInfo,
+    title = "",
+    descriptionSEO = "",
+    addMathJax = false,
+    keywordsSeo = "",
+    children = null,
+    ads = false,
+}) => {
     const router = useRouter();
     let description;
     let keywords =
@@ -69,6 +77,15 @@ const SEO = ({ appInfo, title = "", descriptionSEO = "", addMathJax = false, key
             <meta property="og:title" content={title} />
             <meta property="og:type" content="website" />
             <title>{title}</title>
+            {ads ? (
+                <script
+                    async
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+                    crossOrigin="anonymous"
+                ></script>
+            ) : (
+                <></>
+            )}
         </Head>
     );
 };

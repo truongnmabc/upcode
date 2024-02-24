@@ -6,6 +6,7 @@ import "./Layout2.scss";
 import dynamic from "next/dynamic";
 import { isParentApp } from "@/config/config_web";
 import { ITestInfo } from "@/models/TestInfo";
+import { CheckAndAddAds } from "@/components/ads/ads";
 const ScrollTopTopArrow = dynamic(() => import("../../v4-material/ScrollToTopArrow"), { ssr: false });
 const Footer1 = dynamic(() => import("@/components/footer/Footer1"));
 const FooterLandingV4 = dynamic(() => import("@/components/footer/FooterLandingV4"));
@@ -14,11 +15,13 @@ const Layout2 = ({
     appInfo,
     listTopics,
     tests,
+    ads,
 }: {
     children: any;
     appInfo: IAppInfo;
     listTopics: ITopic[];
     tests: ITestInfo[];
+    ads?: boolean;
 }) => {
     const _isParentApp = isParentApp();
     return (
@@ -28,6 +31,7 @@ const Layout2 = ({
             {children}
             {_isParentApp ? <Footer1 /> : <FooterLandingV4 appInfo={appInfo} />}
             <ScrollTopTopArrow />
+            {ads && <CheckAndAddAds />}
         </div>
     );
 };
