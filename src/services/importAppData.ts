@@ -32,7 +32,7 @@ export async function readFileAppFromGoogleStorage(appInfo: IAppInfo, _state?: s
         let tests = _tests.map((t: any) => new TestInfo({ ...t, slug: genFullStudyLink(appInfo, t?.tag, true, _state) }));
         return { ...data, fullTests: tests, topics };
     } catch (error) {
-        console.log("readFileAppFromGoogleStorage error", appInfo.bucket);
+        console.log("readFileAppFromGoogleStorage error", "new-data-web/" + appInfo.bucket + (_state ? "/" + _state : ""));
         return { topics: [], fullTests: [], branchTests: [] };
     }
 }

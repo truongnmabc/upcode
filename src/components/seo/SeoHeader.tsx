@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { APP_SHORT_NAME, GOOGLE_SITE_VERIFICATION } from "../../config_app";
 import { getDomainName } from "../../utils";
 import replaceYear from "@/utils/replaceYear";
-import { CheckAndAddAds } from "../ads/ads";
 
 const SeoHeader = ({
     children,
@@ -51,7 +50,6 @@ const SeoHeader = ({
                 )}
                 {children}
             </Head>
-            {ads && <CheckAndAddAds />}
         </>
     );
 };

@@ -10,7 +10,9 @@ const CheckAndAddAds = () => {
             return;
         }
         const src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-        if (isProduction() && isWebEASYPREP() && !isRemoveAds(paymentInfo) && (!checkCountryVN() || true)) {
+        if ((isProduction() && isWebEASYPREP() && !isRemoveAds(paymentInfo) && !checkCountryVN()) || true) {
+            console.log("hereeeeeeeee");
+
             const elements = document.getElementsByTagName("script");
             let hasScript = false;
             for (let i = 0; i < elements.length; i++) {
@@ -32,6 +34,8 @@ const CheckAndAddAds = () => {
 };
 
 const HorizontalBannerAds = () => {
+    console.log("HorizontalBannerAds");
+
     return (
         <>
             <ins
@@ -42,7 +46,7 @@ const HorizontalBannerAds = () => {
                 data-ad-format="auto"
                 data-full-width-responsive="true"
             ></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <script dangerouslySetInnerHTML={{ __html: "(adsbygoogle = window.adsbygoogle || []).push({});" }}></script>
         </>
     );
 };

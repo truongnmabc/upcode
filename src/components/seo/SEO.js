@@ -3,7 +3,6 @@ import { APP_SHORT_NAME, GOOGLE_SITE_VERIFICATION } from "../../config_app";
 import { capitalizeFirstWord, getDomainName } from "../../utils";
 import Head from "next/head";
 import replaceYear from "@/utils/replaceYear";
-import { CheckAndAddAds } from "../ads/ads";
 
 const SEO = ({
     appInfo,
@@ -89,7 +88,6 @@ const SEO = ({
                     <></>
                 )}
             </Head>
-            {ads && <CheckAndAddAds />}
         </>
     );
 };

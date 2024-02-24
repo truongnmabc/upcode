@@ -7,6 +7,7 @@ import { setAppInfo } from "./features/appInfo";
 import { getTestSuccess } from "./features/test";
 import { getTopicByParentIdSuccess } from "./features/topic";
 import { getStudyData } from "./reporsitory/game.repository";
+import { CheckAndAddAds } from "@/components/ads/ads";
 
 /**
 // những action nào phải gọi ngay khi vào trang thì phải gọi ở trong này mới có tác dụng (vì persist đc khởi tạo ở client), gọi trong này để persist/HYDRATE được gọi đầu tiên rồi mới đến các action khác
@@ -41,5 +42,10 @@ const MyProvider = ({ children, appInfo, webData }: { children?: React.ReactNode
         if (!!webData.tests) dispatch(getTestSuccess(webData.tests));
         if (!!webData.topics) dispatch(getTopicByParentIdSuccess(webData.topics)); // chỉ là để update vào redux thôi
     }, []);
-    return <>{children}</>;
+    return (
+        <>
+            {children}
+            <CheckAndAddAds />
+        </>
+    );
 };
