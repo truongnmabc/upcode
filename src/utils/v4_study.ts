@@ -77,19 +77,12 @@ const getHighhestLevelOfTopicBePracticed = (listGameState: GameState[], accessTo
 };
 
 function shuffleV4(list: any[]) {
-    return list.sort((a, b) => {
-        let num = Math.floor(Math.random() * 101);
-        switch (num % 6) {
-            case 0:
-                return 0;
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                return 1;
-            case 5:
-                return -1;
-        }
-    });
+    for (let i = list.length - 1; i >= 0; i--) {
+        let n = Math.floor(Math.random() * (i + 1));
+        let t = list[i];
+        list[i] = list[n];
+        list[n] = t;
+    }
+    return list;
 }
 export { getGameProgress, getHighhestLevelOfTopicBePracticed, shuffleV4 };
