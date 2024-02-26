@@ -67,9 +67,10 @@ const EndTestV4 = ({
         let highestLevel = getHighhestLevelOfTopicBePracticed(listGameState, currentTopic);
         if (currentLevelIndex < currentTopic.topics.length - 1) nextLevelIndex = currentLevelIndex + 1;
         if (nextLevelIndex > highestLevel) nextLevelIndex = highestLevel; // trường hợp nhảy cóc sang mini test thì next level sẽ là level tiếp theo theo tuần tự
-        if (nextLevelIndex < currentTopic.topics.length - 1) {
+        if (nextLevelIndex <= currentTopic.topics.length - 1) {
             //tại các level trước final test thì mới có nút next level và final test
-            if (isPass) nextLevelHref = `${currentTopic.slug}#${currentTopic.topics[nextLevelIndex].tag}`;
+            if (isPass && nextLevelIndex < currentTopic.topics.length - 1)
+                nextLevelHref = `${currentTopic.slug}#${currentTopic.topics[nextLevelIndex].tag}`;
             finalTestHref = `${currentTopic.slug}#final-test`;
         }
     }
