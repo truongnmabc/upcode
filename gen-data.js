@@ -5,11 +5,11 @@ const states = require("./src/data/statesName.json");
 
 exports.genDataFunc = (appInfos = [], origin = "", web) => {
     genXMLFunc(appInfos, origin);
-    genStudyData(appInfos, web);
+    if (web === "development") genStudyData(appInfos, web);
 };
 
 /** gen ra file studyData.json */
-const genStudyData = async (listAppInfos = [], web = "deployment") => {
+const genStudyData = async (listAppInfos = []) => {
     let study = "[";
     let branchs = [
         {
@@ -50,52 +50,29 @@ const genStudyData = async (listAppInfos = [], web = "deployment") => {
         },
     ];
     const fetchData = async (appInfo, _state) => {
-        let a;
+        let a = {};
         console.log(appInfo.bucket);
-        if (web === "production") {
-            const debFetch = require("node-fetch");
-            await debFetch(
-                "https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/" +
-                    appInfo.bucket +
-                    (_state ? "/" + _state : "") +
-                    "/topics-and-tests.json?t=" +
-                    new Date().getTime()
-            )
-                .then((response) => response.json())
-                .then((data) => {
-                    // Process the data here
-                    let topics = data?.topics ?? [];
-                    topics.sort((a, b) => {
-                        return a.name.localeCompare(b.name);
-                    });
-                    a = { ...data, topics };
-                })
-                .catch((error) => {
-                    // Handle any errors that occur during the fetch
-                    console.error("---------Error:", error);
+        await fetch(
+            "https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/" +
+                appInfo.bucket +
+                (_state ? "/" + _state : "") +
+                "/topics-and-tests.json?t=" +
+                new Date().getTime()
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                // Process the data here
+                let topics = data?.topics ?? [];
+                topics.sort((a, b) => {
+                    return a.name.localeCompare(b.name);
                 });
-        } else {
-            await fetch(
-                "https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/" +
-                    appInfo.bucket +
-                    (_state ? "/" + _state : "") +
-                    "/topics-and-tests.json?t=" +
-                    new Date().getTime()
-            )
-                .then((response) => response.json())
-                .then((data) => {
-                    // Process the data here
-                    let topics = data?.topics ?? [];
-                    topics.sort((a, b) => {
-                        return a.name.localeCompare(b.name);
-                    });
-                    a = { ...data, topics };
-                })
-                .catch((error) => {
-                    // Handle any errors that occur during the fetch
-                    console.error("---------Error:", error);
-                });
-        }
+                a = { ...data, topics };
+            })
+            .catch((error) => {
+                // Handle any errors that occur during the fetch
+                console.error("---------Error:", error);
+            });
+
         return a;
     };
     for (let app of listAppInfos) {
