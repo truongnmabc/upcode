@@ -48,3 +48,4 @@ src/data/stateData.json
 src/styles/config.css
 .env
 ssh_keys/id_rsa
+deploy_.sh
