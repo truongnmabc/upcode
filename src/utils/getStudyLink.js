@@ -10,6 +10,7 @@ const genFullStudyLink = (appInfo, tag, fullTest, _state = "") => {
 };
 // có dấu / ở đầu
 const genStudyLink = (appShortName, tag, fullTest, _state = "") => {
+    // ****  NẾU SỬA HÀM NÀY THÌ PHẢI SỬA CẢ HÀM _genStudyLink TRONG FILE gen-data.js
     // trong đường dẫn có cả thành phần state
     let url = "";
     if (!fullTest) {

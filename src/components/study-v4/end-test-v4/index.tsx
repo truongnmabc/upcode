@@ -67,7 +67,7 @@ const EndTestV4 = ({
         let highestLevel = getHighhestLevelOfTopicBePracticed(listGameState, currentTopic);
         if (currentLevelIndex < currentTopic.topics.length - 1) nextLevelIndex = currentLevelIndex + 1;
         if (nextLevelIndex > highestLevel) nextLevelIndex = highestLevel; // trường hợp nhảy cóc sang mini test thì next level sẽ là level tiếp theo theo tuần tự
-        if (nextLevelIndex <= currentTopic.topics.length - 1) {
+        if (nextLevelIndex < currentTopic.topics.length - 1) {
             //tại các level trước final test thì mới có nút next level và final test
             if (isPass) nextLevelHref = `${currentTopic.slug}#${currentTopic.topics[nextLevelIndex].tag}`;
             finalTestHref = `${currentTopic.slug}#final-test`;
@@ -171,7 +171,11 @@ const EndTestButton = ({
         <div className="v4-end-test-container-buttons ">
             <div style={{ display: "flex" }}>
                 <button
-                    className={"btn v4-border-radius v4-button-animtaion " + (nextLevelHref ? "btn-theme-1" : "btn-theme-2")}
+                    className={
+                        "btn v4-border-radius v4-button-animtaion " +
+                        (nextLevelHref ? "btn-theme-1" : "btn-theme-2") +
+                        (!levelTag ? " test-btn " : "")
+                    }
                     onClick={() => {
                         ga.event({
                             action: levelTag.includes("level") ? "restart_level" : "click_restart_test",

@@ -5,8 +5,7 @@ import TestInfo from "@/models/TestInfo";
 import { genFullStudyLink } from "@/utils/getStudyLink";
 import { IAppInfo } from "@/models/AppInfo";
 export async function readFileAppFromGoogleStorage(appInfo: IAppInfo, _state?: string) {
-    //storage.googleapis.com/micro-enigma-235001.appspot.com/data-app/data-4878338973761536.json
-    // https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab_new/datacdl.txt
+    // ****  NẾU SỬA HÀM NÀY THÌ PHẢI SỬA CẢ HÀM fetchData TRONG FILE gen-data.js
     try {
         console.log("---" + appInfo.bucket);
         //https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/topics-and-tests.json

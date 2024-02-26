@@ -56,7 +56,7 @@ p {
 }
 
 .overflow-auto {
-    overflow: auto;
+    overflow: scroll;
 }
 
 /* width */

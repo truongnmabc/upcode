@@ -1,12 +1,78 @@
 const fs = require("fs");
 const appStudyUrl = require("./src/data/studyData.json");
+const states = require("./src/data/statesName.json");
 
 exports.genDataFunc = (appInfos = [], origin = "") => {
     genXMLFunc(appInfos, origin);
-    // genStudyData(appInfos);
+    genStudyData(appInfos);
 };
 
+/** gen ra file studyData.json */
 const genStudyData = async (listAppInfos = []) => {
+    let study = "[";
+    let branchs = [
+        {
+            title: "Marine ASVAB Practice Test",
+            url: "marine-asvab-practice-test",
+            tag: "arithmetic-reasoning",
+            isBranch: true,
+        },
+        {
+            title: "Navy ASVAB Practice Test",
+            url: "navy-asvab-practice-test",
+            tag: "arithmetic-reasoning",
+            isBranch: true,
+        },
+        {
+            title: "Army ASVAB Practice Test",
+            url: "army-asvab-practice-test",
+            tag: "arithmetic-reasoning",
+            isBranch: true,
+        },
+        {
+            title: "Coast Guard ASVAB Practice Test",
+            url: "asvab-coast-guard-practice-test",
+            tag: "arithmetic-reasoning",
+            isBranch: true,
+        },
+        {
+            title: "Air Force ASVAB Practice Test",
+            url: "air-force-asvab-practice-test",
+            tag: "arithmetic-reasoning",
+            isBranch: true,
+        },
+        {
+            title: "National Guard ASVAB Practice Test",
+            url: "national-guard-asvab-practice-test",
+            tag: "arithmetic-reasoning",
+            isBranch: true,
+        },
+    ];
+    const fetchData = async (appInfo, _state) => {
+        let a;
+        console.log(appInfo.bucket);
+        await fetch(
+            "https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/" +
+                appInfo.bucket +
+                (_state ? "/" + _state : "") +
+                "/topics-and-tests.json?t=" +
+                new Date().getTime()
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                // Process the data here
+                let topics = data?.topics ?? [];
+                topics.sort((a, b) => {
+                    return a.name.localeCompare(b.name);
+                });
+                a = { ...data, topics };
+            })
+            .catch((error) => {
+                // Handle any errors that occur during the fetch
+                console.error("---------Error:", error);
+            });
+        return a;
+    };
     for (let app of listAppInfos) {
         if (app.appId !== -1)
             try {
@@ -15,7 +81,7 @@ const genStudyData = async (listAppInfos = []) => {
                         for (let s of states) {
                             let _s = s.trim().toLowerCase().replaceAll(" ", "-");
                             if (_s === "alabama") {
-                                let appData = await readFileAppFromGoogleStorage(app, _s);
+                                let appData = await fetchData(app, _s);
                                 let _listTopics = appData?.topics ?? [];
                                 let _tests = appData?.fullTests ?? [];
                                 let t = _listTopics.map((t) => ({
@@ -23,7 +89,7 @@ const genStudyData = async (listAppInfos = []) => {
                                     url: _genStudyLink(app.appShortName, t.tag, false, _s),
                                     tag: t.tag,
                                 }));
-                                r +=
+                                study +=
                                     JSON.stringify({
                                         appId: app.appId,
                                         topics: t,
@@ -33,7 +99,7 @@ const genStudyData = async (listAppInfos = []) => {
                         }
                     }
                 } else {
-                    let appData = await readFileAppFromGoogleStorage(app);
+                    let appData = await fetchData(app);
                     let _listTopics = appData?.topics ?? [];
                     let _tests = appData?.fullTests ?? [];
                     let t = _listTopics.map((t) => ({
@@ -43,7 +109,7 @@ const genStudyData = async (listAppInfos = []) => {
                     }));
                     if (app.appShortName === "asvab") t.push(...branchs);
 
-                    r +=
+                    study +=
                         JSON.stringify({
                             appId: app.appId,
                             topics: t,
@@ -54,8 +120,14 @@ const genStudyData = async (listAppInfos = []) => {
                 console.log("error", app.bucket);
             }
     }
-    r += "]";
-    console.log(r);
+    study += "]";
+    fs.writeFile("./src/data/studyData.json", study, "utf8", (err) => {
+        if (err) {
+            console.error("Error writing ./src/data/studyData.json:", err);
+        } else {
+            console.log("./src/data/studyData.json has been written successfully.");
+        }
+    });
 };
 /**
  * gen ra file sitemap.xml
@@ -124,6 +196,7 @@ const genXMLFunc = (appInfos = [], origin = "") => {
         ${urls}
     </urlset>`;
     fs.writeFileSync("./public/sitemap.xml", xmlData);
+    console.log("gen sitemap.xml done!");
 };
 
 const genUrl = (url) => {

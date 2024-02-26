@@ -12,7 +12,8 @@ import ExpandMoreIcon from "../icon/ExpandMoreIcon";
 import Link from "next/link";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { ITestInfo } from "@/models/TestInfo";
-
+import states from "../../data/statesName.json";
+import { getLink } from "@/utils";
 const DownloadAppV4 = dynamic(() => import("../homepage/DownloadAppV4"));
 
 const HeaderV4 = ({
@@ -61,109 +62,171 @@ const HeaderV4 = ({
                     anchor="right"
                     className="swipeable-drawer-header-v4"
                 >
-                    <div className="drawer-right-menu-header-v4">
+                    <div className="drawer-right-menu-header-v4 overflow-auto">
                         <div className="button-close-drawer-v4" onClick={() => setOpenMenuDrawer(false)}>
                             <CloseIcon />
                         </div>
                         <div className="container-drawer-right-menu-header-v4">
-                            <div
-                                className="container-drawer-right-menu-header-v4-1"
-                                onClick={() => {
-                                    let btn = document.getElementById("v4-icon-expand-test");
-                                    let collapse = document.getElementById("collapse-test");
-                                    let content = document.getElementById("collapse-content-test");
-                                    let height = content.clientHeight;
-                                    if (btn.className.includes("true")) {
-                                        //close
-                                        btn.className = "v4-icon-expand false";
-                                        collapse.style.height = "0px";
-                                    } else {
-                                        btn.className = "v4-icon-expand true";
-                                        collapse.style.height = height + "px";
-                                    }
-                                }}
-                            >
-                                {`Full ${appInfo.appName} Practice Test`}
-                                <div className={"v4-icon-expand"} id="v4-icon-expand-test">
-                                    <ExpandMoreIcon />
-                                </div>
-                            </div>
-                            <div id="collapse-test">
-                                <div id="collapse-content-test">
-                                    {tests.map((test, index) => {
-                                        let _link = test.slug;
-                                        return (
-                                            <div key={index} className="v4-app-test">
-                                                <a
-                                                    href={_link}
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        ga.event({
-                                                            action: "click_menu_test",
-                                                            params: {
-                                                                from: window.location.href,
-                                                                to: test.tag,
-                                                            },
-                                                        });
-                                                        window.location.href = _link;
-                                                    }}
-                                                >
-                                                    {`${test.title} Test`}
-                                                </a>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                            <div
-                                className="container-drawer-right-menu-header-v4-1"
-                                onClick={() => {
-                                    let btn = document.getElementById("v4-icon-expand");
-                                    let collapse = document.getElementById("collapse-topic");
-                                    let content = document.getElementById("collapse-content");
-                                    let height = content.clientHeight;
-                                    if (btn.className.includes("true")) {
-                                        //close
-                                        btn.className = "v4-icon-expand false";
-                                        collapse.style.height = "0px";
-                                    } else {
-                                        btn.className = "v4-icon-expand true";
-                                        collapse.style.height = height + "px";
-                                    }
-                                }}
-                            >
-                                {`${appInfo.appName} Topics`}{" "}
-                                <div className={"v4-icon-expand"} id="v4-icon-expand">
-                                    <ExpandMoreIcon />
-                                </div>
-                            </div>
-                            <div id="collapse-topic">
-                                <div id="collapse-content">
-                                    {topics.map((topic) => {
-                                        let _link = topic.slug;
-                                        return (
-                                            <div key={topic.id} className="v4-app-topic">
-                                                <a
-                                                    href={_link}
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        ga.event({
-                                                            action: "click_menu_topic",
-                                                            params: {
-                                                                from: window.location.href,
-                                                                to: topic.tag,
-                                                            },
-                                                        });
-                                                        window.location.href = _link;
-                                                    }}
-                                                >
-                                                    {topic.name}
-                                                </a>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
+                            {appInfo.hasState && (
+                                <>
+                                    <div
+                                        className="container-drawer-right-menu-header-v4-1"
+                                        onClick={() => {
+                                            let btn = document.getElementById("v4-icon-expand-state");
+                                            let collapse = document.getElementById("collapse-state");
+                                            let content = document.getElementById("collapse-content-state");
+                                            let height = content.clientHeight;
+                                            if (btn.className.includes("true")) {
+                                                //close
+                                                btn.className = "v4-icon-expand false";
+                                                collapse.style.height = "0px";
+                                            } else {
+                                                btn.className = "v4-icon-expand true";
+                                                collapse.style.height = height + "px";
+                                            }
+                                        }}
+                                    >
+                                        Change your state?
+                                        <div className={"v4-icon-expand"} id="v4-icon-expand-state">
+                                            <ExpandMoreIcon />
+                                        </div>
+                                    </div>
+                                    <div id="collapse-state">
+                                        <div id="collapse-content-state" className="overflow-auto">
+                                            {states.map((state, index) => {
+                                                let _link = getLink(appInfo, state.toLowerCase().trim().replaceAll(" ", "-"));
+                                                return (
+                                                    <div key={index} className="v4-app-state">
+                                                        <a
+                                                            href={_link}
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                ga.event({
+                                                                    action: "click_menu_test",
+                                                                    params: {
+                                                                        from: window.location.href,
+                                                                        to: _link,
+                                                                    },
+                                                                });
+                                                                window.location.href = _link;
+                                                            }}
+                                                        >
+                                                            {state}
+                                                        </a>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>{" "}
+                                </>
+                            )}
+                            {tests.length > 0 && (
+                                <>
+                                    <div
+                                        className="container-drawer-right-menu-header-v4-1"
+                                        onClick={() => {
+                                            let btn = document.getElementById("v4-icon-expand-test");
+                                            let collapse = document.getElementById("collapse-test");
+                                            let content = document.getElementById("collapse-content-test");
+                                            let height = content.clientHeight;
+                                            if (btn.className.includes("true")) {
+                                                //close
+                                                btn.className = "v4-icon-expand false";
+                                                collapse.style.height = "0px";
+                                            } else {
+                                                btn.className = "v4-icon-expand true";
+                                                collapse.style.height = height + "px";
+                                            }
+                                        }}
+                                    >
+                                        {`Full ${appInfo.appName} Practice Test`}
+                                        <div className={"v4-icon-expand"} id="v4-icon-expand-test">
+                                            <ExpandMoreIcon />
+                                        </div>
+                                    </div>
+                                    <div id="collapse-test">
+                                        <div id="collapse-content-test">
+                                            {tests.map((test, index) => {
+                                                let _link = test.slug;
+                                                return (
+                                                    <div key={index} className="v4-app-test">
+                                                        <a
+                                                            href={_link}
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                ga.event({
+                                                                    action: "click_menu_test",
+                                                                    params: {
+                                                                        from: window.location.href,
+                                                                        to: test.tag,
+                                                                    },
+                                                                });
+                                                                window.location.href = _link;
+                                                            }}
+                                                        >
+                                                            {`${test.title} Test`}
+                                                        </a>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+
+                            {topics.length > 0 && (
+                                <>
+                                    <div
+                                        className="container-drawer-right-menu-header-v4-1"
+                                        onClick={() => {
+                                            let btn = document.getElementById("v4-icon-expand");
+                                            let collapse = document.getElementById("collapse-topic");
+                                            let content = document.getElementById("collapse-content");
+                                            let height = content.clientHeight;
+                                            if (btn.className.includes("true")) {
+                                                //close
+                                                btn.className = "v4-icon-expand false";
+                                                collapse.style.height = "0px";
+                                            } else {
+                                                btn.className = "v4-icon-expand true";
+                                                collapse.style.height = height + "px";
+                                            }
+                                        }}
+                                    >
+                                        {`${appInfo.appName} Topics`}{" "}
+                                        <div className={"v4-icon-expand"} id="v4-icon-expand">
+                                            <ExpandMoreIcon />
+                                        </div>
+                                    </div>
+                                    <div id="collapse-topic">
+                                        <div id="collapse-content">
+                                            {topics.map((topic) => {
+                                                let _link = topic.slug;
+                                                return (
+                                                    <div key={topic.id} className="v4-app-topic">
+                                                        <a
+                                                            href={_link}
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                ga.event({
+                                                                    action: "click_menu_topic",
+                                                                    params: {
+                                                                        from: window.location.href,
+                                                                        to: topic.tag,
+                                                                    },
+                                                                });
+                                                                window.location.href = _link;
+                                                            }}
+                                                        >
+                                                            {topic.name}
+                                                        </a>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                </>
+                            )}
                             <div className="container-drawer-right-menu-header-v4-1">
                                 <a
                                     // prefetch={false}

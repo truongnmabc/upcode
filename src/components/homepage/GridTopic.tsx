@@ -308,8 +308,6 @@ const TopicLevelProgress = ({
                                         }}
                                         onClick={(e) => {
                                             e.preventDefault();
-                                            console.log(unlocked, _href);
-
                                             if (unlocked && !window.location.href.includes(_href)) {
                                                 if (_href.includes(window.location.pathname)) {
                                                     let _action = "click_";

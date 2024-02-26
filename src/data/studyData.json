@@ -400,7 +400,17 @@
             { "title": "School Bus", "url": "alabama-cdl-school-bus-practice-test", "tag": "school-bus" },
             { "title": "Tanker Vehicles", "url": "alabama-cdl-tanker-vehicles-practice-test", "tag": "tanker-vehicles" }
         ],
-        "fullTests": ["full-length-alabama-cdl-practice-test"]
+        "fullTests": [
+            "full-length-alabama-cdl-air-brakes-practice-test",
+            "full-length-alabama-cdl-combination-vehicles-practice-test",
+            "full-length-alabama-cdl-doubles-triples-trailers-practice-test",
+            "full-length-alabama-cdl-general-knowledge-practice-test",
+            "full-length-alabama-cdl-hazmat-practice-test",
+            "full-length-alabama-cdl-passenger-vehicles-practice-test",
+            "full-length-alabama-cdl-pre-trip-inspection-practice-test",
+            "full-length-alabama-cdl-school-bus-practice-test",
+            "full-length-alabama-cdl-tanker-vehicles-practice-test"
+        ]
     },
     {
         "appId": 6482106442055680,

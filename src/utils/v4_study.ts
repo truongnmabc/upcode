@@ -85,8 +85,8 @@ function shuffleV4(list: any[]) {
             case 1:
             case 2:
             case 3:
-                return 1;
             case 4:
+                return 1;
             case 5:
                 return -1;
         }

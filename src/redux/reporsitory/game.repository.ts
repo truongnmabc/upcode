@@ -172,7 +172,6 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 let testTag = slug
                     .replace("full-length-" + (_state ? _state + "-" : "") + appInfo.appShortName, "")
                     .replace("-practice-test", "");
-                console.log(slug, testTag);
 
                 let data = await getTestDataFromGoogleStorage(
                     appInfo.bucket,

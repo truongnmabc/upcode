@@ -127,6 +127,15 @@ const StudyView = ({
                                 <>
                                     <img src="/images/arrow-left.png" alt="" width={12} height={12} />
                                     <Link href={getLink(appInfo)}>{appInfo.appName}</Link>
+
+                                    {!!contentData._state && (
+                                        <>
+                                            <img src="/images/arrow-left.png" alt="" width={12} height={12} />
+                                            <Link href={getLink(appInfo, contentData._state)}>
+                                                {contentData._state.replaceAll("-", " ")}
+                                            </Link>
+                                        </>
+                                    )}
                                 </>
                             )}
                         </div>
