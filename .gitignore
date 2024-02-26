@@ -49,3 +49,4 @@ src/styles/config.css
 .env
 ssh_keys/id_rsa
 deploy_.sh
+build-easyprep.zip

@@ -1,19 +1,8 @@
-deploy() {
-    appName=$1
-    if [ -z "$appName" ]; then
-        folder="passemall"
-    else 
-        folder=$appName
-    fi
-    echo "Deploying... $folder"
-    git checkout -- ./
-    git pull --rebase origin master
-    ./build.sh $appName
-    yarn
-    yarn build
-    echo "Building..."
-    pm2 restart $folder
-    echo "Deployed $folder"
-}
-
-deploy $1
+if [[ -e build.zip ]]; then
+    rm -rf build-easyprep.zip
+fi
+yarn
+yarn build
+rm -rf build-easyprep.zip
+zip -r build-easyprep.zip .next
+gcloud compute scp --project="micro-enigma-235001" --zone="us-central1-a" --recurse ./build.zip passemall-home:/home/hiepnx27_gmail_com
