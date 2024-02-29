@@ -75,7 +75,11 @@ const HomeSingleApp = ({
                                         onClick={() => {
                                             if (currentState) {
                                                 window.location.href = getLink(appInfo, currentState);
-                                            } else if (openListState != 1) setOpenListState(1);
+                                                ga.event({ action: "click_go_to_state", params: { app: appInfo.appName } });
+                                            } else {
+                                                if (openListState != 1) setOpenListState(1);
+                                                ga.event({ action: "click_get_started", params: { app: appInfo.appName } });
+                                            }
                                         }}
                                     >
                                         {currentState ? `Go To ${currentState.replaceAll("-", " ")}` : "Get Started"}
@@ -85,6 +89,7 @@ const HomeSingleApp = ({
                                             className="not-your-state"
                                             onClick={() => {
                                                 setOpenListState(1);
+                                                ga.event({ action: "select_another_state", params: { app: appInfo.appName } });
                                             }}
                                         >
                                             Not your state?

@@ -5,6 +5,7 @@ import CloseIcon from "../icon/CloseIcon";
 import HistoryIcon from "../icon/HistoryIcon";
 import "./SearchAppComponent.scss";
 import SearchIcon from "../icon/SearchIcon";
+import * as ga from "../../services/ga";
 
 const KEY = "historySearched";
 type HistorySearched = {
@@ -74,7 +75,16 @@ const SearchAppComponent = ({ listAppInfos, isDesktop }: { listAppInfos: IAppInf
     };
 
     return (
-        <div className="search-component align-center" ref={containerRef}>
+        <div
+            className="search-component align-center"
+            ref={containerRef}
+            onClick={() => {
+                ga.event({
+                    action: "click_search",
+                    params: { from: window.location.href },
+                });
+            }}
+        >
             <input
                 ref={inputRef}
                 type="text"
@@ -133,13 +143,27 @@ const SearchAppComponent = ({ listAppInfos, isDesktop }: { listAppInfos: IAppInf
                         handleSearchInput(res.search);
                         localStorage.setItem(KEY, JSON.stringify(_nh)); // đưa lựa chọn lên đầu danh sách
                         setHistorySearchedLocalStorage(_nh);
-                        if (res.link) window.location.href = res.link;
+                        if (res.link) {
+                            ga.event({
+                                action: "click_test_search",
+                                params: {
+                                    app: res.search,
+                                },
+                            });
+                            window.location.href = res.link;
+                        }
                     }}
                     onSelectAppResult={(res: HistorySearched) => {
                         let _h = historySearchedLocalStorage.filter((h) => h.search !== res.search);
                         let _nh = [res, ..._h];
                         localStorage.setItem(KEY, JSON.stringify(_nh)); // đưa lựa chọn lên đầu danh sách
                         setHistorySearchedLocalStorage(_nh);
+                        ga.event({
+                            action: "click_test_search",
+                            params: {
+                                app: res.search,
+                            },
+                        });
                         window.location.href = res.link;
                     }}
                 />

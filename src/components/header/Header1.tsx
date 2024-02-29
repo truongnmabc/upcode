@@ -9,6 +9,7 @@ import CloseIcon from "../icon/CloseIcon";
 import HeaderCategory from "../easy-prep/HeaderCategory";
 import AppLogo from "../logo/AppLogo";
 import Link from "next/link";
+import * as ga from "../../services/ga";
 import dynamic from "next/dynamic";
 const SearchAppComponent = dynamic(() => import("./SearchAppComponent"), {
     ssr: false,
@@ -120,10 +121,30 @@ const HeaderMenu = ({ isDesktop, listAppInfos }: { isDesktop: boolean; listAppIn
     return (
         <>
             <Link href="/">
-                <a className="header-1-menu -option-home">Home</a>
+                <a
+                    className="header-1-menu -option-home"
+                    onClick={(e) => {
+                        ga.event({
+                            action: "click_home",
+                            params: { from: window.location.href },
+                        });
+                    }}
+                >
+                    Home
+                </a>
             </Link>
             <Link href="/about" prefetch={false}>
-                <a className="header-1-menu -option-about">About</a>
+                <a
+                    className="header-1-menu -option-about"
+                    onClick={(e) => {
+                        ga.event({
+                            action: "click_about_us",
+                            params: { from: window.location.href },
+                        });
+                    }}
+                >
+                    About
+                </a>
             </Link>
             <div
                 ref={buttonRef}

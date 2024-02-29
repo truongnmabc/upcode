@@ -15,7 +15,6 @@ import Link from "next/link";
 import { getLink } from "@/utils";
 import { ITestInfo } from "@/models/TestInfo";
 import { getAppTopics } from "@/utils/getRawTopicsData";
-import { HorizontalBannerAds } from "../ads/ads";
 const MainStudyView = dynamic(() => import("./MainStudyView"), {
     ssr: false,
     loading: () => <div className="main-study-frame v4-border-radius" />,
@@ -208,7 +207,6 @@ const StudyView = ({
                         ) : isFinish == 0 ? (
                             <>
                                 <MainStudyView gameState={gameState} appInfo={appInfo} />
-                                <HorizontalBannerAds />
                                 <div id="v4-main-study-other-content" ref={ref}>
                                     <StudyBannerDownloadApp
                                         appInfo={appInfo}

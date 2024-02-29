@@ -4,6 +4,7 @@ body {
     /* để customize drawer, dialog neen set height của 2 cái này  là 100% và overflow = hidden để tránh bị trượt khi bật popup/drawer, còn thành phần giúp scroll là __next*/
     scroll-behavior: smooth;
     box-sizing: border-box;
+    background: var(--main-background-color);
 }
 body {
     margin: 0;

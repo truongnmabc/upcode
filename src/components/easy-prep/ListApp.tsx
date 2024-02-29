@@ -5,6 +5,7 @@ import MyContainer from "../v4-material/MyContainer";
 import categories from "../../data/categories.json";
 import ArrowLeft from "../icon/ArrowLeft";
 import { getLink } from "@/utils";
+import * as ga from "../../services/ga";
 const _MARGIN = 44; // trùng với margin trong scss
 const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
     const [categorySelected, setCategorySelected] = useState(categories[0]?.id ?? 0);
@@ -126,6 +127,16 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
                                                 });
                                             }
                                         }
+                                        let action = "click_category_block";
+                                        if (category.name === "Information Technology") action = "click_it_block";
+                                        else if (category.name === "HSE & College Admission") action = "click_hse_block";
+                                        else if (category.name === "Medical & Nursing") action = "click_med_block";
+                                        else if (category.name === "Drivers Ed") action = "click_driver_block";
+                                        else if (category.name === "Careers") action = "click_career_block";
+                                        ga.event({
+                                            action,
+                                            params: { from: window.location.href },
+                                        });
                                     }}
                                     style={{ marginLeft: index != 0 ? "10px" : "" }}
                                 >
@@ -151,7 +162,17 @@ const ListApp = ({ listAppInfos }: { listAppInfos: IAppInfo[] }) => {
                         ?.sort((a, b) => a.appName.length - b.appName.length)
                         .map((app, index) => {
                             return (
-                                <a className="align-center list-app-item" key={index} href={getLink(app, "")}>
+                                <a
+                                    className="align-center list-app-item"
+                                    key={index}
+                                    href={getLink(app, "")}
+                                    onClick={(e) => {
+                                        ga.event({
+                                            action: "click_test_blocks",
+                                            params: { app: app.appName },
+                                        });
+                                    }}
+                                >
                                     <div className="font-14 app-name">{app.appName.toUpperCase()}</div>
                                     <div className="font-14 dot">&middot;</div>
                                     <div className="font-14 total-questions">{app.totalQuestion}</div>

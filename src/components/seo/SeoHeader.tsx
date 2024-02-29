@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { APP_SHORT_NAME, GOOGLE_SITE_VERIFICATION } from "../../config_app";
 import { getDomainName } from "../../utils";
 import replaceYear from "@/utils/replaceYear";
-import { getAdClientId } from "../ads/ads";
 
 const SeoHeader = ({
     children,
@@ -40,16 +39,6 @@ const SeoHeader = ({
                 <link rel="preconnect" href="https://www.googletagmanager.com" />
                 <link rel="profile" href="https://gmpg.org/xfn/11" />
                 <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
-                {ads ? (
-                    <script
-                        async
-                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-                        crossOrigin="anonymous"
-                        data-ad-client={getAdClientId()}
-                    ></script>
-                ) : (
-                    <></>
-                )}
                 {children}
             </Head>
         </>

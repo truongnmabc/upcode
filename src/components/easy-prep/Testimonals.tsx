@@ -6,6 +6,7 @@ import "./Testimonals.scss";
 import ArrowLeft from "../icon/ArrowLeft";
 import { useRef } from "react";
 import { useState } from "react";
+import * as ga from "../../services/ga";
 
 const slidesToShow = 2;
 const slidesToScroll = 2;
@@ -65,6 +66,7 @@ const Testimonals = () => {
                     <div
                         onClick={() => {
                             if (currentSlide != 0) ref.current.slickPrev();
+                            ga.event({ action: "click_testimonals", params: {} });
                         }}
                         className={"prev-arrow " + (currentSlide === 0 ? " disabled" : "")}
                     >
@@ -75,6 +77,7 @@ const Testimonals = () => {
                     <div
                         onClick={() => {
                             if (currentSlide + slidesToScroll < testimonals.length) ref.current.slickNext();
+                            ga.event({ action: "click_testimonals", params: {} });
                         }}
                         className={"next-arrow " + (currentSlide + slidesToScroll === testimonals.length ? " disabled" : "")}
                     >

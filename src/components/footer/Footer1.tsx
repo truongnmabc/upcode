@@ -8,6 +8,7 @@ import YoutubeIcon from "../icon/YoutubeIcon";
 import LinkedinIcon from "../icon/LinkedinIcon";
 import InstagramIcon from "../icon/InstagramIcon";
 import TwitterIcon from "../icon/TwitterIcon";
+import * as ga from "../../services/ga";
 import AppLogo from "../logo/AppLogo";
 const Footer1 = () => {
     let fb = getContactLink("facebook");
@@ -51,10 +52,28 @@ const Footer1 = () => {
                 <div className="line-2 align-center">
                     <div className="line-2-option">
                         <Link href={"/contact"} prefetch={false}>
-                            Contact
+                            <a
+                                onClick={(e) => {
+                                    ga.event({
+                                        action: "click_contact_footer",
+                                        params: { from: window.location.href },
+                                    });
+                                }}
+                            >
+                                Contact
+                            </a>
                         </Link>
                         <Link href={"/privacy"} prefetch={false}>
-                            Privacy
+                            <a
+                                onClick={(e) => {
+                                    ga.event({
+                                        action: "click_privacy",
+                                        params: { from: window.location.href },
+                                    });
+                                }}
+                            >
+                                Privacy
+                            </a>
                         </Link>
                     </div>
                     <span>©2024 Easy Prep All Rights Reserved.</span>

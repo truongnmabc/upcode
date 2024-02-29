@@ -13,7 +13,8 @@ import { ITopic } from "@/models/Topic";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { IAppInfo } from "../../models/AppInfo";
 import { getAppInfo } from "../../utils/getAppInfo";
-import { CheckAndAddAds } from "@/components/ads/ads";
+import { useEffect } from "react";
+import * as ga from "../../services/ga";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -51,14 +52,14 @@ const StudyPage = ({
         topics,
         tests,
     };
-    // useEffect(() => {
-    //     if (window) {
-    //         ga.event({
-    //             action: "users_exclude_blog",
-    //             params: { from: window.location.href },
-    //         });
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (window) {
+            ga.event({
+                action: "users_exclude_blog",
+                params: { from: window.location.href },
+            });
+        }
+    }, []);
     return (
         <>
             <SEO
@@ -71,7 +72,6 @@ const StudyPage = ({
             <StoreProvider appInfo={appInfo} webData={webData} />
             <StudyLayout appInfo={appInfo} contentData={webData} />
             <ScrollToTopArrow />
-            <CheckAndAddAds />
         </>
     );
 };

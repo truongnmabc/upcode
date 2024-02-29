@@ -1,6 +1,6 @@
-if [[ -e build-easyprep.zip ]]; then
-    rm -rf build-easyprep.zip
-fi
+# if [[ -e build-easyprep.zip ]]; then
+#     rm -rf build-easyprep.zip
+# fi
 # yarn
 # yarn build
 # cần build trước (chú ý sửa file env thành production)

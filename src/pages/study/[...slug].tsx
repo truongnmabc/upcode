@@ -18,7 +18,6 @@ import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { ITestInfo } from "@/models/TestInfo";
 import { ITopic } from "@/models/Topic";
 import states from "../../data/statesName.json";
-import { CheckAndAddAds } from "@/components/ads/ads";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });

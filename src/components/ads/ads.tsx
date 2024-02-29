@@ -1,36 +1,5 @@
 import Config from "@/config";
-import { getSession, isProduction, isWebEASYPREP } from "@/config/config_web";
-import { useEffect } from "react";
-
-const CheckAndAddAds = () => {
-    const paymentInfo = 0; //= useSelector((state) => state.userReducer.paymentInfo);
-    useEffect(() => {
-        let adClient = getAdClientId();
-        if (!adClient?.length) {
-            return;
-        }
-        const src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-        if ((isProduction() && isWebEASYPREP() && !isRemoveAds(paymentInfo) && !checkCountryVN()) || true) {
-            const elements = document.getElementsByTagName("script");
-            let hasScript = false;
-            for (let i = 0; i < elements.length; i++) {
-                if (elements[i]?.src && elements[i].src == src) {
-                    hasScript = true;
-                }
-            }
-            if (!hasScript) {
-                console.log("hereeeeeeeee");
-                const elem = document.createElement("script");
-                elem.setAttribute("data-ad-client", getAdClientId());
-                elem.src = src;
-                elem.async = true;
-                elem.defer = true;
-                document.body.insertBefore(elem, document.body.firstChild);
-            }
-        }
-    }, []);
-    return null;
-};
+import { getSession, isWebEASYPREP } from "@/config/config_web";
 
 const HorizontalBannerAds = () => {
     console.log("HorizontalBannerAds");
@@ -85,4 +54,4 @@ export const isRemoveAds = (paymentInfo: any) => {
     return false;
 };
 
-export { CheckAndAddAds, HorizontalBannerAds, getAdClientId };
+export { HorizontalBannerAds, getAdClientId };

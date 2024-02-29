@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import ExpandMoreIcon from "../icon/ExpandMoreIcon";
 import Collapse from "@mui/material/Collapse";
 import { getLink } from "@/utils";
+import * as ga from "../../services/ga";
 const HeaderCategory = ({
     isDesktop,
     listAppInfos,
@@ -70,7 +71,21 @@ const HeaderCategory = ({
                                             .sort((a, b) => a.appName.localeCompare(b.appName))
                                             .map((app, index) => {
                                                 return (
-                                                    <a className="app-name align-center" href={getLink(app, "")} key={index}>
+                                                    <a
+                                                        className="app-name align-center"
+                                                        href={getLink(app, "")}
+                                                        key={index}
+                                                        onClick={(e) => {
+                                                            // e.preventDefault();
+                                                            ga.event({
+                                                                action: "click_test_drop_down",
+                                                                params: {
+                                                                    device: "mobile",
+                                                                    app: app.appName,
+                                                                },
+                                                            });
+                                                        }}
+                                                    >
                                                         {app.appName.toUpperCase()}
                                                     </a>
                                                 );
@@ -115,7 +130,20 @@ const HeaderCategory = ({
                             .sort((a, b) => a.appName.length - b.appName.length)
                             .map((app, index) => {
                                 return (
-                                    <a className="app-name align-center" href={getLink(app, "")} key={index}>
+                                    <a
+                                        className="app-name align-center"
+                                        href={getLink(app, "")}
+                                        key={index}
+                                        onClick={(e) => {
+                                            ga.event({
+                                                action: "click_test_drop_down",
+                                                params: {
+                                                    device: "desktop",
+                                                    app: app.appName,
+                                                },
+                                            });
+                                        }}
+                                    >
                                         {app.appName.toUpperCase()}
                                     </a>
                                 );

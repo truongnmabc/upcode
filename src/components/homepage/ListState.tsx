@@ -4,6 +4,7 @@ import states from "../../data/statesName.json";
 import "./ListState.scss";
 import dynamic from "next/dynamic";
 import { getLink } from "@/utils";
+import * as ga from "../../services/ga";
 const Dialog = dynamic(() => import("@mui/material/Dialog"));
 
 const ListState = ({
@@ -53,6 +54,7 @@ const ListState = ({
                                     "select-state-" + appInfo.appNameId,
                                     state.toLowerCase().trim().replaceAll(" ", "-")
                                 );
+                                ga.event({ action: "click_state", params: { state: state } });
                             }}
                             className="state"
                             key={index}
