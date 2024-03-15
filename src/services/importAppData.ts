@@ -4,6 +4,8 @@ import { callApi } from "../services/index";
 import TestInfo from "@/models/TestInfo";
 import { genFullStudyLink } from "@/utils/getStudyLink";
 import { IAppInfo } from "@/models/AppInfo";
+const BUCKET = "new-data-web/";
+const BUCKET2 = "new-data-web-test/";
 export async function readFileAppFromGoogleStorage(appInfo: IAppInfo, _state?: string) {
     // ****  NẾU SỬA HÀM NÀY THÌ PHẢI SỬA CẢ HÀM fetchData TRONG FILE gen-data.js
     try {
@@ -11,7 +13,7 @@ export async function readFileAppFromGoogleStorage(appInfo: IAppInfo, _state?: s
         //https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/topics-and-tests.json
         let data = await callApi({
             url:
-                "new-data-web/" +
+                (!_state ? BUCKET : BUCKET2) +
                 appInfo.bucket +
                 (_state ? "/" + _state : "") +
                 "/topics-and-tests.json?t=" +
@@ -28,7 +30,9 @@ export async function readFileAppFromGoogleStorage(appInfo: IAppInfo, _state?: s
             return a.name.localeCompare(b.name);
         });
         let _tests = data?.fullTests ?? [];
-        let tests = _tests.map((t: any) => new TestInfo({ ...t, slug: genFullStudyLink(appInfo, t?.tag, true, _state) }));
+        let tests = _tests.map(
+            (t: any) => new TestInfo({ ...t, slug: genFullStudyLink(appInfo, t?.tag, true, _state), stateTag: _state })
+        );
         return { ...data, fullTests: tests, topics };
     } catch (error) {
         console.log("readFileAppFromGoogleStorage error", "new-data-web/" + appInfo.bucket + (_state ? "/" + _state : ""));
@@ -40,7 +44,9 @@ export async function getTopicQuestionsFromGoogleStorage(bucket: string, topicTa
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/general-science-questions.json
     try {
         let data = await callApi({
-            url: `new-data-web/${bucket + (_state ? "/" + _state : "")}/${topicTag}.json?t=${new Date().getTime()}`,
+            url: `${!_state ? BUCKET : BUCKET2}${
+                bucket + (_state ? "/" + _state : "")
+            }/${topicTag}.json?t=${new Date().getTime()}`,
             params: null,
             method: "get",
             baseURl: "https://storage.googleapis.com/micro-enigma-235001.appspot.com/",
@@ -57,7 +63,7 @@ export async function getTestDataFromGoogleStorage(bucket: string, url: string, 
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/full-tests.json
     try {
         let data = await callApi({
-            url: `new-data-web/${bucket + (_state ? "/" + _state : "")}/${url}.json?t=${Date.now()}`,
+            url: `${!_state ? BUCKET : BUCKET2}${bucket + (_state ? "/" + _state : "")}/${url}.json?t=${Date.now()}`,
             params: null,
             method: "get",
             baseURl: "https://storage.googleapis.com/micro-enigma-235001.appspot.com/",
@@ -65,7 +71,7 @@ export async function getTestDataFromGoogleStorage(bucket: string, url: string, 
         });
 
         return data.map((_) => {
-            return { test: new TestInfo(_), cards: _.cards };
+            return { test: new TestInfo(_), cards: _.cards, stateTag: _state };
         });
     } catch (error) {
         console.log("getTestDataFromGoogleStorage error");

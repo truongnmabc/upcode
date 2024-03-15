@@ -8,17 +8,13 @@ class Question {
     explanation: string;
     hint: string;
     image: string;
-    index: number;
     paragraphContent: string;
-    paragraphId: number;
     progress: number[]; // v4
     question: string;
     questionStatus: number;
-    shortId: number;
 
     constructor(object: any = {}) {
         this.id = object.id;
-        this.shortId = object.shortId ?? 0;
         this.question = object.question ?? "";
         this.hint = object.hint ?? "";
         this.image = object.image ?? "";
@@ -39,8 +35,6 @@ class Question {
                 );
             });
         }
-        this.index = object.index ?? -1;
-        this.paragraphId = object.paragraphId ?? -1;
         this.paragraphContent = object.paragraphContent ?? object.paragraph ?? "";
         this.correctNums = this.getCorrectNum();
         this.progress = object.progress ?? [];

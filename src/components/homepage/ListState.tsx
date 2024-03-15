@@ -45,21 +45,21 @@ const ListState = ({
     return isDesktop ? (
         <div id="collapse-list-state">
             <div className="select-state v4-border-radius" id="list-state-content">
-                {states.map((state, index) => {
+                {states[appInfo.appShortName].map((state, index) => {
                     return (
                         <a
-                            href={getLink(appInfo, state.toLowerCase().trim().replaceAll(" ", "-"))}
+                            href={getLink(appInfo, state.tag)}
                             onClick={() => {
-                                localStorage.setItem(
-                                    "select-state-" + appInfo.appNameId,
-                                    state.toLowerCase().trim().replaceAll(" ", "-")
-                                );
-                                ga.event({ action: "click_state", params: { state: state } });
+                                localStorage.setItem("select-state-" + appInfo.appNameId, state.tag);
+                                ga.event({
+                                    action: "click_state",
+                                    params: { appShortName: appInfo.appShortName, state: state.name },
+                                });
                             }}
                             className="state"
                             key={index}
                         >
-                            {state}
+                            {state.name}
                         </a>
                     );
                 })}
@@ -69,7 +69,7 @@ const ListState = ({
         <>
             <Dialog open={openListState == 1} onClose={() => setOpenListState(0)}>
                 <div className="list-state-dialog overflow-auto">
-                    {states.map((state, index) => {
+                    {states[appInfo.appShortName].map((state, index) => {
                         return (
                             <a
                                 href={getLink(appInfo, state.toLowerCase().trim().replaceAll(" ", "-"))}
@@ -80,6 +80,10 @@ const ListState = ({
                                         "select-state-" + appInfo.appNameId,
                                         state.toLowerCase().trim().replaceAll(" ", "-")
                                     );
+                                    ga.event({
+                                        action: "click_state",
+                                        params: { appShortName: appInfo.appShortName, state: state.name },
+                                    });
                                 }}
                             >
                                 {state}

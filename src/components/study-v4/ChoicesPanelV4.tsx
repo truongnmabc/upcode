@@ -70,45 +70,6 @@ const ChoicesPanelV4 = ({
                         index={index}
                     />
                 );
-                // return (
-                //     <div
-                //         key={index}
-                //         className={
-                //             "v4-answer-button v4-border-radius " +
-                //             (isReviewAnswer ? " review " : "") +
-                //             (choice.selected ? " selected " : "") +
-                //             showCss +
-                //             (tester && choice.isCorrect ? " correct " : "")
-                //         }
-                //         onClick={(e) => {
-                //             // nếu đã trả lời xong và đáp án này đã chọn hoặc dùng để hiện đáp án end test thì không handle click nữa
-                //             if (
-                //                 (thisQuestionIsDone && // TEST_GAME thi cho phep thay doi dap an duoc (đã cho hiện đáp án rồi thì không cho chọn lại)
-                //                     allowShowAnswer) ||
-                //                 choice.selected ||
-                //                 isReviewAnswer
-                //             ) {
-                //                 return;
-                //             }
-                //             if (choice.id != -1 && !!choice.content)
-                //                 // viết như này để cho trường hợp đang là TEMP_LIST_ANSWER
-                //                 onChoiceSelected(choice);
-                //         }}
-                //     >
-                //         <div className="v4-answered-content v4-flex">
-                //             {getIcon((thisQuestionIsDone && allowShowAnswer) || isReviewAnswer, choice)}
-                //             <div className="v4-answer-button-content">
-                //                 <V4QuestionContent
-                //                     content={choice.content}
-                //                     type={TextContentType.answer}
-                //                     bucket={bucket}
-                //                     renderMathJax={isMathJaxContent(choice.content)}
-                //                     place={place}
-                //                 />
-                //             </div>
-                //         </div>
-                //     </div>
-                // );
             })}
         </div>
     );

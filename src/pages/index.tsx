@@ -4,6 +4,7 @@ import { AppInfo, IAppInfo } from "@/models/AppInfo";
 import { ITestInfo } from "@/models/TestInfo";
 import { ITopic } from "@/models/Topic";
 import StoreProvider from "@/redux/StoreProvider";
+import { callApi } from "@/services";
 import { getHomeSeoContentApi } from "@/services/home.service";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { setScrollDownAuto } from "@/utils";
@@ -13,6 +14,7 @@ import replaceYear from "@/utils/replaceYear";
 import { GetStaticProps } from "next";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
+import stateData from "../data/statesName.json";
 const HomeSingleApp = dynamic(() => import("@/container/single-app/HomeSingleApp"));
 const ParentAppLayout = dynamic(() => import("@/container/parent-app/ParentAppLayout"));
 const ScrollToTopArrow = dynamic(() => import("../components/v4-material/ScrollToTopArrow"), {
@@ -46,6 +48,14 @@ export default function Home({
         <>
             <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} ads />
             <StoreProvider appInfo={appInfo} webData={_isParentApp ? {} : { tests: tests, topics: listTopics }} />
+            {/* <div
+                style={{ marginTop: "100px" }}
+                onClick={() => {
+                    genState();
+                }}
+            >
+                kkkkkkkkkkk
+            </div> */}
             {_isParentApp ? (
                 <ParentAppLayout appInfo={appInfo} listAppInfos={listAppInfo} />
             ) : (
@@ -105,4 +115,24 @@ export const getStaticProps: GetStaticProps = async (context) => {
             listAppInfo,
         },
     });
+};
+const genState = async () => {
+    let states = stateData.cdl.slice(15, 25);
+    for (let s of states) {
+        try {
+            setTimeout(() => {}, 1000);
+            let res = await callApi({
+                url: `api/app/export-data-web?stateId=${s.id}&appId=6540077669810176&bucket=cdl_v2&state=${s.tag}`,
+                params: null,
+                method: "get",
+                baseURl: "http://localhost:3001/",
+                headers: null,
+                timeout: 90000,
+            });
+            console.log(s.name, res);
+        } catch (e) {
+            console.log("*****NOT*OK******", s.name);
+        }
+    }
+    console.log("--------done-----------");
 };

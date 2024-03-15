@@ -93,8 +93,8 @@ const HeaderV4 = ({
                                     </div>
                                     <div id="collapse-state">
                                         <div id="collapse-content-state" className="overflow-auto">
-                                            {states.map((state, index) => {
-                                                let _link = getLink(appInfo, state.toLowerCase().trim().replaceAll(" ", "-"));
+                                            {states[appInfo.appShortName].map((state, index) => {
+                                                let _link = getLink(appInfo, state.tag);
                                                 return (
                                                     <div key={index} className="v4-app-state">
                                                         <a
@@ -111,7 +111,7 @@ const HeaderV4 = ({
                                                                 window.location.href = _link;
                                                             }}
                                                         >
-                                                            {state}
+                                                            {state.name}
                                                         </a>
                                                     </div>
                                                 );

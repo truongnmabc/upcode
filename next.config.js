@@ -59,12 +59,10 @@ module.exports = () => {
 
                             if (app.hasState) {
                                 // điều hướng các trang state của app con sang file theo đường dẫn này
-                                states.forEach((state) => {
+                                states[app.appShortName].forEach((state) => {
                                     let __ = {
-                                        source: _getLink(app, state.toLowerCase().trim().replace(" ", "-")),
-                                        destination:
-                                            "/stateAndChildrenApp" +
-                                            _getLink(app, state.toLowerCase().trim().replace(" ", "-")),
+                                        source: _getLink(app, state.tag),
+                                        destination: "/stateAndChildrenApp" + _getLink(app, state.tag),
                                     };
                                     paths.push(__);
                                 });
@@ -109,8 +107,8 @@ module.exports = () => {
                 appInfos.forEach((app) => {
                     if (app.hasState) {
                         // điều hướng các trang state sang file theo đường dẫn này
-                        states.forEach((state) => {
-                            let path = "/" + state.toLowerCase().trim().replace(" ", "-");
+                        states[app.appShortName].forEach((state) => {
+                            let path = "/" + state.tag;
                             let __ = {
                                 source: path,
                                 destination: "/stateAndChildrenApp" + path,

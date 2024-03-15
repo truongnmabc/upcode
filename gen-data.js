@@ -2,10 +2,11 @@ const fs = require("fs");
 const appStudyUrl = require("./src/data/studyData.json");
 const states = require("./src/data/statesName.json");
 // const fetch = require("node-fetch");
-
-exports.genDataFunc = (appInfos = [], origin = "", web) => {
+const BUCKET = "new-data-web/";
+const BUCKET2 = "new-data-web-test/";
+exports.genDataFunc = async (appInfos = [], origin = "", web) => {
+    if (web === "development") await genStudyData(appInfos, web);
     genXMLFunc(appInfos, origin);
-    if (web === "development") genStudyData(appInfos, web);
 };
 
 /** gen ra file studyData.json */
@@ -51,9 +52,10 @@ const genStudyData = async (listAppInfos = []) => {
     ];
     const fetchData = async (appInfo, _state) => {
         let a = {};
-        console.log(appInfo.bucket);
+        console.log(appInfo.bucket, _state);
         await fetch(
-            "https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/" +
+            "https://storage.googleapis.com/micro-enigma-235001.appspot.com/" +
+                (!!_state ? BUCKET2 : BUCKET) +
                 appInfo.bucket +
                 (_state ? "/" + _state : "") +
                 "/topics-and-tests.json?t=" +
@@ -79,26 +81,30 @@ const genStudyData = async (listAppInfos = []) => {
         if (app.appId !== -1)
             try {
                 if (app.hasState) {
-                    if (app.appShortName === "cdl") {
-                        for (let s of states) {
-                            let _s = s.trim().toLowerCase().replaceAll(" ", "-");
-                            if (_s === "alabama") {
+                    let asn = app.appShortName;
+                    if (asn === "cdl" || true) {
+                        let _data = {
+                            appId: app.appId,
+                            topics: [],
+                            fullTests: [],
+                        };
+                        let _states = states[asn];
+                        for (let s of _states) {
+                            let _s = s.tag;
+                            if (_s === "iowa" || true) {
                                 let appData = await fetchData(app, _s);
                                 let _listTopics = appData?.topics ?? [];
-                                let _tests = appData?.fullTests ?? [];
+                                let _tests = (appData?.fullTests ?? []).map((t) => _genStudyLink(asn, t.tag, true, _s));
                                 let t = _listTopics.map((t) => ({
                                     title: t.name,
-                                    url: _genStudyLink(app.appShortName, t.tag, false, _s),
+                                    url: _genStudyLink(asn, t.tag, false, _s),
                                     tag: t.tag,
                                 }));
-                                study +=
-                                    JSON.stringify({
-                                        appId: app.appId,
-                                        topics: t,
-                                        fullTests: _tests.map((t) => _genStudyLink(app.appShortName, t.tag, true, _s)),
-                                    }).replaceAll("/", "") + ",";
+                                _data.topics.push(...t);
+                                _data.fullTests.push(..._tests);
                             }
                         }
+                        study += JSON.stringify(_data).replaceAll("/", "") + ",";
                     }
                 } else {
                     let appData = await fetchData(app);
@@ -123,6 +129,7 @@ const genStudyData = async (listAppInfos = []) => {
             }
     }
     study += "]";
+    // console.log(study);
     fs.writeFile("./src/data/studyData.json", study, "utf8", (err) => {
         if (err) {
             console.error("Error writing ./src/data/studyData.json:", err);

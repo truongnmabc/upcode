@@ -70,8 +70,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
         paths.push(...listAppLink);
         listAppInfo.forEach((app) => {
             if (app.hasState) {
-                states.forEach((state) => {
-                    let url = getLink(app, state.toLowerCase().trim().replaceAll(" ", "-"));
+                states[app.appShortName].forEach((state) => {
+                    let url = getLink(app, state.tag);
                     if (!url.includes("https:")) paths.push(formatData(url));
                 });
             }
@@ -98,7 +98,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
     if (!isParent) {
         // chỗ này chưa bổ sung, sau làm riêng app con thì bổ sung vào
         if (stateAndChildrenApp.length == 1) {
-            if (states.find((state) => state.toLowerCase().trim().replace(" ", "-") === slug)) {
+            if (states["cdl"].find((state) => state.tag === slug)) {
+                // ** dùng luôn ds của cdl vì của dmv cũng tương tự, ở đây chỉ dùng trường tag thôi
+                // trường hợp web được build ra là một web con có state thì đang config để trỏ url trang state về route này
+                _state = slug;
+                slug = "";
+            } else if (states["dmv"].find((state) => state.tag === slug)) {
+                // ** dùng luôn ds của cdl vì của dmv cũng tương tự, ở đây chỉ dùng trường tag thôi
                 // trường hợp web được build ra là một web con có state thì đang config để trỏ url trang state về route này
                 _state = slug;
                 slug = "";
@@ -148,94 +154,3 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export default ChildrenApp;
-
-let genstudyDataJSON = async (listAppInfos) => {
-    let r = "[";
-    let branchs = [
-        {
-            title: "Marine ASVAB Practice Test",
-            url: "marine-asvab-practice-test",
-            tag: "arithmetic-reasoning",
-            isBranch: true,
-        },
-        {
-            title: "Navy ASVAB Practice Test",
-            url: "navy-asvab-practice-test",
-            tag: "arithmetic-reasoning",
-            isBranch: true,
-        },
-        {
-            title: "Army ASVAB Practice Test",
-            url: "army-asvab-practice-test",
-            tag: "arithmetic-reasoning",
-            isBranch: true,
-        },
-        {
-            title: "Coast Guard ASVAB Practice Test",
-            url: "asvab-coast-guard-practice-test",
-            tag: "arithmetic-reasoning",
-            isBranch: true,
-        },
-        {
-            title: "Air Force ASVAB Practice Test",
-            url: "air-force-asvab-practice-test",
-            tag: "arithmetic-reasoning",
-            isBranch: true,
-        },
-        {
-            title: "National Guard ASVAB Practice Test",
-            url: "national-guard-asvab-practice-test",
-            tag: "arithmetic-reasoning",
-            isBranch: true,
-        },
-    ];
-    for (let app of listAppInfos) {
-        if (app.appId !== -1)
-            try {
-                if (app.hasState) {
-                    if (app.appShortName === "cdl") {
-                        for (let s of states) {
-                            let _s = s.trim().toLowerCase().replaceAll(" ", "-");
-                            if (_s === "alabama") {
-                                let appData: any = await readFileAppFromGoogleStorage(app, _s);
-                                let _listTopics = appData?.topics ?? [];
-                                let _tests = appData?.fullTests ?? [];
-                                let t = _listTopics.map((t) => ({
-                                    title: t.name,
-                                    url: genStudyLink(app.appShortName, t.tag, false, _s),
-                                    tag: t.tag,
-                                }));
-                                r +=
-                                    JSON.stringify({
-                                        appId: app.appId,
-                                        topics: t,
-                                        fullTests: _tests.map((t) => genStudyLink(app.appShortName, t.tag, true, _s)),
-                                    }).replaceAll("/", "") + ",";
-                            }
-                        }
-                    }
-                } else {
-                    let appData: any = await readFileAppFromGoogleStorage(app);
-                    let _listTopics = appData?.topics ?? [];
-                    let _tests = appData?.fullTests ?? [];
-                    let t = _listTopics.map((t) => ({
-                        title: t.name,
-                        url: genStudyLink(app.appShortName, t.tag, false),
-                        tag: t.tag,
-                    }));
-                    if (app.appShortName === "asvab") t.push(...branchs);
-
-                    r +=
-                        JSON.stringify({
-                            appId: app.appId,
-                            topics: t,
-                            fullTests: _tests.map((t) => genStudyLink(app.appShortName, t.tag, true)),
-                        }).replaceAll("/", "") + ",";
-                }
-            } catch (e) {
-                console.log("error", app.bucket);
-            }
-    }
-    r += "]";
-    console.log(r);
-};

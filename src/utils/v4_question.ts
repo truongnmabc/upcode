@@ -16,16 +16,9 @@ export function renderMath(callback?: any) {
 }
 
 export const isMathJaxContent = (text: string) => {
-    // if (!text) return false;
-    // // Regular expression pattern to match MathJax elements
-    // var regex = /\\\(.*?\\\)|\\\[(.|[\r\n])*?\\\]/g; //from GPT
-    // // Test if the string contains MathJax content
-    // return regex.test(text);
-
     var regex = /\\\(.*?\\\)|\\\[(.|[\r\n])*?\\\]/g; //from GPT
     if (
         text != null &&
-        // !!text.match(/((?:\\.|.)*)\1/)
         (regex.test(text) ||
             text.includes("<math") ||
             text.includes("\\[") ||

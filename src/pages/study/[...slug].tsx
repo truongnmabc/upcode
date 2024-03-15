@@ -18,6 +18,7 @@ import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { ITestInfo } from "@/models/TestInfo";
 import { ITopic } from "@/models/Topic";
 import states from "../../data/statesName.json";
+import { useEffect } from "react";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -56,6 +57,9 @@ const StudyPage = ({
         tests,
         _state,
     };
+    useEffect(() => {
+        localStorage.setItem("select-state-" + appInfo.appNameId, _state);
+    }, []);
     return (
         <>
             <SEO
@@ -93,7 +97,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             let _state = "";
             if (appInfo.hasState) {
                 // nếu app có state (thì url dẫn đến trang học này có chứa state trong đó)
-                _state = states.map((s) => s.trim().toLowerCase().replaceAll(" ", "-")).find((s) => slug.includes(s));
+                _state = states[appInfo.appShortName].find((s) => slug.includes(s.tag)).tag;
             }
             let appData: any = await readFileAppFromGoogleStorage(appInfo, _state);
             listTopics = appData?.topics ?? [];

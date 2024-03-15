@@ -78,7 +78,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 } else {
                     passPercent = _test.passPercent;
                     timeTest = _test.timeTest;
-                    studyId = _test.id + "";
+                    studyId = _test.slug + "";
                     // co du lieu roi thi gan du lieu de load game
                     let questionsData = mapTopicQuestions[studyId];
                     if (!questionsData || questionsData.length == 0) {
@@ -87,7 +87,10 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     }
                 }
             } else {
-                let accessTopic = topics.find((t) => slug.includes(t.tag) && appInfo.appId + "" == t.rootTopicId + "");
+                let accessTopic = topics.find(
+                    (t) => t.slug.includes(slug)
+                    //  && appInfo.appId + "" == t.rootTopicId + ""
+                );
                 if (!accessTopic) {
                     // chưa có  thì gọi api
                     getTopic = true;
@@ -181,9 +184,10 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
 
                 let test = data[0].test;
                 test.slug = "/" + fullSlug;
-                studyId = test.id + "";
+                studyId = test.slug;
                 passPercent = test.passPercent;
                 timeTest = test.timeTest;
+                test.stateTag = _state;
                 questionsData = data[0].cards;
                 if (questionsData.length) {
                     // update vao redux; cho nay can chu y check truong hop co data nhung khong du so luong!!
@@ -254,10 +258,10 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             try {
                 const mapQuestionsData: { [key: string]: Question[] } = state.cardReducer.mapTopicQuestions;
                 const appId: number = state.appInfoReducer.appInfo.appId;
-                let _questions = questionsData.length // lấy luôn data được tải về hoặc lấy trong reducer (trường hợp đã có sẵn data rồi)
+                let questions = questionsData.length // lấy luôn data được tải về hoặc lấy trong reducer (trường hợp đã có sẵn data rồi)
                     ? questionsData.map((q) => new Question(q))
                     : [...mapQuestionsData[studyId]];
-                let questions = shuffleV4(_questions);
+                //shuffleV4 let questions = (_questions); // không shuffle câu hỏi vì đang được sort theo trình tự dễ -> khó
 
                 // shuffle nhưng đưa câu hỏi không có hình ảnh lên đầu tiên (cải thiện core web vital)
                 let normalQuestionIndex: number = questions.findIndex((q) => {
@@ -281,10 +285,10 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 gameState.questions = questions.map((q, index) => {
                     //suffle các đáp án
                     q.choices = shuffleV4(q.choices);
-                    return {
+                    return new Question({
                         ...q,
                         index: index,
-                    };
+                    });
                 });
                 gameState.currentQuestion = gameState.questions[0];
                 gameState.showAnswer = gameType == Config.TOPIC_GAME;

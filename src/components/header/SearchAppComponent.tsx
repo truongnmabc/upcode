@@ -11,8 +11,7 @@ const KEY = "historySearched";
 type HistorySearched = {
     timeStamp: number;
     search: string;
-    link?: string;
-    img?: string;
+    appId?: number;
 };
 
 const LIMIT_HISTORY_SHOWN = 5;
@@ -128,6 +127,7 @@ const SearchAppComponent = ({ listAppInfos, isDesktop }: { listAppInfos: IAppInf
                         setSearchValue([]);
                         setHistorySearched([]);
                     }}
+                    listAppInfos={listAppInfos}
                     containerRef={containerRef}
                     histories={historySearched}
                     removeHistorySearchedItem={(id: number) => {
@@ -143,14 +143,15 @@ const SearchAppComponent = ({ listAppInfos, isDesktop }: { listAppInfos: IAppInf
                         handleSearchInput(res.search);
                         localStorage.setItem(KEY, JSON.stringify(_nh)); // đưa lựa chọn lên đầu danh sách
                         setHistorySearchedLocalStorage(_nh);
-                        if (res.link) {
+                        if (res.appId) {
+                            let _app = listAppInfos.find((a) => a.appId === res.appId);
                             ga.event({
                                 action: "click_test_search",
                                 params: {
                                     app: res.search,
                                 },
                             });
-                            window.location.href = res.link;
+                            window.location.href = getLink(_app);
                         }
                     }}
                     onSelectAppResult={(res: HistorySearched) => {
@@ -164,7 +165,8 @@ const SearchAppComponent = ({ listAppInfos, isDesktop }: { listAppInfos: IAppInf
                                 app: res.search,
                             },
                         });
-                        window.location.href = res.link;
+                        let _app = listAppInfos.find((a) => a.appId === res.appId);
+                        window.location.href = getLink(_app);
                     }}
                 />
             ) : (
@@ -182,6 +184,7 @@ const SearchResult = ({
     removeHistorySearchedItem,
     onSelectHistorySearched,
     onSelectAppResult,
+    listAppInfos,
 }: {
     searchValue: (IAppInfo | string)[];
     hideResult: () => void;
@@ -190,6 +193,7 @@ const SearchResult = ({
     removeHistorySearchedItem: (id: number) => void;
     onSelectHistorySearched: (res: HistorySearched) => void;
     onSelectAppResult: (res: HistorySearched) => void;
+    listAppInfos: IAppInfo[];
 }) => {
     // https://dev.to/rashed_iqbal/how-to-handle-outside-clicks-in-react-with-typescript-4lmc
     const areaRef = useRef<HTMLDivElement>(null);
@@ -207,7 +211,7 @@ const SearchResult = ({
     }, []);
     // const stateName = localStorage.getItem("stateSlug");
     let _searchValue = searchValue.filter((v) => {
-        if (typeof v != "string") return !histories.find((h) => h.link === getLink(v, ""));
+        if (typeof v != "string") return !histories.find((h) => h.appId === v.appId);
         return true;
     });
     return (
@@ -215,16 +219,20 @@ const SearchResult = ({
             {!!histories.length && (
                 <div style={{ padding: 12 }}>
                     {histories.map((hist, index) => {
+                        let _img = "";
+                        if (!!hist.appId) {
+                            _img = listAppInfos.find((a) => a.appId === hist.appId)?.icon;
+                        }
                         return (
                             <div
-                                key={index}
+                                key={hist.appId ?? index}
                                 className="align-center history-item"
                                 onClick={() => {
                                     onSelectHistorySearched(hist);
                                 }}
                             >
                                 <span className="align-center">
-                                    {!hist.img && (
+                                    {!hist.appId && (
                                         <div
                                             className="align-center"
                                             style={{
@@ -239,9 +247,9 @@ const SearchResult = ({
                                         </div>
                                     )}
                                     <span className="align-center">
-                                        {!!hist.img && (
+                                        {!!hist.appId && (
                                             <img
-                                                src={hist.img}
+                                                src={_img}
                                                 width={24}
                                                 height={24}
                                                 loading="lazy"
@@ -277,14 +285,13 @@ const SearchResult = ({
                                 </div>
                             );
                         else {
-                            let srcImg = `/info/images/${res.bucket}/logo60.png`;
+                            let srcImg = res.icon;
                             return (
                                 <div
-                                    key={index}
+                                    key={res.appId}
                                     className="result-item align-center"
                                     onClick={() => {
-                                        let link = getLink(res, "");
-                                        let _h = { timeStamp: Date.now(), search: res.appName, link: link, img: srcImg };
+                                        let _h = { timeStamp: Date.now(), search: res.appName, appId: res.appId };
                                         onSelectAppResult(_h);
                                     }}
                                 >
