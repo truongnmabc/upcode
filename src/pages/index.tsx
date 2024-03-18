@@ -117,12 +117,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
     });
 };
 const genState = async () => {
-    let states = stateData.cdl.slice(15, 25);
+    let states = stateData.dmv.slice(45, 51);
     for (let s of states) {
         try {
             setTimeout(() => {}, 1000);
             let res = await callApi({
-                url: `api/app/export-data-web?stateId=${s.id}&appId=6540077669810176&bucket=cdl_v2&state=${s.tag}`,
+                url: `api/app/export-data-web?stateId=${s.id}&appId=6309732366155776&bucket=dmv&state=${s.tag}`,
                 params: null,
                 method: "get",
                 baseURl: "http://localhost:3001/",

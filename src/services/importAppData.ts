@@ -10,10 +10,11 @@ export async function readFileAppFromGoogleStorage(appInfo: IAppInfo, _state?: s
     // ****  NẾU SỬA HÀM NÀY THÌ PHẢI SỬA CẢ HÀM fetchData TRONG FILE gen-data.js
     try {
         console.log("---" + appInfo.bucket);
+        let isDmv = appInfo.bucket === "dmv";
         //https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/topics-and-tests.json
         let data = await callApi({
             url:
-                (!_state ? BUCKET : BUCKET2) +
+                (!isDmv ? BUCKET : BUCKET2) +
                 appInfo.bucket +
                 (_state ? "/" + _state : "") +
                 "/topics-and-tests.json?t=" +
@@ -43,8 +44,9 @@ export async function readFileAppFromGoogleStorage(appInfo: IAppInfo, _state?: s
 export async function getTopicQuestionsFromGoogleStorage(bucket: string, topicTag: string, _state: string) {
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/general-science-questions.json
     try {
+        let isDmv = bucket === "dmv";
         let data = await callApi({
-            url: `${!_state ? BUCKET : BUCKET2}${
+            url: `${!isDmv ? BUCKET : BUCKET2}${
                 bucket + (_state ? "/" + _state : "")
             }/${topicTag}.json?t=${new Date().getTime()}`,
             params: null,
@@ -62,8 +64,9 @@ export async function getTopicQuestionsFromGoogleStorage(bucket: string, topicTa
 export async function getTestDataFromGoogleStorage(bucket: string, url: string, _state) {
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/full-tests.json
     try {
+        let isDmv = bucket === "dmv";
         let data = await callApi({
-            url: `${!_state ? BUCKET : BUCKET2}${bucket + (_state ? "/" + _state : "")}/${url}.json?t=${Date.now()}`,
+            url: `${!isDmv ? BUCKET : BUCKET2}${bucket + (_state ? "/" + _state : "")}/${url}.json?t=${Date.now()}`,
             params: null,
             method: "get",
             baseURl: "https://storage.googleapis.com/micro-enigma-235001.appspot.com/",
