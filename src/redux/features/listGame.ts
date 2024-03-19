@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { GameState } from "./game";
 import { REHYDRATE } from "redux-persist";
+import { resetData } from "./dataVersion";
 
 export const listGameSlice = createSlice({
     name: "listGame",
@@ -14,7 +15,8 @@ export const listGameSlice = createSlice({
     extraReducers: (builder) => {
         //TODO
         builder.addCase(REHYDRATE, (state, action) => {
-            if (action["payload"]) {
+            if (resetData()) return { games: new Array<GameState>() };
+            if (action["payload"] && !resetData()) {
                 let localList = action["payload"]["listGameReducer"];
                 if (localList && localList.games) {
                     for (let i = 0; i < localList.games.length; i++) {

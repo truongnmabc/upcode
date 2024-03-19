@@ -260,4 +260,87 @@ let exportApp = [
     //     appId: 5569772466995200,
     //     bucket: "nce",
     // }, //
+    // {
+    //     appId: 5753091221618688,
+    //     bucket: "ptce",
+    // }, //
+    // {
+    //     appId: 4691917260455936,
+    //     bucket: "nclexpn",
+    // }, //
+    // {
+    //     appId: 5017963709071360,
+    //     bucket: "nclexrn",
+    // }, //
+    // {
+    //     appId: 5397248982646784,
+    //     bucket: "fsc",
+    // }, //
+    [
+        {
+            appName: "HVAC",
+            appId: 4811628111462400,
+            bucket: "hvac",
+        },
+        {
+            appName: "CPA",
+            appId: 6221301783986176,
+            bucket: "cpa",
+        },
+        {
+            appName: "NATE",
+            appId: 5198848772276224,
+            bucket: "nate",
+        },
+        {
+            appName: "CNA",
+            appId: 5007397443600384,
+            bucket: "cna",
+        },
+        {
+            appName: "TABE",
+            appId: 5258846803066880,
+            bucket: "tabe",
+        },
+        {
+            appName: "MBE",
+            appId: 4791736938266624,
+            bucket: "mbe",
+        },
+        {
+            appName: "Servsafe",
+            appId: 5746867797229568,
+            bucket: "servsafe",
+        },
+        {
+            appName: "TSI",
+            appId: 5278385414602752,
+            bucket: "tsi",
+        },
+        {
+            appName: "DKT",
+            appId: 5252858371899392,
+            bucket: "dkt",
+        },
+        {
+            appName: "EPA 608",
+            appId: 6074233270566912,
+            bucket: "epa608",
+        },
+        {
+            appName: "DAT",
+            appId: 5276218037370880,
+            bucket: "dat",
+        },
+        {
+            appName: "CAST",
+            appId: 6449536089194496,
+            bucket: "cast",
+        },
+        {
+            appName: "CompTIA A+",
+            appId: 5551925043920896,
+            bucket: "comptiaa",
+        },
+    ],
 ];

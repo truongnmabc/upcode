@@ -82,7 +82,7 @@ const genStudyData = async (listAppInfos = []) => {
             try {
                 if (app.hasState) {
                     let asn = app.appShortName;
-                    if (asn === "cdl" || true) {
+                    if (asn === "dmv" || true) {
                         let _data = {
                             appId: app.appId,
                             topics: [],
@@ -125,7 +125,7 @@ const genStudyData = async (listAppInfos = []) => {
                         }).replaceAll("/", "") + ",";
                 }
             } catch (e) {
-                console.log("error", app.bucket);
+                console.log("error", e);
             }
     }
     study += "]";

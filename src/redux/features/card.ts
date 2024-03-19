@@ -1,17 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { REHYDRATE } from "redux-persist";
 import Question from "../../models/Question";
+import { DATA_VERSION, resetData } from "./dataVersion";
 
 export interface ICardState {
     mapTopicQuestions: { [key: string]: Question[] };
-    abc: boolean;
 }
 
 export const cardSlice = createSlice({
     name: "card",
     initialState: {
         mapTopicQuestions: {},
-        abc: false,
     },
     reducers: {
         getQuestionsDataSuccess: (state, action: PayloadAction<{ parentId: string; questions: Question[] }>) => {
@@ -30,6 +29,10 @@ export const cardSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(REHYDRATE, (state, action) => {
+            if (resetData())
+                return {
+                    mapTopicQuestions: {},
+                };
             if (action["payload"]) {
                 let mapTopicQuestionsData = action["payload"]["cardReducer"]?.mapTopicQuestions ?? {};
                 let _mapTopicQuestionsData = {};

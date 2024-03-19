@@ -24,6 +24,7 @@ import { getTestSuccess } from "../features/test";
 import { setTimeTest } from "../features/timeLeft";
 import { getTopicByParentIdSuccess } from "../features/topic";
 import { getAppTopics } from "@/utils/getRawTopicsData";
+import { DATA_VERSION, resetData } from "../features/dataVersion";
 
 const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, { dispatch, getState, rejectWithValue }) => {
     // tại version này phần học đc build static nên các url coi như là được xác định trước rồi!
@@ -304,6 +305,9 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 dispatch(updateToListGames(gameState));
                 if (gameState.gameType !== Config.TOPIC_GAME)
                     dispatch(setTimeTest({ id: gameState.id, timeTest: gameState.timeTest }));
+                if (resetData()) {
+                    localStorage.setItem("data-version", DATA_VERSION);
+                }
                 return gameState;
             } catch (err) {
                 console.log("loadStudyGame Error: ", err);

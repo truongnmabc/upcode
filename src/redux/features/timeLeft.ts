@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { REHYDRATE } from "redux-persist";
+import { resetData } from "./dataVersion";
 
 export interface ITimeTestItem {
     id: string; //id cua bai hoc
@@ -29,6 +30,7 @@ export const timeTestSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(REHYDRATE, (state, action) => {
+            if (resetData()) return { data: {} };
             if (action["payload"]) {
                 let data = action["payload"]["timeLeftReducer"]["data"];
                 state.data = data;
