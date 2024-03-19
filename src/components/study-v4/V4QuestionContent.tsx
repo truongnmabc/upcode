@@ -161,7 +161,24 @@ const _QuestionContent = ({
             </>
         );
     }
-    return <TextContent content={content} type={type} bucket={bucket} onLoaded={onLoaded} />;
+    return (
+        <>
+            <TextContent
+                content={content}
+                type={type}
+                bucket={bucket}
+                onLoaded={onLoaded}
+                showImageDialog={(url) => {
+                    setOpenDialog(url);
+                }}
+            />
+            {!!openDialog && (
+                <Dialog open={!!openDialog} onClose={() => setOpenDialog("")} className="customize-dialog">
+                    <ImageDialog closeDialog={() => setOpenDialog("")} url={openDialog} />
+                </Dialog>
+            )}
+        </>
+    );
 };
 
 const TextContent = ({
