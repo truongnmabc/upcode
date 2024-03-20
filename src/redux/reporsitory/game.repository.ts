@@ -36,10 +36,10 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
     if (slashIndex !== -1) {
         slug = slug.substring(slashIndex + 1, fullSlug.length);
     }
-    let topics: ITopic[] = state.topicReducer.list.map((a) => new Topic(a));
+    let topics: ITopic[] = state.topicReducer.list.map((a) => new Topic(a)); // topic đã được lấy về khi getServerSideProps
     let mapTopicQuestions: { [key: string]: Question[] } = state.cardReducer.mapTopicQuestions;
     let appInfo: IAppInfo = state.appInfoReducer.appInfo;
-    let tests: ITestInfo[] = state.testReducer.list;
+    let tests: ITestInfo[] = state.testReducer.list; // test đã được lấy về khi getServerSideProps
     let lisGameStates: GameState[] = state.listGameReducer.games.map((g) => new GameState(g));
     let _state = webData._state;
     // phải check xem đã tồn tại dữ liệu chưa thì mới gọi api (vđề là nếu dữ liệu có thay đổi thì không biết được)

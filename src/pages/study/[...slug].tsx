@@ -58,7 +58,7 @@ const StudyPage = ({
         _state,
     };
     useEffect(() => {
-        localStorage.setItem("select-state-" + appInfo.appNameId, _state);
+        if (appInfo.hasState && !!_state) localStorage.setItem("select-state-" + appInfo.appNameId, _state);
     }, []);
     return (
         <>
