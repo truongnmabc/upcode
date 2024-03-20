@@ -152,7 +152,8 @@ const StudyView = ({
                                 />
                             </div>
                         )}
-                        {(gameType === Config.BRANCH_TEST_GAME ? listBranchs : tests).length > 1 && (
+                        {(gameType === Config.TOPIC_GAME ??
+                            (gameType === Config.BRANCH_TEST_GAME ? listBranchs : tests).length > 1) && (
                             <div className="v4-study-list-branches-0 v4-border-radius">
                                 <h3 className="v4-font-semi-bold">{`More ${appInfo.appName} Tests`}</h3>
                                 {(gameType === Config.BRANCH_TEST_GAME ? listBranchs : tests).map((t, i) => {
