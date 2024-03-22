@@ -76,6 +76,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 if (!_test) {
                     //call api neu nh khong co
                     getTest = true;
+                    console.log("G.R.01");
                 } else {
                     passPercent = _test.passPercent;
                     timeTest = _test.timeTest;
@@ -85,6 +86,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     if (!questionsData || questionsData.length == 0) {
                         // chua co questions data thi goi api thoi
                         getTest = true;
+                        console.log("G.R.02");
                     }
                 }
             } else {
@@ -94,11 +96,13 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 );
                 if (!accessTopic) {
                     // chưa có  thì gọi api
+                    console.log("G.R.03");
                     getTopic = true;
                 } else if (accessTopic && !accessTopic?.topics) {
                     // là data cũ (không có trường topics) thì gọi api
                     getTopic = true;
                     forceLoad = true;
+                    console.log("G.R.04");
                 } else {
                     // co du lieu roi thi gan du lieu de load game
                     // update, thêm level thì cần check xem topic đó có lưu level trong trường topics chưa
@@ -129,6 +133,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     if (!questionsData || questionsData.length == 0) {
                         // chua co questions data thi goi api thoi
                         getTopicQuestions = true;
+                        console.log("G.R.05");
                     }
                 }
             }
@@ -166,6 +171,8 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     if (gameType !== Config.TOPIC_GAME)
                         dispatch(setTimeTest({ id: gameState.id, timeTest: gameState.timeTest }));
                     return gameState;
+                } else {
+                    console.log("G.R.06");
                 }
             }
 
@@ -232,6 +239,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 if (!topicQuestions || topicQuestions?.length == 0) {
                     // neu chua co
                     getTopicQuestions = true;
+                    console.log("G.R.08");
                 }
             }
             if (level_tag && gameType == Config.TOPIC_GAME) {
