@@ -1,4 +1,3 @@
-// import Container from "@material-ui/core/Container";
 import Link from "next/link";
 import { getContactLink, validateEmail } from "@/utils";
 import { APP_SHORT_NAME } from "../../config_app";
