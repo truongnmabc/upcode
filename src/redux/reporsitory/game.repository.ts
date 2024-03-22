@@ -308,7 +308,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 gameState.timeTest = timeTest;
                 gameState.levelTag = level_tag;
 
-                console.log("Start new game!");
+                console.log("Start new game!", gameState.id);
 
                 dispatch(updateToListGames(gameState));
                 if (gameState.gameType !== Config.TOPIC_GAME)
