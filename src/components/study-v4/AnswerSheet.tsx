@@ -21,7 +21,7 @@ const AnswerSheet = ({ gameState, contentData }: { gameState: GameState; content
             // đảm bảo question nào có tồn tại choice được selected thì tức là nó đã được trả lời
             // trường hợp đang làm ở câu mới nhất xong bấm sang câu khác trước đó thì logic này vẫn đúng
             let _q = new Question(q); //khs nó bị mất kiểu object này
-            let correctNum = _q.getCorrectNum();
+            let correctNum = _q.correctNums;
             let listSelected = q.choices.filter((c) => c.selected);
             if (listSelected.length == correctNum) {
                 maximumQuestionIndexIsAnswered++;

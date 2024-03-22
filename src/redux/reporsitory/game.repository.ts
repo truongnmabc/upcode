@@ -351,7 +351,7 @@ const onChooseAnswer = createAsyncThunk(
         let gameState = GameState.cloneGameState(state.gameReducer.game);
         try {
             let _cQuestion = new Question(gameState.currentQuestion);
-            let correctNum = _cQuestion.getCorrectNum(); // số đáp án đúng của câu hỏi
+            let correctNum = _cQuestion.correctNums; // số đáp án đúng của câu hỏi
 
             if (gameState.gameType !== Config.TOPIC_GAME) {
                 // test được chọn lại đáp án (theo kiểu queue),
