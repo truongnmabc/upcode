@@ -23,10 +23,15 @@ const ReviewAnswer = ({ gameState, appInfo }: { gameState: GameState; appInfo: I
             <div className="v4-review-answer-title">Review Your Answers</div>
             <div className="v4-review-answer-questions">
                 {questions.map((question, index) => {
-                    question = { ...question, question: "(" + (index + 1) + "). " + question.question };
+                    // question = { ...question, question: question.question };
                     return (
                         <div className="v4-review-answer-question" key={question.id}>
-                            <QuestionPanelV4 appInfoBucket={appInfo.bucket} question={question} place="review" />
+                            <QuestionPanelV4
+                                appInfoBucket={appInfo.bucket}
+                                question={question}
+                                place="review"
+                                index={index + 1}
+                            />
                         </div>
                     );
                 })}

@@ -132,10 +132,8 @@ const MainStudyView = ({
     //     if (_showKeyboard === "true") setShowKeyboard(false);
     // }, []);
     let explanationContent = thisQuestionIsDone && gameState.gameType == Config.TOPIC_GAME ? currentQuestion.explanation : "";
-    explanationContent = decryptExplanation(explanationContent);
-
-    let contentQuestion = currentQuestion.question;
-    contentQuestion = decryptExplanation(contentQuestion);
+    explanationContent = decryptExplanation(explanationContent, 1);
+    let contentQuestion = decryptExplanation(currentQuestion.question, 2);
     return (
         <div className="v4-main-study-view-0">
             <div className="v4-main-study-view-1 v4-border-radius">

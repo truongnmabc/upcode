@@ -14,11 +14,13 @@ const QuestionPanelV4 = ({
     appInfoBucket,
     allowShowAnswer = true,
     place,
+    index = -1,
 }: {
     question: Question;
     appInfoBucket: string;
     allowShowAnswer?: boolean;
     place: "question" | "study" | "review";
+    index?: number;
 }) => {
     const [expandParagraph, setExpandParagraph] = useState(false);
     let explanationContent = decryptExplanation(question.explanation);
@@ -29,7 +31,7 @@ const QuestionPanelV4 = ({
             {tester && question.id}
             <div className="v4-question-panel-content v4-border-radius">
                 <V4QuestionContent
-                    content={contentQuestion}
+                    content={(index > -1 ? index + ". " : "") + contentQuestion}
                     bucket={appInfoBucket}
                     renderMathJax={isMathJaxContent(contentQuestion)}
                     image={question.image}

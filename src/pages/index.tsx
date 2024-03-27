@@ -117,9 +117,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
     });
 };
 const genState = async () => {
-    const states = stateData.dmv.slice(40, 51);
-    const appId = "6309732366155776";
-    const bucket = "dmv";
+    const states = stateData.cdl.slice(0, 51);
+    const appId = "6540077669810176";
+    const bucket = "cdl_v2";
     for (let s of states) {
         try {
             setTimeout(() => {}, 1000);

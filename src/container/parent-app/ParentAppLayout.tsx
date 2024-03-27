@@ -193,11 +193,11 @@ let exportApp = [
     //     appId: 6504182246801408,
     //     bucket: "hiset",
     // },
-    // {
-    //     appName: "Accuplacer",
-    //     appId: 6119576033034240,
-    //     bucket: "accuplacer",
-    // },
+    // // {
+    // //     appName: "Accuplacer",
+    // //     appId: 6119576033034240,
+    // //     bucket: "accuplacer",
+    // // },
     // {
     //     appName: "CHSPE",
     //     appId: 6564860188950528,
@@ -248,159 +248,159 @@ let exportApp = [
     //     appId: 5252858371899392,
     //     bucket: "dkt",
     // },
-    // // {
-    // //     appName: "ASVAB",
-    // //     appId: 4878338973761536,
-    // //     bucket: "asvab",
-    // // },
     // {
-    //     appName: "PCCN",
-    //     appId: 5421595969454080,
-    //     bucket: "pccn",
+    //     appName: "ASVAB",
+    //     appId: 4878338973761536,
+    //     bucket: "asvab",
     // },
+    {
+        appName: "PCCN",
+        appId: 5421595969454080,
+        bucket: "pccn",
+    },
+    {
+        appName: "GRE",
+        appId: 6098076194308096,
+        bucket: "gre",
+    },
+    {
+        appName: "CCAT",
+        appId: 5311366673989632,
+        bucket: "ccat",
+    },
+    {
+        appName: "CBEST",
+        appId: 4896549496684544,
+        bucket: "cbest",
+    },
+    {
+        appName: "GED",
+        appId: 5296397775536128,
+        bucket: "ged",
+    },
+    {
+        appName: "CompTIA CySA+",
+        appId: 6660380035121152,
+        bucket: "comptiacysa",
+    },
+    {
+        appName: "AWS Cloud Practitioner",
+        appId: 6219842827845632,
+        bucket: "awscp_new",
+    },
+    {
+        appName: "EPA 608",
+        appId: 6074233270566912,
+        bucket: "epa608",
+    },
+    {
+        appName: "TASC",
+        appId: 5462477120733184,
+        bucket: "tasc",
+    },
+    {
+        appName: "APUSH",
+        appId: 4856116048560128,
+        bucket: "apush",
+    },
+    {
+        appName: "HSPT",
+        appId: 6174673429594112,
+        bucket: "hspt",
+    },
     // {
-    //     appName: "GRE",
-    //     appId: 6098076194308096,
-    //     bucket: "gre",
+    //     appName: "DMV",
+    //     appId: 6309732366155776,
+    //     bucket: "dmv",
     // },
-    // {
-    //     appName: "CCAT",
-    //     appId: 5311366673989632,
-    //     bucket: "ccat",
-    // },
-    // {
-    //     appName: "CBEST",
-    //     appId: 4896549496684544,
-    //     bucket: "cbest",
-    // },
-    // {
-    //     appName: "GED",
-    //     appId: 5296397775536128,
-    //     bucket: "ged",
-    // },
-    // {
-    //     appName: "CompTIA CySA+",
-    //     appId: 6660380035121152,
-    //     bucket: "comptiacysa",
-    // },
-    // {
-    //     appName: "AWS Cloud Practitioner",
-    //     appId: 6219842827845632,
-    //     bucket: "awscp_new",
-    // },
-    // {
-    //     appName: "EPA 608",
-    //     appId: 6074233270566912,
-    //     bucket: "epa608",
-    // },
-    // {
-    //     appName: "TASC",
-    //     appId: 5462477120733184,
-    //     bucket: "tasc",
-    // },
-    // {
-    //     appName: "APUSH",
-    //     appId: 4856116048560128,
-    //     bucket: "apush",
-    // },
-    // {
-    //     appName: "HSPT",
-    //     appId: 6174673429594112,
-    //     bucket: "hspt",
-    // },
-    // // {
-    // //     appName: "DMV",
-    // //     appId: 6309732366155776,
-    // //     bucket: "dmv",
-    // // },
-    // {
-    //     appName: "NMLS",
-    //     appId: 6465005999357952,
-    //     bucket: "nmls",
-    // },
-    // {
-    //     appName: "EMT",
-    //     appId: 5243570678136832,
-    //     bucket: "emtb",
-    // },
-    // {
-    //     appName: "CAPM",
-    //     appId: 4739223829610496,
-    //     bucket: "capm",
-    // },
-    // {
-    //     appName: "CFA Level 1",
-    //     appId: 5615326898159616,
-    //     bucket: "cfa",
-    // },
-    // {
-    //     appName: "CCNA",
-    //     appId: 5391119996157952,
-    //     bucket: "ccna",
-    // },
-    // {
-    //     appName: "Series 7",
-    //     appId: 5601951678988288,
-    //     bucket: "series7",
-    // },
-    // {
-    //     appName: "NCLEX PN",
-    //     appId: 4691917260455936,
-    //     bucket: "nclexpn",
-    // },
-    // {
-    //     appName: "DAT",
-    //     appId: 5276218037370880,
-    //     bucket: "dat",
-    // },
-    // {
-    //     appName: "Phlebotomy",
-    //     appId: 6328870527565824,
-    //     bucket: "phlebotomy",
-    // },
-    // {
-    //     appName: "TEAS",
-    //     appId: 5186025303310336,
-    //     bucket: "teas",
-    // },
-    // {
-    //     appName: "CPCE",
-    //     appId: 4540394026041344,
-    //     bucket: "cpce",
-    // },
-    // {
-    //     appName: "AWS Solutions Architect Associate",
-    //     appId: 5962925959282688,
-    //     bucket: "awscertifiedsolutionsarchitect",
-    // },
-    // {
-    //     appName: "ASE Series A",
-    //     appId: 5881924151148544,
-    //     bucket: "ase",
-    // },
-    // {
-    //     appName: "PTCE",
-    //     appId: 5753091221618688,
-    //     bucket: "ptce",
-    // },
-    // {
-    //     appName: "PMP",
-    //     appId: 6711507096174592,
-    //     bucket: "pmp",
-    // },
-    // {
-    //     appName: "CAST",
-    //     appId: 6449536089194496,
-    //     bucket: "cast",
-    // },
-    // {
-    //     appName: "NCE",
-    //     appId: 5569772466995200,
-    //     bucket: "nce",
-    // },
-    // {
-    //     appName: "CompTIA A+",
-    //     appId: 5551925043920896,
-    //     bucket: "comptiaa",
-    // },
+    {
+        appName: "NMLS",
+        appId: 6465005999357952,
+        bucket: "nmls",
+    },
+    {
+        appName: "EMT",
+        appId: 5243570678136832,
+        bucket: "emtb",
+    },
+    {
+        appName: "CAPM",
+        appId: 4739223829610496,
+        bucket: "capm",
+    },
+    {
+        appName: "CFA Level 1",
+        appId: 5615326898159616,
+        bucket: "cfa",
+    },
+    {
+        appName: "CCNA",
+        appId: 5391119996157952,
+        bucket: "ccna",
+    },
+    {
+        appName: "Series 7",
+        appId: 5601951678988288,
+        bucket: "series7",
+    },
+    {
+        appName: "NCLEX PN",
+        appId: 4691917260455936,
+        bucket: "nclexpn",
+    },
+    {
+        appName: "DAT",
+        appId: 5276218037370880,
+        bucket: "dat",
+    },
+    {
+        appName: "Phlebotomy",
+        appId: 6328870527565824,
+        bucket: "phlebotomy",
+    },
+    {
+        appName: "TEAS",
+        appId: 5186025303310336,
+        bucket: "teas",
+    },
+    {
+        appName: "CPCE",
+        appId: 4540394026041344,
+        bucket: "cpce",
+    },
+    {
+        appName: "AWS Solutions Architect Associate",
+        appId: 5962925959282688,
+        bucket: "awscertifiedsolutionsarchitect",
+    },
+    {
+        appName: "ASE Series A",
+        appId: 5881924151148544,
+        bucket: "ase",
+    },
+    {
+        appName: "PTCE",
+        appId: 5753091221618688,
+        bucket: "ptce",
+    },
+    {
+        appName: "PMP",
+        appId: 6711507096174592,
+        bucket: "pmp",
+    },
+    {
+        appName: "CAST",
+        appId: 6449536089194496,
+        bucket: "cast",
+    },
+    {
+        appName: "NCE",
+        appId: 5569772466995200,
+        bucket: "nce",
+    },
+    {
+        appName: "CompTIA A+",
+        appId: 5551925043920896,
+        bucket: "comptiaa",
+    },
 ];
