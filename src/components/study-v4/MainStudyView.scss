@@ -152,6 +152,25 @@
             .v4-main-study-view-btn-wrapper {
                 height: 60px;
 
+                #v4-btn-sticky {
+                    position: relative;
+                    &.show {
+                        box-shadow: none;
+                        width: 100%;
+                        padding: 10px 0 0 0;
+                    }
+                }
+                .v4-main-study-view-btn-0 {
+                    width: fit-content;
+                    align-self: self-end;
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 924px) {
+        .v4-main-study-view-1 {
+            .v4-main-study-view-btn-wrapper {
                 .keyboard {
                     position: relative;
                     z-index: 5;
@@ -161,10 +180,10 @@
                         border: 1px solid #2121211f;
                         border-radius: 8px;
                         height: 42px;
-                        width: calc(100% - 1px - 1px - 146px - 146px - 16px - 16px);
-                        left: 50%;
+                        width: calc(100% - 1px - 1px - 146px - 16px);
+                        // left: 50%;
                         margin-top: 10px;
-                        transform: translateX(-50%);
+                        // transform: translateX(-50%);
 
                         .border-2 {
                             height: 100%;
@@ -177,18 +196,19 @@
                         }
                     }
                 }
+            }
+        }
+    }
 
-                #v4-btn-sticky {
-                    position: relative;
-                    &.show {
-                        box-shadow: none;
-                        width: 100%;
-                        padding: 10px 0 0 0;
+    @media screen and (min-width: 1078px) {
+        .v4-main-study-view-1 {
+            .v4-main-study-view-btn-wrapper {
+                .keyboard {
+                    .border-1 {
+                        width: fit-content; //calc(100% - 1px - 1px - 146px - 146px - 16px - 16px);
+                        left: 50%;
+                        transform: translateX(-50%);
                     }
-                }
-                .v4-main-study-view-btn-0 {
-                    width: fit-content;
-                    align-self: self-end;
                 }
             }
         }

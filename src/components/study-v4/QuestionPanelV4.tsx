@@ -2,7 +2,7 @@ import { useState } from "react";
 import Config from "../../config";
 import { getSession } from "../../config/config_web";
 import Question from "../../models/Question";
-import { TextContentType, isMathJaxContent } from "../../utils/v4_question";
+import { TextContentType, decryptExplanation, isMathJaxContent } from "../../utils/v4_question";
 import MyCollapse from "../v4-material/MyCollapse";
 import ChoicesPanelV4 from "./ChoicesPanelV4";
 import QuestionMultipleChoiceV4 from "./QuestionMultipleChoiceV4";
@@ -21,14 +21,17 @@ const QuestionPanelV4 = ({
     place: "question" | "study" | "review";
 }) => {
     const [expandParagraph, setExpandParagraph] = useState(false);
+    let explanationContent = decryptExplanation(question.explanation);
+    let contentQuestion = decryptExplanation(question.question);
+    // if (!isProUser) explanationContent = hashText(explanationContent);
     return (
         <div className="v4-question-panel">
             {tester && question.id}
             <div className="v4-question-panel-content v4-border-radius">
                 <V4QuestionContent
-                    content={question.question}
+                    content={contentQuestion}
                     bucket={appInfoBucket}
-                    renderMathJax={isMathJaxContent(question.question)}
+                    renderMathJax={isMathJaxContent(contentQuestion)}
                     image={question.image}
                     place={place}
                 />
@@ -75,10 +78,10 @@ const QuestionPanelV4 = ({
                 <div className="explanation-content-wrapper">
                     <div>
                         <V4QuestionContent
-                            content={question.explanation}
+                            content={explanationContent}
                             type={TextContentType.explanation}
                             bucket={appInfoBucket}
-                            renderMathJax={isMathJaxContent(question.explanation)}
+                            renderMathJax={isMathJaxContent(explanationContent)}
                             place={place}
                         />
                     </div>

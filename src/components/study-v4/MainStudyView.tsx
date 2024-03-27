@@ -2,7 +2,7 @@ import "./MainStudyView.scss";
 import { GameState, getNumOfCorrectAnswer } from "../../redux/features/game";
 import { IAppInfo } from "../../models/AppInfo";
 import { IChoice } from "../../models/Choice";
-import { TextContentType, renderMath } from "../../utils/v4_question";
+import { TextContentType, decryptExplanation, renderMath } from "../../utils/v4_question";
 import { useDispatch } from "react-redux";
 import * as ga from "../../services/ga";
 import ChoicesPanelV4 from "./ChoicesPanelV4";
@@ -11,7 +11,7 @@ import dynamic from "next/dynamic";
 import QuestionMultipleChoiceV4 from "./QuestionMultipleChoiceV4";
 import V4QuestionContent from "./V4QuestionContent";
 import { nextQuestion, onChooseAnswer, onGameSubmitted } from "@/redux/reporsitory/game.repository";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const CancelRoundedIcon = dynamic(() => import("@mui/icons-material/CancelRounded"), { ssr: false });
 const CheckCircleRoundedIcon = dynamic(() => import("@mui/icons-material/CheckCircleRounded"), { ssr: false });
@@ -20,10 +20,18 @@ const ErrorRoundedIcon = dynamic(() => import("@mui/icons-material/ErrorRounded"
 const InfoIcon = dynamic(() => import("../icon/InfoIcon"), { ssr: false });
 const V4CircleProgress = dynamic(() => import("../v4-material/V4CircleProgress"));
 
-const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: IAppInfo }) => {
+const MainStudyView = ({
+    gameState,
+    appInfo,
+    haveCountdown = false,
+}: {
+    gameState: GameState;
+    appInfo: IAppInfo;
+    haveCountdown?: boolean;
+}) => {
     let currentQuestion = gameState.currentQuestion;
     // const isDesktop = useMediaQuery("(min-width:769px)");
-    const [showKeyboard, setShowKeyboard] = useState(true);
+    // const [showKeyboard, setShowKeyboard] = useState(true);
     const dispatch = useDispatch();
     let thisQuestionIsDone =
         currentQuestion.questionStatus == Config.QUESTION_ANSWERED_CORRECT ||
@@ -50,7 +58,7 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
         }
     };
     const onChoiceSelected = (choice: IChoice, useKeyboard?: boolean) => {
-        if (useKeyboard) setShowKeyboard(false);
+        if (useKeyboard) setHideKeyboard();
         ga.event({
             action: "v4_study_users_answer_quiz",
             params: {
@@ -62,6 +70,13 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
             },
         });
         dispatch(onChooseAnswer(choice));
+    };
+
+    const setHideKeyboard = () => {
+        let kb = document.getElementById("v4-keyboard");
+        if (!!kb) {
+            kb.style.display = "none";
+        }
     };
 
     useEffect(() => {
@@ -86,8 +101,9 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
     useEffect(() => {
         const handleEnterEvent = (event: KeyboardEvent) => {
             if (Config.V4KEYBOARD.includes(event.code)) {
-                localStorage.setItem("useKeyboard", "true");
-                if (showKeyboard) setShowKeyboard(false);
+                // localStorage.setItem("useKeyboard", "true");
+                // if (showKeyboard) setShowKeyboard(false);
+                setHideKeyboard();
             }
             if (event.code == "Enter" || event.code === "NumpadEnter") {
                 event.preventDefault();
@@ -111,11 +127,15 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
         };
     }, [thisQuestionIsDone, isLastQuestion]);
 
-    useEffect(() => {
-        let _showKeyboard = localStorage.getItem("useKeyboard");
-        if (_showKeyboard === "true") setShowKeyboard(false);
-    }, []);
+    // useEffect(() => {
+    //     let _showKeyboard = localStorage.getItem("useKeyboard");
+    //     if (_showKeyboard === "true") setShowKeyboard(false);
+    // }, []);
+    let explanationContent = thisQuestionIsDone && gameState.gameType == Config.TOPIC_GAME ? currentQuestion.explanation : "";
+    explanationContent = decryptExplanation(explanationContent);
 
+    let contentQuestion = currentQuestion.question;
+    contentQuestion = decryptExplanation(contentQuestion);
     return (
         <div className="v4-main-study-view-0">
             <div className="v4-main-study-view-1 v4-border-radius">
@@ -123,7 +143,7 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                     <V4CircleProgress />
                 ) : (
                     <>
-                        {gameState.gameType !== Config.TOPIC_GAME && (
+                        {gameState.gameType !== Config.TOPIC_GAME && haveCountdown && (
                             <div className="v4-test-game-count-down-desktop-0 _769">
                                 <CountDownV4 gameState={gameState} />
                             </div>
@@ -131,7 +151,7 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                         {/* hiện tại chỗ này không dùng được GamePanelV4 vì phần này có nhiều config riêng quá */}
                         <div className="v4-main-study-view-question-content-0 v4-border-radius">
                             <V4QuestionContent
-                                content={currentQuestion.question}
+                                content={contentQuestion}
                                 bucket={appInfo.bucket}
                                 renderMathJax={true}
                                 image={currentQuestion.image}
@@ -254,11 +274,7 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                                 <div className="explanation-content-wrapper">
                                     <div>
                                         <V4QuestionContent
-                                            content={
-                                                thisQuestionIsDone && gameState.gameType == Config.TOPIC_GAME
-                                                    ? currentQuestion.explanation
-                                                    : ""
-                                            }
+                                            content={explanationContent}
                                             type={TextContentType.explanation}
                                             bucket={appInfo.bucket}
                                             renderMathJax={true}
@@ -269,15 +285,15 @@ const MainStudyView = ({ gameState, appInfo }: { gameState: GameState; appInfo: 
                         </div>
 
                         <div className="v4-main-study-view-btn-wrapper" id="v4-sticky" style={{ textAlign: "right" }}>
-                            {showKeyboard && (
-                                <div className="keyboard">
-                                    <div className="border-1">
-                                        <div className="border-2 align-center">
-                                            <img src="/images/keyboard.png" />
-                                        </div>
+                            {/* {showKeyboard && ( */}
+                            <div className="keyboard" id="v4-keyboard">
+                                <div className="border-1">
+                                    <div className="border-2 align-center">
+                                        <img src="/images/keyboard.png" />
                                     </div>
                                 </div>
-                            )}
+                            </div>
+                            {/* )} */}
                             <div id="v4-btn-sticky" className={thisQuestionIsDone ? " show " : ""}>
                                 <button
                                     className={

@@ -113,3 +113,21 @@ export function getSizeImage(str: string) {
 
     return { maxWidth: "200px", maxHeight: "200px" };
 }
+
+const CryptoJS = require("crypto-js");
+const KEY = process.env.NEXT_PUBLIC_SECRET_KEY;
+const IV = KEY.slice(0, 12);
+
+export const decryptExplanation = (encryptText: string) => {
+    if (!encryptText) return "";
+    try {
+        var decryptedExplanation = CryptoJS.AES.decrypt(encryptText, KEY, {
+            iv: IV,
+            mode: CryptoJS.mode.CBC,
+            padding: CryptoJS.pad.Pkcs7,
+        });
+        return decryptedExplanation.toString(CryptoJS.enc.Utf8);
+    } catch (e) {
+        return encryptText;
+    }
+};

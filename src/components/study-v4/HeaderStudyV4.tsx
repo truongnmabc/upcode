@@ -17,10 +17,12 @@ const HeaderStudyV4 = ({
     gameState,
     isTopicTest,
     appInfo,
+    haveCountdown = false,
 }: {
     gameState: GameState;
     isTopicTest: boolean;
     appInfo: IAppInfo;
+    haveCountdown?: boolean;
 }) => {
     const dispatch = useDispatch();
     const [openDrawer, setOpendrawer] = useState(false);
@@ -55,7 +57,7 @@ const HeaderStudyV4 = ({
                     >
                         <ArrowBackIosNewRoundedIcon htmlColor="#212121" />
                     </div>
-                    {!isTopicTest && (
+                    {!isTopicTest && haveCountdown && (
                         <div className="v4-test-game-count-down-mobile-0">
                             <CountDownV4 gameState={gameState} />
                         </div>

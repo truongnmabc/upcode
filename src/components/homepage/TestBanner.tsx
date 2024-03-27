@@ -40,11 +40,15 @@ const TestBanner = ({ appInfo, test, index }: { appInfo: IAppInfo; test: ITestIn
 
                     <span className="v4-test-banner-description">
                         {`Complete practicing? Now this is a full ${appInfo.appName} practice test 
-                        that mimics the real test. You'll have ${timeTest} minutes 
+                        that mimics the real test. ${
+                            test.timeTest > 0
+                                ? `You'll have ${timeTest} minutes 
                         ${timeTest > 60 ? `(${Math.floor(timeTest / 60)} hours and ${timeTest % 60} minutes)` : ""} to finish ${
-                            test?.totalQuestion
-                        } questions 
-                        from all ${appInfo.appName} sections.`}
+                                      test?.totalQuestion
+                                  } questions 
+                        from all ${appInfo.appName} sections.`
+                                : "There's no time limit on the tests, so you can focus on doing your best to demonstrate your skills."
+                        }`}
                     </span>
 
                     <div className="v4-test-banner-content-button-practice v4-border-radius">Practice now!</div>

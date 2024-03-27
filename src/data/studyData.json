@@ -2251,7 +2251,13 @@
                 "tag": "next-generation-writing"
             }
         ],
-        "fullTests": ["full-length-accuplacer-practice-test"]
+        "fullTests": [
+            "full-length-accuplacer-next-generation-advanced-algebra-and-functions-practice-test",
+            "full-length-accuplacer-next-generation-arithmetic-practice-test",
+            "full-length-accuplacer-next-generation-quantitative-reasoning-algebra-and-statistics-practice-test",
+            "full-length-accuplacer-next-generation-reading-practice-test",
+            "full-length-accuplacer-next-generation-writing-practice-test"
+        ]
     },
     {
         "appId": 6564860188950528,

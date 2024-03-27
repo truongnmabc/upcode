@@ -5,8 +5,10 @@ const states = require("./src/data/statesName.json");
 const BUCKET = "new-data-web/";
 const BUCKET2 = "new-data-web-test/";
 exports.genDataFunc = async (appInfos = [], origin = "", web) => {
-    if (web === "development") await genStudyData(appInfos, web);
-    genXMLFunc(appInfos, origin);
+    if (web === "development") {
+        await genStudyData(appInfos, web);
+        genXMLFunc(appInfos, origin);
+    }
 };
 
 /** gen ra file studyData.json */
@@ -52,10 +54,11 @@ const genStudyData = async (listAppInfos = []) => {
     ];
     const fetchData = async (appInfo, _state) => {
         let a = {};
+        let _2 = !!_state || appInfo.bucket === "accuplacer" || appInfo.bucket === "asvab" || appInfo.bucket === "capm";
         console.log(appInfo.bucket, _state);
         await fetch(
             "https://storage.googleapis.com/micro-enigma-235001.appspot.com/" +
-                (!!_state ? BUCKET2 : BUCKET) +
+                (!!_2 ? BUCKET2 : BUCKET) +
                 appInfo.bucket +
                 (_state ? "/" + _state : "") +
                 "/topics-and-tests.json?t=" +

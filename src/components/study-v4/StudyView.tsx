@@ -91,11 +91,17 @@ const StudyView = ({
             };
         }
     }, []);
+    let haveCountdown = contentData?.tests?.find((t) => t.slug == gameState.id)?.timeTest > 0;
     return (
         <>
             <div className="__768" style={{ height: 60 }}>
                 {isFinish == 0 ? (
-                    <HeaderStudyV4 gameState={gameState} isTopicTest={gameType == Config.TOPIC_GAME} appInfo={appInfo} />
+                    <HeaderStudyV4
+                        gameState={gameState}
+                        isTopicTest={gameType == Config.TOPIC_GAME}
+                        appInfo={appInfo}
+                        haveCountdown={haveCountdown}
+                    />
                 ) : isFinish == 1 ? (
                     <div
                         className="align-center"
@@ -164,7 +170,7 @@ const StudyView = ({
                                         title = t.title;
                                     } else {
                                         url = t.slug;
-                                        title = t.title + ((t.title as string).toLowerCase().endsWith("test") ? "" : " Test");
+                                        title = t.title + ((t.title as string).toLowerCase().includes("test") ? "" : " Test");
                                     }
                                     return (
                                         <a
@@ -207,7 +213,7 @@ const StudyView = ({
                             />
                         ) : isFinish == 0 ? (
                             <>
-                                <MainStudyView gameState={gameState} appInfo={appInfo} />
+                                <MainStudyView gameState={gameState} appInfo={appInfo} haveCountdown={haveCountdown} />
                                 <div id="v4-main-study-other-content" ref={ref}>
                                     <StudyBannerDownloadApp
                                         appInfo={appInfo}

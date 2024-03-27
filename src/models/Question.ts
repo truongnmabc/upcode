@@ -12,6 +12,7 @@ class Question {
     progress: number[]; // v4
     question: string;
     questionStatus: number;
+    index: number;
 
     constructor(object: any = {}) {
         this.id = object.id;
@@ -19,6 +20,7 @@ class Question {
         this.hint = object.hint ?? "";
         this.image = object.image ?? "";
         this.explanation = object.explanation ?? "";
+        this.index = object.index ?? -1;
         this.questionStatus = object.questionStatus ?? Config.QUESTION_NOT_ANSWERED;
         this.choices = getListChoices(object.answers, object.choices, this.id);
         if (this.choices.length <= 0 && object.listChoices?.length > 0) {

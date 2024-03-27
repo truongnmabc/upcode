@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { REHYDRATE } from "redux-persist";
 import Question from "../../models/Question";
-import { DATA_VERSION, resetData } from "./dataVersion";
+import { resetData } from "./dataVersion";
 
 export interface ICardState {
     mapTopicQuestions: { [key: string]: Question[] };
@@ -19,7 +19,7 @@ export const cardSlice = createSlice({
                     let payload = action["payload"];
                     let questions = payload.questions;
                     let parentId = payload.parentId;
-                    questions = questions.map((q) => new Question(q));
+                    questions = questions.map((q, i) => new Question({ ...q, index: i }));
                     if (state.mapTopicQuestions) state.mapTopicQuestions[parentId] = questions; // gán đè luôn, chú ý chỗ này!! // gán đè luôn, chú ý chỗ này!!
                 }
             } catch (e) {

@@ -10,7 +10,7 @@ export async function readFileAppFromGoogleStorage(appInfo: IAppInfo, _state?: s
     // ****  NẾU SỬA HÀM NÀY THÌ PHẢI SỬA CẢ HÀM fetchData TRONG FILE gen-data.js
     try {
         console.log("---" + appInfo.bucket);
-        let isDmv = !!_state;
+        let isDmv = !!_state || true;
         //https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/topics-and-tests.json
         let data = await callApi({
             url:
@@ -44,7 +44,7 @@ export async function readFileAppFromGoogleStorage(appInfo: IAppInfo, _state?: s
 export async function getTopicQuestionsFromGoogleStorage(bucket: string, topicTag: string, _state: string) {
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/general-science-questions.json
     try {
-        let isDmv = !!_state;
+        let isDmv = !!_state || true;
         let data = await callApi({
             url: `${!isDmv ? BUCKET : BUCKET2}${
                 bucket + (_state ? "/" + _state : "")
@@ -64,7 +64,7 @@ export async function getTopicQuestionsFromGoogleStorage(bucket: string, topicTa
 export async function getTestDataFromGoogleStorage(bucket: string, url: string, _state) {
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/full-tests.json
     try {
-        let isDmv = !!_state;
+        let isDmv = !!_state || true;
         let data = await callApi({
             url: `${!isDmv ? BUCKET : BUCKET2}${bucket + (_state ? "/" + _state : "")}/${url}.json?t=${Date.now()}`,
             params: null,
