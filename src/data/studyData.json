@@ -129,12 +129,17 @@
             },
             { "title": "Regulation (REG)", "url": "cpa-regulation-reg--practice-test", "tag": "regulation-reg-" }
         ],
-        "fullTests": ["full-length-cpa-practice-test"]
+        "fullTests": [
+            "full-length-cpa-auditing-and-attestation-aud--practice-test",
+            "full-length-cpa-financial-accounting-and-reporting-far--practice-test",
+            "full-length-cpa-business-environment-and-concepts-bec--practice-test",
+            "full-length-cpa-regulation-reg--practice-test"
+        ]
     },
     {
         "appId": 5198848772276224,
         "topics": [{ "title": "Practice Questions", "url": "nate-practice-questions", "tag": "practice-questions" }],
-        "fullTests": ["full-length-nate-practice-test"]
+        "fullTests": ["full-length-nate-practice-questions-practice-test"]
     },
     {
         "appId": 5007397443600384,
@@ -244,7 +249,11 @@
             { "title": "Math", "url": "tabe-math-with-ex--practice-test", "tag": "tabe-math-with-ex-" },
             { "title": "Reading", "url": "tabe-reading-practice-test", "tag": "tabe-reading" }
         ],
-        "fullTests": ["full-length-tabe-practice-test"]
+        "fullTests": [
+            "full-length-tabe-tabe-reading-practice-test",
+            "full-length-tabe-tabe-language-practice-test",
+            "full-length-tabe-tabe-math-with-ex--practice-test"
+        ]
     },
     {
         "appId": 4561360798089216,
@@ -314,7 +323,12 @@
             { "title": "ServSafe Food Handler", "url": "servsafe-food-handler-practice-test", "tag": "servsafe-food-handler" },
             { "title": "ServSafe Manager", "url": "servsafe-manager-practice-test", "tag": "servsafe-manager" }
         ],
-        "fullTests": ["full-length-servsafe-practice-test"]
+        "fullTests": [
+            "full-length-servsafe-servsafe-alcohol-primary-and-alcohol-advanced-practice-test",
+            "full-length-servsafe-servsafe-allergens-practice-test",
+            "full-length-servsafe-servsafe-food-handler-practice-test",
+            "full-length-servsafe-servsafe-manager-practice-test"
+        ]
     },
     {
         "appId": 5397248982646784,
@@ -2417,7 +2431,16 @@
             },
             { "title": "Vocabulary", "url": "hesi-a2-vocabulary-practice-test", "tag": "vocabulary" }
         ],
-        "fullTests": ["full-length-hesi-a2-practice-test"]
+        "fullTests": [
+            "full-length-hesi-a2-mathematics-practice-test",
+            "full-length-hesi-a2-reading-comprehension-practice-test",
+            "full-length-hesi-a2-vocabulary-practice-test",
+            "full-length-hesi-a2-grammar-practice-test",
+            "full-length-hesi-a2-biology-practice-test",
+            "full-length-hesi-a2-chemistry-practice-test",
+            "full-length-hesi-a2-anatomy--physiology-practice-test",
+            "full-length-hesi-a2-physics-practice-test"
+        ]
     },
     {
         "appId": 5473188218667008,
@@ -2680,7 +2703,12 @@
                 "tag": "type-3"
             }
         ],
-        "fullTests": ["full-length-epa-608-practice-test"]
+        "fullTests": [
+            "full-length-epa-608-core-exam-practice-test",
+            "full-length-epa-608-type-1-practice-test",
+            "full-length-epa-608-type-2-practice-test",
+            "full-length-epa-608-type-3-practice-test"
+        ]
     },
     {
         "appId": 5462477120733184,
@@ -2695,7 +2723,13 @@
             { "title": "Social Studies", "url": "tasc-social-studies-practice-test", "tag": "social-studies" },
             { "title": "Writing", "url": "tasc-writing-practice-test", "tag": "writing" }
         ],
-        "fullTests": ["full-length-tasc-practice-test"]
+        "fullTests": [
+            "full-length-tasc-mathematical-reasoning-practice-test",
+            "full-length-tasc-reasoning-through-language-arts-practice-test",
+            "full-length-tasc-science-practice-test",
+            "full-length-tasc-social-studies-practice-test",
+            "full-length-tasc-writing-practice-test"
+        ]
     },
     {
         "appId": 4856116048560128,
@@ -3255,7 +3289,17 @@
             { "title": "A8: Engine Performance", "url": "ase-a8-practice-test", "tag": "a8" },
             { "title": "A9: Light Vehicle Diesel Engines", "url": "ase-a9-practice-test", "tag": "a9" }
         ],
-        "fullTests": ["full-length-ase-practice-test"]
+        "fullTests": [
+            "full-length-ase-ase-series-a-practice-test",
+            "full-length-ase-a2-practice-test",
+            "full-length-ase-a3-practice-test",
+            "full-length-ase-a4-practice-test",
+            "full-length-ase-a5-practice-test",
+            "full-length-ase-a6-practice-test",
+            "full-length-ase-a7-practice-test",
+            "full-length-ase-a8-practice-test",
+            "full-length-ase-a9-practice-test"
+        ]
     },
     {
         "appId": 5753091221618688,
@@ -3364,6 +3408,16 @@
             { "title": "Bonus 1101 questions", "url": "comptia-a-practice-exam-220--1101", "tag": "practice-exam-220--1101" },
             { "title": "Bonus 1102 questions", "url": "comptia-a-practice-exam-220--1102", "tag": "practice-exam-220--1102" }
         ],
-        "fullTests": ["full-length-comptia-a-practice-test"]
+        "fullTests": [
+            "full-length-comptia-a-chapter-1--mobile-devices-practice-test",
+            "full-length-comptia-a-chapter-2-networking-practice-test",
+            "full-length-comptia-a-chapter-3-hardware-practice-test",
+            "full-length-comptia-a-chapter-4-virtualization-and-cloud-computing-practice-test",
+            "full-length-comptia-a-chapter-5-hardware-and-network-troubleshooting-practice-test",
+            "full-length-comptia-a-chapter-6-operating-systems-practice-test",
+            "full-length-comptia-a-chapter-7-security-practice-test",
+            "full-length-comptia-a-chapter-8-software-troubleshooting-practice-test",
+            "full-length-comptia-a-chapter-9-operational-procedures-practice-test"
+        ]
     }
 ]

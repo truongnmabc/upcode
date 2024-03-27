@@ -54,7 +54,7 @@ const genStudyData = async (listAppInfos = []) => {
     ];
     const fetchData = async (appInfo, _state) => {
         let a = {};
-        let _2 = !!_state || appInfo.bucket === "accuplacer" || appInfo.bucket === "asvab" || appInfo.bucket === "capm";
+        let _2 = !!_state || true;
         console.log(appInfo.bucket, _state);
         await fetch(
             "https://storage.googleapis.com/micro-enigma-235001.appspot.com/" +
