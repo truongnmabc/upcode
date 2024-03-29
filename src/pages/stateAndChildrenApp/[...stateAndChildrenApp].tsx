@@ -12,6 +12,7 @@ import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
 import replaceYear from "@/utils/replaceYear";
 import states from "../../data/statesName.json";
 import { genStudyLink } from "@/utils/getStudyLink";
+import { getHomeSeoContentApi } from "@/services/home.service";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -129,10 +130,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 tests = appData?.fullTests ?? [];
             }
         }
-        // let homeSeoContent = await getHomeSeoContentApi("home-seo-content");
-        // if (homeSeoContent) {
-        //     homeSeoContent.content = replaceYear(homeSeoContent.content);
-        // }
+        let homeSeoContent = await getHomeSeoContentApi("home-seo-content");
+        if (homeSeoContent) {
+            homeSeoContent.content = replaceYear(homeSeoContent.content);
+        }
 
         // await genstudyDataJSON(listAppInfos);
         let titleSEO = replaceYear(childAppInfo.title);

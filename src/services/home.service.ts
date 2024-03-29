@@ -14,7 +14,7 @@ export const getHomeSeoContentApi = async (postUrl: string) => {
     if (!END_POINT_WORD_PRESS?.length) {
         return "";
     }
-    let url = END_POINT_WORD_PRESS + Config.PREFIX_URL + APIConfig.GET_HOME_SEO_CONTENT + "?posturl=" + postUrl;
+    let url = END_POINT_WORD_PRESS + Config.PREFIX_URL + "/posts" + "?slug=" + postUrl;
     let content = await GET({ url });
     return content;
 };
