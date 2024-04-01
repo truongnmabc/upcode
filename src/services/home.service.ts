@@ -15,7 +15,7 @@ export const getHomeSeoContentApi = async (pageUrl: string) => {
         if (!END_POINT_WORD_PRESS?.length) {
             throw "END_POINT_NULL!";
         }
-        let url = END_POINT_WORD_PRESS + Config.PREFIX_URL + "/pages" + "?slug=" + pageUrl;
+        let url = END_POINT_WORD_PRESS + Config.PREFIX_URL_2 + "/pages" + "?slug=" + pageUrl;
         let seo = await GET({ url });
         return { content: seo[0]?.content.rendered };
     } catch (err) {
