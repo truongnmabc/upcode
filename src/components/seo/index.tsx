@@ -35,16 +35,16 @@ const SeoContentComponentV2 = ({
                     <div className="section seo-content-v2">
                         <div className={"content " + (stateLayout ? "state" : "")}>
                             <div id="text-seo-content" className={"text _read-more"}>
-                                {typeof window !== "undefined" ? (
-                                    <div
-                                        className="wrap-text"
-                                        dangerouslySetInnerHTML={{
-                                            __html: homeSeoContent.content,
-                                        }}
-                                    />
-                                ) : (
+                                {/* {typeof window !== "undefined" ? ( */}
+                                <div
+                                    className="wrap-text"
+                                    dangerouslySetInnerHTML={{
+                                        __html: homeSeoContent.content,
+                                    }}
+                                />
+                                {/* ) : (
                                     homeSeoContent.content
-                                )}
+                                )} */}
                             </div>
                             {stateLayout && srcFlag ? (
                                 <div className="flag ">
