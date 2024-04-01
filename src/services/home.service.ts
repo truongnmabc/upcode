@@ -10,13 +10,18 @@ export const END_POINT_WORD_PRESS =
         : null;
 export const API_SEND_EMAIL = "https://webpush.passemall.com/api/send-contact";
 
-export const getHomeSeoContentApi = async (postUrl: string) => {
-    if (!END_POINT_WORD_PRESS?.length) {
-        return "";
+export const getHomeSeoContentApi = async (pageUrl: string) => {
+    try {
+        if (!END_POINT_WORD_PRESS?.length) {
+            throw "END_POINT_NULL!";
+        }
+        let url = END_POINT_WORD_PRESS + Config.PREFIX_URL + "/pages" + "?slug=" + pageUrl;
+        let seo = await GET({ url });
+        return { content: seo[0]?.content.rendered };
+    } catch (err) {
+        console.log(err);
+        return { content: "" };
     }
-    let url = END_POINT_WORD_PRESS + Config.PREFIX_URL + "/posts" + "?slug=" + postUrl;
-    let content = await GET({ url });
-    return content;
 };
 
 // export const getAppRatingReviewForWeb = async (appKey: string) => {

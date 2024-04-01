@@ -1,10 +1,10 @@
 .seo-content-container-v2 {
     background-color: #fff;
     border-radius: 6px;
-    padding: 0 16px;
+    padding: 16px;
     .seo-content-v2 {
-        margin-top: 24px;
-        margin-bottom: 16px;
+        // margin-top: 24px;
+        // margin-bottom: 16px;
         line-height: 24px;
 
         text-align: left;
@@ -114,6 +114,6 @@
     }
 
     @media screen and (min-width: 769px) {
-        padding: 0 24px;
+        padding: 24px;
     }
 }

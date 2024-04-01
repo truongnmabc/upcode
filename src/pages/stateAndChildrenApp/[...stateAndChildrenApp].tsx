@@ -25,7 +25,7 @@ const ChildrenApp = ({
     keywordSEO,
     descriptionSEO,
     childAppInfo,
-    // homeSeoContent,
+    homeSeoContent,
     titleSEO,
     _state,
 }: {
@@ -34,7 +34,7 @@ const ChildrenApp = ({
     keywordSEO: string;
     descriptionSEO: string;
     childAppInfo: IAppInfo;
-    // homeSeoContent: string;
+    homeSeoContent: string;
     titleSEO?: string;
     _state: string; // '_state' là dang slug, 'state' là dạng tên riêng
 }) => {
@@ -43,7 +43,13 @@ const ChildrenApp = ({
         <>
             <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} ads />
             <StoreProvider appInfo={childAppInfo} webData={{ tests: tests, topics: listTopics }} />
-            <HomeSingleApp appInfo={childAppInfo} homeSeoContent={""} listTopics={listTopics} tests={tests} _state={_state} />
+            <HomeSingleApp
+                appInfo={childAppInfo}
+                homeSeoContent={homeSeoContent}
+                listTopics={listTopics}
+                tests={tests}
+                _state={_state}
+            />
             <ScrollToTopArrow />
         </>
     );
@@ -130,7 +136,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 tests = appData?.fullTests ?? [];
             }
         }
-        let homeSeoContent = await getHomeSeoContentApi("home-seo-content");
+        let homeSeoContent = await getHomeSeoContentApi(getLink(childAppInfo, _state));
         if (homeSeoContent) {
             homeSeoContent.content = replaceYear(homeSeoContent.content);
         }
@@ -148,7 +154,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 keywordSEO: childAppInfo?.keywordSEO,
                 childAppInfo,
                 _state: _state ?? "",
-                // homeSeoContent,
+                homeSeoContent,
             },
         });
     }
