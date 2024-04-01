@@ -249,11 +249,7 @@
             { "title": "Math", "url": "tabe-math-with-ex--practice-test", "tag": "tabe-math-with-ex-" },
             { "title": "Reading", "url": "tabe-reading-practice-test", "tag": "tabe-reading" }
         ],
-        "fullTests": [
-            "full-length-tabe-tabe-reading-practice-test",
-            "full-length-tabe-tabe-language-practice-test",
-            "full-length-tabe-tabe-math-with-ex--practice-test"
-        ]
+        "fullTests": ["full-length-tabe-practice-test"]
     },
     {
         "appId": 4561360798089216,
@@ -284,7 +280,11 @@
             { "title": "Reading", "url": "pert-reading-practice-test", "tag": "reading" },
             { "title": "Writing", "url": "pert-writing-practice-test", "tag": "writing" }
         ],
-        "fullTests": ["full-length-pert-practice-test"]
+        "fullTests": [
+            "full-length-pert-math-practice-test",
+            "full-length-pert-reading-practice-test",
+            "full-length-pert-writing-practice-test"
+        ]
     },
     {
         "appId": 6341062520995840,
@@ -2234,7 +2234,13 @@
             { "title": "Science", "url": "hiset-science-practice-test", "tag": "science" },
             { "title": "Social Studies", "url": "hiset-social-studies-practice-test", "tag": "social-studies" }
         ],
-        "fullTests": ["full-length-hiset-practice-test"]
+        "fullTests": [
+            "full-length-hiset-language-arts-reading-practice-test",
+            "full-length-hiset-language-arts-writing-practice-test",
+            "full-length-hiset-mathematical-reasoning-practice-test",
+            "full-length-hiset-science-practice-test",
+            "full-length-hiset-social-studies-practice-test"
+        ]
     },
     {
         "appId": 6119576033034240,
@@ -2364,7 +2370,7 @@
             { "title": "Reading", "url": "tsi-reading-practice-test", "tag": "tsi-reading-practice-test" },
             { "title": "Writing", "url": "tsi-tst-writing-practice-test", "tag": "tst-writing-practice-test" }
         ],
-        "fullTests": ["full-length-tsi-practice-test"]
+        "fullTests": ["full-length-tsi-math-practice-test", "full-length-tsi-ela-practice-test"]
     },
     {
         "appId": 6536271351513088,
@@ -2501,7 +2507,7 @@
             { "title": "Road Safety", "url": "dkt-road-safety-practice-test", "tag": "road-safety" },
             { "title": "Traffic Signs", "url": "dkt-traffic-signs-practice-test", "tag": "traffic-signs" }
         ],
-        "fullTests": ["full-length-dkt-practice-test"]
+        "fullTests": ["full-length-dkt-general-knowledge-practice-test", "full-length-dkt-road-safety-practice-test"]
     },
     {
         "appId": 4878338973761536,
@@ -2754,7 +2760,13 @@
             { "title": "Reading", "url": "hspt-reading-practice-test", "tag": "reading" },
             { "title": "Verbal", "url": "hspt-verbal-practice-test", "tag": "verbal" }
         ],
-        "fullTests": ["full-length-hspt-practice-test"]
+        "fullTests": [
+            "full-length-hspt-verbal-practice-test",
+            "full-length-hspt-quantitative-practice-test",
+            "full-length-hspt-reading-practice-test",
+            "full-length-hspt-math-practice-test",
+            "full-length-hspt-language-practice-test"
+        ]
     },
     {
         "appId": 6309732366155776,
@@ -3208,7 +3220,12 @@
                 "tag": "reading-comprehension"
             }
         ],
-        "fullTests": ["full-length-dat-practice-test"]
+        "fullTests": [
+            "full-length-dat-survey-of-the-natural-sciences-practice-test",
+            "full-length-dat-perceptual-ability-practice-test",
+            "full-length-dat-quantitative-reasoning-practice-test",
+            "full-length-dat-reading-comprehension-practice-test"
+        ]
     },
     {
         "appId": 6328870527565824,
@@ -3353,7 +3370,12 @@
                 "tag": "reading-comprehension"
             }
         ],
-        "fullTests": ["full-length-cast-practice-test"]
+        "fullTests": [
+            "full-length-cast-graphic-arithmetic-practice-test",
+            "full-length-cast-mathematical-usage-practice-test",
+            "full-length-cast-mechanical-concepts-practice-test",
+            "full-length-cast-reading-comprehension-practice-test"
+        ]
     },
     {
         "appId": 5569772466995200,
@@ -3403,16 +3425,6 @@
             { "title": "Bonus 1101 questions", "url": "comptia-a-practice-exam-220--1101", "tag": "practice-exam-220--1101" },
             { "title": "Bonus 1102 questions", "url": "comptia-a-practice-exam-220--1102", "tag": "practice-exam-220--1102" }
         ],
-        "fullTests": [
-            "full-length-comptia-a-chapter-1--mobile-devices-practice-test",
-            "full-length-comptia-a-chapter-2-networking-practice-test",
-            "full-length-comptia-a-chapter-3-hardware-practice-test",
-            "full-length-comptia-a-chapter-4-virtualization-and-cloud-computing-practice-test",
-            "full-length-comptia-a-chapter-5-hardware-and-network-troubleshooting-practice-test",
-            "full-length-comptia-a-chapter-6-operating-systems-practice-test",
-            "full-length-comptia-a-chapter-7-security-practice-test",
-            "full-length-comptia-a-chapter-8-software-troubleshooting-practice-test",
-            "full-length-comptia-a-chapter-9-operational-procedures-practice-test"
-        ]
+        "fullTests": ["full-length-comptia-a-core-0-practice-test", "full-length-comptia-a-core-1-practice-test"]
     }
 ]

@@ -1,18 +1,17 @@
 import { ITestInfo } from "@/models/TestInfo";
 import StoreProvider from "@/redux/StoreProvider";
+import { getHomeSeoContentApi } from "@/services/home.service";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { getLink } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
-import { GetStaticPaths, GetStaticProps } from "next";
+import replaceYear from "@/utils/replaceYear";
+import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import { isParentApp } from "../../config/config_web";
-import { AppInfo, IAppInfo } from "../../models/AppInfo";
-import { ITopic } from "../../models/Topic";
-import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
-import replaceYear from "@/utils/replaceYear";
 import states from "../../data/statesName.json";
-import { genStudyLink } from "@/utils/getStudyLink";
-import { getHomeSeoContentApi } from "@/services/home.service";
+import { IAppInfo } from "../../models/AppInfo";
+import { ITopic } from "../../models/Topic";
+import { readAllAppInfos } from "../../utils/getAppInfo";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -55,49 +54,49 @@ const ChildrenApp = ({
     );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    const appInfo: IAppInfo | null = getAppInfo();
-    if (!appInfo)
-        return {
-            paths: [],
-            fallback: false, // false | true | 'blocking'
-        };
-    let _isParentApp = isParentApp();
-    const paths = [];
-    if (_isParentApp) {
-        let listAppInfo = readAllAppInfos();
-        listAppInfo = listAppInfo.filter((w: any) => w.appId && w.categoryId).map((w: any) => new AppInfo(w));
-        let listAppLink: string[] = listAppInfo
-            .map((app) => {
-                let url = getLink(app, "");
-                if (url.includes("https:")) return null;
-                return formatData(url);
-            })
-            .filter((p) => p);
-        paths.push(...listAppLink);
-        listAppInfo.forEach((app) => {
-            if (app.hasState) {
-                states[app.appShortName].forEach((state) => {
-                    let url = getLink(app, state.tag);
-                    if (!url.includes("https:")) paths.push(formatData(url));
-                });
-            }
-        });
-    }
-    return {
-        paths,
-        fallback: false,
-    };
-};
+// export const getStaticPaths: GetStaticPaths = async () => {
+//     const appInfo: IAppInfo | null = getAppInfo();
+//     if (!appInfo)
+//         return {
+//             paths: [],
+//             fallback: false, // false | true | 'blocking'
+//         };
+//     let _isParentApp = isParentApp();
+//     const paths = [];
+//     if (_isParentApp) {
+//         let listAppInfo = readAllAppInfos();
+//         listAppInfo = listAppInfo.filter((w: any) => w.appId && w.categoryId).map((w: any) => new AppInfo(w));
+//         let listAppLink: string[] = listAppInfo
+//             .map((app) => {
+//                 let url = getLink(app, "");
+//                 if (url.includes("https:")) return null;
+//                 return formatData(url);
+//             })
+//             .filter((p) => p);
+//         paths.push(...listAppLink);
+//         listAppInfo.forEach((app) => {
+//             if (app.hasState) {
+//                 states[app.appShortName].forEach((state) => {
+//                     let url = getLink(app, state.tag);
+//                     if (!url.includes("https:")) paths.push(formatData(url));
+//                 });
+//             }
+//         });
+//     }
+//     return {
+//         paths,
+//         fallback: false,
+//     };
+// };
 
-const formatData = (url: string) => {
-    return {
-        params: {
-            stateAndChildrenApp: url.replace("/", "").split("/"),
-        },
-    };
-};
-export const getStaticProps: GetStaticProps = async (context) => {
+// const formatData = (url: string) => {
+//     return {
+//         params: {
+//             stateAndChildrenApp: url.replace("/", "").split("/"),
+//         },
+//     };
+// };
+export const getServerSideProps: GetServerSideProps = async (context) => {
     // trang giao diện các chứng chỉ con, được định tuyến trong exportPathMap tại next.config.js
     let stateAndChildrenApp = context.params.stateAndChildrenApp;
     let [slug, _state] = stateAndChildrenApp;
@@ -156,7 +155,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 _state: _state ?? "",
                 homeSeoContent,
             },
-            revalidate: 1800, // sau 30p sẽ chạy lại hàm này 1 lần https://nextjs.org/docs/pages/api-reference/functions/get-static-props#revalidate
+            // revalidate: 1800, // sau 30p sẽ chạy lại hàm này 1 lần https://nextjs.org/docs/pages/api-reference/functions/get-static-props#revalidate
         });
     }
 };
