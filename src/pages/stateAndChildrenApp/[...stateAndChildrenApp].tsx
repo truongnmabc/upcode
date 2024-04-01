@@ -156,6 +156,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 _state: _state ?? "",
                 homeSeoContent,
             },
+            revalidate: 1800, // sau 30p sẽ chạy lại hàm này 1 lần https://nextjs.org/docs/pages/api-reference/functions/get-static-props#revalidate
         });
     }
 };
