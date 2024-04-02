@@ -35,6 +35,8 @@ const V4QuestionContent = ({
     }, [content]);
 
     const onLoaded = (arg?: any) => {
+        console.log(arg);
+
         if (place == "study") {
             // trang học thì mới phải làm như này vì dữ liệu phải đợi tải về sau khi tải trang, còn trang question thì dữ liệu tải về trong khi tải trang luôn rồi
             if (!!mainViewPanel?.current?.style) mainViewPanel.current.style.height = _ref.current.clientHeight + "px";
@@ -201,6 +203,10 @@ const TextContent = ({
         if (ele) {
             const resizeObserver = new ResizeObserver(onLoaded);
             resizeObserver.observe(ele);
+            let img = ele.getElementsByTagName("img")[0];
+            if (img) {
+                img.onload = () => onLoaded();
+            }
             return () => {
                 resizeObserver.disconnect();
             };
@@ -226,6 +232,7 @@ const TextContent = ({
             })
             .join("");
     }
+    // result = result.replace("<img", `<img onload="onLoaded(111)"`);
     return (
         <div
             ref={contentRef}
@@ -274,6 +281,7 @@ const TextContentQuestion = ({
 
     if (!image || image == "null") {
         if (hasImage(content)) {
+            console.log("-------------------", content);
             return (
                 <TextContent
                     content={content}
