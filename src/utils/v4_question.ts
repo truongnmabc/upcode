@@ -31,14 +31,9 @@ export const isMathJaxContent = (text: string) => {
 };
 
 export const getUrlImage = (bucket: string, name: string, folder?: string) => {
-    return (
-        "https://storage.googleapis.com/micro-enigma-235001.appspot.com/" +
-        bucket +
-        "/" +
-        (folder ? folder : "images") +
-        "/" +
-        name
-    );
+    let ggcloudUrl = "https://storage.googleapis.com/micro-enigma-235001.appspot.com/";
+    if (name.includes(ggcloudUrl)) return name;
+    return ggcloudUrl + bucket + "/" + (folder ? folder : "images") + "/" + name;
 };
 
 const getImageFromString = (text: string) => {

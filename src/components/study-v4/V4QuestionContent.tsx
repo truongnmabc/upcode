@@ -35,8 +35,6 @@ const V4QuestionContent = ({
     }, [content]);
 
     const onLoaded = (arg?: any) => {
-        console.log(arg);
-
         if (place == "study") {
             // trang học thì mới phải làm như này vì dữ liệu phải đợi tải về sau khi tải trang, còn trang question thì dữ liệu tải về trong khi tải trang luôn rồi
             if (!!mainViewPanel?.current?.style) mainViewPanel.current.style.height = _ref.current.clientHeight + "px";
@@ -281,26 +279,37 @@ const TextContentQuestion = ({
 
     if (!image || image == "null") {
         if (hasImage(content)) {
-            console.log("-------------------", content);
-            return (
-                <TextContent
-                    content={content}
-                    type={type}
-                    bucket={bucket}
-                    showImageDialog={(url) => showImageDialog(url)}
-                    onLoaded={onLoaded}
-                />
-            );
+            // trường hợp có img trong text cần tách img ra để hiện như tồn tại trường image
+            const regex = /<img.*?src="(.*?)".*?\/>/g;
+            const matches = content.match(regex);
+            if (matches) {
+                const srcValues = matches.map((match) => {
+                    const srcMatch = match.match(/src="(.*?)"/);
+                    return srcMatch ? srcMatch[1] : "";
+                });
+                image = srcValues[0];
+            }
+            content = content.replace(/<img.*?\/>/g, "");
+            // return (
+            //     <TextContent
+            //         content={content}
+            //         type={type}
+            //         bucket={bucket}
+            //         showImageDialog={(url) => showImageDialog(url)}
+            //         onLoaded={onLoaded}
+            //     />
+            // );
         }
         // (#####)
-        return (
-            <div
-                ref={contentRef}
-                key={new Date().getTime()}
-                dangerouslySetInnerHTML={{ __html: content }}
-                className={"v4-question-text"}
-            />
-        );
+        else
+            return (
+                <div
+                    ref={contentRef}
+                    key={new Date().getTime()}
+                    dangerouslySetInnerHTML={{ __html: content }}
+                    className={"v4-question-text"}
+                />
+            );
     }
 
     let imageUrl = getUrlImage(bucket, image);
