@@ -117,9 +117,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
     });
 };
 const genState = async () => {
-    const states = stateData.cdl.slice(0, 51);
-    const appId = "6540077669810176";
-    const bucket = "cdl_v2";
+    const states = stateData["real-estate"].slice(9, 10);
+    const appId = "6212062713741312";
+    const bucket = "realestate";
     for (let s of states) {
         try {
             setTimeout(() => {}, 1000);

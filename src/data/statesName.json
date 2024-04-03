@@ -513,5 +513,262 @@
             "name": "Wyoming",
             "tag": "wyoming"
         }
+    ],
+    "real-estate": [
+        {
+            "id": 6703043510796288,
+            "name": "Alabama",
+            "tag": "alabama"
+        },
+        {
+            "id": 5168493932576768,
+            "name": "Alaska",
+            "tag": "alaska"
+        },
+        {
+            "id": 4887018955866112,
+            "name": "Arizona",
+            "tag": "arizona"
+        },
+        {
+            "id": 5995370163208192,
+            "name": "Arkansas",
+            "tag": "arkansas"
+        },
+        {
+            "id": 5159408910729216,
+            "name": "California",
+            "tag": "california"
+        },
+        {
+            "id": 4605543979155456,
+            "name": "Colorado",
+            "tag": "colorado"
+        },
+        {
+            "id": 4948302678196224,
+            "name": "Connecticut",
+            "tag": "connecticut"
+        },
+        {
+            "id": 6276845139918848,
+            "name": "Delaware",
+            "tag": "delaware"
+        },
+        {
+            "id": 4918413220642816,
+            "name": "District of Columbia",
+            "tag": "district-of-columbia"
+        },
+        {
+            "id": 5059150708998144,
+            "name": "Florida",
+            "tag": "florida"
+        },
+        {
+            "id": 4877933934018560,
+            "name": "Georgia",
+            "tag": "georgia"
+        },
+        {
+            "id": 5731443885998080,
+            "name": "Hawaii",
+            "tag": "hawaii"
+        },
+        {
+            "id": 5340625685708800,
+            "name": "Idaho",
+            "tag": "idaho"
+        },
+        {
+            "id": 6466525592551424,
+            "name": "Illinois",
+            "tag": "illinois"
+        },
+        {
+            "id": 6421568534085632,
+            "name": "Indiana",
+            "tag": "indiana"
+        },
+        {
+            "id": 4556796813377536,
+            "name": "Iowa",
+            "tag": "iowa"
+        },
+        {
+            "id": 4587995279654912,
+            "name": "Kansas",
+            "tag": "kansas"
+        },
+        {
+            "id": 6003833840861184,
+            "name": "Kentucky",
+            "tag": "kentucky"
+        },
+        {
+            "id": 6637152538460160,
+            "name": "Louisiana",
+            "tag": "louisiana"
+        },
+        {
+            "id": 5520337653465088,
+            "name": "Maine",
+            "tag": "maine"
+        },
+        {
+            "id": 6140093557374976,
+            "name": "Maryland",
+            "tag": "maryland"
+        },
+        {
+            "id": 5014193650532352,
+            "name": "Massachusetts",
+            "tag": "massachusetts"
+        },
+        {
+            "id": 4777675732287488,
+            "name": "Michigan",
+            "tag": "michigan"
+        },
+        {
+            "id": 5903575639130112,
+            "name": "Minnesota",
+            "tag": "minnesota"
+        },
+        {
+            "id": 6646237560307712,
+            "name": "Mississippi",
+            "tag": "mississippi"
+        },
+        {
+            "id": 6065738907385856,
+            "name": "Missouri",
+            "tag": "missouri"
+        },
+        {
+            "id": 5682696720220160,
+            "name": "Montana",
+            "tag": "montana"
+        },
+        {
+            "id": 5713895186497536,
+            "name": "Nebraska",
+            "tag": "nebraska"
+        },
+        {
+            "id": 6628688860807168,
+            "name": "Nevada",
+            "tag": "nevada"
+        },
+        {
+            "id": 5858618580664320,
+            "name": "New Hampshire",
+            "tag": "new-hampshire"
+        },
+        {
+            "id": 5432420209786880,
+            "name": "New Jersey",
+            "tag": "new-jersey"
+        },
+        {
+            "id": 5502788953964544,
+            "name": "New Mexico",
+            "tag": "new-mexico"
+        },
+        {
+            "id": 5295668627243008,
+            "name": "New York",
+            "tag": "new-york"
+        },
+        {
+            "id": 6012918862708736,
+            "name": "North Carolina",
+            "tag": "north-carolina"
+        },
+        {
+            "id": 4869470256365568,
+            "name": "North Dakota",
+            "tag": "north-dakota"
+        },
+        {
+            "id": 5577143603953664,
+            "name": "Ohio",
+            "tag": "ohio"
+        },
+        {
+            "id": 5481363174064128,
+            "name": "Oklahoma",
+            "tag": "oklahoma"
+        },
+        {
+            "id": 5150945233076224,
+            "name": "Oregon",
+            "tag": "oregon"
+        },
+        {
+            "id": 6185050615840768,
+            "name": "Pennsylvania",
+            "tag": "pennsylvania"
+        },
+        {
+            "id": 6607263080906752,
+            "name": "Rhode Island",
+            "tag": "rhode-island"
+        },
+        {
+            "id": 5547855282438144,
+            "name": "South Carolina",
+            "tag": "south-carolina"
+        },
+        {
+            "id": 4732718673821696,
+            "name": "South Dakota",
+            "tag": "south-dakota"
+        },
+        {
+            "id": 6044313127485440,
+            "name": "Tennessee",
+            "tag": "tennessee"
+        },
+        {
+            "id": 5511252631617536,
+            "name": "Texas",
+            "tag": "texas"
+        },
+        {
+            "id": 4596458957307904,
+            "name": "Utah",
+            "tag": "utah"
+        },
+        {
+            "id": 5722358864150528,
+            "name": "Vermont",
+            "tag": "vermont"
+        },
+        {
+            "id": 6074202585038848,
+            "name": "Virginia",
+            "tag": "virginia"
+        },
+        {
+            "id": 5449968909287424,
+            "name": "Washington",
+            "tag": "washington"
+        },
+        {
+            "id": 6294393839419392,
+            "name": "West Virginia",
+            "tag": "west-virginia"
+        },
+        {
+            "id": 6575868816130048,
+            "name": "Wisconsin",
+            "tag": "wisconsin"
+        },
+        {
+            "id": 6285308817571840,
+            "name": "Wyoming",
+            "tag": "wyoming"
+        }
     ]
 }
