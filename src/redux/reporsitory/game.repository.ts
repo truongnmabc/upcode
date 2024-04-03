@@ -211,7 +211,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 let data: any = await readFileAppFromGoogleStorage(appInfo, _state); // get data ve
                 topics = data?.topics ?? [];
                 dispatch(getTopicByParentIdSuccess(topics));
-                let accessTopic = topics.find((t) => slug.includes(t.tag));
+                let accessTopic = topics.find((t) => t.slug.includes(slug));
                 if (!accessTopic) {
                     // neu khong tim thay topic dang truy cap
                     throw { err: "No topic data!" };

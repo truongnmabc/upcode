@@ -110,11 +110,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             let titleSEO = contentSEO?.titleSeo?.length > 0 ? contentSEO.titleSeo[0] : appInfo.title;
             let descriptionSEO = contentSEO?.descSeo?.length > 0 ? contentSEO.descSeo[0] : appInfo.descriptionSEO;
 
-            const topic = listTopics.find((t) => slug.includes(t.tag) && !slug.includes("full-length"));
-            const test = tests.find((t) => slug.includes(t.tag) && slug.includes("full-length"));
+            const topic = listTopics.find((t) => t.slug.includes(slug) && !slug.includes("full-length"));
+            const test = tests.find((t) => t.slug.includes(slug) && slug.includes("full-length"));
             const _branchTests = appData.branchTests;
             let branchTest;
             for (let key in _branchTests) {
+                // asvab
                 if (key.includes(slug)) branchTest = _branchTests[key];
             }
             let gameType = Config.TEST_GAME;
@@ -128,6 +129,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             } else if (!!test) {
                 title = test.title;
             }
+            console.log(gameType);
 
             return convertToJSONObject({
                 props: {
