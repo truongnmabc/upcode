@@ -5,10 +5,10 @@ const states = require("./src/data/statesName.json");
 const BUCKET = "new-data-web/";
 const BUCKET2 = "new-data-web-test/";
 exports.genDataFunc = async (appInfos = [], origin = "", web) => {
-    // if (web === "development") {
-    //     await genStudyData(appInfos, web);
-    //     genXMLFunc(appInfos, origin);
-    // }
+    if (web === "development") {
+        await genStudyData(appInfos, web);
+        genXMLFunc(appInfos, origin);
+    }
 };
 
 /** gen ra file studyData.json */
