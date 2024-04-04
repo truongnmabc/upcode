@@ -72,7 +72,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 // phần branch dùng chung câu hỏi với test
                 // quy định slug này là vào practice-test
                 // design mới là sẽ chỉ còn 1 bài test ~ diagnosticTest nên testInfoV4Reducer.list chỉ có 1 phần tử thôi
-                let _test = tests.find((t) => t.slug.includes(slug)); // tim thong tin bai test (full-test va branch test)
+                let _test = tests.find((t) => t.slug.includes(slug)); // tim thong tin bai test (full-test va branch test) // WARNING!
                 if (!_test) {
                     //call api neu nh khong co
                     getTest = true;
@@ -91,7 +91,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 }
             } else {
                 let accessTopic = topics.find(
-                    (t) => t.slug.includes(slug)
+                    (t) => t.slug.includes(slug) // WARNING!
                     //  && appInfo.appId + "" == t.rootTopicId + ""
                 );
                 if (!accessTopic) {
@@ -211,7 +211,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 let data: any = await readFileAppFromGoogleStorage(appInfo, _state); // get data ve
                 topics = data?.topics ?? [];
                 dispatch(getTopicByParentIdSuccess(topics));
-                let accessTopic = topics.find((t) => t.slug.includes(slug));
+                let accessTopic = topics.find((t) => t.slug.includes(slug)); // WARNING!
                 if (!accessTopic) {
                     // neu khong tim thay topic dang truy cap
                     throw { err: "No topic data!" };
@@ -440,40 +440,41 @@ const onChooseAnswer = createAsyncThunk(
             });
             gameState.currentQuestion = _cQuestion;
 
-            // xử lý riêng phần học topic level (bê nguyên từ reducer sang nên tạm đặt biến _state), tránh bug mất mát dữ liệu giữa gameState và listGameState
-            let _state = gameState;
-            if (_state.levelTag.includes("level")) {
+            // xử lý riêng phần học topic level (bê nguyên từ reducer sang nên tạm đặt biến _gameState), tránh bug mất mát dữ liệu giữa gameState và listGameState
+            let _gameState = gameState; // khác gì nhau đâu
+            if (_gameState.levelTag.includes("level")) {
                 // phần học topic [level]
-                let indexActive = _state.indexActive;
-                if (indexActive == _state.questions.length - 1 && _state.arrayIndexWrong.length == 0) {
+                let indexActive = _gameState.indexActive;
+                if (indexActive == _gameState.questions.length - 1 && _gameState.arrayIndexWrong.length == 0) {
                     // lượt làm đầu tiên (arrayIndexWrong == []) và cần đảm bảo arrayIndexWrong == []
                     // nếu làm đến câu cuối thì kiểm tra xem còn câu sai phía trước không để add vào arrayIndexWrong để thực hiện làm lại (theo luồng học cũ làm đến khi nào đúng hết thì thôi)
                     let _arrayIndexWrong: number[] = [];
-                    for (let i = 0; i < _state.questions.length; i++) {
-                        if (_state.questions[i].questionStatus == Config.QUESTION_ANSWERED_INCORRECT) _arrayIndexWrong.push(i);
+                    for (let i = 0; i < _gameState.questions.length; i++) {
+                        if (_gameState.questions[i].questionStatus == Config.QUESTION_ANSWERED_INCORRECT)
+                            _arrayIndexWrong.push(i);
                     }
 
-                    _state.arrayIndexWrong = _arrayIndexWrong;
-                } else if (_state.arrayIndexWrong.length > 0) {
+                    _gameState.arrayIndexWrong = _arrayIndexWrong;
+                } else if (_gameState.arrayIndexWrong.length > 0) {
                     //không phải lượt làm đầu tiên
-                    if (_state.currentQuestion.questionStatus == Config.QUESTION_ANSWERED_INCORRECT) {
+                    if (_gameState.currentQuestion.questionStatus == Config.QUESTION_ANSWERED_INCORRECT) {
                         // nếu trả lời sai
-                        if (_state.arrayIndexWrong.includes(indexActive)) {
+                        if (_gameState.arrayIndexWrong.includes(indexActive)) {
                             // câu hiện tại đang nằm trong ds các câu đang trả lời sai
-                            if (_state.arrayIndexWrong.length == 1) {
+                            if (_gameState.arrayIndexWrong.length == 1) {
                                 // // còn sai đúng 1 câu và vẫn tiếp tục trả lời sai / cái này xử lý trong NEXT_QUESTION rồi
                             } else {
                                 // còn nhiều câu sai, và câu hiện tại sẽ là câu đầu tiên trong arrayIndexWrong (logic hiện tại là thế và cần đảm bảo như vậy để tránh bug phát sinh)
-                                _state.arrayIndexWrong = _state.arrayIndexWrong.filter((i) => i != indexActive);
-                                _state.arrayIndexWrong.push(indexActive); // thêm vào cuối ds như hàng đợi
+                                _gameState.arrayIndexWrong = _gameState.arrayIndexWrong.filter((i) => i != indexActive);
+                                _gameState.arrayIndexWrong.push(indexActive); // thêm vào cuối ds như hàng đợi
                             }
                         } else {
                             // nếu đây là một câu sai mới thì push vào arrayIndexWrong
-                            _state.arrayIndexWrong.push(indexActive);
+                            _gameState.arrayIndexWrong.push(indexActive);
                         }
                     } else {
                         // trả lời đúng (và câu này sẽ nằm trong arrayIndexWrong - cần đảm bảo nó nằm trong arrayIndexWrong vì rơi vào trường hợp này là đang ở đoạn trả lời lại các câu đã sai)
-                        _state.arrayIndexWrong = _state.arrayIndexWrong.filter((i) => i != indexActive);
+                        _gameState.arrayIndexWrong = _gameState.arrayIndexWrong.filter((i) => i != indexActive);
                     }
                 }
             }

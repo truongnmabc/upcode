@@ -97,7 +97,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             let _state = "";
             if (appInfo.hasState) {
                 // nếu app có state (thì url dẫn đến trang học này có chứa state trong đó)
-                _state = states[appInfo.appShortName].find((s) => slug.includes(s.tag)).tag;
+                let maxLengthMatching = 0;
+                states[appInfo.appShortName].forEach((s) => {
+                    // bug cho trường hợp verginia | west-verginia
+                    if (slug.includes(s.tag)) {
+                        if (s.tag.length > maxLengthMatching) {
+                            maxLengthMatching = s.tag.length;
+                            _state = s.tag;
+                        }
+                    }
+                });
+                // _state = states[appInfo.appShortName].find((s) => slug.includes(s.tag)).tag; // WARNING!
             }
             let appData: any = await readFileAppFromGoogleStorage(appInfo, _state);
             listTopics = appData?.topics ?? [];
@@ -110,8 +120,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             let titleSEO = contentSEO?.titleSeo?.length > 0 ? contentSEO.titleSeo[0] : appInfo.title;
             let descriptionSEO = contentSEO?.descSeo?.length > 0 ? contentSEO.descSeo[0] : appInfo.descriptionSEO;
 
-            const topic = listTopics.find((t) => t.slug.includes(slug) && !slug.includes("full-length"));
-            const test = tests.find((t) => t.slug.includes(slug) && slug.includes("full-length"));
+            const topic = listTopics.find((t) => t.slug.includes(slug) && !slug.includes("full-length")); // WARNING!
+            const test = tests.find((t) => t.slug.includes(slug) && slug.includes("full-length")); // WARNING!
             const _branchTests = appData.branchTests;
             let branchTest;
             for (let key in _branchTests) {

@@ -1,11 +1,16 @@
 import { isParentApp } from "@/config/config_web";
 import listAppTopic from "../data/studyData.json";
+import { genStudyLink } from "./getStudyLink";
 const getRawTopicsData = (appInfo, _state) => {
     let listSubMenu = [];
     const appTopic = listAppTopic.find((topic) => topic.appId === appInfo.appId);
     if (appTopic) {
         let tempTopics = appTopic.topics.filter((topic) => !topic.isBranch);
-        if (_state) tempTopics = tempTopics.filter((topic) => topic.url.includes(_state));
+        if (_state) {
+            tempTopics = tempTopics.filter(
+                (topic) => genStudyLink(appInfo.appShortName, topic.tag, false, _state) === "/" + topic.url
+            ); // phải check nhu này vì vđề string
+        }
 
         const isParent = isParentApp();
         listSubMenu = tempTopics.map((t, index) => {
