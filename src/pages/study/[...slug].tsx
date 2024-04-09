@@ -85,6 +85,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             slug = appNameId; // trường hợp web được build là một single app thì trang học sẽ là /[study]
             seoSlug = slug;
         }
+        seoSlug = seoSlug
+            .split("-")
+            .filter((_) => _)
+            .join("-");
         console.log("xxxx", appNameId, slug, seoSlug);
 
         let _isParentApp = isParentApp();
