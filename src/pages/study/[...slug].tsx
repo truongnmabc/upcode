@@ -1,6 +1,6 @@
 import Config from "@/config";
 import StoreProvider from "@/redux/StoreProvider";
-import { getHomeSeoContentStateApi } from "@/services/home.service";
+import { getHomeSeoContentApi, getHomeSeoContentStateApi } from "@/services/home.service";
 import IWebData from "@/types/webData";
 import { getLink, getTitle } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
@@ -80,9 +80,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
         // các trang học đều được định tuyến về đây trong next.config.js (rewrites)
         let [appNameId, slug] = context.params.slug;
-        if (!slug) slug = appNameId; // trường hợp web được build là một single app thì trang học sẽ là /[study]
-
-        console.log(appNameId, slug);
+        let seoSlug = [appNameId, slug].join("-");
+        if (!slug) {
+            slug = appNameId; // trường hợp web được build là một single app thì trang học sẽ là /[study]
+            seoSlug = slug;
+        }
+        console.log("xxxx", appNameId, slug, seoSlug);
 
         let _isParentApp = isParentApp();
         let listAppInfo: any[] = readAllAppInfos();
@@ -113,12 +116,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             listTopics = appData?.topics ?? [];
             tests = appData?.fullTests ?? [];
 
-            const contentSEO = await getHomeSeoContentStateApi(slug, "https://passemall.com");
+            const contentSEO = await getHomeSeoContentApi(seoSlug);
             if (contentSEO) {
                 contentSEO.content = replaceYear(contentSEO.content);
             }
-            let titleSEO = contentSEO?.titleSeo?.length > 0 ? contentSEO.titleSeo[0] : appInfo.title;
-            let descriptionSEO = contentSEO?.descSeo?.length > 0 ? contentSEO.descSeo[0] : appInfo.descriptionSEO;
+            let titleSEO = appInfo.title;
+            let descriptionSEO = appInfo.descriptionSEO;
 
             const topic = listTopics.find((t) => t.slug.includes(slug) && !slug.includes("full-length")); // WARNING!
             const test = tests.find((t) => t.slug.includes(slug) && slug.includes("full-length")); // WARNING!
