@@ -36,14 +36,14 @@
 # EXPOSE 4050
 # CMD ["yarn", "start", "-p" , "4050"]
 
-FROM node:16.15.1
+FROM node:18.12.0
 USER root
 
 RUN mkdir -p /app
 WORKDIR /app
 
-COPY . /app/cdl
-WORKDIR /app/cdl
+COPY . /app/web
+WORKDIR /app/web
 COPY temp-next .next
 COPY temp-env .env
 RUN yarn install

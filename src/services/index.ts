@@ -1,3 +1,4 @@
+import Config from "@/config";
 import Axios, { Method } from "axios";
 const callApi = ({
     method,
@@ -13,7 +14,7 @@ const callApi = ({
     baseURl?: string;
     headers?: any;
     timeout?: number;
-}) => {
+}): any => {
     return new Promise((resolve, reject) => {
         return Axios({
             baseURL: baseURl ? baseURl : Config.BASE_URL,

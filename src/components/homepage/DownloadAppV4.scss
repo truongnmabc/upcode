@@ -1,0 +1,39 @@
+.v4-platform-download-app {
+    display: flex;
+    a {
+        display: flex;
+        transition: 0.2s all;
+
+        &:hover {
+            transform: translateY(-2px);
+        }
+    }
+    &.row {
+        flex-direction: row;
+        a:not(:first-child) {
+            margin-left: 12px;
+        }
+    }
+
+    &.col {
+        flex-direction: column; // bổ sung thêm khi làm đến
+
+        >a:not(:first-child) {
+            margin-top: 6px;
+        }
+    }
+
+    @media screen and (min-width: 769px) {
+        &.row {
+            a:not(:first-child) {
+                
+            }
+        }
+    
+        &.col {
+            >a:not(:first-child) {
+                margin-top: 12px;
+            }
+        }
+    }
+}

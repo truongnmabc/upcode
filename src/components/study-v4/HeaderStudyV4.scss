@@ -1,0 +1,99 @@
+.v4-main-study-view-top-mobile-0 {
+    position: relative;
+    display: flex;
+    height: 40px;
+    align-items: center;
+    padding: 8px 0;
+    > div {
+        display: flex;
+    }
+    .v4-test-game-count-down-mobile-0,
+    .v4-test-game-level-tag-mobile-0 {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        text-transform: capitalize;
+    }
+    > span {
+        position: absolute;
+        top: 50%;
+        &.right {
+            right: 0;
+            transform: translateY(-50%);
+            width: 70px;
+            text-align: right;
+        }
+
+        &.center {
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
+
+.v4-drawer-bottom-study {
+    font-family: "Sora", sans-serif;
+    // .MuiDrawer-paper {
+    border-top-right-radius: 32px;
+    border-top-left-radius: 32px;
+    background-color: #fff !important;
+    overflow-y: unset;
+    .v4-swipable-drawer-bottom-0 {
+        position: relative;
+        padding: 32px 24px 10px;
+
+        .v4-puller {
+            position: absolute;
+            width: 56px;
+            height: 4px;
+            background-color: #fff;
+            border-radius: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -12px;
+        }
+        .really-want-to-exit {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 28px;
+            text-align: center;
+        }
+        .progress-will-be-saved {
+            padding-top: 24px;
+            font-size: 14px;
+            font-family: "Sora", sans-serif;
+            line-height: 19px;
+            text-align: center;
+        }
+        .v4-swipable-drawer-bottom-button {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            grid-gap: 8px;
+            text-align: center;
+            padding-top: 48px;
+            div {
+                font-size: 16px;
+                font-weight: 600;
+                padding: 10px;
+                border: 1px solid #e7e7e8;
+                line-height: 26px;
+                border-radius: 12px;
+            }
+
+            .v4-bottom-submit {
+                background-color: #7c6f5b;
+                color: #fff;
+            }
+        }
+        // }
+    }
+}
+
+.customize-swipeable-drawer-bottom {
+    .MuiDrawer-paper {
+        background: transparent !important;
+        overflow-y: visible !important;
+    }
+}

@@ -1,0 +1,49 @@
+.v4-question-main-view-0 {
+    display: flex;
+    min-height: 100vh;
+    .v4-question-main-view-left-bar-0 {
+        padding-top: 34px;
+        width: 290px;
+        min-width: 290px; //thêm phần text seo vào thì nó bị dãn ra nên phải đặt tạm thuộc tính này để xử lý;
+    }
+    .v4-question-main-view-1 {
+        padding-left: 0;
+        padding-top: 16px;
+        width: 100%;
+    }
+    @media screen and (min-width: 769px) {
+        min-height: calc(100vh - 52px - 1px); //52: header, 1: border
+
+        .v4-question-main-view-left-bar-0 {
+            .v4-left-banner-download-0 {
+                background-color: #fff;
+                padding: 16px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                h3 {
+                    margin: 0;
+                    font-size: 14px;
+                    line-height: 21px;
+                    text-align: center;
+                    padding-bottom: 12px;
+                }
+            }
+            .v4-question-list-topics-0 {
+                padding-top: 16px;
+                padding-bottom: 16px;
+                > h3 {
+                    font-size: 20px;
+                    line-height: 30px;
+                    margin: 0;
+                    padding-bottom: 12px;
+                }
+            }
+        }
+
+        .v4-question-main-view-1 {
+            padding-left: 16px;
+            padding-top: 0;
+        }
+    }
+}

@@ -1,0 +1,78 @@
+.v4-review-answer {
+    // position: absolute;
+    // left: 0;
+    overflow: hidden;
+    background: #fff;
+    margin-top: 12px;
+    .v4-review-answer-title {
+        color: #212121;
+        text-align: center;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        padding-top: 16px;
+        font-style: normal;
+        line-height: normal;
+        text-transform: capitalize;
+    }
+
+    .v4-review-answer-questions {
+        padding: 0 16px 16px;
+
+        .v4-review-answer-question {
+            position: relative;
+            margin-top: 16px;
+
+            &::before,
+            &::after {
+                content: "";
+                height: 1px;
+                width: 40%;
+                background-color: rgba(33, 33, 33, 0.12);
+                position: absolute;
+                top: 0;
+                z-index: 1;
+            }
+
+            &::before {
+                left: 0;
+            }
+
+            &::after {
+                right: 0;
+            }
+        }
+    }
+
+    @media screen and (min-width: 769px) {
+        position: relative;
+        left: unset;
+        background: rgba(33, 33, 33, 0.04);
+        border-radius: 6px;
+        padding: 12px;
+
+        .v4-review-answer-title {
+            margin-bottom: 24px;
+            font-size: 24px;
+            padding-top: 0;
+        }
+
+        .v4-review-answer-questions {
+            padding: 0;
+            .v4-review-answer-question {
+                border-top: 1px solid rgba(33, 33, 33, 0.24);
+                padding: 24px 0;
+                margin-top: 0;
+
+                &:first-child {
+                    border-top: none;
+                }
+
+                &::before,
+                &::after {
+                    content: none;
+                }
+            }
+        }
+    }
+}
