@@ -1,10 +1,17 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import mediaQuery from "../declaration/mediaQuery";
 import { Fragment, useEffect } from "react";
 import isMobileFunctionsWithUserAgent from "@/utils/isMobileFunctionsWithUserAgent";
 import getCountryAPI from "@/utils/getCountryAPI";
+import { Provider } from "react-redux";
+import mediaQuery from "css-mediaquery";
 import "../styles/index.css";
-export default function App({ Component, pageProps, deviceType }: any) {
+import { wrapper } from "@/redux/store";
+// function App(props: any) {
+function App({ Component, ...rest }: any) {
+    const { store, props } = wrapper.useWrappedStore(rest);
+    // const { Component, pageProps, deviceType } = props;
+    const { pageProps, deviceType } = props;
+
     const ssrMatchMedia = (query: any) => ({
         matches: mediaQuery.match(query, {
             // The estimated CSS width of the browser.
@@ -26,14 +33,11 @@ export default function App({ Component, pageProps, deviceType }: any) {
         if (jssStyles) {
             jssStyles.parentElement?.removeChild(jssStyles);
         }
-        // if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-        //     const { register } = require("../serviceWorker");
-        //     register();
-        // }
+
         async function getCountryFC() {
             let countryLocalStorage = localStorage.getItem("country");
             if (!countryLocalStorage) {
-                let getCountry = await getCountryAPI();
+                let getCountry: any = await getCountryAPI();
                 if (getCountry?.country) {
                     localStorage.setItem("country", getCountry?.country);
                     if (getCountry.country == "VN") {
@@ -41,8 +45,6 @@ export default function App({ Component, pageProps, deviceType }: any) {
                         window.location.reload();
                     }
                 }
-            } else {
-                // setProduction(pageProps?.urlOrigin, countryLocalStorage);
             }
             if (countryLocalStorage == "VN") {
                 var element = document.getElementsByTagName("ins");
@@ -51,26 +53,17 @@ export default function App({ Component, pageProps, deviceType }: any) {
                 }
             }
         }
-        getCountryFC();
+        // getCountryFC();
     }, []);
-    useEffect(() => {
-        // if ("serviceWorker" in navigator) {
-        //     window.addEventListener("load", function () {
-        //         navigator.serviceWorker.register("/sw.js").then(
-        //             function (registration) {},
-        //             function (err) {}
-        //         );
-        //     });
-        // }
-    }, []);
+
     return (
-        <Fragment>
-            <ThemeProvider theme={theme}>
-                {/* <DialogProvider> */}
-                <Component {...pageProps} />
-                {/* </DialogProvider> */}
-            </ThemeProvider>
-        </Fragment>
+        <Provider store={store}>
+            <Fragment>
+                <ThemeProvider theme={theme}>
+                    <Component {...pageProps} />
+                </ThemeProvider>
+            </Fragment>
+        </Provider>
     );
 }
 
@@ -84,3 +77,4 @@ App.getInitialProps = async (context: any) => {
         deviceType,
     };
 };
+export default App;

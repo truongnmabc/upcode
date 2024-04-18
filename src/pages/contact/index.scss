@@ -1,0 +1,126 @@
+.contacts {
+    position: relative;
+    margin-bottom: 120px;
+    min-height: calc(100vh - 198px - 40px); // lấy theo Footer1
+    .contacts-container {
+        padding-bottom: 40px;
+        .logo {
+            z-index: 1;
+            position: relative;
+            padding-top: 40px;
+        }
+        .contact-header-container {
+            display: flex;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+            img {
+                display: block;
+                margin-left: auto;
+            }
+            .title-header {
+                font-weight: 600;
+                font-size: 48px;
+                line-height: 72px;
+                color: #ffffff;
+                margin-top: 90px;
+            }
+            .description-header {
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 27px;
+                color: rgba(255, 255, 255, 0.52);
+                margin-top: 96px;
+                margin-bottom: 60px;
+            }
+            .media-container {
+                display: flex;
+                align-items: center;
+                margin-bottom: 60px;
+                svg {
+                    width: 56px;
+                    height: 56px;
+                }
+                .media-content {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    margin-left: 40px;
+                    .title {
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: 24px;
+                        color: #ffffff;
+                    }
+                    .description {
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 24px;
+                        text-decoration-line: underline;
+                        color: rgba(255, 255, 255, 0.52);
+                    }
+                }
+            }
+        }
+        .contact-background-header {
+            border-radius: 0px 0px 80px 0px;
+            background: #212121;
+            position: absolute;
+            width: 55%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            z-index: 0;
+        }
+        .background-dot {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            width: 55%;
+            height: 100%;
+            z-index: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .contacts {
+        margin-bottom: 0px;
+        min-height: calc(100vh - 130px - 24px);
+        .contacts-container {
+            .logo {
+                padding-top: 20px;
+                img {
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+            }
+            padding-bottom: 0px;
+            .contact-header-container {
+                margin-bottom: 0px;
+                .title-header {
+                    font-size: 36px;
+                    line-height: 54px;
+                    margin-top: 60px;
+                }
+                .description-header {
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 21px;
+                    color: #8b8b8b;
+                    margin-top: 80px;
+                }
+            }
+            .contact-background-header {
+                width: 100%;
+                border-radius: 0px;
+            }
+        }
+    }
+}
+
+.footer-1 {
+    position: relative;
+    z-index: 1;
+}

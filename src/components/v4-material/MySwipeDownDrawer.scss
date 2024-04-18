@@ -1,0 +1,32 @@
+$animation: 0.3s 0s cubic-bezier(0.55, 0, 0.1, 1);
+.presentation-drawer-bottom {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -9999;
+
+    #_blank_drawer_bottom {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background-image: linear-gradient(
+            to bottom,
+            transparent,
+            rgba(33, 33, 33, 0.5)
+        );
+        transition: 0.3s all;
+        right: 0;
+        bottom: -100vh;
+    }
+    #navigation_drawer_bottom {
+        position: fixed;
+        right: 0;
+        bottom: calc(-100vh - 25px + 30px);
+        width: 100vw;
+        z-index: 1100;
+        transition: transform $animation;
+    }
+}

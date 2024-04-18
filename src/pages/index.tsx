@@ -1,9 +1,10 @@
-import ParentAppLayout from "@/components/parent-app/ParentAppLayout";
 import SeoHeader from "@/components/seo/SeoHeader";
-import { isParentApp, isWebASVAB } from "@/config/config_web";
+import { isParentApp } from "@/config/config_web";
 import { AppInfo, IAppInfo } from "@/models/AppInfo";
-import TestInfo, { ITestInfo } from "@/models/TestInfo";
+import { ITestInfo } from "@/models/TestInfo";
 import { ITopic } from "@/models/Topic";
+import StoreProvider from "@/redux/StoreProvider";
+import { callApi } from "@/services";
 import { getHomeSeoContentApi } from "@/services/home.service";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { setScrollDownAuto } from "@/utils";
@@ -11,8 +12,14 @@ import convertToJSONObject from "@/utils/convertToJSONObject";
 import { getAppInfo, readAllAppInfos } from "@/utils/getAppInfo";
 import replaceYear from "@/utils/replaceYear";
 import { GetStaticProps } from "next";
+import dynamic from "next/dynamic";
 import { useEffect } from "react";
-
+import stateData from "../data/statesName.json";
+const HomeSingleApp = dynamic(() => import("@/container/single-app/HomeSingleApp"));
+const ParentAppLayout = dynamic(() => import("@/container/parent-app/ParentAppLayout"));
+const ScrollToTopArrow = dynamic(() => import("../components/v4-material/ScrollToTopArrow"), {
+    ssr: false,
+});
 export default function Home({
     descriptionSEO,
     listTopics,
@@ -24,7 +31,7 @@ export default function Home({
     listAppInfo,
 }: {
     listTopics?: ITopic[];
-    tests: ITestInfo[];
+    tests?: ITestInfo[];
     keywordSEO: string;
     descriptionSEO: string;
     appInfo: IAppInfo;
@@ -36,16 +43,36 @@ export default function Home({
     useEffect(() => {
         setScrollDownAuto("home");
     }, []);
+
     return (
         <>
-            <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} />
-            {_isParentApp ? <ParentAppLayout appInfo={appInfo} listAppInfos={listAppInfo} /> : <></>}
+            <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} ads />
+            <StoreProvider appInfo={appInfo} webData={_isParentApp ? {} : { tests: tests, topics: listTopics }} />
+            {/* <div
+                style={{ marginTop: "100px" }}
+                onClick={() => {
+                    genState();
+                }}
+            >
+                kkkkkkkkkkk
+            </div> */}
+            {_isParentApp ? (
+                <ParentAppLayout appInfo={appInfo} listAppInfos={listAppInfo} />
+            ) : (
+                <HomeSingleApp
+                    appInfo={appInfo}
+                    homeSeoContent={homeSeoContent}
+                    listTopics={listTopics}
+                    tests={tests}
+                    _state=""
+                />
+            )}
+            <ScrollToTopArrow />
         </>
     );
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-    const isAsvab = isWebASVAB();
     let listTopics = []; // topics
     let appInfo: IAppInfo | null = getAppInfo();
     let tests = []; // tests
@@ -56,30 +83,25 @@ export const getStaticProps: GetStaticProps = async (context) => {
         listAppInfo = readAllAppInfos();
         listAppInfo = listAppInfo.filter((w: any) => w.appId).map((w: any) => new AppInfo(w));
     } else {
-        if (isAsvab) {
-            // làm giao diện mới cho asvab nên check riêng asvab
-            if (appInfo) {
-                let appData: any = await readFileAppFromGoogleStorage(appInfo.appId + "");
-                listTopics = appData?.topics ?? [];
-                listTopics.sort((a: any, b: any) => {
-                    return a.name.localeCompare(b.name);
-                });
-                let _tests = appData?.fullTests ?? [];
-                tests = _tests.map((t: any) => new TestInfo(t));
-            }
-            homeSeoContent = await getHomeSeoContentApi("home-seo-content");
+        // làm giao diện mới cho asvab nên check riêng asvab
+        if (appInfo) {
+            let appData: any = await readFileAppFromGoogleStorage(appInfo);
+            listTopics = appData?.topics ?? [];
+            tests = appData?.fullTests ?? [];
         }
+        homeSeoContent = await getHomeSeoContentApi("home-seo-content");
     }
 
     if (homeSeoContent) {
         homeSeoContent.content = replaceYear(homeSeoContent.content);
     }
-    let rankMathTitle = appInfo?.rank_math_title;
-    if (appInfo && rankMathTitle) {
-        rankMathTitle = rankMathTitle?.replace("%title%", appInfo.title).replace("%page%", "");
-        rankMathTitle = replaceYear(rankMathTitle);
-    }
-    let titleSEO = !!rankMathTitle ? rankMathTitle : appInfo?.title;
+    // let rankMathTitle = appInfo?.rank_math_title;
+    // if (appInfo && rankMathTitle) {
+    //     rankMathTitle = rankMathTitle?.replace("%title%", appInfo.title).replace("%page%", "");
+    //     rankMathTitle = replaceYear(rankMathTitle);
+    // }
+    // let titleSEO = !!rankMathTitle ? rankMathTitle : appInfo?.title;
+    let titleSEO = appInfo.title;
     if (titleSEO) titleSEO = replaceYear(titleSEO);
     return convertToJSONObject({
         props: {
@@ -93,4 +115,26 @@ export const getStaticProps: GetStaticProps = async (context) => {
             listAppInfo,
         },
     });
+};
+const genState = async () => {
+    const states = stateData["real-estate"].slice(9, 10);
+    const appId = "6212062713741312";
+    const bucket = "realestate";
+    for (let s of states) {
+        try {
+            setTimeout(() => {}, 1000);
+            let res = await callApi({
+                url: `api/app/export-data-web?stateId=${s.id}&appId=${appId}&bucket=${bucket}&state=${s.tag}`,
+                params: null,
+                method: "get",
+                baseURl: "http://localhost:3001/",
+                headers: null,
+                timeout: 90000,
+            });
+            console.log(s.name, res);
+        } catch (e) {
+            console.log("*****NOT*OK******", s.name);
+        }
+    }
+    console.log("--------done-----------");
 };

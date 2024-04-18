@@ -56,22 +56,22 @@ const _Drawer = ({
                     setContainer(true);
                     drawer.current.className = "open";
                     drawer.current.style.transform = "translate(calc(-100vw - 25px + 30px), 0)"; // giống bên css
-                    document.body.style.overflow = "hidden";
-                    nextEle.style.height = "-webkit-fill-available"; // chu y cho nay
+                    // document.body.style.overflow = "hidden";
+                    // nextEle.style.height = "-webkit-fill-available"; // chu y cho nay
                     nextEle.style.overflow = "hidden";
                 } else {
                     setContainer(false);
                     drawer.current.className = "";
                     drawer.current.style.transform = "translate(0, 0)"; // giống bên css
-                    document.body.style.overflow = "unset";
-                    nextEle.style.height = "100%";
+                    // document.body.style.overflow = "unset";
+                    // nextEle.style.height = "100%";
                     nextEle.style.overflow = "";
                 }
             }
             return () => {
-                nextEle && (nextEle.style.height = "100%");
-                nextEle && (nextEle.style.overflow = "");
-                document.body.style.overflow = "unset";
+                // nextEle && (nextEle.style.height = "100%");
+                nextEle && (nextEle.style.overflow = "auto");
+                // document.body.style.overflow = "unset";
             };
         }
     }, [open]);

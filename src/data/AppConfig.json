@@ -16,6 +16,23 @@
         "mainColorUpgradePro": "#329678",
         "appleClientId": ""
     },
+    "easyprep": {
+        "gaId": "UA-167769768-1",
+        "tagManagerId": "GTM-NFL5XHT",
+        "appId": null,
+        "googleVerifyId": "J65PLlMKrhHcS6Ql3keUP-l6_tzEDu_5RgZxybRrhDE",
+        "mainColor": "#fbeb9f",
+        "mainColorBold": "#0e636f",
+        "mainBackgroundColor": "#f8f3ef",
+        "GA4ID": "G-8N9FNDCM44",
+        "pageId": "110654290809849",
+        "wpDomain": "https://easy-prep.org",
+        "cookie": "#278F61",
+        "bgColorStartTest": "#e2a650",
+        "bgColorCloseCookie": "#3E6798",
+        "mainColorUpgradePro": "#329678",
+        "appleClientId": ""
+    },
     "itexam": {
         "gaId": "UA-167769768-18",
         "tagManagerId": "GTM-NBZTV5D",
@@ -58,7 +75,7 @@
         "googleVerifyId": "kS0dwjBOA9pZaStotM-lbFAW2fP7vk6-usRhQcPogw0",
         "mainColor": "#615F46",
         "mainColorBold": "#4a482c",
-        "mainBackgroundColor": "#f8fdff",
+        "mainBackgroundColor": "#F9F7EE",
         "cookie": "#666444",
         "GA4ID": "G-REG5WF8B8P",
         "pageId": "104795498352899",
