@@ -120,12 +120,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             listTopics = appData?.topics ?? [];
             tests = appData?.fullTests ?? [];
 
-            const contentSEO = await getHomeSeoContentApi(seoSlug);
-            if (contentSEO) {
-                contentSEO.content = replaceYear(contentSEO.content);
+            let titleSEO = "";
+            let descriptionSEO = "";
+            let contentSeo = "";
+            try {
+                const contentSEO = await getHomeSeoContentStateApi(seoSlug);
+
+                if (contentSEO) {
+                    contentSEO.content = replaceYear(contentSEO.content);
+                }
+                contentSeo = contentSEO.content;
+                titleSEO = contentSEO?.titleSeo[0] ?? appInfo.title;
+                descriptionSEO = contentSEO?.descSeo[0] ?? appInfo.descriptionSEO;
+            } catch (err) {
+                titleSEO = appInfo.title;
+                descriptionSEO = appInfo.descriptionSEO;
             }
-            let titleSEO = appInfo.title;
-            let descriptionSEO = appInfo.descriptionSEO;
+
+            // console.log(contentSeo, titleSEO, descriptionSEO);
 
             const topic = listTopics.find((t) => t.slug.includes(slug) && !slug.includes("full-length")); // WARNING!
             const test = tests.find((t) => t.slug.includes(slug) && slug.includes("full-length")); // WARNING!
@@ -155,7 +167,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                     descriptionSEO,
                     keywordSEO: appInfo.keywordSEO,
                     data: {
-                        content: contentSEO?.content ?? "",
+                        content: contentSeo,
                         title: title,
                     },
                     gameType,

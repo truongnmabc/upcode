@@ -232,7 +232,7 @@
         "fullTests": ["full-length-ceh-practice-test"]
     },
     {
-        "appId": 6030675607027712,
+        "appId": 6115280825614336,
         "topics": [{ "title": "Practice Questions", "url": "az-900-practice-questions", "tag": "practice-questions" }],
         "fullTests": ["full-length-az-900-practice-test"]
     },
