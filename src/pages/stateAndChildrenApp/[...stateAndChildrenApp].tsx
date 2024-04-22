@@ -135,7 +135,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 tests = appData?.fullTests ?? [];
             }
         }
-        let homeSeoContent = await getHomeSeoContentApi(getLink(childAppInfo, _state));
+        let homeSeoContent = await getHomeSeoContentApi(
+            getLink(childAppInfo, _state)
+                .split("/")
+                .filter((_) => _)
+                .join("-")
+                .split("-") // xử lý trường hợp nhiều dấu -- cạnh nhau
+                .filter((_) => _)
+                .join("-")
+        );
         if (homeSeoContent) {
             homeSeoContent.content = replaceYear(homeSeoContent.content);
         }

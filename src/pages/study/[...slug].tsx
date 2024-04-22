@@ -1,6 +1,6 @@
 import Config from "@/config";
 import StoreProvider from "@/redux/StoreProvider";
-import { getHomeSeoContentApi, getHomeSeoContentStateApi } from "@/services/home.service";
+import { getHomeSeoContentStateApi } from "@/services/home.service";
 import IWebData from "@/types/webData";
 import { getLink, getTitle } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";

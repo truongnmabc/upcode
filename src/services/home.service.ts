@@ -23,7 +23,19 @@ export const getHomeSeoContentApi = async (pageUrl: string) => {
         return { content: "" };
     }
 };
-
+// export const getHomeSeoContentApi = async (postUrl: string) => {
+//     if (!END_POINT_WORD_PRESS?.length) {
+//         return "";
+//     }
+//     let url =
+//         END_POINT_WORD_PRESS +
+//         Config.PREFIX_URL +
+//         APIConfig.GET_HOME_SEO_CONTENT +
+//         "?posturl=" +
+//         postUrl;
+//     let content = await GET({ url });
+//     return content;
+// };
 // export const getAppRatingReviewForWeb = async (appKey: string) => {
 //     //http://localhost:3001/api/app-rating/getAppRatingReviewForWeb?appKey=all
 //     let url = "https://api-cms-v2-dot-micro-enigma-235001.appspot.com/api/app-rating/getAppRatingReviewForWeb?appKey=" + appKey;
