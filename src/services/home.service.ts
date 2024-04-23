@@ -61,18 +61,13 @@ export const getHomeSeoContentStateApi = async (stateSlug: string, baseUrl?: str
     if (!END_POINT_WORD_PRESS?.length) {
         return "";
     }
-    let url = "";
-    if (isProduction() && isWebCDL()) {
-        url = "http://localhost:3001/api/homeseo-api?stateSlug=" + stateSlug;
-    }
-    if (!url) {
-        url =
-            (baseUrl ?? END_POINT_WORD_PRESS) +
-            Config.PREFIX_URL +
-            APIConfig.GET_HOME_SEO_CONTENT_STATE +
-            "?stateSlug=" +
-            stateSlug;
-    }
+    let url =
+        (baseUrl ?? END_POINT_WORD_PRESS) +
+        Config.PREFIX_URL +
+        APIConfig.GET_HOME_SEO_CONTENT_STATE +
+        "?stateSlug=" +
+        stateSlug;
+
     let dataCache = cache.get(url);
     if (dataCache) {
         return dataCache;

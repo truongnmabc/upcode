@@ -180,9 +180,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             let questionsData = [];
             if (getTest) {
                 // vi api tra ve ca data cua test va question luon nen dung chung 1 bien getTest de check
-                let testTag = slug
-                    .replace("full-length-" + (_state ? _state + "-" : "") + appInfo.appShortName, "")
-                    .replace("-practice-test", "");
+                let testTag = slug.replace("full-length" + (_state ? "-" + _state : ""), "").replace("-practice-test", "");
 
                 let data = await getTestDataFromGoogleStorage(
                     appInfo.bucket,
