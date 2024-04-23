@@ -12,7 +12,6 @@ import { render } from "react-dom";
 import getRawTopicsData from "../../utils/getRawTopicsData";
 import AppState from "@/redux/appState";
 import { getStudyData } from "@/redux/reporsitory/game.repository";
-import { genFullStudyLink } from "@/utils/getStudyLink";
 import Config from "@/config";
 
 const RANDOM_COLORS = [

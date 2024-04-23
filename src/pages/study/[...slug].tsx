@@ -89,7 +89,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             .split("-")
             .filter((_) => _)
             .join("-");
-        console.log("xxxx", appNameId, slug, seoSlug);
 
         let _isParentApp = isParentApp();
         let listAppInfo: any[] = readAllAppInfos();
@@ -158,7 +157,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             } else if (!!test) {
                 title = test.title;
             }
-            console.log(gameType);
 
             return convertToJSONObject({
                 props: {
