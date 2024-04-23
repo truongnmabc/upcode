@@ -68,6 +68,8 @@ export const getHomeSeoContentStateApi = async (stateSlug: string, baseUrl?: str
         "?stateSlug=" +
         stateSlug;
 
+    console.log("home.services", url);
+
     let dataCache = cache.get(url);
     if (dataCache) {
         return dataCache;
