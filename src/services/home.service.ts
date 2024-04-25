@@ -68,12 +68,12 @@ export const getHomeSeoContentStateApi = async (stateSlug: string, baseUrl?: str
         "?stateSlug=" +
         stateSlug;
 
-    console.log("home.services", url);
-
-    let dataCache = cache.get(url);
-    if (dataCache) {
-        return dataCache;
-    }
+    // console.log("home.services", url);
+    // let dataCache = cache.get(url);
+    // console.log(dataCache);
+    // if (dataCache) {
+    //     return dataCache;
+    // }
     let content = await GET({ url });
     if (content) {
         cache.put(url, content, Config.TIME_MEMORY_CACHE);
