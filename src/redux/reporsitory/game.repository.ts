@@ -217,10 +217,17 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 gameTitle = appInfo.appName + " " + accessTopic.name + " Practice Test";
 
                 // đm có cả trường hợp sửa tag của topic
-                let dcm = [{ oldTag: "chapter-7-security", bucket: "awscp_new", newTag: "security" }];
+                let dcm = [
+                    { oldTag: "chapter-7-security", bucket: "awscp_new", newTag: "security" }, // trường hợp này thêm ngày 26/4/2024 => 9/2024 xoá đi nhé
+                ];
                 topic_tag = accessTopic.tag;
-                let e = dcm.find((_) => _.oldTag === topic_tag);
-                if (!!e) topic_tag = e.newTag;
+                let e = dcm.find((_) => _.oldTag === topic_tag && appInfo.bucket === _.bucket);
+                console.log("e tag:", e);
+                if (!!e) {
+                    topic_tag = e.newTag;
+                    accessTopic.tag = e.newTag;
+                    dispatch(getTopicByParentIdSuccess([accessTopic]));
+                }
 
                 if (!accessTopic?.topics || accessTopic?.topics.length == 0) {
                     // truong hop topic khong chia level
