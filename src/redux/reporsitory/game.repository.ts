@@ -155,7 +155,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                         console.log("G.R.05");
                     }
                 }
-                console.log("kk1", studyId, accessTopic);
+                console.log("kk1", studyId, accessTopic, slug);
             }
 
             // restore dữ liệu cũ -----------------------------------------------------------------------------
