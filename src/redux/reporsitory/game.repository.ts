@@ -215,7 +215,13 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     throw { err: "No topic data!" };
                 }
                 gameTitle = appInfo.appName + " " + accessTopic.name + " Practice Test";
+
+                // đm có cả trường hợp sửa tag của topic
+                let dcm = [{ oldTag: "chapter-7-security", bucket: "awscp_new", newTag: "security" }];
                 topic_tag = accessTopic.tag;
+                let e = dcm.find((_) => _.oldTag === topic_tag);
+                if (!!e) topic_tag = e.newTag;
+
                 if (!accessTopic?.topics || accessTopic?.topics.length == 0) {
                     // truong hop topic khong chia level
                     studyId = accessTopic.id;

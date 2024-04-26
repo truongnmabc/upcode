@@ -45,10 +45,12 @@ export async function getTopicQuestionsFromGoogleStorage(bucket: string, topicTa
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/general-science-questions.json
     try {
         let isDmv = !!_state || true;
+        let url = `${!isDmv ? BUCKET : BUCKET2}${
+            bucket + (_state ? "/" + _state : "")
+        }/${topicTag}.json?t=${new Date().getTime()}`;
+
         let data = await callApi({
-            url: `${!isDmv ? BUCKET : BUCKET2}${
-                bucket + (_state ? "/" + _state : "")
-            }/${topicTag}.json?t=${new Date().getTime()}`,
+            url: url,
             params: null,
             method: "get",
             baseURl: "https://storage.googleapis.com/micro-enigma-235001.appspot.com/",
