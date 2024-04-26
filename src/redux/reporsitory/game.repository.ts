@@ -30,12 +30,6 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
     // tại version này phần học đc build static nên các url coi như là được xác định trước rồi!
     const state = getState() as AppState;
     // !! check nếu có dữ liệu thì thôi không gọi api, nếu chưa có thì mới gọi
-    let [fullSlug, level]: string[] = (webData.fullSlug ?? "").split("#"); // topic có đi kèm phần #level trong url
-    let slashIndex = fullSlug.lastIndexOf("/");
-    let slug = fullSlug;
-    if (slashIndex !== -1) {
-        slug = slug.substring(slashIndex + 1, fullSlug.length);
-    }
     let topics: ITopic[] = state.topicReducer.list.map((a) => new Topic(a)); // topic đã được lấy về khi getServerSideProps
     let mapTopicQuestions: { [key: string]: Question[] } = state.cardReducer.mapTopicQuestions;
     let appInfo: IAppInfo = state.appInfoReducer.appInfo;
@@ -58,6 +52,14 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             let level_tag = "";
             let forceLoad = false; // biến này để xử lý trường hợp data cũ và data mới thôi, giờ nó cũng k còn tác dụng nữa nma cứ để đây
             let gameTitle = "Full-length " + appInfo.appName + " Practice Test";
+            let [fullSlug, level]: string[] = (webData.fullSlug ?? "").split("#"); // topic có đi kèm phần #level trong url
+            let slashIndex = fullSlug.lastIndexOf("/");
+            let slug = fullSlug;
+
+            if (slashIndex !== -1 && gameType == Config.BRANCH_TEST_GAME) {
+                slug = slug.substring(slashIndex + 1, fullSlug.length);
+            }
+
             // **************** có cả trường hợp sửa tag của topic
             let dcm = [
                 {
