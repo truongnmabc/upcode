@@ -49,8 +49,6 @@ export async function getTopicQuestionsFromGoogleStorage(bucket: string, topicTa
             bucket + (_state ? "/" + _state : "")
         }/${topicTag}.json?t=${new Date().getTime()}`;
 
-        console.log("url", url);
-
         let data = await callApi({
             url: url,
             params: null,

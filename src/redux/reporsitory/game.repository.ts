@@ -143,7 +143,6 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
 
                     // **************** có cả trường hợp sửa tag của topic
                     let e = dcm.find((_) => _.oldTag === topic_tag && appInfo.bucket === _.bucket);
-                    console.log("e tag:", e);
                     if (!!e) {
                         topic_tag = e.newTag;
                         accessTopic.tag = e.newTag;
