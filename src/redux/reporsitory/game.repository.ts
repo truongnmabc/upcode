@@ -58,6 +58,11 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             let level_tag = "";
             let forceLoad = false; // biến này để xử lý trường hợp data cũ và data mới thôi, giờ nó cũng k còn tác dụng nữa nma cứ để đây
             let gameTitle = "Full-length " + appInfo.appName + " Practice Test";
+            // **************** có cả trường hợp sửa tag của topic
+            let dcm = [
+                { oldTag: "chapter-7-security", bucket: "awscp_new", newTag: "security" }, // trường hợp này thêm ngày 26/4/2024 => 9/2024 xoá đi nhé
+            ];
+            // **************** có cả trường hợp sửa tag của topic
 
             if (gameType == Config.BRANCH_TEST_GAME) {
                 let branchTopic = getAppTopics().find((app) => app.appId === appInfo.appId)?.topics;
@@ -135,6 +140,16 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                         getTopicQuestions = true;
                         console.log("G.R.05");
                     }
+
+                    // **************** có cả trường hợp sửa tag của topic
+                    let e = dcm.find((_) => _.oldTag === topic_tag && appInfo.bucket === _.bucket);
+                    console.log("e tag:", e);
+                    if (!!e) {
+                        topic_tag = e.newTag;
+                        accessTopic.tag = e.newTag;
+                        dispatch(getTopicByParentIdSuccess([accessTopic]));
+                    }
+                    // **************** có cả trường hợp sửa tag của topic
                 }
             }
             // restore dữ liệu cũ -----------------------------------------------------------------------------
@@ -215,19 +230,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     throw { err: "No topic data!" };
                 }
                 gameTitle = appInfo.appName + " " + accessTopic.name + " Practice Test";
-
-                // đm có cả trường hợp sửa tag của topic
-                let dcm = [
-                    { oldTag: "chapter-7-security", bucket: "awscp_new", newTag: "security" }, // trường hợp này thêm ngày 26/4/2024 => 9/2024 xoá đi nhé
-                ];
                 topic_tag = accessTopic.tag;
-                let e = dcm.find((_) => _.oldTag === topic_tag && appInfo.bucket === _.bucket);
-                console.log("e tag:", e);
-                if (!!e) {
-                    topic_tag = e.newTag;
-                    accessTopic.tag = e.newTag;
-                    dispatch(getTopicByParentIdSuccess([accessTopic]));
-                }
 
                 if (!accessTopic?.topics || accessTopic?.topics.length == 0) {
                     // truong hop topic khong chia level
