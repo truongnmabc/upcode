@@ -96,6 +96,9 @@ const GridTopic = ({
     const dispatchAction = (data: any) => {
         dispatch(getStudyData({ ...data, _state: _state }));
     };
+
+    console.log("xx0", highlightedTopicId);
+
     return (
         <div className={`v4-grid-topic-0 ${place}`}>
             {topics.map((topic, index) => {
@@ -245,6 +248,8 @@ const TopicLevelProgress = ({
     dispatchAction: any;
     topicUrl: string;
 }) => {
+    console.log("xx2:", levels);
+
     let sequence = 3;
     let arr: Array<ITopic[]> = [];
     let idx = 0;

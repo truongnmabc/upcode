@@ -72,7 +72,6 @@ const StudyView = ({
     };
 
     useEffect(() => {
-        console.log("xx1:", listTopics);
         if (typeof window != "undefined") {
             // khi có tương tác với trang thì sẽ kéo phần nội dung (banner download, seo) ở dưới màn hình lên
             window.onscroll = (e) => {
