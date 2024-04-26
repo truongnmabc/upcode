@@ -97,8 +97,6 @@ const GridTopic = ({
         dispatch(getStudyData({ ...data, _state: _state }));
     };
 
-    console.log("xx0", highlightedTopicId, topics);
-
     return (
         <div className={`v4-grid-topic-0 ${place}`}>
             {topics.map((topic, index) => {
