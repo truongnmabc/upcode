@@ -75,8 +75,8 @@ export const getHomeSeoContentStateApi = async (stateSlug: string, baseUrl?: str
     //     return dataCache;
     // }
     let content = await GET({ url });
-    if (content) {
-        cache.put(url, content, Config.TIME_MEMORY_CACHE);
-    }
+    // if (content) {
+    //     cache.put(url, content, Config.TIME_MEMORY_CACHE);
+    // }
     return content;
 };
