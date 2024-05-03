@@ -56,7 +56,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             let slashIndex = fullSlug.lastIndexOf("/");
             let slug = fullSlug;
 
-            if (slashIndex !== -1 && gameType == Config.BRANCH_TEST_GAME) {
+            if (slashIndex !== -1 && gameType != Config.TOPIC_GAME) {
                 slug = slug.substring(slashIndex + 1, fullSlug.length);
             }
 
@@ -85,7 +85,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 // phần branch dùng chung câu hỏi với test
                 // quy định slug này là vào practice-test
                 // design mới là sẽ chỉ còn 1 bài test ~ diagnosticTest nên testInfoV4Reducer.list chỉ có 1 phần tử thôi
-                let _test = tests.find((t) => t.slug.includes(slug)); // tim thong tin bai test (full-test va branch test) // WARNING!
+                let _test = tests.find((t) => t.slug.includes(fullSlug)); // tim thong tin bai test (full-test va branch test) // WARNING!
                 if (!_test) {
                     //call api neu nh khong co
                     getTest = true;
