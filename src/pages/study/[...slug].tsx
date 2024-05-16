@@ -129,8 +129,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                     contentSEO.content = replaceYear(contentSEO.content);
                 }
                 contentSeo = contentSEO.content;
-                titleSEO = contentSEO?.titleSeo[0] ?? appInfo.title;
-                descriptionSEO = contentSEO?.descSeo[0] ?? appInfo.descriptionSEO;
+                titleSEO = contentSEO?.titleSeo[0];
+                if (!titleSEO) titleSEO = appInfo.title;
+                descriptionSEO = contentSEO?.descSeo[0];
+                if (!descriptionSEO) descriptionSEO = appInfo.descriptionSEO;
             } catch (err) {
                 console.log("**Seo err:", err.message);
                 titleSEO = appInfo.title;

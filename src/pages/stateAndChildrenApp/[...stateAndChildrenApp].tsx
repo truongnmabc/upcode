@@ -166,8 +166,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             d = contentSEO?.descSeo[0];
         } catch (err) {}
 
-        let titleSEO = replaceYear(t ?? childAppInfo.title ?? "");
-        let descriptionSEO = replaceYear(d ?? childAppInfo.descriptionSEO ?? "");
+        if (!t) t = childAppInfo.title;
+        if (!d) d = childAppInfo.descriptionSEO;
+
+        let titleSEO = replaceYear(t ?? "");
+        let descriptionSEO = replaceYear(d ?? "");
 
         return convertToJSONObject({
             props: {
