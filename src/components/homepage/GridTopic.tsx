@@ -80,13 +80,13 @@ const GridTopic = ({
         // để hiển thị link và tên topic cho SEO
         topics = getRawTopicsData(appInfo, _state);
     }
-    try {
-        topics.sort((a, b) => {
-            return a.name.localeCompare(b.name);
-        });
-    } catch (e) {
-        console.log(e);
-    }
+    // try {
+    //     topics.sort((a, b) => {
+    //         return a.name.localeCompare(b.name);
+    //     });
+    // } catch (e) {
+    //     console.log(e);
+    // }
     topics = topics.map((t, i) => ({ ...t, color: RANDOM_COLORS[i] }));
     topics.sort((a, b) => {
         if (highlightedTopicId.includes(a.id + "")) return -1; // đưa topic đang làm lên đầu tiên

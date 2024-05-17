@@ -117,24 +117,96 @@ export const getStaticProps: GetStaticProps = async (context) => {
     });
 };
 const genState = async () => {
-    const states = stateData["real-estate"].slice(9, 10);
-    const appId = "6212062713741312";
-    const bucket = "realestate";
-    for (let s of states) {
+    // const states = stateData["real-estate"].slice(9, 10);
+    // const appId = "6212062713741312";
+    // const bucket = "realestate";
+    // for (let s of states) {
+    //     try {
+    //         setTimeout(() => {}, 1000);
+    //         let res = await callApi({
+    //             url: `api/app/export-data-web?stateId=${s.id}&appId=${appId}&bucket=${bucket}&state=${s.tag}`,
+    //             params: null,
+    //             method: "get",
+    //             baseURl: "http://localhost:3001/",
+    //             headers: null,
+    //             timeout: 90000,
+    //         });
+    //         console.log(s.name, res);
+    //     } catch (e) {
+    //         console.log("*****NOT*OK******", s.name);
+    //     }
+    // }
+    // console.log("--------done-----------");
+
+    let app = [
+        {
+            bucket: "cen",
+            appId: 4837345850294272,
+            appName: "CEN",
+        },
+        {
+            bucket: "journeymanelectrician",
+            appId: 5316459300388864,
+            appName: "Journeyman Electrician",
+        },
+        {
+            bucket: "comptiaitf",
+            appId: 6413438390632448,
+            appName: "comptia itf+",
+        },
+        {
+            bucket: "awscerifiedsysopsadministrator",
+            appId: 5215607919214592,
+            appName: "AWS Certified SysOps Administrator",
+        },
+        {
+            bucket: "mcat",
+            appId: 5685410002894848,
+            appName: "MCAT",
+        },
+        {
+            bucket: "pl300",
+            appId: 6640384538050560,
+            appName: "PL-300",
+        },
+        {
+            bucket: "awscertifieddeveloper",
+            appId: 5910018231631872,
+            appName: "AWS Certified Developer",
+        },
+        {
+            bucket: "australiancitizenship",
+            appId: 6500317395943424,
+            appName: "Australian Citizenship",
+        },
+        {
+            bucket: "fsot",
+            appId: 6634431222644736,
+            appName: "FSOT",
+        },
+        {
+            bucket: "paramedic",
+            appId: 5643531427250176,
+            appName: "Paramedic",
+        },
+    ];
+
+    for (let a of app) {
+        let bucket = a.bucket;
+        let appId = a.appId;
         try {
             setTimeout(() => {}, 1000);
             let res = await callApi({
-                url: `api/app/export-data-web?stateId=${s.id}&appId=${appId}&bucket=${bucket}&state=${s.tag}`,
+                url: `api/app/export-data-web?appId=${appId}&bucket=${bucket}`,
                 params: null,
                 method: "get",
                 baseURl: "http://localhost:3001/",
                 headers: null,
                 timeout: 90000,
             });
-            console.log(s.name, res);
+            console.log(a.appName, res);
         } catch (e) {
-            console.log("*****NOT*OK******", s.name);
+            console.log("*****NOT*OK******", a.appName);
         }
     }
-    console.log("--------done-----------");
 };

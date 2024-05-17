@@ -69,8 +69,14 @@ const genStudyData = async (listAppInfos = []) => {
                 // Process the data here
                 let topics = data?.topics ?? [];
                 topics.sort((a, b) => {
+                    if (!!a?.orderIndex && !!b.orderIndex) return a.orderIndex - b.orderIndex;
                     return a.name.localeCompare(b.name);
                 });
+
+                let bonusQuestions = topics.filter((t) => t.name.toLowerCase().includes("bonus "));
+                topics = topics.filter((t) => !t.name.toLowerCase().includes("bonus "));
+                topics = topics.concat(bonusQuestions);
+
                 a = { ...data, topics };
             })
             .catch((error) => {
