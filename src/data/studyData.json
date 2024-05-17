@@ -206,7 +206,20 @@
     },
     {
         "appId": 6115280825614336,
-        "topics": [{ "title": "Practice Questions", "url": "practice-questions", "tag": "practice-questions" }],
+        "topics": [
+            { "title": "Cloud Concepts", "url": "describe-cloud-concepts-practice-test", "tag": "describe-cloud-concepts" },
+            {
+                "title": "Azure Architecture and Services",
+                "url": "describe-azure-architecture-and-services-practice-test",
+                "tag": "describe-azure-architecture-and-services"
+            },
+            {
+                "title": "Azure Management and Governance",
+                "url": "describe-azure-management-and-governance-practice-test",
+                "tag": "describe-azure-management-and-governance"
+            },
+            { "title": "Bonus Questions", "url": "bonus-questions-practice-test", "tag": "bonus-questions" }
+        ],
         "fullTests": ["full-length-practice-test"]
     },
     {
@@ -2389,31 +2402,27 @@
         "appId": 6326015811911680,
         "topics": [
             {
-                "title": "Domain 1.0: Threat and Vulnerability Management",
-                "url": "domain-1-0-threat-and-vulnerability-management-practice-test",
-                "tag": "domain-1-0-threat-and-vulnerability-management"
+                "title": "Security Operations",
+                "url": "domain-1-0-security-operations-practice-test",
+                "tag": "domain-1-0-security-operations"
             },
             {
-                "title": "Domain 2.0: Software and Systems Security",
-                "url": "domain-2-0-software-and-systems-security-practice-test",
-                "tag": "domain-2-0-software-and-systems-security"
+                "title": "Vulnerability Management",
+                "url": "domain-2-0-vulnerability-management-practice-test",
+                "tag": "domain-2-0-vulnerability-management"
             },
             {
-                "title": "Domain 3.0 Security Operations and Monitoring",
-                "url": "domain-3-0-security-operations-and-monitoring-practice-test",
-                "tag": "domain-3-0-security-operations-and-monitoring"
+                "title": "Incident Response and Management",
+                "url": "domain-3-0-incident-response-and-management-practice-test",
+                "tag": "domain-3-0-incident-response-and-management"
             },
             {
-                "title": "Domain 4.0: Incident Response",
-                "url": "domain-4-0-incident-response-practice-test",
-                "tag": "domain-4-0-incident-response"
+                "title": "Reporting and Communication",
+                "url": "reporting-and-communication-practice-test",
+                "tag": "reporting-and-communication"
             },
-            {
-                "title": "Domain 5.0: Compliance and Assessment",
-                "url": "domain-5-0-compliance-and-assessment-practice-test",
-                "tag": "domain-5-0-compliance-and-assessment"
-            },
-            { "title": "Bonus questions", "url": "bonus-questions-practice-test", "tag": "bonus-questions" }
+            { "title": "Bonus Questions 1", "url": "bonus-questions-1-practice-test", "tag": "bonus-questions-1" },
+            { "title": "Bonus Questions 2", "url": "bonus-questions-2-practice-test", "tag": "bonus-questions-2" }
         ],
         "fullTests": ["full-length-practice-test"]
     },
@@ -4528,11 +4537,28 @@
     {
         "appId": 6117350328762368,
         "topics": [
-            { "title": "Exam 2", "url": "exam-2-practice-test", "tag": "exam-2" },
-            { "title": "Exam 3", "url": "exam-3-practice-test", "tag": "exam-3" },
-            { "title": "Exam 4", "url": "exam-4-practice-test", "tag": "exam-4" },
-            { "title": "Exam 5", "url": "exam-5-practice-test", "tag": "exam-5" },
-            { "title": "Exam 1", "url": "exam-1-practice-test", "tag": "exam-1" }
+            {
+                "title": "Ethical and Professional Standards",
+                "url": "ethical-and-professional-standards-practice-test",
+                "tag": "ethical-and-professional-standards"
+            },
+            { "title": "Quantitative Methods", "url": "quantitative-methods-practice-test", "tag": "quantitative-methods" },
+            { "title": "Economics", "url": "economics-practice-test", "tag": "economics" },
+            {
+                "title": "Financial Statement Analysis",
+                "url": "financial-statement-analysis-practice-test",
+                "tag": "financial-statement-analysis"
+            },
+            { "title": "Corporate Issuers", "url": "corporate-issuers-practice-test", "tag": "corporate-issuers" },
+            { "title": "Portfolio Management", "url": "portfolio-management-practice-test", "tag": "portfolio-management" },
+            { "title": "Equity Investments", "url": "equity-investments-practice-test", "tag": "equity-investments" },
+            { "title": "Fixed Income", "url": "fixed-income-practice-test", "tag": "fixed-income" },
+            { "title": "Derivatives", "url": "derivatives-practice-test", "tag": "derivatives" },
+            {
+                "title": "Alternative Investments",
+                "url": "alternative-investments-practice-test",
+                "tag": "alternative-investments"
+            }
         ],
         "fullTests": ["full-length-practice-test"]
     },

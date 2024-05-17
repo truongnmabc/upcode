@@ -139,56 +139,71 @@ const genState = async () => {
     // console.log("--------done-----------");
 
     let app = [
-        {
-            bucket: "cen",
-            appId: 4837345850294272,
-            appName: "CEN",
-        },
-        {
-            bucket: "journeymanelectrician",
-            appId: 5316459300388864,
-            appName: "Journeyman Electrician",
-        },
-        {
-            bucket: "comptiaitf",
-            appId: 6413438390632448,
-            appName: "comptia itf+",
-        },
-        {
-            bucket: "awscerifiedsysopsadministrator",
-            appId: 5215607919214592,
-            appName: "AWS Certified SysOps Administrator",
-        },
-        {
-            bucket: "mcat",
-            appId: 5685410002894848,
-            appName: "MCAT",
-        },
-        {
-            bucket: "pl300",
-            appId: 6640384538050560,
-            appName: "PL-300",
-        },
-        {
-            bucket: "awscertifieddeveloper",
-            appId: 5910018231631872,
-            appName: "AWS Certified Developer",
-        },
-        {
-            bucket: "australiancitizenship",
-            appId: 6500317395943424,
-            appName: "Australian Citizenship",
-        },
-        {
-            bucket: "fsot",
-            appId: 6634431222644736,
-            appName: "FSOT",
-        },
-        {
-            bucket: "paramedic",
-            appId: 5643531427250176,
-            appName: "Paramedic",
-        },
+        // {
+        //     bucket: "maf",
+        //     appId: 6115280825614336,
+        //     appName: "Microsoft Azure AZ-900",
+        // },
+        // {
+        //     bucket: "cfa",
+        //     appId: 6117350328762368,
+        //     appName: "CFA Level 1",
+        // },
+        // {
+        //     bucket: "comptiacysa",
+        //     appId: 6326015811911680,
+        //     appName: "CompTIA CySA+",
+        // },
+        // {
+        //     bucket: "cen",
+        //     appId: 4837345850294272,
+        //     appName: "CEN",
+        // },
+        // {
+        //     bucket: "journeymanelectrician",
+        //     appId: 5316459300388864,
+        //     appName: "Journeyman Electrician",
+        // },
+        // {
+        //     bucket: "comptiaitf",
+        //     appId: 6413438390632448,
+        //     appName: "comptia itf+",
+        // },
+        // {
+        //     bucket: "awscerifiedsysopsadministrator",
+        //     appId: 5215607919214592,
+        //     appName: "AWS Certified SysOps Administrator",
+        // },
+        // {
+        //     bucket: "mcat",
+        //     appId: 5685410002894848,
+        //     appName: "MCAT",
+        // },
+        // {
+        //     bucket: "pl300",
+        //     appId: 6640384538050560,
+        //     appName: "PL-300",
+        // },
+        // {
+        //     bucket: "awscertifieddeveloper",
+        //     appId: 5910018231631872,
+        //     appName: "AWS Certified Developer",
+        // },
+        // {
+        //     bucket: "australiancitizenship",
+        //     appId: 6500317395943424,
+        //     appName: "Australian Citizenship",
+        // },
+        // {
+        //     bucket: "fsot",
+        //     appId: 6634431222644736,
+        //     appName: "FSOT",
+        // },
+        // {
+        //     bucket: "paramedic",
+        //     appId: 5643531427250176,
+        //     appName: "Paramedic",
+        // },
     ];
 
     for (let a of app) {
