@@ -30,12 +30,6 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
     // tại version này phần học đc build static nên các url coi như là được xác định trước rồi!
     const state = getState() as AppState;
     // !! check nếu có dữ liệu thì thôi không gọi api, nếu chưa có thì mới gọi
-    let [fullSlug, level]: string[] = (webData.fullSlug ?? "").split("#"); // topic có đi kèm phần #level trong url
-    let slashIndex = fullSlug.lastIndexOf("/");
-    let slug = fullSlug;
-    if (slashIndex !== -1) {
-        slug = slug.substring(slashIndex + 1, fullSlug.length);
-    }
     let topics: ITopic[] = state.topicReducer.list.map((a) => new Topic(a)); // topic đã được lấy về khi getServerSideProps
     let mapTopicQuestions: { [key: string]: Question[] } = state.cardReducer.mapTopicQuestions;
     let appInfo: IAppInfo = state.appInfoReducer.appInfo;
@@ -58,6 +52,25 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             let level_tag = "";
             let forceLoad = false; // biến này để xử lý trường hợp data cũ và data mới thôi, giờ nó cũng k còn tác dụng nữa nma cứ để đây
             let gameTitle = "Full-length " + appInfo.appName + " Practice Test";
+            let [fullSlug, level]: string[] = (webData.fullSlug ?? "").split("#"); // topic có đi kèm phần #level trong url
+            let slashIndex = fullSlug.lastIndexOf("/");
+            let slug = fullSlug;
+
+            if (slashIndex !== -1 && gameType != Config.TOPIC_GAME) {
+                slug = slug.substring(slashIndex + 1, fullSlug.length);
+            }
+
+            // **************** có cả trường hợp sửa tag của topic
+            let dcm = [
+                {
+                    oldTag: "chapter-7-security",
+                    bucket: "awscp_new",
+                    newTag: "security",
+                    oldId: "5974654817665024",
+                    newId: "5407780207853568",
+                }, // trường hợp này thêm ngày 26/4/2024 => 9/2024 xoá đi nhé
+            ];
+            // **************** có cả trường hợp sửa tag, thay đổi id của topic
 
             if (gameType == Config.BRANCH_TEST_GAME) {
                 let branchTopic = getAppTopics().find((app) => app.appId === appInfo.appId)?.topics;
@@ -72,7 +85,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 // phần branch dùng chung câu hỏi với test
                 // quy định slug này là vào practice-test
                 // design mới là sẽ chỉ còn 1 bài test ~ diagnosticTest nên testInfoV4Reducer.list chỉ có 1 phần tử thôi
-                let _test = tests.find((t) => t.slug.includes(slug)); // tim thong tin bai test (full-test va branch test) // WARNING!
+                let _test = tests.find((t) => t.slug.includes(fullSlug)); // tim thong tin bai test (full-test va branch test) // WARNING!
                 if (!_test) {
                     //call api neu nh khong co
                     getTest = true;
@@ -104,6 +117,14 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     forceLoad = true;
                     console.log("G.R.04");
                 } else {
+                    // **************** có cả trường hợp sửa tag của topic
+                    let e = dcm.find((_) => _.oldTag === topic_tag && appInfo.bucket === _.bucket);
+                    if (!!e) {
+                        accessTopic.tag = e.newTag;
+                        dispatch(getTopicByParentIdSuccess([accessTopic]));
+                    }
+                    // **************** có cả trường hợp sửa tag của topic
+
                     // co du lieu roi thi gan du lieu de load game
                     // update, thêm level thì cần check xem topic đó có lưu level trong trường topics chưa
                     // tìm ra level cao nhất có thể làm rồi đối chiếu với access level
@@ -137,6 +158,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     }
                 }
             }
+
             // restore dữ liệu cũ -----------------------------------------------------------------------------
             if (studyId && !forceLoad) {
                 // qua kiểm tra thấy có id của phần học ứng với slug này rồi thì check trong listGameState (xem đã từng làm chưa) để resotre lại dữ liệu
@@ -180,9 +202,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
             let questionsData = [];
             if (getTest) {
                 // vi api tra ve ca data cua test va question luon nen dung chung 1 bien getTest de check
-                let testTag = slug
-                    .replace("full-length-" + (_state ? _state + "-" : "") + appInfo.appShortName, "")
-                    .replace("-practice-test", "");
+                let testTag = slug.replace("full-length" + (_state ? "-" + _state : ""), "").replace("-practice-test", "");
 
                 let data = await getTestDataFromGoogleStorage(
                     appInfo.bucket,
@@ -218,6 +238,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                 }
                 gameTitle = appInfo.appName + " " + accessTopic.name + " Practice Test";
                 topic_tag = accessTopic.tag;
+
                 if (!accessTopic?.topics || accessTopic?.topics.length == 0) {
                     // truong hop topic khong chia level
                     studyId = accessTopic.id;

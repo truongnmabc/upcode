@@ -23,7 +23,19 @@ export const getHomeSeoContentApi = async (pageUrl: string) => {
         return { content: "" };
     }
 };
-
+// export const getHomeSeoContentApi = async (postUrl: string) => {
+//     if (!END_POINT_WORD_PRESS?.length) {
+//         return "";
+//     }
+//     let url =
+//         END_POINT_WORD_PRESS +
+//         Config.PREFIX_URL +
+//         APIConfig.GET_HOME_SEO_CONTENT +
+//         "?posturl=" +
+//         postUrl;
+//     let content = await GET({ url });
+//     return content;
+// };
 // export const getAppRatingReviewForWeb = async (appKey: string) => {
 //     //http://localhost:3001/api/app-rating/getAppRatingReviewForWeb?appKey=all
 //     let url = "https://api-cms-v2-dot-micro-enigma-235001.appspot.com/api/app-rating/getAppRatingReviewForWeb?appKey=" + appKey;
@@ -49,25 +61,22 @@ export const getHomeSeoContentStateApi = async (stateSlug: string, baseUrl?: str
     if (!END_POINT_WORD_PRESS?.length) {
         return "";
     }
-    let url = "";
-    if (isProduction() && isWebCDL()) {
-        url = "http://localhost:3001/api/homeseo-api?stateSlug=" + stateSlug;
-    }
-    if (!url) {
-        url =
-            (baseUrl ?? END_POINT_WORD_PRESS) +
-            Config.PREFIX_URL +
-            APIConfig.GET_HOME_SEO_CONTENT_STATE +
-            "?stateSlug=" +
-            stateSlug;
-    }
-    let dataCache = cache.get(url);
-    if (dataCache) {
-        return dataCache;
-    }
+    let url =
+        (baseUrl ?? END_POINT_WORD_PRESS) +
+        Config.PREFIX_URL +
+        APIConfig.GET_HOME_SEO_CONTENT_STATE +
+        "?stateSlug=" +
+        stateSlug;
+
+    // console.log("home.services", url);
+    // let dataCache = cache.get(url);
+    // console.log(dataCache);
+    // if (dataCache) {
+    //     return dataCache;
+    // }
     let content = await GET({ url });
-    if (content) {
-        cache.put(url, content, Config.TIME_MEMORY_CACHE);
-    }
+    // if (content) {
+    //     cache.put(url, content, Config.TIME_MEMORY_CACHE);
+    // }
     return content;
 };

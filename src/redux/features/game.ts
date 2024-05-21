@@ -21,7 +21,7 @@ export class GameState {
     defaultTimeTest: number; //
     gameTitle: string; //
     gameType: number; //
-    id: string; // version cũ là id có thành phần level và appId | vesion mới thì k có cái đó mà chỉ còn mỗi studyId thôi ; bổ sung thêm -[level] cho topic
+    id: string; // version cũ là id có thành phần level và appId | vesion mới thì k có cái đó mà chỉ còn mỗi studyId thôi ; bổ sung thêm -[level] cho topic | test sẽ dùng slug làm id này
     indexActive: number; //
     isFinishGame: -1 | 0 | 1; // đánh dấu là đã kết thúc bài học hay chưa {-1: init, 0: chưa, 1: rồi}
     isLoadedStudyData: boolean; //

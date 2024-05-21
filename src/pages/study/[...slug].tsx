@@ -1,6 +1,6 @@
 import Config from "@/config";
 import StoreProvider from "@/redux/StoreProvider";
-import { getHomeSeoContentApi, getHomeSeoContentStateApi } from "@/services/home.service";
+import { getHomeSeoContentStateApi } from "@/services/home.service";
 import IWebData from "@/types/webData";
 import { getLink, getTitle } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
@@ -89,7 +89,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             .split("-")
             .filter((_) => _)
             .join("-");
-        console.log("xxxx", appNameId, slug, seoSlug);
 
         let _isParentApp = isParentApp();
         let listAppInfo: any[] = readAllAppInfos();
@@ -130,9 +129,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                     contentSEO.content = replaceYear(contentSEO.content);
                 }
                 contentSeo = contentSEO.content;
-                titleSEO = contentSEO?.titleSeo[0] ?? appInfo.title;
-                descriptionSEO = contentSEO?.descSeo[0] ?? appInfo.descriptionSEO;
+                titleSEO = contentSEO?.titleSeo[0];
+                if (!titleSEO) titleSEO = appInfo.title;
+                descriptionSEO = contentSEO?.descSeo[0];
+                if (!descriptionSEO) descriptionSEO = appInfo.descriptionSEO;
             } catch (err) {
+                console.log("**Seo err:", err.message);
                 titleSEO = appInfo.title;
                 descriptionSEO = appInfo.descriptionSEO;
             }
@@ -158,7 +160,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             } else if (!!test) {
                 title = test.title;
             }
-            console.log(gameType);
 
             return convertToJSONObject({
                 props: {
