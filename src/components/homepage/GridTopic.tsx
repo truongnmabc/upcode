@@ -12,7 +12,6 @@ import { render } from "react-dom";
 import getRawTopicsData from "../../utils/getRawTopicsData";
 import AppState from "@/redux/appState";
 import { getStudyData } from "@/redux/reporsitory/game.repository";
-import { genFullStudyLink } from "@/utils/getStudyLink";
 import Config from "@/config";
 
 const RANDOM_COLORS = [
@@ -81,13 +80,13 @@ const GridTopic = ({
         // để hiển thị link và tên topic cho SEO
         topics = getRawTopicsData(appInfo, _state);
     }
-    try {
-        topics.sort((a, b) => {
-            return a.name.localeCompare(b.name);
-        });
-    } catch (e) {
-        console.log(e);
-    }
+    // try {
+    //     topics.sort((a, b) => {
+    //         return a.name.localeCompare(b.name);
+    //     });
+    // } catch (e) {
+    //     console.log(e);
+    // }
     topics = topics.map((t, i) => ({ ...t, color: RANDOM_COLORS[i] }));
     topics.sort((a, b) => {
         if (highlightedTopicId.includes(a.id + "")) return -1; // đưa topic đang làm lên đầu tiên
@@ -97,6 +96,7 @@ const GridTopic = ({
     const dispatchAction = (data: any) => {
         dispatch(getStudyData({ ...data, _state: _state }));
     };
+
     return (
         <div className={`v4-grid-topic-0 ${place}`}>
             {topics.map((topic, index) => {
@@ -246,6 +246,8 @@ const TopicLevelProgress = ({
     dispatchAction: any;
     topicUrl: string;
 }) => {
+    console.log("xx2:", levels);
+
     let sequence = 3;
     let arr: Array<ITopic[]> = [];
     let idx = 0;

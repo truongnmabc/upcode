@@ -79,18 +79,18 @@
             .v4-study-list-topics-0 {
                 padding-top: 16px;
             }
+
             .v4-study-list-branches-0 {
+                padding: 16px;
+                background: #fff;
+                margin-top: 16px;
+
                 h3 {
                     font-size: 20px;
                     line-height: 30px;
                     margin: 0;
                     padding-bottom: 12px;
                 }
-            }
-            .v4-study-list-branches-0 {
-                padding: 16px;
-                background: #fff;
-                margin-top: 16px;
 
                 a {
                     color: #3b82f6;
@@ -99,6 +99,8 @@
                     display: block;
                     font-size: 14px;
                     transition: 0.2s all;
+                    text-transform: capitalize;
+
                     &:hover {
                         background-color: rgba(33, 33, 33, 0.04);
                     }

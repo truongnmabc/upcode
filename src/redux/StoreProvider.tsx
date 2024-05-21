@@ -37,9 +37,13 @@ const MyProvider = ({ children, appInfo, webData }: { children?: React.ReactNode
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setAppInfo(appInfo));
+        if (!!webData.tests) {
+            dispatch(getTestSuccess(webData.tests));
+        }
+        if (!!webData.topics) {
+            dispatch(getTopicByParentIdSuccess(webData.topics)); // chỉ là để update vào redux thôi
+        }
         if (!!webData.type) dispatch(getStudyData(webData));
-        if (!!webData.tests) dispatch(getTestSuccess(webData.tests));
-        if (!!webData.topics) dispatch(getTopicByParentIdSuccess(webData.topics)); // chỉ là để update vào redux thôi
     }, []);
     return <>{children}</>;
 };

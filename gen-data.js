@@ -69,8 +69,14 @@ const genStudyData = async (listAppInfos = []) => {
                 // Process the data here
                 let topics = data?.topics ?? [];
                 topics.sort((a, b) => {
+                    if (!!a?.orderIndex && !!b.orderIndex) return a.orderIndex - b.orderIndex;
                     return a.name.localeCompare(b.name);
                 });
+
+                let bonusQuestions = topics.filter((t) => t.name.toLowerCase().includes("bonus "));
+                topics = topics.filter((t) => !t.name.toLowerCase().includes("bonus "));
+                topics = topics.concat(bonusQuestions);
+
                 a = { ...data, topics };
             })
             .catch((error) => {
@@ -237,12 +243,19 @@ const _genStudyLink = (appShortName, tag, fullTest, _state = "") => {
         if (!tag?.includes(appShortName)) url = appShortName + "-" + url;
         if (!tag?.includes("practice")) url = url + "-" + "practice-test";
         if (_state) url = url.replace(appShortName, _state + "-" + appShortName);
-        url = "/" + url;
     } else {
-        if (!!tag) url = `/full-length-${_state ? _state + "-" + appShortName : appShortName}-${tag}-practice-test`;
+        if (!!tag) url = `full-length-${_state ? _state + "-" + appShortName : appShortName}-${tag}-practice-test`;
         // trường hợp full-length test
-        else url = `/full-length-${_state ? _state + "-" + appShortName : appShortName}-practice-test`; // trường hợp full-length test
+        else url = `full-length-${_state ? _state + "-" + appShortName : appShortName}-practice-test`; // trường hợp full-length test
     }
     // trường hợp branch
+
+    url = url //update 23/4
+        .replaceAll(appShortName, "")
+        .split("-")
+        .filter((_) => !!_ && !!_.trim())
+        .join("-");
+
+    url = "/" + url;
     return url;
 };

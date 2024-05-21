@@ -1,6 +1,6 @@
 import { ITestInfo } from "@/models/TestInfo";
 import StoreProvider from "@/redux/StoreProvider";
-import { getHomeSeoContentApi } from "@/services/home.service";
+import { getHomeSeoContentApi, getHomeSeoContentStateApi } from "@/services/home.service";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { getLink } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
@@ -135,14 +135,42 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 tests = appData?.fullTests ?? [];
             }
         }
-        let homeSeoContent = await getHomeSeoContentApi(getLink(childAppInfo, _state));
-        if (homeSeoContent) {
-            homeSeoContent.content = replaceYear(homeSeoContent.content);
-        }
+        // let homeSeoContent = await getHomeSeoContentApi(
+        //     getLink(childAppInfo, _state)
+        //         .split("/")
+        //         .filter((_) => _)
+        //         .join("-")
+        //         .split("-") // xử lý trường hợp nhiều dấu -- cạnh nhau
+        //         .filter((_) => _)
+        //         .join("-")
+        // );
+        // if (homeSeoContent) {
+        //     homeSeoContent.content = replaceYear(homeSeoContent.content);
+        // }
 
         // await genstudyDataJSON(listAppInfos);
-        let titleSEO = replaceYear(childAppInfo.title);
-        let descriptionSEO = replaceYear(childAppInfo.descriptionSEO);
+
+        // if (_state) {
+        let seoSlug = [slug, _state].join("-");
+        seoSlug = seoSlug
+            .split("-")
+            .filter((_) => _)
+            .join("-");
+
+        const contentSEO = await getHomeSeoContentStateApi(seoSlug);
+        contentSEO.content = replaceYear(contentSEO?.content ?? "");
+        let t = "";
+        let d = "";
+        try {
+            t = contentSEO?.titleSeo[0];
+            d = contentSEO?.descSeo[0];
+        } catch (err) {}
+
+        if (!t) t = childAppInfo.title;
+        if (!d) d = childAppInfo.descriptionSEO;
+
+        let titleSEO = replaceYear(t ?? "");
+        let descriptionSEO = replaceYear(d ?? "");
 
         return convertToJSONObject({
             props: {
@@ -153,7 +181,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 keywordSEO: childAppInfo?.keywordSEO,
                 childAppInfo,
                 _state: _state ?? "",
-                homeSeoContent,
+                homeSeoContent: contentSEO,
             },
             // revalidate: 1800, // sau 30p sẽ chạy lại hàm này 1 lần https://nextjs.org/docs/pages/api-reference/functions/get-static-props#revalidate
         });

@@ -28,15 +28,25 @@ export async function readFileAppFromGoogleStorage(appInfo: IAppInfo, _state?: s
             (t) => new Topic({ ...t, slug: genFullStudyLink(appInfo, t.tag, false, _state) })
         );
         topics.sort((a: any, b: any) => {
+            if (!!a?.orderIndex && !!b.orderIndex) return a.orderIndex - b.orderIndex;
             return a.name.localeCompare(b.name);
         });
+
+        let bonusQuestions = topics.filter((t) => t.name.toLowerCase().includes("bonus "));
+        topics = topics.filter((t) => !t.name.toLowerCase().includes("bonus "));
+        topics = topics.concat(bonusQuestions);
+
         let _tests = data?.fullTests ?? [];
         let tests = _tests.map(
             (t: any) => new TestInfo({ ...t, slug: genFullStudyLink(appInfo, t?.tag, true, _state), stateTag: _state })
         );
         return { ...data, fullTests: tests, topics };
     } catch (error) {
-        console.log("readFileAppFromGoogleStorage error", "new-data-web/" + appInfo.bucket + (_state ? "/" + _state : ""));
+        console.log(
+            "readFileAppFromGoogleStorage error",
+            "new-data-web/" + appInfo.bucket + (_state ? "/" + _state : ""),
+            error
+        );
         return { topics: [], fullTests: [], branchTests: [] };
     }
 }
@@ -45,10 +55,12 @@ export async function getTopicQuestionsFromGoogleStorage(bucket: string, topicTa
     // https://storage.googleapis.com/micro-enigma-235001.appspot.com/new-data-web/asvab/general-science-questions.json
     try {
         let isDmv = !!_state || true;
+        let url = `${!isDmv ? BUCKET : BUCKET2}${
+            bucket + (_state ? "/" + _state : "")
+        }/${topicTag}.json?t=${new Date().getTime()}`;
+
         let data = await callApi({
-            url: `${!isDmv ? BUCKET : BUCKET2}${
-                bucket + (_state ? "/" + _state : "")
-            }/${topicTag}.json?t=${new Date().getTime()}`,
+            url: url,
             params: null,
             method: "get",
             baseURl: "https://storage.googleapis.com/micro-enigma-235001.appspot.com/",
