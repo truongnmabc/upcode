@@ -14,7 +14,7 @@ import MediaAboutUs from "@/components/icon/MediaAboutUs";
 const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
     const isMobile = useMediaQuery("(max-width:780px)");
     const isTablet = useMediaQuery("(max-width:1210px)");
-    let emailSupport = "simplifyyourlearning.apps@gmail.com";
+    let emailSupport = "support@easy-prep.org"; //"simplifyyourlearning.apps@gmail.com";
     return (
         <>
             <SeoHeader title={"Contact us – ABC Elearning"} description={""} keyword={""} />
