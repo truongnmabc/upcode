@@ -70,7 +70,7 @@ const ListState = ({
             <Dialog open={openListState == 1} onClose={() => setOpenListState(0)}>
                 <div className="list-state-dialog overflow-auto">
                     {states[appInfo.appShortName].map((state, index) => {
-                        let _state = state.name.toLowerCase().trim().replaceAll(" ", "-");
+                        let _state = state.tag;
                         return (
                             <a
                                 href={getLink(appInfo, _state)}
