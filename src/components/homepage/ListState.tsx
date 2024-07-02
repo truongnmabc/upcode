@@ -70,23 +70,21 @@ const ListState = ({
             <Dialog open={openListState == 1} onClose={() => setOpenListState(0)}>
                 <div className="list-state-dialog overflow-auto">
                     {states[appInfo.appShortName].map((state, index) => {
+                        let _state = state.name.toLowerCase().trim().replaceAll(" ", "-");
                         return (
                             <a
-                                href={getLink(appInfo, state.toLowerCase().trim().replaceAll(" ", "-"))}
+                                href={getLink(appInfo, _state)}
                                 className="state"
                                 key={index}
                                 onClick={() => {
-                                    localStorage.setItem(
-                                        "select-state-" + appInfo.appNameId,
-                                        state.toLowerCase().trim().replaceAll(" ", "-")
-                                    );
+                                    localStorage.setItem("select-state-" + appInfo.appNameId, _state);
                                     ga.event({
                                         action: "click_state",
                                         params: { appShortName: appInfo.appShortName, state: state.name },
                                     });
                                 }}
                             >
-                                {state}
+                                {state.name}
                             </a>
                         );
                     })}
