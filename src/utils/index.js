@@ -1,3 +1,4 @@
+import { isParentApp } from "@/config/config_web";
 import { APP_SHORT_NAME } from "@/config_app";
 
 const getDomainName = (router) => {
@@ -168,7 +169,8 @@ const getLink = (app, stateSlug = "") => {
     } else {
         link = "/" + app.appNameId;
         if (stateSlug && app.hasState) {
-            link += "/" + stateSlug;
+            if (isParentApp()) link += "/" + stateSlug;
+            else link = "/" + stateSlug;
         }
     }
     return link;

@@ -1,10 +1,9 @@
-import { AppInfo, IAppInfo } from "../../models/AppInfo";
-import { ITopic } from "../../models/Topic";
 import QuestionPageView from "@/components/question-page/QuestionPageView";
-import { GameState } from "@/redux/features/game";
 import { isParentApp } from "@/config/config_web";
-import { readAllAppInfos } from "@/utils/getAppInfo";
+import { GameState } from "@/redux/features/game";
 import dynamic from "next/dynamic";
+import { IAppInfo } from "../../models/AppInfo";
+import { ITopic } from "../../models/Topic";
 
 const Header1 = dynamic(() => import("@/components/header/Header1"));
 const HeaderV4 = dynamic(() => import("@/components/header/HeaderV4"));
@@ -27,7 +26,11 @@ const QuestionLayout = ({
     const _isParentApp = isParentApp();
     return (
         <div className="use-background">
-            {_isParentApp ? <Header1 listAppInfos={listAppInfos} /> : <HeaderV4 appInfo={appInfo} topics={listTopics} />}
+            {_isParentApp ? (
+                <Header1 listAppInfos={listAppInfos} />
+            ) : (
+                <HeaderV4 appInfo={appInfo} topics={listTopics} tests={[]} />
+            )}
             <QuestionPageView
                 appInfo={appInfo}
                 listTopics={listTopics}

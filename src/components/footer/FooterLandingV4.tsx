@@ -11,7 +11,7 @@ import TwitterIcon from "../icon/TwitterIcon";
 import YoutubeIcon from "../icon/YoutubeIcon";
 const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
     const getSrcLogo = () => {
-        let logo = `/images/${APP_SHORT_NAME}/logo-light.png`;
+        let logo = `/images/${APP_SHORT_NAME}/logo-dark.png`;
         return logo;
     };
     const _email = useRef<HTMLInputElement>(null);

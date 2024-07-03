@@ -115,6 +115,23 @@ module.exports = () => {
                             };
                             paths.push(__);
                         });
+
+                        let study = studyData.find((s) => s.appId === app.appId); // cần đảm bảo dữ liệu trong này đúng (dữ liệu được sinh ra từ genstudyDataJSON)
+                        if (study) {
+                            let { topics, fullTests } = study;
+                            // các app có state
+                            topics.forEach((t) => {
+                                let p = "/" + t.url;
+                                let _ = { source: p, destination: "/study" + p };
+                                paths.push(_);
+                            });
+
+                            fullTests.forEach((t) => {
+                                let p = "/" + t;
+                                let _ = { source: p, destination: "/study" + p };
+                                paths.push(_);
+                            });
+                        }
                     }
                 });
             }

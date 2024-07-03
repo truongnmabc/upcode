@@ -46,20 +46,21 @@ export const makeStore = () => {
                     name: "abc-elearning",
                     storeName: "reduxpersist",
                 });
-                whitelist = [
-                    "appInfoReducer",
-                    "cardReducer",
-                    "listGameReducer",
-                    "testReducer",
-                    "topicReducer",
-                    "timeLeftReducer",
-                ]; // các reducer được tự động load dữ liệu khi vào trang
             } else {
                 idbStorage = createIdbStorage({
                     name: base,
                     storeName: "reduxpersist",
                 });
             }
+            whitelist = [
+                "appInfoReducer",
+                "cardReducer",
+                "listGameReducer",
+                "testReducer",
+                "topicReducer",
+                "timeLeftReducer",
+                "userReducer",
+            ]; // các reducer được tự động load dữ liệu khi vào trang
         }
         const persistConfig = {
             key: "root",

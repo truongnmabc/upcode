@@ -13,4 +13,5 @@ export default interface IWebData {
     topics?: ITopic[]; // truyền cái này để update vào redux
     tests?: ITestInfo[]; // truyền cái này để update vào redux
     _state?: string;
+    getUserData?: boolean; // để lấy thông tin mua hàng của user
 }
