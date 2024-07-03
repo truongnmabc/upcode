@@ -93,14 +93,14 @@ const GetProPage = ({ appInfo }: { appInfo: IAppInfo }) => {
 
         if (type === ONETIME) {
             if (paymentInfo?.buyPro === Config.PURCHARED) {
-                window.location.href = "/billing" + (appInfo.appNameId ? `?appNameId=${appInfo.appNameId}` : "");
+                window.location.href = "/billing";
                 return;
             }
         } else {
             let orderIndex = prices.findIndex((p) => p.planId === orderInfo?.plan_id);
             if (orderIndex > -1 && index <= orderIndex) {
                 // nếu đã từng mua rồi thì chuyển sang trang billing
-                window.location.href = "/billing" + (appInfo.appNameId ? `?appNameId=${appInfo.appNameId}` : "");
+                window.location.href = "/billing";
                 return;
             }
         }

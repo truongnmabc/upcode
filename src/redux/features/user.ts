@@ -2,6 +2,8 @@ import { IPaymentInfo, InAppSubscription } from "@/models/PaymentInfo";
 import { IUserInfo, UserInfo } from "@/models/UserInfo";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { REHYDRATE } from "redux-persist";
+import { getUserDeviceLogin } from "../reporsitory/syncData.repository";
+import checkPro from "@/utils/checkPro";
 
 export interface IUserReducer {
     userId: string; // userId này có thể được gen ra mà k cần login nên không dùng trường id này để check là login hay chưa
@@ -105,6 +107,16 @@ export const userSlice = createSlice({
             state.loadingPayment = false;
             state.isPro = false;
             state.reload = false;
+        });
+
+        builder.addCase(getUserDeviceLogin.fulfilled, (state, action) => {
+            if (action.payload) {
+                state.paymentInfo = action.payload.paymentInfo;
+                state.paymentInfos = action.payload.paymentInfos;
+                state.inAppPruchasedInfo = action.payload.inAppSubs;
+                state.isPro = checkPro(state.paymentInfo, state.inAppPruchasedInfo);
+                state.loadingPayment = true;
+            }
         });
     },
 });

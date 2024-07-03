@@ -50,6 +50,7 @@ class Config {
     static PURCHAR = 0;
     static PURCHARED = 1;
     static PAY_SUBSCRIPTION = 1;
+    static PAYMENT_PAY_SUBSCRIPTION = "2";
     static DATE_VALUE_STRING = {
         DAY: 1,
         WEEK: 7,

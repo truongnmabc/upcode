@@ -2,8 +2,8 @@ import "./MainStudyView.scss";
 import { GameState, getNumOfCorrectAnswer } from "../../redux/features/game";
 import { IAppInfo } from "../../models/AppInfo";
 import { IChoice } from "../../models/Choice";
-import { TextContentType, decryptExplanation, renderMath } from "../../utils/v4_question";
-import { useDispatch } from "react-redux";
+import { TextContentType, decryptExplanation, hashText, renderMath } from "../../utils/v4_question";
+import { useDispatch, useSelector } from "react-redux";
 import * as ga from "../../services/ga";
 import ChoicesPanelV4 from "./ChoicesPanelV4";
 import Config from "../../config";
@@ -12,6 +12,8 @@ import QuestionMultipleChoiceV4 from "./QuestionMultipleChoiceV4";
 import V4QuestionContent from "./V4QuestionContent";
 import { nextQuestion, onChooseAnswer, onGameSubmitted } from "@/redux/reporsitory/game.repository";
 import { useEffect } from "react";
+import AppState from "@/redux/appState";
+import { genLinkPro } from "@/services/home.service";
 
 const CancelRoundedIcon = dynamic(() => import("@mui/icons-material/CancelRounded"), { ssr: false });
 const CheckCircleRoundedIcon = dynamic(() => import("@mui/icons-material/CheckCircleRounded"), { ssr: false });
@@ -29,9 +31,9 @@ const MainStudyView = ({
     appInfo: IAppInfo;
     haveCountdown?: boolean;
 }) => {
+    const isPro = useSelector((state: AppState) => state.userReducer.isPro);
+    const isLockContent = !isPro;
     let currentQuestion = gameState.currentQuestion;
-    // const isDesktop = useMediaQuery("(min-width:769px)");
-    // const [showKeyboard, setShowKeyboard] = useState(true);
     const dispatch = useDispatch();
     let thisQuestionIsDone =
         currentQuestion.questionStatus == Config.QUESTION_ANSWERED_CORRECT ||
@@ -127,13 +129,21 @@ const MainStudyView = ({
         };
     }, [thisQuestionIsDone, isLastQuestion]);
 
+    const onClickPro = () => {
+        if (isLockContent) {
+            let linkPro = genLinkPro(appInfo);
+            window.open(linkPro, "_blank");
+        }
+    };
+
     // useEffect(() => {
     //     let _showKeyboard = localStorage.getItem("useKeyboard");
     //     if (_showKeyboard === "true") setShowKeyboard(false);
     // }, []);
     let explanationContent = thisQuestionIsDone && gameState.gameType == Config.TOPIC_GAME ? currentQuestion.explanation : "";
-    explanationContent = decryptExplanation(explanationContent, 1);
-    let contentQuestion = decryptExplanation(currentQuestion.question, 2);
+    explanationContent = decryptExplanation(explanationContent);
+    explanationContent = !isLockContent ? explanationContent : hashText(explanationContent);
+    let contentQuestion = decryptExplanation(currentQuestion.question);
     return (
         <div className="v4-main-study-view-0">
             <div className="v4-main-study-view-1 v4-border-radius">
@@ -267,8 +277,25 @@ const MainStudyView = ({
                                 (thisQuestionIsDone && gameState.gameType == Config.TOPIC_GAME ? " show " : "")
                             }
                         >
-                            <div className={"v4-explanation-detail-title"}>Detailed Explanation</div>
-                            <div className={"v4-explanation"}>
+                            <div className={"v4-explanation-detail-title align-center"} onClick={onClickPro}>
+                                Detailed Explanation&nbsp;
+                                {isLockContent && (
+                                    <>
+                                        <span className="_769">
+                                            (Get &nbsp;
+                                            <img src="/images/passemall/pro_icon.svg" className="pro-img" />
+                                            &nbsp; to show this content)
+                                        </span>
+                                        <img
+                                            src="/images/passemall/pro-content.png"
+                                            className="pro-img __768"
+                                            width={86}
+                                            height={19}
+                                        />
+                                    </>
+                                )}
+                            </div>
+                            <div className={"v4-explanation " + (!isLockContent ? "" : "blur-content")} onClick={onClickPro}>
                                 <div className="explanation-content-wrapper">
                                     <div>
                                         <V4QuestionContent
