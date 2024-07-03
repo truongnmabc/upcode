@@ -9,7 +9,7 @@ downloadFile() {
     appName=$1
     . $envFile
       
-    url="https://api-cms-v2-dot-micro-enigma-235001.appspot.com/api/app/config/get-all-web-config?bucket=$appName"
+    url="http://localhost:3001/api/app/config/get-all-web-config?bucket=$appName"
     response=$(curl -s -X GET "$url")
     echo "$response" > "$DATA_PATH/appInfos.json"
     node -e "const  {genDataFunc}  = require('./gen-data.js'); genDataFunc($response, '$NEXT_PUBLIC_WORDPRESS_API_URL', '$NEXT_PUBLIC_WEB_PROD');"
@@ -23,6 +23,7 @@ genConfigApp() {
     mainBackgroundColor=$5
     GA4ID=$6
     mainColorBold=$7
+    appleClientId=$8
     fileConfig="./src/config_app.js"
     > $fileConfig
     . $envFile
@@ -35,7 +36,7 @@ genConfigApp() {
     echo 'export const MAIN_BACKGROUND_COLOR = '$mainBackgroundColor';' >>$fileConfig
     timeBuild=`date +%s000`
     echo 'export const TIME_BUILD = '$timeBuild';' >>$fileConfig 
-
+    echo 'export const APPLE_CLIENT_ID = '$appleClientId';' >>$fileConfig
     if [[ "$NEXT_PUBLIC_WEB_PROD" == 'production' ]]; then
         echo 'export const GA4_ID = '$GA4ID';' >>$fileConfig
     else
@@ -106,7 +107,7 @@ deploy() {
         bgColorStartTest=`jq .default.bgColorStartTest $APP_INFOS_FILE`
         mainColorUpgradePro=`jq .default.mainColorUpgradePro $APP_INFOS_FILE`
         bgColorCloseCookie=`jq .default.bgColorCloseCookie $APP_INFOS_FILE`
-
+        appleClientId=`jq .default.appleClientId $APP_INFOS_FILE`
     else
         appId=`jq .$appName.appId $APP_INFOS_FILE`
         googleVerifyId=`jq .$appName.googleVerifyId  $APP_INFOS_FILE`
@@ -122,6 +123,7 @@ deploy() {
         upgradeProMainColor=`jq .$appName.upgradeProMainColor $APP_INFOS_FILE`
         mainColorUpgradePro=`jq .$appName.mainColorUpgradePro $APP_INFOS_FILE`
         colorClockDiscount=`jq .$appName.colorClockDiscount $APP_INFOS_FILE`
+        appleClientId=`jq .$appName.appleClientId $APP_INFOS_FILE`
     fi
 
     if [ "$appName" == "cdl" ]; then
@@ -143,7 +145,7 @@ deploy() {
     cp -r "$ROOT_PATH/images/$logoPath/logo60.png" "$ROOT_PATH/images/logo60.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo192.png" "$ROOT_PATH/images/logo192.png"
     cp -r "$ROOT_PATH/images/$logoPath/logo512.png" "$ROOT_PATH/images/logo512.png"
-    genConfigApp $appId $googleVerifyId $appName $mainColor $mainBackgroundColor $GA4ID $mainColorBold
+    genConfigApp $appId $googleVerifyId $appName $mainColor $mainBackgroundColor $GA4ID $mainColorBold $appleClientId
     genConfigCssApp $mainColor $mainBackgroundColor $mainColorBold $appName $cookie $bgColorStartTest $bgColorCloseCookie $mainColorUpgradePro $colorClockDiscount 
     downloadFile $appName
     # yarn build

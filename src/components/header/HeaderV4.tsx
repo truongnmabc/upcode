@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { APP_SHORT_NAME } from "../../config_app";
 import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
@@ -14,6 +14,11 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { ITestInfo } from "@/models/TestInfo";
 import states from "../../data/statesName.json";
 import { getLink } from "@/utils";
+import V4LoginDialog from "./V4LoginDialog";
+import AppState from "@/redux/appState";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/features/user";
+import Routes from "@/config/routes";
 const DownloadAppV4 = dynamic(() => import("../homepage/DownloadAppV4"));
 
 const HeaderV4 = ({
@@ -26,10 +31,20 @@ const HeaderV4 = ({
     topics: ITopic[]; // cần truyền và cái này để trang Home không cần phụ thuộc vào redux nữa => tránh mount 2 lần và bị nháy màn hình khi truy cập (do logic của file LayoutV4)
 }) => {
     const [openMenuDrawer, setOpenMenuDrawer] = useState(false);
+    const [open, setOpen] = useState(true);
+    const [openDialog, setOpenDialog] = useState(false);
+    const userReducer = useSelector((state: AppState) => state.userReducer);
+    const { userInfo, reload, isPro } = userReducer;
+    const haveGetProBtn = !isPro;
     const getSrcLogo = () => {
         let logo = `/images/${APP_SHORT_NAME}/logo-light.png`;
         return logo;
     };
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (reload) window.location.reload();
+    }, [reload]);
+
     return (
         <div className="container-header-v4">
             <MyContainer className="header-v4">
@@ -38,20 +53,27 @@ const HeaderV4 = ({
                         <img src={getSrcLogo()} alt={"logo-" + APP_SHORT_NAME} />
                     </Link>
                 </div>
-                <div
-                    className="header-menu-v4"
-                    onClick={() => {
-                        setOpenMenuDrawer(true);
-                        ga.event({
-                            action: "click_menu_header",
-                            params: {
-                                from: window.location.href,
-                            },
-                        });
-                    }}
-                >
-                    <span>Menu</span>
-                    <MenuIcon />
+                <div className="flex">
+                    {haveGetProBtn && (
+                        <a className="header-menu-v4 get-pro" href={Routes.UPGRADE_PRO}>
+                            <span>Get Pro</span>
+                        </a>
+                    )}
+                    <div
+                        className="header-menu-v4"
+                        onClick={() => {
+                            setOpenMenuDrawer(true);
+                            ga.event({
+                                action: "click_menu_header",
+                                params: {
+                                    from: window.location.href,
+                                },
+                            });
+                        }}
+                    >
+                        <span>Menu</span>
+                        <MenuIcon />
+                    </div>
                 </div>
                 <SwipeableDrawer
                     open={openMenuDrawer}
@@ -67,6 +89,41 @@ const HeaderV4 = ({
                             <CloseIcon />
                         </div>
                         <div className="container-drawer-right-menu-header-v4">
+                            {!!userInfo && (
+                                <div
+                                    className="container-drawer-right-menu-header-v4-1"
+                                    onClick={() => {
+                                        window.location.href = haveGetProBtn ? Routes.UPGRADE_PRO : "/billing";
+                                    }}
+                                >
+                                    <div className="v4-avatar">
+                                        {isPro && <img className="crown" src="images/crown.png" />}
+                                        <img className="avt" src={userInfo.avatar} width={48} height={48} />
+                                        <div>
+                                            <div className="-name">{userInfo.name}</div>
+                                            <div className="-email">{userInfo.email}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {haveGetProBtn && (
+                                <a
+                                    className="container-drawer-right-menu-header-v4-1"
+                                    href={Routes.UPGRADE_PRO}
+                                    onClick={() => {
+                                        setOpenMenuDrawer(true);
+                                        ga.event({
+                                            action: "click_get_pro_menu_header",
+                                            params: {
+                                                from: window.location.href,
+                                            },
+                                        });
+                                    }}
+                                >
+                                    <span>Get Pro</span>
+                                </a>
+                            )}
                             {appInfo.hasState && (
                                 <>
                                     <div
@@ -233,7 +290,32 @@ const HeaderV4 = ({
                                     href={"/blog"}
                                 >{`${appInfo.appName} Blog`}</a>
                             </div>
-
+                            <div
+                                className="container-drawer-right-menu-header-v4-1"
+                                onClick={() => {
+                                    if (!!userInfo) {
+                                        dispatch(logout());
+                                        ga.event({
+                                            action: "log_out",
+                                            params: {},
+                                        });
+                                        if (window.location.pathname.includes("billing")) {
+                                            window.location.href = "/";
+                                        }
+                                    } else {
+                                        ga.event({
+                                            action: "click_login",
+                                            params: {},
+                                        });
+                                        if (!openDialog) setOpenDialog(true);
+                                        if (!open) {
+                                            setOpen(true);
+                                        }
+                                    }
+                                }}
+                            >
+                                {!userInfo ? "Login" : "Logout"}
+                            </div>
                             <div className="container-drawer-right-menu-header-v4-2">
                                 <div>Available on Android and Apple devices</div>
                                 <DownloadAppV4 appInfo={appInfo} place="menu" />
@@ -241,13 +323,7 @@ const HeaderV4 = ({
                         </div>
                     </div>
                 </SwipeableDrawer>
-                {/* <MySwipeableDrawer
-                    open={openMenuDrawer}
-                    onClose={() => setOpenMenuDrawer(false)}
-                    className="drawer-right-menu-header-v4"
-                >
-                    
-                </MySwipeableDrawer> */}
+                {openDialog && <V4LoginDialog appInfo={appInfo} open={open} setOpen={setOpen} />}
             </MyContainer>
         </div>
     );

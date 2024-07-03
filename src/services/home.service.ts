@@ -3,6 +3,8 @@ import APIConfig from "@/config/api_config";
 import Config from "../config";
 import { GET, POST } from "./request";
 import { isProduction, isWebCDL } from "@/config/config_web";
+import { callApi } from ".";
+import Routes from "@/config/routes";
 
 export const END_POINT_WORD_PRESS =
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.length && process.env.NEXT_PUBLIC_WORDPRESS_API_URL != "null"
@@ -79,4 +81,24 @@ export const getHomeSeoContentStateApi = async (stateSlug: string, baseUrl?: str
     //     cache.put(url, content, Config.TIME_MEMORY_CACHE);
     // }
     return content;
+};
+
+export const getAppReviewApi = async (appId) => {
+    let data = await callApi({
+        url: "https://dashboard-api2.abc-elearning.org/ratings-reviews?appID=" + appId,
+        method: "get",
+        params: null,
+    }).catch((e) => console.log(e));
+    if (data) {
+        return data;
+    }
+    return null;
+};
+
+export const genLinkPro = (appInfo, hasParams = false) => {
+    let url = Routes.UPGRADE_PRO;
+    if (appInfo?.appNameId && !!hasParams) {
+        url += "?appNameId" + "=" + appInfo.appNameId;
+    }
+    return url;
 };

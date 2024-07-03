@@ -1,0 +1,153 @@
+.discount-drawer-section {
+    .MuiDrawer-paper {
+        overflow: visible;
+        background-color: unset;
+        z-index: 5;
+    }
+    .background-discount {
+        background-image: url("/public/images/passemall/new-pro/background-drawer.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover !important;
+        height: 100%;
+        .container {
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .left {
+                display: flex;
+                align-items: center;
+                img {
+                    margin-right: 36px;
+                }
+                .text-discount {
+                    font-weight: 600;
+                    font-size: 24px;
+                    line-height: 36px;
+                    text-transform: capitalize;
+                    color: #ffffff;
+                    .percent {
+                        color: #59f5a9;
+                        font-size: 26px;
+                    }
+                }
+            }
+
+            .right {
+                .content {
+                    display: flex;
+                    align-items: center;
+                    .timer {
+                        flex: 1;
+                        position: relative;
+                        font-weight: 600;
+                        font-size: 32px;
+                        line-height: 48px;
+                        text-transform: capitalize;
+                        color: #ffffff;
+                        white-space: nowrap;
+                        padding: 2px 24px;
+                        margin-right: 30px;
+                        background-image: url("/public/images/passemall/new-pro/border.png");
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        min-width: 167px;
+
+                        .limited {
+                            position: absolute;
+                            top: -6px;
+                            left: 34%;
+                            font-weight: 500;
+                            font-size: 11px;
+                            line-height: 18px;
+                            color: #fff;
+                        }
+                    }
+                    .button-update {
+                        text-transform: none;
+                        color: #fff;
+                        cursor: pointer;
+                        border: none;
+                        background: linear-gradient(93.11deg, #0bb177 0.93%, #3b6b5a 100%);
+                        border-radius: 12px;
+                        padding: 12px 42px;
+                        font-weight: 500;
+                        font-size: 20px;
+                        line-height: 30px;
+                        max-height: 54px;
+                        width: 230px;
+                        transition: all 0.15s ease;
+                        box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px,
+                            rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+                        &:hover {
+                            transform: translate3d(0, -3px, 0);
+                            box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+                                rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+                        }
+                    }
+                }
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                height: unset;
+                .left {
+                    img {
+                        margin-right: 8px;
+                    }
+                }
+
+                .right {
+                    display: flex;
+                    flex-direction: column;
+                    .text-discount {
+                        font-weight: 600;
+                        font-size: 16px;
+                        line-height: 24px;
+                        text-transform: capitalize;
+                        color: #ffffff;
+                        padding-left: 8px;
+                        .percent {
+                            color: #59f5a9;
+                            font-size: 18px;
+                        }
+                    }
+                    .content {
+                        .timer {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            background-image: url("/public/images/passemall/new-pro/border-mobile.png");
+                            font-weight: 600;
+                            font-size: 16px;
+                            line-height: 24px;
+                            min-height: 32px;
+                            padding: 2px 16px;
+                            margin-right: 10px;
+                            min-width: 88px;
+
+                            .limited {
+                                font-weight: 500;
+                                font-size: 8px;
+                                line-height: 12px;
+                                left: 30%;
+                            }
+                        }
+
+                        .button-update {
+                            padding: 12px 16px;
+                            font-weight: 600;
+                            font-size: 14px;
+                            line-height: 21px;
+                            min-width: unset;
+                            width: unset;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

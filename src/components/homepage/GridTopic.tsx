@@ -246,8 +246,6 @@ const TopicLevelProgress = ({
     dispatchAction: any;
     topicUrl: string;
 }) => {
-    console.log("xx2:", levels);
-
     let sequence = 3;
     let arr: Array<ITopic[]> = [];
     let idx = 0;

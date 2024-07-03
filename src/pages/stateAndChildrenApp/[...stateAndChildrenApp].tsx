@@ -11,7 +11,7 @@ import { isParentApp } from "../../config/config_web";
 import states from "../../data/statesName.json";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
-import { readAllAppInfos } from "../../utils/getAppInfo";
+import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -103,6 +103,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     let isParent = isParentApp();
     if (!isParent) {
         // chỗ này chưa bổ sung, sau làm riêng app con thì bổ sung vào
+        const appInfo = getAppInfo();
+        let listTopics = []; // topics
+        let tests = []; // tests
+
         if (stateAndChildrenApp.length == 1) {
             if (states["cdl"].find((state) => state.tag === slug)) {
                 // ** dùng luôn ds của cdl vì của dmv cũng tương tự, ở đây chỉ dùng trường tag thôi
@@ -116,8 +120,34 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 slug = "";
             }
         }
+
+        let appData: any = await readFileAppFromGoogleStorage(appInfo, _state ?? "");
+        listTopics = appData?.topics ?? [];
+        tests = appData?.fullTests ?? [];
+
+        let t = "";
+        let d = "";
+        // try {
+        //     t = contentSEO?.titleSeo[0];
+        //     d = contentSEO?.descSeo[0];
+        // } catch (err) {}
+
+        if (!t) t = appInfo.title;
+        if (!d) d = appInfo.descriptionSEO;
+
+        let titleSEO = replaceYear(t ?? "");
+        let descriptionSEO = replaceYear(d ?? "");
+
         return convertToJSONObject({
-            props: {},
+            props: {
+                childAppInfo: appInfo,
+                _state,
+                listTopics,
+                tests,
+                titleSEO,
+                descriptionSEO,
+                keywordSEO: appInfo?.keywordSEO,
+            },
         });
     } else {
         // vao app con, làm tương tự như ở /pages/index.tsx

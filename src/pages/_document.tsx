@@ -25,6 +25,7 @@ class MyDocument extends Document {
                                       gtag('config', "${GA4_ID}");`,
                         }}
                     />
+                    <script async defer src={`https://accounts.google.com/gsi/client`} />
                     <Main />
                     <NextScript />
                 </body>

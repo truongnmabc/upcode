@@ -1,5 +1,7 @@
 class Config {
     static BASE_URL = "https://test-dot-micro-enigma-235001.appspot.com";
+    static BASE_URL_DEV = "https://dev-dot-micro-enigma-235001.appspot.com";
+    static DASHBOARD_API = `https://dashboard-api2.abc-elearning.org/`;
     static HTTP_REQUEST_TIMEOUT = 30000;
     static HTTP_REQUEST_SUCCESS = 200;
     static PREFIX_URL = "/wp-json/passemall/v1";
@@ -41,5 +43,18 @@ class Config {
     static MAX_CLICK_ADS_PER_USER = 3;
     static COUNT_ADS_KEY = "COUNT_ADS_KEY";
     static MAX_TIMES_DISPLAY_ADS = 100;
+    static MILLISECONDS_PER_DAY = 86400000;
+    static PAYMENT_SUCCESS = 1;
+    static PAYMENT_INIT = 0;
+    static PAY_ONE_TIME = 0;
+    static PURCHAR = 0;
+    static PURCHARED = 1;
+    static PAY_SUBSCRIPTION = 1;
+    static DATE_VALUE_STRING = {
+        DAY: 1,
+        WEEK: 7,
+        MONTH: 30,
+        YEAR: 365,
+    };
 }
 export default Config;

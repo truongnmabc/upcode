@@ -18,7 +18,7 @@ const SeoHeader = ({
     ads?: boolean;
 }) => {
     const router = useRouter();
-    let image = `/info/images/${APP_SHORT_NAME}/logo60.png`;
+    let image = `/info/images/${APP_SHORT_NAME === "cdl_v2" ? "cdl" : APP_SHORT_NAME}/logo60.png`;
     let urlCanonical = getDomainName(router);
     title = replaceYear(title);
     description = replaceYear(description);

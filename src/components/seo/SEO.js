@@ -19,8 +19,8 @@ const SEO = ({
         "Abc e-learning, abc elearning, study online,practice test, practice question,exam prepare,asvab,teas exam,cdl test,cdl practice,cissp exam,cissp practice,accuplacer,comptia practice test,comptia A+,compTIA Network,comptia security,dmv,dmv practice test,driving theory,driving theory UK,G1 test,GED,hesi,hesi A2,motorcycle permit,pmp,pmp exam,ptcb,ptce,real estate exam,practice app,practice test onl,free practice test,free practice questions,free practice app";
     let logoName = "logo60.png";
 
-    let image = `/info/images/${APP_SHORT_NAME}/${logoName}`;
-    let imageShare = `/info/images/${APP_SHORT_NAME}/${logoName}`;
+    let image = `/info/images/${APP_SHORT_NAME === "cdl_v2" ? "cdl" : APP_SHORT_NAME}/${logoName}`;
+    let imageShare = `/info/images/${APP_SHORT_NAME === "cdl_v2" ? "cdl" : APP_SHORT_NAME}/${logoName}`;
     if (appInfo) {
         if (!title?.length) {
             if (appInfo.title) {

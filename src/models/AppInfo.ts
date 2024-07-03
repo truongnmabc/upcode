@@ -9,13 +9,16 @@ export interface IAppInfo {
     categoryId: number; // phân loại mục hiển thị tại trang home app cha
     descriptionSEO: string; // seo
     hasState: boolean; //
+    icon: string;
     keywordSEO: string; // seo
     linkAndroid: string;
     linkIos: string;
+    oneMonthPro?: string;
+    oneWeekPro?: string;
+    oneYearPro?: string;
     title: string; // seo
     totalQuestion: number; // tổng số lượng câu hỏi (để hiện ở trang home app cha)
     usingMathJax: boolean;
-    icon: string;
 }
 export class AppInfo implements IAppInfo {
     appId: number | null;
@@ -26,13 +29,16 @@ export class AppInfo implements IAppInfo {
     categoryId: number;
     descriptionSEO: string;
     hasState: boolean;
+    icon: string;
     keywordSEO: string;
     linkAndroid: string;
     linkIos: string;
+    oneMonthPro?: string;
+    oneWeekPro?: string;
+    oneYearPro?: string;
     title: string;
     totalQuestion: number;
     usingMathJax: boolean;
-    icon: string;
 
     constructor(object: any = {}) {
         this.appId = object.appId ? parseInt(object.appId + "") : null;
@@ -43,12 +49,15 @@ export class AppInfo implements IAppInfo {
         this.categoryId = object.categoryId ? parseInt(object.categoryId + "") : 0;
         this.descriptionSEO = object.descriptionSEO ?? "";
         this.hasState = parseBoolean(object.hasState) ?? false;
+        this.icon = object.icon ?? "";
         this.keywordSEO = object.keywordSEO ?? "";
         this.linkAndroid = object.linkAndroid ?? "";
         this.linkIos = object.linkIos ?? "";
+        this.oneMonthPro = object.oneMonthPro ?? "";
+        this.oneWeekPro = object.oneWeekPro ?? "";
+        this.oneYearPro = object.oneYearPro ?? "";
         this.title = object.title ?? "";
         this.totalQuestion = object.totalQuestion ?? "";
         this.usingMathJax = parseBoolean(object.usingMathJax);
-        this.icon = object.icon ?? "";
     }
 }

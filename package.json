@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "PORT=3006 next dev",
+        "dev": "PORT=3000 next dev",
         "build": "next build",
         "start": "next start",
         "lint": "next lint"
@@ -19,6 +19,7 @@
         "axios": "^1.6.5",
         "crypto-js": "^4.2.0",
         "css-mediaquery": "^0.1.2",
+        "jsonwebtoken": "8.5.1",
         "memory-cache": "^0.2.0",
         "mini-css-extract-plugin": "^2.7.7",
         "next": "^12.3.4",
@@ -28,6 +29,7 @@
         "qrcode.react": "^3.1.0",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
+        "react-paypal-button-v2": "^2.6.3",
         "react-redux": "^7.2.1",
         "react-slick": "^0.29.0",
         "redux-persist": "^6.0.0",

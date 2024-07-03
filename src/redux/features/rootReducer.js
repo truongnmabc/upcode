@@ -6,6 +6,7 @@ import listGameReducer from "./listGame";
 import testReducer from "./test";
 import timeLeftReducer from "./timeLeft";
 import topicReducer from "./topic";
+import userReducer from "./user";
 
 const rootReducer = combineReducers({
     appInfoReducer,
@@ -15,5 +16,6 @@ const rootReducer = combineReducers({
     testReducer,
     timeLeftReducer,
     topicReducer,
+    userReducer,
 });
 export default rootReducer;
