@@ -57,8 +57,10 @@ const PopUpGetProContent = ({
 }) => {
     const appConfig = getConfigAppPro(appInfo);
 
+    console.log(appConfig);
+
     const onPaymentSuccess = () => {
-        window.location.href = "/billing?appNameId=" + appInfo.appNameId;
+        window.location.href = "/billing";
         onClose();
     };
     let isSubscription = getConfigProV2(appInfo).type === SUBSCRIPTION;

@@ -143,6 +143,12 @@
             .v4-explanation-detail {
                 .v4-explanation-detail-title {
                     font-size: 14px;
+
+                    > span {
+                        display: flex;
+                        align-items: center;
+                        cursor: pointer;
+                    }
                 }
 
                 .v4-explanation {

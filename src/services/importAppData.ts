@@ -4,6 +4,7 @@ import { callApi } from "../services/index";
 import TestInfo from "@/models/TestInfo";
 import { genFullStudyLink } from "@/utils/getStudyLink";
 import { IAppInfo } from "@/models/AppInfo";
+import Config from "@/config";
 const BUCKET = "new-data-web/";
 const BUCKET2 = "new-data-web-test/";
 export async function readFileAppFromGoogleStorage(appInfo: IAppInfo, _state?: string) {
@@ -111,4 +112,15 @@ export async function getQuestionDataApi(questionId: string) {
         console.log("getQuestionDataApi error2: ", error);
         return null;
     }
+}
+
+export function syncDataToWebAfterLoginAPI(data: any) {
+    //https://micro-enigma-235001.appspot.com/api/auth?type=send-email&email=tranhoang30101@gmail.com&appName=ASVAB
+    return callApi({
+        baseURl: Config.BASE_URL, // "https://micro-enigma-235001.appspot.com/",
+        method: "post",
+        url: "/api/auth?type=sync-data-to-web-after-login",
+        params: data,
+        headers: undefined,
+    });
 }

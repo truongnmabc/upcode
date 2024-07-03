@@ -15,7 +15,7 @@
         }
 
         .title-popup {
-            font-weight: 600;
+            font-weight: 500;
             font-size: 18px;
             line-height: 28px;
             display: flex;
@@ -31,9 +31,9 @@
         .popup-text {
             padding-top: 32px;
             display: flex;
-            gap: 16px;
+            gap: 8px;
             position: relative;
-            color: rgba(33, 33, 33, 0.52);
+
             align-items: center;
             justify-content: center;
             font-weight: 400;
@@ -46,6 +46,9 @@
                 display: flex;
                 align-items: baseline;
                 gap: 6px;
+                font-size: 14px;
+                line-height: 21px;
+                color: rgba(33, 33, 33, 0.52) !important;
             }
             &:after {
                 position: absolute;

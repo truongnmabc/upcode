@@ -113,7 +113,7 @@ const CryptoJS = require("crypto-js");
 const KEY = process.env.NEXT_PUBLIC_SECRET_KEY;
 const IV = KEY.slice(0, 12);
 
-export const decryptExplanation = (encryptText: string, k?: number) => {
+export const decryptExplanation = (encryptText: string) => {
     if (!encryptText) return "";
     try {
         let check = atob(encryptText);
@@ -126,4 +126,31 @@ export const decryptExplanation = (encryptText: string, k?: number) => {
     } catch (e) {
         return encryptText;
     }
+};
+
+export const hashText = (text: string = ""): string => {
+    // keep '<br>' , space, dot, comma
+    let res = "";
+    let i = 0;
+    let j = 0;
+    while (i < text.length) {
+        let asciiCode = text.charCodeAt(i);
+        if ([32, 44, 46].includes(asciiCode)) {
+            res += text.charAt(i);
+            i++;
+            continue;
+        }
+        if (text[i] == "<") {
+            if (text[i + 1] == "b" && text[i + 2] == "r" && text[i + 3] == ">") {
+                i = i + 4;
+                res += "<br>";
+                continue;
+            }
+        }
+        // res += DEFAULT_GET_PRO_TEXT.charAt(j % DEFAULT_GET_PRO_TEXT.length);
+        res += "*";
+        i++;
+        j++;
+    }
+    return res;
 };
