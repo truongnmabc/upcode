@@ -10,7 +10,8 @@ import InstagramIcon from "../icon/InstagramIcon";
 import TwitterIcon from "../icon/TwitterIcon";
 import * as ga from "../../services/ga";
 import AppLogo from "../logo/AppLogo";
-const Footer1 = () => {
+import { IAppInfo } from "@/models/AppInfo";
+const Footer1 = ({ appInfo }: { appInfo: IAppInfo }) => {
     let fb = getContactLink("facebook");
     let tw = getContactLink("twitter");
     let yt = getContactLink("youtube");
@@ -76,7 +77,7 @@ const Footer1 = () => {
                             </a>
                         </Link>
                     </div>
-                    <span>©2024 Easy Prep All Rights Reserved.</span>
+                    <span>©2024 {appInfo.appName} All Rights Reserved.</span>
                 </div>
             </MyContainer>
         </footer>

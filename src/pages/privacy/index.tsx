@@ -3,12 +3,15 @@ import MyContainer from "@/components/v4-material/MyContainer";
 import { isParentApp } from "@/config/config_web";
 import { AppInfo, IAppInfo } from "@/models/AppInfo";
 import convertToJSONObject from "@/utils/convertToJSONObject";
-import { readAllAppInfos } from "@/utils/getAppInfo";
+import { getAppInfo, readAllAppInfos } from "@/utils/getAppInfo";
 import { GetStaticProps } from "next";
 import "./index.scss";
-const Privacy = ({ isParentApp, listAppInfo }: { isParentApp: boolean; listAppInfo: IAppInfo[] }) => {
+
+// Chú ý trang này chỉ build ở trên easyprep
+
+const Privacy = ({ listAppInfo, appInfo }: { listAppInfo: IAppInfo[]; appInfo: IAppInfo }) => {
     return (
-        <Layout1 listAppInfos={listAppInfo}>
+        <Layout1 listAppInfos={listAppInfo} appInfo={appInfo}>
             <MyContainer>
                 <div className="entry-content">
                     <h1>Privacy Policy</h1>
@@ -384,9 +387,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
         listAppInfo = readAllAppInfos();
         listAppInfo = listAppInfo.filter((w: any) => w.appId).map((w: any) => new AppInfo(w));
     }
+    let appInfo = getAppInfo();
     return convertToJSONObject({
         props: {
             listAppInfo,
+            appInfo,
         },
     });
 };

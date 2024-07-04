@@ -1,10 +1,8 @@
-import cache from "memory-cache";
 import APIConfig from "@/config/api_config";
+import Routes from "@/config/routes";
+import { callApi } from ".";
 import Config from "../config";
 import { GET, POST } from "./request";
-import { isProduction, isWebCDL } from "@/config/config_web";
-import { callApi } from ".";
-import Routes from "@/config/routes";
 
 export const END_POINT_WORD_PRESS =
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.length && process.env.NEXT_PUBLIC_WORDPRESS_API_URL != "null"
@@ -12,32 +10,27 @@ export const END_POINT_WORD_PRESS =
         : null;
 export const API_SEND_EMAIL = "https://webpush.passemall.com/api/send-contact";
 
-export const getHomeSeoContentApi = async (pageUrl: string) => {
-    try {
-        if (!END_POINT_WORD_PRESS?.length) {
-            throw "END_POINT_NULL!";
-        }
-        let url = END_POINT_WORD_PRESS + Config.PREFIX_URL_2 + "/pages" + "?slug=" + pageUrl;
-        let seo = await GET({ url });
-        return { content: seo[0]?.content.rendered };
-    } catch (err) {
-        console.log(err);
-        return { content: "" };
-    }
-};
 // export const getHomeSeoContentApi = async (postUrl: string) => {
-//     if (!END_POINT_WORD_PRESS?.length) {
-//         return "";
+//     try {
+//         if (!END_POINT_WORD_PRESS?.length) {
+//             throw "END_POINT_NULL!";
+//         }
+//         let url = END_POINT_WORD_PRESS + Config.PREFIX_URL + APIConfig.GET_HOME_SEO_CONTENT + "?posturl=" + postUrl; // hàm mới
+//         let content = await GET({ url });
+//         return content;
+//     } catch (err) {
+//         console.log(err);
+//         return { content: "" };
 //     }
-//     let url =
-//         END_POINT_WORD_PRESS +
-//         Config.PREFIX_URL +
-//         APIConfig.GET_HOME_SEO_CONTENT +
-//         "?posturl=" +
-//         postUrl;
-//     let content = await GET({ url });
-//     return content;
 // };
+export const getHomeSeoContentApi = async (postUrl: string) => {
+    if (!END_POINT_WORD_PRESS?.length) {
+        return "";
+    }
+    let url = END_POINT_WORD_PRESS + Config.PREFIX_URL + APIConfig.GET_HOME_SEO_CONTENT + "?posturl=" + postUrl; //cdl cũ
+    let content = await GET({ url });
+    return content;
+};
 // export const getAppRatingReviewForWeb = async (appKey: string) => {
 //     //http://localhost:3001/api/app-rating/getAppRatingReviewForWeb?appKey=all
 //     let url = "https://api-cms-v2-dot-micro-enigma-235001.appspot.com/api/app-rating/getAppRatingReviewForWeb?appKey=" + appKey;
@@ -101,4 +94,22 @@ export const genLinkPro = (appInfo, hasParams = false) => {
         url += "?appNameId" + "=" + appInfo.appNameId;
     }
     return url;
+};
+
+export const getSEOAndHeaderContentApi = async (isHomePage: boolean, pathname?: string, isState?: boolean) => {
+    if (!END_POINT_WORD_PRESS) {
+        return null;
+    }
+    const url = END_POINT_WORD_PRESS + Config.PREFIX_URL + APIConfig.GET_SEO_AND_HEADER_CONTENT;
+
+    let result = await POST({
+        url: url,
+        params: {
+            isHomePage,
+            pathname,
+            isState,
+        },
+    });
+
+    return result;
 };

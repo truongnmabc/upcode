@@ -22,7 +22,7 @@ export const isWebCDL = (appShortName) => {
     if (appShortName == "cdl") {
         return true;
     }
-    return APP_SHORT_NAME.toLowerCase() == "cdl";
+    return APP_SHORT_NAME.toLowerCase() == "cdl_v2";
 };
 
 export function setSession(key, value) {

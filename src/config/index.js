@@ -18,6 +18,9 @@ class Config {
     static GAME_STATUS_FAILED = -1;
     static GAME_STATUS_TESTING = 0;
     static GAME_STATUS_PASSED = 4;
+    static STATUS_GAME_INIT = -1;
+    static STATUS_GAME_UNFINISHED = 0;
+    static STATUS_GAME_FINISH = 1;
 
     static TOPIC_GAME = 0;
     static TEST_GAME = 1;

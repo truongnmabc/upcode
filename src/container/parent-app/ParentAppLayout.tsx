@@ -33,7 +33,7 @@ const ParentAppLayout = ({ appInfo, listAppInfos }: { appInfo: IAppInfo; listApp
         // }
     };
     return (
-        <Layout1 listAppInfos={listAppInfos}>
+        <Layout1 listAppInfos={listAppInfos} appInfo={appInfo}>
             <MyContainer className="take-learning-to-the-next-level ">
                 <div className="align-center -container">
                     <div className="landing-title" onClick={() => exportData()}>

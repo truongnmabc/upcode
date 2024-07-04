@@ -1,29 +1,23 @@
 import Config from "@/config";
-import { getSession, isWebEASYPREP } from "@/config/config_web";
+import { getSession, isProduction, isWebCDL } from "@/config/config_web";
 
-const HorizontalBannerAds = () => {
-    console.log("HorizontalBannerAds");
+// const HorizontalBannerAds = () => {
+//     console.log("HorizontalBannerAds");
 
-    return (
-        <>
-            <ins
-                className="adsbygoogle"
-                style={{ display: "block" }}
-                data-ad-client="ca-pub-2131195938375129"
-                data-ad-slot="9812116074"
-                data-ad-format="auto"
-                data-full-width-responsive="true"
-            ></ins>
-            <script dangerouslySetInnerHTML={{ __html: "(adsbygoogle = window.adsbygoogle || []).push({});" }}></script>
-        </>
-    );
-};
-function getAdClientId() {
-    if (isWebEASYPREP()) {
-        return "ca-pub-2131195938375129";
-    }
-    return "";
-}
+//     return (
+//         <>
+//             <ins
+//                 className="adsbygoogle"
+//                 style={{ display: "block" }}
+//                 data-ad-client="ca-pub-2131195938375129"
+//                 data-ad-slot="9812116074"
+//                 data-ad-format="auto"
+//                 data-full-width-responsive="true"
+//             ></ins>
+//             <script dangerouslySetInnerHTML={{ __html: "(adsbygoogle = window.adsbygoogle || []).push({});" }}></script>
+//         </>
+//     );
+// };
 
 const checkCountryVN = () => {
     let currentCountry = localStorage.getItem("country");
@@ -50,8 +44,44 @@ const checkCountryVN = () => {
     return currentCountry == "VN";
 };
 
-export const isRemoveAds = (paymentInfo: any) => {
-    return false;
+function getAdClientId() {
+    if (isWebCDL()) {
+        return "ca-pub-3656400522603089"; // cdl, passemall, teas, ged,cna
+    }
+    return "";
+}
+
+function hasAds() {
+    return isProduction() && isWebCDL();
+}
+
+function addLinkAdsen() {
+    return hasAds() || isProduction();
+}
+
+const hasShowAds = () => {
+    const tester = getSession(Config.TESTER_KEY);
+    return tester || hasAds();
 };
 
-export { HorizontalBannerAds, getAdClientId };
+const isAdsGoogle = () => {
+    return isWebCDL();
+};
+
+function getAdsId(name) {
+    // passemall
+    return {
+        LearnAdsMobileBeforeNavigation: "3453850342",
+        BlogAdsRightSidebar: "7193784800",
+        BlogAdsBeforeArticleList: "7570216992",
+        LearnAdsLeftSidebar: "7712659551",
+        LearnAdsAfterHeader: "2126318623",
+        LearnAdsBottom: "5880455057",
+        TestAdsAfterHeader: "9053413301",
+        TestAdsLeftSidebar: "9053413301",
+        TestAdsBottom: "9983351597",
+        HomeAdsAfterTopics: "6818380284",
+        HomeAdsAfterTests: "5143719422",
+    }[name];
+}
+export { getAdClientId, hasAds, addLinkAdsen, checkCountryVN, hasShowAds, isAdsGoogle, getAdsId };

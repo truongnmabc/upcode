@@ -28,7 +28,7 @@ const Layout2 = ({
             <HeaderV4 appInfo={appInfo} topics={listTopics} tests={tests} />
             <div className="header-2-frame" />
             {children}
-            {_isParentApp ? <Footer1 /> : <FooterLandingV4 appInfo={appInfo} />}
+            {_isParentApp ? <Footer1 appInfo={appInfo} /> : <FooterLandingV4 appInfo={appInfo} />}
             <ScrollTopTopArrow />
         </div>
     );

@@ -14,14 +14,14 @@ import MediaAboutUs from "@/components/icon/MediaAboutUs";
 const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
     const isMobile = useMediaQuery("(max-width:780px)");
     const isTablet = useMediaQuery("(max-width:1210px)");
-    let emailSupport = "support@easy-prep.org"; //"simplifyyourlearning.apps@gmail.com";
+    let emailSupport = getEmailContact(appInfo);
     return (
         <>
             <SeoHeader title={"Contact us – ABC Elearning"} description={""} keyword={""} />
             <div className="contacts">
                 <MyContainer className="contacts-container">
                     <div className="logo">
-                        <AppLogo />
+                        <AppLogo theme="dark" />
                     </div>
                     <div className="contact-background-header" />
                     {!isMobile && (
@@ -68,9 +68,15 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
                     </div>
                 </MyContainer>
             </div>
-            <Footer1 />
+            <Footer1 appInfo={appInfo} />
         </>
     );
+};
+
+const getEmailContact = (appInfo: IAppInfo) => {
+    if (appInfo.appShortName === "cdl") return "support@abc-elearning.org";
+    else if (appInfo.appShortName === "easyprep") return "support@easy-prep.org";
+    else return "simplifyyourlearning.apps@gmail.com";
 };
 export const getStaticProps = async (context) => {
     let appInfo = getAppInfo();

@@ -5,7 +5,7 @@
     .seo-content-v2 {
         // margin-top: 24px;
         // margin-bottom: 16px;
-        line-height: 24px;
+        line-height: 1.5;
 
         text-align: left;
 
@@ -85,6 +85,10 @@
                 > :nth-child(3),
                 > :nth-child(4) {
                     display: block !important;
+                }
+
+                h2.in-excerpt {
+                    line-height: 36px;
                 }
             }
         }
