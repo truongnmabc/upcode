@@ -1,5 +1,5 @@
 import SeoHeader from "@/components/seo/SeoHeader";
-import { isParentApp } from "@/config/config_web";
+import { isParentApp, isWebCDL } from "@/config/config_web";
 import AboutLayout from "@/container/about-container/AboutLayout";
 import { AppInfo, IAppInfo } from "@/models/AppInfo";
 import convertToJSONObject from "@/utils/convertToJSONObject";
@@ -35,6 +35,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
         listAppInfo = readAllAppInfos();
         listAppInfo = listAppInfo.filter((w: any) => w.appId).map((w: any) => new AppInfo(w));
     } else {
+        if (isWebCDL()) {
+            return {
+                redirect: {
+                    destination: "/about-us",
+                    permanent: true,
+                },
+            };
+        }
         listTopics = getRawTopicsData(appInfo, "");
     }
     return convertToJSONObject({

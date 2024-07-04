@@ -102,6 +102,8 @@ const GridTopic = ({
             {topics.map((topic, index) => {
                 let isHighlighted = highlightedTopicId.includes(topic.id);
                 let _href = topic.slug;
+                if (index == 0) console.log(topic);
+
                 return (
                     <div key={index} id={index}>
                         <a
@@ -203,7 +205,15 @@ const GridTopic = ({
                                     : "")
                             }
                             style={{
-                                height: place != "home" && allowExpand && isHighlighted ? "248px" : "0",
+                                height:
+                                    place != "home" && allowExpand && isHighlighted
+                                        ? `${
+                                              4 + // margin-top
+                                              16 * 2 + // padding vertical
+                                              Math.ceil(topic?.topics?.length / 3) * 60 + // height of level
+                                              (Math.ceil(topic?.topics?.length / 3) - 1) * 16 // mergin level
+                                          }px`
+                                        : "0",
                             }}
                         >
                             {allowExpand && topic?.topics?.length && (place == "home" ? true : isHighlighted) ? (
@@ -257,7 +267,16 @@ const TopicLevelProgress = ({
     const strokeColor = "#E3A651";
     let highestLevel = getHighhestLevelOfTopicBePracticed(listGameState, currentTopic);
     return (
-        <div className="v4-topic-level-container v4-border-radius">
+        <div
+            className="v4-topic-level-container v4-border-radius"
+            style={{
+                height: `${
+                    16 * 2 + // padding vertical
+                    Math.ceil(levels.length / 3) * 60 + // height of level
+                    (Math.ceil(levels.length / 3) - 1) * 16 // margin level
+                }px`,
+            }}
+        >
             <div className="v4-topic-level">
                 {arr.map((line, index) => {
                     return (

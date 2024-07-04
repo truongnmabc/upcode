@@ -128,6 +128,9 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                             <Link href={"/faq"} prefetch={false}>
                                 FAQs
                             </Link>
+                            <Link href={"/contact"} prefetch={false}>
+                                Contact
+                            </Link>
                         </div>
                         <div className="v4-footer-landing-container-122">© 2021 ABC E-learning All Rights Reserved.</div>
                     </div>

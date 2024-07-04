@@ -1,0 +1,47 @@
+:root {
+    --bottom-height-nav-test: 80px;
+}
+
+.ads-bottom {
+    position: fixed;
+    z-index: 100;
+    width: 730px;
+    margin: 0 auto;
+    bottom: calc(var(--bottom-height-nav-test) + 8px);
+    right: 0px;
+    left: 0px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.75);
+
+    @media screen and (max-width: 768px) {
+        background: rgba(255, 255, 255);
+        bottom: 0;
+        width: 100%;
+    }
+}
+
+.btn-remove {
+    background: rgba(33, 33, 33, 0.24);
+    border-radius: 4px;
+    a {
+        display: flex;
+        text-decoration: none;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 18px;
+        color: #ffffff;
+
+        span {
+            padding: 4px 40px 4px 16px;
+            background: rgba(0, 0, 0, 0.52);
+        }
+        .icon-remove {
+            height: 26px;
+            img {
+                height: 100%;
+            }
+        }
+    }
+}

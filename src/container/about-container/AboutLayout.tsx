@@ -58,7 +58,7 @@ const AboutLayout = ({
 }) => {
     if (isParentApp)
         return (
-            <Layout1 listAppInfos={listAppInfos}>
+            <Layout1 listAppInfos={listAppInfos} appInfo={appInfo}>
                 <AboutContent />
             </Layout1>
         );

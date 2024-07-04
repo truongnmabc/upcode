@@ -1,6 +1,6 @@
 import { ITestInfo } from "@/models/TestInfo";
 import StoreProvider from "@/redux/StoreProvider";
-import { getHomeSeoContentApi, getHomeSeoContentStateApi } from "@/services/home.service";
+import { getHomeSeoContentApi, getHomeSeoContentStateApi, getSEOAndHeaderContentApi } from "@/services/home.service";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { getLink } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
@@ -125,12 +125,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         listTopics = appData?.topics ?? [];
         tests = appData?.fullTests ?? [];
 
-        let t = "";
-        let d = "";
-        // try {
-        //     t = contentSEO?.titleSeo[0];
-        //     d = contentSEO?.descSeo[0];
-        // } catch (err) {}
+        let titleAndDescSeo = await getSEOAndHeaderContentApi(false, _state, true);
+
+        let t = titleAndDescSeo.titleSEO;
+        let d = titleAndDescSeo.descriptionSEO;
 
         if (!t) t = appInfo.title;
         if (!d) d = appInfo.descriptionSEO;
@@ -147,6 +145,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 titleSEO,
                 descriptionSEO,
                 keywordSEO: appInfo?.keywordSEO,
+                homeSeoContent: { content: titleAndDescSeo.description },
             },
         });
     } else {
