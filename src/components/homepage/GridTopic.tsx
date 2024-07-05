@@ -94,6 +94,7 @@ const GridTopic = ({
     });
     const dispatch = useDispatch();
     const dispatchAction = (data: any) => {
+        window.scrollTo(0, 0);
         dispatch(getStudyData({ ...data, _state: _state }));
     };
 
@@ -102,8 +103,6 @@ const GridTopic = ({
             {topics.map((topic, index) => {
                 let isHighlighted = highlightedTopicId.includes(topic.id);
                 let _href = topic.slug;
-                if (index == 0) console.log(topic);
-
                 return (
                     <div key={index} id={index}>
                         <a
@@ -285,7 +284,7 @@ const TopicLevelProgress = ({
                                 let unlocked =
                                     index * sequence + i <= highestLevel ||
                                     (index == 0 && i == 0) ||
-                                    level.tag == "mini-test" ||
+                                    level.tag.startsWith("mini-test") ||
                                     level.tag == "final-test"; // luôn mở level 0
                                 let _href = `${topicUrl}#${level.tag}`;
                                 let asPath = "";
@@ -321,8 +320,8 @@ const TopicLevelProgress = ({
                                         key={i}
                                         href={_href}
                                         style={{
-                                            marginLeft: i % sequence != 0 && index % 2 == 0 ? "40px" : "",
-                                            marginRight: i % sequence != 0 && index % 2 == 1 ? "40px" : "",
+                                            marginLeft: i % sequence != 0 && index % 2 == 0 ? "32px" : "",
+                                            marginRight: i % sequence != 0 && index % 2 == 1 ? "32px" : "",
                                             cursor: unlocked ? "pointer" : "not-allowed",
                                         }}
                                         onClick={(e) => {
@@ -370,7 +369,7 @@ const TopicLevelProgress = ({
                                                 </svg>
                                             </div>
                                         )}
-                                        {level.tag == "mini-test" ? (
+                                        {level.tag.startsWith("mini-test") ? (
                                             <div
                                                 style={{
                                                     display: "flex",

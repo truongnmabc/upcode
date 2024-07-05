@@ -47,9 +47,15 @@
         }
 
         .v4-explanation-detail {
+            cursor: pointer;
             .v4-explanation-detail-title {
                 font-size: 14px;
                 line-height: 21px;
+
+                span {
+                    display: flex;
+                    align-items: center;
+                }
             }
 
             // .v4-explanation {

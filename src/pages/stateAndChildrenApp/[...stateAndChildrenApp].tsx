@@ -54,48 +54,6 @@ const ChildrenApp = ({
     );
 };
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//     const appInfo: IAppInfo | null = getAppInfo();
-//     if (!appInfo)
-//         return {
-//             paths: [],
-//             fallback: false, // false | true | 'blocking'
-//         };
-//     let _isParentApp = isParentApp();
-//     const paths = [];
-//     if (_isParentApp) {
-//         let listAppInfo = readAllAppInfos();
-//         listAppInfo = listAppInfo.filter((w: any) => w.appId && w.categoryId).map((w: any) => new AppInfo(w));
-//         let listAppLink: string[] = listAppInfo
-//             .map((app) => {
-//                 let url = getLink(app, "");
-//                 if (url.includes("https:")) return null;
-//                 return formatData(url);
-//             })
-//             .filter((p) => p);
-//         paths.push(...listAppLink);
-//         listAppInfo.forEach((app) => {
-//             if (app.hasState) {
-//                 states[app.appShortName].forEach((state) => {
-//                     let url = getLink(app, state.tag);
-//                     if (!url.includes("https:")) paths.push(formatData(url));
-//                 });
-//             }
-//         });
-//     }
-//     return {
-//         paths,
-//         fallback: false,
-//     };
-// };
-
-// const formatData = (url: string) => {
-//     return {
-//         params: {
-//             stateAndChildrenApp: url.replace("/", "").split("/"),
-//         },
-//     };
-// };
 export const getServerSideProps: GetServerSideProps = async (context) => {
     // trang giao diện các chứng chỉ con, được định tuyến trong exportPathMap tại next.config.js
     let stateAndChildrenApp = context.params.stateAndChildrenApp;

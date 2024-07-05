@@ -102,7 +102,8 @@
         background-image: url("public/images/state-background.png");
         background-repeat: no-repeat;
         background-position: center;
-        background-size: contain;
+        // background-size: contain;
+        background-size: inherit;
 
         .get-started-btn {
             background-color: rgba(33, 33, 33, 0.96);
@@ -131,7 +132,9 @@
 
     @media screen and (min-width: 769px) {
         .app-state-backround-0 {
-            height: 735px;
+            // height: 735px;
+            height: 400px;
+            transition: 0.2s all;
 
             .get-started-btn {
                 font-size: 24px;

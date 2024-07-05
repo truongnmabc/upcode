@@ -17,7 +17,7 @@ export const timeTestSlice = createSlice({
         setTimeTest: (state, action: PayloadAction<{ timeTest: number; id: string }>) => {
             let id = action.payload.id;
             let timeTest = action.payload.timeTest;
-            if (timeTest && id) {
+            if (timeTest >= 0 && id) {
                 if (!!state.data[id]) {
                     // neu da ton tai data ve phan test nay thi upadte lai gia tri
                     state.data[id].timeTest = timeTest;

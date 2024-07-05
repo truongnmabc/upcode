@@ -43,7 +43,7 @@ const CheckAdsBlocker = ({ webData, upgradedPro }: { webData: IWebData; upgraded
                 <div
                     style={{
                         fontSize: "18px",
-                        fontFamily: "Poppins-Medium",
+                        fontWeight: "500",
                         lineHeight: "25px",
                         textAlign: "center",
                         marginTop: "16px",

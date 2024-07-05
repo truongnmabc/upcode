@@ -58,7 +58,7 @@ const genStudyData = async (listAppInfos = []) => {
         console.log(appInfo.bucket, _state);
         await fetch(
             "https://storage.googleapis.com/micro-enigma-235001.appspot.com/" +
-                (!!_2 ? BUCKET2 : BUCKET) +
+                (!_2 ? BUCKET2 : BUCKET) +
                 appInfo.bucket +
                 (_state ? "/" + _state : "") +
                 "/topics-and-tests.json?t=" +

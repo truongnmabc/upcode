@@ -22,7 +22,7 @@ const MainQuestionPageView = ({
         <div className="v4-main-question-view-0">
             <div className="v4-question-title">{gameState.gameTitle}</div>
             <div className="v4-main-question-view-1 v4-border-radius">
-                <QuestionPanelV4 appInfoBucket={appInfo.bucket} question={currentQuestion} place="question" />
+                <QuestionPanelV4 appInfo={appInfo} question={currentQuestion} place="question" />
                 <div className="v4-main-question-view-btn-wrapper" style={{ textAlign: "right" }}>
                     <button
                         className="v4-main-question-view-btn-0 v4-border-radius v4-button-animtaion"

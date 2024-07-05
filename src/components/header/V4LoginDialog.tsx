@@ -170,7 +170,7 @@ export const V4LoginDialog = ({
                                     </div>
                                     <p className="emaill-address">Email Address</p>
                                     <input
-                                        placeholder="youremail@gmail.com"
+                                        placeholder="Enter your email address"
                                         onChange={(e) => {
                                             setEmail(e.target.value);
                                         }}
