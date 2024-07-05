@@ -74,7 +74,7 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
 
             if (gameType == Config.BRANCH_TEST_GAME) {
                 let branchTopic = getAppTopics().find((app) => app.appId === appInfo.appId)?.topics;
-                branchTopic = branchTopic?.filter((t) => t.isBranch);
+                branchTopic = branchTopic?.filter((t) => t?.isBranch);
                 let branch = branchTopic?.find((t) => t.url === slug);
                 gameTitle = branch.title;
             }
@@ -136,7 +136,9 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                         let maxLevel = getHighhestLevelOfTopicBePracticed(lisGameStates, accessTopic);
                         let highestLevelTopic = accessTopic?.topics.find((t) => t.id === accessTopic.id + "-" + maxLevel);
                         let accessLevelTopic = accessTopic?.topics.find((l) => l.tag === level) ?? highestLevelTopic; // nếu không xác định được level truy cập thì đưa ra level cao nhất theo tuần tự có thể làm
-                        if (!(level == "mini-test" || level == "final-test")) {
+                        console.log(level);
+
+                        if (!(level?.startsWith("mini-test") || level == "final-test")) {
                             // nếu truy cập vào level lớn hơn level cao nhất có thể làm thì đưa ra level cao nhất theo tuần tự có thể làm
                             let accessLevel = parseInt(accessLevelTopic.id.split("-")[1]);
                             if (accessLevel > maxLevel) accessLevelTopic = highestLevelTopic;

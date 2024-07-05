@@ -136,7 +136,8 @@
         margin: 16px auto;
         .v4-topic-level-progress-0 {
             display: flex;
-            justify-content: flex-start;
+            // justify-content: flex-start;
+            justify-content: space-between;
             flex-direction: row-reverse;
             position: relative;
             &:nth-child(odd) {
@@ -173,10 +174,10 @@
                 top: 18px;
             }
             .v4-half-circle-right {
-                right: -36px;
+                right: -32px;
             }
             .v4-half-circle-left {
-                left: -36px;
+                left: -32px;
             }
             .v4-level-circle {
                 width: 30px;

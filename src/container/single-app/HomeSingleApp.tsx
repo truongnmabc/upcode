@@ -53,12 +53,25 @@ const HomeSingleApp = ({
             setCurrentState(_state);
         }
     }, [appInfo]);
+
+    useEffect(() => {
+        if (isDesktop) {
+            let area = document.getElementById("app-state-backround-0");
+            if (area) {
+                if (openListState == 1) {
+                    area.style.height = "735px";
+                } else {
+                    area.style.height = "400px";
+                }
+            }
+        }
+    }, [openListState, isDesktop]);
     return (
         <Layout2 appInfo={appInfo} listTopics={listTopics} tests={tests}>
             <div className="v4-home-landing-0">
                 {appHasState && !!!_state ? (
                     <>
-                        <div className="app-state-backround-0">
+                        <div className="app-state-backround-0" id="app-state-backround-0">
                             <MyContainer>
                                 <div className="landing-title-0">
                                     <div className="landing-title-11">

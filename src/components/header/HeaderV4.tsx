@@ -19,6 +19,7 @@ import AppState from "@/redux/appState";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/features/user";
 import Routes from "@/config/routes";
+import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 const DownloadAppV4 = dynamic(() => import("../homepage/DownloadAppV4"));
 
 const HeaderV4 = ({
@@ -33,6 +34,7 @@ const HeaderV4 = ({
     const [openMenuDrawer, setOpenMenuDrawer] = useState(false);
     const [open, setOpen] = useState(true);
     const [openDialog, setOpenDialog] = useState(false);
+    const [currentState, setCurrentState] = useState("");
     const userReducer = useSelector((state: AppState) => state.userReducer);
     const { userInfo, reload, isPro } = userReducer;
     const haveGetProBtn = !isPro;
@@ -45,6 +47,12 @@ const HeaderV4 = ({
         if (reload) window.location.reload();
     }, [reload]);
 
+    useEffect(() => {
+        let _state = localStorage.getItem("select-state-" + appInfo.appNameId);
+        if (_state) {
+            setCurrentState(_state);
+        }
+    }, []);
     return (
         <div className="container-header-v4">
             <MyContainer className="header-v4">
@@ -152,6 +160,7 @@ const HeaderV4 = ({
                                         <div id="collapse-content-state" className="overflow-auto">
                                             {states[appInfo.appShortName].map((state, index) => {
                                                 let _link = getLink(appInfo, state.tag);
+                                                let isCurrentState = currentState == state.tag;
                                                 return (
                                                     <div key={index} className="v4-app-state">
                                                         <a
@@ -165,10 +174,11 @@ const HeaderV4 = ({
                                                                         to: _link,
                                                                     },
                                                                 });
-                                                                window.location.href = _link;
+                                                                if (!isCurrentState) window.location.href = _link;
                                                             }}
                                                         >
-                                                            {state.name}
+                                                            {state.name}{" "}
+                                                            {isCurrentState && <CheckRoundedIcon htmlColor="#fff" />}
                                                         </a>
                                                     </div>
                                                 );

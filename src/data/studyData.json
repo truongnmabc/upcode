@@ -644,13 +644,6 @@
                 "url": "new-hampshire-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "new-jersey-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "new-jersey-hazmat-practice-test", "tag": "hazmat" },
-            {
-                "title": "Passenger Vehicles",
-                "url": "new-jersey-passenger-vehicles-practice-test",
-                "tag": "passenger-vehicles"
-            },
             { "title": "Air Brakes", "url": "new-jersey-air-brakes-practice-test", "tag": "air-brakes" },
             {
                 "title": "Combination Vehicles",
@@ -662,13 +655,20 @@
                 "url": "new-jersey-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "new-jersey-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "new-jersey-school-bus-practice-test", "tag": "school-bus" },
+            { "title": "General Knowledge", "url": "new-jersey-general-knowledge-practice-test", "tag": "general-knowledge" },
+            { "title": "HazMat", "url": "new-jersey-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "Passenger Vehicles",
+                "url": "new-jersey-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "new-jersey-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
+            { "title": "School Bus", "url": "new-jersey-school-bus-practice-test", "tag": "school-bus" },
+            { "title": "Tanker Vehicles", "url": "new-jersey-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
             { "title": "General Knowledge", "url": "new-mexico-general-knowledge-practice-test", "tag": "general-knowledge" },
             { "title": "HazMat", "url": "new-mexico-hazmat-practice-test", "tag": "hazmat" },
             {
@@ -966,6 +966,11 @@
             { "title": "Tanker Vehicles", "url": "texas-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
             { "title": "School Bus", "url": "texas-school-bus-practice-test", "tag": "school-bus" },
             { "title": "Pre-Trip Inspection", "url": "texas-pre-trip-inspection-practice-test", "tag": "pre-trip-inspection" },
+            {
+                "title": "Special Requirements",
+                "url": "texas-special-requirements-practice-test",
+                "tag": "special-requirements"
+            },
             { "title": "General Knowledge", "url": "utah-general-knowledge-practice-test", "tag": "general-knowledge" },
             { "title": "HazMat", "url": "utah-hazmat-practice-test", "tag": "hazmat" },
             { "title": "Passenger Vehicles", "url": "utah-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
@@ -1389,15 +1394,15 @@
             "full-length-new-hampshire-tanker-vehicles-practice-test",
             "full-length-new-hampshire-school-bus-practice-test",
             "full-length-new-hampshire-pre-trip-inspection-practice-test",
-            "full-length-new-jersey-general-knowledge-practice-test",
-            "full-length-new-jersey-hazmat-practice-test",
-            "full-length-new-jersey-passenger-vehicles-practice-test",
             "full-length-new-jersey-air-brakes-practice-test",
             "full-length-new-jersey-combination-vehicles-practice-test",
             "full-length-new-jersey-doubles-triples-trailers-practice-test",
-            "full-length-new-jersey-tanker-vehicles-practice-test",
-            "full-length-new-jersey-school-bus-practice-test",
+            "full-length-new-jersey-general-knowledge-practice-test",
+            "full-length-new-jersey-hazmat-practice-test",
+            "full-length-new-jersey-passenger-vehicles-practice-test",
             "full-length-new-jersey-pre-trip-inspection-practice-test",
+            "full-length-new-jersey-school-bus-practice-test",
+            "full-length-new-jersey-tanker-vehicles-practice-test",
             "full-length-new-mexico-general-knowledge-practice-test",
             "full-length-new-mexico-hazmat-practice-test",
             "full-length-new-mexico-passenger-vehicles-practice-test",
@@ -1515,6 +1520,7 @@
             "full-length-texas-tanker-vehicles-practice-test",
             "full-length-texas-school-bus-practice-test",
             "full-length-texas-pre-trip-inspection-practice-test",
+            "full-length-texas-special-requirements-practice-test",
             "full-length-utah-general-knowledge-practice-test",
             "full-length-utah-hazmat-practice-test",
             "full-length-utah-passenger-vehicles-practice-test",

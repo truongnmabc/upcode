@@ -48,14 +48,14 @@ export default function Home({
         <>
             <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} ads />
             <StoreProvider appInfo={appInfo} webData={_isParentApp ? {} : { tests: tests, topics: listTopics }} />
-            {/* <div
+            <div
                 style={{ marginTop: "100px" }}
                 onClick={() => {
                     genState();
                 }}
             >
                 kkkkkkkkkkk
-            </div> */}
+            </div>
             {_isParentApp ? (
                 <ParentAppLayout appInfo={appInfo} listAppInfos={listAppInfo} />
             ) : (
@@ -117,7 +117,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     });
 };
 const genState = async () => {
-    const states = stateData["cdl"].slice(40, 55);
+    const states = stateData["cdl"].slice(41, 51);
     const appId = "6540077669810176";
     const bucket = "cdl_v2";
     for (let s of states) {
@@ -129,7 +129,7 @@ const genState = async () => {
                 method: "get",
                 baseURl: "http://localhost:3001/",
                 headers: null,
-                timeout: 90000,
+                timeout: 120000,
             });
             console.log(s.name, res);
         } catch (e) {

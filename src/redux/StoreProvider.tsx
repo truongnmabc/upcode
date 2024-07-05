@@ -57,7 +57,7 @@ const MyProvider = ({ children, appInfo, webData }: { children?: React.ReactNode
         <>
             {children}
             <PopupSubscription appInfo={appInfo} />
-            <CheckAdsBlocker upgradedPro={isPro} webData={webData} />
+            {/* <CheckAdsBlocker upgradedPro={isPro} webData={webData} /> */}
             <CheckAndAddAds isProUser={isPro} />
         </>
     );
