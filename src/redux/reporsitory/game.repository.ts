@@ -134,15 +134,26 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     if (accessTopic?.topics.length > 0) {
                         // nếu topic được chia level
                         let maxLevel = getHighhestLevelOfTopicBePracticed(lisGameStates, accessTopic);
-                        let highestLevelTopic = accessTopic?.topics.find((t) => t.id === accessTopic.id + "-" + maxLevel);
-                        let accessLevelTopic = accessTopic?.topics.find((l) => l.tag === level) ?? highestLevelTopic; // nếu không xác định được level truy cập thì đưa ra level cao nhất theo tuần tự có thể làm
-                        console.log(level);
+                        // let highestLevelTopic = accessTopic?.topics.find((t) => t.id === accessTopic.id + "-" + maxLevel);
+                        // let accessLevelTopic = accessTopic?.topics.find((l) => l.tag === level) ?? highestLevelTopic; // nếu không xác định được level truy cập thì đưa ra level cao nhất theo tuần tự có thể làm
 
-                        if (!(level?.startsWith("mini-test") || level == "final-test")) {
-                            // nếu truy cập vào level lớn hơn level cao nhất có thể làm thì đưa ra level cao nhất theo tuần tự có thể làm
-                            let accessLevel = parseInt(accessLevelTopic.id.split("-")[1]);
-                            if (accessLevel > maxLevel) accessLevelTopic = highestLevelTopic;
-                        }
+                        // if (!(level?.startsWith("mini-test") || level == "final-test")) {
+                        //     // nếu truy cập vào level lớn hơn level cao nhất có thể làm thì đưa ra level cao nhất theo tuần tự có thể làm
+                        //     let accessLevel = parseInt(accessLevelTopic.id.split("-")[1]);
+                        //     if (accessLevel > maxLevel) accessLevelTopic = highestLevelTopic;
+                        // }
+
+                        // vào level cao nhất có thể làm
+                        lisGameStates
+                            .filter((g) => g.id.includes(accessTopic.id))
+                            .forEach((g) => {
+                                let lv = 0;
+                                lv = parseInt(g.id.split("-")[1]);
+                                if (lv > maxLevel && !g.levelTag.includes("final-test")) maxLevel = lv; // không xét trường hợp làm nhảy cóc final test, chỉ xét final test khi đã làm tuần tự ở hàm _getHighhestLevelOfTopicBePracticed bên trên
+                            });
+                        if (!!lisGameStates.find((g) => g.id === accessTopic.id + "-" + maxLevel)?.havePassed) maxLevel += 1;
+                        let accessLevelTopic = accessTopic.topics.find((t) => t.id === accessTopic.id + "-" + maxLevel); // chú ý chỗ này = undefined => bug
+
                         studyId = accessLevelTopic.id + "";
                         topic_tag = accessTopic.tag;
                         level_tag = accessLevelTopic.tag;
@@ -597,6 +608,7 @@ const onGameSubmitted = createAsyncThunk("game/onGameSubmitted", async (_, { get
                 });
             } else {
                 gameState.status = Config.GAME_STATUS_PASSED;
+                gameState.havePassed = true;
                 ga.event({
                     action: "pass_test",
                     params: { from: window.location.href },

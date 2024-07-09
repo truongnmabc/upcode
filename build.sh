@@ -9,7 +9,7 @@ downloadFile() {
     appName=$1
     . $envFile
       
-    url="http://localhost:3001/api/app/config/get-all-web-config?bucket=$appName"
+    url="https://api-cms-v2-dot-micro-enigma-235001.appspot.com/api/app/config/get-all-web-config?bucket=$appName"
     response=$(curl -s -X GET "$url")
     echo "$response" > "$DATA_PATH/appInfos.json"
     node -e "const  {genDataFunc}  = require('./gen-data.js'); genDataFunc($response, '$NEXT_PUBLIC_WORDPRESS_API_URL', '$NEXT_PUBLIC_WEB_PROD');"

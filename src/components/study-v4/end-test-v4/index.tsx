@@ -60,13 +60,13 @@ const EndTestV4 = ({
 
     let nextLevelHref = ""; // cái này để dùng cho phần end của level topic
     let finalTestHref = ""; // cái này để dùng cho phần end của level topic
-    let listGameState: GameState[] = useSelector((state: AppState) => state.listGameReducer.games);
+    // let listGameState: GameState[] = useSelector((state: AppState) => state.listGameReducer.games);//
     if (currentTopic) {
         let currentLevelIndex = currentTopic.topics.findIndex((lv) => lv.id == gameState.id);
         let nextLevelIndex = currentLevelIndex;
-        let highestLevel = getHighhestLevelOfTopicBePracticed(listGameState, currentTopic);
+        // let highestLevel = getHighhestLevelOfTopicBePracticed(listGameState, currentTopic);//
         if (currentLevelIndex < currentTopic.topics.length - 1) nextLevelIndex = currentLevelIndex + 1;
-        if (nextLevelIndex > highestLevel) nextLevelIndex = highestLevel; // trường hợp nhảy cóc sang mini test thì next level sẽ là level tiếp theo theo tuần tự
+        // if (nextLevelIndex > highestLevel) nextLevelIndex = highestLevel;// // trường hợp nhảy cóc sang mini test thì next level sẽ là level tiếp theo theo tuần tự
         if (nextLevelIndex <= currentTopic.topics.length - 1) {
             //tại các level trước final test thì mới có nút next level và final test
             if (isPass && nextLevelIndex < currentTopic.topics.length - 1)
@@ -199,7 +199,7 @@ const EndTestButton = ({
                             window.scrollTo({ top: 0 });
                         }}
                     >
-                        Next Level
+                        {nextLevelHref.includes("mini-test") ? "Mini Test" : "Next Level"}
                     </button>
                 )}
             </div>

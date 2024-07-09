@@ -152,23 +152,15 @@ const GetProPage = ({ appInfo }: { appInfo: IAppInfo }) => {
                             <div className="app-feature">
                                 <p>
                                     <img src="/images/passemall/new-pro/Checkbox.png" />
-                                    {appInfo.totalQuestion}+ Professional {appInfo.appName} Questions + Explanations
+                                    Unlock Detailed Explanations
                                 </p>
                                 <p>
                                     <img src="/images/passemall/new-pro/Checkbox.png" />
-                                    Customize Your Own Tests
+                                    Get {appInfo.totalQuestion}+ Questions On Mobile App
                                 </p>
                                 <p>
                                     <img src="/images/passemall/new-pro/Checkbox.png" />
-                                    Get And Download PDF If Necessary
-                                </p>
-                                <p>
-                                    <img src="/images/passemall/new-pro/Checkbox.png" />
-                                    Remove Ads, Use Dark Mode
-                                </p>
-                                <p>
-                                    <img src="/images/passemall/new-pro/Checkbox.png" />
-                                    Sync Among All Your Devices
+                                    Remove All Disturbing Ads
                                 </p>
                             </div>
                         </MyContainer>

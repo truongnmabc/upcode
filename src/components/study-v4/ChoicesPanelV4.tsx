@@ -43,6 +43,7 @@ const ChoicesPanelV4 = ({
         thisQuestionIsDone = true;
     }
 
+    const isMultichoices = currentQuestion.correctNums > 1;
     return (
         <div className={"v4-choices-panel-0"}>
             {listAnswers.map((_choice, index) => {
@@ -68,6 +69,7 @@ const ChoicesPanelV4 = ({
                         thisQuestionIsDone={thisQuestionIsDone}
                         key={index}
                         index={index}
+                        isMultichoices={isMultichoices}
                     />
                 );
             })}
@@ -85,6 +87,7 @@ const AnswerPanel = ({
     isReviewAnswer,
     onChoiceSelected,
     index,
+    isMultichoices,
 }: {
     choice: IChoice;
     showCss: string;
@@ -95,6 +98,7 @@ const AnswerPanel = ({
     isReviewAnswer: boolean;
     onChoiceSelected: any;
     index: number;
+    isMultichoices: boolean;
 }) => {
     let disableSelectAnswer =
         (thisQuestionIsDone && // TEST_GAME thi cho phep thay doi dap an duoc (đã cho hiện đáp án rồi thì không cho chọn lại)
@@ -143,7 +147,13 @@ const AnswerPanel = ({
             }}
         >
             <div className="v4-answered-content v4-flex">
-                {getIcon((thisQuestionIsDone && allowShowAnswer) || isReviewAnswer, choice)}
+                {isMultichoices ? (
+                    <div className="check-box">
+                        <Checked />
+                    </div>
+                ) : (
+                    getIcon((thisQuestionIsDone && allowShowAnswer) || isReviewAnswer, choice)
+                )}
                 <div className="v4-answer-button-content">
                     <V4QuestionContent
                         content={choice.content}
@@ -173,4 +183,13 @@ const getIcon = (condition: boolean, choice: IChoice) => {
         else return <RadioButtonUncheckedRoundedIcon htmlColor="#AEAEB2" sx={_sx} />;
     }
 };
+
+const Checked = () => {
+    return (
+        <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.5 4.5L5.15385 8L12.5 1" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+    );
+};
+
 export default ChoicesPanelV4;

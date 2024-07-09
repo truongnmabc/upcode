@@ -48,14 +48,14 @@ export default function Home({
         <>
             <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} ads />
             <StoreProvider appInfo={appInfo} webData={_isParentApp ? {} : { tests: tests, topics: listTopics }} />
-            <div
+            {/* <div
                 style={{ marginTop: "100px" }}
                 onClick={() => {
                     genState();
                 }}
             >
                 kkkkkkkkkkk
-            </div>
+            </div> */}
             {_isParentApp ? (
                 <ParentAppLayout appInfo={appInfo} listAppInfos={listAppInfo} />
             ) : (
@@ -85,9 +85,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
     } else {
         // làm giao diện mới cho asvab nên check riêng asvab
         if (appInfo) {
-            let appData: any = await readFileAppFromGoogleStorage(appInfo);
-            listTopics = appData?.topics ?? [];
-            tests = appData?.fullTests ?? [];
+            if (!appInfo.hasState) {
+                // app có state thì trang home chọn state nên không thể lấy được topic và test
+                let appData: any = await readFileAppFromGoogleStorage(appInfo);
+                listTopics = appData?.topics ?? [];
+                tests = appData?.fullTests ?? [];
+            }
         }
         homeSeoContent = await getHomeSeoContentApi("home-seo-content");
     }
