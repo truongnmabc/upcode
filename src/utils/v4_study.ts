@@ -85,4 +85,27 @@ function shuffleV4(list: any[]) {
     }
     return list;
 }
-export { getGameProgress, getHighhestLevelOfTopicBePracticed, shuffleV4 };
+
+// update cho cdl là làm xong minitest thì mở 3 level trước đó
+const getListTopicsUnlocked = (listGameState: GameState[], accessTopic: ITopic) => {
+    let res: string[] = [];
+    let games = listGameState.filter((g) => (g.id + "").includes(accessTopic.id) && (g.id + "").includes("-"));
+    if (games.length > 1) {
+        for (let i = 0; i < games.length; i++) {
+            let _lv = games[i].id.split("-")[1];
+            let isMiniTest = games[i].levelTag.includes("mini-test");
+            if (isMiniTest) {
+                if (games[i].havePassed) {
+                    let lv = parseInt(_lv);
+                    let tid = games[i].id.split("-")[0];
+                    res.push(tid + "-" + (lv - 1)); //3 level kế trước
+                    res.push(tid + "-" + (lv - 2)); //3 level kế trước
+                    res.push(tid + "-" + (lv - 3)); //3 level kế trước
+                    res.push(tid + "-" + (lv + 1)); //3 level kế trước
+                }
+            }
+        }
+    }
+    return res;
+};
+export { getGameProgress, getHighhestLevelOfTopicBePracticed, shuffleV4, getListTopicsUnlocked };

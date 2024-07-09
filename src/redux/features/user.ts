@@ -60,7 +60,6 @@ export const userSlice = createSlice({
 
         loginSuccess: (state, action) => {
             let payload = action.payload;
-            console.log(payload);
 
             if (payload) {
                 state.userInfo = payload.userInfo;

@@ -201,21 +201,22 @@ export const V4LoginDialog = ({
                                 </>
                             )}
                         </div>
-                        {processing ? (
-                            <div className="processing">
-                                <V4CircleProgress />
-                            </div>
-                        ) : (
-                            <div
-                                className="verify"
-                                onClick={() => {
-                                    if (step == 1) verifyEmail();
-                                    else if (step == 2) verifyCode();
-                                }}
-                            >
-                                Verify
-                            </div>
-                        )}
+
+                        <div
+                            className="verify"
+                            onClick={() => {
+                                if (processing) return;
+                                if (step == 1) verifyEmail();
+                                else if (step == 2) verifyCode();
+                            }}
+                        >
+                            Verify{" "}
+                            {processing && (
+                                <div className="processing">
+                                    <V4CircleProgress size={12} thickness={2} />
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </Dialog>

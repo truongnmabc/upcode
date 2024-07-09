@@ -26,7 +26,7 @@ const QuestionPanelV4 = ({
     place: "question" | "study" | "review";
     index?: number;
 }) => {
-    const isPro = false; // useSelector((state: AppState) => state.userReducer.isPro);
+    const isPro = useSelector((state: AppState) => state.userReducer.isPro);
     const [expandParagraph, setExpandParagraph] = useState(false);
     let explanationContent = decryptExplanation(question.explanation);
     let contentQuestion = decryptExplanation(question.question);
@@ -86,21 +86,27 @@ const QuestionPanelV4 = ({
                 isReviewAnswer={true}
                 currentQuestion={question}
             />
-            <div className={"v4-explanation-detail"} onClick={onClickPro}>
+            <div className={"v4-explanation-detail"}>
                 <div className={"v4-explanation-detail-title align-center"}>
                     Detailed Explanation&nbsp;
                     {!isPro && (
                         <>
                             <span className="_769">
                                 (Get &nbsp;
-                                <img src="/images/passemall/pro_icon.svg" className="pro-img" />
+                                <img src="/images/passemall/pro_icon.svg" className="pro-img" width={48} onClick={onClickPro} />
                                 &nbsp; to show this content)
                             </span>
-                            <img src="/images/passemall/pro-content.png" className="pro-img __768" width={86} height={19} />
+                            <img
+                                src="/images/passemall/pro-content.png"
+                                className="pro-img __768"
+                                width={86}
+                                height={19}
+                                onClick={onClickPro}
+                            />
                         </>
                     )}
                 </div>
-                <div className={"explanation-content-wrapper " + (isPro ? "" : "blur-content")}>
+                <div className={"explanation-content-wrapper " + (isPro ? "" : "blur-content")} onClick={onClickPro}>
                     <div>
                         <V4QuestionContent
                             content={explanationContent}

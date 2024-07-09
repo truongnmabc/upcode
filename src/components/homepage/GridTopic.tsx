@@ -5,7 +5,7 @@ import { ITopic } from "../../models/Topic";
 import { GameState, getNumOfCorrectAnswer } from "../../redux/features/game";
 import TargetIcon from "../icon/TargetIcon";
 import "./GridTopic.scss";
-import { getGameProgress, getHighhestLevelOfTopicBePracticed } from "../../utils/v4_study";
+import { getGameProgress, getHighhestLevelOfTopicBePracticed, getListTopicsUnlocked } from "../../utils/v4_study";
 import { SYNC_TYPE } from "../../config/config_sync";
 import { memo } from "react";
 import { render } from "react-dom";
@@ -265,6 +265,9 @@ const TopicLevelProgress = ({
     }
     const strokeColor = "#E3A651";
     let highestLevel = getHighhestLevelOfTopicBePracticed(listGameState, currentTopic);
+    let listTopicsUnlocked = getListTopicsUnlocked(listGameState, currentTopic);
+    console.log(listTopicsUnlocked);
+
     return (
         <div
             className="v4-topic-level-container v4-border-radius"
@@ -285,7 +288,8 @@ const TopicLevelProgress = ({
                                     index * sequence + i <= highestLevel ||
                                     (index == 0 && i == 0) ||
                                     level.tag.startsWith("mini-test") ||
-                                    level.tag == "final-test"; // luôn mở level 0
+                                    level.tag == "final-test" || // luôn mở level 0, mini-test, final-test
+                                    listTopicsUnlocked.includes(level.id);
                                 let _href = `${topicUrl}#${level.tag}`;
                                 let asPath = "";
                                 if (typeof window !== "undefined") {
@@ -531,6 +535,9 @@ const TopicLevelProgress = ({
                                     </svg>
                                 </div>
                             )}
+                            {
+                                line.length < sequence && <div style={{ width: "76px" }} /> // cái này để dùng cho space-between
+                            }
                         </div>
                     );
                 })}

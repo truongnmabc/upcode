@@ -21,6 +21,7 @@ export class GameState {
     defaultTimeTest: number; //
     gameTitle: string; //
     gameType: number; //
+    havePassed: boolean; // check xem game này đã từng pass hay chưa
     id: string; // version cũ là id có thành phần level và appId | vesion mới thì k có cái đó mà chỉ còn mỗi studyId thôi ; bổ sung thêm -[level] cho topic | test sẽ dùng slug làm id này
     indexActive: number; //
     isFinishGame: -1 | 0 | 1; // đánh dấu là đã kết thúc bài học hay chưa {-1: init, 0: chưa, 1: rồi}
@@ -31,7 +32,7 @@ export class GameState {
     progress: Progress; //
     questions: Question[]; //
     showAnswer: boolean; // trường này để check xem màn học này có cho hiện kết quả hay không
-    status: number;
+    status: number; // status của game, chỉ được gán khi submitted
     timeTest: number; //
     unlock: boolean;
     constructor(props?: any) {
@@ -73,6 +74,7 @@ export class GameState {
             this.defaultTimeTest = DEFAULT_TIME_TEST;
         }
         this.unlock = !!props.unlock;
+        this.havePassed = !!props?.havePassed ?? this.status === Config.GAME_STATUS_PASSED ?? false;
     }
     static init() {
         let gameState = new GameState({});

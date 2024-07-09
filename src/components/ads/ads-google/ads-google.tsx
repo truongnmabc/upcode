@@ -68,7 +68,6 @@ export const RightAdsHorizontal = () => {
 
 export const HeaderLearnAdsView = () => {
     let isPro = useSelector((state: AppState) => state.userReducer.isPro);
-    // let appInfo = useSelector((state: AppState) => state.appInfoReducer.appInfo);
     let _hasAds = hasAds();
     const id = "HeaderLearnAdsView";
     let showAds = _hasAds && isClientSide() && !isPro; // && appInfo.usingFeaturePro;
