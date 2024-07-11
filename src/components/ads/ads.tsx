@@ -39,7 +39,7 @@ const checkCountryVN = () => {
     if (totalCount > MAX_TIMES_DISPLAY_ADS) {
         return true;
     }
-    console.log("Your current country:", currentCountry);
+    // console.log("Your current country:", currentCountry);
 
     return currentCountry == "VN";
 };

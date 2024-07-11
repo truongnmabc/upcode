@@ -199,7 +199,7 @@ const EndTestButton = ({
                             window.scrollTo({ top: 0 });
                         }}
                     >
-                        {nextLevelHref.includes("mini-test") ? "Mini Test" : "Next Level"}
+                        {nextLevelHref.includes("mini-test") ? nextLevelHref.split("#")[1].replaceAll("-", " ") : "Next Level"}
                     </button>
                 )}
             </div>

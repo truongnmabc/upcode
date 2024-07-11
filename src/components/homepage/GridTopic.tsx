@@ -266,7 +266,6 @@ const TopicLevelProgress = ({
     const strokeColor = "#E3A651";
     let highestLevel = getHighhestLevelOfTopicBePracticed(listGameState, currentTopic);
     let listTopicsUnlocked = getListTopicsUnlocked(listGameState, currentTopic);
-    console.log(listTopicsUnlocked);
 
     return (
         <div

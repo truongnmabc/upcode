@@ -36,7 +36,7 @@ const HeaderV4 = ({
     const [openDialog, setOpenDialog] = useState(false);
     const [currentState, setCurrentState] = useState("");
     const userReducer = useSelector((state: AppState) => state.userReducer);
-    const { userInfo, reload, isPro } = userReducer;
+    const { userInfo, reload, isPro, paymentInfos, inAppPruchasedInfo } = userReducer;
     const haveGetProBtn = !isPro;
     const getSrcLogo = () => {
         let logo = `/images/${APP_SHORT_NAME}/logo-light.png`;
@@ -101,7 +101,9 @@ const HeaderV4 = ({
                                 <div
                                     className="container-drawer-right-menu-header-v4-1"
                                     onClick={() => {
-                                        window.location.href = haveGetProBtn ? Routes.UPGRADE_PRO : "/billing";
+                                        window.location.href = !(paymentInfos.length > 0 || inAppPruchasedInfo.length > 0)
+                                            ? Routes.UPGRADE_PRO
+                                            : "/billing";
                                     }}
                                 >
                                     <div className="v4-avatar">
