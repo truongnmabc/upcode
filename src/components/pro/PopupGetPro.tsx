@@ -57,8 +57,6 @@ const PopUpGetProContent = ({
 }) => {
     const appConfig = getConfigAppPro(appInfo);
 
-    console.log(appConfig);
-
     const onPaymentSuccess = () => {
         window.location.href = "/billing";
         onClose();

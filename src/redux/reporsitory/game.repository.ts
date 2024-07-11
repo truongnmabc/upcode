@@ -13,7 +13,7 @@ import {
 import IWebData from "@/types/webData";
 import * as ga from "../../services/ga";
 import { hasImage } from "@/utils/v4_question";
-import { getHighhestLevelOfTopicBePracticed, shuffleV4 } from "@/utils/v4_study";
+import { getHighhestLevelOfTopicBePracticed, getListTopicsUnlocked, shuffleV4 } from "@/utils/v4_study";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Question from "../../models/Question";
 import AppState from "../appState";
@@ -134,14 +134,17 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                     if (accessTopic?.topics.length > 0) {
                         // nếu topic được chia level
                         let maxLevel = getHighhestLevelOfTopicBePracticed(lisGameStates, accessTopic);
-                        // let highestLevelTopic = accessTopic?.topics.find((t) => t.id === accessTopic.id + "-" + maxLevel);
-                        // let accessLevelTopic = accessTopic?.topics.find((l) => l.tag === level) ?? highestLevelTopic; // nếu không xác định được level truy cập thì đưa ra level cao nhất theo tuần tự có thể làm
+                        let highestLevelTopic = accessTopic?.topics.find((t) => t.id === accessTopic.id + "-" + maxLevel);
+                        let accessLevelTopic = accessTopic?.topics.find((l) => l.tag === level) ?? highestLevelTopic; // nếu không xác định được level truy cập thì đưa ra level cao nhất theo tuần tự có thể làm
 
-                        // if (!(level?.startsWith("mini-test") || level == "final-test")) {
-                        //     // nếu truy cập vào level lớn hơn level cao nhất có thể làm thì đưa ra level cao nhất theo tuần tự có thể làm
-                        //     let accessLevel = parseInt(accessLevelTopic.id.split("-")[1]);
-                        //     if (accessLevel > maxLevel) accessLevelTopic = highestLevelTopic;
-                        // }
+                        if (!(level?.startsWith("mini-test") || level == "final-test")) {
+                            // nếu truy cập vào level lớn hơn level cao nhất có thể làm thì đưa ra level cao nhất theo tuần tự có thể làm
+                            // ** update 8/7/2024 cho CDL: pass mini test thì mở 3 level phía trước nó (ứng với mini test đó) nên logic chỗ này cần sửa lại không đưa ra level cao nhất theo tuần tự nữa.
+                            let accessLevel = parseInt(accessLevelTopic.id.split("-")[1]);
+                            let listTopicsUnlocked = getListTopicsUnlocked(lisGameStates, accessTopic);
+                            if (accessLevel > maxLevel && !listTopicsUnlocked.includes(accessLevelTopic.id))
+                                accessLevelTopic = highestLevelTopic; // nếu level muốn truy cập lớn hơn level cao nhất đang mở và nó không nằm trong ds các level được mở vì pass mini test thì đưa ra level cao nhất có thể làm theo tuần tự
+                        }
 
                         // vào level cao nhất có thể làm
                         lisGameStates
@@ -152,7 +155,6 @@ const getStudyData = createAsyncThunk("getStudyData", async (webData: IWebData, 
                                 if (lv > maxLevel && !g.levelTag.includes("final-test")) maxLevel = lv; // không xét trường hợp làm nhảy cóc final test, chỉ xét final test khi đã làm tuần tự ở hàm _getHighhestLevelOfTopicBePracticed bên trên
                             });
                         if (!!lisGameStates.find((g) => g.id === accessTopic.id + "-" + maxLevel)?.havePassed) maxLevel += 1;
-                        let accessLevelTopic = accessTopic.topics.find((t) => t.id === accessTopic.id + "-" + maxLevel); // chú ý chỗ này = undefined => bug
 
                         studyId = accessLevelTopic.id + "";
                         topic_tag = accessTopic.tag;

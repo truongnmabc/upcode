@@ -275,9 +275,13 @@ const convertData = (listTransaction: any[], prices: any[]) => {
     // ]
 
     return listTransaction.map((tran) => {
+        let dotIndex = (tran.amount as string).indexOf(".");
+        for (let i = tran.amount.length - 1 - dotIndex; i < 2; i++) {
+            tran.amount += "0";
+        }
         return {
             date: _formatTime(tran.time),
-            period: _formatTime(tran.time) + " to " + _formatTime(tran.expiryDate),
+            period: _formatTime(tran.startDate) + " to " + _formatTime(tran.expiryDate),
             plan: prices.find((p) => p.planId === tran.planId).savePrice.text,
             amount: "$" + tran.amount,
             status: tran.status ?? "Cancelled",
