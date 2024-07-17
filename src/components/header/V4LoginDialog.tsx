@@ -150,10 +150,10 @@ export const V4LoginDialog = ({
                                     <div className="login-with" id="login-width">
                                         {GOOGLE_ID && (
                                             <div>
-                                                <GoogleAuth submitSuccessFc={() => {}}></GoogleAuth>
+                                                <GoogleAuth submitSuccessFc={() => {}} isRenderButton></GoogleAuth>
                                             </div>
                                         )}
-                                        {APPLE_CLIENT_ID && (
+                                        {/* {APPLE_CLIENT_ID && (
                                             <div
                                                 style={{
                                                     display: "flex",
@@ -162,7 +162,7 @@ export const V4LoginDialog = ({
                                             >
                                                 <LoginWithApple submitSuccessFc={() => {}}></LoginWithApple>
                                             </div>
-                                        )}
+                                        )} */}
                                     </div>
                                     <div className="or">
                                         <div />
