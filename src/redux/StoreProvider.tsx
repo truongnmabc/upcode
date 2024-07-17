@@ -12,6 +12,7 @@ import PopupSubscription from "@/components/pro/check-subscription/PopupSubscrip
 import CheckAdsBlocker from "@/components/pro/CheckAdsBlocker";
 import AppState from "./appState";
 import { addLinkAdsen, checkCountryVN, getAdClientId, hasShowAds } from "@/components/ads/ads";
+import GoogleAuth from "@/components/google-button";
 
 /**
 // những action nào phải gọi ngay khi vào trang thì phải gọi ở trong này mới có tác dụng (vì persist đc khởi tạo ở client), gọi trong này để persist/HYDRATE được gọi đầu tiên rồi mới đến các action khác
@@ -57,8 +58,9 @@ const MyProvider = ({ children, appInfo, webData }: { children?: React.ReactNode
         <>
             {children}
             <PopupSubscription appInfo={appInfo} />
-            {/* <CheckAdsBlocker upgradedPro={isPro} webData={webData} /> */}
+            <CheckAdsBlocker upgradedPro={isPro} webData={webData} />
             <CheckAndAddAds isProUser={isPro} />
+            <GoogleOneTapLogin />
         </>
     );
 };
@@ -93,4 +95,11 @@ const CheckAndAddAds = ({ isProUser }: { isProUser: boolean }) => {
         }
     }, []);
     return null;
+};
+
+const GoogleOneTapLogin = () => {
+    ///// one tap login with google
+    const userInfo = useSelector((state: AppState) => state.userReducer.userInfo);
+    const loading = useSelector((state: AppState) => state.userReducer.loading);
+    return typeof window !== "undefined" && !loading && !userInfo?.email && <GoogleAuth isRenderButton={false}></GoogleAuth>;
 };
