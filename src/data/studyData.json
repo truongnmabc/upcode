@@ -1976,24 +1976,22 @@
     {
         "appId": 6504182246801408,
         "topics": [
-            { "title": "Mathematics", "url": "mathematical-reasoning-practice-test", "tag": "mathematical-reasoning" },
             {
-                "title": "Language Arts - Reading",
+                "title": "Mathematical Reasoning",
+                "url": "mathematical-reasoning-practice-test",
+                "tag": "mathematical-reasoning"
+            },
+            {
+                "title": "Reasoning Through Language Arts",
                 "url": "reasoning-through-language-arts-practice-test",
                 "tag": "reasoning-through-language-arts"
             },
             { "title": "Science", "url": "science-practice-test", "tag": "science" },
-            { "title": "Social Studies", "url": "social-studies-practice-test", "tag": "social-studies" },
-            {
-                "title": "Language Arts - Writing",
-                "url": "language-arts-writing-practice-test",
-                "tag": "language-arts--writing"
-            }
+            { "title": "Social Studies", "url": "social-studies-practice-test", "tag": "social-studies" }
         ],
         "fullTests": [
-            "full-length-language-arts-reading-practice-test",
-            "full-length-language-arts-writing-practice-test",
             "full-length-mathematical-reasoning-practice-test",
+            "full-length-reasoning-through-language-arts-practice-test",
             "full-length-science-practice-test",
             "full-length-social-studies-practice-test"
         ]
@@ -4563,9 +4561,9 @@
         "fullTests": ["full-length-practice-test"]
     },
     {
-        "appId": 5391119996157952,
+        "appId": 6535568742678528,
         "topics": [
-            { "title": "Network Fundamentals", "url": "abc-practice-test", "tag": "abc" },
+            { "title": "Network Fundamentals", "url": "network-fundamentals-practice-test", "tag": "network-fundamentals" },
             { "title": "Network Access", "url": "network-access-practice-test", "tag": "network-access" },
             { "title": "IP Connectivity", "url": "ip-connectivity-practice-test", "tag": "ip-connectivity" },
             { "title": "IP Services", "url": "ip-services-practice-test", "tag": "ip-services" },
@@ -4574,7 +4572,9 @@
                 "title": "Automation and Programmability",
                 "url": "automation-and-programmability-practice-test",
                 "tag": "automation-and-programmability"
-            }
+            },
+            { "title": "Practice Exam 1", "url": "practice-exam-1", "tag": "practice-exam-1" },
+            { "title": "Practice Exam 2", "url": "practice-exam-2", "tag": "practice-exam-2" }
         ],
         "fullTests": ["full-length-practice-test"]
     },
