@@ -98,18 +98,18 @@ const listApp = [
         name: "CNA",
         url: "https://cna-prep.com",
     },
-    {
-        imageName: "medtutors-screenshot.png",
-        imageBackground: "medtutors-background.png",
-        name: "Medtutors",
-        url: "https://medtutor.org",
-    },
-    {
-        imageName: "testshub-screenshot.png",
-        imageBackground: "testshub-background.png",
-        name: "Testshub",
-        url: "https://tests-hub.com",
-    },
+    // {
+    //     imageName: "medtutors-screenshot.png",
+    //     imageBackground: "medtutors-background.png",
+    //     name: "Medtutors",
+    //     url: "https://medtutor.org",
+    // },
+    // {
+    //     imageName: "testshub-screenshot.png",
+    //     imageBackground: "testshub-background.png",
+    //     name: "Testshub",
+    //     url: "https://tests-hub.com",
+    // },
     {
         imageName: "worksheet-screenshot.png",
         imageBackground: "worksheetzone-background.png",
@@ -294,11 +294,11 @@ const WhoWeAre = () => {
                     <h2>Who we are</h2>
                     <p>
                         Hi there, we&apos;re ABC E-learning. We help test-takers <span>simplify their learning process</span>,
-                        easily pass their coming tests, and get a brighter future.
+                        easily pass their upcoming tests, and get a brighter future.
                     </p>
                     <p>
-                        We are used to be candidates who wasted time and efforts with boring books and crowded classrooms. Based
-                        on our own needs, we create a new learning system that bring convenience and higher effectiveness.
+                        We used to be candidates who wasted time and efforts with boring books and crowded classrooms. Based on
+                        our own needs, we have created a new learning system that brings convenience and higher effectiveness.
                     </p>
                 </Grid>
             </Grid>
