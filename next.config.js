@@ -156,14 +156,14 @@ const getLinkToStore = () => {
         if (!appInfo.appNameId.includes("https:")) {
             if (appInfo.linkAndroid) {
                 arr.push({
-                    source: "/" + (appInfo?.appNameId ? appInfo?.appNameId + "/" : "") + `app-android`, //ANDROID_STORE_PATH
+                    source: "/" + `app-android`, //ANDROID_STORE_PATH
                     destination: appInfo.linkAndroid,
                     permanent: false,
                 });
             }
             if (appInfo.linkIos) {
                 arr.push({
-                    source: "/" + (appInfo?.appNameId ? appInfo?.appNameId + "/" : "") + `app-ios`, //IOS_STORE_PATH
+                    source: "/" + `app-ios`, //IOS_STORE_PATH
                     destination: appInfo.linkIos,
                     permanent: false,
                 });
