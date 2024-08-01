@@ -1,0 +1,55 @@
+.search-question {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-top: 56px;
+
+    .search-svg {
+        width: fit-content;
+        border: 1px solid #212121;
+        border-right: none;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        border-top-left-radius: 28px;
+        border-bottom-left-radius: 28px;
+        display: flex;
+
+        svg {
+            padding-left: 24px;
+            margin: auto 0;
+        }
+    }
+
+    .MuiFormControl-root {
+        width: 100%;
+        * {
+            border-width: 1px !important;
+            border-color: var(--border-color) !important;
+            border-left: none;
+            // color: var(--border-color);
+        }
+
+        .MuiInputBase-root {
+            border-bottom-right-radius: 28px;
+            border-top-right-radius: 28px;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-width: 1px;
+        }
+
+        .PrivateNotchedOutline-root-1 {
+            border-left: none;
+            border-color: var(--border-color);
+        }
+    }
+
+    .Mui-focused {
+        color: #212121 !important;
+    }
+
+    .Mui-focused,
+    .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+        border-color: var(--border-color) !important;
+        border-width: 1px;
+    }
+}
