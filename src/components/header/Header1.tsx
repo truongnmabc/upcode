@@ -133,7 +133,7 @@ const HeaderMenu = ({ isDesktop, listAppInfos }: { isDesktop: boolean; listAppIn
                     Home
                 </a>
             </Link>
-            <Link href="/about" prefetch={false}>
+            <Link href="/about-us" prefetch={false}>
                 <a
                     className="header-1-menu -option-about"
                     onClick={(e) => {
