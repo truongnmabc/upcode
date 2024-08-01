@@ -1,0 +1,32 @@
+.faq-container {
+  padding-top: 70px;
+
+  @media screen and (max-width: 768px) {
+    padding-top: 48px;
+  }
+
+  .faq-title {
+    h1 {
+      font-weight: 600;
+      font-size: 48px;
+      text-align: center;
+      text-transform: capitalize;
+      color: var(--foreground);
+      margin: 0;
+      @media screen and (max-width: 768px) {
+        font-size: 36px;
+      }
+    }
+
+    p {
+      font-weight: 400;
+      font-size: 24px;
+      text-align: center;
+      margin: 0;
+      color: var(--foreground-052);
+      @media screen and (max-width: 768px) {
+        font-size: 16px;
+      }
+    }
+  }
+}
