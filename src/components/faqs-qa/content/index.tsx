@@ -146,7 +146,7 @@ const FaqsAndQaContent = ({
                         </div>
                         <div className="content-container">
                             <div className="right-content">
-                                <ContentTab loading={true} children={<></>} />
+                                <ContentTab loading={true} />
                                 {/* {tab == TYPE_TAB.Faq && (
                                     <ContentTab
                                         loading={loading}
@@ -182,8 +182,8 @@ const FaqsAndQaContent = ({
         </>
     );
 };
-const ContentTab = ({ loading, children }: { loading: boolean; children: any }) => {
-    return <>{loading ? <V4CircleProgress /> : children}</>;
+const ContentTab = ({ loading }: { loading: boolean }) => {
+    return <V4CircleProgress />;
 };
 // const ButtonPostQuestion = ({ setPostQuestion }: { setPostQuestion: Function }) => {
 //     // const [showLogin, setShowLogin] = useState(false);
