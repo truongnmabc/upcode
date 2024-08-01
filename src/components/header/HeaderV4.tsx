@@ -176,7 +176,13 @@ const HeaderV4 = ({
                                                                         to: _link,
                                                                     },
                                                                 });
-                                                                if (!isCurrentState) window.location.href = _link;
+                                                                if (!isCurrentState) {
+                                                                    localStorage.setItem(
+                                                                        "select-state-" + appInfo.appNameId,
+                                                                        state.tag
+                                                                    );
+                                                                    window.location.href = _link;
+                                                                }
                                                             }}
                                                         >
                                                             {state.name}{" "}
