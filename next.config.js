@@ -139,7 +139,14 @@ module.exports = () => {
         },
         async redirects() {
             let config_2 = getLinkToStore();
-            return config_2;
+            return [
+                ...config_2,
+                {
+                    source: "/about",
+                    destination: "/about-us",
+                    permanent: true,
+                },
+            ];
         },
     });
 };
