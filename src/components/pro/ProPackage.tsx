@@ -106,7 +106,7 @@ const PriceItem = ({ price, active = false, handleActive, isMobile }) => {
                         <div className="trial-day">
                             {trialDay && (
                                 <>
-                                    {trialDay}-days <b>FREE</b> trial
+                                    {trialDay}-day <b>FREE</b> trial
                                 </>
                             )}
                         </div>
@@ -131,7 +131,7 @@ const PriceItem = ({ price, active = false, handleActive, isMobile }) => {
                         <div className="trial-day">
                             {trialDay && (
                                 <>
-                                    {trialDay}-days <b>FREE</b> trial
+                                    {trialDay}-day <b>FREE</b> trial
                                 </>
                             )}
                         </div>

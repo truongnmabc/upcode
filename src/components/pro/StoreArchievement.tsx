@@ -79,21 +79,13 @@ const StoreArchievement = ({ appInfo, reverse = false }: { appInfo: IAppInfo; re
                 }}
             >
                 <div className="img-wrapper">
-                    <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href={"/" + (appInfo?.appNameId ? appInfo?.appNameId + "/" : "") + IOS_STORE_PATH}
-                    >
+                    <a target="_blank" rel="noreferrer" href={"/" + IOS_STORE_PATH}>
                         <img src={icon3} alt="" />
                     </a>
                 </div>
 
                 <div className="img-wrapper">
-                    <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href={"/" + (appInfo?.appNameId ? appInfo?.appNameId + "/" : "") + IOS_STORE_PATH}
-                    >
+                    <a target="_blank" rel="noreferrer" href={"/" + IOS_STORE_PATH}>
                         <img src={rate3} alt="" />
                     </a>
                 </div>
