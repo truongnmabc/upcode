@@ -4,9 +4,11 @@ const withImages = require("next-images");
 const appInfos = require("./src/data/appInfos.json");
 const states = require("./src/data/statesName.json");
 const studyData = require("./src/data/studyData.json");
+const cdlJSON = require("./src/data/cdlLinkLandingPage.json");
 const is_parent_app =
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.includes("passemall") ||
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.includes("easy-prep");
+const isWebCDL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.includes("cdl-prep");
 module.exports = () => {
     const plugins = [withImages];
     return plugins.reduce((acc, next) => next(acc), {
@@ -44,7 +46,6 @@ module.exports = () => {
             ignoreBuildErrors: true,
         },
         distDir: process.env.BUILD_DIR || ".next",
-
         async rewrites() {
             // định tuyến trong project (điều hướng url nào đi vào file giao diện nào)
             let paths = [];
@@ -139,6 +140,26 @@ module.exports = () => {
         },
         async redirects() {
             let config_2 = getLinkToStore();
+            let cdlUrlLandingPage = [];
+            if (isWebCDL) {
+                states.cdl.map((s) => {
+                    let state = "/" + s.tag;
+                    cdlJSON.forEach((topic) => {
+                        Object.keys(topic).forEach((topicName) => {
+                            const keywords = topic[topicName];
+                            keywords.forEach((keyword) => {
+                                const keyReplace = keyword.replaceAll(/ /g, "-");
+                                const url = state + "-" + keyReplace;
+                                cdlUrlLandingPage.push({
+                                    source: url,
+                                    destination: state,
+                                    permanent: true,
+                                });
+                            });
+                        });
+                    });
+                });
+            }
             return [
                 ...config_2,
                 {
@@ -146,6 +167,7 @@ module.exports = () => {
                     destination: "/about-us",
                     permanent: true,
                 },
+                ...cdlUrlLandingPage,
             ];
         },
     });

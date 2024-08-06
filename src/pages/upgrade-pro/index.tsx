@@ -178,12 +178,11 @@ const GetProPage = ({ appInfo }: { appInfo: IAppInfo }) => {
                     </div>
                     <MyContainer className="pro-content">
                         <p className="pro-description">
-                            Subscriptions auto-renew at the cost of the chosen package, unless cancelled 24-hours in advance
-                            prior to the end of the current period. The subscription fee is charged to your iTunes account at
-                            confirmation of purchase. You may manage your subscription and turn off auto-renewal by going to
-                            your Account Settings after purchase. Per Apple policy, no cancellation of the current subscription
-                            is allowed during the active subscription period. Once purchased, refunds will not be provided for
-                            any unused portion of the term.
+                            Subscriptions auto-renew at the cost of the chosen package, unless cancelled 24 hours in advance of
+                            the end of the current period. The subscription fee is charged to your PayPal account upon purchase.
+                            You may manage your subscription and turn off auto-renewal by accessing your Account Settings after
+                            purchase. Per our policy, you cannot cancel your current subscription during the active subscription
+                            period. No refunds will be provided for any unused portion of the subscription term.
                         </p>
                         <StoreReviews appId={appInfo.appId} />
                     </MyContainer>
