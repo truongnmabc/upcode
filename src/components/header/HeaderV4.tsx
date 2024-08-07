@@ -176,7 +176,13 @@ const HeaderV4 = ({
                                                                         to: _link,
                                                                     },
                                                                 });
-                                                                if (!isCurrentState) window.location.href = _link;
+                                                                if (!isCurrentState) {
+                                                                    localStorage.setItem(
+                                                                        "select-state-" + appInfo.appNameId,
+                                                                        state.tag
+                                                                    );
+                                                                    window.location.href = _link;
+                                                                }
                                                             }}
                                                         >
                                                             {state.name}{" "}
@@ -326,7 +332,7 @@ const HeaderV4 = ({
                                     }
                                 }}
                             >
-                                {!userInfo ? "Login" : "Logout"}
+                                {!userInfo ? "Log in" : "Log out"}
                             </div>
                             <div className="container-drawer-right-menu-header-v4-2">
                                 <div>Available on Android and Apple devices</div>
