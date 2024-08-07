@@ -23,7 +23,7 @@ const DownloadAppV4 = ({
             {!!appInfo.linkIos && (
                 <a
                     className="v4-button-animtaion"
-                    href={"/" + (appInfo?.appNameId ? appInfo?.appNameId + "/" : "") + IOS_STORE_PATH}
+                    href={"/" + IOS_STORE_PATH}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => {
@@ -49,7 +49,7 @@ const DownloadAppV4 = ({
             {!!appInfo.linkAndroid && (
                 <a
                     className="v4-button-animtaion"
-                    href={"/" + (appInfo?.appNameId ? appInfo?.appNameId + "/" : "") + ANDROID_STORE_PATH}
+                    href={"/" + ANDROID_STORE_PATH}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => {

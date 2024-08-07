@@ -22,13 +22,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (isMobile && isAndroid) {
         ctx.res
             .writeHead(302, {
-                Location: "/" + (appInfo?.appNameId ? appInfo?.appNameId + "/" : "") + ANDROID_STORE_PATH,
+                Location: "/" + ANDROID_STORE_PATH,
             })
             .end();
     } else {
         ctx.res
             .writeHead(302, {
-                Location: "/" + (appInfo?.appNameId ? appInfo?.appNameId + "/" : "") + IOS_STORE_PATH,
+                Location: "/" + IOS_STORE_PATH,
             })
             .end();
     }
