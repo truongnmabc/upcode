@@ -155,6 +155,11 @@ module.exports = () => {
                                     destination: state,
                                     permanent: true,
                                 });
+                                cdlUrlLandingPage.push({
+                                    source: state + url,
+                                    destination: state,
+                                    permanent: true,
+                                });
                             });
                         });
                     });
