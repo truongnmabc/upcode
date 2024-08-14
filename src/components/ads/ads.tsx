@@ -2,8 +2,6 @@ import Config from "@/config";
 import { getSession, isWebEASYPREP } from "@/config/config_web";
 
 const HorizontalBannerAds = () => {
-    console.log("HorizontalBannerAds");
-
     return (
         <>
             <ins
