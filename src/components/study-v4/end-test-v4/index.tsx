@@ -49,11 +49,13 @@ const EndTestV4 = ({
     appInfo,
     currentTopic,
     _state,
+    storage,
 }: {
     gameState: GameState;
     appInfo: IAppInfo;
     currentTopic?: ITopic;
     _state: string;
+    storage: string;
 }) => {
     const isDesktop = useMediaQuery("(min-width:769px)");
     const { isPass, passPercent, currentScore, correctNum } = getGameProgress(gameState);
@@ -118,7 +120,7 @@ const EndTestV4 = ({
 
                 {isDesktop && !gameState.levelTag.includes("level") && (
                     <div id="study_review">
-                        <ReviewAnswer gameState={gameState} appInfo={appInfo} />
+                        <ReviewAnswer gameState={gameState} appInfo={appInfo} storage={storage} />
                     </div>
                 )}
             </div>
@@ -133,7 +135,7 @@ const EndTestV4 = ({
                     />
                     {!gameState.levelTag.includes("level") && (
                         <div id="study_review">
-                            <ReviewAnswer gameState={gameState} appInfo={appInfo} />
+                            <ReviewAnswer gameState={gameState} appInfo={appInfo} storage={storage} />
                         </div>
                     )}
                 </>

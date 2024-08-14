@@ -9,7 +9,7 @@ import { IAppInfo } from "../../models/AppInfo";
 // import { ITestInfo } from "@/models/TestInfo";
 const HeaderV4 = dynamic(() => import("../../components/header/HeaderV4"));
 
-const StudyLayout = ({ appInfo, contentData }: { appInfo: IAppInfo; contentData: IWebData }) => {
+const StudyLayout = ({ appInfo, contentData, storage }: { appInfo: IAppInfo; contentData: IWebData; storage: string }) => {
     // chú ý là phần học này đã được chuyển qua build static
     const gameState: GameState = useSelector((state: AppState) => state.gameReducer.game);
     // const _listTopics: ITopic[] = useSelector((state: AppState) => state.topicReducer.list);
@@ -28,6 +28,7 @@ const StudyLayout = ({ appInfo, contentData }: { appInfo: IAppInfo; contentData:
                 gameState={gameState}
                 contentData={contentData}
                 tests={contentData.tests}
+                storage={storage}
             />
         </div>
     );

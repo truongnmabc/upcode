@@ -24,10 +24,12 @@ const MainStudyView = ({
     gameState,
     appInfo,
     haveCountdown = false,
+    storage,
 }: {
     gameState: GameState;
     appInfo: IAppInfo;
     haveCountdown?: boolean;
+    storage: string;
 }) => {
     let currentQuestion = gameState.currentQuestion;
     // const isDesktop = useMediaQuery("(min-width:769px)");
@@ -132,8 +134,8 @@ const MainStudyView = ({
     //     if (_showKeyboard === "true") setShowKeyboard(false);
     // }, []);
     let explanationContent = thisQuestionIsDone && gameState.gameType == Config.TOPIC_GAME ? currentQuestion.explanation : "";
-    explanationContent = decryptExplanation(explanationContent, 1);
-    let contentQuestion = decryptExplanation(currentQuestion.question, 2);
+    explanationContent = decryptExplanation(explanationContent, storage);
+    let contentQuestion = decryptExplanation(currentQuestion.question, storage);
     return (
         <div className="v4-main-study-view-0">
             <div className="v4-main-study-view-1 v4-border-radius">

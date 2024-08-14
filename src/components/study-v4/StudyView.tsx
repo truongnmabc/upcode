@@ -40,12 +40,14 @@ const StudyView = ({
     gameState,
     contentData,
     tests,
+    storage,
 }: {
     appInfo: IAppInfo;
     listTopics: ITopic[];
     gameState: GameState;
     contentData: IWebData;
     tests: ITestInfo[];
+    storage: string;
 }) => {
     let isFinish = gameState.isFinishGame;
     const gameType = contentData.gameType;
@@ -211,10 +213,16 @@ const StudyView = ({
                                 appInfo={appInfo}
                                 currentTopic={listTopics.find((t) => gameState.id.includes(t.id))}
                                 _state={contentData._state}
+                                storage={storage}
                             />
                         ) : isFinish == 0 ? (
                             <>
-                                <MainStudyView gameState={gameState} appInfo={appInfo} haveCountdown={haveCountdown} />
+                                <MainStudyView
+                                    gameState={gameState}
+                                    appInfo={appInfo}
+                                    haveCountdown={haveCountdown}
+                                    storage={storage}
+                                />
                                 <div id="v4-main-study-other-content" ref={ref}>
                                     <StudyBannerDownloadApp
                                         appInfo={appInfo}
