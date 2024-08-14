@@ -110,15 +110,15 @@ export function getSizeImage(str: string) {
 }
 
 const CryptoJS = require("crypto-js");
-const KEY = process.env.NEXT_PUBLIC_SECRET_KEY;
-const IV = KEY.slice(0, 12);
+// const KEY = process.env.NEXT_PUBLIC_SECRET_KEY;
+// const IV = KEY.slice(0, 12);
 
 export const decryptExplanation = (encryptText: string, k?: number) => {
     if (!encryptText) return "";
     try {
         let check = atob(encryptText);
-        var decryptedExplanation = CryptoJS.AES.decrypt(encryptText, KEY, {
-            iv: IV,
+        var decryptedExplanation = CryptoJS.AES.decrypt(encryptText, process.env.NEXT_PUBLIC_SECRET_KEY, {
+            iv: process.env.NEXT_PUBLIC_SECRET_KEY.slice(0, 12),
             mode: CryptoJS.mode.CBC,
             padding: CryptoJS.pad.Pkcs7,
         });
