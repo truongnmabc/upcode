@@ -15,16 +15,18 @@ const QuestionPanelV4 = ({
     allowShowAnswer = true,
     place,
     index = -1,
+    storage,
 }: {
     question: Question;
     appInfoBucket: string;
     allowShowAnswer?: boolean;
     place: "question" | "study" | "review";
     index?: number;
+    storage: string;
 }) => {
     const [expandParagraph, setExpandParagraph] = useState(false);
-    let explanationContent = decryptExplanation(question.explanation);
-    let contentQuestion = decryptExplanation(question.question);
+    let explanationContent = decryptExplanation(question.explanation, storage);
+    let contentQuestion = decryptExplanation(question.question, storage);
     // if (!isProUser) explanationContent = hashText(explanationContent);
     return (
         <div className="v4-question-panel">

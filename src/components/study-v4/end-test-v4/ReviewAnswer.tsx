@@ -5,7 +5,7 @@ import { GameState } from "@/redux/features/game";
 import { useEffect } from "react";
 import { renderMath } from "@/utils/v4_question";
 
-const ReviewAnswer = ({ gameState, appInfo }: { gameState: GameState; appInfo: IAppInfo }) => {
+const ReviewAnswer = ({ gameState, appInfo, storage }: { gameState: GameState; appInfo: IAppInfo; storage: string }) => {
     const questions = gameState.questions;
     useEffect(() => {
         if (appInfo.usingMathJax) {
@@ -31,6 +31,7 @@ const ReviewAnswer = ({ gameState, appInfo }: { gameState: GameState; appInfo: I
                                 question={question}
                                 place="review"
                                 index={index + 1}
+                                storage={storage}
                             />
                         </div>
                     );

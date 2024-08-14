@@ -32,6 +32,7 @@ const StudyPage = ({
     topics,
     tests,
     _state,
+    _storage,
 }: {
     appInfo: IAppInfo;
     data: IWebData;
@@ -42,6 +43,7 @@ const StudyPage = ({
     topics: ITopic[];
     tests: ITestInfo[];
     _state: string;
+    _storage: string;
 }) => {
     const router = useRouter();
     let _slug = router.asPath.slice(1, router.asPath.length); // mô tả tại IWebData, trong asPath có phần #level, slice để bỏ đi dấu / ở đầu vì trước dùng slug của getServerSideProps không có
@@ -70,7 +72,7 @@ const StudyPage = ({
                 keywordsSeo={keywordSEO}
             ></SEO>
             <StoreProvider appInfo={appInfo} webData={webData} />
-            <StudyLayout appInfo={appInfo} contentData={webData} />
+            <StudyLayout appInfo={appInfo} contentData={webData} storage={_storage} />
             <ScrollToTopArrow />
         </>
     );
@@ -175,6 +177,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                     topics: listTopics,
                     tests,
                     _state,
+                    _storage: process.env.NEXT_PUBLIC_SECRET_KEY, // đặt tên khác đi để đỡ bị dò thôi
                 },
             });
         } else throw { p: 3 };
