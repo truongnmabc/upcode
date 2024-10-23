@@ -45,8 +45,7 @@ const TestBanner = ({ appInfo, test, index }: { appInfo: IAppInfo; test: ITestIn
                                 ? `You'll have ${timeTest} minutes 
                         ${timeTest > 60 ? `(${Math.floor(timeTest / 60)} hours and ${timeTest % 60} minutes)` : ""} to finish ${
                                       test?.totalQuestion
-                                  } questions 
-                        from all ${appInfo.appName} sections.`
+                                  } questions.`
                                 : "There's no time limit on the tests, so you can focus on doing your best to demonstrate your skills."
                         }`}
                     </span>

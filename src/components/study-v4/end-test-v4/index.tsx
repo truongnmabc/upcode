@@ -185,7 +185,10 @@ const EndTestButton = ({
                         dispatch(onRestartGame());
                     }}
                 >
-                    {levelTag.includes("level") ? "Restart Level" : "Restart Test"}
+                    Restart
+                    {
+                        //levelTag.includes("level") ? "Restart Level" : "Restart Test"
+                    }
                 </button>
                 {nextLevelHref && (
                     <button

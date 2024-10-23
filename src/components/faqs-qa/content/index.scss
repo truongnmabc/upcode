@@ -1,0 +1,138 @@
+.faqs-and-qa-content {
+    padding-top: 80px;
+
+    @media screen and (max-width: 768px) {
+        padding-top: 88px;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 80px;
+
+        @media screen and (max-width: 768px) {
+            justify-content: center;
+        }
+
+        .tab {
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 36px;
+            line-height: 54px;
+            text-align: center;
+            color: var(--background-052);
+
+            p {
+                margin: 0;
+            }
+        }
+
+        .tab.selected {
+            color: #212121;
+
+            .tab-indicator {
+                width: 90px;
+                height: 3px;
+                background: #212121;
+                box-shadow: 0px -1px 4px rgba(0, 0, 0, 0.25);
+                border-radius: 32px 22px 0px 0px;
+                margin: 4px auto 0;
+                // @media screen and(max-width: 768px) {
+                //   height: 6px;
+                //   width: 6px;
+                //   border-radius: 50%;
+                // }
+            }
+        }
+    }
+    .post-question-component {
+        margin-left: auto;
+
+        @media screen and (max-width: 768px) {
+            margin-left: 0;
+            width: 100%;
+            margin-top: -64px;
+            margin-bottom: 100px;
+
+            .MuiButton-root {
+                width: 100%;
+            }
+        }
+        .button-post-question {
+            font-weight: 600;
+            font-size: 18px;
+            border-radius: 90px;
+            border: 1px solid rgba(33, 33, 33, 0.32);
+            transition: all 0.3s ease;
+            &:hover {
+                transform: translateY(-3px);
+            }
+            @media screen and (min-width: 769px) {
+                background-color: var(--main-color);
+                padding: 8px 56px;
+                color: #fff;
+                font-weight: 500;
+                font-size: 16px;
+            }
+
+            .MuiButton-label {
+                text-transform: capitalize;
+            }
+        }
+    }
+    .content {
+        background: #f7f7f7;
+        .content-container {
+            gap: 18px;
+            padding-top: 32px;
+
+            @media screen and (min-width: 769px) {
+                display: flex;
+                padding: 64px 0;
+                flex-wrap: wrap;
+            }
+
+            .right-content {
+                flex: 3;
+                width: 100%;
+
+                @media screen and (max-width: 768px) {
+                    padding-bottom: 40px;
+                }
+            }
+
+            .hot-question {
+                flex: 1;
+            }
+        }
+        .pagination {
+            padding: 24px 0;
+            margin-left: auto;
+            width: fit-content;
+            .css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+                background-color: unset !important;
+                color: var(--main-color);
+                font-size: 18px;
+
+                &:after {
+                    position: absolute;
+                    content: "";
+                    height: 2px;
+                    bottom: 4px;
+                    margin: 0 auto;
+                    left: 0;
+                    right: 0;
+                    width: 5px;
+                    background: var(--main-color);
+                    -o-transition: 0.5s;
+                    -ms-transition: 0.5s;
+                    -moz-transition: 0.5s;
+                    -webkit-transition: 0.5s;
+                    transition: 0.5s;
+                }
+            }
+            .css-yuzg60-MuiButtonBase-root-MuiPaginationItem-root:not(.Mui-selected) {
+                font-size: 12px;
+            }
+        }
+    }
+}
