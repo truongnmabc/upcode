@@ -39,6 +39,7 @@ const SeoHeader = ({
                 <link rel="preconnect" href="https://www.googletagmanager.com" />
                 <link rel="profile" href="https://gmpg.org/xfn/11" />
                 <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
+		<meta name="msvalidate.01" content="1FE43D03A47AC5E8E264C3B61F1717D3" />
                 {children}
             </Head>
         </>

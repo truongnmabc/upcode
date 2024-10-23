@@ -7,6 +7,7 @@
 .history
 package-lock.json
 yarn.lock
+build.zip
 
 # testing
 /coverage
