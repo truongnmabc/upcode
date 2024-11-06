@@ -124,14 +124,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             let contentSeo = "";
             try {
                 const contentSEO = await getHomeSeoContentStateApi(seoSlug);
-
                 if (contentSEO) {
                     contentSEO.content = replaceYear(contentSEO.content);
                 }
                 contentSeo = contentSEO.content;
                 titleSEO = contentSEO?.titleSeo[0];
                 if (!titleSEO) titleSEO = appInfo.title;
-                descriptionSEO = contentSEO?.descSeo[0];
+                if (contentSEO?.descSeo) {
+                    descriptionSEO = contentSEO?.descSeo[0];
+                }
                 if (!descriptionSEO) descriptionSEO = appInfo.descriptionSEO;
             } catch (err) {
                 console.log("**Seo err:", err.message);
