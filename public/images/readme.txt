@@ -1,1 +1,0 @@
-các folder trong này được đặt theo tên bucket trên cms, nên là nếu có thay đổi bucket thì nhớ phải thay đổi lại tên folder

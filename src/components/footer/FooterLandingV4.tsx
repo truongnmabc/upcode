@@ -9,7 +9,10 @@ import MyContainer from "../v4-material/MyContainer";
 import FacebookIcon from "../icon/FacebookIcon";
 import TwitterIcon from "../icon/TwitterIcon";
 import YoutubeIcon from "../icon/YoutubeIcon";
-const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
+import { useSelector } from "@/redux/store/store";
+import { appInfoState } from "@/redux/features/appInfo";
+import { getContactApp } from "@/utils/getContact";
+const FooterLandingV4 = () => {
     const getSrcLogo = () => {
         let logo = `/images/${APP_SHORT_NAME}/logo-light.png`;
         return logo;
@@ -19,6 +22,7 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
     const error_email = useRef<HTMLParagraphElement>(null);
     const error_message = useRef<HTMLParagraphElement>(null);
     const btn = useRef<HTMLButtonElement>(null);
+    const { appInfo } = useSelector(appInfoState);
     const handleSubmit = async () => {
         let result;
         try {
@@ -141,6 +145,9 @@ const PlatformContactsLogo = () => {
     let fb = getContactLink("facebook");
     let tw = getContactLink("twitter");
     let yt = getContactLink("youtube");
+
+    const { email, facebook, twitter, youtube } = getContactApp();
+    console.log("🚀 ~ PlatformContactsLogo ~ youtube:", youtube);
     // viet kieu nay de check core web vital
     return (
         <div className="v4-platform-logo-contact-0">
@@ -148,7 +155,7 @@ const PlatformContactsLogo = () => {
                 <div>
                     <a href={fb}>
                         {/* <img alt="facebook-icon" src="/images/v4-facebook.webp" width={24} height={24} /> */}
-                        <FacebookIcon color="#fff" />
+                        <FacebookIcon color="#ffffffb8" />
                     </a>
                 </div>
             )}
@@ -156,7 +163,7 @@ const PlatformContactsLogo = () => {
                 <div>
                     <a href={tw}>
                         {/* <img alt="twitter-icon" src="/images/v4-twitter.webp" width={24} height={24} /> */}
-                        <TwitterIcon color="#fff" />
+                        <TwitterIcon color="#ffffffb8" />
                     </a>
                 </div>
             )}
@@ -164,7 +171,7 @@ const PlatformContactsLogo = () => {
                 <div>
                     <a href={yt}>
                         {/* <img alt="youtube-icon" src="/images/v4-youtube.webp" width={24} height={24} /> */}
-                        <YoutubeIcon color="#fff" />
+                        <YoutubeIcon color="#ffffffb8" />
                     </a>
                 </div>
             )}
@@ -172,7 +179,4 @@ const PlatformContactsLogo = () => {
     );
 };
 
-export default memo(FooterLandingV4, (prev, next) => {
-    if (JSON.stringify(prev.appInfo).localeCompare(JSON.stringify(next.appInfo)) == 0) return true;
-    return false;
-});
+export default memo(FooterLandingV4);
