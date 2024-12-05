@@ -3,10 +3,12 @@
 # dependencies
 /node_modules
 /.pnp
-.pnp.js
-.history
-package-lock.json
-yarn.lock
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
 # testing
 /coverage
@@ -14,7 +16,7 @@ yarn.lock
 # next.js
 /.next/
 /out/
-/README.md
+
 # production
 /build
 
@@ -27,27 +29,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# env files (can opt-in for committing if needed)
+.env*
 
 # vercel
 .vercel
 
-.idea/
-
-public/info/images/logo192.png
-public/info/images/logo512.png
-public/info/images/logo60.png
-src/config_app.js
-src/data/appInfos.json
-src/data/footerMenus.json
-src/data/stateData.json
-src/data/studyData copy.json
-src/styles/config.css
-.env
-ssh_keys/id_rsa
-deploy_.sh
-build-easyprep.zip
+# typescript
+*.tsbuildinfo
+next-env.d.ts

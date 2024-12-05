@@ -1,37 +1,111 @@
-import AppState from "@/redux/appState";
-import { GameState } from "@/redux/features/game";
-import IWebData from "@/types/webData";
-import dynamic from "next/dynamic";
-import { useSelector } from "react-redux";
-import StudyView from "../../components/study-v4/StudyView";
-import { IAppInfo } from "../../models/AppInfo";
-// import { ITopic } from "../../models/Topic";
-// import { ITestInfo } from "@/models/TestInfo";
-const HeaderV4 = dynamic(() => import("../../components/header/HeaderV4"));
+"use client";
 
-const StudyLayout = ({ appInfo, contentData, storage }: { appInfo: IAppInfo; contentData: IWebData; storage: string }) => {
-    // chú ý là phần học này đã được chuyển qua build static
-    const gameState: GameState = useSelector((state: AppState) => state.gameReducer.game);
-    // const _listTopics: ITopic[] = useSelector((state: AppState) => state.topicReducer.list);
-    // const listTopics = _listTopics.filter((t) => t && t.rootTopicId + "" === appInfo.appId + "");
-    // const tests: ITestInfo[] = useSelector((state: AppState) =>
-    //     state.testReducer.list.filter((t) => t.appId === appInfo.appId)
-    // );
-    return (
-        <div className="use-background">
-            <div className="_769">
-                <HeaderV4 appInfo={appInfo} topics={contentData.topics} tests={contentData.tests} />
-            </div>
-            <StudyView
-                appInfo={appInfo}
-                listTopics={contentData.topics}
-                gameState={gameState}
-                contentData={contentData}
-                tests={contentData.tests}
-                storage={storage}
-            />
-        </div>
-    );
+import { Grid2 } from "@mui/material";
+import { MathJaxContext } from "better-react-mathjax";
+import React, { useEffect, useLayoutEffect } from "react";
+import ContentGroup from "./contentGroup";
+import HeaderMobile from "./headerMobile";
+import QuestionGroup from "./questionGroup";
+import { useAppDispatch } from "@/lib/redux/hooks";
+import beforeUnLoadThunk from "@/lib/redux/repository/utils/reload";
+import initQuestionThunk from "@/lib/redux/repository/game/initQuestion";
+import { IQueryOpt, setOptQuery } from "@/lib/redux/features/study";
+import { db } from "@/lib/db/db.model";
+
+const FN = ({ contentSeo }: { contentSeo: string }) => {
+  const handlePageReload = () => {
+    const data = localStorage.getItem("optQuery");
+    console.log("🚀 ~ handlePageReload ~ data:", data);
+    if (data) {
+      const optQuery: IQueryOpt = JSON.parse(data);
+      if (optQuery.partTag && optQuery.subTopicTag) {
+        dispatch(
+          initQuestionThunk({
+            partTag: optQuery.partTag,
+            subTopicTag: optQuery.subTopicTag,
+          })
+        );
+        dispatch(
+          setOptQuery({
+            partTag: optQuery.partTag,
+            subTopicTag: optQuery.subTopicTag,
+          })
+        );
+      }
+      localStorage.removeItem("optQuery");
+    }
+  };
+
+  useLayoutEffect(() => {
+    handlePageReload();
+  }, []);
+
+  const dispatch = useAppDispatch();
+
+  const handleBeforeUnload = (event: BeforeUnloadEvent) =>
+    dispatch(beforeUnLoadThunk());
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleTets = async () => {
+      const data = await db.topicQuestion
+        .where("[subTopicTag+tag]")
+        .equals(["machines", "machines-extended-1"])
+        .first();
+
+      const question = data?.questions?.map(
+        (item) => item.answers.find((item) => item.correct)?.text
+      );
+      console.log("🚀 ~ handleTets ~ question:", question);
+    };
+    handleTets();
+  }, []);
+
+  return (
+    <div className="flex-1 max-w-page sm:px-4 mx-auto">
+      <Grid2 container>
+        <Grid2
+          size={{
+            sm: 0,
+            md: 0,
+            xs: 12,
+          }}
+        >
+          <HeaderMobile />
+        </Grid2>
+      </Grid2>
+      <div className="sm:py-4" id="v4-study-main-view-0">
+        <Grid2 container spacing={{ xs: 0, sm: 2 }} className="w-full h-full">
+          <Grid2
+            size={{
+              sm: 3,
+              xs: 0,
+            }}
+          >
+            <QuestionGroup />
+          </Grid2>
+          <Grid2
+            size={{
+              sm: 9,
+              xs: 12,
+            }}
+          >
+            <MathJaxContext>
+              <ContentGroup contentSeo={contentSeo} />
+            </MathJaxContext>
+          </Grid2>
+        </Grid2>
+      </div>
+    </div>
+  );
 };
 
+const StudyLayout = React.memo(FN);
 export default StudyLayout;

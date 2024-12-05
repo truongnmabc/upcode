@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Dashboard",
+    "isIndex": true
+  },
+  {
+    "name": "Product",
+    "children": [
+      {
+        "name": "Create"
+      },
+      {
+        "name": "List"
+      },
+      {
+        "name": "Detail"
+      }
+    ]
+  },
+  {
+    "name": "Admin"
+  },
+  {
+    "name": "Service",
+    "children": [
+      {
+        "name": "Create"
+      },
+      {
+        "name": "List"
+      },
+      {
+        "name": "Detail"
+      }
+    ]
+  },
+  {
+    "name": "Gift"
+  },
+  {
+    "name": "Wheel"
+  }
+]
