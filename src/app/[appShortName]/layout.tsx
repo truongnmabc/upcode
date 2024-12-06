@@ -4,15 +4,14 @@ import { API_PATH } from "@/common/constants/api.constants";
 import AppThemeProvider from "@/common/theme/themeProvider";
 import AppLayout from "@/components/appLayout";
 import InitData from "@/container/initData";
-import "@/css/globals.css";
 import type { Metadata } from "next";
 import { Poppins, Vampiro_One } from "next/font/google";
-import Head from "next/head";
-import { Fragment } from "react";
 import NotFound from "../not-found";
-type Props = {
-  params: { appShortName: string };
-};
+import TestModal from "@/tests";
+import { Fragment } from "react";
+
+import "@/css/globals.css";
+import "@/common/theme/themeProvider";
 
 const vampiro = Vampiro_One({
   weight: ["400"],
@@ -20,6 +19,7 @@ const vampiro = Vampiro_One({
   preload: true,
   display: "swap",
   variable: "--font-vampiro",
+  subsets: ["latin"],
 });
 
 const poppins = Poppins({
@@ -28,32 +28,56 @@ const poppins = Poppins({
   preload: true,
   display: "swap",
   variable: "--font-poppins",
+  subsets: ["latin"],
 });
 
-export async function fetchAppData(appShortName: string, fetchAll = false) {
-  const appInfo = await axiosInstance.get(
-    `${API_PATH.APP_INFO}/${appShortName}`
-  );
-  let appConfig;
-  if (appInfo.data.code === 404) {
-    return {
-      appInfo: null,
-      appConfig,
-    };
-  }
-  if (fetchAll && appInfo.data) {
-    const res = await axiosInstance.get(
-      `${API_PATH.APP_CONFIG}/${appInfo.data.data?.appShortName}`
-    );
-    appConfig = res.data?.data;
-  }
+type Props = {
+  params: { appShortName: string };
+};
 
-  return { appInfo: appInfo.data.data, appConfig };
+export async function fetchAppData(appShortName: string, fetchAll = false) {
+  try {
+    const { data: appInfo } = await axiosInstance.get(
+      `${API_PATH.APP_INFO}/${appShortName}`
+    );
+
+    if (!appInfo || appInfo.code === 404) {
+      return { appInfo: null, appConfig: undefined };
+    }
+
+    let appConfig;
+    if (fetchAll) {
+      const { data: configData } = await axiosInstance.get(
+        `${API_PATH.APP_CONFIG}/${appInfo.data?.appShortName}`
+      );
+      appConfig = configData?.data;
+    }
+
+    return { appInfo: appInfo.data, appConfig };
+  } catch (error) {
+    console.error("Failed to fetch app data:", error);
+    return { appInfo: null, appConfig: undefined };
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const data = await params;
-  const { appInfo } = await fetchAppData(data.appShortName);
+  const { appShortName } = await params;
+
+  if (!appShortName) {
+    return {
+      title: "Not Found",
+      description: "Application not found",
+    };
+  }
+  const { appInfo } = await fetchAppData(appShortName);
+
+  if (!appInfo) {
+    return {
+      title: "Not Found",
+      description: "Application not found",
+    };
+  }
+
   const image = `/images/logo/logo60.png`;
 
   return {
@@ -72,59 +96,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function RootLayout({
   children,
   params,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-  params: Promise<{ appShortName: string }>;
-}>) {
-  const appShortName = (await params).appShortName || process.env.APP_ID;
+  params: { appShortName: string };
+}) {
+  const { appShortName } = await params;
   const { appInfo, appConfig } = await fetchAppData(appShortName, true);
+
   if (!appInfo) {
     return <NotFound />;
   }
 
   return (
     <Fragment>
-      <Head>
-        <meta charSet="UTF-8" />
-        {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        /> */}
-
-        {/* <Script
-          rel="preconnect"
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${appConfig.GA4_ID}`}
-        /> */}
-        {/* <Script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', "${appConfig.GA4_ID}");`,
-          }}
-        />
-        <Script async defer src={`https://accounts.google.com/gsi/client`} /> */}
-
-        {/* <Script
-          type="text/javascript"
-          id="MathJax-script"
-          async
-          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.0/es5/tex-chtml.js"
-        ></Script> */}
-      </Head>
-      <main className={`${vampiro.variable} ${poppins.variable} font-sans`}>
+      <main className={`${vampiro?.variable} ${poppins?.variable} font-sans`}>
         <StoreProvider appInfo={appInfo} appConfig={appConfig}>
           <AppThemeProvider>
             <AppLayout>{children}</AppLayout>
             <InitData appInfo={appInfo} />
+            {process.env.NODE_ENV === "development" && <TestModal />}
           </AppThemeProvider>
         </StoreProvider>
-
-        {/* <GoogleAnalytics gaId={appConfig.GA4_ID} /> */}
-        {/* <GoogleTagManager gtmId={appConfig.GA4_ID} /> */}
       </main>
     </Fragment>
   );

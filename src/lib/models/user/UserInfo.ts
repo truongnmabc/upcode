@@ -10,8 +10,8 @@ export class UserInfo implements IUserInfo {
     email: string;
     avatar: string;
 
-    constructor(object: any = {}) {
-        this.id = object.id ?? undefined;
+    constructor(object: Partial<IUserInfo> = {}) {
+        this.id = object.id ?? "";
         this.name = object.name ?? "";
         this.email = object.email ?? "";
         this.avatar = !!object?.avatar ? object?.avatar : "/images/avatar.png";

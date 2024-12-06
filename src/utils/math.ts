@@ -1,3 +1,4 @@
+import { IQuestion } from "@/lib/models/question/questions";
 import { ITopic } from "@/lib/models/topics/topics";
 
 export const groupTopics = (
@@ -14,4 +15,12 @@ export const groupTopics = (
   }
 
   return arr;
+};
+
+export const calculatorAverageLevel = (questions: IQuestion[]): number => {
+  const listLevel = questions.map((ques) => (ques.level < 0 ? 50 : ques.level));
+
+  const totalLevel = listLevel.reduce((acc, curr) => acc + curr, 0);
+
+  return totalLevel / listLevel.length;
 };

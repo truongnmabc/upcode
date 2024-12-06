@@ -2,10 +2,8 @@
 import CrownIcon from "@/components/icon/iconCrown";
 import { useIsMobile } from "@/lib/hooks/useIsMobile";
 import { gameState } from "@/lib/redux/features/game";
-import { userState } from "@/lib/redux/features/user";
 import { useAppSelector } from "@/lib/redux/hooks";
 import { eventSendGA4 } from "@/lib/services/googleEvent";
-import checkPro from "@/utils/checkPro";
 import ctx from "@/utils/mergeClass";
 import { MyCrypto } from "@/utils/myCrypto";
 import { MathJax } from "better-react-mathjax";
@@ -13,11 +11,7 @@ import React, { useEffect, useState } from "react";
 
 const FN = () => {
   const isMobile = useIsMobile();
-  const { paymentInfo, inAppPurchasedInfo } = useAppSelector(userState);
-  const isProUser =
-    !!paymentInfo || inAppPurchasedInfo.length > 0
-      ? checkPro(paymentInfo, inAppPurchasedInfo)
-      : false;
+  const isProUser = false;
 
   const [text, setText] = useState<string>("");
   const { currentGame } = useAppSelector(gameState);

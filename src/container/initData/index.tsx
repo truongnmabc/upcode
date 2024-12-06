@@ -1,24 +1,45 @@
 "use client";
 import axiosInstance from "@/common/config/axios";
+import { API_PATH } from "@/common/constants/api.constants";
 import { db } from "@/lib/db/db.model";
 import { IAppInfo } from "@/lib/models/appInfo";
-import React, { useEffect } from "react";
-import Topic, { ITopic } from "@/lib/models/topics/topics";
-import { API_PATH } from "@/common/constants/api.constants";
-import Part from "@/lib/models/topics/part";
-import { IQuestion } from "@/lib/models/question/questions";
 import SubTopicProgress from "@/lib/models/progress/subTopicProgress";
-import { ITopicQuestion } from "@/lib/models/question/topicQuestion";
+import { IQuestion } from "@/lib/models/question/questions";
+import Part, { IPart } from "@/lib/models/topics/part";
+import Topic from "@/lib/models/topics/topics";
+import { Table } from "dexie";
+import { useEffect } from "react";
+
+export interface ITopic {
+  id: number;
+  parentId: number;
+  name: string;
+  icon: string;
+  tag: string;
+  type: number;
+  contentType: number;
+  orderIndex: number;
+  topics: ITopic[];
+  questions: IQuestion[];
+  subTopicTag?: string;
+}
 
 const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
-  const addIfNotExists = async (table: any, id: number, data: any) => {
+  const addIfNotExists = async <T extends { id: number }>(
+    table: Table<T>,
+    id: number,
+    data: T
+  ) => {
     const exists = await table.get(id);
     if (!exists) {
       await table.add(data);
     }
   };
 
-  const processTreeData = async (topics: ITopic[], table: any) => {
+  const processTreeData = async (
+    topics: ITopic[],
+    table: Table<Topic | IPart> | "subtopic"
+  ) => {
     for (const topic of topics) {
       if (table === db.topics) {
         const topicData = new Topic({
@@ -52,10 +73,10 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
     }
   };
 
-  const processQuestionsData = async (topics: any[]) => {
+  const processQuestionsData = async (topics: ITopic[]) => {
     for (const topic of topics) {
       const subTopicTag = topic.tag;
-      for (const part of topic.topics) {
+      for (const part of topic?.topics) {
         await db
           .transaction(
             "rw",
@@ -63,7 +84,7 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
             async () =>
               await db.topicQuestion.add({
                 ...part,
-                questions: part.questions.map((item: IQuestion) => ({
+                questions: part?.questions.map((item: IQuestion) => ({
                   ...item,
                   parentId: part.id,
                 })),
@@ -81,8 +102,8 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
 
   // *NOTE: init data
 
-  const initDataSubTopicProgress = async (topic: ITopicQuestion) => {
-    const newPart = new Part(topic.topics?.[0]);
+  const initDataSubTopicProgress = async (topic: ITopic) => {
+    const newPart = new Part(topic?.topics?.[0]);
     await db.subTopicProgress.add(
       new SubTopicProgress({
         id: topic?.id || 0,

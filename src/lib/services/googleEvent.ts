@@ -1,26 +1,25 @@
 "use client";
 
-import { sendGTMEvent, sendGAEvent } from "@next/third-parties/google";
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
 
 export const eventSendGtag = ({
-  eventName,
-  value,
+    eventName,
+    value,
 }: {
-  eventName: string;
-  value: any;
+    eventName: string;
+    value: unknown;
 }) => {
-  return;
-  sendGTMEvent({ event: eventName, value: value });
+    if (process.env.NODE_ENV !== "development")
+        sendGTMEvent({ event: eventName, value: value });
 };
 
 export const eventSendGA4 = ({
-  eventName,
-  value,
-  ...attr
+    eventName,
+    value,
 }: {
-  eventName: string;
-  value: any;
+    eventName: string;
+    value: unknown;
 }) => {
-  return;
-  sendGAEvent("event", eventName, { value: value });
+    if (process.env.NODE_ENV !== "development")
+        sendGAEvent("event", eventName, { value: value });
 };

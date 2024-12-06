@@ -3,7 +3,6 @@ import Dialog from "@mui/material/Dialog";
 import React from "react";
 import CloseIcon from "@/asset/icon/CloseIcon";
 import BannerModalLogin from "./bannerModalLogin";
-import "./index.scss";
 import VerifyLogin from "./verifyLogin";
 
 export const FN = ({

@@ -9,9 +9,10 @@ export interface ITopicQuestion {
   orderIndex?: number;
   tag?: string;
   type: number;
-  topics: any;
+  topics: unknown;
   questions?: IQuestion[];
   status: number;
+  subTopicTag?: string;
 }
 export default class TopicQuestion implements ITopicQuestion {
   id: number;
@@ -23,8 +24,9 @@ export default class TopicQuestion implements ITopicQuestion {
   questions?: IQuestion[];
   tag: string;
   type: number;
-  topics: any;
+  topics: unknown;
   status: number;
+  subTopicTag?: string;
 
   constructor(object: Partial<ITopicQuestion> = {}) {
     this.id = object.id ?? -1;

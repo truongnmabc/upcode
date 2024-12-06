@@ -106,9 +106,9 @@ const IconProgress = ({
           {part.name}
         </div>
       </div>
-      {/* {index < total - 1 && (
+      {index < total - 1 && false && (
         <div className="w-6 mt-8 h-[1px] border-dashed border-b border-[var(--text-color-primary)]"></div>
-      )} */}
+      )}
     </>
   );
 };
