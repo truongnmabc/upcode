@@ -5,44 +5,46 @@ import { useEffect, useState } from "react";
 type ThemeMode = "light" | "dark" | "system";
 
 export const useTheme = () => {
-  const { mode, setMode } = useColorScheme();
-  const [theme, setTheme] = useState<string>("");
-  useEffect(() => {
-    const root = window.document.body;
-    if (root.className && !theme) return;
+    const { setMode } = useColorScheme();
+    const [theme, setTheme] = useState<string>("");
+    useEffect(() => {
+        const root = window.document.body;
+        if (root.className && !theme) return;
 
-    if (theme === "light") {
-      root.classList.remove("dark");
-    }
-
-    if (theme === "dark") {
-      root.classList.add("dark");
-    }
-
-    if (theme === "system") {
-      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-      if (mediaQuery.matches) {
-        root.classList.add("dark");
-      }
-
-      const handleChange = (e: MediaQueryListEvent) => {
-        if (e.matches) {
-          root.classList.add("dark");
-        } else {
-          root.classList.remove("dark");
+        if (theme === "light") {
+            root.classList.remove("dark");
         }
-      };
 
-      mediaQuery.addEventListener("change", handleChange);
-      return () => mediaQuery.removeEventListener("change", handleChange);
-    }
-  }, [theme]);
+        if (theme === "dark") {
+            root.classList.add("dark");
+        }
 
-  const toggleTheme = (newTheme: ThemeMode) => {
-    setTheme(newTheme);
-    setMode(newTheme);
-    localStorage.setItem("theme", newTheme);
-  };
+        if (theme === "system") {
+            const mediaQuery = window.matchMedia(
+                "(prefers-color-scheme: dark)"
+            );
+            if (mediaQuery.matches) {
+                root.classList.add("dark");
+            }
 
-  return { theme, toggleTheme };
+            const handleChange = (e: MediaQueryListEvent) => {
+                if (e.matches) {
+                    root.classList.add("dark");
+                } else {
+                    root.classList.remove("dark");
+                }
+            };
+
+            mediaQuery.addEventListener("change", handleChange);
+            return () => mediaQuery.removeEventListener("change", handleChange);
+        }
+    }, [theme]);
+
+    const toggleTheme = (newTheme: ThemeMode) => {
+        setTheme(newTheme);
+        setMode(newTheme);
+        localStorage.setItem("theme", newTheme);
+    };
+
+    return { theme, toggleTheme };
 };

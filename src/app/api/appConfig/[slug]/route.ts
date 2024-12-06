@@ -7,7 +7,7 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
-  const slug = (await params).slug;
+  const slug = (await params)?.slug;
 
   const cachingValue = cache.get(slug);
   if (cachingValue) {
@@ -43,6 +43,7 @@ export async function GET(
       });
     }
   } catch (error) {
+    console.log("🚀 ~ error:", error);
     return Response.json({ error: "Failed to read appInfos.json" });
   }
 }

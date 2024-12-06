@@ -1,46 +1,59 @@
-import BannerApp from "@/container/home/banner/bannerApp";
-import { fetchAppData } from "./layout";
 import axiosInstance from "@/common/config/axios";
-import GridTopics from "@/container/home/gridTopic/gridTopics";
 import { RANDOM_COLORS } from "@/common/constants";
-import { ITopic } from "@/lib/models/topics/topics";
 import { API_PATH } from "@/common/constants/api.constants";
+import BannerApp from "@/container/home/banner/bannerApp";
+import GridTopics from "@/container/home/gridTopic/gridTopics";
+import { ITopic } from "@/lib/models/topics/topics";
+import { fetchAppData } from "./layout";
 
-type Params = Promise<{ appShortName: string }>;
+type Params = {
+  params: Promise<{ appShortName: string }>;
+};
 
-export default async function Home(props: { params: Params }) {
-  const params = await props.params;
-  const appId = params?.appShortName || process.env.APP_ID;
-  const { appInfo, appConfig } = await fetchAppData(appId);
+export default async function Home({ params }: Params) {
+  try {
+    const resolvedParams = await params;
+    const appShortName = resolvedParams?.appShortName || process.env.APP_ID;
 
-  const response = await axiosInstance.get(
-    `${API_PATH.GET_DATA_STUDY}/${appInfo.appShortName}`
-  );
+    const { appInfo } = await fetchAppData(appShortName);
 
-  const {
-    tests,
-    topic,
-  }: {
-    topic: ITopic[];
-    tests: any;
-  } = response?.data?.data;
+    if (!appInfo) {
+      throw new Error("App info not found");
+    }
 
-  return (
-    <section className="w-full h-full mx-auto max-w-page px-4 sm:px-6">
-      <div
-        id="home_id"
-        className="w-full h-full flex flex-col gap-4 sm:gap-8 py-6 sm:py-9"
-      >
-        <BannerApp appInfo={appInfo} />
-        <GridTopics
-          isAll={topic?.length > 0}
-          topics={topic.map((item, index) => ({
-            ...item,
-            color: RANDOM_COLORS[index],
-          }))}
-          appInfo={appInfo}
-        />
-      </div>
-    </section>
-  );
+    const response = await axiosInstance.get(
+      `${API_PATH.GET_DATA_STUDY}/${appInfo?.appShortName}`
+    );
+
+    const topics: ITopic[] = response?.data?.data?.topic || [];
+
+    return (
+      <section className="w-full h-full mx-auto max-w-page px-4 sm:px-6">
+        <div className="w-full h-full flex flex-col gap-4 sm:gap-8 py-6 sm:py-9">
+          <BannerApp appInfo={appInfo} />
+          <GridTopics
+            isAll={topics.length > 0}
+            topics={topics.map((item, index) => ({
+              ...item,
+              color: RANDOM_COLORS[index % RANDOM_COLORS.length],
+            }))}
+            appInfo={appInfo}
+          />
+        </div>
+      </section>
+    );
+  } catch (error) {
+    console.error("Error loading Home component:", error);
+
+    return (
+      <section className="w-full h-full flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600">Error</h1>
+          <p className="text-lg text-gray-600">
+            Unable to load content. Please try again later.
+          </p>
+        </div>
+      </section>
+    );
+  }
 }

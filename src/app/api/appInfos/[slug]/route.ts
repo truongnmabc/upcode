@@ -1,14 +1,14 @@
+import { timeCaching } from "@/common/constants";
 import { IAppInfo } from "@/lib/models/appInfo";
 import { promises as fs } from "fs";
-import path from "path";
 import cache from "memory-cache";
-import { timeCaching } from "@/common/constants";
-import { redirect } from "next/navigation";
+import path from "path";
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
-  const slug = (await params).slug;
+  const slug = (await params)?.slug;
+  if (!slug) throw new Error("");
   const cachingValue = cache.get(slug);
   if (cachingValue) {
     return Response.json({
@@ -44,6 +44,7 @@ export async function GET(
       });
     }
   } catch (error) {
+    console.log("🚀 ~ error:", error);
     return Response.json({ error: "Failed to read appInfos.json" });
   }
 }

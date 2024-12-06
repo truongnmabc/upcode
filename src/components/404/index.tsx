@@ -1,6 +1,7 @@
 "use client";
+
 import React from "react";
-import "./index.scss";
+import "./index.css";
 import ImagesRender from "./imagesRender";
 import { useRouter } from "next/navigation";
 
@@ -23,7 +24,7 @@ const Page404Container = () => {
 
         <div className="page-not-found-text">Oops! Page not found.</div>
         <div className="sorry-text">
-          Sorry, the page you're looking for doesn't exist.
+          Sorry, the page you&apos;re looking for doesn&apos;t exist.
         </div>
         <div
           onClick={() => {

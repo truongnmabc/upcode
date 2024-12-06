@@ -1,11 +1,11 @@
 import { requestGetData } from "@/lib/services/request";
-import path from "path";
 
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const slug = (await params).slug;
+  console.log("🚀 ~ slug:", slug);
 
   try {
     const data = await requestGetData({
@@ -21,6 +21,7 @@ export async function GET(
       status: 1,
     });
   } catch (error) {
+    console.log("🚀 ~ error:", error);
     return Response.json({ error: "Failed to read appInfos.json" });
   }
 }
