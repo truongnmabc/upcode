@@ -3,7 +3,7 @@ import CrownIcon from "@/components/icon/iconCrown";
 import { useIsMobile } from "@/lib/hooks/useIsMobile";
 import { gameState } from "@/lib/redux/features/game";
 import { useAppSelector } from "@/lib/redux/hooks";
-import { eventSendGA4 } from "@/lib/services/googleEvent";
+import { trackingEventGa4 } from "@/lib/services/googleEvent";
 import ctx from "@/utils/mergeClass";
 import { MyCrypto } from "@/utils/myCrypto";
 import { MathJax } from "better-react-mathjax";
@@ -30,7 +30,7 @@ const FN = () => {
       })}
       onClick={() => {
         if (!isProUser) {
-          eventSendGA4({
+          trackingEventGa4({
             eventName: "click_pro_explain",
             value: {},
           });

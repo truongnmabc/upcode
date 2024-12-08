@@ -15,7 +15,7 @@ import {
   studyState,
 } from "@/lib/redux/features/study";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { eventSendGA4 } from "@/lib/services/googleEvent";
+import { trackingEventGa4 } from "@/lib/services/googleEvent";
 import ctx from "@/utils/mergeClass";
 import { convertPathName, revertPathName } from "@/utils/pathName";
 import { usePathname, useRouter } from "next/navigation";
@@ -100,7 +100,7 @@ const TitleTopic = ({
 
   const handleClick: React.MouseEventHandler<HTMLDivElement> = async (e) => {
     onRippleClickHandler(e);
-    eventSendGA4({
+    trackingEventGa4({
       eventName: "click_topic",
       value: {
         from: window.location.href,

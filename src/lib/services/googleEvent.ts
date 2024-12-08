@@ -1,25 +1,31 @@
 "use client";
 
 import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
+import { makeStore } from "../redux/store";
 
 export const eventSendGtag = ({
-    eventName,
-    value,
+  eventName,
+  value,
 }: {
-    eventName: string;
-    value: unknown;
+  eventName: string;
+  value: unknown;
 }) => {
-    if (process.env.NODE_ENV !== "development")
-        sendGTMEvent({ event: eventName, value: value });
+  const store = makeStore().getState();
+  const { appShortName } = store.appInfoReducer.appInfo;
+  if (process.env.NODE_ENV !== "development")
+    sendGTMEvent({ event: `${appShortName}-${eventName}`, value: value });
 };
 
-export const eventSendGA4 = ({
-    eventName,
-    value,
+export const trackingEventGa4 = ({
+  eventName,
+  value,
 }: {
-    eventName: string;
-    value: unknown;
+  eventName: string;
+  value: unknown;
 }) => {
-    if (process.env.NODE_ENV !== "development")
-        sendGAEvent("event", eventName, { value: value });
+  const store = makeStore().getState();
+
+  const { appShortName } = store.appInfoReducer.appInfo;
+  if (process.env.NODE_ENV !== "development")
+    sendGAEvent("event", `${appShortName}-${eventName}`, { value: value });
 };

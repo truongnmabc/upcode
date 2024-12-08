@@ -68,7 +68,7 @@ const PassingProbability = () => {
       <div className="mt-3 h-6 w-full custom-progress relative">
         <progress value={passingValue} max={100} className="w-full" />
         <div className="absolute top-0 left-0 w-full   h-full flex items-center justify-center">
-          <span className="text-white text-sm">{passingValue.toFixed(2)}%</span>
+          <span className="text-white text-sm">{passingValue.toFixed(0)}%</span>
         </div>
       </div>
     </div>

@@ -4,8 +4,8 @@ import React from "react";
 import { useAppSelector } from "@/lib/redux/hooks";
 import { useIsMobile } from "@/lib/hooks/useIsMobile";
 import { appInfoState } from "@/lib/redux/features/appInfo";
-import DownloadApp from "@/container/home/downloadApp/downloadApp";
 import LazyLoadImage from "@/components/images";
+import IconLinkStoreApp from "@/components/iconLinkStoreApp";
 const FN = () => {
   const { appInfo } = useAppSelector(appInfoState);
   const isMobile = useIsMobile();
@@ -16,11 +16,10 @@ const FN = () => {
           appInfo.totalQuestion
         }+ ${appInfo.appName.toUpperCase()} exam-like questions with our mobile apps!`}</h4>
         {!isMobile && (
-          <DownloadApp
-            classNames="w-full justify-center"
-            appInfo={appInfo}
-            size="l"
-          />
+          <div className="flex items-center justify-center gap-2">
+            <IconLinkStoreApp type="ios" />
+            <IconLinkStoreApp type="android" />
+          </div>
         )}
       </div>
 
@@ -29,8 +28,9 @@ const FN = () => {
         classNames="w-full flex justify-center sm:w-1/3 h-full bg-no-repeat "
       />
       {isMobile && (
-        <div style={{ padding: "16px" }}>
-          <DownloadApp appInfo={appInfo} size="m" />
+        <div className="flex pt-4 flex-col gap-2">
+          <IconLinkStoreApp type="ios" />
+          <IconLinkStoreApp type="android" />
         </div>
       )}
     </div>
