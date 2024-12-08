@@ -1,3 +1,4 @@
+"use client";
 import { Grid2 } from "@mui/material";
 import React, { Fragment } from "react";
 import CompanyFooter from "./company";
@@ -7,8 +8,16 @@ import clsx from "clsx";
 import SupportFooter from "./support";
 import SocialsIcon from "./socials";
 import CopyrightNote from "./copyright";
+import { usePathname } from "next/navigation";
+import { convertPathName } from "@/utils/pathName";
+import { useIsMobile } from "@/lib/hooks/useIsMobile";
 
 const FN = () => {
+  const pathname = usePathname();
+  const path = convertPathName(pathname);
+  const isMobile = useIsMobile();
+  if (isMobile && path?.includes("/study")) return <></>;
+
   return (
     <Fragment>
       <div className=" h-fit w-full flex  justify-center bg-[#7c6f5b] ">

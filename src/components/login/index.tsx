@@ -1,10 +1,9 @@
 "use client";
 import Dialog from "@mui/material/Dialog";
 import React from "react";
-import CloseIcon from "@/asset/icon/CloseIcon";
 import BannerModalLogin from "./bannerModalLogin";
 import VerifyLogin from "./verifyLogin";
-
+import "./styles.css";
 export const FN = ({
   open,
   setOpen,
@@ -22,17 +21,9 @@ export const FN = ({
       }}
       className="v4-login-dialog"
     >
-      <div className="v4-login">
-        {allowClose && (
-          <div
-            className="button-close-dialog-v4"
-            onClick={() => setOpen(false)}
-          >
-            <CloseIcon />
-          </div>
-        )}
+      <div className="flex flex-col sm:flex-row w-full h-full overflow-hidden  bg-white dark:bg-black">
         <BannerModalLogin />
-        <VerifyLogin />
+        <VerifyLogin setOpen={setOpen} />
       </div>
     </Dialog>
   );

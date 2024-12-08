@@ -63,7 +63,7 @@ const IconProgress = ({
         key={index}
         onClick={async () => {
           if (isCurrentPlaying) {
-            // eventSendGA4({
+            // trackingEventGa4({
 
             // })
             if (pathname.includes("/study")) {

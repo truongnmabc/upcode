@@ -10,7 +10,7 @@ const FN = ({ children }: { children: React.ReactNode }) => {
       <WrapperScroll>
         <HeaderApp />
         <div className="flex-1 flex flex-col bg-theme-white dark:bg-theme-dark  justify-between">
-          <div className="flex-1">{children}</div>
+          <div className="flex-1 w-full mx-auto max-w-page">{children}</div>
           <FooterApp />
         </div>
         <SheetApp />

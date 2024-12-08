@@ -14,5 +14,5 @@ const FN = ({ appInfo }: { appInfo: IAppInfo }) => {
   );
 };
 
-const BannerApp = React.memo(FN);
-export default BannerApp;
+const TitleHomeApp = React.memo(FN);
+export default TitleHomeApp;

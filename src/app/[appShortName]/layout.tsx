@@ -9,9 +9,7 @@ import { Poppins, Vampiro_One } from "next/font/google";
 import NotFound from "../not-found";
 import TestModal from "@/tests";
 import { Fragment } from "react";
-
 import "@/css/globals.css";
-import "@/common/theme/themeProvider";
 
 const vampiro = Vampiro_One({
   weight: ["400"],
@@ -30,7 +28,6 @@ const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
 });
-
 type Props = {
   params: { appShortName: string };
 };
