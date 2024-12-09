@@ -39,6 +39,8 @@
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.6;
+  background-color: #21212129;
+  border: none;
 }
 .mtui-btn[disabled] > * {
   pointer-events: none;

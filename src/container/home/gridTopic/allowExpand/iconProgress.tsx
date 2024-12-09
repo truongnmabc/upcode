@@ -16,18 +16,11 @@ import { gameState } from "@/lib/redux/features/game";
 type IProps = {
   part: ITopic;
   index: number;
-  total: number;
   subTopicTag: string;
   listPlayed: IPartProgress[];
 };
 
-const IconProgress = ({
-  part,
-  index,
-  total,
-  subTopicTag,
-  listPlayed,
-}: IProps) => {
+const IconProgress = ({ part, index, subTopicTag, listPlayed }: IProps) => {
   const { appInfo } = useAppSelector(appInfoState);
   const { currentGame, listQuestion } = useAppSelector(gameState);
   const { mainTopicTag } = useContext<IContextAllowExpand>(AllowExpandContext);
@@ -56,10 +49,13 @@ const IconProgress = ({
   return (
     <>
       <div
-        className={clsx("w-14 flex flex-col  items-center justify-center", {
-          "cursor-pointer": isCurrentPlaying,
-          "cursor-not-allowed": !isCurrentPlaying,
-        })}
+        className={clsx(
+          "w-14 z-10  flex flex-col  items-center justify-center",
+          {
+            "cursor-pointer": isCurrentPlaying,
+            "cursor-not-allowed": !isCurrentPlaying,
+          }
+        )}
         key={index}
         onClick={async () => {
           if (isCurrentPlaying) {
@@ -106,9 +102,6 @@ const IconProgress = ({
           {part.name}
         </div>
       </div>
-      {index < total - 1 && false && (
-        <div className="w-6 mt-8 h-[1px] border-dashed border-b border-[var(--text-color-primary)]"></div>
-      )}
     </>
   );
 };

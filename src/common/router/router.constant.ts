@@ -10,5 +10,7 @@ const RouterApp = {
   Teams_of_service: "teams_of_service",
   Study_Guides: "study_guides",
   Score_Calculator: "score_calculator",
+  Test: "test",
+  Review: "review",
 };
 export default RouterApp;

@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
-import InputCodeVerify from "./inputCodeLogin";
-import InputEmailAddress from "./inputEmailLogin";
-import { IS_TESTER } from "@/common/constants";
-import { useAppSelector } from "@/lib/redux/hooks";
-import { appInfoState } from "@/lib/redux/features/appInfo";
-import { sendEmailApi, verifiedCodeApi } from "@/lib/services/home.service";
-import { appConfigState } from "@/lib/redux/features/appConfig";
 import CloseIcon from "@/asset/icon/CloseIcon";
-import { MtUiButton } from "../button";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { IS_TESTER } from "@/common/constants";
+import { appConfigState } from "@/lib/redux/features/appConfig";
+import { appInfoState } from "@/lib/redux/features/appInfo";
+import { useAppSelector } from "@/lib/redux/hooks";
+import { sendEmailApi, verifiedCodeApi } from "@/lib/services/home.service";
 import AppleIcon from "@mui/icons-material/Apple";
 import GoogleIcon from "@mui/icons-material/Google";
 import Divider from "@mui/material/Divider";
+import { signIn } from "next-auth/react";
+import React, { useState } from "react";
+import { MtUiButton } from "../button";
+import InputCodeVerify from "./inputCodeLogin";
+import InputEmailAddress from "./inputEmailLogin";
 
 const GOOGLE_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
 
@@ -71,7 +71,7 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
     }
   };
 
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   return (
     <div className="w-full sm:w-1/3 flex flex-col justify-between px-4 py-6 h-full">
       <div className="flex flex-col gap-8 ">

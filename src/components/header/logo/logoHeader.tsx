@@ -27,7 +27,9 @@ const FN = () => {
       }}
     >
       <LazyLoadImage
-        src={`/images/logo/${theme == "dark" ? "logo-dark" : "logo-light"}.png`}
+        src={`/${appInfo.appShortName}/logo/${
+          theme == "dark" ? "logo-dark" : "logo-light"
+        }.png`}
         classNames=" w-full max-w-[128px] max-h-14  sm:max-w-[160px]"
       />
     </div>

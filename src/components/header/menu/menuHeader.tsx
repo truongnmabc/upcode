@@ -3,6 +3,7 @@ import IconGetPro from "./icon/iconGetPro";
 import IconMenuHeader from "./icon/iconMenuHeader";
 import IconTopics from "./icon/iconTopics";
 import LoginHeader from "./icon/iconLogin";
+import IconReviewHeader from "./icon/iconReview";
 export interface IItemMenuHeader {
   name: string;
   icon?: React.ReactNode;
@@ -16,6 +17,10 @@ const menus: IItemMenuHeader[] = [
   {
     name: "Topics",
     icon: <IconTopics />,
+  },
+  {
+    name: "Review",
+    icon: <IconReviewHeader />,
   },
   {
     name: "Login",

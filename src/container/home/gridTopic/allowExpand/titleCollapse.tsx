@@ -15,7 +15,7 @@ const FN = ({ subTopic }: { subTopic: ITopic }) => {
   const dispatch = useAppDispatch();
 
   return (
-    <div>
+    <div className="w-full h-full">
       <div
         className={ctx(
           "w-full bg-[#F3F5F6] p-3  cursor-pointer flex gap-2 items-center justify-between",

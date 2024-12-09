@@ -17,9 +17,13 @@ const FN = () => {
   const { currentGame } = useAppSelector(gameState);
 
   useEffect(() => {
-    if (currentGame?.text) {
-      const content = MyCrypto.decrypt(currentGame?.text);
-      setText(content);
+    if (currentGame?.text && currentGame?.id) {
+      try {
+        const content = MyCrypto.decrypt(currentGame?.text);
+        setText(content);
+      } catch (err) {
+        console.log("🚀 ~ useEffect ~ err:", err);
+      }
     }
   }, [currentGame?.id]);
   return (

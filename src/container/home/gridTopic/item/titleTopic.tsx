@@ -55,13 +55,14 @@ const TitleTopic = ({
   ): Promise<{
     tag?: string;
     subTopicTag: string;
+    partId?: number;
+    subTopicId?: number;
   }> => {
     const progress = await db.subTopicProgress
       .where("parentId")
       .equals(parentId)
       .toArray();
 
-    console.log("🚀 ~ progress:", progress);
     if (!progress.length) {
       const firstTopic = topic.topics?.[0];
       const firstSubTopic = firstTopic?.topics?.[0];
@@ -79,6 +80,8 @@ const TitleTopic = ({
       return {
         tag: newPart?.tag || "",
         subTopicTag: firstTopic?.tag || "",
+        partId: firstSubTopic?.id,
+        subTopicId: firstTopic?.id,
       };
     }
 
@@ -109,7 +112,9 @@ const TitleTopic = ({
     });
 
     if (!isMobile && currentPathname === RouterApp.Home) {
-      const { tag, subTopicTag } = await fetchSubTopicData(topic.id);
+      const { tag, subTopicTag, partId, subTopicId } = await fetchSubTopicData(
+        topic.id
+      );
 
       const _href = revertPathName({
         href: `study/${topic.tag}-practice-test`,
@@ -122,6 +127,8 @@ const TitleTopic = ({
           initQuestionThunk({
             partTag: tag,
             subTopicTag,
+            partId,
+            subTopicId,
           })
         );
 

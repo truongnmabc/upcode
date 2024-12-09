@@ -1,9 +1,8 @@
-import { handlers } from "@/common/auth";
-
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
+  console.log("🚀 ~ params:", params);
   try {
     return Response.json({
       data: "",

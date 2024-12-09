@@ -1,40 +1,29 @@
-import React, { useEffect, useState } from "react";
-import "./progress.css";
-import { useAppSelector } from "@/lib/redux/hooks";
-import { gameState } from "@/lib/redux/features/game";
-import { db } from "@/lib/db/db.model";
-import { IUserQuestionProgress } from "@/lib/models/progress/userQuestionProgress";
 import { useIsMobile } from "@/lib/hooks/useIsMobile";
+import { gameState } from "@/lib/redux/features/game";
+import { useAppSelector } from "@/lib/redux/hooks";
+import ctx from "@/utils/mergeClass";
+import "./progress.css";
 const ProgressQuestion = () => {
-  const [progress, setProgress] = useState(0);
-  const { currentGame, listQuestion, idTopic } = useAppSelector(gameState);
+  const { listQuestion, indexCurrentQuestion } = useAppSelector(gameState);
   const isMobile = useIsMobile();
-  useEffect(() => {
-    const handleCalculatorProgress = async () => {
-      const listAnswer = await db.userProgress
-        .where("parentId")
-        .equals(idTopic)
-        .toArray();
 
-      const latestAnswers = listAnswer.reduce<
-        Record<number, IUserQuestionProgress>
-      >((acc, curr) => {
-        acc[curr.id] = curr;
-        return acc;
-      }, {});
-
-      const totalCorrect = Object.values(latestAnswers).filter(
-        (item) => item.selectedAnswers?.correct
-      );
-      setProgress((totalCorrect.length / listQuestion.length) * 100);
-    };
-    if (idTopic !== -1 && currentGame && listQuestion.length && !isMobile)
-      handleCalculatorProgress();
-  }, [listQuestion, currentGame, idTopic, isMobile]);
-
+  if (isMobile) return <></>;
   return (
-    <div className="w-full hidden sm:block custom-header-progress">
-      <progress value={progress} max={100} />
+    <div className="flex w-full h-1">
+      {listQuestion.map((item, index) => (
+        <div
+          key={index}
+          className={ctx("h-full w-full", {
+            "bg-[#21212133]": item.localStatus === "lock",
+            "bg-[#5497FF]":
+              indexCurrentQuestion === index || item.localStatus === "unlock",
+            "bg-[#07C58C]":
+              item.localStatus === "pass" && indexCurrentQuestion !== index,
+            "bg-[#FF746D]":
+              item.localStatus === "miss" && indexCurrentQuestion !== index,
+          })}
+        ></div>
+      ))}
     </div>
   );
 };
