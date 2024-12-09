@@ -14,10 +14,15 @@ const FN = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (currentGame?.text) {
-      const content = MyCrypto.decrypt(currentGame?.text);
-      setText(content);
-      setLoading(false);
+    if (currentGame && currentGame.text && currentGame.id) {
+      try {
+        const content = MyCrypto.decrypt(currentGame?.text);
+        setText(content);
+      } catch (err) {
+        console.log("🚀 ~ useEffect ~ err:", err);
+      } finally {
+        setLoading(false);
+      }
     }
   }, [currentGame?.id]);
 

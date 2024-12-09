@@ -1,7 +1,7 @@
 "use client";
 import CloseIcon from "@/asset/icon/CloseIcon";
 import RouterApp from "@/common/router/router.constant";
-import DownloadApp from "@/container/home/downloadApp/downloadApp";
+import IconLinkStoreApp from "@/components/iconLinkStoreApp";
 import { appInfoState } from "@/lib/redux/features/appInfo";
 import { userState } from "@/lib/redux/features/user";
 import { useAppSelector } from "@/lib/redux/hooks";
@@ -11,7 +11,6 @@ import { Drawer } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
 import ItemDrawerFullTest from "./itemDrawer";
-import IconLinkStoreApp from "@/components/iconLinkStoreApp";
 
 type IList = {
   handleClick: () => void;

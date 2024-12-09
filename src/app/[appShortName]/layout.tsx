@@ -10,6 +10,8 @@ import NotFound from "../not-found";
 import TestModal from "@/tests";
 import { Fragment } from "react";
 import "@/css/globals.css";
+import { IAppInfo } from "@/lib/models/appInfo";
+import { IAppConfigData } from "@/lib/redux/features/appConfig";
 
 const vampiro = Vampiro_One({
   weight: ["400"],
@@ -32,7 +34,13 @@ type Props = {
   params: { appShortName: string };
 };
 
-export async function fetchAppData(appShortName: string, fetchAll = false) {
+export async function fetchAppData(
+  appShortName: string,
+  fetchAll = false
+): Promise<{
+  appInfo?: IAppInfo | null;
+  appConfig?: IAppConfigData;
+}> {
   try {
     const { data: appInfo } = await axiosInstance.get(
       `${API_PATH.APP_INFO}/${appShortName}`
@@ -75,7 +83,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const image = `/images/logo/logo60.png`;
+  const image = `/infos/${appInfo.appShortName}/logo60.png`;
 
   return {
     title: appInfo.title,
@@ -100,7 +108,7 @@ export default async function RootLayout({
   const { appShortName } = await params;
   const { appInfo, appConfig } = await fetchAppData(appShortName, true);
 
-  if (!appInfo) {
+  if (!appInfo || !appConfig) {
     return <NotFound />;
   }
 

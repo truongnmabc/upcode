@@ -1,8 +1,10 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "",
-  // timeout: 10000,
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? process.env.DEV_BASE_API
+      : process.env.NEXT_PUBLIC_API_URL || "",
   headers: {
     "Content-Type": "application/json",
   },

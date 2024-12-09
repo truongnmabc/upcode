@@ -5,7 +5,7 @@ import { useAppSelector } from "@/lib/redux/hooks";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import CssBaseline from "@mui/material/CssBaseline";
-import React, { Fragment, useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
 
 export type ThemeMode = "light" | "dark" | "system";
 

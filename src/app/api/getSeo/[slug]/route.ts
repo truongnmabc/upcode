@@ -1,12 +1,22 @@
 import { timeCaching } from "@/common/constants";
+import { requestGetData } from "@/lib/services/request";
 import cache from "memory-cache";
+import { NextRequest } from "next/server";
 export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ slug: string }> }
+  request: NextRequest,
+  {
+    params,
+  }: {
+    params: Promise<{ slug: string }>;
+  }
 ) {
+  const { nextUrl } = request;
+  const search = nextUrl.searchParams.get("search");
+
   try {
     const slug = (await params).slug;
-    const cachingValue = cache.get(`${slug}-seo`);
+
+    const cachingValue = cache.get(search);
     if (cachingValue) {
       return Response.json({
         data: cachingValue,
@@ -15,16 +25,22 @@ export async function GET(
         status: 1,
       });
     }
-    //   const pathName = path.join(
-    //     process.cwd(),
-    //     "src/common/data/dynamic/appInfos.json"
-    //   );
-    // const res = await fetch;
-    const currentAppInfo = {
-      content: "",
+
+    const data = (await requestGetData({
+      url: `/wp-json/passemall/v1/get-info-state?stateSlug=${slug}-${search}`,
+      config: {
+        baseURL: "https://api.asvab-prep.com",
+      },
+    })) as {
+      content: string;
     };
-    if (true) {
-      cache.put(`${slug}-seo`, currentAppInfo, timeCaching);
+
+    const currentAppInfo = {
+      content: data?.content,
+    };
+    if (data) {
+      cache.put(search, currentAppInfo, timeCaching);
+
       return Response.json({
         data: currentAppInfo,
         code: 200,
@@ -34,7 +50,7 @@ export async function GET(
       return Response.json({
         data: "",
         code: 404,
-        message: "AppId not founds",
+        message: "data not founds",
         status: 0,
       });
     }
