@@ -1,4 +1,7 @@
 import { MtUiButton } from "@/components/button";
+import { gameState } from "@/lib/redux/features/game";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import useActionsThunk from "@/lib/redux/repository/user/actions";
 import {
   Box,
   Checkbox,
@@ -18,9 +21,11 @@ const listReport = [
   { label: "Bad Image Quality", value: "7" },
 ];
 
-const ReportMistake = () => {
+const ReportMistake = ({ onClose }: { onClose: () => void }) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const [otherReason, setOtherReason] = useState<string>("");
+  const dispatch = useAppDispatch();
+  const { currentGame } = useAppSelector(gameState);
 
   const handleCheckboxChange = (value: string) => {
     setSelectedValues((prev) =>
@@ -32,6 +37,14 @@ const ReportMistake = () => {
     e.preventDefault();
     console.log("Selected values:", selectedValues);
     console.log("Other reason:", otherReason);
+
+    dispatch(
+      useActionsThunk({
+        status: "dislike",
+        questionId: currentGame.id,
+      })
+    );
+    onClose();
   };
 
   return (

@@ -57,9 +57,11 @@ const StatusAnswer = () => {
         <div className="w-6 h-6">
           <CheckCircleRounded htmlColor="#00c17c" />
         </div>
-        <span style={{ color: "#00c17c" }}>
-          <div>CORRECT</div>
-          <span>You will not see this question for a while</span>
+        <span>
+          <div className="text-[#00c17c]">CORRECT</div>
+          <span className="text-[#00c17c]">
+            You will not see this question for a while
+          </span>
         </span>
       </div>
     );
@@ -71,9 +73,11 @@ const StatusAnswer = () => {
         <div className="w-6 h-6">
           <ErrorRounded htmlColor="#E3A651" />
         </div>
-        <span style={{ color: "#E3A651" }}>
-          <div>LEARNING</div>
-          <span>You got this question wrong last time</span>
+        <span>
+          <div className="text-[#E3A651]">LEARNING</div>
+          <span className="text-[#E3A651]">
+            You got this question wrong last time
+          </span>
         </span>
       </div>
     );
@@ -85,8 +89,8 @@ const StatusAnswer = () => {
         <div className="w-6 h-6">
           <InfoIcon htmlColor="#6BA6FF" />
         </div>
-        <span style={{ color: "#6BA6FF" }}>
-          <div>NEW QUESTION</div>
+        <span>
+          <div className="text-[#6BA6FF]">NEW QUESTION</div>
         </span>
       </div>
     );
@@ -98,9 +102,11 @@ const StatusAnswer = () => {
         <div className="w-6 h-6">
           <CheckCircleRounded htmlColor="#00c17c" />
         </div>
-        <span style={{ color: "#00c17c" }}>
-          <div>REVIEWING</div>
-          <span>You got this question last time</span>
+        <span>
+          <div className="text-[#00c17c]">REVIEWING</div>
+          <span className="text-[#00c17c]">
+            You got this question last time
+          </span>
         </span>
       </div>
     );
