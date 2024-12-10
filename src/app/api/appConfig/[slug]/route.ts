@@ -18,10 +18,7 @@ export async function GET(
       status: 1,
     });
   }
-  const pathName = path.join(
-    process.cwd(),
-    "src/common/data/dynamic/appConfig.json"
-  );
+  const pathName = path.join(process.cwd(), "src/data/dynamic/appConfig.json");
   try {
     const fileContent = await fs.readFile(pathName, "utf-8");
     const data = JSON.parse(fileContent);

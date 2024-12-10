@@ -1,9 +1,9 @@
 "use client";
 
-import { useIsMobile } from "@/lib/hooks/useIsMobile";
-import { useTheme } from "@/lib/hooks/useTheme";
-import { appInfoState } from "@/lib/redux/features/appInfo";
-import { useAppSelector } from "@/lib/redux/hooks";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { useTheme } from "@/hooks/useTheme";
+import { appInfoState } from "@/redux/features/appInfo";
+import { useAppSelector } from "@/redux/hooks";
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import LazyLoadImage from "../images";

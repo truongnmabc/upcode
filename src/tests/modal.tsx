@@ -1,4 +1,6 @@
+import { db } from "@/db/db.model";
 import { Drawer } from "@mui/material";
+import { useEffect } from "react";
 
 // import { db } from "@/lib/db/db.model";
 // import { useEffect } from "react";
@@ -62,20 +64,20 @@ const ModalTest = ({ open, setOpen }: IPros) => {
   //     getIndexedDBUsage();
   // }, []);
 
-  // useEffect(() => {
-  //     const handleTets = async () => {
-  //         const data = await db.topicQuestion
-  //             .where("[subTopicTag+tag]")
-  //             .equals(["machines", "machines-extended-3"])
-  //             .first();
+  useEffect(() => {
+    const handleTets = async () => {
+      const data = await db.topicQuestion
+        .where("[subTopicTag+tag]")
+        .equals(["machines", "machines-extended-3"])
+        .first();
 
-  //         const question = data?.questions?.map(
-  //             (item) => item.answers.find((item) => item.correct)?.text
-  //         );
-  //         console.log("🚀 ~ handleTets ~ question:", question);
-  //     };
-  //     handleTets();
-  // }, []);
+      const question = data?.questions?.map(
+        (item) => item.answers.find((item) => item.correct)?.text
+      );
+      console.log("🚀 ~ handleTets ~ question:", question);
+    };
+    handleTets();
+  }, []);
 
   return (
     <Drawer

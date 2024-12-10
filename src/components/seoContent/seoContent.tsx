@@ -1,7 +1,6 @@
 import React from "react";
 
 const FN = ({ content }: { content: string }) => {
-  if (!content) return <></>;
   return (
     <div
       className="html-content-revert"

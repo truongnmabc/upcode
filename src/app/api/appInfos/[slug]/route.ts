@@ -1,5 +1,5 @@
 import { timeCaching } from "@/common/constants";
-import { IAppInfo } from "@/lib/models/appInfo";
+import { IAppInfo } from "@/models/appInfo";
 import { promises as fs } from "fs";
 import cache from "memory-cache";
 import path from "path";
@@ -18,10 +18,7 @@ export async function GET(
       status: 1,
     });
   }
-  const pathName = path.join(
-    process.cwd(),
-    "src/common/data/dynamic/appInfos.json"
-  );
+  const pathName = path.join(process.cwd(), "src/data/dynamic/appInfos.json");
   try {
     const fileContent = await fs.readFile(pathName, "utf-8");
     const data = JSON.parse(fileContent);

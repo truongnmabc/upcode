@@ -1,18 +1,18 @@
 "use client";
 import MtUiRipple, { useRipple } from "@/components/ripple";
-import { db } from "@/lib/db/db.model";
-import SubTopicProgress from "@/lib/models/progress/subTopicProgress";
-import Part from "@/lib/models/topics/part";
-import { ITopic } from "@/lib/models/topics/topics";
-import { appInfoState } from "@/lib/redux/features/appInfo";
+import { db } from "@/db/db.model";
+import SubTopicProgress from "@/models/progress/subTopicProgress";
+import Part from "@/models/topics/part";
+import { ITopic } from "@/models/topics/topics";
+import { appInfoState } from "@/redux/features/appInfo";
 import {
   selectSubTopics,
   selectTopics,
   setOptQuery,
-} from "@/lib/redux/features/study";
-import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import initQuestionThunk from "@/lib/redux/repository/game/initQuestion";
-import { trackingEventGa4 } from "@/lib/services/googleEvent";
+} from "@/redux/features/study";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import initQuestionThunk from "@/redux/repository/game/initQuestion";
+import { trackingEventGa4 } from "@/services/googleEvent";
 import ctx from "@/utils/mergeClass";
 import { revertPathName } from "@/utils/pathName";
 import { ExpandMore } from "@mui/icons-material";

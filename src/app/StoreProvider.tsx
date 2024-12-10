@@ -2,10 +2,10 @@
 
 import { useRef } from "react";
 import { Provider } from "react-redux";
-import { makeStore, AppStore } from "@/lib/redux/store";
-import { setAppInfo } from "@/lib/redux/features/appInfo";
-import { IAppConfigData, setAppConfig } from "@/lib/redux/features/appConfig";
-import { IAppInfo } from "@/lib/models/appInfo";
+import { makeStore, AppStore } from "@/redux/store";
+import { setAppInfo } from "@/redux/features/appInfo";
+import { IAppConfigData, setAppConfig } from "@/redux/features/appConfig";
+import { IAppInfo } from "@/models/appInfo";
 
 export default function StoreProvider({
   children,

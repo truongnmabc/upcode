@@ -1,7 +1,7 @@
 "use client";
 
-import { appConfigState } from "@/lib/redux/features/appConfig";
-import { useAppSelector } from "@/lib/redux/hooks";
+import { appConfigState } from "@/redux/features/appConfig";
+import { useAppSelector } from "@/redux/hooks";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import CssBaseline from "@mui/material/CssBaseline";

@@ -1,5 +1,5 @@
-import { IQuestion } from "@/lib/models/question/questions";
-import { ITopic } from "@/lib/models/topics/topics";
+import { IQuestion } from "@/models/question/questions";
+import { ITopic } from "@/models/topics/topics";
 
 export const groupTopics = (
   listTopic: ITopic[],

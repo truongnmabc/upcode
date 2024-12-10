@@ -2,17 +2,16 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
 import RouterApp from "@/common/router/router.constant";
 import IconLinkStoreApp from "@/components/iconLinkStoreApp";
-import { appInfoState } from "@/lib/redux/features/appInfo";
-import { userState } from "@/lib/redux/features/user";
-import { useAppSelector } from "@/lib/redux/hooks";
-import { trackingEventGa4 } from "@/lib/services/googleEvent";
+import { appInfoState } from "@/redux/features/appInfo";
+import { userState } from "@/redux/features/user";
+import { useAppSelector } from "@/redux/hooks";
+import { trackingEventGa4 } from "@/services/googleEvent";
 import { revertPathName } from "@/utils/pathName";
 import { Drawer } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
 import ItemDrawerFullTest from "./itemDrawer";
 import ListStudyDrawer from "./listStudy";
-import ListTestsDrawer from "./listTest";
 
 type IList = {
   handleClick: () => void;
@@ -121,7 +120,6 @@ const FN = ({
         />
 
         <ListStudyDrawer setOpenMenuDrawer={setOpenMenuDrawer} />
-        <ListTestsDrawer setOpenMenuDrawer={setOpenMenuDrawer} />
         {list.map((item) => (
           <ItemDrawerFullTest
             key={item.name}

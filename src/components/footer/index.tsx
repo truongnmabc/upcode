@@ -10,7 +10,7 @@ import SocialsIcon from "./socials";
 import CopyrightNote from "./copyright";
 import { usePathname } from "next/navigation";
 import { convertPathName } from "@/utils/pathName";
-import { useIsMobile } from "@/lib/hooks/useIsMobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const FN = () => {
   const pathname = usePathname();

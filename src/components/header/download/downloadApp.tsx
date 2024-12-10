@@ -2,9 +2,9 @@
 
 import RouterApp from "@/common/router/router.constant";
 import LazyLoadImage from "@/components/images";
-import { useTheme } from "@/lib/hooks/useTheme";
-import { appInfoState } from "@/lib/redux/features/appInfo";
-import { useAppSelector } from "@/lib/redux/hooks";
+import { useTheme } from "@/hooks/useTheme";
+import { appInfoState } from "@/redux/features/appInfo";
+import { useAppSelector } from "@/redux/hooks";
 import { convertPathName } from "@/utils/pathName";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";

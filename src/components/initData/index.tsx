@@ -1,0 +1,227 @@
+"use client";
+import axiosInstance from "@/common/config/axios";
+import { API_PATH } from "@/common/constants/api.constants";
+import { db } from "@/db/db.model";
+import { IAppInfo } from "@/models/appInfo";
+import SubTopicProgress from "@/models/progress/subTopicProgress";
+import { IQuestion } from "@/models/question/questions";
+import { ITest } from "@/models/tests/tests";
+import Part, { IPart } from "@/models/topics/part";
+import Topic from "@/models/topics/topics";
+import { Table } from "dexie";
+import { useEffect } from "react";
+
+export interface ITopic {
+  id: number;
+  parentId: number;
+  name: string;
+  icon: string;
+  tag: string;
+  type: number;
+  contentType: number;
+  orderIndex: number;
+  topics: ITopic[];
+  questions: IQuestion[];
+  subTopicTag?: string;
+}
+
+interface IResDataTest {
+  finalTests: ITest[];
+  practiceTests: ITest[];
+  diagnosticTestFormat: ITest;
+}
+
+const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
+  const addIfNotExists = async <T extends { id: number }>(
+    table: Table<T>,
+    id: number,
+    data: T
+  ) => {
+    const exists = await table.get(id);
+    if (!exists) {
+      await table.add(data);
+    }
+  };
+
+  const processTreeData = async (
+    topics: ITopic[],
+    table: Table<Topic | IPart> | "subtopic"
+  ) => {
+    for (const topic of topics) {
+      if (table === db.topics) {
+        const topicData = new Topic({
+          ...topic,
+          id: Number(topic.id),
+          topics: topic.topics?.map(
+            (item) =>
+              new Topic({
+                ...item,
+              })
+          ),
+        });
+
+        await addIfNotExists(db.topics, topicData.id, topicData);
+
+        if (topic.topics && topic.topics.length > 0) {
+          await processTreeData(topic.topics, "subtopic");
+        }
+      }
+      // } else if (table === "subtopic") {
+      //   if (topic.topics && topic.topics.length > 0) {
+      //     await processTreeData(topic.topics, db.part);
+      //   }
+      // } else if (table === db.part) {
+      //   const partData = new Part({
+      //     ...topic,
+      //     id: Number(topic.id),
+      //   });
+
+      //   await addIfNotExists(db.part, partData.id, partData);
+      // }
+    }
+  };
+
+  const processQuestionsData = async (topics: ITopic[]) => {
+    for (const topic of topics) {
+      const subTopicTag = topic.tag;
+      for (const part of topic?.topics) {
+        await db
+          .transaction(
+            "rw",
+            db.topicQuestion,
+            async () =>
+              await db.topicQuestion.add({
+                ...part,
+                questions: part?.questions.map((item: IQuestion) => ({
+                  ...item,
+                  parentId: part.id,
+                })),
+                subTopicTag,
+                status: 0,
+              })
+          )
+          .catch((error) => {
+            console.log("error 2", error);
+          });
+      }
+      await initDataSubTopicProgress(topic);
+    }
+  };
+
+  // *NOTE: init data
+
+  const initDataSubTopicProgress = async (topic: ITopic) => {
+    const newPart = new Part(topic?.topics?.[0]);
+    await db.subTopicProgress.add(
+      new SubTopicProgress({
+        id: topic?.id || 0,
+        parentId: topic.parentId,
+        part: [
+          {
+            ...newPart,
+            status: 0,
+          },
+        ],
+        subTopicTag: topic?.tag || "",
+      })
+    );
+  };
+
+  const initDataTest = async (tests: IResDataTest) => {
+    const listKey = Object.keys(tests) as (keyof IResDataTest)[];
+    for (const name of listKey) {
+      if (name === "diagnosticTestFormat") {
+        const exists = await db.tests.get(tests[name].id);
+        if (!exists) {
+          await db.tests.add({
+            ...tests[name],
+            testType: name,
+          });
+        }
+      } else {
+        const list = tests[name];
+        for (const test of list) {
+          const exists = await db.tests.get(test.id);
+          if (!exists) {
+            await db.tests.add({
+              ...test,
+              testType: name,
+            });
+          }
+        }
+      }
+    }
+  };
+
+  const fetchAndProcessTopicsRecursive = async (topics: ITopic[]) => {
+    if (!topics || topics.length === 0) return;
+
+    const [currentTopic, ...remainingTopics] = topics;
+    const id = currentTopic.id;
+
+    const exists = await db.topicStatus.get(id);
+
+    if (!exists) {
+      try {
+        await db.topicStatus.add({
+          id,
+        });
+
+        const response = await axiosInstance.get(
+          `${API_PATH.GET_DATA_TOPICS}/${id}`
+        );
+        if (response.data.status === 1) {
+          const data = response.data.data;
+          processQuestionsData(data);
+        }
+      } catch (err) {
+        console.error("🚀 ~ fetchAndProcessTopicsRecursive ~ err:", err);
+      }
+    }
+
+    await fetchAndProcessTopicsRecursive(remainingTopics);
+  };
+
+  const handleInitData = async () => {
+    console.log("Start time init indexedDb data:", new Date().toISOString());
+
+    const response = await axiosInstance.get(
+      `${API_PATH.GET_DATA_STUDY}/${appInfo.appShortName}`
+    );
+    if (response.data.data) {
+      const {
+        topic,
+        tests,
+      }: {
+        topic: ITopic[];
+        tests: IResDataTest;
+      } = response?.data?.data;
+
+      await db
+        .transaction(
+          "rw",
+          db.topics,
+          async () => await processTreeData(topic, db.topics)
+        )
+        .catch((error) => {
+          console.log("error", error);
+        });
+      await db
+        .transaction("rw", db.tests, async () => await initDataTest(tests))
+        .catch((error) => {
+          console.log("error", error);
+        });
+      await fetchAndProcessTopicsRecursive(topic);
+
+      console.log("End time init indexedDb data:", new Date().toISOString());
+    }
+  };
+
+  useEffect(() => {
+    if (appInfo) handleInitData();
+  }, [appInfo]);
+
+  return <></>;
+};
+
+export default InitData;

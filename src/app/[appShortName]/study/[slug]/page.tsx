@@ -1,6 +1,6 @@
 import axiosInstance from "@/common/config/axios";
 import { API_PATH } from "@/common/constants/api.constants";
-import StudyLayout from "@/container/study/studyLayout";
+import StudyLayout from "@/components/study/studyLayout";
 import { fetchAppData } from "../../layout";
 
 type Params = Promise<{ appShortName: string; slug: string }>;

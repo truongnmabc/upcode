@@ -2,9 +2,9 @@
 import FacebookIcon from "@/components/icon/FacebookIcon";
 import TwitterIcon from "@/components/icon/TwitterIcon";
 import YoutubeIcon from "@/components/icon/YoutubeIcon";
-import { useIsMobile } from "@/lib/hooks/useIsMobile";
-import { appInfoState } from "@/lib/redux/features/appInfo";
-import { useAppSelector } from "@/lib/redux/hooks";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { appInfoState } from "@/redux/features/appInfo";
+import { useAppSelector } from "@/redux/hooks";
 import { getContactApp } from "@/utils/getContact";
 import clsx from "clsx";
 import React from "react";
