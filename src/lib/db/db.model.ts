@@ -7,6 +7,7 @@ import { ITopicStatus } from "../models/question/topicStatus";
 import { ISubTopicProgress } from "../models/progress/subTopicProgress";
 import { IUserQuestionProgress } from "../models/progress/userQuestionProgress";
 import { IUserActions } from "../models/user/useAction";
+import { ITest } from "../models/tests/tests";
 
 export class DB extends Dexie {
   userProgress!: Table<IUserQuestionProgress>;
@@ -16,6 +17,7 @@ export class DB extends Dexie {
   topics!: Table<ITopic>;
   part!: Table<IPart>;
   useActions!: Table<IUserActions>;
+  tests!: Table<ITest>;
   constructor() {
     super("ABC");
     this.version(1).stores({
@@ -43,6 +45,8 @@ export class DB extends Dexie {
 
       part: "++id, parentId",
       useActions: "++id,questionId",
+
+      tests: "++id, testType",
     });
   }
 }

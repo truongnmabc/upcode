@@ -5,8 +5,8 @@ import TitleHomeApp from "@/container/home/title";
 import GridTopics from "@/container/home/gridTopic/gridTopics";
 import { ITopic } from "@/lib/models/topics/topics";
 import { fetchAppData } from "./layout";
-import SeoContent from "@/container/home/seo";
 import DownloadApp from "@/container/home/downloadApp/downloadApp";
+import SeoContent from "@/components/seoContent/seoContent";
 
 type Params = {
   params: Promise<{ appShortName: string }>;
@@ -42,7 +42,9 @@ export default async function Home({ params }: Params) {
             appInfo={appInfo}
           />
           <DownloadApp />
-          <SeoContent content={""} />
+          <div className="p-4 mb-28 sm:mb-0 sm:p-6 rounded-md  overflow-hidden bg-white dark:bg-black">
+            <SeoContent content={""} />
+          </div>
         </div>
       </section>
     );

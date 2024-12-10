@@ -7,7 +7,7 @@ import React from "react";
 
 const FN = () => {
   const pathname = usePathname();
-  if (!pathname.includes("/study")) {
+  if (pathname.includes("/review")) {
     return (
       <NextLink href={RouterApp.Topics}>
         <div className="hidden sm:flex item-center hover:text-primary  capitalize gap-3">
