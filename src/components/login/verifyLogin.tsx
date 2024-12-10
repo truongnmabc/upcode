@@ -2,10 +2,10 @@
 
 import CloseIcon from "@/asset/icon/CloseIcon";
 import { IS_TESTER } from "@/common/constants";
-import { appConfigState } from "@/lib/redux/features/appConfig";
-import { appInfoState } from "@/lib/redux/features/appInfo";
-import { useAppSelector } from "@/lib/redux/hooks";
-import { sendEmailApi, verifiedCodeApi } from "@/lib/services/home.service";
+import { appConfigState } from "@/redux/features/appConfig";
+import { appInfoState } from "@/redux/features/appInfo";
+import { useAppSelector } from "@/redux/hooks";
+import { sendEmailApi, verifiedCodeApi } from "@/services/home.service";
 import AppleIcon from "@mui/icons-material/Apple";
 import GoogleIcon from "@mui/icons-material/Google";
 import Divider from "@mui/material/Divider";

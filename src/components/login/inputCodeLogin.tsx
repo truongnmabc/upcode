@@ -1,5 +1,5 @@
 "use client";
-import useDebounce from "@/lib/hooks/useDebounce";
+import useDebounce from "@/hooks/useDebounce";
 import { TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 

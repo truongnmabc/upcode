@@ -1,6 +1,6 @@
 "use client";
-import { appInfoState } from "@/lib/redux/features/appInfo";
-import { useAppSelector } from "@/lib/redux/hooks";
+import { appInfoState } from "@/redux/features/appInfo";
+import { useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
 import React, { CSSProperties, useState } from "react";
 // import Image from "next/image";

@@ -1,7 +1,7 @@
 "use client";
-import { appInfoState } from "@/lib/redux/features/appInfo";
-import { useAppSelector } from "@/lib/redux/hooks";
-import { trackingEventGa4 } from "@/lib/services/googleEvent";
+import { appInfoState } from "@/redux/features/appInfo";
+import { useAppSelector } from "@/redux/hooks";
+import { trackingEventGa4 } from "@/services/googleEvent";
 import ctx from "@/utils/mergeClass";
 import React from "react";
 import LazyLoadImage from "../images";

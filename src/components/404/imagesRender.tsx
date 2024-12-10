@@ -1,6 +1,6 @@
 "use client";
 
-import { useIsMobile } from "@/lib/hooks/useIsMobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import Image from "next/image";
 import React from "react";
 

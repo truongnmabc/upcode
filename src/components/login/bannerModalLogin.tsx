@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import Blur from "./blur";
-import { useAppSelector } from "@/lib/redux/hooks";
-import { appInfoState } from "@/lib/redux/features/appInfo";
+import { useAppSelector } from "@/redux/hooks";
+import { appInfoState } from "@/redux/features/appInfo";
 import { TESTER_KEY } from "@/common/constants";
 import { setSession } from "@/utils/session";
 

@@ -1,8 +1,8 @@
 "use client";
 import LogoHeader from "@/components/header/logo/logoHeader";
-import { useIsMobile } from "@/lib/hooks/useIsMobile";
-import { appInfoState } from "@/lib/redux/features/appInfo";
-import { useAppSelector } from "@/lib/redux/hooks";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { appInfoState } from "@/redux/features/appInfo";
+import { useAppSelector } from "@/redux/hooks";
 import clsx from "clsx";
 import React from "react";
 import { DmcaIcon } from "./iconDmca";

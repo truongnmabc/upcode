@@ -7,7 +7,7 @@ import DownLoadApp from "./download/downloadApp";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import { convertPathName } from "@/utils/pathName";
-import { useIsMobile } from "@/lib/hooks/useIsMobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const FN = () => {
   const pathname = usePathname();

@@ -3,7 +3,8 @@ import { fetchAppData } from "../../layout";
 import axiosInstance from "@/common/config/axios";
 
 import { API_PATH } from "@/common/constants/api.constants";
-import FinalTestLayout from "@/container/finalTest";
+import FinalTestLayout from "@/components/finalTest";
+
 type Params = {
   params: Promise<{ appShortName: string; slug: string }>;
 };

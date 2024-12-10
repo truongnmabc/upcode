@@ -3,15 +3,15 @@ import axiosInstance from "@/common/config/axios";
 import { API_PATH } from "@/common/constants/api.constants";
 import AppThemeProvider from "@/common/theme/themeProvider";
 import AppLayout from "@/components/appLayout";
-import InitData from "@/container/initData";
+import InitData from "@/components/initData";
 import type { Metadata } from "next";
 import { Poppins, Vampiro_One } from "next/font/google";
 import NotFound from "../not-found";
 import TestModal from "@/tests";
 import { Fragment } from "react";
 import "@/css/globals.css";
-import { IAppInfo } from "@/lib/models/appInfo";
-import { IAppConfigData } from "@/lib/redux/features/appConfig";
+import { IAppInfo } from "@/models/appInfo";
+import { IAppConfigData } from "@/redux/features/appConfig";
 
 const vampiro = Vampiro_One({
   weight: ["400"],

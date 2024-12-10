@@ -1,12 +1,13 @@
 import axiosInstance from "@/common/config/axios";
 import { RANDOM_COLORS } from "@/common/constants";
 import { API_PATH } from "@/common/constants/api.constants";
-import TitleHomeApp from "@/container/home/title";
-import GridTopics from "@/container/home/gridTopic/gridTopics";
-import { ITopic } from "@/lib/models/topics/topics";
-import { fetchAppData } from "./layout";
-import DownloadApp from "@/container/home/downloadApp/downloadApp";
+import DownloadApp from "@/components/home/downloadApp/downloadApp";
+import GridTest from "@/components/home/gridTests/GridTest";
+import GridTopics from "@/components/home/gridTopic/gridTopics";
+import TitleHomeApp from "@/components/home/title";
 import SeoContent from "@/components/seoContent/seoContent";
+import { ITopic } from "@/models/topics/topics";
+import { fetchAppData } from "./layout";
 
 type Params = {
   params: Promise<{ appShortName: string }>;
@@ -41,6 +42,7 @@ export default async function Home({ params }: Params) {
             }))}
             appInfo={appInfo}
           />
+          <GridTest />
           <DownloadApp />
           <div className="p-4 mb-28 sm:mb-0 sm:p-6 rounded-md  overflow-hidden bg-white dark:bg-black">
             <SeoContent content={""} />

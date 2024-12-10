@@ -1,4 +1,4 @@
-import { requestGetData } from "@/lib/services/request";
+import { requestGetData } from "@/services/request";
 
 export async function GET(
   request: Request,

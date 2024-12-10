@@ -1,15 +1,15 @@
 "use client";
 
 import LazyLoadImage from "@/components/images";
-import { appInfoState } from "@/lib/redux/features/appInfo";
-import { useAppSelector } from "@/lib/redux/hooks";
+import { appInfoState } from "@/redux/features/appInfo";
+import { useAppSelector } from "@/redux/hooks";
 import { getContactApp } from "@/utils/getContact";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { sendEmailSubscribe } from "@/lib/services/home.service";
+import { sendEmailSubscribe } from "@/services/home.service";
 
 const FN = () => {
   const [formData, setFormData] = useState({ email: "", message: "" });
