@@ -5,6 +5,7 @@ import { db } from "@/lib/db/db.model";
 import { IAppInfo } from "@/lib/models/appInfo";
 import SubTopicProgress from "@/lib/models/progress/subTopicProgress";
 import { IQuestion } from "@/lib/models/question/questions";
+import { ITest } from "@/lib/models/tests/tests";
 import Part, { IPart } from "@/lib/models/topics/part";
 import Topic from "@/lib/models/topics/topics";
 import { Table } from "dexie";
@@ -22,6 +23,12 @@ export interface ITopic {
   topics: ITopic[];
   questions: IQuestion[];
   subTopicTag?: string;
+}
+
+interface IResDataTest {
+  finalTests: ITest[];
+  practiceTests: ITest[];
+  diagnosticTestFormat: ITest;
 }
 
 const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
@@ -119,6 +126,32 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
     );
   };
 
+  const initDataTest = async (tests: IResDataTest) => {
+    const listKey = Object.keys(tests) as (keyof IResDataTest)[];
+    for (const name of listKey) {
+      if (name === "diagnosticTestFormat") {
+        const exists = await db.tests.get(tests[name].id);
+        if (!exists) {
+          await db.tests.add({
+            ...tests[name],
+            testType: name,
+          });
+        }
+      } else {
+        const list = tests[name];
+        for (const test of list) {
+          const exists = await db.tests.get(test.id);
+          if (!exists) {
+            await db.tests.add({
+              ...test,
+              testType: name,
+            });
+          }
+        }
+      }
+    }
+  };
+
   const fetchAndProcessTopicsRecursive = async (topics: ITopic[]) => {
     if (!topics || topics.length === 0) return;
 
@@ -158,8 +191,10 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
     if (response.data.data) {
       const {
         topic,
+        tests,
       }: {
         topic: ITopic[];
+        tests: IResDataTest;
       } = response?.data?.data;
 
       await db
@@ -172,7 +207,11 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
         .catch((error) => {
           console.log("error", error);
         });
-
+      await db
+        .transaction("rw", db.tests, async () => await initDataTest(tests))
+        .catch((error) => {
+          console.log("error", error);
+        });
       await fetchAndProcessTopicsRecursive(topic);
 
       console.log("End time init indexedDb data:", new Date().toISOString());

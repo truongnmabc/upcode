@@ -1,58 +1,10 @@
-"use client";
-
-import { IQueryOpt, setOptQuery } from "@/lib/redux/features/study";
-import { useAppDispatch } from "@/lib/redux/hooks";
-import initQuestionThunk from "@/lib/redux/repository/game/initQuestion";
-import beforeUnLoadThunk from "@/lib/redux/repository/utils/reload";
 import { Grid2 } from "@mui/material";
-import { MathJaxContext } from "better-react-mathjax";
-import React, { useCallback, useEffect, useLayoutEffect } from "react";
+import React from "react";
 import ContentGroup from "./contentGroup";
 import HeaderMobile from "./headerMobile";
 import QuestionGroup from "./questionGroup";
 
 const FN = ({ contentSeo }: { contentSeo: string }) => {
-  const dispatch = useAppDispatch();
-
-  const handlePageReload = useCallback(() => {
-    const data = localStorage.getItem("optQuery");
-    if (data) {
-      const optQuery: IQueryOpt = JSON.parse(data);
-      if (optQuery.partTag && optQuery.subTopicTag) {
-        dispatch(
-          initQuestionThunk({
-            partTag: optQuery.partTag,
-            subTopicTag: optQuery.subTopicTag,
-          })
-        );
-        dispatch(
-          setOptQuery({
-            partTag: optQuery.partTag,
-            subTopicTag: optQuery.subTopicTag,
-          })
-        );
-      }
-      localStorage.removeItem("optQuery");
-    }
-  }, [dispatch]);
-
-  useLayoutEffect(() => {
-    handlePageReload();
-  }, [handlePageReload]);
-
-  const handleBeforeUnload = useCallback(
-    () => dispatch(beforeUnLoadThunk()),
-    [dispatch]
-  );
-
-  useEffect(() => {
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [handleBeforeUnload]);
-
   return (
     <div className="flex-1 max-w-page sm:px-4 mx-auto">
       <Grid2 container>
@@ -82,9 +34,7 @@ const FN = ({ contentSeo }: { contentSeo: string }) => {
               xs: 12,
             }}
           >
-            <MathJaxContext>
-              <ContentGroup contentSeo={contentSeo} />
-            </MathJaxContext>
+            <ContentGroup contentSeo={contentSeo} />
           </Grid2>
         </Grid2>
       </div>

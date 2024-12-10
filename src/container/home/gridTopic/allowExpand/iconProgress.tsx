@@ -6,7 +6,12 @@ import { appInfoState } from "@/lib/redux/features/appInfo";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { revertPathName } from "@/utils/pathName";
 import clsx from "clsx";
-import { usePathname, useRouter } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { IconSubTopic } from "./iconTopic";
 import { AllowExpandContext, IContextAllowExpand } from "./provider";
@@ -46,6 +51,11 @@ const IconProgress = ({ part, index, subTopicTag, listPlayed }: IProps) => {
     }
   }, [isCurrentPlaying, currentGame.id, part.id, listQuestion]);
 
+  // const searchParam = useSearchParams();
+  // console.log("🚀 ~ searchParam:", searchParam);
+  // const params = useParams();
+  // console.log("🚀 ~ params:", params);
+  // searchParam.
   return (
     <>
       <div
@@ -82,8 +92,9 @@ const IconProgress = ({ part, index, subTopicTag, listPlayed }: IProps) => {
               href: `study/${mainTopicTag}-practice-test`,
               appName: appInfo.appShortName,
             });
+            console.log("🚀 ~ onClick={ ~ _href:", _href);
 
-            router.push(_href);
+            router.replace(_href);
           }
         }}
       >
@@ -99,7 +110,7 @@ const IconProgress = ({ part, index, subTopicTag, listPlayed }: IProps) => {
         />
 
         <div className="max-w-14 text-center pt-1 text-[10px] text-[#212121] truncate">
-          {part.name}
+          Core {index + 1}
         </div>
       </div>
     </>

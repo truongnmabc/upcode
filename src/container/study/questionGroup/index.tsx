@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import AnswerSheet from "./answer/answerSheet";
 import FinalTestBtn from "./finalTestBtn/finalTestBtn";

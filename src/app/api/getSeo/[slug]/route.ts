@@ -12,11 +12,14 @@ export async function GET(
 ) {
   const { nextUrl } = request;
   const search = nextUrl.searchParams.get("search");
+  const type = nextUrl.searchParams.get("type");
+
+  const slug = (await params).slug;
+
+  const state = type && type === "final_test" ? search : `${slug}-${search}`;
 
   try {
-    const slug = (await params).slug;
-
-    const cachingValue = cache.get(search);
+    const cachingValue = cache.get(state);
     if (cachingValue) {
       return Response.json({
         data: cachingValue,
@@ -27,7 +30,7 @@ export async function GET(
     }
 
     const data = (await requestGetData({
-      url: `/wp-json/passemall/v1/get-info-state?stateSlug=${slug}-${search}`,
+      url: `/wp-json/passemall/v1/get-info-state?stateSlug=${state}`,
       config: {
         baseURL: "https://api.asvab-prep.com",
       },
@@ -39,7 +42,7 @@ export async function GET(
       content: data?.content,
     };
     if (data) {
-      cache.put(search, currentAppInfo, timeCaching);
+      cache.put(state, currentAppInfo, timeCaching);
 
       return Response.json({
         data: currentAppInfo,

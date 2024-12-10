@@ -133,7 +133,6 @@ const FN = ({ subTopic }: { subTopic: ITopic }) => {
         ctx.stroke();
       } else {
         const position = i % 2 === 0;
-
         drawCurvedLine(start, end, ctx, position);
       }
     }

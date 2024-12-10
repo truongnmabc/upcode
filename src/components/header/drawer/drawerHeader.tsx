@@ -11,6 +11,8 @@ import { Drawer } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
 import ItemDrawerFullTest from "./itemDrawer";
+import ListStudyDrawer from "./listStudy";
+import ListTestsDrawer from "./listTest";
 
 type IList = {
   handleClick: () => void;
@@ -111,12 +113,15 @@ const FN = ({
 
             router.push(
               revertPathName({
-                href: `/full-length-${appInfo?.appShortName}-practice-test`,
+                href: `/final_test/full-length-${appInfo?.appShortName}-practice-test`,
                 appName: appInfo.appShortName,
               })
             );
           }}
         />
+
+        <ListStudyDrawer setOpenMenuDrawer={setOpenMenuDrawer} />
+        <ListTestsDrawer setOpenMenuDrawer={setOpenMenuDrawer} />
         {list.map((item) => (
           <ItemDrawerFullTest
             key={item.name}
