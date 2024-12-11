@@ -1,4 +1,12 @@
 "use client";
+import { gameState } from "@/redux/features/game";
+import { IQueryOpt, setOptQuery } from "@/redux/features/study";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import initQuestionThunk from "@/redux/repository/game/initQuestion";
+import initTestQuestionThunk from "@/redux/repository/game/initTestQuestion";
+import beforeUnLoadThunk from "@/redux/repository/utils/reload";
+import { MathJaxContext } from "better-react-mathjax";
+import { useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useLayoutEffect } from "react";
 import BottomBtn from "./bottomBtn/bottomBtn";
 import ChoicesPanel from "./choicesPanel/choicesPanel";
@@ -6,21 +14,13 @@ import ExplanationDetail from "./explanation/explanationDetail";
 import ProgressQuestion from "./progress/progressQuestion";
 import QuestionContent from "./question/questionContent";
 import TitleQuestion from "./title/titleQuestion";
-import { IQueryOpt, setOptQuery } from "@/redux/features/study";
-import { useAppDispatch } from "@/redux/hooks";
-import initQuestionThunk from "@/redux/repository/game/initQuestion";
-import beforeUnLoadThunk from "@/redux/repository/utils/reload";
-import { MathJaxContext } from "better-react-mathjax";
-import { useSearchParams } from "next/navigation";
-import { db } from "@/db/db.model";
-import initTestQuestionThunk from "@/redux/repository/game/initTestQuestion";
 const FN = () => {
   const dispatch = useAppDispatch();
   const subTopicTag = useSearchParams().get("subTopic");
   const partTag = useSearchParams().get("tag");
   const type = useSearchParams().get("type");
   const testId = useSearchParams().get("testId");
-
+  const { isFetched } = useAppSelector(gameState);
   const handlePageReload = useCallback(() => {
     const data = localStorage.getItem("optQuery");
     if (data) {
@@ -64,8 +64,9 @@ const FN = () => {
   }, [subTopicTag, partTag, type, testId]);
 
   useLayoutEffect(() => {
-    handleGetData();
-  }, [subTopicTag, partTag, type, testId]);
+    if (isFetched) return;
+    // handleGetData();
+  }, [subTopicTag, partTag, type, testId, isFetched]);
 
   useLayoutEffect(() => {
     handlePageReload();

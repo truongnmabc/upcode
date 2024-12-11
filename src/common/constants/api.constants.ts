@@ -4,4 +4,5 @@ export const API_PATH = {
   GET_SEO: "/api/getSeo",
   GET_DATA_STUDY: "/api/study",
   GET_DATA_TOPICS: "/api/topics",
+  GET_QUESTION_BY_ID: "/api/getQuestion",
 };

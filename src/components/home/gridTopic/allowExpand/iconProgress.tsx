@@ -10,17 +10,24 @@ import initQuestionThunk from "@/redux/repository/game/initQuestion";
 import { revertPathName } from "@/utils/pathName";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { IconSubTopic } from "./iconTopic";
 import { AllowExpandContext, IContextAllowExpand } from "./provider";
 type IProps = {
   part: ITopic;
   index: number;
   subTopicTag: string;
-  listPlayed: IPartProgress[];
+  isCurrentPlaying?: IPartProgress;
+  listPass?: number[];
 };
 
-const IconProgress = ({ part, index, subTopicTag, listPlayed }: IProps) => {
+const IconProgress = ({
+  part,
+  index,
+  subTopicTag,
+  isCurrentPlaying,
+  listPass,
+}: IProps) => {
   const { appInfo } = useAppSelector(appInfoState);
   const { currentGame, listQuestion } = useAppSelector(gameState);
   const { mainTopicTag } = useContext<IContextAllowExpand>(AllowExpandContext);
@@ -28,9 +35,8 @@ const IconProgress = ({ part, index, subTopicTag, listPlayed }: IProps) => {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const [progress, setProgress] = useState(0);
-  const isCurrentPlaying = listPlayed.find((item) => item.id === part.id);
 
-  const handleListenerChange = async () => {
+  const handleListenerChange = useCallback(async () => {
     const result = await db.userProgress
       .where("parentId")
       .equals(part.id)
@@ -39,12 +45,44 @@ const IconProgress = ({ part, index, subTopicTag, listPlayed }: IProps) => {
     const pass = result.filter((item) => item.selectedAnswers?.correct);
 
     setProgress(Math.floor((pass.length / listQuestion.length) * 100));
-  };
+  }, [part.id, listQuestion]);
+
   useEffect(() => {
     if (isCurrentPlaying && currentGame.id && part.id) {
       handleListenerChange();
     }
   }, [isCurrentPlaying, currentGame.id, part.id, listQuestion]);
+
+  const handleClick = useCallback(async () => {
+    if (listPass?.includes(part.id)) {
+      const _href = revertPathName({
+        href: `finish/${mainTopicTag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${part?.tag}`,
+        appName: appInfo.appShortName,
+      });
+      return router.push(_href);
+    }
+    if (part.id === isCurrentPlaying?.id) {
+      // trackingEventGa4({
+
+      // })
+
+      const _href = revertPathName({
+        href: `study/${mainTopicTag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${part?.tag}`,
+        appName: appInfo.appShortName,
+      });
+
+      dispatch(
+        initQuestionThunk({
+          partTag: part?.tag,
+          subTopicTag,
+        })
+      );
+      if (pathname.includes("/study")) {
+        return router.replace(_href);
+      }
+      return router.push(_href);
+    }
+  }, [part, isCurrentPlaying]);
 
   return (
     <>
@@ -57,44 +95,12 @@ const IconProgress = ({ part, index, subTopicTag, listPlayed }: IProps) => {
           }
         )}
         key={index}
-        onClick={async () => {
-          if (isCurrentPlaying) {
-            // trackingEventGa4({
-
-            // })
-            // if (pathname.includes("/study")) {
-            //   dispatch(
-            //     initQuestionThunk({
-            //       partTag: part?.tag,
-            //       subTopicTag,
-            //     })
-            //   );
-            //   dispatch(
-            //     setOptQuery({
-            //       partTag: part?.tag,
-            //       subTopicTag: subTopicTag,
-            //     })
-            //   );
-            //   return;
-            // }
-
-            const _href = revertPathName({
-              href: `study/${mainTopicTag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${part?.tag}`,
-              appName: appInfo.appShortName,
-            });
-
-            router.replace(_href);
-          }
-        }}
+        onClick={handleClick}
       >
         <IconSubTopic
-          lock={!isCurrentPlaying ? true : false}
-          activeAnim={
-            isCurrentPlaying && currentGame.parentId === isCurrentPlaying.id
-              ? true
-              : false
-          }
-          isFinishThisLevel={isCurrentPlaying?.status === 1}
+          lock={part.id !== isCurrentPlaying?.id}
+          activeAnim={currentGame.parentId === part?.id}
+          isFinishThisLevel={listPass?.includes(part.id) || false}
           currentLevelScore={progress}
         />
 

@@ -6,6 +6,7 @@ import initQuestionThunk from "../repository/game/initQuestion";
 import { RootState } from "../store";
 import nextQuestionThunk from "../repository/game/nextQuestion";
 import choiceAnswer from "../repository/game/choiceAnswer";
+import initTestQuestionThunk from "../repository/game/initTestQuestion";
 
 export interface ICurrentGame extends IQuestion {
   localStatus: "unlock" | "pass" | "miss" | "lock";
@@ -26,6 +27,8 @@ export interface IGameReducer {
   time: number;
 
   type: "test" | "learn";
+  // Data  đã đx chuẩn bị chưa
+  isFetched: boolean;
 }
 const initGameReducer: IGameReducer = {
   currentGame: {
@@ -45,6 +48,7 @@ const initGameReducer: IGameReducer = {
   turn: 0,
   time: 60,
   type: "learn",
+  isFetched: false,
 };
 
 export const gameSlice = createSlice({
@@ -110,7 +114,24 @@ export const gameSlice = createSlice({
       }
     });
 
+    builder.addCase(initTestQuestionThunk.pending, (state, action) => {
+      state.isFetched = false;
+    });
+
+    builder.addCase(initTestQuestionThunk.fulfilled, (state, action) => {
+      state.isFetched = true;
+      const questions = action.payload.questions;
+      state.listQuestion = questions;
+      state.currentGame = questions[0];
+    });
+
+    builder.addCase(initQuestionThunk.pending, (state, action) => {
+      state.isFetched = false;
+    });
+
     builder.addCase(initQuestionThunk.fulfilled, (state, action) => {
+      state.isFetched = true;
+
       const progressData = action.payload.progressData;
 
       const questions = Array.isArray(action.payload.questions)
@@ -158,8 +179,9 @@ export const gameSlice = createSlice({
             !progressData.some((answer) => answer?.id === question?.id)
         );
 
-        // *NOTE : Nếu đã làm 1 lượt thì sẽ quai lại làm câu sai
         if (firstUnansweredIndex === -1) {
+          // *NOTE : Nếu đã làm 1 lượt thì sẽ quai lại làm câu sai
+
           const wrongAnswers = questions.filter(
             (question) =>
               !progressData.some(

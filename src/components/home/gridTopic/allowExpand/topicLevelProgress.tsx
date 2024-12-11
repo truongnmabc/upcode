@@ -6,7 +6,7 @@ import { studyState } from "@/redux/features/study";
 import { useAppSelector } from "@/redux/hooks";
 import { groupTopics } from "@/utils/math";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import IconProgress from "./iconProgress";
 
 type CanvasRenderingContext2DOrNull = CanvasRenderingContext2D | null;
@@ -26,7 +26,7 @@ function drawCurvedLine(
     x: (start.x + end.x) / 2 + (isRight ? 20 : -20),
     y: (start.y + end.y) / 2,
   };
-  const radius = Math.ceil(end.y - start.y) / 2;
+  const radius = Math.abs(Math.ceil(end.y - start.y)) / 2;
 
   if (ctx) {
     ctx.beginPath();
@@ -75,7 +75,7 @@ function getCenterPosition(
   };
 }
 
-const FN = ({ subTopic }: { subTopic: ITopic }) => {
+const TopicLevelProgress = ({ subTopic }: { subTopic: ITopic }) => {
   const arr = groupTopics(subTopic?.topics || [], 3);
 
   const { selectedSubTopics } = useAppSelector(studyState);
@@ -101,17 +101,21 @@ const FN = ({ subTopic }: { subTopic: ITopic }) => {
   }, [subTopic]);
 
   useEffect(() => {
+    if (!isExpand) return;
+
     const canvas = document.getElementById(
-      "lineCanvas"
+      `lineCanvas-${subTopic.id}`
     ) as HTMLCanvasElement | null;
+
     if (!canvas) return;
 
     const ctx: CanvasRenderingContext2DOrNull = canvas.getContext("2d");
     if (!ctx) return;
 
     const container = document.getElementById(
-      "container"
+      `container-${subTopic.id}`
     ) as HTMLDivElement | null;
+
     if (!container) return;
 
     canvas.width = container.offsetWidth;
@@ -122,7 +126,6 @@ const FN = ({ subTopic }: { subTopic: ITopic }) => {
     ctx.strokeStyle = "#fcb03b";
     ctx.lineWidth = 2;
     ctx.setLineDash([10, 5]);
-
     for (let i = 0; i < icons.length - 1; i++) {
       const start = getCenterPosition(icons[i], container);
       const end = getCenterPosition(icons[i + 1], container);
@@ -136,7 +139,13 @@ const FN = ({ subTopic }: { subTopic: ITopic }) => {
         drawCurvedLine(start, end, ctx, position);
       }
     }
-  }, []);
+
+    return () => {
+      if (ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    };
+  }, [subTopic]);
 
   return (
     <div
@@ -147,7 +156,7 @@ const FN = ({ subTopic }: { subTopic: ITopic }) => {
           hidden: !isExpand,
         }
       )}
-      id="container"
+      id={`container-${subTopic.id}`}
     >
       <div className="flex   flex-wrap gap-2 w-[200px]">
         {arr?.length > 0 &&
@@ -169,18 +178,22 @@ const FN = ({ subTopic }: { subTopic: ITopic }) => {
                   subTopicTag={subTopic.tag}
                   index={i}
                   key={i}
-                  listPlayed={listPlayed}
+                  isCurrentPlaying={listPlayed?.find(
+                    (item) => item.status === 0
+                  )}
+                  listPass={listPlayed
+                    ?.filter((item) => item.status === 1)
+                    ?.map((item) => item.id)}
                 />
               ))}
             </div>
           ))}
       </div>
       <canvas
-        id="lineCanvas"
+        id={`lineCanvas-${subTopic.id}`}
         className="absolute w-full h-full top-0 left-0  z-0"
       />
     </div>
   );
 };
-const TopicLevelProgress = React.memo(FN);
-export default TopicLevelProgress;
+export default React.memo(TopicLevelProgress);

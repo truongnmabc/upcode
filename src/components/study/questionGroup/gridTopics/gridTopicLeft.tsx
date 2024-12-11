@@ -36,24 +36,21 @@ const FN = () => {
 
   const [open, setOpen] = React.useState(type === "learn");
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  const handleClick = () => setOpen(!open);
 
   const handleGetData = async () => {
     const listData = await db.topics.toArray();
     setListMainTopics(
-      listData
-        .map((item, index) => ({
-          ...item,
-          id: Number(item.id),
-          color: RANDOM_COLORS[index],
-        }))
-        .sort((a, b) => {
-          if (a.id === selectedTopics) return -1;
-          if (b.id === selectedTopics) return 1;
-          return 0;
-        })
+      listData.map((item, index) => ({
+        ...item,
+        id: Number(item.id),
+        color: RANDOM_COLORS[index],
+      }))
+      // .sort((a, b) => {
+      //   if (a.id === selectedTopics) return -1;
+      //   if (b.id === selectedTopics) return 1;
+      //   return 0;
+      // })
     );
   };
 
