@@ -10,46 +10,43 @@ import { usePathname } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { AllowExpandContext, IContextAllowExpand } from "./provider";
 import TitleCollapse from "./titleCollapse";
+import { Collapse } from "@mui/material";
 
-const FN = () => {
+const AllowExpand = () => {
   const pathname = usePathname();
   const { color, mainTopic } =
     useContext<IContextAllowExpand>(AllowExpandContext);
-  const [currentPathname, setCurrentPathname] = useState<string | null>(null);
+  const currentPathname = convertPathName(pathname);
   const { selectedTopics } = useAppSelector(studyState);
   const isAllowExpand = selectedTopics === mainTopic?.id;
   const isMobile = useIsMobile();
 
-  useEffect(() => {
-    const path = convertPathName(pathname);
-    setCurrentPathname(path);
-  }, [pathname]);
-  if (currentPathname === null) return null;
-
-  if (!isMobile && currentPathname === RouterApp.Home) return <></>;
+  const open =
+    !isMobile && currentPathname === RouterApp.Home
+      ? false
+      : selectedTopics === mainTopic?.id;
   return (
-    <div
-      style={{
-        borderColor: isAllowExpand ? color : "transparent",
-      }}
-      className={ctx("bg-white transition-all p-3", {
-        "border border-t-0 rounded-bl-md rounded-br-md border-solid":
-          isAllowExpand && currentPathname === RouterApp.Home,
-        " rounded-md": currentPathname !== RouterApp.Home,
-        hidden: !isAllowExpand,
-      })}
-    >
-      <div className="flex gap-2 flex-col ">
-        {mainTopic?.topics &&
-          mainTopic?.topics?.length > 0 &&
-          mainTopic?.topics?.map((subTopic: ITopic, index) => (
-            <TitleCollapse subTopic={subTopic} key={index} />
-          ))}
+    <Collapse timeout="auto" unmountOnExit in={open}>
+      <div
+        style={{
+          borderColor: isAllowExpand ? color : "transparent",
+        }}
+        className={ctx("bg-white transition-all p-3", {
+          "border border-t-0 rounded-bl-md rounded-br-md border-solid":
+            isAllowExpand && currentPathname === RouterApp.Home,
+          " rounded-md": currentPathname !== RouterApp.Home,
+        })}
+      >
+        <div className="flex gap-2 flex-col ">
+          {mainTopic?.topics &&
+            mainTopic?.topics?.length > 0 &&
+            mainTopic?.topics?.map((subTopic: ITopic, index) => (
+              <TitleCollapse subTopic={subTopic} key={index} />
+            ))}
+        </div>
       </div>
-    </div>
+    </Collapse>
   );
 };
 
-const AllowExpand = React.memo(FN);
-
-export default AllowExpand;
+export default React.memo(AllowExpand);

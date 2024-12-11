@@ -8,6 +8,7 @@ import React, { useContext } from "react";
 import { AllowExpandContext, IContextAllowExpand } from "./provider";
 import TopicLevelProgress from "./topicLevelProgress";
 import ctx from "@/utils/mergeClass";
+import { Collapse } from "@mui/material";
 const FN = ({ subTopic }: { subTopic: ITopic }) => {
   const { color } = useContext<IContextAllowExpand>(AllowExpandContext);
   const { selectedSubTopics } = useAppSelector(studyState);
@@ -58,7 +59,9 @@ const FN = ({ subTopic }: { subTopic: ITopic }) => {
           <ExpandMore />{" "}
         </div>
       </div>
-      {isExpand && <TopicLevelProgress subTopic={subTopic} />}
+      <Collapse in={isExpand} unmountOnExit timeout="auto">
+        <TopicLevelProgress subTopic={subTopic} />
+      </Collapse>
     </div>
   );
 };

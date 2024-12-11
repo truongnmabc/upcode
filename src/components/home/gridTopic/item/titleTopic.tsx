@@ -4,7 +4,6 @@ import LazyLoadImage from "@/components/images";
 import MtUiRipple, { useRipple } from "@/components/ripple";
 import { db } from "@/db/db.model";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import SubTopicProgress from "@/models/progress/subTopicProgress";
 import Part from "@/models/topics/part";
 import { ITopic } from "@/models/topics/topics";
 import { appInfoState } from "@/redux/features/appInfo";
@@ -22,6 +21,66 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Priority from "./priority";
 import initQuestionThunk from "@/redux/repository/game/initQuestion";
+import { IPartProgress } from "@/models/progress/subTopicProgress";
+
+export const handleGetNextPart = async ({
+  parentId,
+  topic,
+}: {
+  parentId: number;
+  topic?: ITopic;
+}): Promise<{
+  tag?: string;
+  subTopicTag: string;
+  partId?: number;
+  subTopicId?: number;
+}> => {
+  const progress = await db.subTopicProgress
+    .where("parentId")
+    .equals(parentId)
+    .toArray();
+
+  if (!progress.length && topic) {
+    const firstTopic = topic.topics?.[0];
+    const firstSubTopic = firstTopic?.topics?.[0];
+
+    const part = firstTopic?.topics?.map((item) => ({
+      id: item.id || -1,
+      parentId: item.parentId,
+      status: 0,
+      totalQuestion: item?.totalQuestion || 0,
+      tag: item.tag,
+      turn: 1,
+    })) as IPartProgress[];
+
+    await db.subTopicProgress.add({
+      id: firstTopic?.id || 0,
+      parentId: topic.id,
+      part: part,
+      subTopicTag: firstTopic?.tag || "",
+      pass: false,
+    });
+
+    return {
+      tag: firstSubTopic?.tag || "",
+      subTopicTag: firstTopic?.tag || "",
+      partId: firstSubTopic?.id,
+      subTopicId: firstTopic?.id,
+    };
+  }
+
+  const incompleteProgress = progress.find(
+    (item) => !item.pass && item.part?.some((p) => p.status === 0)
+  );
+
+  const nextPart = incompleteProgress?.part?.find((p) => p.status === 0);
+
+  return {
+    tag: nextPart?.tag,
+    subTopicTag: incompleteProgress?.subTopicTag || "",
+    subTopicId: incompleteProgress?.id,
+  };
+};
 
 const TitleTopic = ({
   topic,
@@ -38,68 +97,14 @@ const TitleTopic = ({
 
   const isMobile = useIsMobile();
   const { selectedTopics } = useAppSelector(studyState);
-  const [isAllowExpand, setIsAllowExpand] = useState(false);
   const disPatch = useAppDispatch();
+
+  const isAllowExpand = selectedTopics === topic?.id;
 
   useEffect(() => {
     const path = convertPathName(pathname);
     setCurrentPathname(path);
   }, [pathname]);
-
-  useEffect(() => {
-    setIsAllowExpand(selectedTopics === topic?.id);
-  }, [selectedTopics]);
-
-  const fetchSubTopicData = async (
-    parentId: number
-  ): Promise<{
-    tag?: string;
-    subTopicTag: string;
-    partId?: number;
-    subTopicId?: number;
-  }> => {
-    const progress = await db.subTopicProgress
-      .where("parentId")
-      .equals(parentId)
-      .toArray();
-
-    if (!progress.length) {
-      const firstTopic = topic.topics?.[0];
-      const firstSubTopic = firstTopic?.topics?.[0];
-      const newPart = new Part(firstSubTopic);
-
-      await db.subTopicProgress.add(
-        new SubTopicProgress({
-          id: firstTopic?.id || 0,
-          parentId: topic.id,
-          part: [{ ...newPart, status: 0 }],
-          subTopicTag: firstTopic?.tag || "",
-        })
-      );
-
-      return {
-        tag: newPart?.tag || "",
-        subTopicTag: firstTopic?.tag || "",
-        partId: firstSubTopic?.id,
-        subTopicId: firstTopic?.id,
-      };
-    }
-
-    const incompleteProgress = progress.find(
-      (item) => !item.pass && item.part?.some((p) => p.status === 0)
-    );
-    console.log("🚀 ~ incompleteProgress:", incompleteProgress);
-
-    const nextPart = incompleteProgress?.part?.find((p) => p.status === 0);
-    console.log("🚀 ~ nextPart:", nextPart);
-
-    if (incompleteProgress) disPatch(selectSubTopics(incompleteProgress?.id));
-
-    return {
-      tag: nextPart?.tag,
-      subTopicTag: incompleteProgress?.subTopicTag || "",
-    };
-  };
 
   const handleClick: React.MouseEventHandler<HTMLDivElement> = async (e) => {
     onRippleClickHandler(e);
@@ -112,37 +117,32 @@ const TitleTopic = ({
     });
 
     if (!isMobile && currentPathname === RouterApp.Home) {
-      const { tag, subTopicTag, partId, subTopicId } = await fetchSubTopicData(
-        topic.id
-      );
+      const { tag, subTopicTag, partId, subTopicId } = await handleGetNextPart({
+        parentId: topic.id,
+        topic,
+      });
 
       const _href = revertPathName({
         href: `study/${topic.tag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${tag}`,
         appName: appInfo.appShortName,
       });
       disPatch(selectTopics(topic.id));
+      if (subTopicId) disPatch(selectSubTopics(subTopicId));
 
-      // if (tag && subTopicTag) {
-      //   disPatch(
-      //     initQuestionThunk({
-      //       partTag: tag,
-      //       subTopicTag,
-      //       partId,
-      //       subTopicId,
-      //     })
-      //   );
-
-      //   disPatch(
-      //     setOptQuery({
-      //       partTag: tag,
-      //       subTopicTag: subTopicTag,
-      //     })
-      //   );
-      // }
-
+      if (tag && subTopicTag) {
+        disPatch(
+          initQuestionThunk({
+            partTag: tag,
+            subTopicTag,
+            partId,
+            subTopicId,
+          })
+        );
+      }
       router.push(_href);
       return;
     }
+
     disPatch(selectTopics(isAllowExpand ? -1 : topic.id));
   };
 
@@ -155,7 +155,7 @@ const TitleTopic = ({
   return (
     <div
       className={ctx(
-        "flex items-center relative overflow-hidden h-full bg-white max-h-[74px] cursor-pointer w-full transition-all  border-solid border border-[#2121211F]",
+        "flex items-center relative overflow-hidden h-full bg-white max-h-11 sm:max-h-[74px] cursor-pointer w-full transition-all  border-solid border border-[#2121211F]",
         {
           "rounded-tl-md rounded-tr-md ": isAllowExpand,
           "rounded-md ": !isAllowExpand,

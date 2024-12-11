@@ -1,7 +1,7 @@
 "use client";
+import { handleGetNextPart } from "@/components/home/gridTopic/item/titleTopic";
 import MtUiRipple, { useRipple } from "@/components/ripple";
 import { db } from "@/db/db.model";
-import SubTopicProgress from "@/models/progress/subTopicProgress";
 import Part from "@/models/topics/part";
 import { ITopic } from "@/models/topics/topics";
 import { appInfoState } from "@/redux/features/appInfo";
@@ -18,7 +18,7 @@ import { revertPathName } from "@/utils/pathName";
 import { ExpandMore } from "@mui/icons-material";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 
 const ListStudyDrawer = ({
   setOpenMenuDrawer,
@@ -32,65 +32,16 @@ const ListStudyDrawer = ({
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  useEffect(() => {
-    const handleGetDataTopic = async () => {
-      const data = await db.topics.toArray();
-      if (data) setList(data);
-    };
-    handleGetDataTopic();
+  const handleGetDataTopic = useCallback(async () => {
+    const data = await db.topics.toArray();
+    if (data) setList(data);
   }, []);
 
-  const fetchSubTopicData = async (
-    topic: ITopic
-  ): Promise<{
-    tag?: string;
-    subTopicTag: string;
-    partId?: number;
-    subTopicId?: number;
-  }> => {
-    const parentId = topic.id;
-    const progress = await db.subTopicProgress
-      .where("parentId")
-      .equals(parentId)
-      .toArray();
+  useEffect(() => {
+    handleGetDataTopic();
+  }, [handleGetDataTopic]);
 
-    if (!progress.length) {
-      const firstTopic = topic.topics?.[0];
-      const firstSubTopic = firstTopic?.topics?.[0];
-      const newPart = new Part(firstSubTopic);
-
-      await db.subTopicProgress.add(
-        new SubTopicProgress({
-          id: firstTopic?.id || 0,
-          parentId: topic.id,
-          part: [{ ...newPart, status: 0 }],
-          subTopicTag: firstTopic?.tag || "",
-        })
-      );
-
-      return {
-        tag: newPart?.tag || "",
-        subTopicTag: firstTopic?.tag || "",
-        partId: firstSubTopic?.id,
-        subTopicId: firstTopic?.id,
-      };
-    }
-
-    const incompleteProgress = progress.find(
-      (item) => !item.pass && item.part?.some((p) => p.status === 0)
-    );
-
-    const nextPart = incompleteProgress?.part?.find((p) => p.status === 0);
-
-    if (incompleteProgress) dispatch(selectSubTopics(incompleteProgress?.id));
-
-    return {
-      tag: nextPart?.tag,
-      subTopicTag: incompleteProgress?.subTopicTag || "",
-    };
-  };
-
-  const handleClick = async (topic: ITopic) => {
+  const handleClick = useCallback(async (topic: ITopic) => {
     trackingEventGa4({
       eventName: "click_topic",
       value: {
@@ -98,14 +49,15 @@ const ListStudyDrawer = ({
         to: topic.tag,
       },
     });
-    const { tag, subTopicTag, partId, subTopicId } = await fetchSubTopicData(
-      topic
-    );
+    const { tag, subTopicTag, partId, subTopicId } = await handleGetNextPart({
+      parentId: topic.id,
+    });
     const _href = revertPathName({
-      href: `study/${topic.tag}-practice-test`,
+      href: `study/${topic.tag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${tag}`,
       appName: appInfo.appShortName,
     });
     dispatch(selectTopics(topic.id));
+    if (subTopicId) dispatch(selectSubTopics(subTopicId));
 
     if (tag && subTopicTag) {
       dispatch(
@@ -116,17 +68,10 @@ const ListStudyDrawer = ({
           subTopicId,
         })
       );
-
-      dispatch(
-        setOptQuery({
-          partTag: tag,
-          subTopicTag: subTopicTag,
-        })
-      );
     }
     setOpenMenuDrawer(false);
     router.push(_href);
-  };
+  }, []);
 
   return (
     <div className="p-3">

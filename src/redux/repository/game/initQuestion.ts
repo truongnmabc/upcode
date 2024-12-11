@@ -59,6 +59,7 @@ const initQuestionThunk = createAsyncThunk(
       progressData = await db.userProgress
         .where("parentId")
         .equals(res?.id)
+        .filter((item) => item.type === "learn")
         .toArray();
     }
 

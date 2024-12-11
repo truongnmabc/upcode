@@ -7,7 +7,6 @@ export interface ITopic {
   type: number;
   contentType: number;
   orderIndex: number;
-
   // NOTE: api khong tra ve
   topics?: ITopic[];
   description?: string;
@@ -55,18 +54,3 @@ export interface IProgress {
   mastered: number;
   notSeen: number;
 }
-
-// Update the function with proper types
-export const calculateTopicProgress = (progress: IProgress): number => {
-  const familiar = progress?.familiar ?? 0;
-  const mastered = progress?.mastered ?? 0;
-  const notSeen = progress?.notSeen ?? 0;
-  const total = familiar + mastered + notSeen;
-
-  if (total === 0) {
-    return 0;
-  }
-
-  const p = (familiar * 0.5 + mastered * 1) / total;
-  return Math.round(p * 100);
-};

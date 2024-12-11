@@ -3,7 +3,6 @@ import axiosInstance from "@/common/config/axios";
 import { API_PATH } from "@/common/constants/api.constants";
 import { db } from "@/db/db.model";
 import { IAppInfo } from "@/models/app/appInfo";
-import SubTopicProgress from "@/models/progress/subTopicProgress";
 import { IQuestion } from "@/models/question/questions";
 import { ITest } from "@/models/tests/tests";
 import Part, { IPart } from "@/models/topics/part";
@@ -23,6 +22,7 @@ export interface ITopic {
   topics: ITopic[];
   questions: IQuestion[];
   subTopicTag?: string;
+  totalQuestion: number;
 }
 
 interface IResDataTest {
@@ -43,41 +43,19 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
     }
   };
 
-  const processTreeData = async (
-    topics: ITopic[],
-    table: Table<Topic | IPart> | "subtopic"
-  ) => {
+  const processTreeData = async (topics: ITopic[]) => {
     for (const topic of topics) {
-      if (table === db.topics) {
-        const topicData = new Topic({
-          ...topic,
-          id: Number(topic.id),
-          topics: topic.topics?.map(
-            (item) =>
-              new Topic({
-                ...item,
-              })
-          ),
-        });
-
-        await addIfNotExists(db.topics, topicData.id, topicData);
-
-        if (topic.topics && topic.topics.length > 0) {
-          await processTreeData(topic.topics, "subtopic");
-        }
-      }
-      // } else if (table === "subtopic") {
-      //   if (topic.topics && topic.topics.length > 0) {
-      //     await processTreeData(topic.topics, db.part);
-      //   }
-      // } else if (table === db.part) {
-      //   const partData = new Part({
-      //     ...topic,
-      //     id: Number(topic.id),
-      //   });
-
-      //   await addIfNotExists(db.part, partData.id, partData);
-      // }
+      const topicData = new Topic({
+        ...topic,
+        id: Number(topic.id),
+        topics: topic.topics?.map(
+          (item) =>
+            new Topic({
+              ...item,
+            })
+        ),
+      });
+      await addIfNotExists(db.topics, topicData.id, topicData);
     }
   };
 
@@ -111,20 +89,20 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
   // *NOTE: init data
 
   const initDataSubTopicProgress = async (topic: ITopic) => {
-    const newPart = new Part(topic?.topics?.[0]);
-    await db.subTopicProgress.add(
-      new SubTopicProgress({
-        id: topic?.id || 0,
-        parentId: topic.parentId,
-        part: [
-          {
-            ...newPart,
-            status: 0,
-          },
-        ],
-        subTopicTag: topic?.tag || "",
-      })
-    );
+    await db.subTopicProgress.add({
+      id: topic?.id || 0,
+      parentId: topic.parentId,
+      part: topic?.topics?.map((item) => ({
+        id: item.id,
+        parentId: item.parentId,
+        status: 0,
+        totalQuestion: item.totalQuestion,
+        tag: item.tag,
+        turn: 1,
+      })),
+      subTopicTag: topic?.tag || "",
+      pass: false,
+    });
   };
 
   const initDataTest = async (tests: IResDataTest) => {
@@ -159,6 +137,7 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
     const [currentTopic, ...remainingTopics] = topics;
     const id = currentTopic.id;
 
+    // NOTE : Kiểm tra xem topci đó đã có data chưa.
     const exists = await db.topicStatus.get(id);
 
     if (!exists) {
@@ -197,20 +176,26 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
         tests: IResDataTest;
       } = response?.data?.data;
 
+      //*NOTE  Khởi tạo danh sách topic
+
       await db
         .transaction(
           "rw",
           db.topics,
-          async () => await processTreeData(topic, db.topics)
+          db.subTopicProgress,
+          async () => await processTreeData(topic)
         )
         .catch((error) => {
           console.log("error", error);
         });
+
+      // *NOTE Khởi tạo danh sách bài test
       await db
         .transaction("rw", db.tests, async () => await initDataTest(tests))
         .catch((error) => {
           console.log("error", error);
         });
+
       await fetchAndProcessTopicsRecursive(topic);
 
       console.log("End time init indexedDb data:", new Date().toISOString());

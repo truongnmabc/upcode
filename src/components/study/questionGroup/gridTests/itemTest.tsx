@@ -1,25 +1,31 @@
 import IconGridTest from "@/components/icon/iconGridTest";
 import { ITest } from "@/models/tests/tests";
 import { appInfoState } from "@/redux/features/appInfo";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import initTestQuestionThunk from "@/redux/repository/game/initTestQuestion";
 import { revertPathName } from "@/utils/pathName";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
 
 const ItemTestLeft = ({ test, index }: { test: ITest; index: number }) => {
   const router = useRouter();
   const { appInfo } = useAppSelector(appInfoState);
-
+  const dispatch = useAppDispatch();
   const testId = useSearchParams().get("testId");
-  const handleCLick = () => {
+  const handleCLick = useCallback(() => {
+    dispatch(
+      initTestQuestionThunk({
+        testId: String(test.id),
+      })
+    );
     const _href = revertPathName({
       href: `study/practice-test?type=test&testId=${test.id}`,
 
       appName: appInfo.appShortName,
     });
-
     router.replace(_href);
-  };
+  }, [test, dispatch]);
   return (
     <div
       className={clsx(
