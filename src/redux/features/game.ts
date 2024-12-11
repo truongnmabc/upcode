@@ -20,6 +20,12 @@ export interface IGameReducer {
   listWrongAnswers: number[];
   isFist: boolean;
   subTopicProgressId: number;
+  //  luot lam (nguoi dung co the lam lai)
+  turn: number;
+  // time test
+  time: number;
+
+  type: "test" | "learn";
 }
 const initGameReducer: IGameReducer = {
   currentGame: {
@@ -36,6 +42,9 @@ const initGameReducer: IGameReducer = {
   listWrongAnswers: [],
   isFist: true,
   subTopicProgressId: -1,
+  turn: 0,
+  time: 60,
+  type: "learn",
 };
 
 export const gameSlice = createSlice({

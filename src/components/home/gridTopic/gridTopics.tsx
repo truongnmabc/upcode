@@ -1,4 +1,4 @@
-import { IAppInfo } from "@/models/appInfo";
+import { IAppInfo } from "@/models/app/appInfo";
 import { ITopic } from "@/models/topics/topics";
 import clsx from "clsx";
 import TitleTopic from "./item/titleTopic";

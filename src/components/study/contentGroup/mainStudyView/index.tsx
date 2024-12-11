@@ -20,29 +20,30 @@ const FN = () => {
   const partTag = useSearchParams().get("tag");
   const type = useSearchParams().get("type");
   const testId = useSearchParams().get("testId");
-  // const handlePageReload = useCallback(() => {
-  //   const data = localStorage.getItem("optQuery");
-  //   if (data) {
-  //     const optQuery: IQueryOpt = JSON.parse(data);
-  //     if (optQuery.partTag && optQuery.subTopicTag) {
-  //       dispatch(
-  //         initQuestionThunk({
-  //           partTag: optQuery.partTag,
-  //           subTopicTag: optQuery.subTopicTag,
-  //         })
-  //       );
-  //       dispatch(
-  //         setOptQuery({
-  //           partTag: optQuery.partTag,
-  //           subTopicTag: optQuery.subTopicTag,
-  //         })
-  //       );
-  //     }
-  //     localStorage.removeItem("optQuery");
-  //   }
-  // }, [dispatch]);
 
-  const handleGetData = async () => {
+  const handlePageReload = useCallback(() => {
+    const data = localStorage.getItem("optQuery");
+    if (data) {
+      const optQuery: IQueryOpt = JSON.parse(data);
+      if (optQuery.partTag && optQuery.subTopicTag) {
+        dispatch(
+          initQuestionThunk({
+            partTag: optQuery.partTag,
+            subTopicTag: optQuery.subTopicTag,
+          })
+        );
+        dispatch(
+          setOptQuery({
+            partTag: optQuery.partTag,
+            subTopicTag: optQuery.subTopicTag,
+          })
+        );
+      }
+      localStorage.removeItem("optQuery");
+    }
+  }, [dispatch]);
+
+  const handleGetData = useCallback(async () => {
     if (type === "test") {
       console.log("test");
       dispatch(
@@ -60,28 +61,28 @@ const FN = () => {
         })
       );
     }
-  };
+  }, [subTopicTag, partTag, type, testId]);
 
   useLayoutEffect(() => {
     handleGetData();
   }, [subTopicTag, partTag, type, testId]);
 
-  // useLayoutEffect(() => {
-  //   handlePageReload();
-  // }, [handlePageReload]);
+  useLayoutEffect(() => {
+    handlePageReload();
+  }, [handlePageReload]);
 
-  // const handleBeforeUnload = useCallback(
-  //   () => dispatch(beforeUnLoadThunk()),
-  //   [dispatch]
-  // );
+  const handleBeforeUnload = useCallback(
+    () => dispatch(beforeUnLoadThunk()),
+    [dispatch]
+  );
 
-  // useEffect(() => {
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //   };
-  // }, [handleBeforeUnload]);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [handleBeforeUnload]);
   return (
     <MathJaxContext>
       <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
