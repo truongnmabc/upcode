@@ -58,12 +58,14 @@ function setScrollDownAuto(screen) {
 
 function getContactLink(contactMethod) {
     let appName = APP_SHORT_NAME.toLowerCase();
-    if (appName == "cdl") {
+    if (appName == "cdl" || appName == "cdl_v2") {
         if (contactMethod == "facebook") {
             return "https://www.facebook.com/CDL-prep-101878645343877";
         } else if (contactMethod == "twitter") {
             return "https://twitter.com/CLprep";
         } else if (contactMethod == "youtube") {
+            return "https://www.youtube.com/channel/UCke4KGWOxPP8R2aPVQTUAlA";
+        } else if (contactMethod == "linkedin") {
             return "https://www.youtube.com/channel/UCke4KGWOxPP8R2aPVQTUAlA";
         } else if (contactMethod == "email") {
             return "support@cdl-prep.com";
