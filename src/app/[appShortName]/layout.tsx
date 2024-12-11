@@ -10,7 +10,7 @@ import NotFound from "../not-found";
 import TestModal from "@/tests";
 import { Fragment } from "react";
 import "@/css/globals.css";
-import { IAppInfo } from "@/models/appInfo";
+import { IAppInfo } from "@/models/app/appInfo";
 import { IAppConfigData } from "@/redux/features/appConfig";
 
 const vampiro = Vampiro_One({

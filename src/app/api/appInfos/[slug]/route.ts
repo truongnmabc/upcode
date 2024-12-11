@@ -1,5 +1,5 @@
 import { timeCaching } from "@/common/constants";
-import { IAppInfo } from "@/models/appInfo";
+import { IAppInfo } from "@/models/app/appInfo";
 import { promises as fs } from "fs";
 import cache from "memory-cache";
 import path from "path";

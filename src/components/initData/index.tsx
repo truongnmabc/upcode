@@ -2,7 +2,7 @@
 import axiosInstance from "@/common/config/axios";
 import { API_PATH } from "@/common/constants/api.constants";
 import { db } from "@/db/db.model";
-import { IAppInfo } from "@/models/appInfo";
+import { IAppInfo } from "@/models/app/appInfo";
 import SubTopicProgress from "@/models/progress/subTopicProgress";
 import { IQuestion } from "@/models/question/questions";
 import { ITest } from "@/models/tests/tests";

@@ -1,4 +1,4 @@
-import { IAppInfo } from "@/models/appInfo";
+import { IAppInfo } from "@/models/app/appInfo";
 import React from "react";
 const FN = ({ appInfo }: { appInfo: IAppInfo }) => {
   return (
