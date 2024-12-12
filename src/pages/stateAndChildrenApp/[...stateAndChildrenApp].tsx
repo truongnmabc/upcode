@@ -1,6 +1,11 @@
 import { ITestInfo } from "@/models/TestInfo";
 import StoreProvider from "@/redux/StoreProvider";
-import { getHomeSeoContentApi, getHomeSeoContentStateApi, getSEOAndHeaderContentApi } from "@/services/home.service";
+import {
+    getHomeSeoContentApi,
+    getHomeSeoContentStateApi,
+    getSEOAndHeaderContentApi,
+    requestGetListBlock,
+} from "@/services/home.service";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { getLink } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
@@ -18,6 +23,51 @@ const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/Scro
 const SeoHeader = dynamic(() => import("@/components/seo/SeoHeader"));
 const HomeSingleApp = dynamic(() => import("@/container/single-app/HomeSingleApp"));
 
+export interface IPost {
+    ID: number;
+    post_author: string;
+    post_date: string;
+    post_date_gmt: string;
+    post_content: string;
+    post_title: string;
+    post_excerpt: string;
+    post_status: string;
+    comment_status: string;
+    ping_status: string;
+    post_password: string;
+    post_name: string;
+    to_ping: string;
+    pinged: string;
+    post_modified: string;
+    post_modified_gmt: string;
+    post_content_filtered: string;
+    post_parent: number;
+    guid: string;
+    menu_order: number;
+    post_type: string;
+    post_mime_type: string;
+    comment_count: string;
+    filter: string;
+}
+
+export interface IAuthor {
+    ID: string;
+    user_login: string;
+    user_pass: string;
+    user_nicename: string;
+    user_email: string;
+    user_url: string;
+    user_registered: string;
+    user_activation_key: string;
+    user_status: string;
+    display_name: string;
+}
+export interface IItemBlock {
+    post: IPost;
+    avatar: string;
+    author: IAuthor;
+}
+
 const ChildrenApp = ({
     listTopics,
     tests,
@@ -27,6 +77,7 @@ const ChildrenApp = ({
     homeSeoContent,
     titleSEO,
     _state,
+    listBlock,
 }: {
     listTopics?: ITopic[];
     tests?: ITestInfo[];
@@ -36,6 +87,7 @@ const ChildrenApp = ({
     homeSeoContent: string;
     titleSEO?: string;
     _state: string; // '_state' là dang slug, 'state' là dạng tên riêng
+    listBlock: IItemBlock[];
 }) => {
     // appInfo ở đây là của app con nha
     return (
@@ -48,6 +100,7 @@ const ChildrenApp = ({
                 listTopics={listTopics}
                 tests={tests}
                 _state={_state}
+                listBlock={listBlock}
             />
             <ScrollToTopArrow />
         </>
@@ -85,6 +138,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
         let titleAndDescSeo = await getSEOAndHeaderContentApi(false, _state, true);
 
+        let listBlock;
+        if (_state) {
+            listBlock = await requestGetListBlock({
+                // state: _state,
+                // *NOTE: để tạm do các bang khác chưa có data
+                state: "TX",
+            });
+        }
+
+        console.log("🚀 ~ listBlock:", listBlock);
+
         let t = titleAndDescSeo.titleSEO;
         let d = titleAndDescSeo.descriptionSEO;
 
@@ -104,6 +168,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 descriptionSEO,
                 keywordSEO: appInfo?.keywordSEO,
                 homeSeoContent: { content: titleAndDescSeo.description },
+                listBlock,
             },
         });
     } else {
