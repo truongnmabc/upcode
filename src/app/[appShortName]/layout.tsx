@@ -4,15 +4,14 @@ import { API_PATH } from "@/common/constants/api.constants";
 import AppThemeProvider from "@/common/theme/themeProvider";
 import AppLayout from "@/components/appLayout";
 import InitData from "@/components/initData";
-import type { Metadata } from "next";
-import { Poppins, Vampiro_One } from "next/font/google";
-import NotFound from "../not-found";
-import TestModal from "@/tests";
-import { Fragment } from "react";
 import "@/css/globals.css";
 import { IAppInfo } from "@/models/app/appInfo";
 import { IAppConfigData } from "@/redux/features/appConfig";
-// import { getSession } from "@/common/auth";
+import TestModal from "@/tests";
+import type { Metadata } from "next";
+import { Poppins, Vampiro_One } from "next/font/google";
+import { Fragment } from "react";
+import NotFound from "../not-found";
 
 const vampiro = Vampiro_One({
   weight: ["400"],
@@ -112,7 +111,6 @@ export default async function RootLayout({
   if (!appInfo || !appConfig) {
     return <NotFound />;
   }
-  // const session = await getSession();
   return (
     <Fragment>
       <main className={`${vampiro?.variable} ${poppins?.variable} font-sans`}>

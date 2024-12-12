@@ -9,7 +9,7 @@ import { sendEmailApi, verifiedCodeApi } from "@/services/home.service";
 import AppleIcon from "@mui/icons-material/Apple";
 import GoogleIcon from "@mui/icons-material/Google";
 import Divider from "@mui/material/Divider";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { MtUiButton } from "../button";
 import InputCodeVerify from "./inputCodeLogin";
@@ -71,7 +71,7 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
     }
   };
 
-  // const { data: session } = useSession();
+  const { data: session } = useSession();
   return (
     <div className="w-full sm:w-1/3 flex flex-col justify-between px-4 py-6 h-full">
       <div className="flex flex-col gap-8 ">
@@ -96,7 +96,7 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
                 type="default"
                 className="border-[#2121211f] rounded-md"
                 onClick={() => {
-                  signIn();
+                  signIn("google");
                 }}
                 size="large"
               >

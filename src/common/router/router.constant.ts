@@ -12,5 +12,6 @@ const RouterApp = {
   Score_Calculator: "score_calculator",
   Test: "test",
   Review: "review",
+  Billing: "billing",
 };
 export default RouterApp;

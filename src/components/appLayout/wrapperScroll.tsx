@@ -27,6 +27,7 @@ const WrapperScroll = ({ children }: { children: React.ReactNode }) => {
         {children}
         {isScrollRef && <ScrollToTopArrow scrollRef={scrollRef} />}
       </div>
+      //{" "}
     </SessionProvider>
   );
 };

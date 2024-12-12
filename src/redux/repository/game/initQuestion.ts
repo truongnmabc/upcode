@@ -1,7 +1,8 @@
 "use client";
+import { IStatusAnswer } from "@/components/study/contentGroup/mainStudyView/statusAnswer/statusAnswer";
 import { db } from "@/db/db.model";
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
-import { IQuestion } from "@/models/question/questions";
+import { IAnswer, IQuestion } from "@/models/question/questions";
 import TopicQuestion, { ITopicQuestion } from "@/models/question/topicQuestion";
 import { requestGetData } from "@/services/request";
 import { MyCrypto } from "@/utils/myCrypto";
@@ -14,8 +15,11 @@ type IInitQuestion = {
   subTopicId?: number;
 };
 
-interface IResInitQuestion extends ITopicQuestion {
-  progressData: IUserQuestionProgress[];
+interface IResInitQuestion {
+  progressData?: IUserQuestionProgress[] | null;
+  questions?: IQuestion[];
+  id: number;
+  parentId: number;
 }
 
 const initQuestionThunk = createAsyncThunk(
@@ -29,7 +33,7 @@ const initQuestionThunk = createAsyncThunk(
       .where("[subTopicTag+tag]")
       .equals([subTopicTag, partTag])
       .first();
-    let progressData;
+    let progressData: IUserQuestionProgress[] = [];
 
     const { partId, subTopicId } = rest;
 
@@ -41,13 +45,12 @@ const initQuestionThunk = createAsyncThunk(
         },
       })) as IQuestion[];
 
-      const init = new TopicQuestion();
       return {
-        ...init,
         questions: data.map((item) => ({
           ...item,
           text: MyCrypto.encrypt(item.text),
           explanation: MyCrypto.encrypt(item.explanation),
+          localStatus: "new",
         })),
         progressData: [],
         id: partId || 0,
@@ -63,12 +66,32 @@ const initQuestionThunk = createAsyncThunk(
         .toArray();
     }
 
+    const question = res?.questions?.map((que) => {
+      const progress = progressData?.find((pro) => que.id === pro.id);
+
+      const selectedAnswers = progress?.selectedAnswers || [];
+
+      return {
+        ...que,
+        selectedAnswer: !progress
+          ? null
+          : selectedAnswers[selectedAnswers?.length - 1],
+        localStatus: (!progress
+          ? "new"
+          : selectedAnswers?.find((pro) => pro.correct)
+          ? "correct"
+          : "incorrect") as IStatusAnswer,
+      };
+    });
+
     const result = {
-      ...res,
+      questions: question,
       progressData,
+      id: res.id,
+      parentId: res.parentId,
     };
 
-    return result as IResInitQuestion;
+    return result;
   }
 );
 

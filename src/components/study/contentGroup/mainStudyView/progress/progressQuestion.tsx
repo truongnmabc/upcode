@@ -4,7 +4,8 @@ import { useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
 import "./progress.css";
 const ProgressQuestion = () => {
-  const { listQuestion, indexCurrentQuestion } = useAppSelector(gameState);
+  const { listQuestion, indexCurrentQuestion, currentGame } =
+    useAppSelector(gameState);
   const isMobile = useIsMobile();
 
   if (isMobile) return <></>;
@@ -14,13 +15,13 @@ const ProgressQuestion = () => {
         <div
           key={index}
           className={ctx("h-full w-full", {
-            "bg-[#21212133]": item.localStatus === "lock",
-            "bg-[#5497FF]":
-              indexCurrentQuestion === index || item.localStatus === "unlock",
+            "bg-[#21212133]": item.localStatus === "new",
+            "bg-[#5497FF]": currentGame.id === item.id,
             "bg-[#07C58C]":
-              item.localStatus === "pass" && indexCurrentQuestion !== index,
+              item.localStatus === "correct" && indexCurrentQuestion !== index,
             "bg-[#FF746D]":
-              item.localStatus === "miss" && indexCurrentQuestion !== index,
+              item.localStatus === "incorrect" &&
+              indexCurrentQuestion !== index,
           })}
         ></div>
       ))}

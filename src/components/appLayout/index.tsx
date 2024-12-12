@@ -3,7 +3,7 @@ import HeaderApp from "@/components/header";
 import React, { Fragment } from "react";
 import SheetApp from "../sheetApp";
 import WrapperScroll from "./wrapperScroll";
-import type { Session } from "next-auth";
+
 const FN = ({ children }: { children: React.ReactNode }) => {
   return (
     <Fragment>

@@ -74,7 +74,7 @@ const ModalTest = ({ open, setOpen }: IPros) => {
       const question = data?.questions?.map(
         (item) => item.answers.find((item) => item.correct)?.text
       );
-      console.log("🚀 ~ handleTets ~ question:", question);
+      // console.log("🚀 ~ handleTets ~ question:", question);
     };
     handleTets();
   }, []);

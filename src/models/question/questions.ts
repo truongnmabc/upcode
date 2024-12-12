@@ -1,14 +1,16 @@
+import { IStatusAnswer } from "@/components/study/contentGroup/mainStudyView/statusAnswer/statusAnswer";
+
 export interface IAnswer {
   correct: boolean;
   explanation: string;
   id: number;
   index: number;
   text: string;
+  turn?: number;
 }
 
 export interface IQuestion {
   answers: IAnswer[];
-  appId: number;
   contentType?: number;
   createDate?: number;
   databaseId?: number;
@@ -17,7 +19,6 @@ export interface IQuestion {
   hint: string;
   id: number;
   image: string;
-  index: number;
   lastUpdate?: number;
   level: number;
   oldId?: number;
@@ -26,4 +27,7 @@ export interface IQuestion {
   status: number;
   syncStatus: number;
   text: string;
+
+  localStatus?: IStatusAnswer;
+  selectedAnswer?: IAnswer | null;
 }
