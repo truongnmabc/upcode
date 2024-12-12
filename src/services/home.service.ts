@@ -113,3 +113,15 @@ export const getSEOAndHeaderContentApi = async (isHomePage: boolean, pathname?: 
 
     return result;
 };
+
+export const requestGetListBlock = async ({ state }: { state: string }) => {
+    try {
+        const response = await GET({
+            url: `https://cdl-prep.com/wp-json/passemall/v1/get-post-by-category-name?category_name=${state}`,
+        });
+        return response;
+    } catch (err) {
+        console.log("🚀 ~ requestGetListBlock ~ err:", err);
+        return null;
+    }
+};

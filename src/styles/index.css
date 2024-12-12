@@ -1,4 +1,10 @@
 @import "config.css"; /*  Using a string */
+
+@import "./tailwinds.css";
+@import "./styles.css";
+
+
+
 html,
 body {
     /* để customize drawer, dialog neen set height của 2 cái này  là 100% và overflow = hidden để tránh bị trượt khi bật popup/drawer, còn thành phần giúp scroll là __next*/
@@ -38,7 +44,8 @@ p {
     color: #212121;
 }
 
-.flex {
+
+/* .flex {
     display: flex;
 }
 .align-center {
@@ -58,7 +65,7 @@ p {
 
 .overflow-auto {
     overflow: scroll;
-}
+} */
 
 /* width */
 .overflow-auto::-webkit-scrollbar {
@@ -171,3 +178,20 @@ html {
     user-select: none; /* Standard syntax */
     /* pointer-events: none; */
 }
+
+
+.mask-gradient {
+    mask-image: radial-gradient(
+      circle at top left,
+      rgba(0, 0, 0, 1) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    -webkit-mask-image: radial-gradient(
+      circle at top left,
+      rgba(0, 0, 0, 1) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+  
+
+  

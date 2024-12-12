@@ -5,7 +5,7 @@
         margin: 0;
     }
     .landing-title-0 {
-        padding-top: 24px;
+        // padding-top: 24px;
 
         .landing-title-11 {
             .title-h1 {
@@ -29,7 +29,9 @@
             }
         }
         .landing-title-12 {
-            display: none;
+            // display: none;
+            margin-top: 12px;
+            margin-bottom: 16px;
             text-align: center;
         }
     }
@@ -53,7 +55,7 @@
     }
     @media screen and (min-width: 769px) {
         .landing-title-0 {
-            padding-top: 36px;
+            padding-top: 48px;
             padding-bottom: 12px;
             .landing-title-11 {
                 .title-h1 {
