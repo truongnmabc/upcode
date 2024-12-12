@@ -21,7 +21,7 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
             <div className="cluster-infor-title  w-1/2  flex h-full">
                 <div
                     className="cluster-img-info   flex flex-col justify-end flex-end pl-[80px] pb-[48px]
-      bg-[url('/images/contacts/cdl/truck-contact-page.png')] bg-cover bg-center h-[885px]  w-full"
+      bg-[url('/public/images/contacts/cdl/truck-contact-page.png')] bg-cover bg-center h-[885px]  w-full"
                 >
                     <div className="title text-white text-[32px] leading-[48px] font-semibold text-left ">
                         Contact Information

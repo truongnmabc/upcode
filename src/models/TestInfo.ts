@@ -8,6 +8,7 @@ export interface ITestInfo {
     title: string;
     totalQuestion: number;
     stateTag: string;
+    img?: string;
 }
 
 export default class TestInfo implements ITestInfo {

@@ -5,6 +5,7 @@ import getCountryAPI from "@/utils/getCountryAPI";
 import { Provider } from "react-redux";
 import mediaQuery from "css-mediaquery";
 import "../styles/index.css";
+
 import { wrapper } from "@/redux/store";
 // function App(props: any) {
 function App({ Component, ...rest }: any) {
