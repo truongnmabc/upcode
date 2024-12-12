@@ -5,17 +5,13 @@ import convertToJSONObject from "@/utils/convertToJSONObject";
 import { getAppInfo } from "@/utils/getAppInfo";
 import StoreProvider from "@/redux/StoreProvider";
 import SeoHeader from "@/components/seo/SeoHeader";
+import Layout2 from "@/components/layout/layout-2/Layout2";
 
 const AboutUsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
     return (
         <>
             <SeoHeader title={"About us – ABC Elearning"} description={""} keyword={""} />
-            <>
-                <div id="page" className="site desktop">
-                    <StoreProvider webData={{ appId: appInfo.appId, type: "about-us" }} appInfo={appInfo} />
-                    <AboutUsContainer appInfo={appInfo} />
-                </div>
-            </>
+            <AboutUsContainer appInfo={appInfo} />
         </>
     );
 };

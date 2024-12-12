@@ -3,8 +3,6 @@
 @import "./tailwinds.css";
 @import "./styles.css";
 
-
-
 html,
 body {
     /* để customize drawer, dialog neen set height của 2 cái này  là 100% và overflow = hidden để tránh bị trượt khi bật popup/drawer, còn thành phần giúp scroll là __next*/
@@ -43,7 +41,6 @@ h5,
 p {
     color: #212121;
 }
-
 
 /* .flex {
     display: flex;
@@ -168,6 +165,9 @@ html {
         /* chỗ nào dùng class này thì chú ý thêm !important vào trường display */
         display: block;
     }
+    .max-w-component-desktop {
+        max-width: 100%;
+    }
 }
 
 .blur-content {
@@ -179,19 +179,11 @@ html {
     /* pointer-events: none; */
 }
 
+.max-w-component-desktop {
+    max-width: 1206px;
+}
 
 .mask-gradient {
-    mask-image: radial-gradient(
-      circle at top left,
-      rgba(0, 0, 0, 1) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    -webkit-mask-image: radial-gradient(
-      circle at top left,
-      rgba(0, 0, 0, 1) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
-  
-
-  
+    mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+}
