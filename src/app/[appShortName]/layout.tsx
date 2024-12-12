@@ -12,6 +12,7 @@ import { Fragment } from "react";
 import "@/css/globals.css";
 import { IAppInfo } from "@/models/app/appInfo";
 import { IAppConfigData } from "@/redux/features/appConfig";
+// import { getSession } from "@/common/auth";
 
 const vampiro = Vampiro_One({
   weight: ["400"],
@@ -111,7 +112,7 @@ export default async function RootLayout({
   if (!appInfo || !appConfig) {
     return <NotFound />;
   }
-
+  // const session = await getSession();
   return (
     <Fragment>
       <main className={`${vampiro?.variable} ${poppins?.variable} font-sans`}>

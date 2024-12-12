@@ -4,9 +4,10 @@ import React, { useRef, useState } from "react";
 import ScrollToTopArrow from "../scrollTop";
 import { SessionProvider } from "next-auth/react";
 
-const FN = ({ children }: { children: React.ReactNode }) => {
+const WrapperScroll = ({ children }: { children: React.ReactNode }) => {
   const [isScrollRef, setIsShowRef] = useState(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+
   return (
     <SessionProvider>
       <div
@@ -29,5 +30,4 @@ const FN = ({ children }: { children: React.ReactNode }) => {
     </SessionProvider>
   );
 };
-const WrapperScroll = React.memo(FN);
-export default WrapperScroll;
+export default React.memo(WrapperScroll);
