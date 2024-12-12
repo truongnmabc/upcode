@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/features/user";
 import Routes from "@/config/routes";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
+import GetPro from "../icon/GetPro";
 const DownloadAppV4 = dynamic(() => import("../homepage/DownloadAppV4"));
 
 const HeaderV4 = ({
@@ -61,12 +62,39 @@ const HeaderV4 = ({
                         <img src={getSrcLogo()} alt={"logo-" + APP_SHORT_NAME} />
                     </Link>
                 </div>
-                <div className="flex">
+                <div className="cluster-right-header flex">
                     {haveGetProBtn && (
                         <a className="header-menu-v4 get-pro" href={Routes.UPGRADE_PRO}>
+                            <GetPro />
                             <span>Get Pro</span>
                         </a>
                     )}
+                    <div
+                        className="login-header"
+                        onClick={() => {
+                            if (!!userInfo) {
+                                dispatch(logout());
+                                ga.event({
+                                    action: "log_out",
+                                    params: {},
+                                });
+                                if (window.location.pathname.includes("billing")) {
+                                    window.location.href = "/";
+                                }
+                            } else {
+                                ga.event({
+                                    action: "click_login",
+                                    params: {},
+                                });
+                                if (!openDialog) setOpenDialog(true);
+                                if (!open) {
+                                    setOpen(true);
+                                }
+                            }
+                        }}
+                    >
+                        {!userInfo ? "Log in" : "Log out"}
+                    </div>
                     <div
                         className="header-menu-v4"
                         onClick={() => {
@@ -79,10 +107,11 @@ const HeaderV4 = ({
                             });
                         }}
                     >
-                        <span>Menu</span>
+                        <span className="text-nemu">Menu</span>
                         <MenuIcon />
                     </div>
                 </div>
+
                 <SwipeableDrawer
                     open={openMenuDrawer}
                     onClose={() => setOpenMenuDrawer(false)}
