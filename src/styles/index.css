@@ -161,6 +161,9 @@ html {
         /* chỗ nào dùng class này thì chú ý thêm !important vào trường display */
         display: block;
     }
+    .max-w-component-desktop {
+        max-width: 100%;
+    }
 }
 
 .blur-content {
@@ -170,4 +173,8 @@ html {
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
     /* pointer-events: none; */
+}
+
+.max-w-component-desktop {
+    max-width: 1206px;
 }

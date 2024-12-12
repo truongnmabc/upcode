@@ -3,7 +3,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
 import dataAboutUs from "../../data/about-us-member.json";
 // import SectionFooter from "../../components/SectionHome/SectionFooter/SectionFooter";
@@ -17,7 +17,11 @@ import MyContainer from "@/components/v4-material/MyContainer";
 import "../../styles/slick.css";
 import "../../styles/slick.min.css";
 import "../../styles/slick-theme.min.css";
-
+import Layout2 from "@/components/layout/layout-2/Layout2";
+import CoreValueIcon from "@/components/icon/about/CoreValueIcon";
+import MissionIcon from "@/components/icon/about/MissionIcon";
+import VisionIcon from "@/components/icon/about/VisionIcon";
+import MemberAbout from "../../data/about-us-member.json";
 const urlStorage = "https://storage.googleapis.com/micro-enigma-235001.appspot.com/about-us";
 const listApp = [
     {
@@ -117,6 +121,45 @@ const listApp = [
         url: "https://worksheetzone.org",
     },
 ];
+const contentPreview = [
+    "Welcome to CDL Prep, owned by ABC Elearning.",
+    "CDL Prep is a trusted resource designed to help you pass your Commercial Driver’s License exams. Our platform offers expertly crafted practice questions, and insightful blog posts on CDL topics, requirements, and regulations.",
+    "CDL Prep is here to support your learning journey with resources that are accessible, effective, and tailored to help you succeed in your CDL career in your state.",
+];
+const listRecord = [
+    {
+        summary: "6 Years of Establishment",
+        contentR: "With 6+ years of experience, CDL Prep has supported aspiring drivers in their test preparation.",
+    },
+    {
+        summary: "1.4M+ Users",
+        contentR: "More than 200.000 users have trusted CDL Prep for comprehensive and effective CDL practice tests.",
+    },
+    {
+        summary: "96% Passing Rate",
+        contentR: "Our users have achieved a 96% passing rate, a testament to our quality and effectiveness.",
+    },
+];
+const introAboutUs = [
+    {
+        title: "Mission",
+        color: "#FF6E65",
+        content:
+            "Deliver expertly designed practice questions, study materials, and reliable support to ensure a smooth and successful journey into the professional driving industry.",
+    },
+    {
+        title: "Vision",
+        color: "#897BFF",
+        content:
+            "To be the go-to platform for CDL preparation for drivers to be confident, well-prepared, and able to pursue rewarding careers on the road.",
+    },
+    {
+        title: "Core Value",
+        color: "#FFBC3F",
+        content:
+            "Provide top-quality, accurate, and up-to-date CDL prep resources, make them accessible and affordable to all, and ensure content is reliable, and crafted by experts",
+    },
+];
 const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
     const router = useRouter();
     // const isMobile = useMediaQuery("(max-width:780px)");
@@ -126,32 +169,73 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
         let logo = `/images/${APP_SHORT_NAME}/logo-dark.png`;
         return logo;
     };
+
     return (
-        <div className="about-us-container">
-            <div className="about-us-header">
-                <Container sx={{ zIndex: 1, position: "relative" }}>
-                    <div className="logo-and-contact">
-                        <Link href="/">
-                            <img src={getSrcLogo()} alt={"logo-" + APP_SHORT_NAME} />
-                        </Link>
-                        <Button variant="text" className="contacts-btn" onClick={() => router.push(Routes.CONTACTS)}>
-                            Contacts
-                        </Button>
+        <Layout2 appInfo={appInfo} listTopics={[]} tests={[]}>
+            <div className="about-us-container">
+                <div className="about-us-top">
+                    <div className="cluster-info-title max-w-component-desktop">
+                        <div className="content-about-us">
+                            <div className="title">ABOUT US</div>
+                            <div className="list-contents" id="list-contents">
+                                {contentPreview.map((content, index) => (
+                                    <div className="content" key={index} id={`content-about-us-${index}`}>
+                                        {content}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="list-records">
+                            {listRecord.map((record, index) => (
+                                <div className="record" key={index}>
+                                    <div className="summary">{record.summary}</div>
+                                    <div className="content">{record.contentR}</div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                    <h1 className="title-about-us">ABOUT US</h1>
-                    <p className="description-header">ABC E-learning: Simplify your learning</p>
-                    <Button variant="text" className="contacts-bottom" onClick={() => router.push(Routes.CONTACTS)}>
-                        Contacts
-                    </Button>
-                </Container>
-                <div className="background-header"></div>
+                </div>
+                <div className="about-us-bottom">
+                    <div className="cluster-intro-about-us max-w-component-desktop">
+                        <div className="item-intro">
+                            <MissionIcon />
+                            <div className="title" style={{ backgroundColor: introAboutUs[0].color }}>
+                                {introAboutUs[0].title}
+                            </div>
+                            <div className="content">{introAboutUs[0].content}</div>
+                        </div>
+                        <div className="item-intro">
+                            <VisionIcon />
+                            <div className="title" style={{ backgroundColor: introAboutUs[1].color }}>
+                                {introAboutUs[1].title}
+                            </div>
+                            <div className="content">{introAboutUs[1].content}</div>
+                        </div>
+                        <div className="item-intro">
+                            <CoreValueIcon />
+                            <div className="title" style={{ backgroundColor: introAboutUs[2].color }}>
+                                {introAboutUs[2].title}
+                            </div>
+                            <div className="content">{introAboutUs[2].content}</div>
+                        </div>
+                    </div>
+                    <div className="meet-the-team max-w-component-desktop">
+                        <div className="title-meet-the-team">Meet The Team</div>
+                        <div className="members">
+                            {MemberAbout.map((item, index) => (
+                                <div className="info-member" key={index}>
+                                    <div className="avatar">
+                                        <img src="/images/about/hello-there-avatar.png" alt="" />
+                                    </div>
+                                    <div className="name">{item.name}</div>
+                                    <div className="position">{item.position}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <OurTeamSection></OurTeamSection>
-            <WhoWeAre></WhoWeAre>
-            <WhatWeHave></WhatWeHave>
-            <LearningNetwork></LearningNetwork>
-            <Footer1 appInfo={appInfo}></Footer1>
-        </div>
+        </Layout2>
     );
 };
 
