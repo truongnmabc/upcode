@@ -13,6 +13,8 @@ import "./HomeSingleApp.scss";
 import GridTopic from "@/components/homepage/GridTopic";
 import dynamic from "next/dynamic";
 import { capitalizeFirstWord, getLink } from "@/utils";
+import NewHome from "./newHome";
+import { IItemBlock } from "@/pages/stateAndChildrenApp/[...stateAndChildrenApp]";
 const ListState = dynamic(() => import("../../components/homepage/ListState"), {
     ssr: false,
     // loading: () => <div className="v4-border-radius" style={{ height: "16px", background: "#212121b2" }} />,
@@ -24,12 +26,14 @@ const HomeSingleApp = ({
     homeSeoContent,
     tests,
     _state = "",
+    listBlock,
 }: {
     appInfo: IAppInfo;
     listTopics: ITopic[];
     homeSeoContent: any;
     tests: ITestInfo[];
     _state: string;
+    listBlock?: IItemBlock[];
 }) => {
     useEffect(() => {
         if (window) {
@@ -130,66 +134,21 @@ const HomeSingleApp = ({
                         </MyContainer>
                     </>
                 ) : (
-                    <MyContainer>
-                        <div className="landing-title-0">
-                            <div className="landing-title-11">
-                                <h1 className="title-h1">
-                                    <span className="landing-title-21">{`${stateName(_state)} ${
-                                        appInfo?.appName
-                                    } Practice Test`}</span>
-                                    <span className="landing-title-22">
-                                        Ace The <strong className="v4-font-semi-bold">{appInfo?.appName}</strong> On First Try
-                                    </span>
-                                </h1>
-                            </div>
-                            <div className="landing-title-12">
-                                {listTopics.length > 1
-                                    ? `Our free ${stateName(_state)} ${appInfo.appName} practice tests feature all ${stateName(
-                                          _state
-                                      )} ${
-                                          appInfo.appName
-                                      } test subjects. We recommend taking at least one practice exam from every subject to guarantee your success at your local testing location. To get started, choose a category from the list below and practice them!`
-                                    : `Our free ${stateName(_state)} ${appInfo.appName} practice tests feature all ${stateName(
-                                          _state
-                                      )} ${
-                                          appInfo.appName
-                                      } test subjects. We recommend taking all practice questions to guarantee your success at your local testing location.`}
-                            </div>
-                        </div>
-                        <div className="v4-landing-topic-0">
-                            <h2>{`Practice ${stateName(_state)} ${appInfo.appName} Test By Topics`}</h2>
-                            <GridTopic
-                                place="home"
-                                listTopics={listTopics}
-                                appInfo={appInfo}
-                                allowExpand={!isDesktop}
-                                _state={_state}
-                            />
-                        </div>
-
-                        <div className="v4-landing-practice-test-0">
-                            <h2>{`Take Full ${stateName(_state)} ${appInfo.appName} Practice Test`}</h2>
-                            {tests.map((test, index) => (
-                                <div key={index} style={{ marginTop: index != 0 ? 16 : 0 }}>
-                                    <TestBanner key={index} appInfo={appInfo} test={test} index={index} />
-                                </div>
-                            ))}
-                        </div>
-                        <div className="v4-landing-banner-download-app-0">
-                            <h2>{`Prepare to Pass ${stateName(_state)} ${appInfo.appName} on Any Devices`}</h2>
-                            <BannerDownloadApp appInfo={appInfo} device={isDesktop ? "desktop" : "mobile"} />
-                        </div>
-                        <div className="v4-landing-seo-content-0">
-                            <SeoContentComponentV2 homeSeoContent={homeSeoContent} />
-                        </div>
-                    </MyContainer>
+                    <NewHome
+                        listTopics={listTopics}
+                        tests={tests}
+                        _state={stateName(_state)}
+                        appInfo={appInfo}
+                        // homeSeoContent={homeSeoContent}
+                        listBlock={listBlock}
+                    />
                 )}
             </div>
         </Layout2>
     );
 };
 
-const stateName = (state: string) => {
+export const stateName = (state: string) => {
     return capitalizeFirstWord(state.replaceAll("-", " "));
 };
 export default HomeSingleApp;

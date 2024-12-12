@@ -5,7 +5,7 @@ import { ITestInfo } from "@/models/TestInfo";
 import { ITopic } from "@/models/Topic";
 import StoreProvider from "@/redux/StoreProvider";
 import { callApi } from "@/services";
-import { getHomeSeoContentApi } from "@/services/home.service";
+import { getHomeSeoContentApi, requestGetListBlock } from "@/services/home.service";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { setScrollDownAuto } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
@@ -73,12 +73,14 @@ export default function Home({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
+    console.error("🚀 ~ constgetStaticProps:GetStaticProps= ~ context:", context.params);
     let listTopics = []; // topics
     let appInfo: IAppInfo | null = getAppInfo();
     let tests = []; // tests
     let homeSeoContent;
     let listAppInfo = [];
     let _isParentApp = isParentApp();
+
     if (_isParentApp) {
         listAppInfo = readAllAppInfos();
         listAppInfo = listAppInfo.filter((w: any) => w.appId).map((w: any) => new AppInfo(w));
@@ -98,6 +100,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     if (homeSeoContent) {
         homeSeoContent.content = replaceYear(homeSeoContent.content);
     }
+
     // let rankMathTitle = appInfo?.rank_math_title;
     // if (appInfo && rankMathTitle) {
     //     rankMathTitle = rankMathTitle?.replace("%title%", appInfo.title).replace("%page%", "");
