@@ -1,6 +1,7 @@
 import { db } from "@/db/db.model";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
+import { IStatusAnswer } from "@/components/study/contentGroup/mainStudyView/statusAnswer/statusAnswer";
 
 const nextQuestionThunk = createAsyncThunk(
   "nextQuestionThunk",
@@ -28,7 +29,7 @@ const nextQuestionThunk = createAsyncThunk(
         nextQuestion: {
           ...listQuestion[nextLever],
           selectedAnswer: null,
-          localStatus: "unlock" as "unlock" | "pass" | "miss" | "lock",
+          localStatus: "new" as IStatusAnswer,
         },
       };
     }

@@ -7,10 +7,22 @@ import { RootState } from "../store";
 import nextQuestionThunk from "../repository/game/nextQuestion";
 import choiceAnswer from "../repository/game/choiceAnswer";
 import initTestQuestionThunk from "../repository/game/initTestQuestion";
+import { IStatusAnswer } from "@/components/study/contentGroup/mainStudyView/statusAnswer/statusAnswer";
 
-export interface ICurrentGame extends IQuestion {
-  localStatus: "unlock" | "pass" | "miss" | "lock";
-  selectedAnswer: IAnswer | null;
+export interface ICurrentGame
+  extends Omit<
+    IQuestion,
+    | "createDate"
+    | "databaseId"
+    | "hasChild"
+    | "hint"
+    | "image"
+    | "lastUpdate"
+    | "oldId"
+    | "paragraphId"
+  > {
+  localStatus?: IStatusAnswer;
+  selectedAnswer?: IAnswer | null;
 }
 const init = new UserQuestionProgress();
 export interface IGameReducer {
@@ -25,30 +37,31 @@ export interface IGameReducer {
   turn: number;
   // time test
   time: number;
-
+  // type
   type: "test" | "learn";
   // Data  đã đx chuẩn bị chưa
-  isFetched: boolean;
 }
 const initGameReducer: IGameReducer = {
   currentGame: {
     ...init,
-    localStatus: "unlock",
+    localStatus: "new",
     selectedAnswer: null,
-    image: "",
     text: "",
   },
   listQuestion: [],
+
+  // vị trí câu hiện tại đang làm
   indexCurrentQuestion: 0,
   idTopic: -1,
-
+  //  danh sách câu trả lời sai
   listWrongAnswers: [],
+  //  làm lần đầu
   isFist: true,
+
   subTopicProgressId: -1,
   turn: 0,
   time: 60,
   type: "learn",
-  isFetched: false,
 };
 
 export const gameSlice = createSlice({
@@ -74,7 +87,7 @@ export const gameSlice = createSlice({
       const { choice, question } = action.payload;
 
       state.currentGame.selectedAnswer = choice;
-      state.currentGame.localStatus = choice.correct ? "pass" : "miss";
+      state.currentGame.localStatus = choice.correct ? "correct" : "incorrect";
 
       if (!choice.correct) {
         const newArr = [...state.listWrongAnswers];
@@ -109,113 +122,77 @@ export const gameSlice = createSlice({
         state.listQuestion[questionIndex] = {
           ...state.listQuestion[questionIndex],
           selectedAnswer: choice,
-          localStatus: choice.correct ? "pass" : "miss",
+          localStatus: choice.correct ? "correct" : "incorrect",
         };
       }
     });
 
-    builder.addCase(initTestQuestionThunk.pending, (state, action) => {
-      state.isFetched = false;
-    });
-
-    builder.addCase(initTestQuestionThunk.fulfilled, (state, action) => {
-      state.isFetched = true;
-      const questions = action.payload.questions;
-      state.listQuestion = questions;
-      state.currentGame = questions[0];
-    });
-
-    builder.addCase(initQuestionThunk.pending, (state, action) => {
-      state.isFetched = false;
-    });
+    // builder.addCase(initTestQuestionThunk.fulfilled, (state, action) => {
+    //   state.isFetched = true;
+    //   const questions = action.payload.questions;
+    //   state.listQuestion = questions;
+    //   state.currentGame = questions[0];
+    // });
 
     builder.addCase(initQuestionThunk.fulfilled, (state, action) => {
-      state.isFetched = true;
+      console.log("start init question", action.payload);
+      const { progressData, questions, id, parentId } = action.payload;
+      if (questions && questions.length > 0) {
+        state.listQuestion = questions;
+        state.idTopic = id;
+        state.subTopicProgressId = parentId;
 
-      const progressData = action.payload.progressData;
-
-      const questions = Array.isArray(action.payload.questions)
-        ? action.payload.questions.map<ICurrentGame>((question) => {
-            return {
-              ...question,
-              localStatus: progressData.find(
-                (item) =>
-                  item.id === question.id && item.selectedAnswers?.correct
-              )
-                ? "pass"
-                : progressData.find(
-                    (item) =>
-                      item.id === question.id && !item.selectedAnswers?.correct
-                  )
-                ? "miss"
-                : "lock",
-              selectedAnswer:
-                progressData.find(
-                  (item) => item.id === question.id && item.selectedAnswers
-                )?.selectedAnswers || null,
-              parentId: action.payload.id,
-            };
-          })
-        : [];
-
-      state.listQuestion = questions;
-
-      state.idTopic = action.payload.id;
-      state.subTopicProgressId = action.payload.parentId;
-
-      if (progressData?.length === 0) {
-        // *NOTE: Khi người dùng chưa làm thì mặc định chọn câu đầu tiên.
-
-        state.indexCurrentQuestion = 0;
-        state.currentGame = {
-          ...questions?.[0],
-          localStatus: "unlock",
-          selectedAnswer: null,
-        };
-      } else {
-        // *NOTE : Lấy vị trí câu đầu tiên chưa làm
-        const firstUnansweredIndex = questions.findIndex(
-          (question) =>
-            !progressData.some((answer) => answer?.id === question?.id)
-        );
-
-        if (firstUnansweredIndex === -1) {
-          // *NOTE : Nếu đã làm 1 lượt thì sẽ quai lại làm câu sai
-
-          const wrongAnswers = questions.filter(
+        if (!progressData || progressData.length === 0) {
+          // *NOTE: Khi người dùng chưa làm thì mặc định chọn câu đầu tiên.
+          state.indexCurrentQuestion = 0;
+          state.currentGame = questions[0];
+        } else {
+          // *NOTE: Lấy vị trí câu đầu tiên chưa làm
+          const firstUnansweredIndex = questions.findIndex(
             (question) =>
-              !progressData.some(
-                (answer) =>
-                  answer.id === question?.id && answer.selectedAnswers?.correct
+              !progressData.some((answer) => answer?.id === question?.id)
+          );
+
+          if (firstUnansweredIndex === -1) {
+            // *NOTE: Nếu đã làm 1 lượt thì quay lại làm câu sai
+            const wrongAnswers = questions.filter(
+              (question) =>
+                !progressData.some(
+                  (answer) =>
+                    answer.id === question?.id &&
+                    answer.selectedAnswers?.some((ans) => ans.correct)
+                )
+            );
+
+            state.currentGame = {
+              ...wrongAnswers[0],
+              localStatus: "new",
+              selectedAnswer: null,
+            };
+
+            state.indexCurrentQuestion = questions.findIndex(
+              (item) => item.id === wrongAnswers[0].id
+            );
+
+            state.listWrongAnswers = wrongAnswers.map((item) => item.id);
+          } else {
+            // *NOTE: Chưa làm hết
+            state.listWrongAnswers = progressData
+              .filter(
+                (item) => !item.selectedAnswers?.some((ans) => ans.correct)
               )
-          );
+              .map((item) => item.id);
 
-          state.currentGame = {
-            ...wrongAnswers?.[0],
-            localStatus: "unlock",
-            selectedAnswer: null,
-          };
-
-          state.indexCurrentQuestion = questions.findIndex(
-            (item) => item?.id === wrongAnswers[0]?.id
-          );
-
-          state.listWrongAnswers = wrongAnswers.map((item) => item?.id);
-          return;
+            state.indexCurrentQuestion = firstUnansweredIndex;
+            state.currentGame = {
+              ...state.listQuestion[firstUnansweredIndex],
+              localStatus: "new",
+              selectedAnswer: null,
+            };
+          }
         }
-
-        // *NOTE: Chưa làm hết
-
-        state.listWrongAnswers = progressData
-          .filter((item) => !item?.selectedAnswers?.correct)
-          .map((item) => item.id);
-
-        state.indexCurrentQuestion = firstUnansweredIndex;
-        state.currentGame = {
-          ...questions?.[firstUnansweredIndex],
-          localStatus: "unlock",
-          selectedAnswer: null,
-        };
+      } else {
+        console.error("Questions data is undefined or empty!");
       }
     });
   },

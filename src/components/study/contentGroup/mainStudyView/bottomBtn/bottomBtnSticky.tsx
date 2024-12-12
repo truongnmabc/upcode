@@ -13,7 +13,9 @@ const FN = () => {
     useAppSelector(gameState);
   const { appInfo } = useAppSelector(appInfoState);
   useEffect(() => {
-    const isFinal = listQuestion.every((item) => item.localStatus === "pass");
+    const isFinal = listQuestion.every(
+      (item) => item.localStatus === "correct"
+    );
 
     setIsFinish(isFinal);
   }, [listQuestion]);

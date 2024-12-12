@@ -6,7 +6,6 @@ import { makeStore, AppStore } from "@/redux/store";
 import { setAppInfo } from "@/redux/features/appInfo";
 import { IAppConfigData, setAppConfig } from "@/redux/features/appConfig";
 import { IAppInfo } from "@/models/app/appInfo";
-
 export default function StoreProvider({
   children,
   appInfo,

@@ -1,6 +1,6 @@
 "use client";
-import { gameState, ICurrentGame } from "@/redux/features/game";
-import { useAppSelector } from "@/redux/hooks";
+import { gameState, ICurrentGame, setCurrentGame } from "@/redux/features/game";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
 import React, { useEffect, useState } from "react";
 
@@ -13,7 +13,7 @@ const createTempData = (size: number): ICurrentGame[] => {
     hasChild: false,
     image: "",
     answers: [],
-    localStatus: "lock",
+    localStatus: "new",
     selectedAnswer: null,
     appId: 0,
     hint: "",
@@ -27,8 +27,12 @@ const createTempData = (size: number): ICurrentGame[] => {
 const defaultData: ICurrentGame[] = createTempData(10);
 
 const AnswerSheet = () => {
-  const { listQuestion, indexCurrentQuestion } = useAppSelector(gameState);
+  const { listQuestion, indexCurrentQuestion, currentGame, type } =
+    useAppSelector(gameState);
+
   const [list, setList] = useState<ICurrentGame[]>(defaultData);
+
+  const dispatch = useAppDispatch();
   useEffect(() => {
     if (listQuestion && listQuestion.length > 0) {
       setList(listQuestion);
@@ -49,18 +53,20 @@ const AnswerSheet = () => {
                 "w-[30px] h-[30px] text-xs cursor-not-allowed  rounded transition-all flex items-center justify-center border border-solid",
                 {
                   "border-[#5497FF] pointer-events-auto cursor-pointer":
-                    indexCurrentQuestion === index ||
-                    q.localStatus === "unlock",
+                    currentGame.id === q.id,
                   "border-[#07C58C] text-white bg-[#07C58C]":
-                    q.localStatus === "pass" && indexCurrentQuestion !== index,
+                    q.localStatus === "correct" &&
+                    indexCurrentQuestion !== index,
                   "border-[#FF746D] text-white bg-[#FF746D]":
-                    q.localStatus === "miss" && indexCurrentQuestion !== index,
-                  "opacity-90": q.localStatus === "lock",
+                    q.localStatus === "incorrect" &&
+                    indexCurrentQuestion !== index,
+                  "opacity-90": q.localStatus === "new",
                 }
               )}
-              // onClick={(e) => {
-              //   dispatch(setCurrentQuestion(listQuestion[index]));
-              // }}
+              onClick={(e) => {
+                if (type === "test" && q.localStatus !== "new")
+                  dispatch(setCurrentGame(listQuestion[index]));
+              }}
             >
               {index + 1}
             </div>

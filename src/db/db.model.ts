@@ -23,7 +23,7 @@ export class DB extends Dexie {
     this.version(1).stores({
       // *NOTE: chứa câu trả lời của người dùng.
 
-      userProgress: "++privateId,id,parentId,type",
+      userProgress: "++id,parentId,type",
 
       // *NOTE: Chứa tiến trình hiện tại của người dùng,  theo subTopic
 

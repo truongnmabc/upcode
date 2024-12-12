@@ -1,5 +1,4 @@
 import InfoIcon from "@/components/icon/InfoIcon";
-import { db } from "@/db/db.model";
 import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
 import {
@@ -7,36 +6,18 @@ import {
   CheckCircleRounded,
   ErrorRounded,
 } from "@mui/icons-material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-type IStatus = "incorrect" | "correct" | "learning" | "review" | "new";
+export type IStatusAnswer =
+  | "incorrect"
+  | "correct"
+  | "learning"
+  | "review"
+  | "new";
 
 const StatusAnswer = () => {
-  const [statusQuestion, setStatusQuestion] = useState<IStatus>("new");
-
   const { currentGame } = useAppSelector(gameState);
-
-  useEffect(() => {
-    const handleCheckStatusQuestion = async () => {
-      const answer = await db.userProgress
-        .where("id")
-        .equals(currentGame.id)
-        .toArray();
-
-      setStatusQuestion(
-        answer.length === 0
-          ? "new"
-          : answer.length === 1 && answer?.[0].selectedAnswers?.correct
-          ? "correct"
-          : answer.length === 1 && !answer?.[0].selectedAnswers?.correct
-          ? "incorrect"
-          : "learning"
-      );
-    };
-    if (currentGame?.id) handleCheckStatusQuestion();
-  }, [currentGame]);
-
-  if (statusQuestion === "incorrect") {
+  if (currentGame.localStatus === "incorrect") {
     return (
       <div className="flex text-sm sm:text-base transition-all gap-2">
         <div className="w-6 h-6">
@@ -51,7 +32,7 @@ const StatusAnswer = () => {
       </div>
     );
   }
-  if (statusQuestion === "correct") {
+  if (currentGame.localStatus === "correct") {
     return (
       <div className="flex text-sm sm:text-base transition-all gap-2">
         <div className="w-6 h-6">
@@ -67,7 +48,7 @@ const StatusAnswer = () => {
     );
   }
 
-  if (statusQuestion === "learning") {
+  if (currentGame.localStatus === "learning") {
     return (
       <div className="flex text-sm sm:text-base transition-all gap-2">
         <div className="w-6 h-6">
@@ -83,7 +64,7 @@ const StatusAnswer = () => {
     );
   }
 
-  if (statusQuestion === "new") {
+  if (currentGame.localStatus === "new") {
     return (
       <div className="flex text-sm sm:text-base transition-all gap-2">
         <div className="w-6 h-6">
@@ -96,7 +77,7 @@ const StatusAnswer = () => {
     );
   }
 
-  if (statusQuestion === "review")
+  if (currentGame.localStatus === "review")
     return (
       <div className="flex transition-all text-sm sm:text-base gap-2">
         <div className="w-6 h-6">

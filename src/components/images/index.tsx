@@ -11,9 +11,10 @@ export interface ILazyLoadImages {
   classNames?: string;
   styles?: CSSProperties;
   imgStyles?: CSSProperties;
-  imgClassNames?: CSSProperties;
+  imgClassNames?: string;
   onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
   priority?: boolean;
+  draggable?: boolean;
 }
 
 const LazyLoadImage: React.FC<ILazyLoadImages> = ({

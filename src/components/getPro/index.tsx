@@ -171,17 +171,5 @@ const GetProPage = ({ appInfo }: { appInfo: IAppInfo }) => {
     </>
   );
 };
-export const getServerSideProps = async (context) => {
-  let appInfo = getAppInfo();
-  if (!appInfo) {
-    context.res.writeHead(302, { Location: Routes.LANDING_PAGE_SCREEN }).end();
-    return { props: {} };
-  }
-  return convertToJSONObject({
-    props: {
-      appInfo,
-    },
-  });
-};
 
 export default GetProPage;
