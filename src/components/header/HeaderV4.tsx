@@ -21,6 +21,7 @@ import { logout } from "@/redux/features/user";
 import Routes from "@/config/routes";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import GetPro from "../icon/GetPro";
+import { Tooltip, useMediaQuery } from "@mui/material";
 const DownloadAppV4 = dynamic(() => import("../homepage/DownloadAppV4"));
 
 const HeaderV4 = ({
@@ -32,6 +33,7 @@ const HeaderV4 = ({
     tests: ITestInfo[];
     topics: ITopic[]; // cần truyền và cái này để trang Home không cần phụ thuộc vào redux nữa => tránh mount 2 lần và bị nháy màn hình khi truy cập (do logic của file LayoutV4)
 }) => {
+    const isMobile = useMediaQuery("(max-width:768px)");
     const [openMenuDrawer, setOpenMenuDrawer] = useState(false);
     const [open, setOpen] = useState(true);
     const [openDialog, setOpenDialog] = useState(false);
@@ -69,32 +71,51 @@ const HeaderV4 = ({
                             <span>Get Pro</span>
                         </a>
                     )}
-                    <div
-                        className="login-header"
-                        onClick={() => {
-                            if (!!userInfo) {
-                                dispatch(logout());
-                                ga.event({
-                                    action: "log_out",
-                                    params: {},
-                                });
-                                if (window.location.pathname.includes("billing")) {
-                                    window.location.href = "/";
+                    {!!userInfo && !isMobile ? (
+                        <div
+                            className="container-drawer-right-menu-header-v4-1"
+                            onClick={() => {
+                                window.location.href = !(paymentInfos.length > 0 || inAppPruchasedInfo.length > 0)
+                                    ? Routes.UPGRADE_PRO
+                                    : "/billing";
+                            }}
+                        >
+                            <Tooltip title={`${userInfo.name}`}>
+                                <div className="v4-avatar">
+                                    {isPro && <img className="crown" src="images/crown.png" />}
+                                    <img className="avt" src={userInfo.avatar} width={36} height={36} />
+                                </div>
+                            </Tooltip>
+                        </div>
+                    ) : (
+                        <div
+                            className="login-header"
+                            onClick={() => {
+                                if (!!userInfo) {
+                                    dispatch(logout());
+                                    ga.event({
+                                        action: "log_out",
+                                        params: {},
+                                    });
+                                    if (window.location.pathname.includes("billing")) {
+                                        window.location.href = "/";
+                                    }
+                                } else {
+                                    ga.event({
+                                        action: "click_login",
+                                        params: {},
+                                    });
+                                    if (!openDialog) setOpenDialog(true);
+                                    if (!open) {
+                                        setOpen(true);
+                                    }
                                 }
-                            } else {
-                                ga.event({
-                                    action: "click_login",
-                                    params: {},
-                                });
-                                if (!openDialog) setOpenDialog(true);
-                                if (!open) {
-                                    setOpen(true);
-                                }
-                            }
-                        }}
-                    >
-                        {!userInfo ? "Log in" : "Log out"}
-                    </div>
+                            }}
+                        >
+                            {!userInfo ? "Log in" : "Log out"}
+                        </div>
+                    )}
+
                     <div
                         className="header-menu-v4"
                         onClick={() => {
