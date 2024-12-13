@@ -40,6 +40,13 @@
                         font-weight: 400;
                         line-height: 27px;
                         text-align: left;
+                        span {
+                            display: block;
+                            margin: 16px 0;
+                        }
+                        .show-more {
+                            display: none;
+                        }
                     }
                 }
             }
@@ -86,8 +93,15 @@
             display: flex;
             width: 100%;
             align-items: center;
-            justify-content: space-between;
-            margin-top: 24px;
+            justify-content: center;
+            gap: 56px;
+            margin: 72px 0;
+            // position: relative;
+            // img {
+            //     position: absolute;
+            //     width: 100%;
+            //     height: 135%;
+            // }
             .item-intro {
                 display: flex;
                 align-items: center;
@@ -98,7 +112,11 @@
                 gap: 16px;
                 background-color: #e5e8fe;
                 border-radius: 48px;
+                position: relative;
 
+                img {
+                    position: absolute;
+                }
                 svg {
                     width: 120px;
                     height: 120px;
@@ -122,12 +140,30 @@
                     text-align: center;
                 }
             }
+            .intro-1 {
+                img {
+                    top: -36px;
+                }
+            }
+            .intro-2 {
+                max-width: 335px;
+
+                transform: translateY(+80px);
+                img {
+                    bottom: -36px;
+                }
+            }
+            .intro-3 {
+                img {
+                    top: -36px;
+                }
+            }
         }
         .meet-the-team {
             display: flex;
             gap: 40px;
             width: 100%;
-            margin-top: 48px;
+            margin-top: 86px;
             margin-bottom: 120px;
             align-items: center;
             flex-direction: column;
@@ -141,18 +177,19 @@
                 width: 100%;
                 display: grid;
                 row-gap: 16px;
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
                 .info-member {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     .avatar {
                         img {
-                            width: 128px;
-                            height: 128px;
-                            transition: border 0.25s ease;
+                            width: 132px;
+                            height: 132px;
+                            border: 4px solid transparent;
+                            transition: outline 0.25s ease;
+                            border-radius: 100px;
                             &:hover {
-                                border-radius: 100px;
                                 border: 4px solid #ffffff;
                                 outline: 4px solid #343f82;
                             }
@@ -160,9 +197,9 @@
                     }
                     .name {
                         color: #212121;
-                        font-size: 24px;
+                        font-size: 20px;
                         font-weight: 500;
-                        line-height: 36px;
+                        line-height: 30px;
                         text-align: center;
                         cursor: pointer;
                         &:hover {
@@ -183,6 +220,7 @@
 
     @media screen and (max-width: 768px) {
         .about-us-top {
+            background-image: url(/public/images/about/about-us-img-mobile.png);
             padding: 30px 0 24px 0;
 
             .cluster-info-title {
@@ -199,14 +237,37 @@
                     }
                     .list-contents {
                         gap: 8px;
-                        // display: -webkit-box;
-                        // -webkit-line-clamp: 2;
-                        // -webkit-box-orient: vertical;
+
                         .content {
+                            display: -webkit-box;
+                            -webkit-line-clamp: 3;
+                            -webkit-box-orient: vertical;
+                            transition: height 0.3s ease;
                             font-size: 14px;
                             font-weight: 400;
                             line-height: 21px;
                             text-align: center;
+                            overflow: hidden;
+
+                            span {
+                                display: block;
+                                margin: 4.5px 0;
+                            }
+                            &.show {
+                                -webkit-line-clamp: unset;
+                            }
+                        }
+                        .show-more {
+                            width: 100%;
+                            font-size: 14px;
+                            font-weight: 400;
+                            line-height: 21px;
+                            color: #fff;
+                            display: flex;
+                            gap: 4px;
+                            align-items: center;
+                            justify-content: center;
+                            text-decoration: underline;
                         }
                     }
                 }
@@ -262,6 +323,8 @@
                     text-align: center;
                 }
                 .members {
+                    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+
                     .info-member {
                         .avatar {
                             img {
