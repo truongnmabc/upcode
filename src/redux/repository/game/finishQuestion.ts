@@ -1,6 +1,5 @@
 "use client";
 import { db } from "@/db/db.model";
-import Part from "@/models/topics/part";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 type IInitQuestion = {
@@ -11,6 +10,7 @@ type IInitQuestion = {
 const finishQuestionThunk = createAsyncThunk(
   "finishQuestionThunk",
   async ({ subTopicProgressId, topicId }: IInitQuestion) => {
+    console.log("🚀 ~ subTopicProgressId:", subTopicProgressId);
     console.log("🚀 ~ topicId:", topicId);
     try {
       const currentProgress = await db.subTopicProgress
@@ -22,77 +22,29 @@ const finishQuestionThunk = createAsyncThunk(
 
       if (!currentProgress) throw new Error("Progress not found");
 
-      const questionData = await db.topicQuestion
-        .where("parentId")
-        .equals(subTopicProgressId)
-        .toArray();
-
-      console.log("🚀 ~ questionData:", questionData);
-
-      const existingParts = currentProgress.part;
-
-      console.log("🚀 ~ existingParts:", existingParts);
-
-      if (!existingParts) throw new Error("existingParts not found");
-
-      const firstNewPart = questionData.find(
-        (question) => !existingParts.some((part) => part.id === question.id)
+      const isUnfinished = currentProgress.part?.some(
+        (item) => item.status === 0
       );
 
-      console.log("🚀 ~ firstNewPart:", firstNewPart);
+      const updatedPart = currentProgress.part?.map((item) => ({
+        ...item,
+        status: item.id === topicId ? 1 : item.status,
+      }));
 
-      const isMiss = existingParts.find((item) => item.status === 0);
-      console.log("🚀 ~ isMiss:", isMiss);
-
-      if (!isMiss) {
-        await db.subTopicProgress
-          .where("id")
-          .equals(subTopicProgressId)
-          .modify((record) => {
-            record.pass = true;
-          })
-          .then((res) => console.log("db subTopicProgress updated", res));
-
-        return;
-      }
-
-      if (firstNewPart) {
-        const newPart = new Part(firstNewPart);
-
-        const listUpdated = existingParts?.map((p) =>
-          p.id === topicId ? { ...p, status: 1 } : p
-        );
-        console.log("🚀 ~ listUpdated:", listUpdated);
-
-        listUpdated.push(newPart);
-
-        await db.subTopicProgress
-          .where("id")
-          .equals(subTopicProgressId)
-          .modify((record) => {
-            record.part = listUpdated;
-          })
-          .then((res) => console.log("db update", res));
-      } else {
-        console.log("not firstNewPart");
-        await db.subTopicProgress
-          .where("id")
-          .equals(subTopicProgressId)
-          .modify((record) => {
-            record.part = existingParts.map((item) => ({
-              ...item,
-              status: 1,
-            }));
-          })
-          .then((res) => console.log("db subTopicProgress updated", res));
-      }
-
-      const updatedArray = await db.subTopicProgress
+      await db.subTopicProgress
         .where("id")
         .equals(subTopicProgressId)
-        .toArray();
+        .modify((item) => {
+          (item.part = updatedPart), (item.pass = !isUnfinished);
+        })
+        .catch((err) => console.log("err", err));
 
-      console.log("🚀 ~ updatedArray:", updatedArray);
+      const dbUpdate = await db.subTopicProgress
+        .where("id")
+        .equals(subTopicProgressId)
+        .first();
+
+      console.log("🚀 ~ currentProgress:", dbUpdate);
     } catch (error) {
       console.error("Error in finishQuestionThunk:", error);
     }

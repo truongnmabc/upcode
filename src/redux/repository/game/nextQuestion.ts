@@ -7,21 +7,27 @@ const nextQuestionThunk = createAsyncThunk(
   "nextQuestionThunk",
   async ({ idTopic }: { idTopic: number }, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const { listQuestion, listWrongAnswers } = state.gameReducer;
+    const { listQuestion, listWrongAnswers, turn } = state.gameReducer;
+    console.log("🚀 ~ listQuestion:", listQuestion);
 
     const progressData = await db.userProgress
       .where("parentId")
       .equals(idTopic)
       .toArray();
 
+    console.log("🚀 ~ progressData:", progressData);
+
     const firstUnansweredIndex = listQuestion.findIndex(
       (question) => !progressData.some((answer) => answer.id === question.id)
     );
+
+    console.log("🚀 ~ firstUnansweredIndex:", firstUnansweredIndex);
 
     if (firstUnansweredIndex === -1) {
       const nextLever = listQuestion.findIndex(
         (item) => item.id === listWrongAnswers[0]
       );
+      console.log("🚀 ~ nextLever:", nextLever);
 
       return {
         nextLever,

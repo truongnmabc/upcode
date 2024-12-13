@@ -30,4 +30,5 @@ export interface IQuestion {
 
   localStatus?: IStatusAnswer;
   selectedAnswer?: IAnswer | null;
+  turn?: number;
 }

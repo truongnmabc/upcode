@@ -5,12 +5,15 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishQuestionThunk from "@/redux/repository/game/finishQuestion";
 import nextQuestionThunk from "@/redux/repository/game/nextQuestion";
 import { revertPathName } from "@/utils/pathName";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 const FN = () => {
   const [isFinish, setIsFinish] = useState(false);
   const { currentGame, subTopicProgressId, idTopic, listQuestion } =
     useAppSelector(gameState);
+
+  const params = useParams();
+
   const { appInfo } = useAppSelector(appInfoState);
   useEffect(() => {
     const isFinal = listQuestion.every(
@@ -35,7 +38,7 @@ const FN = () => {
           );
 
           const _href = revertPathName({
-            href: `/finish?subTopicProgressId=${subTopicProgressId}&mainTopic=${1}`,
+            href: `/finish?subTopicProgressId=${subTopicProgressId}&topic=${params?.slug}&partId=${idTopic}`,
             appName: appInfo.appShortName,
           });
 
