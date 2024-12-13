@@ -188,8 +188,8 @@
                             height: 132px;
                             border: 4px solid transparent;
                             transition: outline 0.25s ease;
+                            border-radius: 100px;
                             &:hover {
-                                border-radius: 100px;
                                 border: 4px solid #ffffff;
                                 outline: 4px solid #343f82;
                             }
