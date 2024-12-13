@@ -19,6 +19,19 @@
         .cluster-right-header {
             justify-content: space-between;
             gap: 36px;
+            .v4-avatar {
+                display: flex;
+                position: relative;
+                .crown {
+                    position: absolute;
+                    top: -10px;
+                    left: 14px;
+                }
+                .avt {
+                    background-color: #cca68b;
+                    border-radius: 12px;
+                }
+            }
         }
         .header-menu-v4 {
             display: flex;
