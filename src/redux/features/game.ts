@@ -23,6 +23,7 @@ export interface ICurrentGame
   > {
   localStatus?: IStatusAnswer;
   selectedAnswer?: IAnswer | null;
+  turn?: number;
 }
 const init = new UserQuestionProgress();
 export interface IGameReducer {
@@ -47,6 +48,7 @@ const initGameReducer: IGameReducer = {
     localStatus: "new",
     selectedAnswer: null,
     text: "",
+    turn: 1,
   },
   listQuestion: [],
 
@@ -59,7 +61,7 @@ const initGameReducer: IGameReducer = {
   isFist: true,
 
   subTopicProgressId: -1,
-  turn: 0,
+  turn: 1,
   time: 60,
   type: "learn",
 };
@@ -73,6 +75,9 @@ export const gameSlice = createSlice({
     },
     setListQuestionGames: (state, action: PayloadAction<ICurrentGame[]>) => {
       state.listQuestion = action.payload;
+    },
+    handleTryAgain: (state, action) => {
+      state.turn = action.payload.turn;
     },
   },
   extraReducers(builder) {
@@ -135,7 +140,6 @@ export const gameSlice = createSlice({
     // });
 
     builder.addCase(initQuestionThunk.fulfilled, (state, action) => {
-      console.log("start init question", action.payload);
       const { progressData, questions, id, parentId } = action.payload;
       if (questions && questions.length > 0) {
         state.listQuestion = questions;
@@ -171,7 +175,7 @@ export const gameSlice = createSlice({
             };
 
             state.indexCurrentQuestion = questions.findIndex(
-              (item) => item.id === wrongAnswers[0].id
+              (item) => item?.id === wrongAnswers[0]?.id
             );
 
             state.listWrongAnswers = wrongAnswers.map((item) => item.id);
@@ -200,7 +204,7 @@ export const gameSlice = createSlice({
 
 const { reducer: gameReducer, actions } = gameSlice;
 
-export const { setCurrentGame, setListQuestionGames } = actions;
+export const { setCurrentGame, setListQuestionGames, handleTryAgain } = actions;
 
 export const gameState = (state: RootState) => state.gameReducer;
 

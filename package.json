@@ -25,6 +25,7 @@
     "@use-gesture/react": "^10.3.1",
     "axios": "^1.7.7",
     "better-react-mathjax": "^2.0.4-beta1",
+    "chart.js": "^4.4.7",
     "clsx": "^2.1.1",
     "crypto": "^1.0.1",
     "dexie": "^4.0.10",
@@ -36,6 +37,7 @@
     "next-auth": "5.0.0-beta.25",
     "rc-util": "^5.44.0",
     "react": "^19.0.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^19.0.0",
     "react-qr-code": "^2.0.15",
     "react-redux": "^9.1.2",
@@ -45,6 +47,7 @@
   "devDependencies": {
     "@clack/prompts": "^0.8.2",
     "@next/bundle-analyzer": "^15.0.3",
+    "@types/chart.js": "^2.9.41",
     "@types/crypto-js": "^4.2.2",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/mathjax": "^0.0.40",

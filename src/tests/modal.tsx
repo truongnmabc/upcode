@@ -1,5 +1,6 @@
 import { db } from "@/db/db.model";
 import { Drawer } from "@mui/material";
+import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 // import { db } from "@/lib/db/db.model";
@@ -64,20 +65,25 @@ const ModalTest = ({ open, setOpen }: IPros) => {
   //     getIndexedDBUsage();
   // }, []);
 
+  const tag = useSearchParams().get("tag");
+  const subTopic = useSearchParams().get("subTopic");
+
   useEffect(() => {
     const handleTets = async () => {
-      const data = await db.topicQuestion
-        .where("[subTopicTag+tag]")
-        .equals(["machines", "machines-extended-3"])
-        .first();
+      if (subTopic && tag) {
+        const data = await db.topicQuestion
+          .where("[subTopicTag+tag]")
+          .equals([subTopic, tag])
+          .first();
 
-      const question = data?.questions?.map(
-        (item) => item.answers.find((item) => item.correct)?.text
-      );
-      // console.log("🚀 ~ handleTets ~ question:", question);
+        const question = data?.questions?.map(
+          (item) => item.answers.find((item) => item.correct)?.text
+        );
+        console.log("🚀 ~ handleTets ~ question:", question);
+      }
     };
     handleTets();
-  }, []);
+  }, [tag, subTopic]);
 
   return (
     <Drawer

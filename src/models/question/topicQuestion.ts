@@ -13,6 +13,7 @@ export interface ITopicQuestion {
   questions?: IQuestion[];
   status: number;
   subTopicTag?: string;
+  turn?: number;
 }
 export default class TopicQuestion implements ITopicQuestion {
   id: number;
@@ -27,6 +28,7 @@ export default class TopicQuestion implements ITopicQuestion {
   topics: unknown;
   status: number;
   subTopicTag?: string;
+  turn?: number;
 
   constructor(object: Partial<ITopicQuestion> = {}) {
     this.id = object.id ?? -1;
@@ -40,5 +42,6 @@ export default class TopicQuestion implements ITopicQuestion {
     this.name = object.name ?? "";
     this.type = object.type ?? 3;
     this.status = object.status ?? 0;
+    this.turn = object.turn ?? 1;
   }
 }

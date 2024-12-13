@@ -20,7 +20,6 @@ const FN = () => {
   const partTag = useSearchParams().get("tag");
   const type = useSearchParams().get("type");
   const testId = useSearchParams().get("testId");
-  const { isFetched } = useAppSelector(gameState);
   const handlePageReload = useCallback(() => {
     const data = localStorage.getItem("optQuery");
     if (data) {
@@ -64,9 +63,8 @@ const FN = () => {
   }, [subTopicTag, partTag, type, testId]);
 
   useLayoutEffect(() => {
-    if (isFetched) return;
     // handleGetData();
-  }, [subTopicTag, partTag, type, testId, isFetched]);
+  }, [subTopicTag, partTag, type, testId]);
 
   useLayoutEffect(() => {
     handlePageReload();

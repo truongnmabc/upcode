@@ -40,6 +40,7 @@ const choiceAnswer = createAsyncThunk(
       explanation: question.explanation,
     };
 
+    console.log("update", data);
     if (isEx) {
       await db.userProgress.update(question.id, data).catch((err) => {
         console.log("🚀 db.userProgress.update ~ err:", err);
