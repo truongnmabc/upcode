@@ -22,6 +22,7 @@ import CoreValueIcon from "@/components/icon/about/CoreValueIcon";
 import MissionIcon from "@/components/icon/about/MissionIcon";
 import VisionIcon from "@/components/icon/about/VisionIcon";
 import MemberAbout from "../../data/about-us-member.json";
+import DropDown from "@/components/icon/about/DropDown";
 const urlStorage = "https://storage.googleapis.com/micro-enigma-235001.appspot.com/about-us";
 const listApp = [
     {
@@ -122,9 +123,7 @@ const listApp = [
     },
 ];
 const contentPreview = [
-    "Welcome to CDL Prep, owned by ABC Elearning.",
-    "CDL Prep is a trusted resource designed to help you pass your Commercial Driver’s License exams. Our platform offers expertly crafted practice questions, and insightful blog posts on CDL topics, requirements, and regulations.",
-    "CDL Prep is here to support your learning journey with resources that are accessible, effective, and tailored to help you succeed in your CDL career in your state.",
+    "Welcome to CDL Prep, owned by ABC Elearning.\n<span></span>\nCDL Prep is a trusted resource designed to help you pass your Commercial Driver’s License exams. Our platform offers expertly crafted practice questions, and insightful blog posts on CDL topics, requirements, and regulations.\n <span></span>\nCDL Prep is here to support your learning journey with resources that are accessible, effective, and tailored to help you succeed in your CDL career in your state.",
 ];
 const listRecord = [
     {
@@ -162,13 +161,16 @@ const introAboutUs = [
 ];
 const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
     const router = useRouter();
-    // const isMobile = useMediaQuery("(max-width:780px)");
+    const isMobile = useMediaQuery("(max-width:768px)");
+    const isMobileResize = useMediaQuery("(max-width:1200px)");
+
     // const width = isMobile ? "132" : "150";
     // const height = isMobile ? "41" : "100";
     const getSrcLogo = () => {
         let logo = `/images/${APP_SHORT_NAME}/logo-dark.png`;
         return logo;
     };
+    const [isExpanded, setIsExpanded] = useState(false);
 
     return (
         <Layout2 appInfo={appInfo} listTopics={[]} tests={[]}>
@@ -178,16 +180,30 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
                         <div className="content-about-us">
                             <div className="title">ABOUT US</div>
                             <div className="list-contents" id="list-contents">
-                                {contentPreview.map((content, index) => (
-                                    <div className="content" key={index} id={`content-about-us-${index}`}>
-                                        {content}
+                                {/* {contentPreview.map((content, index) => ( */}
+                                <div
+                                    className={"content " + (isExpanded ? "show" : "hide")}
+                                    dangerouslySetInnerHTML={{ __html: contentPreview }}
+                                />
+                                {isMobile && (
+                                    <div
+                                        className="show-more"
+                                        onClick={() => {
+                                            const timeout = setTimeout(() => {
+                                                setIsExpanded(!isExpanded);
+                                            }, 100);
+                                            return () => clearTimeout(timeout);
+                                        }}
+                                    >
+                                        {isExpanded ? "Show Less" : "Show More"} <DropDown isRotated={isExpanded} />
                                     </div>
-                                ))}
+                                )}
+                                {/* ))} */}
                             </div>
                         </div>
                         <div className="list-records">
                             {listRecord.map((record, index) => (
-                                <div className="record" key={index}>
+                                <div className="record" key={index} id={`record-about-us-${index}`}>
                                     <div className="summary">{record.summary}</div>
                                     <div className="content">{record.contentR}</div>
                                 </div>
@@ -197,21 +213,25 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
                 </div>
                 <div className="about-us-bottom">
                     <div className="cluster-intro-about-us max-w-component-desktop">
-                        <div className="item-intro">
+                        {/* <img src="/images/about/back-line-component.png" alt="" /> */}
+                        <div className="item-intro intro-1">
+                            {!isMobileResize && <img src="/images/about/line-1.png" alt="" />}
                             <MissionIcon />
                             <div className="title" style={{ backgroundColor: introAboutUs[0].color }}>
                                 {introAboutUs[0].title}
                             </div>
                             <div className="content">{introAboutUs[0].content}</div>
                         </div>
-                        <div className="item-intro">
+                        <div className="item-intro intro-2">
+                            {!isMobileResize && <img src="/images/about/line-2.png" alt="" />}
                             <VisionIcon />
                             <div className="title" style={{ backgroundColor: introAboutUs[1].color }}>
                                 {introAboutUs[1].title}
                             </div>
                             <div className="content">{introAboutUs[1].content}</div>
                         </div>
-                        <div className="item-intro">
+                        <div className="item-intro intro-3">
+                            {!isMobileResize && <img src="/images/about/line-3.png" alt="" />}
                             <CoreValueIcon />
                             <div className="title" style={{ backgroundColor: introAboutUs[2].color }}>
                                 {introAboutUs[2].title}
