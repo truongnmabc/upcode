@@ -6,28 +6,28 @@ import Link, { LinkProps } from "next/link";
 import React, { useEffect, useState } from "react";
 
 interface IProps extends LinkProps {
-  children: React.ReactNode;
-  href: string;
+    children: React.ReactNode;
+    href: string;
 }
 
 const FN: React.FC<IProps> = ({ children, href, ...rest }) => {
-  const { appInfo } = useAppSelector(appInfoState);
-  const [link, setLink] = useState(href);
-  useEffect(() => {
-    if (appInfo) {
-      const _href = revertPathName({
-        href,
-        appName: appInfo.appShortName,
-      });
-      setLink(_href);
-    }
-  }, [appInfo.appId, href]);
+    const { appInfo } = useAppSelector(appInfoState);
+    const [link, setLink] = useState(href);
+    useEffect(() => {
+        if (appInfo.appShortName) {
+            const _href = revertPathName({
+                href,
+                appName: appInfo.appShortName,
+            });
+            setLink(_href);
+        }
+    }, [appInfo.appShortName, href]);
 
-  return (
-    <Link href={link} scroll={false} {...rest}>
-      {children}
-    </Link>
-  );
+    return (
+        <Link href={link} scroll={false} {...rest}>
+            {children}
+        </Link>
+    );
 };
 const NextLink = React.memo(FN);
 export default NextLink;

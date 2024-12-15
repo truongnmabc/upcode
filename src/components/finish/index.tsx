@@ -1,93 +1,91 @@
-import React, { useEffect, useState } from "react";
-import TitleFinishPage from "./title";
-import ProgressFinishPage from "./progress";
-import PassingFinishPage from "./passing";
-import GridTopicProgress from "./gridTopic";
-import { useSearchParams } from "next/navigation";
 import { db } from "@/db/db.model";
-import { useAppSelector } from "@/redux/hooks";
-import { gameState } from "@/redux/features/game";
 import { IAnswer } from "@/models/question/questions";
-import { IPartProgress } from "@/models/progress/subTopicProgress";
+import { gameState } from "@/redux/features/game";
+import { useAppSelector } from "@/redux/hooks";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import GridTopicProgress from "./gridTopic";
+import PassingFinishPage from "./passing";
+import ProgressFinishPage from "./progress";
+import TitleFinishPage from "./title";
 
 const FinishLayout = () => {
-  const subTopicProgressId = useSearchParams().get("subTopicProgressId");
-  const partId = useSearchParams().get("partId");
+    const subTopicProgressId = useSearchParams().get("subTopicProgressId");
+    const partId = useSearchParams().get("partId");
 
-  const { turn } = useAppSelector(gameState);
+    const { turn } = useAppSelector(gameState);
 
-  const [game, setGame] = useState<{
-    currentPart: number;
-    listAnswer: IAnswer[];
-    currentPartTag: string;
-    nextPart: {
-      subTopicTag: string;
-      tag: string;
-    };
-  }>({
-    currentPart: 0,
-    listAnswer: [],
-    currentPartTag: "",
-    nextPart: {
-      subTopicTag: "",
-      tag: "",
-    },
-  });
+    const [game, setGame] = useState<{
+        currentPart: number;
+        listAnswer: IAnswer[];
+        currentPartTag: string;
+        nextPart: {
+            subTopicTag: string;
+            tag: string;
+        };
+    }>({
+        currentPart: 0,
+        listAnswer: [],
+        currentPartTag: "",
+        nextPart: {
+            subTopicTag: "",
+            tag: "",
+        },
+    });
 
-  useEffect(() => {
-    const handleGetData = async () => {
-      if (subTopicProgressId && turn && partId) {
-        const data = await db.subTopicProgress
-          .where("id")
-          .equals(Number(subTopicProgressId))
-          .first();
-        console.log("🚀 ~ handleGetData ~ data:", data);
+    useEffect(() => {
+        const handleGetData = async () => {
+            if (subTopicProgressId && turn && partId) {
+                const data = await db.subTopicProgress
+                    .where("id")
+                    .equals(Number(subTopicProgressId))
+                    .first();
 
-        const partIndex =
-          data?.part.findIndex((item) => item.status === 1) || 0;
+                const partIndex =
+                    data?.part.findIndex((item) => item.status === 1) || 0;
 
-        const useProgress = await db.userProgress
-          .where("parentId")
-          .equals(Number(partId))
-          .toArray();
+                const useProgress = await db.userProgress
+                    .where("parentId")
+                    .equals(Number(partId))
+                    .sortBy("index");
 
-        const turnPlayingData = useProgress.flatMap((item) =>
-          item.selectedAnswers?.find((s) => s.turn === turn)
-        );
+                const filteredAnswers = useProgress
+                    .flatMap((item) =>
+                        item.selectedAnswers?.find((s) => s.turn === turn)
+                    )
+                    .filter((item): item is IAnswer => item !== undefined);
 
-        const filteredAnswers = turnPlayingData?.filter(
-          (item): item is IAnswer => item !== undefined
-        );
+                const nextPart = data?.part?.find((p) => p.status === 0);
 
-        const nextPart = data?.part?.find((p) => p.status === 0);
+                if (filteredAnswers && filteredAnswers.length && data?.id) {
+                    setGame({
+                        currentPart: partIndex + 1,
+                        listAnswer: filteredAnswers,
+                        nextPart: {
+                            subTopicTag: data.subTopicTag,
+                            tag: nextPart?.tag || "",
+                        },
+                        currentPartTag:
+                            data.part.find((item) => item.id === Number(partId))
+                                ?.tag || "",
+                    });
+                }
+            }
+        };
+        handleGetData();
+    }, [subTopicProgressId, partId, turn]);
 
-        if (filteredAnswers && filteredAnswers.length && data?.id) {
-          setGame({
-            currentPart: partIndex + 1,
-            listAnswer: filteredAnswers,
-            nextPart: {
-              subTopicTag: data.subTopicTag,
-              tag: nextPart?.tag || "",
-            },
-            currentPartTag: data.part[partIndex].tag,
-          });
-        }
-      }
-    };
-    handleGetData();
-  }, [subTopicProgressId, partId, turn]);
-
-  return (
-    <div className="w-full py-6 h-full gap-8 flex flex-col">
-      <TitleFinishPage currentPart={game.currentPart} />
-      <ProgressFinishPage listAnswer={game.listAnswer} />
-      <PassingFinishPage
-        nextPart={game.nextPart}
-        currentPartTag={game.currentPartTag}
-      />
-      <GridTopicProgress />
-    </div>
-  );
+    return (
+        <div className="w-full py-6 h-full gap-8 flex flex-col">
+            <TitleFinishPage currentPart={game.currentPart} />
+            <ProgressFinishPage listAnswer={game.listAnswer} />
+            <PassingFinishPage
+                nextPart={game.nextPart}
+                currentPartTag={game.currentPartTag}
+            />
+            <GridTopicProgress />
+        </div>
+    );
 };
 
 export default FinishLayout;

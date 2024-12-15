@@ -1,51 +1,52 @@
-import { db } from "@/db/db.model";
+import { ICurrentGame } from "@/redux/features/game";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
-import { IStatusAnswer } from "@/components/study/contentGroup/mainStudyView/statusAnswer/statusAnswer";
 
+type IRes = {
+    nextLever: number;
+    nextQuestion: ICurrentGame;
+    isFirst: boolean;
+};
 const nextQuestionThunk = createAsyncThunk(
-  "nextQuestionThunk",
-  async ({ idTopic }: { idTopic: number }, thunkAPI) => {
-    const state = thunkAPI.getState() as RootState;
-    const { listQuestion, listWrongAnswers, turn } = state.gameReducer;
-    console.log("🚀 ~ listQuestion:", listQuestion);
+    "nextQuestionThunk",
+    async (_, thunkAPI): Promise<IRes | undefined> => {
+        const state = thunkAPI.getState() as RootState;
+        const {
+            listQuestion,
+            listWrongAnswers,
+            isFirst,
+            indexCurrentQuestion,
+        } = state.gameReducer;
 
-    const progressData = await db.userProgress
-      .where("parentId")
-      .equals(idTopic)
-      .toArray();
+        if (isFirst && indexCurrentQuestion + 1 < listQuestion.length) {
+            return {
+                nextLever: indexCurrentQuestion + 1,
+                nextQuestion: listQuestion[indexCurrentQuestion + 1],
+                isFirst: true,
+            };
+        }
 
-    console.log("🚀 ~ progressData:", progressData);
+        if (listWrongAnswers.length > 0) {
+            const idQuestionInCorrect = listWrongAnswers[0];
+            console.log("lam lai lan 2");
+            console.log("🚀 ~ listWrongAnswers:", listWrongAnswers);
 
-    const firstUnansweredIndex = listQuestion.findIndex(
-      (question) => !progressData.some((answer) => answer.id === question.id)
-    );
+            const indexQuestion = listQuestion.findIndex(
+                (item) => item.id === idQuestionInCorrect
+            );
+            console.log("🚀 ~ indexQuestion:", indexQuestion);
 
-    console.log("🚀 ~ firstUnansweredIndex:", firstUnansweredIndex);
-
-    if (firstUnansweredIndex === -1) {
-      const nextLever = listQuestion.findIndex(
-        (item) => item.id === listWrongAnswers[0]
-      );
-      console.log("🚀 ~ nextLever:", nextLever);
-
-      return {
-        nextLever,
-        isFist: false,
-        nextQuestion: {
-          ...listQuestion[nextLever],
-          selectedAnswer: null,
-          localStatus: "new" as IStatusAnswer,
-        },
-      };
+            return {
+                nextLever: indexQuestion,
+                nextQuestion: {
+                    ...listQuestion[indexQuestion],
+                    selectedAnswer: null,
+                    localStatus: "new",
+                },
+                isFirst: false,
+            };
+        }
     }
-
-    return {
-      nextLever: firstUnansweredIndex,
-      nextQuestion: listQuestion[firstUnansweredIndex],
-      isFist: true,
-    };
-  }
 );
 
 export default nextQuestionThunk;

@@ -5,18 +5,18 @@ import SheetApp from "../sheetApp";
 import WrapperScroll from "./wrapperScroll";
 
 const FN = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <Fragment>
-      <WrapperScroll>
-        <HeaderApp />
-        <div className="flex-1 flex flex-col bg-theme-white dark:bg-theme-dark  justify-between">
-          <div className="flex-1 w-full mx-auto max-w-page">{children}</div>
-          <FooterApp />
-        </div>
-        <SheetApp />
-      </WrapperScroll>
-    </Fragment>
-  );
+    return (
+        <Fragment>
+            <WrapperScroll>
+                <HeaderApp />
+                <div className="flex-1 flex flex-col bg-theme-white dark:bg-theme-dark  justify-between">
+                    {children}
+                    <FooterApp />
+                </div>
+                <SheetApp />
+            </WrapperScroll>
+        </Fragment>
+    );
 };
 
 const AppLayout = React.memo(FN);
