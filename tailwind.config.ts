@@ -31,10 +31,6 @@ export default {
                 bottom: "0px -4px 8px 0px #21212129",
                 close: "0px 0px 8px 0px #21212129",
             },
-            width: {
-                slider: "calc((100% / 3) - 16px)",
-                "silder_2/3": "calc((100% / 2) - 24px)",
-            },
         },
     },
     plugins: [],

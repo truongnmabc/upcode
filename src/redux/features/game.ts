@@ -1,148 +1,249 @@
-import Config from "@/config";
-import { IChoice } from "@/models/Choice";
-import Progress from "@/models/Progress";
-import { createSlice } from "@reduxjs/toolkit";
-import Question from "../../models/Question";
-import {
-    getStudyData,
-    goToQuestion,
-    nextQuestion,
-    onChooseAnswer,
-    onGameSubmitted,
-    onRestartGame,
-} from "../reporsitory/game.repository";
+"use client";
+import { IStatusAnswer } from "@/components/study/contentGroup/mainStudyView/statusAnswer/statusAnswer";
+import UserQuestionProgress from "@/models/progress/userQuestionProgress";
+import { IAnswer, IQuestion } from "@/models/question/questions";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import choiceAnswer from "../repository/game/choiceAnswer";
+import initQuestionThunk from "../repository/game/initQuestion";
+import initTestQuestionThunk from "../repository/game/initTestQuestion";
+import nextQuestionThunk from "../repository/game/nextQuestion";
+import { RootState } from "../store";
 
-const DEFAULT_TIME_TEST = 0;
-export class GameState {
-    answeredQuestionIds: number[]; // dùng để check xem câu hỏi đã được trả lời hay chưa (trong cùng 1 lần làm - trường hợp full test có thể chọn lại đáp án khác được) để đặt event tracking
-    appId: number; //
-    arrayIndexWrong: number[]; //
-    currentQuestion: Question; //
-    defaultTimeTest: number; //
-    gameTitle: string; //
-    gameType: number; //
-    havePassed: boolean; // check xem game này đã từng pass hay chưa
-    id: string; // version cũ là id có thành phần level và appId | vesion mới thì k có cái đó mà chỉ còn mỗi studyId thôi ; bổ sung thêm -[level] cho topic | test sẽ dùng slug làm id này
-    indexActive: number; //
-    isFinishGame: -1 | 0 | 1; // đánh dấu là đã kết thúc bài học hay chưa {-1: init, 0: chưa, 1: rồi}
-    isLoadedStudyData: boolean; //
-    levelTag: string; //
-    listSelected: IChoice[]; //
-    passPercent: number; //
-    progress: Progress; //
-    questions: Question[]; //
-    showAnswer: boolean; // trường này để check xem màn học này có cho hiện kết quả hay không
-    status: number; // status của game, chỉ được gán khi submitted
-    timeTest: number; //
-    unlock: boolean;
-    constructor(props?: any) {
-        if (!!props) {
-            this.id = props?.id + "" ?? "-1";
-            if (props?.progress) {
-                this.progress = new Progress(props.progress);
-            } else {
-                this.progress = Progress.init();
-            }
-            this.appId = props?.appId ?? -1;
-            this.arrayIndexWrong = props?.arrayIndexWrong ?? [];
-            this.currentQuestion = new Question(props.currentQuestion);
-            this.gameType = props?.gameType;
-            this.indexActive = props?.indexActive ?? 0;
-            this.isFinishGame = props?.isFinishGame ?? -1;
-            if (!!props?.isFinish) this.isFinishGame = 1;
-            this.status = props?.status ?? Config.GAME_STATUS_TESTING;
-            this.levelTag = props?.levelTag ?? "";
-            this.listSelected = props?.listSelected ?? [];
-            this.passPercent = props?.passPercent ?? 0;
-            this.questions = [];
-            if (props.questions?.length) {
-                for (let i = 0; i < props.questions.length; i++) {
-                    this.questions.push(new Question(props.questions[i]));
-                }
-            }
-            this.showAnswer = !!props?.showAnswer;
-            this.timeTest = props?.timeTest ?? DEFAULT_TIME_TEST;
-            this.gameTitle = props?.gameTitle ?? "";
-            this.answeredQuestionIds = props?.answeredQuestionIds ?? [];
-            this.defaultTimeTest = props.defaultTimeTest;
-            this.isLoadedStudyData = false; // được hiểu là khi khởi tạo được gameState thì có nghĩa là đã load dữ liệu xong, hiện đang áp dụng cho phần học
-        } else {
-            this.indexActive = 0;
-            this.progress = Progress.init();
-            this.questions = new Array();
-            this.answeredQuestionIds = [];
-            this.defaultTimeTest = DEFAULT_TIME_TEST;
-        }
-        this.unlock = !!props.unlock;
-        this.havePassed = !!props?.havePassed ?? this.status === Config.GAME_STATUS_PASSED ?? false;
-    }
-    static init() {
-        let gameState = new GameState({});
-        gameState.answeredQuestionIds = [];
-        gameState.appId = -1;
-        gameState.arrayIndexWrong = new Array();
-        gameState.defaultTimeTest = DEFAULT_TIME_TEST;
-        gameState.id = "-1";
-        gameState.indexActive = 0;
-        gameState.isFinishGame = -1;
-        gameState.listSelected = new Array();
-        gameState.passPercent = 0;
-        gameState.questions = new Array();
-        gameState.status = Config.GAME_STATUS_TESTING;
-        gameState.timeTest = DEFAULT_TIME_TEST;
-        return gameState;
-    }
-    static cloneGameState(clone) {
-        let re = new GameState(JSON.parse(JSON.stringify(clone)));
-        re.isLoadedStudyData = !!clone?.isLoadedStudyData;
-        return re;
-    }
+export interface ICurrentGame
+    extends Omit<
+        IQuestion,
+        | "createDate"
+        | "databaseId"
+        | "hasChild"
+        | "hint"
+        | "image"
+        | "lastUpdate"
+        | "oldId"
+        | "paragraphId"
+    > {
+    localStatus?: IStatusAnswer;
+    selectedAnswer?: IAnswer | null;
+    turn?: number;
 }
+const init = new UserQuestionProgress();
+export interface IGameReducer {
+    currentGame: ICurrentGame;
+    listQuestion: ICurrentGame[];
+    idTopic: number;
+    indexCurrentQuestion: number;
+    listWrongAnswers: number[];
+    isFirst: boolean;
+    subTopicProgressId: number;
+    turn: number;
+    time: number;
+    type: "test" | "learn";
+}
+const initGameReducer: IGameReducer = {
+    currentGame: {
+        ...init,
+        localStatus: "new",
+        selectedAnswer: null,
+        text: "",
+        turn: 1,
+    },
+    listQuestion: [],
+
+    indexCurrentQuestion: 0,
+    idTopic: -1,
+    listWrongAnswers: [],
+    //  làm lần đầu
+    isFirst: true,
+
+    subTopicProgressId: -1,
+    turn: 1,
+    time: 60,
+    type: "learn",
+};
 
 export const gameSlice = createSlice({
     name: "game",
-    initialState: { game: GameState.init() },
-    reducers: {},
-    extraReducers: (builder) => {
-        builder.addCase(getStudyData.pending, (state) => {
-            state.game.isLoadedStudyData = false;
-        });
-        builder.addCase(getStudyData.fulfilled, (state, action) => {
-            state.game = { ...action.payload };
-            state.game.isLoadedStudyData = true;
-            if (state.game.isFinishGame == -1) state.game.isFinishGame = 0;
-            if (!!state.game.levelTag) state.game.unlock = true; // có dữ liệu game tức là unlock
-        });
-        builder.addCase(getStudyData.rejected, (state, action) => {
-            console.log(action.error);
-        });
-
-        builder.addCase(goToQuestion.fulfilled, (state, action) => {
-            state.game = action.payload;
-        });
-
-        builder.addCase(onChooseAnswer.fulfilled, (state, action) => {
-            state.game = action.payload;
-        });
-
-        builder.addCase(nextQuestion.fulfilled, (state, action) => {
-            state.game = action.payload;
+    initialState: initGameReducer,
+    reducers: {
+        setCurrentGame: (state, action: PayloadAction<ICurrentGame>) => {
+            state.currentGame = action.payload;
+        },
+        setListQuestionGames: (
+            state,
+            action: PayloadAction<ICurrentGame[]>
+        ) => {
+            state.listQuestion = action.payload;
+        },
+        handleTryAgain: (state, action) => {
+            state.turn = action.payload.turn;
+        },
+    },
+    extraReducers(builder) {
+        builder.addCase(nextQuestionThunk.fulfilled, (state, action) => {
+            const data = action.payload;
+            state.currentGame = data?.nextQuestion ?? state.listQuestion[0];
+            state.isFirst = data?.isFirst ?? true;
+            state.indexCurrentQuestion = data?.nextLever ?? 0;
         });
 
-        builder.addCase(onGameSubmitted.fulfilled, (state, action) => {
-            state.game = action.payload;
+        builder.addCase(choiceAnswer.fulfilled, (state, action) => {
+            const { choice, question } = action.payload;
+
+            state.currentGame.selectedAnswer = choice;
+            state.currentGame.localStatus = choice.correct
+                ? "correct"
+                : "incorrect";
+
+            if (!choice.correct) {
+                const newArr = [...state.listWrongAnswers];
+                if (newArr.length === 1 && !state.isFirst) {
+                    // *NOTE: Trường hợp còn 1 câu và trả lời sai
+                    const indexRandom = Math.floor(
+                        Math.random() * state.listQuestion.length
+                    );
+                    state.indexCurrentQuestion = indexRandom;
+                    state.listQuestion[indexRandom] = {
+                        ...state.listQuestion[indexRandom],
+                        selectedAnswer: null,
+                        localStatus: "new",
+                    };
+                    newArr.unshift(state.listQuestion[indexRandom].id);
+                } else {
+                    if (newArr.includes(question.id)) {
+                        newArr.shift();
+                        newArr.push(question.id);
+                    } else {
+                        newArr.push(question.id);
+                    }
+                }
+
+                state.listWrongAnswers = newArr;
+            } else {
+                state.listWrongAnswers = state.listWrongAnswers.filter(
+                    (id) => id !== question.id
+                );
+            }
+
+            const questionIndex = state.listQuestion.findIndex(
+                (q) => q.id === question.id
+            );
+
+            if (questionIndex !== -1) {
+                state.listQuestion[questionIndex] = {
+                    ...state.listQuestion[questionIndex],
+                    selectedAnswer: choice,
+                    localStatus: choice.correct ? "correct" : "incorrect",
+                };
+            }
         });
 
-        builder.addCase(onRestartGame.fulfilled, (state, action) => {
-            state.game = action.payload;
-            if (!!state.game.levelTag) state.game.unlock = true; // có dữ liệu game tức là unlock
+        builder.addCase(initTestQuestionThunk.fulfilled, (state, action) => {
+            const { progressData, questions, type, id, duration } =
+                action.payload;
+            state.time = duration;
+            state.type = type;
+            state.idTopic = id ?? -1;
+            state.listQuestion = questions;
+            state.isFirst = true;
+
+            if (!progressData || progressData.length === 0) {
+                // *NOTE: Khi người dùng chưa làm thì mặc định chọn câu đầu tiên.
+                state.indexCurrentQuestion = 0;
+                state.currentGame = questions[0];
+            } else {
+                const firstUnansweredIndex = questions.findIndex(
+                    (question) =>
+                        !progressData.some(
+                            (answer) => answer?.id === question?.id
+                        )
+                );
+                state.currentGame = {
+                    ...state.listQuestion[firstUnansweredIndex],
+                    localStatus: "new",
+                    selectedAnswer: null,
+                };
+            }
+        });
+
+        builder.addCase(initQuestionThunk.fulfilled, (state, action) => {
+            const { progressData, questions, id, parentId, type } =
+                action.payload;
+            state.type = type;
+            if (questions && questions.length > 0) {
+                state.listQuestion = questions;
+                state.idTopic = id;
+                state.subTopicProgressId = parentId;
+
+                if (!progressData || progressData.length === 0) {
+                    // *NOTE: Khi người dùng chưa làm thì mặc định chọn câu đầu tiên.
+                    state.indexCurrentQuestion = 0;
+                    state.currentGame = questions[0];
+                    state.isFirst = true;
+                } else {
+                    // *NOTE: Lấy vị trí câu đầu tiên chưa làm
+                    const firstUnansweredIndex = questions.findIndex(
+                        (question) =>
+                            !progressData.some(
+                                (answer) => answer?.id === question?.id
+                            )
+                    );
+
+                    if (firstUnansweredIndex === -1) {
+                        // *NOTE: Nếu đã làm 1 lượt thì quay lại làm câu sai
+                        const wrongAnswers = questions.filter(
+                            (question) =>
+                                !progressData.some(
+                                    (answer) =>
+                                        answer.id === question?.id &&
+                                        answer.selectedAnswers?.some(
+                                            (ans) => ans.correct
+                                        )
+                                )
+                        );
+
+                        state.isFirst = false;
+                        state.currentGame = {
+                            ...wrongAnswers[0],
+                            localStatus: "new",
+                            selectedAnswer: null,
+                        };
+
+                        state.indexCurrentQuestion = questions.findIndex(
+                            (item) => item?.id === wrongAnswers[0]?.id
+                        );
+
+                        state.listWrongAnswers = wrongAnswers.map(
+                            (item) => item.id
+                        );
+                    } else {
+                        // *NOTE: Chưa làm hết
+                        state.listWrongAnswers = progressData
+                            .filter(
+                                (item) =>
+                                    !item.selectedAnswers?.some(
+                                        (ans) => ans.correct
+                                    )
+                            )
+                            .map((item) => item.id);
+
+                        state.indexCurrentQuestion = firstUnansweredIndex;
+                        state.currentGame = {
+                            ...state.listQuestion[firstUnansweredIndex],
+                            localStatus: "new",
+                            selectedAnswer: null,
+                        };
+                    }
+                }
+            } else {
+                console.error("Questions data is undefined or empty!");
+            }
         });
     },
 });
 
-export const getNumOfCorrectAnswer = (questions: Question[]) => {
-    let numOfCorrectAnswer = questions.filter((q) => q.questionStatus == Config.QUESTION_ANSWERED_CORRECT).length;
-    return numOfCorrectAnswer;
-};
+const { reducer: gameReducer, actions } = gameSlice;
 
-export default gameSlice.reducer;
+export const { setCurrentGame, setListQuestionGames, handleTryAgain } = actions;
+
+export const gameState = (state: RootState) => state.gameReducer;
+
+export default gameReducer;

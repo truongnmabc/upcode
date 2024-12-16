@@ -1,3 +1,17 @@
+import { requestGetData, requestPostData } from "./request";
+
+export const sendEmailApi = async ({
+    email,
+    appName,
+}: {
+    email: string;
+    appName: string;
+}) => {
+    return await requestGetData({
+        url: `/api/auth?type=send-email&email=${email}&appName=${appName}`,
+        params: { email, appName },
+    });
+};
 import APIConfig from "@/config/api_config";
 import Routes from "@/config/routes";
 import { callApi } from ".";
@@ -5,7 +19,8 @@ import Config from "../config";
 import { GET, POST } from "./request";
 
 export const END_POINT_WORD_PRESS =
-    process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.length && process.env.NEXT_PUBLIC_WORDPRESS_API_URL != "null"
+    process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.length &&
+    process.env.NEXT_PUBLIC_WORDPRESS_API_URL != "null"
         ? process.env.NEXT_PUBLIC_WORDPRESS_API_URL
         : null;
 export const API_SEND_EMAIL = "https://webpush.passemall.com/api/send-contact";
@@ -27,7 +42,12 @@ export const getHomeSeoContentApi = async (postUrl: string) => {
     if (!END_POINT_WORD_PRESS?.length) {
         return "";
     }
-    let url = END_POINT_WORD_PRESS + Config.PREFIX_URL + APIConfig.GET_HOME_SEO_CONTENT + "?posturl=" + postUrl; //cdl cũ
+    let url =
+        END_POINT_WORD_PRESS +
+        Config.PREFIX_URL +
+        APIConfig.GET_HOME_SEO_CONTENT +
+        "?posturl=" +
+        postUrl; //cdl cũ
     let content = await GET({ url });
     return content;
 };
@@ -38,47 +58,47 @@ export const getHomeSeoContentApi = async (postUrl: string) => {
 //     return reviews;
 // };
 
-export const sendEmailSubscribeApiV4 = async (email: string, message: string, appName: string) => {
-    //https://test-dot-micro-enigma-235001.appspot.com/api/web?type=send-email&fromEmail=hiepnx27@gmail.com&subject=title&content=content
-    let url = Config.BASE_URL + `/api/web?type=send-email`;
-    let response = await POST({
-        url,
+export const verifiedCodeApi = async ({
+    email,
+    code,
+}: {
+    email: string;
+    code: string;
+}) => {
+    return await requestGetData({
+        url: `/api/auth?type=verify-code&email=${email}&code=${code}`,
         params: {
+            email,
+            code,
+        },
+    });
+};
+
+export const sendEmailSubscribe = async ({
+    email,
+    message,
+    appName,
+}: {
+    email: string;
+    message: string;
+    appName: string;
+}) => {
+    const url = `/api/web?type=send-email`;
+    return await requestPostData({
+        url,
+        data: {
             subject: `Web ${appName} Support`,
             fromEmail: email,
             content: message,
         },
     });
-    return response;
-};
-
-export const getHomeSeoContentStateApi = async (stateSlug: string, baseUrl?: string) => {
-    if (!END_POINT_WORD_PRESS?.length) {
-        return "";
-    }
-    let url =
-        (baseUrl ?? END_POINT_WORD_PRESS) +
-        Config.PREFIX_URL +
-        APIConfig.GET_HOME_SEO_CONTENT_STATE +
-        "?stateSlug=" +
-        stateSlug;
-
-    // console.log("home.services", url);
-    // let dataCache = cache.get(url);
-    // console.log(dataCache);
-    // if (dataCache) {
-    //     return dataCache;
-    // }
-    let content = await GET({ url });
-    // if (content) {
-    //     cache.put(url, content, Config.TIME_MEMORY_CACHE);
-    // }
-    return content;
 };
 
 export const getAppReviewApi = async (appId) => {
     let data = await callApi({
-        url: "https://dashboard-api2.abc-elearning.org/ratings-reviews?appID=" + appId,
+        url:
+            "https://dashboard-api2.abc-elearning.org/ratings-reviews?appID=" +
+            appId,
         method: "get",
         params: null,
     }).catch((e) => console.log(e));
@@ -96,11 +116,18 @@ export const genLinkPro = (appInfo, hasParams = false) => {
     return url;
 };
 
-export const getSEOAndHeaderContentApi = async (isHomePage: boolean, pathname?: string, isState?: boolean) => {
+export const getSEOAndHeaderContentApi = async (
+    isHomePage: boolean,
+    pathname?: string,
+    isState?: boolean
+) => {
     if (!END_POINT_WORD_PRESS) {
         return null;
     }
-    const url = END_POINT_WORD_PRESS + Config.PREFIX_URL + APIConfig.GET_SEO_AND_HEADER_CONTENT;
+    const url =
+        END_POINT_WORD_PRESS +
+        Config.PREFIX_URL +
+        APIConfig.GET_SEO_AND_HEADER_CONTENT;
 
     let result = await POST({
         url: url,

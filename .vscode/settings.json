@@ -1,6 +1,17 @@
 {
     "cSpell.words": [
+        "asvab",
         "clsx",
-        "Swiper"
-    ]
+        "Dexie",
+        "mathjax",
+        "mtui",
+        "persistor",
+        "reduxjs",
+        "rgba",
+        "vampiro"
+    ],
+    "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": "always",
+    "source.fixAll.eslint": "always"
+},
 }

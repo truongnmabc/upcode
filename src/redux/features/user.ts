@@ -1,3 +1,70 @@
+import { createSlice } from "@reduxjs/toolkit";
+import useActionsThunk from "../repository/user/actions";
+import { RootState } from "../store";
+
+type IListAction = {
+    questionId: number;
+    isLike: boolean;
+    isSave: boolean;
+    isDisLike: boolean;
+};
+
+type IUserType = {
+    listActions: IListAction[];
+};
+
+const initState: IUserType = {
+    listActions: [],
+};
+
+export const userSlice = createSlice({
+    name: "user",
+    initialState: initState,
+    reducers: {},
+
+    extraReducers(builder) {
+        builder.addCase(useActionsThunk.fulfilled, (state, action) => {
+            const { questionId, status } = action.payload;
+
+            const existingActionIndex = state.listActions.findIndex(
+                (item) => item.questionId === questionId
+            );
+
+            if (existingActionIndex !== -1) {
+                const existingAction = state.listActions[existingActionIndex];
+                if (
+                    (status === "like" && existingAction.isLike) ||
+                    (status === "dislike" && existingAction.isDisLike) ||
+                    (status === "save" && existingAction.isSave)
+                ) {
+                    state.listActions.splice(existingActionIndex, 1);
+                } else {
+                    state.listActions[existingActionIndex] = {
+                        questionId,
+                        isDisLike: status === "dislike",
+                        isLike: status === "like",
+                        isSave: status === "save",
+                    };
+                }
+            } else {
+                state.listActions.push({
+                    questionId,
+                    isDisLike: status === "dislike",
+                    isLike: status === "like",
+                    isSave: status === "save",
+                });
+            }
+        });
+    },
+});
+
+const { reducer: userReducer, actions } = userSlice;
+
+export const {} = actions;
+
+export default userReducer;
+
+export const userState = (state: RootState) => state.userReducer;
 import { IPaymentInfo, InAppSubscription } from "@/models/PaymentInfo";
 import { IUserInfo, UserInfo } from "@/models/UserInfo";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
@@ -69,7 +136,9 @@ export const userSlice = createSlice({
         paymentSuccessAction: (state, action: PayloadAction<IPaymentInfo>) => {
             state.paymentInfo = action.payload ?? null;
             if (action.payload) {
-                let index = state.paymentInfos.findIndex((paymentInfo) => paymentInfo.appId == action.payload.appId);
+                let index = state.paymentInfos.findIndex(
+                    (paymentInfo) => paymentInfo.appId == action.payload.appId
+                );
                 if (index >= 0) {
                     state.paymentInfos[index] = action.payload;
                 } else {
@@ -92,7 +161,8 @@ export const userSlice = createSlice({
                     }
                     if (state.userInfo) {
                         state.userInfo.id = state.userInfo.id.toLowerCase();
-                        state.userInfo.email = state.userInfo.email.toLowerCase();
+                        state.userInfo.email =
+                            state.userInfo.email.toLowerCase();
                         state.userInfo = new UserInfo(state.userInfo);
                     }
                     if (!state.paymentInfos) {
@@ -113,7 +183,10 @@ export const userSlice = createSlice({
                 state.paymentInfo = action.payload.paymentInfo;
                 state.paymentInfos = action.payload.paymentInfos;
                 state.inAppPruchasedInfo = action.payload.inAppSubs;
-                state.isPro = checkPro(state.paymentInfo, state.inAppPruchasedInfo);
+                state.isPro = checkPro(
+                    state.paymentInfo,
+                    state.inAppPruchasedInfo
+                );
                 state.loadingPayment = true;
             }
         });
