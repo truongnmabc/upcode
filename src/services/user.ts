@@ -1,5 +1,5 @@
-import { callApi } from ".";
 import Config from "../config";
+import { requestPostData } from "./request";
 
 export const saveUserInfoDashboard = (args: {
     email: string;
@@ -10,11 +10,12 @@ export const saveUserInfoDashboard = (args: {
     isSetupStudyPlan: boolean;
     testDate: string;
 }) => {
-    return callApi({
-        method: "POST",
-        baseURl: Config.DASHBOARD_API,
+    return requestPostData({
         url: "web-login",
-        params: args,
+        data: args,
+        config: {
+            baseURL: Config.DASHBOARD_API,
+        },
     });
 };
 export const updateUserInfoDashboard = (args: {
@@ -25,10 +26,22 @@ export const updateUserInfoDashboard = (args: {
     isSetupStudyPlan?: boolean;
     testDate?: string;
 }) => {
-    return callApi({
-        method: "POST",
-        baseURl: Config.DASHBOARD_API,
+    return requestPostData({
+        config: {
+            baseURL: Config.DASHBOARD_API,
+        },
         url: "buy-pro",
-        params: args,
+        data: args,
     });
 };
+
+export function syncDataToWebAfterLoginAPI(data: any) {
+    //https://micro-enigma-235001.appspot.com/api/auth?type=send-email&email=tranhoang30101@gmail.com&appName=ASVAB
+    return requestPostData({
+        url: "/api/auth?type=sync-data-to-web-after-login",
+        data,
+        config: {
+            baseURL: Config.BASE_URL,
+        },
+    });
+}

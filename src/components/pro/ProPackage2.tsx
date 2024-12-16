@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IAppInfo } from "../../models/AppInfo";
 import "./ProPackage2.scss";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import MyContainer from "../v4-material/MyContainer";
+import MyContainer from "../v4-material/myContainer";
 import V4CircleProgress from "../v4-material/V4CircleProgress";
 import CancelSubscriptionDialog from "./CancelSubscriptionDialog";
 import { IPaymentInfo } from "../../models/PaymentInfo";
@@ -29,7 +29,9 @@ const ProPackage2 = ({
     const [importCancelDialog, setImportCancelDialog] = useState(false);
     useEffect(() => {
         if (orderInfo && orderInfo.status === "ACTIVE") {
-            let _currentPlanIndex = prices.findIndex((p) => p.planId === orderInfo.plan_id);
+            let _currentPlanIndex = prices.findIndex(
+                (p) => p.planId === orderInfo.plan_id
+            );
             if (_currentPlanIndex !== -1) {
                 setCurrentPlan(_currentPlanIndex);
                 setActive(_currentPlanIndex);
@@ -56,7 +58,10 @@ const ProPackage2 = ({
                             if (event == "cancel") {
                                 setImportCancelDialog(true);
                                 setOpenCancelDialog(true);
-                            } else if (event == "upgrade" && !openCancelDialog) {
+                            } else if (
+                                event == "upgrade" &&
+                                !openCancelDialog
+                            ) {
                                 // xử lý trường hợp đứa nào táy máy inspect tắt popup cancel đi và bấm upgrade
                                 handleClickGetPro(i);
                             }
@@ -96,17 +101,29 @@ const PriceItem = ({
     loading: boolean;
     handleClickItem: (event: string) => void;
 }) => {
-    const { price: salePrice, initPrice, type, averagePrice, trialDay, savePrice } = price;
+    const {
+        price: salePrice,
+        initPrice,
+        type,
+        averagePrice,
+        trialDay,
+        savePrice,
+    } = price;
     return (
         <div
-            className={`price-item-2 ${active ? "active" : ""} ${disable ? "disable" : ""}`}
+            className={`price-item-2 ${active ? "active" : ""} ${
+                disable ? "disable" : ""
+            }`}
             onClick={() => {
                 if (!disable && !active) handleActive();
             }}
         >
             {active && (
                 <div className="icon-check">
-                    <img src="./images/passemall/new-pro/check-price.png" alt="icon-check" />
+                    <img
+                        src="./images/passemall/new-pro/check-price.png"
+                        alt="icon-check"
+                    />
                 </div>
             )}
             <div className={"popular-text " + (currentPlan ? "current" : "")}>
@@ -118,7 +135,9 @@ const PriceItem = ({
                     <span className="sale-price" id="text-save-price">
                         ${salePrice}{" "}
                     </span>
-                    {initPrice && <span className="current-price">${initPrice}</span>}
+                    {initPrice && (
+                        <span className="current-price">${initPrice}</span>
+                    )}
                 </div>
                 <div className="type">{type}</div>
                 <div className="divide"></div>
@@ -148,7 +167,11 @@ const PriceItem = ({
                             Upgrade
                             {!!savePrice?.percent && (
                                 <>
-                                    To Save <span className="percent">{savePrice?.percent}</span>%{" "}
+                                    To Save{" "}
+                                    <span className="percent">
+                                        {savePrice?.percent}
+                                    </span>
+                                    %{" "}
                                 </>
                             )}
                         </div>

@@ -18,6 +18,10 @@ export const TestSlice = createSlice({
     },
 });
 
-export const TestReducer = TestSlice.reducer;
-export const { shouldOpenSubmitTest } = TestSlice.actions;
-export const TestState = (state: RootState) => state.TestReducer;
+const { reducer: testReducer, actions } = TestSlice;
+
+export const { shouldOpenSubmitTest } = actions;
+
+export const testState = (state: RootState) => state.testReducer;
+
+export default testReducer;

@@ -5,7 +5,7 @@ import { memo, useRef } from "react";
 import { sendEmailSubscribeApiV4 } from "@/services/home.service";
 import { IAppInfo } from "../../models/AppInfo";
 import "./FooterLandingV4.scss";
-import MyContainer from "../v4-material/MyContainer";
+import MyContainer from "../v4-material/myContainer";
 import FacebookIcon from "../icon/FacebookIcon";
 import TwitterIcon from "../icon/TwitterIcon";
 import YoutubeIcon from "../icon/YoutubeIcon";
@@ -36,12 +36,20 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                 btn.current.disabled = true;
                 error_email.current.innerHTML = "";
                 error_message.current.innerHTML = "";
-                result = await sendEmailSubscribeApiV4(email.trim(), message.trim(), appInfo.appName);
+                result = await sendEmailSubscribeApiV4(
+                    email.trim(),
+                    message.trim(),
+                    appInfo.appName
+                );
                 _email.current.value = "";
                 _message.current.value = "";
             } else {
-                (error_email.current.innerHTML = isValidEmail ? "" : "Please provide a valid email address!"),
-                    (error_message.current.innerHTML = isValidMessage ? "" : "Type your message please!");
+                (error_email.current.innerHTML = isValidEmail
+                    ? ""
+                    : "Please provide a valid email address!"),
+                    (error_message.current.innerHTML = isValidMessage
+                        ? ""
+                        : "Type your message please!");
             }
         } catch (error) {
             console.log("footer send mail error", error);
@@ -99,15 +107,36 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                                 />
                             </div>
                         </Link>
-                        {isMobile && <img src={"/images/dmca_protected.png"} alt="certificate" width="121" height="24" />}
+                        {isMobile && (
+                            <img
+                                src={"/images/dmca_protected.png"}
+                                alt="certificate"
+                                width="121"
+                                height="24"
+                            />
+                        )}
                     </div>
 
                     <span>{appInfo.descriptionSEO}</span>
 
-                    {!isMobile && <img src={"/images/dmca_protected.png"} alt="certificate" width="121" height="24" />}
+                    {!isMobile && (
+                        <img
+                            src={"/images/dmca_protected.png"}
+                            alt="certificate"
+                            width="121"
+                            height="24"
+                        />
+                    )}
                 </div>
 
-                {isMobile ? <div className="cluster-company-legal"> {groupCompanyLegal()} </div> : groupCompanyLegal()}
+                {isMobile ? (
+                    <div className="cluster-company-legal">
+                        {" "}
+                        {groupCompanyLegal()}{" "}
+                    </div>
+                ) : (
+                    groupCompanyLegal()
+                )}
                 <div className="item-footer support">
                     <div className="title">Support</div>
                     {emailSupport && (
@@ -129,16 +158,21 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                         }}
                     >
                         <img src="/images/contacts/location.png" alt="" />
-                        <div className="text-info">209 S Rosemont Ave, Dallas, TX 75208</div>
+                        <div className="text-info">
+                            209 S Rosemont Ave, Dallas, TX 75208
+                        </div>
                     </div>
-                    <div className="intro-suport">Any questions or feedback? We’re here to help!</div>
+                    <div className="intro-suport">
+                        Any questions or feedback? We’re here to help!
+                    </div>
                     <div className="v4-input-field v4-border-radius">
                         <input
                             ref={_email}
                             type="email"
                             placeholder="Enter your email"
                             onChange={(e) => {
-                                if (!!error_email.current.innerHTML) error_email.current.innerHTML = "";
+                                if (!!error_email.current.innerHTML)
+                                    error_email.current.innerHTML = "";
                             }}
                         />
                         <p ref={error_email} className="fieldset"></p>
@@ -149,7 +183,8 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                             type="text"
                             placeholder="Enter your message"
                             onChange={(e) => {
-                                if (!!error_message.current.innerHTML) error_message.current.innerHTML = "";
+                                if (!!error_message.current.innerHTML)
+                                    error_message.current.innerHTML = "";
                             }}
                         />
                         <p ref={error_message} className="fieldset"></p>
@@ -235,7 +270,10 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
             </div>
             <div className="v4-footer-landing-container-1">
                 <div className="footer-social max-w-component-desktop">
-                    <span>©2024 {appInfo.appName}Prep by ABC-Elearning. All Rights Reserved.</span>
+                    <span>
+                        ©2024 {appInfo.appName}Prep by ABC-Elearning. All Rights
+                        Reserved.
+                    </span>
                     <PlatformContactsLogo />
                 </div>
             </div>
@@ -279,6 +317,11 @@ const PlatformContactsLogo = () => {
 };
 
 export default memo(FooterLandingV4, (prev, next) => {
-    if (JSON.stringify(prev.appInfo).localeCompare(JSON.stringify(next.appInfo)) == 0) return true;
+    if (
+        JSON.stringify(prev.appInfo).localeCompare(
+            JSON.stringify(next.appInfo)
+        ) == 0
+    )
+        return true;
     return false;
 });

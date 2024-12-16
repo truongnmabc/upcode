@@ -1,12 +1,12 @@
 "use client";
 import { MtUiButton } from "@/components/button";
 import Sheet from "@/components/sheet";
-import { shouldOpenSubmitTest, TestState } from "@/redux/features/tests";
+import { shouldOpenSubmitTest, testState } from "@/redux/features/tests";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import React from "react";
 
 const BottomConfigTest = () => {
-    const { openSubmit } = useAppSelector(TestState);
+    const { openSubmit } = useAppSelector(testState);
     const dispatch = useAppDispatch();
     const setOpenConfirm = () => {
         dispatch(shouldOpenSubmitTest(false));

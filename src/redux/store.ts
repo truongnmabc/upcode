@@ -4,7 +4,7 @@ import appConfigReducer from "./features/appConfig";
 import studyReducer from "./features/study";
 import gameReducer from "./features/game";
 import userReducer from "./features/user";
-import { TestReducer } from "./features/tests";
+import testReducer from "./features/tests";
 
 export const makeStore = () => {
     return configureStore({
@@ -13,8 +13,8 @@ export const makeStore = () => {
             appConfigReducer,
             studyReducer,
             gameReducer,
-            userReducer,
-            TestReducer,
+            testReducer,
+            // userReducer,
         },
     });
 };

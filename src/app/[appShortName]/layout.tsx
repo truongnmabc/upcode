@@ -14,7 +14,7 @@ import { Fragment } from "react";
 import NotFound from "../not-found";
 import Head from "next/head";
 import EventListener from "@/components/event";
-
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 const vampiro = Vampiro_One({
     weight: ["400"],
     style: "normal",
@@ -131,6 +131,9 @@ export default async function RootLayout({
                         )}
                     </AppThemeProvider>
                 </StoreProvider>
+
+                <GoogleAnalytics gaId={process.env.GA_ID} />
+                <GoogleTagManager gtmId={process.env.GTM_ID} />
             </main>
         </Fragment>
     );

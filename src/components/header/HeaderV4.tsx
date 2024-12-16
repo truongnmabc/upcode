@@ -5,7 +5,7 @@ import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import "./HeaderV4.scss";
 import { ITopic } from "../../models/Topic";
-import MyContainer from "../v4-material/MyContainer";
+import MyContainer from "../v4-material/myContainer";
 import CloseIcon from "../icon/CloseIcon";
 import MenuIcon from "../icon/MenuIcon";
 import ExpandMoreIcon from "../icon/ExpandMoreIcon";
@@ -39,7 +39,8 @@ const HeaderV4 = ({
     const [openDialog, setOpenDialog] = useState(false);
     const [currentState, setCurrentState] = useState("");
     const userReducer = useSelector((state: AppState) => state.userReducer);
-    const { userInfo, reload, isPro, paymentInfos, inAppPruchasedInfo } = userReducer;
+    const { userInfo, reload, isPro, paymentInfos, inAppPurchasedInfo } =
+        userReducer;
     const haveGetProBtn = !isPro;
     const getSrcLogo = () => {
         let logo = `/images/${APP_SHORT_NAME}/logo-light.png`;
@@ -61,12 +62,18 @@ const HeaderV4 = ({
             <MyContainer className="header-v4">
                 <div className="logo-header-v4">
                     <Link href="/">
-                        <img src={getSrcLogo()} alt={"logo-" + APP_SHORT_NAME} />
+                        <img
+                            src={getSrcLogo()}
+                            alt={"logo-" + APP_SHORT_NAME}
+                        />
                     </Link>
                 </div>
                 <div className="cluster-right-header flex">
                     {haveGetProBtn && (
-                        <a className="header-menu-v4 get-pro" href={Routes.UPGRADE_PRO}>
+                        <a
+                            className="header-menu-v4 get-pro"
+                            href={Routes.UPGRADE_PRO}
+                        >
                             <GetPro />
                             <span>Get Pro</span>
                         </a>
@@ -75,15 +82,28 @@ const HeaderV4 = ({
                         <div
                             className="container-drawer-right-menu-header-v4-1"
                             onClick={() => {
-                                window.location.href = !(paymentInfos.length > 0 || inAppPruchasedInfo.length > 0)
+                                window.location.href = !(
+                                    paymentInfos.length > 0 ||
+                                    inAppPurchasedInfo.length > 0
+                                )
                                     ? Routes.UPGRADE_PRO
                                     : "/billing";
                             }}
                         >
                             <Tooltip title={`${userInfo.name}`}>
                                 <div className="v4-avatar">
-                                    {isPro && <img className="crown" src="images/crown.png" />}
-                                    <img className="avt" src={userInfo.avatar} width={36} height={36} />
+                                    {isPro && (
+                                        <img
+                                            className="crown"
+                                            src="images/crown.png"
+                                        />
+                                    )}
+                                    <img
+                                        className="avt"
+                                        src={userInfo.avatar}
+                                        width={36}
+                                        height={36}
+                                    />
                                 </div>
                             </Tooltip>
                         </div>
@@ -97,7 +117,11 @@ const HeaderV4 = ({
                                         action: "log_out",
                                         params: {},
                                     });
-                                    if (window.location.pathname.includes("billing")) {
+                                    if (
+                                        window.location.pathname.includes(
+                                            "billing"
+                                        )
+                                    ) {
                                         window.location.href = "/";
                                     }
                                 } else {
@@ -143,7 +167,10 @@ const HeaderV4 = ({
                     className="swipeable-drawer-header-v4"
                 >
                     <div className="drawer-right-menu-header-v4 overflow-auto">
-                        <div className="button-close-drawer-v4" onClick={() => setOpenMenuDrawer(false)}>
+                        <div
+                            className="button-close-drawer-v4"
+                            onClick={() => setOpenMenuDrawer(false)}
+                        >
                             <CloseIcon />
                         </div>
                         <div className="container-drawer-right-menu-header-v4">
@@ -151,17 +178,34 @@ const HeaderV4 = ({
                                 <div
                                     className="container-drawer-right-menu-header-v4-1"
                                     onClick={() => {
-                                        window.location.href = !(paymentInfos.length > 0 || inAppPruchasedInfo.length > 0)
+                                        window.location.href = !(
+                                            paymentInfos.length > 0 ||
+                                            inAppPurchasedInfo.length > 0
+                                        )
                                             ? Routes.UPGRADE_PRO
                                             : "/billing";
                                     }}
                                 >
                                     <div className="v4-avatar">
-                                        {isPro && <img className="crown" src="images/crown.png" />}
-                                        <img className="avt" src={userInfo.avatar} width={48} height={48} />
+                                        {isPro && (
+                                            <img
+                                                className="crown"
+                                                src="images/crown.png"
+                                            />
+                                        )}
+                                        <img
+                                            className="avt"
+                                            src={userInfo.avatar}
+                                            width={48}
+                                            height={48}
+                                        />
                                         <div>
-                                            <div className="-name">{userInfo.name}</div>
-                                            <div className="-email">{userInfo.email}</div>
+                                            <div className="-name">
+                                                {userInfo.name}
+                                            </div>
+                                            <div className="-email">
+                                                {userInfo.email}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -189,58 +233,97 @@ const HeaderV4 = ({
                                     <div
                                         className="container-drawer-right-menu-header-v4-1"
                                         onClick={() => {
-                                            let btn = document.getElementById("v4-icon-expand-state");
-                                            let collapse = document.getElementById("collapse-state");
-                                            let content = document.getElementById("collapse-content-state");
+                                            let btn = document.getElementById(
+                                                "v4-icon-expand-state"
+                                            );
+                                            let collapse =
+                                                document.getElementById(
+                                                    "collapse-state"
+                                                );
+                                            let content =
+                                                document.getElementById(
+                                                    "collapse-content-state"
+                                                );
                                             let height = content.clientHeight;
-                                            if (btn.className.includes("true")) {
+                                            if (
+                                                btn.className.includes("true")
+                                            ) {
                                                 //close
-                                                btn.className = "v4-icon-expand false";
+                                                btn.className =
+                                                    "v4-icon-expand false";
                                                 collapse.style.height = "0px";
                                             } else {
-                                                btn.className = "v4-icon-expand true";
-                                                collapse.style.height = height + "px";
+                                                btn.className =
+                                                    "v4-icon-expand true";
+                                                collapse.style.height =
+                                                    height + "px";
                                             }
                                         }}
                                     >
                                         Change your state?
-                                        <div className={"v4-icon-expand"} id="v4-icon-expand-state">
+                                        <div
+                                            className={"v4-icon-expand"}
+                                            id="v4-icon-expand-state"
+                                        >
                                             <ExpandMoreIcon />
                                         </div>
                                     </div>
                                     <div id="collapse-state">
-                                        <div id="collapse-content-state" className="overflow-auto">
-                                            {states[appInfo.appShortName].map((state, index) => {
-                                                let _link = getLink(appInfo, state.tag);
-                                                let isCurrentState = currentState == state.tag;
-                                                return (
-                                                    <div key={index} className="v4-app-state">
-                                                        <a
-                                                            href={_link}
-                                                            onClick={(e) => {
-                                                                e.preventDefault();
-                                                                ga.event({
-                                                                    action: "click_menu_test",
-                                                                    params: {
-                                                                        from: window.location.href,
-                                                                        to: _link,
-                                                                    },
-                                                                });
-                                                                if (!isCurrentState) {
-                                                                    localStorage.setItem(
-                                                                        "select-state-" + appInfo.appNameId,
-                                                                        state.tag
-                                                                    );
-                                                                    window.location.href = _link;
-                                                                }
-                                                            }}
+                                        <div
+                                            id="collapse-content-state"
+                                            className="overflow-auto"
+                                        >
+                                            {states[appInfo.appShortName].map(
+                                                (state, index) => {
+                                                    let _link = getLink(
+                                                        appInfo,
+                                                        state.tag
+                                                    );
+                                                    let isCurrentState =
+                                                        currentState ==
+                                                        state.tag;
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            className="v4-app-state"
                                                         >
-                                                            {state.name}{" "}
-                                                            {isCurrentState && <CheckRoundedIcon htmlColor="#fff" />}
-                                                        </a>
-                                                    </div>
-                                                );
-                                            })}
+                                                            <a
+                                                                href={_link}
+                                                                onClick={(
+                                                                    e
+                                                                ) => {
+                                                                    e.preventDefault();
+                                                                    ga.event({
+                                                                        action: "click_menu_test",
+                                                                        params: {
+                                                                            from: window
+                                                                                .location
+                                                                                .href,
+                                                                            to: _link,
+                                                                        },
+                                                                    });
+                                                                    if (
+                                                                        !isCurrentState
+                                                                    ) {
+                                                                        localStorage.setItem(
+                                                                            "select-state-" +
+                                                                                appInfo.appNameId,
+                                                                            state.tag
+                                                                        );
+                                                                        window.location.href =
+                                                                            _link;
+                                                                    }
+                                                                }}
+                                                            >
+                                                                {state.name}{" "}
+                                                                {isCurrentState && (
+                                                                    <CheckRoundedIcon htmlColor="#fff" />
+                                                                )}
+                                                            </a>
+                                                        </div>
+                                                    );
+                                                }
+                                            )}
                                         </div>
                                     </div>{" "}
                                 </>
@@ -250,22 +333,38 @@ const HeaderV4 = ({
                                     <div
                                         className="container-drawer-right-menu-header-v4-1"
                                         onClick={() => {
-                                            let btn = document.getElementById("v4-icon-expand-test");
-                                            let collapse = document.getElementById("collapse-test");
-                                            let content = document.getElementById("collapse-content-test");
+                                            let btn = document.getElementById(
+                                                "v4-icon-expand-test"
+                                            );
+                                            let collapse =
+                                                document.getElementById(
+                                                    "collapse-test"
+                                                );
+                                            let content =
+                                                document.getElementById(
+                                                    "collapse-content-test"
+                                                );
                                             let height = content.clientHeight;
-                                            if (btn.className.includes("true")) {
+                                            if (
+                                                btn.className.includes("true")
+                                            ) {
                                                 //close
-                                                btn.className = "v4-icon-expand false";
+                                                btn.className =
+                                                    "v4-icon-expand false";
                                                 collapse.style.height = "0px";
                                             } else {
-                                                btn.className = "v4-icon-expand true";
-                                                collapse.style.height = height + "px";
+                                                btn.className =
+                                                    "v4-icon-expand true";
+                                                collapse.style.height =
+                                                    height + "px";
                                             }
                                         }}
                                     >
                                         {`Full ${appInfo.appName} Practice Test`}
-                                        <div className={"v4-icon-expand"} id="v4-icon-expand-test">
+                                        <div
+                                            className={"v4-icon-expand"}
+                                            id="v4-icon-expand-test"
+                                        >
                                             <ExpandMoreIcon />
                                         </div>
                                     </div>
@@ -274,7 +373,10 @@ const HeaderV4 = ({
                                             {tests.map((test, index) => {
                                                 let _link = test.slug;
                                                 return (
-                                                    <div key={index} className="v4-app-test">
+                                                    <div
+                                                        key={index}
+                                                        className="v4-app-test"
+                                                    >
                                                         <a
                                                             href={_link}
                                                             onClick={(e) => {
@@ -282,11 +384,14 @@ const HeaderV4 = ({
                                                                 ga.event({
                                                                     action: "click_menu_test",
                                                                     params: {
-                                                                        from: window.location.href,
+                                                                        from: window
+                                                                            .location
+                                                                            .href,
                                                                         to: test.tag,
                                                                     },
                                                                 });
-                                                                window.location.href = _link;
+                                                                window.location.href =
+                                                                    _link;
                                                             }}
                                                         >
                                                             {`${test.title} Test`}
@@ -304,22 +409,39 @@ const HeaderV4 = ({
                                     <div
                                         className="container-drawer-right-menu-header-v4-1"
                                         onClick={() => {
-                                            let btn = document.getElementById("v4-icon-expand");
-                                            let collapse = document.getElementById("collapse-topic");
-                                            let content = document.getElementById("collapse-content");
+                                            let btn =
+                                                document.getElementById(
+                                                    "v4-icon-expand"
+                                                );
+                                            let collapse =
+                                                document.getElementById(
+                                                    "collapse-topic"
+                                                );
+                                            let content =
+                                                document.getElementById(
+                                                    "collapse-content"
+                                                );
                                             let height = content.clientHeight;
-                                            if (btn.className.includes("true")) {
+                                            if (
+                                                btn.className.includes("true")
+                                            ) {
                                                 //close
-                                                btn.className = "v4-icon-expand false";
+                                                btn.className =
+                                                    "v4-icon-expand false";
                                                 collapse.style.height = "0px";
                                             } else {
-                                                btn.className = "v4-icon-expand true";
-                                                collapse.style.height = height + "px";
+                                                btn.className =
+                                                    "v4-icon-expand true";
+                                                collapse.style.height =
+                                                    height + "px";
                                             }
                                         }}
                                     >
                                         {`${appInfo.appName} Topics`}{" "}
-                                        <div className={"v4-icon-expand"} id="v4-icon-expand">
+                                        <div
+                                            className={"v4-icon-expand"}
+                                            id="v4-icon-expand"
+                                        >
                                             <ExpandMoreIcon />
                                         </div>
                                     </div>
@@ -328,7 +450,10 @@ const HeaderV4 = ({
                                             {topics.map((topic) => {
                                                 let _link = topic.slug;
                                                 return (
-                                                    <div key={topic.id} className="v4-app-topic">
+                                                    <div
+                                                        key={topic.id}
+                                                        className="v4-app-topic"
+                                                    >
                                                         <a
                                                             href={_link}
                                                             onClick={(e) => {
@@ -336,11 +461,14 @@ const HeaderV4 = ({
                                                                 ga.event({
                                                                     action: "click_menu_topic",
                                                                     params: {
-                                                                        from: window.location.href,
+                                                                        from: window
+                                                                            .location
+                                                                            .href,
                                                                         to: topic.tag,
                                                                     },
                                                                 });
-                                                                window.location.href = _link;
+                                                                window.location.href =
+                                                                    _link;
                                                             }}
                                                         >
                                                             {topic.name}
@@ -367,7 +495,11 @@ const HeaderV4 = ({
                                             action: "log_out",
                                             params: {},
                                         });
-                                        if (window.location.pathname.includes("billing")) {
+                                        if (
+                                            window.location.pathname.includes(
+                                                "billing"
+                                            )
+                                        ) {
                                             window.location.href = "/";
                                         }
                                     } else {
@@ -385,13 +517,21 @@ const HeaderV4 = ({
                                 {!userInfo ? "Log in" : "Log out"}
                             </div>
                             <div className="container-drawer-right-menu-header-v4-2">
-                                <div>Available on Android and Apple devices</div>
+                                <div>
+                                    Available on Android and Apple devices
+                                </div>
                                 <DownloadAppV4 appInfo={appInfo} place="menu" />
                             </div>
                         </div>
                     </div>
                 </SwipeableDrawer>
-                {openDialog && <V4LoginDialog appInfo={appInfo} open={open} setOpen={setOpen} />}
+                {openDialog && (
+                    <V4LoginDialog
+                        appInfo={appInfo}
+                        open={open}
+                        setOpen={setOpen}
+                    />
+                )}
             </MyContainer>
         </div>
     );

@@ -6,7 +6,7 @@ import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import "./StudyView.scss";
 import { isParentApp, setSession } from "../../config/config_web";
-import MyContainer from "../v4-material/MyContainer";
+import MyContainer from "../v4-material/myContainer";
 import { useEffect, useRef } from "react";
 import IWebData from "@/types/webData";
 import { GameState } from "@/redux/features/game";
@@ -23,10 +23,15 @@ const HeaderStudyV4 = dynamic(() => import("./HeaderStudyV4"), {
     ssr: false,
     loading: () => <div className="header-study-v4-frame" />,
 });
-const StudyBannerDownloadApp = dynamic(() => import("./StudyBannerDownloadApp"), {
-    ssr: false,
-    loading: () => <div className="study-banner-download-frame v4-border-radius" />,
-});
+const StudyBannerDownloadApp = dynamic(
+    () => import("./StudyBannerDownloadApp"),
+    {
+        ssr: false,
+        loading: () => (
+            <div className="study-banner-download-frame v4-border-radius" />
+        ),
+    }
+);
 const EndTestV4 = dynamic(() => import("./end-test-v4"), {
     ssr: false,
     loading: () => <div className="v4-end-test-frame"></div>,
@@ -76,23 +81,28 @@ const StudyView = ({
             // khi có tương tác với trang thì sẽ kéo phần nội dung (banner download, seo) ở dưới màn hình lên
             window.onscroll = (e) => {
                 if (ref?.current?.className != undefined)
-                    if (!ref.current.className.includes("nested")) ref.current.className = "nested";
+                    if (!ref.current.className.includes("nested"))
+                        ref.current.className = "nested";
             };
             window.onclick = (e) => {
                 if (ref?.current?.className != undefined)
-                    if (!ref.current.className.includes("nested")) ref.current.className = "nested";
+                    if (!ref.current.className.includes("nested"))
+                        ref.current.className = "nested";
             };
             window.ontouchstart = (e) => {
                 if (ref?.current?.className != undefined)
-                    if (!ref.current.className.includes("nested")) ref.current.className = "nested";
+                    if (!ref.current.className.includes("nested"))
+                        ref.current.className = "nested";
             };
             window.onkeydown = (e) => {
                 if (ref?.current?.className != undefined)
-                    if (!ref.current.className.includes("nested")) ref.current.className = "nested";
+                    if (!ref.current.className.includes("nested"))
+                        ref.current.className = "nested";
             };
         }
     }, []);
-    let haveCountdown = contentData?.tests?.find((t) => t.slug == gameState.id)?.timeTest > 0;
+    let haveCountdown =
+        contentData?.tests?.find((t) => t.slug == gameState.id)?.timeTest > 0;
     return (
         <>
             <div className="__768" style={{ height: 60 }}>
@@ -131,14 +141,34 @@ const StudyView = ({
                             </Link>
                             {isParentApp() ? (
                                 <>
-                                    <img src="/images/arrow-left.png" alt="" width={12} height={12} />
-                                    <Link href={getLink(appInfo)}>{appInfo.appName}</Link>
+                                    <img
+                                        src="/images/arrow-left.png"
+                                        alt=""
+                                        width={12}
+                                        height={12}
+                                    />
+                                    <Link href={getLink(appInfo)}>
+                                        {appInfo.appName}
+                                    </Link>
 
                                     {!!contentData._state && (
                                         <>
-                                            <img src="/images/arrow-left.png" alt="" width={12} height={12} />
-                                            <Link href={getLink(appInfo, contentData._state)}>
-                                                {contentData._state.replaceAll("-", " ")}
+                                            <img
+                                                src="/images/arrow-left.png"
+                                                alt=""
+                                                width={12}
+                                                height={12}
+                                            />
+                                            <Link
+                                                href={getLink(
+                                                    appInfo,
+                                                    contentData._state
+                                                )}
+                                            >
+                                                {contentData._state.replaceAll(
+                                                    "-",
+                                                    " "
+                                                )}
                                             </Link>
                                         </>
                                     )}
@@ -146,15 +176,33 @@ const StudyView = ({
                             ) : (
                                 !!contentData._state && (
                                     <>
-                                        <img src="/images/arrow-left.png" alt="" width={12} height={12} />
-                                        <Link href={getLink(appInfo, contentData._state)}>
-                                            {contentData._state.replaceAll("-", " ")}
+                                        <img
+                                            src="/images/arrow-left.png"
+                                            alt=""
+                                            width={12}
+                                            height={12}
+                                        />
+                                        <Link
+                                            href={getLink(
+                                                appInfo,
+                                                contentData._state
+                                            )}
+                                        >
+                                            {contentData._state.replaceAll(
+                                                "-",
+                                                " "
+                                            )}
                                         </Link>
                                     </>
                                 )
                             )}
                         </div>
-                        {showAnswerSheet && <AnswerSheet gameState={gameState} contentData={contentData} />}
+                        {showAnswerSheet && (
+                            <AnswerSheet
+                                gameState={gameState}
+                                contentData={contentData}
+                            />
+                        )}
                         {!!(gameType === Config.TOPIC_GAME) && (
                             <div className="v4-study-list-topics-0">
                                 <h3 className="v4-font-semi-bold">{`More ${appInfo.appName} Topics`}</h3>
@@ -169,10 +217,16 @@ const StudyView = ({
                             </div>
                         )}
                         {(gameType === Config.TOPIC_GAME ||
-                            (gameType === Config.BRANCH_TEST_GAME ? listBranchs : tests).length > 1) && (
+                            (gameType === Config.BRANCH_TEST_GAME
+                                ? listBranchs
+                                : tests
+                            ).length > 1) && (
                             <div className="v4-study-list-branches-0 v4-border-radius">
                                 <h3 className="v4-font-semi-bold">{`More ${appInfo.appName} Tests`}</h3>
-                                {(gameType === Config.BRANCH_TEST_GAME ? listBranchs : tests).map((t, i) => {
+                                {(gameType === Config.BRANCH_TEST_GAME
+                                    ? listBranchs
+                                    : tests
+                                ).map((t, i) => {
                                     let url = "";
                                     let title = "";
                                     if (gameType === Config.BRANCH_TEST_GAME) {
@@ -180,7 +234,13 @@ const StudyView = ({
                                         title = t.title;
                                     } else {
                                         url = t.slug;
-                                        title = t.title + ((t.title as string).toLowerCase().includes("test") ? "" : " Test");
+                                        title =
+                                            t.title +
+                                            ((t.title as string)
+                                                .toLowerCase()
+                                                .includes("test")
+                                                ? ""
+                                                : " Test");
                                     }
                                     return (
                                         <a
@@ -191,7 +251,8 @@ const StudyView = ({
                                                 ga.event({
                                                     action: "click_menu_branch_test",
                                                     params: {
-                                                        from: window.location.href,
+                                                        from: window.location
+                                                            .href,
                                                         to: t.url,
                                                     },
                                                 });
@@ -207,7 +268,10 @@ const StudyView = ({
                     </div>
                     <div className="v4-main-study-content">
                         <h1
-                            className={"v4-study-title v4-font-semi-bold " + (isFinish ? "" : "unfinish")}
+                            className={
+                                "v4-study-title v4-font-semi-bold " +
+                                (isFinish ? "" : "unfinish")
+                            }
                             onClick={() => {
                                 setIsTester();
                             }}
@@ -218,12 +282,18 @@ const StudyView = ({
                             <EndTestV4
                                 gameState={gameState}
                                 appInfo={appInfo}
-                                currentTopic={listTopics.find((t) => gameState.id.includes(t.id))}
+                                currentTopic={listTopics.find((t) =>
+                                    gameState.id.includes(t.id)
+                                )}
                                 _state={contentData._state}
                             />
                         ) : isFinish == 0 ? (
                             <>
-                                <MainStudyView gameState={gameState} appInfo={appInfo} haveCountdown={haveCountdown} />
+                                <MainStudyView
+                                    gameState={gameState}
+                                    appInfo={appInfo}
+                                    haveCountdown={haveCountdown}
+                                />
                                 <div id="v4-main-study-other-content" ref={ref}>
                                     <StudyBannerDownloadApp
                                         appInfo={appInfo}
@@ -239,7 +309,11 @@ const StudyView = ({
                                         <div
                                             className="v4-study-topic-seo-content v4-border-radius"
                                             dangerouslySetInnerHTML={{
-                                                __html: (contentData?.content ?? "").replace(/\[/g, "<").replace(/\]/g, ">"),
+                                                __html: (
+                                                    contentData?.content ?? ""
+                                                )
+                                                    .replace(/\[/g, "<")
+                                                    .replace(/\]/g, ">"),
                                             }}
                                         />
                                     ) : (

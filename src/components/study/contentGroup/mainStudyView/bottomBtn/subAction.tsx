@@ -9,8 +9,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import ReportMistake from "./reportMistake";
 
 const SubAction = () => {
-    const { currentGame } = useAppSelector(gameState);
-    const { listActions } = useAppSelector(userState);
+    // const { currentGame } = useAppSelector(gameState);
+    // const { listActions } = useAppSelector(userState);
     const [openModal, setOpenModal] = useState(false);
 
     const [status, setStatus] = useState({
@@ -19,27 +19,27 @@ const SubAction = () => {
         save: true,
     });
 
-    useEffect(() => {
-        if (currentGame.id) {
-            const question = listActions.find(
-                (item) => item.questionId === currentGame.id
-            );
-            if (question) {
-                console.log("🚀 ~ useEffect ~ question:", question);
-                setStatus({
-                    like: question.isLike,
-                    dislike: question.isDisLike,
-                    save: question.isSave,
-                });
-            } else {
-                setStatus({
-                    like: false,
-                    dislike: false,
-                    save: false,
-                });
-            }
-        }
-    }, [currentGame, listActions]);
+    // useEffect(() => {
+    //     if (currentGame.id) {
+    //         const question = listActions.find(
+    //             (item) => item.questionId === currentGame.id
+    //         );
+    //         if (question) {
+    //             console.log("🚀 ~ useEffect ~ question:", question);
+    //             setStatus({
+    //                 like: question.isLike,
+    //                 dislike: question.isDisLike,
+    //                 save: question.isSave,
+    //             });
+    //         } else {
+    //             setStatus({
+    //                 like: false,
+    //                 dislike: false,
+    //                 save: false,
+    //             });
+    //         }
+    //     }
+    // }, [currentGame, listActions]);
 
     const saveAction = useCallback(() => {
         // dispatch(

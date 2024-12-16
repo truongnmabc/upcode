@@ -1,4 +1,4 @@
-import MyContainer from "@/components/v4-material/MyContainer";
+import MyContainer from "@/components/v4-material/myContainer";
 import { IAppInfo } from "@/models/AppInfo";
 import { IItemBlock } from "@/models/stateChildrenApp";
 import { ITestInfo } from "@/models/TestInfo";
@@ -42,15 +42,29 @@ const NewHome = ({
                         </div>
                         <div className="landing-title-12">
                             <p className="text-base w-full font-normal text-center">
-                                Ace all {_state} DMV written tests with our two powerful systems: {isDesktop && <br />}
-                                Master part by part in <span className="font-semibold">Practice mode</span> and experience the
-                                real test atmosphere in <span className="font-semibold">Test mode</span>
+                                Ace all {_state} DMV written tests with our two
+                                powerful systems: {isDesktop && <br />}
+                                Master part by part in{" "}
+                                <span className="font-semibold">
+                                    Practice mode
+                                </span>{" "}
+                                and experience the real test atmosphere in{" "}
+                                <span className="font-semibold">Test mode</span>
                             </p>
                         </div>
                     </div>
-                    <ListHome appInfo={appInfo} _state={_state} listTopics={listTopics} tests={tests} />
+                    <ListHome
+                        appInfo={appInfo}
+                        _state={_state}
+                        listTopics={listTopics}
+                        tests={tests}
+                    />
                 </MyContainer>
-                <ListBlock appInfo={appInfo} _state={_state} listBlock={listBlock} />
+                <ListBlock
+                    appInfo={appInfo}
+                    _state={_state}
+                    listBlock={listBlock}
+                />
                 <BannerHome appInfo={appInfo} _state={_state} />
                 <Handbook appInfo={appInfo} _state={_state} />
             </div>
