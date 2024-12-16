@@ -17,6 +17,9 @@ import states from "../../data/statesName.json";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
+import NewHome from "@/container/single-app/newHome";
+import { stateName } from "@/container/single-app/HomeSingleApp";
+import Layout2 from "@/components/layout/layout-2/Layout2";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
@@ -66,6 +69,7 @@ export interface IItemBlock {
     post: IPost;
     avatar: string;
     author: IAuthor;
+    thumbnail: string;
 }
 
 const ChildrenApp = ({
@@ -94,14 +98,24 @@ const ChildrenApp = ({
         <>
             <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} ads />
             <StoreProvider appInfo={childAppInfo} webData={{ tests: tests, topics: listTopics }} />
-            <HomeSingleApp
+            {/* <HomeSingleApp
                 appInfo={childAppInfo}
                 homeSeoContent={homeSeoContent}
                 listTopics={listTopics}
                 tests={tests}
                 _state={_state}
                 listBlock={listBlock}
-            />
+            /> */}
+            <Layout2 appInfo={childAppInfo} listTopics={listTopics} tests={tests}>
+                <NewHome
+                    listTopics={listTopics}
+                    tests={tests}
+                    _state={stateName(_state)}
+                    appInfo={childAppInfo}
+                    // homeSeoContent={homeSeoContent}
+                    listBlock={listBlock}
+                />
+            </Layout2>
             <ScrollToTopArrow />
         </>
     );

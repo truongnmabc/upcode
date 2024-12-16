@@ -83,18 +83,18 @@ const NewHome = ({
                     <div className="landing-title-0">
                         <div className="landing-title-11">
                             <h2 className="title-h1">
-                                <span className="text-2xl sm:text-[40px] font-bold sm:leading-[60px]">{`${_state} ${appInfo?.appName} Practice Test`}</span>
+                                <p className="text-2xl w-full sm:text-[40px] text-center font-bold sm:leading-[60px]">{`${_state} ${appInfo?.appName} Practice Test`}</p>
                                 {/* <span className="landing-title-22">
                                 Ace The <strong className="v4-font-semi-bold">{appInfo?.appName}</strong> On First Try
                             </span> */}
                             </h2>
                         </div>
                         <div className="landing-title-12">
-                            <span className="text-base font-normal text-center">
+                            <p className="text-base w-full font-normal text-center">
                                 Ace all {_state} DMV written tests with our two powerful systems: {isDesktop && <br />}
                                 Master part by part in <span className="font-semibold">Practice mode</span> and experience the
                                 real test atmosphere in <span className="font-semibold">Test mode</span>
-                            </span>
+                            </p>
                         </div>
                     </div>
                     <ListHome
