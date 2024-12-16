@@ -1,0 +1,89 @@
+.cancel-dialog {
+    .MuiPaper-root {
+        padding: 40px 24px;
+        border-radius: 12px;
+        min-width: 500px;
+        position: relative;
+    }
+    .dialog-container {
+        .close-icon {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            cursor: pointer;
+        }
+        .cancel-title {
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 36px;
+            text-align: center;
+            color: #312f14;
+        }
+        .dialog-description {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 26px;
+            text-align: center;
+            letter-spacing: 0.02em;
+            color: #575758;
+            margin-top: 24px;
+        }
+        .list-checkbox {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 24px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            .checkbox-item {
+                display: flex;
+                align-items: center;
+                background: rgba(50, 150, 120, 0.04);
+                border-radius: 12px;
+                padding-left: 12px;
+                .MuiFormControlLabel-root {
+                    width: 100%;
+                    .MuiTypography-root {
+                        margin-left: 30px;
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 26px;
+                        letter-spacing: 0.02em;
+                        color: #212121;
+                    }
+                }
+            }
+        }
+        .button-cancel {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #3e3e40;
+            width: 100%;
+            border: 1px solid #e7e7e8;
+            border-radius: 12px;
+            margin-top: 36px;
+            text-transform: none;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .cancel-dialog {
+        .MuiPaper-root {
+            width: 80%;
+            min-width: unset;
+        }
+        .dialog-container {
+            .list-checkbox {
+                width: 100%;
+            }
+            .close-icon {
+                position: absolute;
+                top: 18px;
+                right: 18px;
+            }
+        }
+    }
+}
