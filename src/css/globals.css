@@ -1,0 +1,55 @@
+@import "./tailwinds.css";
+@import "./root.css";
+@import "./zmp-ui.css";
+@import "./local.css";
+
+html,
+body {
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+::-webkit-scrollbar {
+    width: 8px !important;
+    display: block !important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #c9c9c9;
+    border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #adadad;
+}
+* {
+    font-family: var(--font-poppins);
+}
+
+span,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+    color: var(--text-color);
+}
+
+.max-w-page {
+    max-width: 1280px;
+}
+.text-primary {
+    color: var(--text-color-primary);
+}
+.bg-primary {
+    background-color: var(--color-primary);
+}

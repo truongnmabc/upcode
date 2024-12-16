@@ -1,52 +1,64 @@
-import Axios from "axios";
-import Config from "../config/index";
+import Config from "@/common/config";
+import Axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
-export class RequestData {
-    url: string;
-    params: any;
-
-    constructor(url: string, params: any) {
-        this.url = url;
-        this.params = params;
-    }
-}
-
-export const GET: any = (data: RequestData) => {
-    return new Promise((resolve, reject) => {
-        Axios({
+export const request = async <T>(config: AxiosRequestConfig): Promise<T> => {
+    try {
+        const response: AxiosResponse<T> = await Axios({
+            baseURL: Config.BASE_URL,
             timeout: Config.HTTP_REQUEST_TIMEOUT,
-            url: data.url,
-            method: "GET",
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-            },
-        })
-            .then((response) => {
-                if (response.status === Config.HTTP_REQUEST_SUCCESS) {
-                    resolve(response.data);
-                } else {
-                    reject(response.status);
-                }
-            })
-            .catch((e) => reject(e));
+            ...config,
+        });
+
+        if (response.status === Config.HTTP_REQUEST_SUCCESS) {
+            return response.data;
+        } else {
+            throw new Error(`Request failed with status: ${response.status}`);
+        }
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            throw new Error(error.message);
+        } else {
+            throw new Error("An unknown error occurred");
+        }
+    }
+};
+
+export const requestGetData = async ({
+    url,
+    params,
+    config,
+}: {
+    url: string;
+    params?: Record<string, unknown>;
+    config?: AxiosRequestConfig;
+}): Promise<unknown> => {
+    return request({
+        url,
+        method: "GET",
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+        },
+        params,
+        ...config,
     });
 };
-export const POST: any = (data: RequestData) => {
-    return new Promise((resolve, reject) => {
-        Axios({
-            timeout: Config.HTTP_REQUEST_TIMEOUT,
-            url: data.url,
-            headers: { "Content-Type": "application/json" },
-            method: "POST",
-            data: data.params,
-        })
-            .then((response) => {
-                if (response.status === Config.HTTP_REQUEST_SUCCESS) {
-                    resolve(response.data);
-                } else {
-                    reject(response.status);
-                }
-            })
-            .catch((e) => reject(e));
+
+export const requestPostData = async ({
+    url,
+    data,
+    config,
+}: {
+    url: string;
+    data?: Record<string, unknown>;
+    config?: AxiosRequestConfig;
+}): Promise<unknown> => {
+    return request({
+        url,
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        data,
+        ...config,
     });
 };

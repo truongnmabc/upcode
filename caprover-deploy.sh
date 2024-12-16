@@ -3,8 +3,8 @@ START_TIME=$(date +%s)
 REDEPLOY=$2
 
 echo $REDEPLOY
-echo "Build app $1"
-./build.sh $1
+# echo "Build app $1"
+# ./build.sh $1
 
 rm -rf .next
 envFile="./temp-env"
