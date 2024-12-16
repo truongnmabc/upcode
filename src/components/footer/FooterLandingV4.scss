@@ -16,6 +16,7 @@
     .v4-footer-landing-container-0 {
         width: 100%;
         height: 100%;
+        padding-bottom: 40px;
         // margin-top: -8px;
         // padding-top: 24px;
 
@@ -25,7 +26,7 @@
         box-sizing: border-box;
         .title {
             text-transform: uppercase;
-            margin-bottom: 24px;
+            margin-bottom: 24px !important;
             color: #fff;
             font-size: 18px;
             font-weight: 600;
@@ -68,7 +69,7 @@
         a {
             text-decoration: none;
             color: #fff;
-            font-size: 14px;
+            font-size: 16px;
         }
         // a:not(:first-child) {
         //     margin-left: 32px;
@@ -83,6 +84,9 @@
             text-align: left;
         }
         .support {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
             max-width: 283px;
             > div {
                 color: #fff !important;
@@ -91,6 +95,14 @@
                 font-weight: 500;
                 line-height: 24px;
                 text-align: left;
+            }
+            .cluster-info-send-mail {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .intro-suport {
+                color: #fff;
             }
             .text-info {
                 color: #fff;
@@ -118,7 +130,6 @@
                 }
             }
             .v4-input-field {
-                margin: 12px 0;
                 input {
                     color: #fff;
                     width: 100%;
@@ -153,10 +164,10 @@
                     font-size: 14px;
                     text-align: left;
                     padding-left: 4px;
+                    line-height: 24px;
                 }
             }
             .footer-support {
-                margin-top: 28px;
                 display: flex;
                 width: 100%;
                 justify-content: flex-end;
@@ -315,6 +326,7 @@
             flex-direction: column;
             gap: 16px;
             align-items: unset;
+
             .title {
                 margin-bottom: 8px;
             }
@@ -345,6 +357,7 @@
                     font-size: 14px;
                 }
                 .intro-suport {
+                    color: #fff;
                     font-size: 14px;
                 }
             }
