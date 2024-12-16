@@ -165,3 +165,11 @@ sét lại màu khi đổi app, dark theme và light theme cần đổi của mu
     type Admin = { privileges: string[] };
     type User = { name: string };
     type AdminUser = Admin & User;
+
+IS_SINGLE_APP=fasle;
+DEV_BASE_API="http://localhost:3030/"
+NEXT_PUBLIC_APPLE_SECRET=
+NEXT_PUBLIC_APPLE_ID=
+NEXT_PUBLIC_GOOGLE_ID=34834267607-62p4hbpi85rbo5dns1sfcoo7s8ucdt7v.apps.googleusercontent.com
+NEXT_PUBLIC_GOOGLE_SECRET=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
+AUTH_SECRET="0muSwmVqTlh4H+WF82zC89b3VMYmRC0I9kxETNzb9ik=" # Added by `npx auth`. Read more: https://cli.authjs.dev
