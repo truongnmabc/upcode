@@ -25,8 +25,15 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
         message: "",
     });
     const [checkMessageExist, setCheckMessageExist] = useState(true);
+    const [checkEmailExist, setCheckEmailExist] = useState(true);
+
     let emailSupport = getContactLink("email");
     const onChangeEmail = (e) => {
+        if (e.target.value != "") {
+            setCheckEmailExist(true);
+        } else {
+            setCheckEmailExist(false);
+        }
         setValueSendMail({
             ...valueSendMail,
             email: e.target.value,
@@ -52,7 +59,9 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
             const isValidMessage = message.trim().length > 0;
             if (!isValidMessage) {
                 setCheckMessageExist(false);
-                btn.current.disabled = true;
+            }
+            if (!isValidEmail || !email) {
+                setCheckEmailExist(false);
             }
             if (isValidEmail && isValidMessage) {
                 btn.current.innerHTML = "Sending...";
@@ -71,14 +80,50 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
             }, 2000);
         }
     };
-    return (
-        <Layout2 appInfo={appInfo} listTopics={[]} tests={[]}>
-            <SeoHeader title={"Contact us – ABC Elearning"} description={""} keyword={""} />
-            <div className="contact-page">
-                <div className="cluster-infor-title">
-                    {!isMobile && (
-                        <div className="cluster-img-info">
-                            <div className="title">Contact Information</div>
+    const layoutSendMail = () => {
+        return (
+            <div className="cluster-send-mail">
+                <div className="form-send-mail">
+                    <div className="title">Contact Us</div>
+                    <div className="description">Any questions, comments or feedback? We’re here to help!</div>
+
+                    <div className="input-mail">
+                        <p>Email</p>
+                        <div className="group-input-noti">
+                            <input
+                                type="text"
+                                name="email"
+                                value={valueSendMail.email}
+                                onChange={onChangeEmail}
+                                placeholder="Enter your email"
+                            />
+                            <div className={"noti " + (!checkEmailExist ? "check" : "")}>
+                                Please provide a valid email address!
+                            </div>
+                        </div>
+                    </div>
+                    <div className="input-message">
+                        <p>Message</p>
+                        <div className="group-textarea-noti">
+                            <textarea
+                                className="message-send-mail"
+                                id="message-send-mail"
+                                placeholder="Enter your message"
+                                value={valueSendMail.message}
+                                onChange={onChangeMessage}
+                            ></textarea>
+                            <div className={"noti " + (!checkMessageExist ? "check" : "")}>Please type your message!</div>
+                        </div>
+                    </div>
+
+                    <button ref={btn} onClick={() => handleSubmit()}>
+                        Send
+                    </button>
+                    {!isMobile ? (
+                        <img src="/images/contacts/cdl/form-contact-send-mail.png" alt="" />
+                    ) : (
+                        <>
+                            <div className="contact-information">Contact Information</div>
                             <div className="intro">We’re always happy to hear from you!</div>
                             {emailSupport && (
                                 <div
@@ -92,69 +137,25 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
                                     <div className="text-info">{emailSupport}</div>
                                 </div>
                             )}
-                            <div
-                                className="cluster-location"
-                                onClick={() => {
-                                    router.push("/");
-                                }}
-                            >
-                                <img src="/images/contacts/location.png" alt="" />
-                                <div className="text-info">209 S Rosemont Ave, Dallas, TX 75208</div>
-                            </div>
-                            <div>
-                                <SocialsIcon />
-                            </div>
-                        </div>
+                            <SocialsIcon />
+                        </>
                     )}
-                    <div className="cluster-send-mail">
-                        <div className="form-send-mail">
-                            <div className="title">Contact Us</div>
-                            <div className="description">Any questions, comments or feedback? We’re here to help!</div>
-
-                            <div className="input-mail">
-                                <p>Email</p>
-                                <div className="group-input-noti">
-                                    <input
-                                        type="text"
-                                        name="email"
-                                        value={valueSendMail.email}
-                                        onChange={onChangeEmail}
-                                        placeholder="Enter your email"
-                                    />
-                                    <div
-                                        className={
-                                            "noti " +
-                                            (valueSendMail.email && !validateEmail(valueSendMail.email) ? "check" : "")
-                                        }
-                                    >
-                                        Please provide a valid email address!
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="input-message">
-                                <p>Message</p>
-                                <div className="group-textarea-noti">
-                                    <textarea
-                                        className="message-send-mail"
-                                        id="message-send-mail"
-                                        placeholder="Enter your message"
-                                        value={valueSendMail.message}
-                                        onChange={onChangeMessage}
-                                    ></textarea>
-                                    <div className={"noti " + (!checkMessageExist ? "check" : "")}>
-                                        Please type your message!
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button ref={btn} onClick={() => handleSubmit()}>
-                                Send
-                            </button>
-                            {!isMobile ? (
-                                <img src="/images/contacts/cdl/form-contact-send-mail.png" alt="" />
-                            ) : (
-                                <>
-                                    <div className="contact-information">Contact Information</div>
+                    {}
+                </div>
+            </div>
+        );
+    };
+    return (
+        <Layout2 appInfo={appInfo} listTopics={[]} tests={[]}>
+            <SeoHeader title={"Contact us – ABC Elearning"} description={""} keyword={""} />
+            <div className="contact-page">
+                <div className="cluster-infor-title">
+                    {!isMobile && (
+                        <div className="in-form max-w-component-desktop">
+                            <div className="left-form">
+                                <img className="img-back" src="/images/contacts/cdl/truck-contact-page.png" alt="" />
+                                <div className="cluster-img-info">
+                                    <div className="title">Contact Information</div>
                                     <div className="intro">We’re always happy to hear from you!</div>
                                     {emailSupport && (
                                         <div
@@ -165,16 +166,32 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
                                         >
                                             <img src="/images/contacts/sms.png" alt="" />
 
-                                            <div className="text-info">{emailSupport}</div>
+                                            <div className="text-info">
+                                                {appInfo.appShortName === "cdl" ? "support@abc-elearning.org" : emailSupport}
+                                            </div>
                                         </div>
                                     )}
-                                    <SocialsIcon />
-                                </>
-                            )}
-                            {}
+                                    <div
+                                        className="cluster-location"
+                                        onClick={() => {
+                                            router.push("/");
+                                        }}
+                                    >
+                                        <img src="/images/contacts/location.png" alt="" />
+                                        <div className="text-info">209 S Rosemont Ave, Dallas, TX 75208</div>
+                                    </div>
+                                    <div>
+                                        <SocialsIcon />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {layoutSendMail()}
                         </div>
-                    </div>
+                    )}
+                    {isMobile && layoutSendMail()}
                 </div>
+
                 <div className="cluster-faqs">
                     <div className="title max-w-component-desktop">FAQs</div>
                     <div className="faqs-form max-w-component-desktop">
