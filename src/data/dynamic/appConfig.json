@@ -33,14 +33,14 @@
         "mainColorUpgradePro": "#329678",
         "appleClientId": ""
     },
-    "cdl": {
+    "cdl_v2": {
         "gaId": "UA-167769768-3",
         "tagManagerId": "GTM-MLS2NPZ",
         "appId": 4902462618075136,
         "googleVerifyId": "alG3R0D0dTXZb4Nn8ZSB8FYspMh_HAlziNimiRYMO24",
         "mainColor": "#343FA4",
         "mainColorBold": "#263195",
-        "mainBackgroundColor": "#343FA4",
+        "mainBackgroundColor": "#F0F2FE",
         "cookie": "#232e95",
         "GA4ID": "G-QH162XH769",
         "pageId": "101878645343877",

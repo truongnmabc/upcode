@@ -1,0 +1,189 @@
+@import "config.css"; /*  Using a string */
+
+@import "./tailwinds.css";
+@import "./styles.css";
+
+html,
+body {
+    /* để customize drawer, dialog neen set height của 2 cái này  là 100% và overflow = hidden để tránh bị trượt khi bật popup/drawer, còn thành phần giúp scroll là __next*/
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+    background: var(--main-background-color);
+}
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* position: absolute; */
+    /* height: 100%;
+    width: 100%; */
+    background: var(--main-background-color);
+}
+/* font-family: 'Sora', sans-serif; */
+:root {
+    --background: rgb(255, 255, 255);
+}
+[data-theme="dark"] {
+    --background: rgb(33, 33, 33);
+}
+
+* {
+    font-family: "Sora", sans-serif;
+}
+
+span,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+    color: #212121;
+}
+
+/* .flex {
+    display: flex;
+}
+.align-center {
+    display: flex;
+    align-items: center;
+}
+
+.font-14 {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.font-16 {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.overflow-auto {
+    overflow: scroll;
+} */
+
+/* width */
+.overflow-auto::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.overflow-auto::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+/* Handle */
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: rgba(33, 33, 33, 0.12);
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(33, 33, 33, 0.32);
+}
+
+.v4-border-radius {
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.v4-font-semi-bold {
+    /* font-weight: 600; */
+    font-weight: 500; /* for safari using strong, h1, h2, h3,h4 ,.. element*/
+}
+.v4-font-size-12 {
+    font-size: 12px;
+}
+
+.v4-font-size-14 {
+    font-size: 14px;
+}
+
+.v4-font-size-16 {
+    font-size: 16px;
+}
+
+.v4-flex {
+    display: flex;
+}
+
+.v4-button-animtaion {
+    transition: transform 0.15s ease, opacity 0.2s;
+}
+.v4-button-animtaion:hover {
+    transform: translateY(-3px);
+    opacity: 0.9;
+}
+
+html {
+    /* width: 100%;
+    height: 100%; */
+    /* overflow: auto; */
+    &::-webkit-scrollbar {
+        width: 8px;
+        display: block !important;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #fff;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #c9c9c9;
+        border-radius: 8px;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #adadad;
+    }
+}
+
+/*  _[x]: hiện ở màn có kích thước >= x */
+._769 {
+    display: none;
+}
+@media screen and (min-width: 769px) {
+    ._769 {
+        /* chỗ nào dùng class này thì chú ý thêm !important vào trường display */
+        display: block;
+    }
+}
+/*  _[x]: hiện ở màn có kích thước < x */
+
+.__768 {
+    /* chỗ nào dùng class này thì chú ý thêm !important vào trường display */
+    display: none;
+}
+@media screen and (max-width: 768px) {
+    .__768 {
+        /* chỗ nào dùng class này thì chú ý thêm !important vào trường display */
+        display: block;
+    }
+    .max-w-component-desktop {
+        max-width: 100%;
+    }
+}
+
+.blur-content {
+    filter: blur(4px);
+    -webkit-filter: blur(4px);
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    /* pointer-events: none; */
+}
+
+.max-w-component-desktop {
+    max-width: 1206px;
+}
+
+.mask-gradient {
+    mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+}
