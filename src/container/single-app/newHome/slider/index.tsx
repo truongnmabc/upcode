@@ -4,7 +4,6 @@ import SwiperBlock from "./swiperBlock";
 import { IItemBlock } from "@/pages/stateAndChildrenApp/[...stateAndChildrenApp]";
 
 const ListBlock = ({ appInfo, _state, listBlock }: { appInfo: IAppInfo; _state: string; listBlock?: IItemBlock[] }) => {
-    console.log("🚀 ~ ListBlock ~ listBlock:", listBlock);
     return (
         <div className="bg-[#E6E9FD]">
             <div className="v4-container-component  v4-container-maxWidth">

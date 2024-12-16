@@ -16,7 +16,7 @@ const ListHome = ({
     _state: string;
 }) => {
     return (
-        <div className="w-full h-full pb-6 sm:pb-12 flex flex-col gap-6 sm:gap-8 ">
+        <div className="w-full h-full pt-4  pb-6 sm:pb-12 flex flex-col gap-6 sm:gap-8 ">
             {listTopics.map((topic, index) => (
                 <ItemTopicHome
                     key={index}

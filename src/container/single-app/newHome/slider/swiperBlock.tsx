@@ -38,12 +38,11 @@ const ITemBlock = ({ item }: { item: IItemBlock }) => {
     const isDesktop = useMediaQuery("(min-width:769px)");
 
     return (
-        <div className="p-0 sm:p-4 w-silder_2/3 sm:w-slider flex-shrink-0 rounded-2xl bg-transparent sm:bg-white flex flex-col gap-[10px] h-full">
+        <div className="p-0 sm:p-4 w-silder_2/3 sm:w-slider flex-shrink-0 rounded-2xl bg-transparent sm:bg-white  flex flex-col gap-[10px] h-full">
             <div className=" relative sm:static aspect-square sm:aspect-video w-full flex items-center rounded-lg ">
                 <Image
-                    // src={item.img}
-                    src={"/"}
                     width={360}
+                    src={item?.thumbnail}
                     height={240}
                     layout={!isDesktop ? "fill" : "intrinsic"}
                     className="h-full w-full object-cover rounded-lg"
@@ -66,11 +65,11 @@ const ITemBlock = ({ item }: { item: IItemBlock }) => {
             <div className="flex flex-row sm:flex-col gap-[10px] w-full overflow-hidden">
                 <div className="flex gap-2 w-8 h-8 sm:w-full sm:h-6 items-center">
                     <Image
-                        className=""
+                        className="rounded-full "
                         // src={item?.authorAvatar}
+                        src={item.avatar.includes("secure") ? "/" : item.avatar}
                         lang=""
                         about=""
-                        src={"/"}
                         width={24}
                         height={24}
                         alt="avatar"
