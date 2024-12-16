@@ -1,7 +1,7 @@
 import { IAppInfo } from "@/models/AppInfo";
 import React from "react";
 import SwiperBlock from "./swiperBlock";
-import { IItemBlock } from "@/pages/stateAndChildrenApp/[...stateAndChildrenApp]";
+import { IItemBlock } from "@/models/stateChildrenApp";
 
 const ListBlock = ({ appInfo, _state, listBlock }: { appInfo: IAppInfo; _state: string; listBlock?: IItemBlock[] }) => {
     return (

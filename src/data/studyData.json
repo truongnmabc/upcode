@@ -2,10 +2,26 @@
     {
         "appId": 6540077669810176,
         "topics": [
-            { "title": "General Knowledge", "url": "alabama-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "alabama-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "alabama-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "alabama-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "alabama-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "alabama-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "alabama-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "alabama-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "alabama-combination-vehicles-practice-test",
@@ -16,17 +32,41 @@
                 "url": "alabama-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "alabama-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "alabama-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "alabama-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "alabama-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "alabama-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "alaska-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "alaska-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "alaska-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "alaska-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "alaska-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "alaska-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "alaska-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "alaska-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "alaska-combination-vehicles-practice-test",
@@ -37,13 +77,41 @@
                 "url": "alaska-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "alaska-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "alaska-school-bus-practice-test", "tag": "school-bus" },
-            { "title": "Pre-Trip Inspection", "url": "alaska-pre-trip-inspection-practice-test", "tag": "pre-trip-inspection" },
-            { "title": "General Knowledge", "url": "arizona-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "arizona-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "arizona-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "arizona-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "alaska-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "alaska-school-bus-practice-test",
+                "tag": "school-bus"
+            },
+            {
+                "title": "Pre-Trip Inspection",
+                "url": "alaska-pre-trip-inspection-practice-test",
+                "tag": "pre-trip-inspection"
+            },
+            {
+                "title": "General Knowledge",
+                "url": "arizona-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "arizona-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "arizona-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "arizona-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "arizona-combination-vehicles-practice-test",
@@ -54,17 +122,41 @@
                 "url": "arizona-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "arizona-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "arizona-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "arizona-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "arizona-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "arizona-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "arkansas-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "arkansas-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "arkansas-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "arkansas-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "arkansas-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "arkansas-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "arkansas-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "arkansas-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "arkansas-combination-vehicles-practice-test",
@@ -75,21 +167,41 @@
                 "url": "arkansas-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "arkansas-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "arkansas-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "arkansas-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "arkansas-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "arkansas-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "california-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "california-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "General Knowledge",
+                "url": "california-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "california-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "california-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "california-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "california-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "california-combination-vehicles-practice-test",
@@ -100,17 +212,41 @@
                 "url": "california-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "california-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "california-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "california-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "california-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "california-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "colorado-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "colorado-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "colorado-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "colorado-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "colorado-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "colorado-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "colorado-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "colorado-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "colorado-combination-vehicles-practice-test",
@@ -121,21 +257,41 @@
                 "url": "colorado-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "colorado-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "colorado-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "colorado-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "colorado-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "colorado-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "connecticut-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "connecticut-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "General Knowledge",
+                "url": "connecticut-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "connecticut-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "connecticut-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "connecticut-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "connecticut-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "connecticut-combination-vehicles-practice-test",
@@ -146,17 +302,41 @@
                 "url": "connecticut-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "connecticut-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "connecticut-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "connecticut-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "connecticut-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "connecticut-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "delaware-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "delaware-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "delaware-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "delaware-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "delaware-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "delaware-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "delaware-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "delaware-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "delaware-combination-vehicles-practice-test",
@@ -167,8 +347,16 @@
                 "url": "delaware-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "delaware-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "delaware-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "delaware-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "delaware-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "delaware-pre-trip-inspection-practice-test",
@@ -179,13 +367,21 @@
                 "url": "district-of-columbia-general-knowledge-practice-test",
                 "tag": "general-knowledge"
             },
-            { "title": "HazMat", "url": "district-of-columbia-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "HazMat",
+                "url": "district-of-columbia-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "district-of-columbia-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "district-of-columbia-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "district-of-columbia-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "district-of-columbia-combination-vehicles-practice-test",
@@ -201,16 +397,36 @@
                 "url": "district-of-columbia-tanker-vehicles-practice-test",
                 "tag": "tanker-vehicles"
             },
-            { "title": "School Bus", "url": "district-of-columbia-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "School Bus",
+                "url": "district-of-columbia-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "district-of-columbia-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "florida-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "florida-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "florida-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "florida-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "florida-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "florida-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "florida-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "florida-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "florida-combination-vehicles-practice-test",
@@ -221,17 +437,41 @@
                 "url": "florida-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "florida-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "florida-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "florida-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "florida-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "florida-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "georgia-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "georgia-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "georgia-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "georgia-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "georgia-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "georgia-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "georgia-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "georgia-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "georgia-combination-vehicles-practice-test",
@@ -242,17 +482,41 @@
                 "url": "georgia-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "georgia-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "georgia-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "georgia-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "georgia-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "georgia-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "hawaii-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "hawaii-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "hawaii-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "hawaii-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "hawaii-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "hawaii-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "hawaii-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "hawaii-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "hawaii-combination-vehicles-practice-test",
@@ -263,13 +527,41 @@
                 "url": "hawaii-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "hawaii-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "hawaii-school-bus-practice-test", "tag": "school-bus" },
-            { "title": "Pre-Trip Inspection", "url": "hawaii-pre-trip-inspection-practice-test", "tag": "pre-trip-inspection" },
-            { "title": "General Knowledge", "url": "idaho-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "idaho-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "idaho-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "idaho-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "hawaii-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "hawaii-school-bus-practice-test",
+                "tag": "school-bus"
+            },
+            {
+                "title": "Pre-Trip Inspection",
+                "url": "hawaii-pre-trip-inspection-practice-test",
+                "tag": "pre-trip-inspection"
+            },
+            {
+                "title": "General Knowledge",
+                "url": "idaho-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "idaho-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "idaho-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "idaho-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "idaho-combination-vehicles-practice-test",
@@ -280,13 +572,41 @@
                 "url": "idaho-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "idaho-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "idaho-school-bus-practice-test", "tag": "school-bus" },
-            { "title": "Pre-Trip Inspection", "url": "idaho-pre-trip-inspection-practice-test", "tag": "pre-trip-inspection" },
-            { "title": "General Knowledge", "url": "illinois-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "illinois-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "illinois-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "illinois-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "idaho-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "idaho-school-bus-practice-test",
+                "tag": "school-bus"
+            },
+            {
+                "title": "Pre-Trip Inspection",
+                "url": "idaho-pre-trip-inspection-practice-test",
+                "tag": "pre-trip-inspection"
+            },
+            {
+                "title": "General Knowledge",
+                "url": "illinois-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "illinois-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "illinois-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "illinois-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "illinois-combination-vehicles-practice-test",
@@ -297,17 +617,41 @@
                 "url": "illinois-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "illinois-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "illinois-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "illinois-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "illinois-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "illinois-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "indiana-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "indiana-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "indiana-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "indiana-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "indiana-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "indiana-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "indiana-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "indiana-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "indiana-combination-vehicles-practice-test",
@@ -318,17 +662,41 @@
                 "url": "indiana-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "indiana-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "indiana-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "indiana-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "indiana-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "indiana-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "iowa-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "iowa-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "iowa-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "iowa-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "iowa-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "iowa-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "iowa-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "iowa-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "iowa-combination-vehicles-practice-test",
@@ -339,13 +707,41 @@
                 "url": "iowa-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "iowa-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "iowa-school-bus-practice-test", "tag": "school-bus" },
-            { "title": "Pre-Trip Inspection", "url": "iowa-pre-trip-inspection-practice-test", "tag": "pre-trip-inspection" },
-            { "title": "General Knowledge", "url": "kansas-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "kansas-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "kansas-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "kansas-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "iowa-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "iowa-school-bus-practice-test",
+                "tag": "school-bus"
+            },
+            {
+                "title": "Pre-Trip Inspection",
+                "url": "iowa-pre-trip-inspection-practice-test",
+                "tag": "pre-trip-inspection"
+            },
+            {
+                "title": "General Knowledge",
+                "url": "kansas-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "kansas-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "kansas-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "kansas-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "kansas-combination-vehicles-practice-test",
@@ -356,13 +752,41 @@
                 "url": "kansas-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "kansas-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "kansas-school-bus-practice-test", "tag": "school-bus" },
-            { "title": "Pre-Trip Inspection", "url": "kansas-pre-trip-inspection-practice-test", "tag": "pre-trip-inspection" },
-            { "title": "General Knowledge", "url": "kentucky-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "kentucky-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "kentucky-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "kentucky-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "kansas-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "kansas-school-bus-practice-test",
+                "tag": "school-bus"
+            },
+            {
+                "title": "Pre-Trip Inspection",
+                "url": "kansas-pre-trip-inspection-practice-test",
+                "tag": "pre-trip-inspection"
+            },
+            {
+                "title": "General Knowledge",
+                "url": "kentucky-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "kentucky-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "kentucky-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "kentucky-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "kentucky-combination-vehicles-practice-test",
@@ -373,17 +797,41 @@
                 "url": "kentucky-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "kentucky-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "kentucky-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "kentucky-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "kentucky-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "kentucky-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "louisiana-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "louisiana-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "louisiana-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "louisiana-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "louisiana-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "louisiana-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "louisiana-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "louisiana-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "louisiana-combination-vehicles-practice-test",
@@ -394,17 +842,41 @@
                 "url": "louisiana-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "louisiana-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "louisiana-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "louisiana-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "louisiana-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "louisiana-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "maine-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "maine-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "maine-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "maine-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "maine-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "maine-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "maine-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "maine-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "maine-combination-vehicles-practice-test",
@@ -415,13 +887,41 @@
                 "url": "maine-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "maine-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "maine-school-bus-practice-test", "tag": "school-bus" },
-            { "title": "Pre-Trip Inspection", "url": "maine-pre-trip-inspection-practice-test", "tag": "pre-trip-inspection" },
-            { "title": "General Knowledge", "url": "maryland-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "maryland-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "maryland-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "maryland-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "maine-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "maine-school-bus-practice-test",
+                "tag": "school-bus"
+            },
+            {
+                "title": "Pre-Trip Inspection",
+                "url": "maine-pre-trip-inspection-practice-test",
+                "tag": "pre-trip-inspection"
+            },
+            {
+                "title": "General Knowledge",
+                "url": "maryland-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "maryland-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "maryland-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "maryland-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "maryland-combination-vehicles-practice-test",
@@ -432,8 +932,16 @@
                 "url": "maryland-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "maryland-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "maryland-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "maryland-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "maryland-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "maryland-pre-trip-inspection-practice-test",
@@ -444,13 +952,21 @@
                 "url": "massachusetts-general-knowledge-practice-test",
                 "tag": "general-knowledge"
             },
-            { "title": "HazMat", "url": "massachusetts-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "HazMat",
+                "url": "massachusetts-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "massachusetts-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "massachusetts-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "massachusetts-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "massachusetts-combination-vehicles-practice-test",
@@ -461,17 +977,41 @@
                 "url": "massachusetts-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "massachusetts-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "massachusetts-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "massachusetts-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "massachusetts-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "massachusetts-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "michigan-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "michigan-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "michigan-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "michigan-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "michigan-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "michigan-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "michigan-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "michigan-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "michigan-combination-vehicles-practice-test",
@@ -482,17 +1022,41 @@
                 "url": "michigan-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "michigan-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "michigan-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "michigan-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "michigan-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "michigan-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "minnesota-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "minnesota-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "minnesota-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "minnesota-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "minnesota-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "minnesota-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "minnesota-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "minnesota-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "minnesota-combination-vehicles-practice-test",
@@ -503,21 +1067,41 @@
                 "url": "minnesota-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "minnesota-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "minnesota-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "minnesota-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "minnesota-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "minnesota-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "mississippi-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "mississippi-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "General Knowledge",
+                "url": "mississippi-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "mississippi-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "mississippi-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "mississippi-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "mississippi-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "mississippi-combination-vehicles-practice-test",
@@ -528,17 +1112,41 @@
                 "url": "mississippi-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "mississippi-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "mississippi-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "mississippi-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "mississippi-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "mississippi-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "missouri-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "missouri-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "missouri-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "missouri-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "missouri-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "missouri-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "missouri-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "missouri-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "missouri-combination-vehicles-practice-test",
@@ -549,17 +1157,41 @@
                 "url": "missouri-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "missouri-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "missouri-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "missouri-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "missouri-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "missouri-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "montana-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "montana-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "montana-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "montana-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "montana-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "montana-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "montana-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "montana-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "montana-combination-vehicles-practice-test",
@@ -570,17 +1202,41 @@
                 "url": "montana-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "montana-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "montana-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "montana-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "montana-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "montana-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "nebraska-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "nebraska-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "nebraska-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "nebraska-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "nebraska-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "nebraska-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "nebraska-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "nebraska-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "nebraska-combination-vehicles-practice-test",
@@ -591,17 +1247,41 @@
                 "url": "nebraska-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "nebraska-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "nebraska-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "nebraska-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "nebraska-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "nebraska-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "nevada-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "nevada-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "nevada-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "nevada-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "nevada-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "nevada-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "nevada-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "nevada-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "nevada-combination-vehicles-practice-test",
@@ -612,21 +1292,41 @@
                 "url": "nevada-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "nevada-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "nevada-school-bus-practice-test", "tag": "school-bus" },
-            { "title": "Pre-Trip Inspection", "url": "nevada-pre-trip-inspection-practice-test", "tag": "pre-trip-inspection" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "nevada-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "nevada-school-bus-practice-test",
+                "tag": "school-bus"
+            },
+            {
+                "title": "Pre-Trip Inspection",
+                "url": "nevada-pre-trip-inspection-practice-test",
+                "tag": "pre-trip-inspection"
+            },
             {
                 "title": "General Knowledge",
                 "url": "new-hampshire-general-knowledge-practice-test",
                 "tag": "general-knowledge"
             },
-            { "title": "HazMat", "url": "new-hampshire-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "HazMat",
+                "url": "new-hampshire-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "new-hampshire-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "new-hampshire-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "new-hampshire-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "new-hampshire-combination-vehicles-practice-test",
@@ -637,14 +1337,41 @@
                 "url": "new-hampshire-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "new-hampshire-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "new-hampshire-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "new-hampshire-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "new-hampshire-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "new-hampshire-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "Air Brakes", "url": "new-jersey-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "new-jersey-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "new-jersey-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "new-jersey-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "new-jersey-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "new-jersey-combination-vehicles-practice-test",
@@ -655,28 +1382,41 @@
                 "url": "new-jersey-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "General Knowledge", "url": "new-jersey-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "new-jersey-hazmat-practice-test", "tag": "hazmat" },
             {
-                "title": "Passenger Vehicles",
-                "url": "new-jersey-passenger-vehicles-practice-test",
-                "tag": "passenger-vehicles"
+                "title": "Tanker Vehicles",
+                "url": "new-jersey-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "new-jersey-school-bus-practice-test",
+                "tag": "school-bus"
             },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "new-jersey-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "School Bus", "url": "new-jersey-school-bus-practice-test", "tag": "school-bus" },
-            { "title": "Tanker Vehicles", "url": "new-jersey-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "General Knowledge", "url": "new-mexico-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "new-mexico-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "General Knowledge",
+                "url": "new-mexico-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "new-mexico-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "new-mexico-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "new-mexico-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "new-mexico-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "new-mexico-combination-vehicles-practice-test",
@@ -687,17 +1427,41 @@
                 "url": "new-mexico-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "new-mexico-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "new-mexico-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "new-mexico-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "new-mexico-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "new-mexico-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "new-york-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "new-york-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "new-york-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "new-york-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "new-york-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "new-york-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "new-york-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "new-york-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "new-york-combination-vehicles-practice-test",
@@ -708,8 +1472,16 @@
                 "url": "new-york-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "new-york-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "new-york-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "new-york-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "new-york-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "new-york-pre-trip-inspection-practice-test",
@@ -720,13 +1492,21 @@
                 "url": "north-carolina-general-knowledge-practice-test",
                 "tag": "general-knowledge"
             },
-            { "title": "HazMat", "url": "north-carolina-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "HazMat",
+                "url": "north-carolina-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "north-carolina-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "north-carolina-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "north-carolina-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "north-carolina-combination-vehicles-practice-test",
@@ -737,21 +1517,41 @@
                 "url": "north-carolina-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "north-carolina-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "north-carolina-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "north-carolina-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "north-carolina-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "north-carolina-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "north-dakota-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "north-dakota-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "General Knowledge",
+                "url": "north-dakota-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "north-dakota-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "north-dakota-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "north-dakota-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "north-dakota-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "north-dakota-combination-vehicles-practice-test",
@@ -762,17 +1562,41 @@
                 "url": "north-dakota-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "north-dakota-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "north-dakota-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "north-dakota-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "north-dakota-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "north-dakota-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "ohio-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "ohio-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "ohio-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "ohio-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "ohio-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "ohio-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "ohio-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "ohio-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "ohio-combination-vehicles-practice-test",
@@ -783,13 +1607,41 @@
                 "url": "ohio-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "ohio-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "ohio-school-bus-practice-test", "tag": "school-bus" },
-            { "title": "Pre-Trip Inspection", "url": "ohio-pre-trip-inspection-practice-test", "tag": "pre-trip-inspection" },
-            { "title": "General Knowledge", "url": "oklahoma-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "oklahoma-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "oklahoma-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "oklahoma-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "ohio-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "ohio-school-bus-practice-test",
+                "tag": "school-bus"
+            },
+            {
+                "title": "Pre-Trip Inspection",
+                "url": "ohio-pre-trip-inspection-practice-test",
+                "tag": "pre-trip-inspection"
+            },
+            {
+                "title": "General Knowledge",
+                "url": "oklahoma-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "oklahoma-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "oklahoma-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "oklahoma-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "oklahoma-combination-vehicles-practice-test",
@@ -800,17 +1652,41 @@
                 "url": "oklahoma-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "oklahoma-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "oklahoma-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "oklahoma-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "oklahoma-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "oklahoma-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "oregon-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "oregon-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "oregon-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "oregon-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "oregon-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "oregon-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "oregon-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "oregon-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "oregon-combination-vehicles-practice-test",
@@ -821,17 +1697,41 @@
                 "url": "oregon-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "oregon-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "oregon-school-bus-practice-test", "tag": "school-bus" },
-            { "title": "Pre-Trip Inspection", "url": "oregon-pre-trip-inspection-practice-test", "tag": "pre-trip-inspection" },
-            { "title": "General Knowledge", "url": "pennsylvania-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "pennsylvania-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "oregon-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "oregon-school-bus-practice-test",
+                "tag": "school-bus"
+            },
+            {
+                "title": "Pre-Trip Inspection",
+                "url": "oregon-pre-trip-inspection-practice-test",
+                "tag": "pre-trip-inspection"
+            },
+            {
+                "title": "General Knowledge",
+                "url": "pennsylvania-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "pennsylvania-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "pennsylvania-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "pennsylvania-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "pennsylvania-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "pennsylvania-combination-vehicles-practice-test",
@@ -842,21 +1742,41 @@
                 "url": "pennsylvania-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "pennsylvania-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "pennsylvania-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "pennsylvania-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "pennsylvania-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "pennsylvania-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "rhode-island-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "rhode-island-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "General Knowledge",
+                "url": "rhode-island-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "rhode-island-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "rhode-island-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "rhode-island-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "rhode-island-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "rhode-island-combination-vehicles-practice-test",
@@ -867,8 +1787,16 @@
                 "url": "rhode-island-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "rhode-island-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "rhode-island-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "rhode-island-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "rhode-island-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "rhode-island-pre-trip-inspection-practice-test",
@@ -879,13 +1807,21 @@
                 "url": "south-carolina-general-knowledge-practice-test",
                 "tag": "general-knowledge"
             },
-            { "title": "HazMat", "url": "south-carolina-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "HazMat",
+                "url": "south-carolina-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "south-carolina-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "south-carolina-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "south-carolina-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "south-carolina-combination-vehicles-practice-test",
@@ -896,21 +1832,41 @@
                 "url": "south-carolina-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "south-carolina-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "south-carolina-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "south-carolina-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "south-carolina-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "south-carolina-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "south-dakota-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "south-dakota-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "General Knowledge",
+                "url": "south-dakota-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "south-dakota-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "south-dakota-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "south-dakota-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "south-dakota-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "south-dakota-combination-vehicles-practice-test",
@@ -921,17 +1877,41 @@
                 "url": "south-dakota-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "south-dakota-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "south-dakota-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "south-dakota-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "south-dakota-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "south-dakota-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "tennessee-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "tennessee-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "tennessee-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "tennessee-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "tennessee-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "tennessee-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "tennessee-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "tennessee-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "tennessee-combination-vehicles-practice-test",
@@ -942,17 +1922,41 @@
                 "url": "tennessee-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "tennessee-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "tennessee-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "tennessee-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "tennessee-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "tennessee-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "texas-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "texas-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "texas-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "texas-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "texas-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "texas-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "texas-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "texas-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "texas-combination-vehicles-practice-test",
@@ -963,18 +1967,46 @@
                 "url": "texas-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "texas-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "texas-school-bus-practice-test", "tag": "school-bus" },
-            { "title": "Pre-Trip Inspection", "url": "texas-pre-trip-inspection-practice-test", "tag": "pre-trip-inspection" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "texas-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "texas-school-bus-practice-test",
+                "tag": "school-bus"
+            },
+            {
+                "title": "Pre-Trip Inspection",
+                "url": "texas-pre-trip-inspection-practice-test",
+                "tag": "pre-trip-inspection"
+            },
             {
                 "title": "Special Requirements",
                 "url": "texas-special-requirements-practice-test",
                 "tag": "special-requirements"
             },
-            { "title": "General Knowledge", "url": "utah-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "utah-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "utah-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "utah-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "utah-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "utah-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "utah-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "utah-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "utah-combination-vehicles-practice-test",
@@ -985,13 +2017,41 @@
                 "url": "utah-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "utah-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "utah-school-bus-practice-test", "tag": "school-bus" },
-            { "title": "Pre-Trip Inspection", "url": "utah-pre-trip-inspection-practice-test", "tag": "pre-trip-inspection" },
-            { "title": "General Knowledge", "url": "vermont-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "vermont-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "vermont-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "vermont-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "utah-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "utah-school-bus-practice-test",
+                "tag": "school-bus"
+            },
+            {
+                "title": "Pre-Trip Inspection",
+                "url": "utah-pre-trip-inspection-practice-test",
+                "tag": "pre-trip-inspection"
+            },
+            {
+                "title": "General Knowledge",
+                "url": "vermont-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "vermont-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "vermont-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "vermont-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "vermont-combination-vehicles-practice-test",
@@ -1002,17 +2062,41 @@
                 "url": "vermont-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "vermont-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "vermont-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "vermont-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "vermont-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "vermont-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "virginia-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "virginia-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "virginia-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "virginia-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "virginia-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "virginia-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "virginia-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "virginia-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "virginia-combination-vehicles-practice-test",
@@ -1023,21 +2107,41 @@
                 "url": "virginia-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "virginia-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "virginia-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "virginia-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "virginia-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "virginia-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "washington-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "washington-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "General Knowledge",
+                "url": "washington-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "washington-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "washington-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "washington-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "washington-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "washington-combination-vehicles-practice-test",
@@ -1048,8 +2152,16 @@
                 "url": "washington-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "washington-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "washington-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "washington-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "washington-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "washington-pre-trip-inspection-practice-test",
@@ -1060,13 +2172,21 @@
                 "url": "west-virginia-general-knowledge-practice-test",
                 "tag": "general-knowledge"
             },
-            { "title": "HazMat", "url": "west-virginia-hazmat-practice-test", "tag": "hazmat" },
+            {
+                "title": "HazMat",
+                "url": "west-virginia-hazmat-practice-test",
+                "tag": "hazmat"
+            },
             {
                 "title": "Passenger Vehicles",
                 "url": "west-virginia-passenger-vehicles-practice-test",
                 "tag": "passenger-vehicles"
             },
-            { "title": "Air Brakes", "url": "west-virginia-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "Air Brakes",
+                "url": "west-virginia-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "west-virginia-combination-vehicles-practice-test",
@@ -1077,17 +2197,41 @@
                 "url": "west-virginia-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "west-virginia-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "west-virginia-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "west-virginia-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "west-virginia-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "west-virginia-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "wisconsin-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "wisconsin-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "wisconsin-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "wisconsin-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "wisconsin-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "wisconsin-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "wisconsin-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "wisconsin-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "wisconsin-combination-vehicles-practice-test",
@@ -1098,17 +2242,41 @@
                 "url": "wisconsin-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "wisconsin-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "wisconsin-school-bus-practice-test", "tag": "school-bus" },
+            {
+                "title": "Tanker Vehicles",
+                "url": "wisconsin-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "wisconsin-school-bus-practice-test",
+                "tag": "school-bus"
+            },
             {
                 "title": "Pre-Trip Inspection",
                 "url": "wisconsin-pre-trip-inspection-practice-test",
                 "tag": "pre-trip-inspection"
             },
-            { "title": "General Knowledge", "url": "wyoming-general-knowledge-practice-test", "tag": "general-knowledge" },
-            { "title": "HazMat", "url": "wyoming-hazmat-practice-test", "tag": "hazmat" },
-            { "title": "Passenger Vehicles", "url": "wyoming-passenger-vehicles-practice-test", "tag": "passenger-vehicles" },
-            { "title": "Air Brakes", "url": "wyoming-air-brakes-practice-test", "tag": "air-brakes" },
+            {
+                "title": "General Knowledge",
+                "url": "wyoming-general-knowledge-practice-test",
+                "tag": "general-knowledge"
+            },
+            {
+                "title": "HazMat",
+                "url": "wyoming-hazmat-practice-test",
+                "tag": "hazmat"
+            },
+            {
+                "title": "Passenger Vehicles",
+                "url": "wyoming-passenger-vehicles-practice-test",
+                "tag": "passenger-vehicles"
+            },
+            {
+                "title": "Air Brakes",
+                "url": "wyoming-air-brakes-practice-test",
+                "tag": "air-brakes"
+            },
             {
                 "title": "Combination Vehicles",
                 "url": "wyoming-combination-vehicles-practice-test",
@@ -1119,9 +2287,21 @@
                 "url": "wyoming-doubles-triples-trailers-practice-test",
                 "tag": "doubles-triples-trailers"
             },
-            { "title": "Tanker Vehicles", "url": "wyoming-tanker-vehicles-practice-test", "tag": "tanker-vehicles" },
-            { "title": "School Bus", "url": "wyoming-school-bus-practice-test", "tag": "school-bus" },
-            { "title": "Pre-Trip Inspection", "url": "wyoming-pre-trip-inspection-practice-test", "tag": "pre-trip-inspection" }
+            {
+                "title": "Tanker Vehicles",
+                "url": "wyoming-tanker-vehicles-practice-test",
+                "tag": "tanker-vehicles"
+            },
+            {
+                "title": "School Bus",
+                "url": "wyoming-school-bus-practice-test",
+                "tag": "school-bus"
+            },
+            {
+                "title": "Pre-Trip Inspection",
+                "url": "wyoming-pre-trip-inspection-practice-test",
+                "tag": "pre-trip-inspection"
+            }
         ],
         "fullTests": [
             "full-length-alabama-general-knowledge-practice-test",
@@ -1394,15 +2574,15 @@
             "full-length-new-hampshire-tanker-vehicles-practice-test",
             "full-length-new-hampshire-school-bus-practice-test",
             "full-length-new-hampshire-pre-trip-inspection-practice-test",
-            "full-length-new-jersey-air-brakes-practice-test",
-            "full-length-new-jersey-combination-vehicles-practice-test",
-            "full-length-new-jersey-doubles-triples-trailers-practice-test",
             "full-length-new-jersey-general-knowledge-practice-test",
             "full-length-new-jersey-hazmat-practice-test",
             "full-length-new-jersey-passenger-vehicles-practice-test",
-            "full-length-new-jersey-pre-trip-inspection-practice-test",
-            "full-length-new-jersey-school-bus-practice-test",
+            "full-length-new-jersey-air-brakes-practice-test",
+            "full-length-new-jersey-combination-vehicles-practice-test",
+            "full-length-new-jersey-doubles-triples-trailers-practice-test",
             "full-length-new-jersey-tanker-vehicles-practice-test",
+            "full-length-new-jersey-school-bus-practice-test",
+            "full-length-new-jersey-pre-trip-inspection-practice-test",
             "full-length-new-mexico-general-knowledge-practice-test",
             "full-length-new-mexico-hazmat-practice-test",
             "full-length-new-mexico-passenger-vehicles-practice-test",

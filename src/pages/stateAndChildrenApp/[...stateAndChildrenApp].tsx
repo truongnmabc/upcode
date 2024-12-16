@@ -1,11 +1,10 @@
+import Layout2 from "@/components/layout/layout-2/Layout2";
+import { stateName } from "@/container/single-app/HomeSingleApp";
+import NewHome from "@/container/single-app/newHome";
+import { IItemBlock } from "@/models/stateChildrenApp";
 import { ITestInfo } from "@/models/TestInfo";
 import StoreProvider from "@/redux/StoreProvider";
-import {
-    getHomeSeoContentApi,
-    getHomeSeoContentStateApi,
-    getSEOAndHeaderContentApi,
-    requestGetListBlock,
-} from "@/services/home.service";
+import { getHomeSeoContentStateApi, getSEOAndHeaderContentApi, requestGetListBlock } from "@/services/home.service";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { getLink } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
@@ -17,60 +16,11 @@ import states from "../../data/statesName.json";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
-import NewHome from "@/container/single-app/newHome";
-import { stateName } from "@/container/single-app/HomeSingleApp";
-import Layout2 from "@/components/layout/layout-2/Layout2";
 const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
     ssr: false,
 });
 const SeoHeader = dynamic(() => import("@/components/seo/SeoHeader"));
 const HomeSingleApp = dynamic(() => import("@/container/single-app/HomeSingleApp"));
-
-export interface IPost {
-    ID: number;
-    post_author: string;
-    post_date: string;
-    post_date_gmt: string;
-    post_content: string;
-    post_title: string;
-    post_excerpt: string;
-    post_status: string;
-    comment_status: string;
-    ping_status: string;
-    post_password: string;
-    post_name: string;
-    to_ping: string;
-    pinged: string;
-    post_modified: string;
-    post_modified_gmt: string;
-    post_content_filtered: string;
-    post_parent: number;
-    guid: string;
-    menu_order: number;
-    post_type: string;
-    post_mime_type: string;
-    comment_count: string;
-    filter: string;
-}
-
-export interface IAuthor {
-    ID: string;
-    user_login: string;
-    user_pass: string;
-    user_nicename: string;
-    user_email: string;
-    user_url: string;
-    user_registered: string;
-    user_activation_key: string;
-    user_status: string;
-    display_name: string;
-}
-export interface IItemBlock {
-    post: IPost;
-    avatar: string;
-    author: IAuthor;
-    thumbnail: string;
-}
 
 const ChildrenApp = ({
     listTopics,
@@ -98,14 +48,6 @@ const ChildrenApp = ({
         <>
             <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} ads />
             <StoreProvider appInfo={childAppInfo} webData={{ tests: tests, topics: listTopics }} />
-            {/* <HomeSingleApp
-                appInfo={childAppInfo}
-                homeSeoContent={homeSeoContent}
-                listTopics={listTopics}
-                tests={tests}
-                _state={_state}
-                listBlock={listBlock}
-            /> */}
             <Layout2 appInfo={childAppInfo} listTopics={listTopics} tests={tests}>
                 <NewHome
                     listTopics={listTopics}

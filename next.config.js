@@ -82,6 +82,7 @@ module.exports = () => {
                             }
 
                             let study = studyData.find((s) => s.appId === app.appId); // cần đảm bảo dữ liệu trong này đúng (dữ liệu được sinh ra từ genstudyDataJSON)
+                          
                             if (study) {
                                 let { topics, fullTests } = study;
                                 if (app.hasState) {
@@ -149,6 +150,7 @@ module.exports = () => {
 
                         
                         let study = studyData.find((s) => s.appId === app.appId); // cần đảm bảo dữ liệu trong này đúng (dữ liệu được sinh ra từ genstudyDataJSON)
+
                         if(study) {
                             let { topics, fullTests } = study;
 

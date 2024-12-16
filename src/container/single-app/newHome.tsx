@@ -1,60 +1,15 @@
-import React, { Fragment } from "react";
 import MyContainer from "@/components/v4-material/MyContainer";
-import { stateName } from "./HomeSingleApp";
-import GridTopic from "@/components/homepage/GridTopic";
-import { useMediaQuery } from "@mui/material";
-import TestBanner from "@/components/homepage/TestBanner";
-import BannerDownloadApp from "@/components/homepage/BannerDownloadApp";
-import SeoContentComponentV2 from "@/components/seo";
-import SelectState from "./newHome/selectState";
-import ListHome from "./newHome/list/list";
-import { ITestInfo } from "@/models/TestInfo";
 import { IAppInfo } from "@/models/AppInfo";
+import { IItemBlock } from "@/models/stateChildrenApp";
+import { ITestInfo } from "@/models/TestInfo";
 import { ITopic } from "@/models/Topic";
+import { useMediaQuery } from "@mui/material";
 import dynamic from "next/dynamic";
 import BannerHome from "./newHome/banner";
 import Handbook from "./newHome/handBook";
-import { IItemBlock } from "@/pages/stateAndChildrenApp/[...stateAndChildrenApp]";
+import ListHome from "./newHome/list/list";
+import SelectState from "./newHome/selectState";
 const ListBlock = dynamic(() => import("./newHome/slider"));
-
-const listImg = {
-    "general-knowledge": {
-        lear: "/images/cdl_v2/home/1.png",
-        test: "/images/cdl_v2/home/1.1.png",
-    },
-    hazmat: {
-        lear: "/images/cdl_v2/home/4.png",
-        test: "/images/cdl_v2/home/4.1.png",
-    },
-    "passenger-vehicles": {
-        lear: "/images/cdl_v2/home/5.png",
-        test: "/images/cdl_v2/home/5.1.png",
-    },
-    "air-brakes": {
-        lear: "/images/cdl_v2/home/2.png",
-        test: "/images/cdl_v2/home/2.1.png",
-    },
-    "combination-vehicles": {
-        lear: "/images/cdl_v2/home/3.png",
-        test: "/images/cdl_v2/home/3.1.png",
-    },
-    "doubles-triples-trailers": {
-        lear: "/images/cdl_v2/home/7.png",
-        test: "/images/cdl_v2/home/7.1.png",
-    },
-    "tanker-vehicles": {
-        lear: "/images/cdl_v2/home/8.png",
-        test: "/images/cdl_v2/home/8.1.png",
-    },
-    "school-bus": {
-        lear: "/images/cdl_v2/home/6.png",
-        test: "/images/cdl_v2/home/6.1.png",
-    },
-    "pre-trip-inspection": {
-        lear: "/images/cdl_v2/home/9.png",
-        test: "/images/cdl_v2/home/9.1.png",
-    },
-};
 
 const NewHome = ({
     appInfo,
@@ -74,11 +29,7 @@ const NewHome = ({
     return (
         <div className="w-full h-full">
             <SelectState appInfo={appInfo} _state={_state} />
-            <div
-                style={{
-                    background: "linear-gradient(180deg, #E5E9FF 0%, #F0F2FE 4.75%)",
-                }}
-            >
+            <div>
                 <MyContainer>
                     <div className="landing-title-0">
                         <div className="landing-title-11">
@@ -97,18 +48,7 @@ const NewHome = ({
                             </p>
                         </div>
                     </div>
-                    <ListHome
-                        appInfo={appInfo}
-                        _state={_state}
-                        listTopics={listTopics.map((item) => ({
-                            ...item,
-                            img: listImg[item.tag].lear,
-                        }))}
-                        tests={tests.map((item) => ({
-                            ...item,
-                            img: listImg[item.tag].test,
-                        }))}
-                    />
+                    <ListHome appInfo={appInfo} _state={_state} listTopics={listTopics} tests={tests} />
                 </MyContainer>
                 <ListBlock appInfo={appInfo} _state={_state} listBlock={listBlock} />
                 <BannerHome appInfo={appInfo} _state={_state} />
