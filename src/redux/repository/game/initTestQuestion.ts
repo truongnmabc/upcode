@@ -10,10 +10,15 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 type IInitQuestion = {
     testId?: string | null;
+    duration?: number;
 };
 
-const setDataStore = async (parentId: number, question: IQuestion[]) => {
-    await db.testQuestions.add({ parentId, question });
+const setDataStore = async (
+    parentId: number,
+    question: IQuestion[],
+    duration: number
+) => {
+    await db.testQuestions.add({ parentId, question, duration });
 };
 
 const fetchQuestions = async (testId: string): Promise<IQuestion[]> => {
@@ -57,24 +62,35 @@ const mapQuestionsWithProgress = (
 
 const initTestQuestionThunk = createAsyncThunk(
     "initTestQuestionThunk",
-    async ({ testId }: IInitQuestion) => {
-        const id =
-            testId ||
-            (await db.tests.toArray())
-                .find((test) => test.status === 0)
-                ?.id?.toString();
+    async ({ testId, duration }: IInitQuestion) => {
+        let time = duration;
+        let id = testId;
+        if (!testId) {
+            const res = await db.tests
+                .filter((item) => item.status === 0)
+                .first();
+            if (res) {
+                id = res?.id.toString();
+                time = res?.duration;
+            }
+        }
+
         if (!id) throw new Error("Test ID not found");
 
-        let listQuestion = (
-            await db.testQuestions.where("parentId").equals(Number(id)).first()
-        )?.question;
+        const currentTest = await db.testQuestions
+            .where("parentId")
+            .equals(Number(id))
+            .first();
+        let listQuestion = currentTest?.question;
+
+        time = currentTest?.duration;
+
         if (!listQuestion) {
             listQuestion = await fetchQuestions(id);
-            setDataStore(Number(id), listQuestion);
+            setDataStore(Number(id), listQuestion, time || 60);
         }
 
         const progressData = await getLocalProgress(Number(id), "test");
-
         const questions = mapQuestionsWithProgress(listQuestion, progressData);
 
         return {
@@ -82,6 +98,7 @@ const initTestQuestionThunk = createAsyncThunk(
             progressData,
             id: Number(id),
             type: "test" as const,
+            duration: time || 60,
         };
     }
 );

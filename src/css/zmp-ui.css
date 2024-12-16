@@ -6,18 +6,42 @@
     --zaui-light-text-color: #141415;
     --zaui-dark-text-color: #f4f5f6;
     --zaui-avatar-text-color: #ffffff;
-    --zaui-avatar-background-gradient-01: linear-gradient(45deg, #006af5 0%, #8fc1ff 100%);
-    --zaui-avatar-background-gradient-02: linear-gradient(45deg, #6a40bf 0%, #52a0ff 100%);
-    --zaui-avatar-background-gradient-03: linear-gradient(45deg, #12aee2 0%, #66d68f 100%);
-    --zaui-avatar-background-gradient-04: linear-gradient(45deg, #34b764 0%, #99e5b5 100%);
+    --zaui-avatar-background-gradient-01: linear-gradient(
+        45deg,
+        #006af5 0%,
+        #8fc1ff 100%
+    );
+    --zaui-avatar-background-gradient-02: linear-gradient(
+        45deg,
+        #6a40bf 0%,
+        #52a0ff 100%
+    );
+    --zaui-avatar-background-gradient-03: linear-gradient(
+        45deg,
+        #12aee2 0%,
+        #66d68f 100%
+    );
+    --zaui-avatar-background-gradient-04: linear-gradient(
+        45deg,
+        #34b764 0%,
+        #99e5b5 100%
+    );
     --zaui-mask-overlay-color: #000000b3;
     --zaui-light-body-background-color: #e9ebed;
     --zaui-light-avatar-border: #ffffff;
     --zaui-light-avatar-status-background: #ffffff;
     --zaui-light-avatar-status-online: #34b764;
     --zaui-light-avatar-status-blocked: #dc1f18;
-    --zaui-light-avatar-story-contour-color: linear-gradient(45deg, #006af5 0%, #5fcbf2 100%);
-    --zaui-light-avatar-uploading: linear-gradient(90deg, rgba(95, 203, 242, 0) 0%, #006af5 100%);
+    --zaui-light-avatar-story-contour-color: linear-gradient(
+        45deg,
+        #006af5 0%,
+        #5fcbf2 100%
+    );
+    --zaui-light-avatar-uploading: linear-gradient(
+        90deg,
+        rgba(95, 203, 242, 0) 0%,
+        #006af5 100%
+    );
     --zaui-light-avatar-story-seen: #d6d9dc;
     --zaui-light-avatar-counter-background: #e9ebed;
     --zaui-light-bottom-navigation-color: #767a7f;
@@ -176,8 +200,16 @@
     --zaui-dark-avatar-status-background: #141415;
     --zaui-dark-avatar-status-online: #34b764;
     --zaui-dark-avatar-status-blocked: #dc1f18;
-    --zaui-dark-avatar-story-contour-color: linear-gradient(45deg, #006af5 0%, #5fcbf2 100%);
-    --zaui-dark-avatar-uploading: linear-gradient(90deg, rgba(95, 203, 242, 0) 0%, #006af5 100%);
+    --zaui-dark-avatar-story-contour-color: linear-gradient(
+        45deg,
+        #006af5 0%,
+        #5fcbf2 100%
+    );
+    --zaui-dark-avatar-uploading: linear-gradient(
+        90deg,
+        rgba(95, 203, 242, 0) 0%,
+        #006af5 100%
+    );
     --zaui-dark-avatar-story-seen: #53575a;
     --zaui-dark-avatar-counter-background: #36383a;
     --zaui-dark-bottom-navigation-color: #8f9499;
@@ -491,7 +523,10 @@
 }
 .zaui-btn:active,
 .zaui-btn:focus-visible {
-    background-color: var(--zaui-light-button-primary-background-pressed, #0250b6);
+    background-color: var(
+        --zaui-light-button-primary-background-pressed,
+        #0250b6
+    );
 }
 .zaui-btn-disabled[disabled],
 .zaui-btn-primary.zaui-btn-disabled[disabled],
@@ -539,7 +574,10 @@
 .zaui-btn-primary.zaui-btn-highlight:focus-visible,
 .zaui-btn-primary:active,
 .zaui-btn-primary:focus-visible {
-    background-color: var(--zaui-light-button-primary-background-pressed, #0250b6);
+    background-color: var(
+        --zaui-light-button-primary-background-pressed,
+        #0250b6
+    );
 }
 .zaui-btn-secondary,
 .zaui-btn-secondary.zaui-btn-highlight {
@@ -550,7 +588,10 @@
 .zaui-btn-secondary.zaui-btn-highlight:focus-visible,
 .zaui-btn-secondary:active,
 .zaui-btn-secondary:focus-visible {
-    background-color: var(--zaui-light-button-secondary-background-pressed, #b8d9ff);
+    background-color: var(
+        --zaui-light-button-secondary-background-pressed,
+        #b8d9ff
+    );
 }
 .zaui-btn-tertiary,
 .zaui-btn-tertiary.zaui-btn-highlight {
@@ -561,26 +602,41 @@
 .zaui-btn-tertiary.zaui-btn-highlight:focus-visible,
 .zaui-btn-tertiary:active,
 .zaui-btn-tertiary:focus-visible {
-    background-color: var(--zaui-light-button-tertiary-background-pressed, #ebf4ff);
+    background-color: var(
+        --zaui-light-button-tertiary-background-pressed,
+        #ebf4ff
+    );
 }
 .zaui-btn-danger,
 .zaui-btn-primary.zaui-btn-danger {
-    background-color: var(--zaui-light-button-primary-danger-background, #dc1f18);
+    background-color: var(
+        --zaui-light-button-primary-danger-background,
+        #dc1f18
+    );
     color: var(--zaui-light-button-primary-danger-text, #fff);
 }
 .zaui-btn-danger:active,
 .zaui-btn-danger:focus-visible,
 .zaui-btn-primary.zaui-btn-danger:active,
 .zaui-btn-primary.zaui-btn-danger:focus-visible {
-    background-color: var(--zaui-light-button-primary-danger-background-pressed, #a51712);
+    background-color: var(
+        --zaui-light-button-primary-danger-background-pressed,
+        #a51712
+    );
 }
 .zaui-btn-secondary.zaui-btn-danger {
-    background-color: var(--zaui-light-button-secondary-danger-background, #fed8d7);
+    background-color: var(
+        --zaui-light-button-secondary-danger-background,
+        #fed8d7
+    );
     color: var(--zaui-light-button-secondary-danger-text, #dc1f18);
 }
 .zaui-btn-secondary.zaui-btn-danger:active,
 .zaui-btn-secondary.zaui-btn-danger:focus-visible {
-    background-color: var(--zaui-light-button-secondary-danger-background-pressed, #fcbdba);
+    background-color: var(
+        --zaui-light-button-secondary-danger-background-pressed,
+        #fcbdba
+    );
 }
 .zaui-btn-tertiary.zaui-btn-danger {
     background-color: transparent;
@@ -588,15 +644,24 @@
 }
 .zaui-btn-tertiary.zaui-btn-danger:active,
 .zaui-btn-tertiary.zaui-btn-danger:focus-visible {
-    background-color: var(--zaui-light-button-tertiary-danger-background-pressed, #ffebeb);
+    background-color: var(
+        --zaui-light-button-tertiary-danger-background-pressed,
+        #ffebeb
+    );
 }
 .zaui-btn-secondary.zaui-btn-neutral {
-    background-color: var(--zaui-light-button-secondary-neutral-background, #e9ebed);
+    background-color: var(
+        --zaui-light-button-secondary-neutral-background,
+        #e9ebed
+    );
     color: var(--zaui-light-button-secondary-neutral-text, #141415);
 }
 .zaui-btn-secondary.zaui-btn-neutral:active,
 .zaui-btn-secondary.zaui-btn-neutral:focus-visible {
-    background-color: var(--zaui-light-button-secondary-neutral-background-pressed, #d6d9dc);
+    background-color: var(
+        --zaui-light-button-secondary-neutral-background-pressed,
+        #d6d9dc
+    );
 }
 .zaui-btn-tertiary.zaui-btn-neutral {
     background-color: transparent;
@@ -604,7 +669,10 @@
 }
 .zaui-btn-tertiary.zaui-btn-neutral:active,
 .zaui-btn-tertiary.zaui-btn-neutral:focus-visible {
-    background-color: var(--zaui-light-button-tertiary-neutral-background-pressed, #e9ebed);
+    background-color: var(
+        --zaui-light-button-tertiary-neutral-background-pressed,
+        #e9ebed
+    );
 }
 .zaui-btn-loading {
     position: relative;
@@ -705,11 +773,17 @@ body[zaui-theme="dark"] .zaui-btn {
 }
 body[zaui-theme="dark"] .zaui-btn:active,
 body[zaui-theme="dark"] .zaui-btn:focus-visible {
-    background-color: var(--zaui-light-button-primary-background-pressed, #0250b6);
+    background-color: var(
+        --zaui-light-button-primary-background-pressed,
+        #0250b6
+    );
 }
 body[zaui-theme="dark"] .zaui-btn:active,
 body[zaui-theme="dark"] .zaui-btn:focus-visible {
-    background-color: var(--zaui-dark-button-primary-background-pressed, #0250b6);
+    background-color: var(
+        --zaui-dark-button-primary-background-pressed,
+        #0250b6
+    );
     background: var(--zaui-dark-button-primary-background-pressed, #0250b6);
 }
 body[zaui-theme="dark"] .zaui-btn-disabled[disabled],
@@ -732,13 +806,19 @@ body[zaui-theme="dark"] .zaui-btn-primary.zaui-btn-highlight:active,
 body[zaui-theme="dark"] .zaui-btn-primary.zaui-btn-highlight:focus-visible,
 body[zaui-theme="dark"] .zaui-btn-primary:active,
 body[zaui-theme="dark"] .zaui-btn-primary:focus-visible {
-    background-color: var(--zaui-light-button-primary-background-pressed, #0250b6);
+    background-color: var(
+        --zaui-light-button-primary-background-pressed,
+        #0250b6
+    );
 }
 body[zaui-theme="dark"] .zaui-btn-primary.zaui-btn-highlight:active,
 body[zaui-theme="dark"] .zaui-btn-primary.zaui-btn-highlight:focus-visible,
 body[zaui-theme="dark"] .zaui-btn-primary:active,
 body[zaui-theme="dark"] .zaui-btn-primary:focus-visible {
-    background-color: var(--zaui-dark-button-primary-background-pressed, #0250b6);
+    background-color: var(
+        --zaui-dark-button-primary-background-pressed,
+        #0250b6
+    );
 }
 body[zaui-theme="dark"] .zaui-btn-secondary,
 body[zaui-theme="dark"] .zaui-btn-secondary.zaui-btn-highlight {
@@ -750,13 +830,19 @@ body[zaui-theme="dark"] .zaui-btn-secondary.zaui-btn-highlight:active,
 body[zaui-theme="dark"] .zaui-btn-secondary.zaui-btn-highlight:focus-visible,
 body[zaui-theme="dark"] .zaui-btn-secondary:active,
 body[zaui-theme="dark"] .zaui-btn-secondary:focus-visible {
-    background-color: var(--zaui-light-button-secondary-background-pressed, #b8d9ff);
+    background-color: var(
+        --zaui-light-button-secondary-background-pressed,
+        #b8d9ff
+    );
 }
 body[zaui-theme="dark"] .zaui-btn-secondary.zaui-btn-highlight:active,
 body[zaui-theme="dark"] .zaui-btn-secondary.zaui-btn-highlight:focus-visible,
 body[zaui-theme="dark"] .zaui-btn-secondary:active,
 body[zaui-theme="dark"] .zaui-btn-secondary:focus-visible {
-    background-color: var(--zaui-light-button-secondary-background-pressed, #b8d9ff);
+    background-color: var(
+        --zaui-light-button-secondary-background-pressed,
+        #b8d9ff
+    );
 }
 body[zaui-theme="dark"] .zaui-btn-tertiary,
 body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-highlight {
@@ -768,32 +854,50 @@ body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-highlight:active,
 body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-highlight:focus-visible,
 body[zaui-theme="dark"] .zaui-btn-tertiary:active,
 body[zaui-theme="dark"] .zaui-btn-tertiary:focus-visible {
-    background-color: var(--zaui-light-button-tertiary-background-pressed, #ebf4ff);
+    background-color: var(
+        --zaui-light-button-tertiary-background-pressed,
+        #ebf4ff
+    );
 }
 body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-highlight:active,
 body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-highlight:focus-visible,
 body[zaui-theme="dark"] .zaui-btn-tertiary:active,
 body[zaui-theme="dark"] .zaui-btn-tertiary:focus-visible {
-    background-color: var(--zaui-dark-button-tertiary-background-pressed, #03316d);
+    background-color: var(
+        --zaui-dark-button-tertiary-background-pressed,
+        #03316d
+    );
 }
 body[zaui-theme="dark"] .zaui-btn-danger,
 body[zaui-theme="dark"] .zaui-btn-primary.zaui-btn-danger {
-    background-color: var(--zaui-dark-button-primary-danger-background, #dc1f18);
+    background-color: var(
+        --zaui-dark-button-primary-danger-background,
+        #dc1f18
+    );
     color: var(--zaui-dark-button-primary-danger-text, #fff);
 }
 body[zaui-theme="dark"] .zaui-btn-danger:active,
 body[zaui-theme="dark"] .zaui-btn-danger:focus-visible,
 body[zaui-theme="dark"] .zaui-btn-primary.zaui-btn-danger:active,
 body[zaui-theme="dark"] .zaui-btn-primary.zaui-btn-danger:focus-visible {
-    background-color: var(--zaui-dark-button-primary-danger-background-pressed, #a51712);
+    background-color: var(
+        --zaui-dark-button-primary-danger-background-pressed,
+        #a51712
+    );
 }
 body[zaui-theme="dark"] .zaui-btn-secondary.zaui-btn-danger {
-    background-color: var(--zaui-dark-button-secondary-danger-background, #650e0b);
+    background-color: var(
+        --zaui-dark-button-secondary-danger-background,
+        #650e0b
+    );
     color: var(--zaui-dark-button-secondary-danger-text, #f89996);
 }
 body[zaui-theme="dark"] .zaui-btn-secondary.zaui-btn-danger:active,
 body[zaui-theme="dark"] .zaui-btn-secondary.zaui-btn-danger:focus-visible {
-    background-color: var(--zaui-dark-button-secondary-danger-background-pressed, #490a08);
+    background-color: var(
+        --zaui-dark-button-secondary-danger-background-pressed,
+        #490a08
+    );
 }
 body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-danger {
     background-color: transparent;
@@ -801,15 +905,24 @@ body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-danger {
 }
 body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-danger:active,
 body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-danger:focus-visible {
-    background-color: var(--zaui-dark-button-tertiary-danger-background-pressed, #650e0b);
+    background-color: var(
+        --zaui-dark-button-tertiary-danger-background-pressed,
+        #650e0b
+    );
 }
 body[zaui-theme="dark"] .zaui-btn-secondary.zaui-btn-neutral {
-    background-color: var(--zaui-dark-button-secondary-neutral-background, #36383a);
+    background-color: var(
+        --zaui-dark-button-secondary-neutral-background,
+        #36383a
+    );
     color: var(--zaui-dark-button-secondary-neutral-text, #fff);
 }
 body[zaui-theme="dark"] .zaui-btn-secondary.zaui-btn-neutral:active,
 body[zaui-theme="dark"] .zaui-btn-secondary.zaui-btn-neutral:focus-visible {
-    background-color: var(--zaui-dark-button-secondary-neutral-background-pressed, #252627);
+    background-color: var(
+        --zaui-dark-button-secondary-neutral-background-pressed,
+        #252627
+    );
 }
 body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-neutral {
     background-color: transparent;
@@ -817,7 +930,10 @@ body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-neutral {
 }
 body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-neutral:active,
 body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-neutral:focus-visible {
-    background-color: var(--zaui-dark-button-tertiary-neutral-background-pressed, #36383a);
+    background-color: var(
+        --zaui-dark-button-tertiary-neutral-background-pressed,
+        #36383a
+    );
 }
 :root {
     --zaui-safe-area-inset-top: env(safe-area-inset-top, 0px);
@@ -1010,7 +1126,8 @@ body[zaui-theme="dark"] .zaui-btn-tertiary.zaui-btn-neutral:focus-visible {
     align-items: flex-end;
     justify-content: center;
 }
-.zaui-modal-content-actions-vertical .zaui-modal-content-action:not(:last-child) {
+.zaui-modal-content-actions-vertical
+    .zaui-modal-content-action:not(:last-child) {
     margin-right: 0;
 }
 .zaui-modal-content-appear,
@@ -1082,7 +1199,9 @@ body[zaui-theme="dark"] .zaui-modal-content-actions::before {
     justify-content: center;
     align-items: center;
 }
-.zaui-sheet-content .zaui-sheet-content-handler-wrapper .zaui-sheet-content-handler {
+.zaui-sheet-content
+    .zaui-sheet-content-handler-wrapper
+    .zaui-sheet-content-handler {
     display: inline-block;
     width: 48px;
     height: 6px;
@@ -1141,7 +1260,8 @@ body[zaui-theme="dark"] .zaui-modal-content-actions::before {
     align-items: flex-end;
     justify-content: center;
 }
-.zaui-sheet-content-actions-vertical .zaui-sheet-content-action:not(:last-child) {
+.zaui-sheet-content-actions-vertical
+    .zaui-sheet-content-action:not(:last-child) {
     margin-right: 0;
 }
 .zaui-sheet-content-appear,
@@ -1226,6 +1346,13 @@ body[zaui-theme="dark"] .zaui-sheet-content {
 body[zaui-theme="dark"] .zaui-sheet-content-actions::before {
     background: var(--zaui-dark-sheet-divider, #36383a);
 }
-body[zaui-theme="dark"] .zaui-sheet-content .zaui-sheet-content-handler-wrapper .zaui-sheet-content-handler {
+body[zaui-theme="dark"]
+    .zaui-sheet-content
+    .zaui-sheet-content-handler-wrapper
+    .zaui-sheet-content-handler {
     background-color: var(--zaui-dark-sheet-handler, #36383a);
+}
+
+.zaui-sheet-content-border-none .zaui-sheet-content {
+    border-radius: 0;
 }

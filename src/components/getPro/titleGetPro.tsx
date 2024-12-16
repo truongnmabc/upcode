@@ -3,7 +3,6 @@ import { appInfoState } from "@/redux/features/appInfo";
 import { useAppSelector } from "@/redux/hooks";
 import React from "react";
 import LazyLoadImage from "../images";
-
 const TitleGetPro = () => {
     const { appInfo } = useAppSelector(appInfoState);
     return (

@@ -1,5 +1,5 @@
 "use client";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 import React from "react";
 
 export const extractKey = (pathname: string): string | null => {
@@ -11,9 +11,18 @@ export const extractKey = (pathname: string): string | null => {
     return null;
 };
 
+const getKeyTest = (pathname: string | string[] | undefined): string | null => {
+    if (!pathname) return null;
+    if (typeof pathname === "string") return decodeURI(pathname);
+    return decodeURI(pathname[pathname?.length - 1]);
+};
 const TitleQuestion = () => {
     const pathname = usePathname();
-    const defaultTitle = extractKey(pathname);
+    const param = useParams();
+
+    const type = useSearchParams().get("type");
+    const defaultTitle =
+        type === "test" ? getKeyTest(param?.slug) : extractKey(pathname);
 
     return (
         <div className="w-full text-center capitalize text-xl font-semibold">

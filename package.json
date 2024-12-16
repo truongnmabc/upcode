@@ -10,7 +10,7 @@
         "dev": "next dev --turbopack -p 3030",
         "build:router": "node src/scripts/create_router.js",
         "build": "next build",
-        "start": "next start",
+        "start": "next start -p 3030",
         "lint": "next lint"
     },
     "dependencies": {

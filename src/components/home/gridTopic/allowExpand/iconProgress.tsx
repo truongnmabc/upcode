@@ -133,7 +133,11 @@ const IconProgress = ({
                     lock={part.id !== isCurrentPlaying?.id}
                     activeAnim={currentGame.parentId === part?.id}
                     isFinishThisLevel={isPass}
-                    currentLevelScore={isPass ? 100 : progress}
+                    currentLevelScore={
+                        currentGame.parentId !== part?.id && isPass
+                            ? 100
+                            : progress
+                    }
                 />
 
                 <div className="max-w-14 text-center pt-1 text-[10px] text-[#212121] truncate">
