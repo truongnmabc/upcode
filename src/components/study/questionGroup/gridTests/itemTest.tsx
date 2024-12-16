@@ -16,7 +16,8 @@ const ItemTestLeft = ({ test, index }: { test: ITest; index: number }) => {
     const handleCLick = useCallback(() => {
         dispatch(
             initTestQuestionThunk({
-                testId: String(test.id),
+                testId: test.id.toString(),
+                duration: test.duration,
             })
         );
         const _href = revertPathName({
@@ -31,7 +32,7 @@ const ItemTestLeft = ({ test, index }: { test: ITest; index: number }) => {
             className={clsx(
                 "bg-white cursor-pointer hover:border-[#4797B1] rounded-md border border-solid w-full flex items-center",
                 {
-                    "border-[#4797B1]": testId === String(test.id),
+                    "border-[#4797B1]": testId === test.id.toString(),
                 }
             )}
             onClick={handleCLick}

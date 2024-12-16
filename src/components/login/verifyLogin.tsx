@@ -1,7 +1,6 @@
 "use client";
 
 import CloseIcon from "@/asset/icon/CloseIcon";
-import { IS_TESTER } from "@/common/constants";
 import { appConfigState } from "@/redux/features/appConfig";
 import { appInfoState } from "@/redux/features/appInfo";
 import { useAppSelector } from "@/redux/hooks";
@@ -31,16 +30,12 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
         setProcess(true);
         try {
             if (email?.length) {
-                if (IS_TESTER) {
+                const data = await sendEmailApi({
+                    email,
+                    appName: appInfo?.appName,
+                });
+                if (data === "Sended email!") {
                     setStep(2);
-                } else {
-                    const data = await sendEmailApi({
-                        email,
-                        appName: appInfo?.appName,
-                    });
-                    if (data === "Sended email!") {
-                        setStep(2);
-                    }
                 }
             } else {
                 window.alert("Email not empty");

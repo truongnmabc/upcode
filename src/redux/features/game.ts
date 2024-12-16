@@ -137,8 +137,9 @@ export const gameSlice = createSlice({
         });
 
         builder.addCase(initTestQuestionThunk.fulfilled, (state, action) => {
-            const { progressData, questions, type, id } = action.payload;
-
+            const { progressData, questions, type, id, duration } =
+                action.payload;
+            state.time = duration;
             state.type = type;
             state.idTopic = id ?? -1;
             state.listQuestion = questions;

@@ -8,6 +8,7 @@ import { MathJax } from "better-react-mathjax";
 import React from "react";
 import GetIconPrefix from "../choicesPanel/getIcon";
 import choiceAnswer from "@/redux/repository/game/choiceAnswer";
+import BtnTets from "@/tests/btn";
 const FN = ({ choice, index }: { choice: IAnswer; index: number }) => {
     const dispatch = useAppDispatch();
     const { currentGame } = useAppSelector(gameState);
@@ -68,6 +69,7 @@ const FN = ({ choice, index }: { choice: IAnswer; index: number }) => {
                     />
                 </MathJax>
             )}
+            {/* <BtnTets correct={choice.correct} /> */}
         </div>
     );
 };

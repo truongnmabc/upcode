@@ -44,7 +44,12 @@ export const IconSubTopic = ({
                     }
                 )}
             >
-                {isFinishThisLevel ? (
+                {activeAnim ? (
+                    <div className="w-full text-white h-full text-center flex justify-center  items-center text-xs">
+                        {currentLevelScore}
+                        <small className="text-white">%</small>
+                    </div>
+                ) : isFinishThisLevel ? (
                     <CheckedIcon color="white" />
                 ) : lock ? (
                     <LockIcon />

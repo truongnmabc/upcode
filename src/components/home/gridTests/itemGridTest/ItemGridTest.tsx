@@ -40,19 +40,35 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
                 return;
             }
 
-            const res = await db.tests.toArray();
-            const id = res.find((item) => item?.status === 0)?.id.toString();
-            dispatch(
-                initTestQuestionThunk({
-                    testId: id,
-                })
-            );
+            if (item.id === "DT") {
+                // const res = await db.tests.where("type").equals("diagnosticTestFormat").toArray();
+                // const _href = revertPathName({
+                //     href: `/study/${item.name}?type=test&testId=${id}`,
+                //     appName: appInfo.appShortName,
+                // });
+                // router.push(_href);
+            }
+            if (item.id === "PT") {
+                const res = await db.tests
+                    .where("testType")
+                    .equals("practiceTests")
+                    .toArray();
 
-            const _href = revertPathName({
-                href: `/study/${item.name}?type=test&testId=${id}`,
-                appName: appInfo.appShortName,
-            });
-            router.push(_href);
+                const currentTest = res.find((item) => item?.status === 0);
+                const id = currentTest?.id.toString();
+                dispatch(
+                    initTestQuestionThunk({
+                        testId: id,
+                        duration: currentTest?.duration,
+                    })
+                );
+
+                const _href = revertPathName({
+                    href: `/study/${item.name}?type=test&testId=${id}`,
+                    appName: appInfo.appShortName,
+                });
+                router.push(_href);
+            }
         },
         [
             appInfo.appShortName,
