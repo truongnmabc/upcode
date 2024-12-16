@@ -7,10 +7,17 @@ import { PaymentInfo } from "../../../models/PaymentInfo";
 import * as ga from "../../../services/ga";
 import { updateUserInfoDashboard } from "../../../services/user";
 import "./PayPalButtonView.scss";
-import { PAYPAL_CLIENT_ID, PAYPAL_CURRENCY, PAYPAL_STYLE } from "@/config/config_paypal";
+import {
+    PAYPAL_CLIENT_ID,
+    PAYPAL_CURRENCY,
+    PAYPAL_STYLE,
+} from "@/config/config_paypal";
 import { isProduction } from "@/config/config_web";
 import AppState from "@/redux/appState";
-import { saveToDashboardAPI, uploadPaymentInfoAPI } from "@/services/syncDataToWeb";
+import {
+    saveToDashboardAPI,
+    uploadPaymentInfoAPI,
+} from "@/services/syncDataToWeb";
 import { paymentSuccessAction } from "@/redux/features/user";
 
 const PayPalButtonView = ({
@@ -23,7 +30,9 @@ const PayPalButtonView = ({
     stateValue: string;
 }) => {
     let userReducer = useSelector((state: AppState) => state.userReducer);
-    let appInfo = useSelector((state: AppState) => state.appInfoReducer.appInfo);
+    let appInfo = useSelector(
+        (state: AppState) => state.appInfoReducer.appInfo
+    );
     const appId = appInfo.appId ?? APP_NEW_DOMAIN;
     const [paymentSource, setPaySource] = useState("");
     const dispatch = useDispatch();
@@ -51,7 +60,7 @@ const PayPalButtonView = ({
         paymentInfo.paymentSource = paymentSource;
         paymentInfo.appId = appId;
 
-        paymentInfo[stateValue] = Config.PURCHARED;
+        paymentInfo[stateValue] = Config.PURCHASED;
 
         dispatch(paymentSuccessAction(paymentInfo));
         let obj = {

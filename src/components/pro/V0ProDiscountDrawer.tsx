@@ -2,7 +2,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useEffect, useState } from "react";
 import { convertTime } from "../../utils";
 import "./V0ProDiscountDrawer.scss";
-import MyContainer from "@/components/v4-material/MyContainer";
+import MyContainer from "@/components/v4-material/myContainer";
 import dynamic from "next/dynamic";
 const Drawer = dynamic(() => import("@mui/material/Drawer"));
 
@@ -54,11 +54,20 @@ const V0ProDiscountDrawer = ({
     return (
         <div className="discount-drawer-section">
             {SALE_INDEX > 0 && (
-                <Drawer open={open} hideBackdrop anchor={"bottom"} variant="persistent" transitionDuration={500}>
+                <Drawer
+                    open={open}
+                    hideBackdrop
+                    anchor={"bottom"}
+                    variant="persistent"
+                    transitionDuration={500}
+                >
                     <div className="background-discount">
                         <MyContainer className="container">
                             <div className="left">
-                                <img src="/images/passemall/new-pro/girl-smile.png" alt="smile" />
+                                <img
+                                    src="/images/passemall/new-pro/girl-smile.png"
+                                    alt="smile"
+                                />
                                 {!isMobile && (
                                     <div className="text-discount">
                                         Save{" "}
@@ -81,10 +90,17 @@ const V0ProDiscountDrawer = ({
                                 )}
                                 <div className="content">
                                     <div className="timer">
-                                        <span className="limited">Limited offer</span>
+                                        <span className="limited">
+                                            Limited offer
+                                        </span>
                                         {convertTime(time)}
                                     </div>
-                                    <button className="button-update" onClick={() => onClickGetPro(SALE_INDEX)}>
+                                    <button
+                                        className="button-update"
+                                        onClick={() =>
+                                            onClickGetPro(SALE_INDEX)
+                                        }
+                                    >
                                         Upgrade Now
                                     </button>
                                 </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import MyContainer from "../v4-material/MyContainer";
+import MyContainer from "../v4-material/myContainer";
 import "./Footer1.scss";
 import Link from "next/link";
 import { getContactLink } from "@/utils";

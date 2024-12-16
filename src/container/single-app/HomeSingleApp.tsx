@@ -8,7 +8,7 @@ import Layout2 from "@/components/layout/layout-2/Layout2";
 import TestBanner from "@/components/homepage/TestBanner";
 import BannerDownloadApp from "@/components/homepage/BannerDownloadApp";
 import SeoContentComponentV2 from "@/components/seo";
-import MyContainer from "@/components/v4-material/MyContainer";
+import MyContainer from "@/components/v4-material/myContainer";
 import "./HomeSingleApp.scss";
 import GridTopic from "@/components/homepage/GridTopic";
 import dynamic from "next/dynamic";
@@ -75,15 +75,24 @@ const HomeSingleApp = ({
             <div className="v4-home-landing-0">
                 {appHasState && !!!_state ? (
                     <>
-                        <div className="app-state-backround-0" id="app-state-backround-0">
+                        <div
+                            className="app-state-backround-0"
+                            id="app-state-backround-0"
+                        >
                             <MyContainer>
                                 <div className="landing-title-0">
                                     <div className="landing-title-11">
                                         <h1 className="title-h1">
-                                            <span className="landing-title-21">{appInfo?.appName + " Practice Test"}</span>
+                                            <span className="landing-title-21">
+                                                {appInfo?.appName +
+                                                    " Practice Test"}
+                                            </span>
                                             <span className="landing-title-22">
-                                                Ace The <strong className="v4-font-semi-bold">{appInfo?.appName}</strong> On
-                                                First Try
+                                                Ace The{" "}
+                                                <strong className="v4-font-semi-bold">
+                                                    {appInfo?.appName}
+                                                </strong>{" "}
+                                                On First Try
                                             </span>
                                         </h1>
                                     </div>
@@ -91,22 +100,46 @@ const HomeSingleApp = ({
                                         className="get-started-btn v4-border-radius"
                                         onClick={() => {
                                             if (currentState) {
-                                                window.location.href = getLink(appInfo, currentState);
-                                                ga.event({ action: "click_go_to_state", params: { app: appInfo.appName } });
+                                                window.location.href = getLink(
+                                                    appInfo,
+                                                    currentState
+                                                );
+                                                ga.event({
+                                                    action: "click_go_to_state",
+                                                    params: {
+                                                        app: appInfo.appName,
+                                                    },
+                                                });
                                             } else {
-                                                if (openListState != 1) setOpenListState(1);
-                                                ga.event({ action: "click_get_started", params: { app: appInfo.appName } });
+                                                if (openListState != 1)
+                                                    setOpenListState(1);
+                                                ga.event({
+                                                    action: "click_get_started",
+                                                    params: {
+                                                        app: appInfo.appName,
+                                                    },
+                                                });
                                             }
                                         }}
                                     >
-                                        {currentState ? `Go To ${currentState.replaceAll("-", " ")}` : "Get Started"}
+                                        {currentState
+                                            ? `Go To ${currentState.replaceAll(
+                                                  "-",
+                                                  " "
+                                              )}`
+                                            : "Get Started"}
                                     </div>
                                     {!!currentState && openListState < 1 && (
                                         <div
                                             className="not-your-state"
                                             onClick={() => {
                                                 setOpenListState(1);
-                                                ga.event({ action: "select_another_state", params: { app: appInfo.appName } });
+                                                ga.event({
+                                                    action: "select_another_state",
+                                                    params: {
+                                                        app: appInfo.appName,
+                                                    },
+                                                });
                                             }}
                                         >
                                             Not your state?
@@ -125,11 +158,18 @@ const HomeSingleApp = ({
                         </div>
                         <MyContainer>
                             <div className="v4-landing-banner-download-app-0">
-                                <h2>{`Prepare to Pass ${isDesktop ? appInfo.appName : ""} on Any Devices`}</h2>
-                                <BannerDownloadApp appInfo={appInfo} device={isDesktop ? "desktop" : "mobile"} />
+                                <h2>{`Prepare to Pass ${
+                                    isDesktop ? appInfo.appName : ""
+                                } on Any Devices`}</h2>
+                                <BannerDownloadApp
+                                    appInfo={appInfo}
+                                    device={isDesktop ? "desktop" : "mobile"}
+                                />
                             </div>
                             <div className="v4-landing-seo-content-0">
-                                <SeoContentComponentV2 homeSeoContent={homeSeoContent} />
+                                <SeoContentComponentV2
+                                    homeSeoContent={homeSeoContent}
+                                />
                             </div>
                         </MyContainer>
                     </>
@@ -138,22 +178,32 @@ const HomeSingleApp = ({
                         <div className="landing-title-0">
                             <div className="landing-title-11">
                                 <h1 className="title-h1">
-                                    <span className="landing-title-21">{`${stateName(_state)} ${
+                                    <span className="landing-title-21">{`${stateName(
+                                        _state
+                                    )} ${
                                         appInfo?.appName
                                     } Practice Test`}</span>
                                     <span className="landing-title-22">
-                                        Ace The <strong className="v4-font-semi-bold">{appInfo?.appName}</strong> On First Try
+                                        Ace The{" "}
+                                        <strong className="v4-font-semi-bold">
+                                            {appInfo?.appName}
+                                        </strong>{" "}
+                                        On First Try
                                     </span>
                                 </h1>
                             </div>
                             <div className="landing-title-12">
                                 {listTopics.length > 1
-                                    ? `Our free ${stateName(_state)} ${appInfo.appName} practice tests feature all ${stateName(
+                                    ? `Our free ${stateName(_state)} ${
+                                          appInfo.appName
+                                      } practice tests feature all ${stateName(
                                           _state
                                       )} ${
                                           appInfo.appName
                                       } test subjects. We recommend taking at least one practice exam from every subject to guarantee your success at your local testing location. To get started, choose a category from the list below and practice them!`
-                                    : `Our free ${stateName(_state)} ${appInfo.appName} practice tests feature all ${stateName(
+                                    : `Our free ${stateName(_state)} ${
+                                          appInfo.appName
+                                      } practice tests feature all ${stateName(
                                           _state
                                       )} ${
                                           appInfo.appName
@@ -161,7 +211,9 @@ const HomeSingleApp = ({
                             </div>
                         </div>
                         <div className="v4-landing-topic-0">
-                            <h2>{`Practice ${stateName(_state)} ${appInfo.appName} Test By Topics`}</h2>
+                            <h2>{`Practice ${stateName(_state)} ${
+                                appInfo.appName
+                            } Test By Topics`}</h2>
                             <GridTopic
                                 place="home"
                                 listTopics={listTopics}
@@ -172,19 +224,36 @@ const HomeSingleApp = ({
                         </div>
 
                         <div className="v4-landing-practice-test-0">
-                            <h2>{`Take Full ${stateName(_state)} ${appInfo.appName} Practice Test`}</h2>
+                            <h2>{`Take Full ${stateName(_state)} ${
+                                appInfo.appName
+                            } Practice Test`}</h2>
                             {tests.map((test, index) => (
-                                <div key={index} style={{ marginTop: index != 0 ? 16 : 0 }}>
-                                    <TestBanner key={index} appInfo={appInfo} test={test} index={index} />
+                                <div
+                                    key={index}
+                                    style={{ marginTop: index != 0 ? 16 : 0 }}
+                                >
+                                    <TestBanner
+                                        key={index}
+                                        appInfo={appInfo}
+                                        test={test}
+                                        index={index}
+                                    />
                                 </div>
                             ))}
                         </div>
                         <div className="v4-landing-banner-download-app-0">
-                            <h2>{`Prepare to Pass ${stateName(_state)} ${appInfo.appName} on Any Devices`}</h2>
-                            <BannerDownloadApp appInfo={appInfo} device={isDesktop ? "desktop" : "mobile"} />
+                            <h2>{`Prepare to Pass ${stateName(_state)} ${
+                                appInfo.appName
+                            } on Any Devices`}</h2>
+                            <BannerDownloadApp
+                                appInfo={appInfo}
+                                device={isDesktop ? "desktop" : "mobile"}
+                            />
                         </div>
                         <div className="v4-landing-seo-content-0">
-                            <SeoContentComponentV2 homeSeoContent={homeSeoContent} />
+                            <SeoContentComponentV2
+                                homeSeoContent={homeSeoContent}
+                            />
                         </div>
                     </MyContainer>
                 )}

@@ -19,7 +19,7 @@ import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
 // import QasContent from "../qas";
 import "./index.scss";
 import V4CircleProgress from "../../v4-material/V4CircleProgress";
-import MyContainer from "../../v4-material/MyContainer";
+import MyContainer from "../../v4-material/myContainer";
 // import { useMediaQuery } from "@mui/material";
 
 export const TYPE_TAB = {
@@ -120,14 +120,22 @@ const FaqsAndQaContent = ({
 
                     <div className="tabs">
                         <div
-                            className={"tab " + (tab == TYPE_TAB.Faq ? "selected" : "")}
+                            className={
+                                "tab " + (tab == TYPE_TAB.Faq ? "selected" : "")
+                            }
                             onClick={() => setTabFunction(TYPE_TAB.Faq)}
                         >
                             <p>FAQs</p>
                             <div className="tab-indicator "></div>
                         </div>
                         <div
-                            className={"tab " + (tab == TYPE_TAB.Qa || tab == TYPE_TAB.Post_question ? "selected" : "")}
+                            className={
+                                "tab " +
+                                (tab == TYPE_TAB.Qa ||
+                                tab == TYPE_TAB.Post_question
+                                    ? "selected"
+                                    : "")
+                            }
                             onClick={() => setTabFunction(TYPE_TAB.Qa)}
                         >
                             <p>Q&A </p>
@@ -140,9 +148,17 @@ const FaqsAndQaContent = ({
                 </MyContainer>
                 <div className="content">
                     <MyContainer>
-                        <div style={{ display: "flex", alignItems: "center", paddingTop: "12px", textDecoration: "underline" }}>
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                paddingTop: "12px",
+                                textDecoration: "underline",
+                            }}
+                        >
                             <WarningAmberRoundedIcon htmlColor="#E3A651" />
-                            This site is currently under maintenance, We should be back shortly!
+                            This site is currently under maintenance, We should
+                            be back shortly!
                         </div>
                         <div className="content-container">
                             <div className="right-content">

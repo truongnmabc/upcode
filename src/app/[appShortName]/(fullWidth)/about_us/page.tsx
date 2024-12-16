@@ -1,0 +1,16 @@
+import React from "react";
+import { fetchAppData } from "../../layout";
+import AboutUsContainer from "@/components/about-us";
+type Params = {
+    params: Promise<{ appShortName: string; slug: string }>;
+};
+export default async function Page({ params }: Params) {
+    const { appShortName, slug } = await params;
+
+    const { appInfo } = await fetchAppData(appShortName);
+
+    if (!appInfo) {
+        throw new Error("App info not found");
+    }
+    return <AboutUsContainer appInfo={appInfo} />;
+}

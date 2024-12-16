@@ -10,7 +10,11 @@ import "./PopupSubscription.scss";
 import dynamic from "next/dynamic";
 import { PAYPAL_SUBSCRIPTION_KEY } from "@/config/config_paypal";
 import AppState from "@/redux/appState";
-import { convertMillisecondsToDateZTime, getCookie, setCookieDate } from "@/utils/web";
+import {
+    convertMillisecondsToDateZTime,
+    getCookie,
+    setCookieDate,
+} from "@/utils/web";
 import { uploadPaymentInfoAPI } from "@/services/syncDataToWeb";
 import { paymentSuccessAction } from "@/redux/features/user";
 
@@ -19,7 +23,9 @@ const Dialog = dynamic(() => import("@mui/material/Dialog"), { ssr: false });
 /**  component này để check xem còn pro hay không và nhắc nhở user, cancel, update lên datastore */
 const PopupSubscription = ({ appInfo }: { appInfo: IAppInfo }) => {
     const dispatch = useDispatch();
-    const paymentInfo: IPaymentInfo = useSelector((state: AppState) => state.userReducer.paymentInfo); // theo luồng hiện tại là giá trị của cái này được update nhờ action getUserDevicesLogin gọi ở LayoutV4
+    const paymentInfo: IPaymentInfo = useSelector(
+        (state: AppState) => state.userReducer.paymentInfo
+    ); // theo luồng hiện tại là giá trị của cái này được update nhờ action getUserDevicesLogin gọi ở LayoutV4
     const [option, setOption] = useState({
         showPopup: false,
         message: "",
@@ -34,7 +40,11 @@ const PopupSubscription = ({ appInfo }: { appInfo: IAppInfo }) => {
             },
             process.env.NEXT_PUBLIC_SECRET_KEY
         );
-        setCookieDate(PAYPAL_SUBSCRIPTION_KEY, token, new Date(next_billing_time));
+        setCookieDate(
+            PAYPAL_SUBSCRIPTION_KEY,
+            token,
+            new Date(next_billing_time)
+        );
         if (new Date(next_billing_time).getTime() !== paymentInfo.expiredDate) {
             // chỗ này chỉ update lại expiredDate nên nếu khác nhau thì mới làm
             let object = {
@@ -55,7 +65,10 @@ const PopupSubscription = ({ appInfo }: { appInfo: IAppInfo }) => {
             let decodedToken = null;
             if (cookieValue) {
                 try {
-                    decodedToken = jwt.verify(cookieValue, process.env.NEXT_PUBLIC_SECRET_KEY);
+                    decodedToken = jwt.verify(
+                        cookieValue,
+                        process.env.NEXT_PUBLIC_SECRET_KEY
+                    );
                 } catch (error) {
                     console.log("error", error);
                 }
@@ -65,11 +78,12 @@ const PopupSubscription = ({ appInfo }: { appInfo: IAppInfo }) => {
             if (
                 paymentInfo &&
                 isSubscriptionId(paymentInfo.orderId) &&
-                paymentInfo.buyPro == Config.PURCHARED &&
+                paymentInfo.buyPro == Config.PURCHASED &&
                 paymentInfo.orderId?.length &&
                 (!decodedToken || // chú ý đoạn này timeExpired được set khi mua hàng thành công (lấy trường next_billing_time của paypal trả về)
                     // mà khoảng cách thời gian của trường đó với thời gian bắt đầu có hiệu lực không phải là 3 ngày (theo free Trial), nên chỗ này cần chú ý
-                    new Date(decodedToken?.timeExpired).getTime() < Date.now() ||
+                    new Date(decodedToken?.timeExpired).getTime() <
+                        Date.now() ||
                     appInfo.appId != decodedToken.appId)
             ) {
                 // nếu hết hạn hoặc chưa có trong cookie thì mới đi vào đây
@@ -86,7 +100,8 @@ const PopupSubscription = ({ appInfo }: { appInfo: IAppInfo }) => {
                     switch (data.status) {
                         case "APPROVAL_PENDING":
                             // user need approved
-                            messagStr = "Please approve your subscription on Paypal to start using our Pro version";
+                            messagStr =
+                                "Please approve your subscription on Paypal to start using our Pro version";
                             break;
                         case "APPROVED":
                             // waiting admin approved
@@ -95,9 +110,14 @@ const PopupSubscription = ({ appInfo }: { appInfo: IAppInfo }) => {
                         case "CANCELLED":
                         case "SUSPENDED":
                             if (handleCheckTimeExpired(paymentInfo) == true) {
-                                messagStr = "Your subscription is cancelled. Please re-activate it to use our Pro version";
+                                messagStr =
+                                    "Your subscription is cancelled. Please re-activate it to use our Pro version";
                             } else {
-                                handleSetCookieToken(convertMillisecondsToDateZTime(paymentInfo.expiredDate));
+                                handleSetCookieToken(
+                                    convertMillisecondsToDateZTime(
+                                        paymentInfo.expiredDate
+                                    )
+                                );
                             }
                             //cancelled subscription
                             //cho ve ban thuong
@@ -105,13 +125,19 @@ const PopupSubscription = ({ appInfo }: { appInfo: IAppInfo }) => {
                         case "EXPIRED":
                             //user need renew
                             if (handleCheckTimeExpired(paymentInfo) == true) {
-                                messagStr = "Your subscription is expired. Please re-activate it to use our Pro version";
+                                messagStr =
+                                    "Your subscription is expired. Please re-activate it to use our Pro version";
                             } else {
-                                handleSetCookieToken(convertMillisecondsToDateZTime(paymentInfo.expiredDate));
+                                handleSetCookieToken(
+                                    convertMillisecondsToDateZTime(
+                                        paymentInfo.expiredDate
+                                    )
+                                );
                             }
                             break;
                         case "ACTIVE":
-                            let next_billing_time: string = data.billing_info?.next_billing_time;
+                            let next_billing_time: string =
+                                data.billing_info?.next_billing_time;
                             if (next_billing_time) {
                                 handleSetCookieToken(next_billing_time);
                             }
@@ -130,7 +156,13 @@ const PopupSubscription = ({ appInfo }: { appInfo: IAppInfo }) => {
     }, [paymentInfo]);
 
     const cancelledSubscription = async () => {
-        let object = { ...paymentInfo, forceUpdate: true, type: 0, buyPro: 0, purchared: 0 };
+        let object = {
+            ...paymentInfo,
+            forceUpdate: true,
+            type: 0,
+            buyPro: 0,
+            PURCHASED: 0,
+        };
         // chỉ cancel theo cách là update lại datastore thôi
         await uploadPaymentInfoAPI(object);
         dispatch(paymentSuccessAction(paymentInfo));
@@ -142,11 +174,18 @@ const PopupSubscription = ({ appInfo }: { appInfo: IAppInfo }) => {
 
     return (
         !!option?.showPopup && (
-            <Dialog open={option.showPopup} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+            <Dialog
+                open={option.showPopup}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
                 <div className="main-popup-subscription">
                     <p className="title">{option.message}</p>
                     <div className="btn">
-                        <button className="pay_late" onClick={cancelledSubscription}>
+                        <button
+                            className="pay_late"
+                            onClick={cancelledSubscription}
+                        >
                             Back to Free Version
                         </button>
                         <button

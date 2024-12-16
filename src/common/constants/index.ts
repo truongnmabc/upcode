@@ -120,3 +120,5 @@ export const RANDOM_COLORS = [
 ];
 
 export const timeCaching = 1 * 1000 * 60 * 60;
+
+export const isProduction = process.env.NODE_ENV === "production";

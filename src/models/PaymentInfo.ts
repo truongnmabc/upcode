@@ -10,7 +10,7 @@ export interface IPaymentInfo {
     paymentStatus: number;
     appId: number;
     appShortName: string;
-    purchared: number;
+    PURCHASED: number;
     paymentSource: string;
     payerName: string;
     buyPro: number; // trường này cần được gọi api để check và update vào đây
@@ -29,7 +29,7 @@ export class PaymentInfo {
     paymentStatus: number;
     appId: number;
     appShortName: string;
-    purchared: number;
+    PURCHASED: number;
     payerName: string;
     paymentSource: string;
     buyPro: number;
@@ -50,11 +50,11 @@ export class PaymentInfo {
         this.userId = object.userId ?? "";
         this.payerName = object.payerName ?? "";
         this.paymentSource = object.paymentSource ?? "";
-        this.purchared = 0;
+        this.PURCHASED = 0;
         this.buyPro = 0;
-        if (object.purchared == 1 || object.buyPro == 1) {
-            this.purchared = Config.PURCHARED;
-            this.buyPro = Config.PURCHARED;
+        if (object.PURCHASED == 1 || object.buyPro == 1) {
+            this.PURCHASED = Config.PURCHASED;
+            this.buyPro = Config.PURCHASED;
         }
         this.timeLeftDiscount = object.timeLeftDiscount ?? -2;
         this.type = object.type ?? Config.PAY_ONE_TIME;
@@ -62,10 +62,6 @@ export class PaymentInfo {
         this.expiredDate = object.expiredDate ?? -1;
     }
 }
-
-export const isBuyPro = (paymentInfo) => {
-    return paymentInfo?.purchared == Config.PURCHARED || paymentInfo?.buyPro == Config.PURCHARED;
-};
 
 export const isSubscriptionId = (str: string) => {
     const regex = /\b[\dA-Z-]{13}\b/gm;
@@ -79,7 +75,7 @@ export interface InAppSubscription {
     os: string;
     createDate: number;
     purchaseDate: number;
-    expriredDate: number; // thời hạn của lần ra hạn hiện tại
+    expiredDate: number; // thời hạn của lần ra hạn hiện tại
     purchased: boolean; // đã thanh toán hay chưa
     trialPeriod: boolean; // trong trial hay không
     in_app: {
