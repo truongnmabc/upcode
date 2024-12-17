@@ -145,19 +145,19 @@ const introAboutUs = [
         title: "Mission",
         color: "#FF6E65",
         content:
-            "Deliver expertly designed practice questions, study materials, and reliable support to ensure a smooth and successful journey into the professional driving industry.",
+            "Deliver expertly designed practice questions, study materials, and reliable support to ensure a smooth and successful journey into the professional driving industry.<br/><br/>",
     },
     {
         title: "Vision",
         color: "#897BFF",
         content:
-            "To be the go-to platform for CDL preparation for drivers to be confident, well-prepared, and able to pursue rewarding careers on the road.",
+            "To be the go-to platform for CDL preparation for drivers to be confident, well-prepared, and able to pursue rewarding careers on the road.<br/><br/>",
     },
     {
         title: "Core Value",
         color: "#FFBC3F",
         content:
-            "Provide top-quality, accurate, and up-to-date CDL prep resources, make them accessible and affordable to all, and ensure content is reliable, and crafted by experts",
+            "Provide top-quality, accurate, and up-to-date CDL prep resources, make them accessible and affordable to all, and ensure content is reliable, and<br/> crafted by experts.",
     },
 ];
 const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
@@ -234,7 +234,7 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
                             <div className="title" style={{ backgroundColor: introAboutUs[0].color }}>
                                 {introAboutUs[0].title}
                             </div>
-                            <div className="content">{introAboutUs[0].content}</div>
+                            <div className="content" dangerouslySetInnerHTML={{ __html: introAboutUs[0].content }} />
                         </div>
                         <div className="item-intro intro-2">
                             {!isMobileResize && <img src="/images/about/line-2.png" alt="" />}
@@ -242,7 +242,7 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
                             <div className="title" style={{ backgroundColor: introAboutUs[1].color }}>
                                 {introAboutUs[1].title}
                             </div>
-                            <div className="content">{introAboutUs[1].content}</div>
+                            <div className="content" dangerouslySetInnerHTML={{ __html: introAboutUs[1].content }} />
                         </div>
                         <div className="item-intro intro-3">
                             {!isMobileResize && <img src="/images/about/line-3.png" alt="" />}
@@ -250,7 +250,7 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
                             <div className="title" style={{ backgroundColor: introAboutUs[2].color }}>
                                 {introAboutUs[2].title}
                             </div>
-                            <div className="content">{introAboutUs[2].content}</div>
+                            <div className="content" dangerouslySetInnerHTML={{ __html: introAboutUs[2].content }} />
                         </div>
                     </div>
                     <div className="meet-the-team max-w-component-desktop">
