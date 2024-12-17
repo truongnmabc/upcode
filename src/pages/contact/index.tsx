@@ -242,7 +242,11 @@ const ViewFAQs = ({ faq, index }: { faq: any; index: any }) => {
     const handleShowAnswer = () => {
         setShowAnswer(!showAnswer);
     };
-
+    useEffect(() => {
+        if (index == 0) {
+            setShowAnswer(true);
+        }
+    }, []);
     return (
         <div
             className="item-faq"
