@@ -35,7 +35,7 @@ export const updateUserInfoDashboard = (args: {
     });
 };
 
-export function syncDataToWebAfterLoginAPI(data: any) {
+export function syncDataToWebAfterLoginAPI(data?: Record<string, unknown>) {
     //https://micro-enigma-235001.appspot.com/api/auth?type=send-email&email=tranhoang30101@gmail.com&appName=ASVAB
     return requestPostData({
         url: "/api/auth?type=sync-data-to-web-after-login",

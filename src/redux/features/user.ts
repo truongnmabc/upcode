@@ -2,12 +2,11 @@ import {
     IPaymentInfo,
     InAppSubscription,
     PaymentInfo,
-} from "@/models/PaymentInfo";
-import { IUserInfo, UserInfo } from "@/models/UserInfo";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { REHYDRATE } from "redux-persist";
-import { getUserDeviceLogin } from "../reporsitory/syncData.repository";
+} from "@/models/payment/PaymentInfo";
+import { IUserInfo } from "@/models/UserInfo";
 import checkPro from "@/utils/checkPro";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+// import { getUserDeviceLogin } from "../reporsitory/syncData.repository";
 import { RootState } from "../store";
 
 export interface IUserReducer {
@@ -115,33 +114,31 @@ export const userSlice = createSlice({
         //     state.isPro = false;
         //     state.reload = false;
         // });
-
-        builder.addCase(getUserDeviceLogin.fulfilled, (state, action) => {
-            if (action.payload) {
-                state.paymentInfo = action.payload.paymentInfo;
-                state.paymentInfos = action.payload.paymentInfos;
-                state.inAppPurchasedInfo = action.payload.inAppSubs;
-                if (state.paymentInfo) {
-                    state.isPro = checkPro(
-                        state.paymentInfo,
-                        state.inAppPurchasedInfo
-                    );
-                }
-
-                state.loadingPayment = true;
-            }
-        });
+        // builder.addCase(getUserDeviceLogin.fulfilled, (state, action) => {
+        //     if (action.payload) {
+        //         state.paymentInfo = action.payload.paymentInfo;
+        //         state.paymentInfos = action.payload.paymentInfos;
+        //         state.inAppPurchasedInfo = action.payload.inAppSubs;
+        //         if (state.paymentInfo) {
+        //             state.isPro = checkPro(
+        //                 state.paymentInfo,
+        //                 state.inAppPurchasedInfo
+        //             );
+        //         }
+        //         state.loadingPayment = true;
+        //     }
+        // });
     },
 });
 
-const genUserId = () => {
-    return Date.now() + "" + Math.floor(Math.random() * 99999);
-};
+// const genUserId = () => {
+//     return Date.now() + "" + Math.floor(Math.random() * 99999);
+// };
 
 const { actions, reducer: userReducer } = userSlice;
 
 export const { logout, loginSuccess, paymentSuccessAction } = actions;
 
-export const userState = (state: RootState) => state.userReducer;
+// export const userState = (state: RootState) => state.userReducer;
 
 export default userReducer;

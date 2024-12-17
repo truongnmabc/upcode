@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Config from "../../../config";
 import * as ga from "../../../services/ga";
 import { IAppInfo } from "../../../models/AppInfo";
-import { IPaymentInfo, isSubscriptionId } from "../../../models/PaymentInfo";
+import {
+    IPaymentInfo,
+    isSubscriptionId,
+} from "../../../models/payment/PaymentInfo";
 import { checkPaypalStatusAPI } from "../../../services/paypal.service";
 import "./PopupSubscription.scss";
 import dynamic from "next/dynamic";

@@ -9,6 +9,7 @@ export async function GET(
 ) {
     const slug = (await params)?.slug;
     if (!slug) throw new Error("");
+
     const cachingValue = cache.get(slug);
     if (cachingValue) {
         return Response.json({

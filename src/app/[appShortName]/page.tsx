@@ -8,6 +8,9 @@ import TitleHomeApp from "@/components/home/title";
 import SeoContent from "@/components/seoContent/seoContent";
 import { ITopic } from "@/models/topics/topics";
 import { fetchAppData } from "./layout";
+import { getAppType } from "@/utils/config_web";
+import ParentAppLayout from "@/components/parent-app/parentAppLayout";
+import HomeSingleApp from "@/components/state-app";
 
 type Params = {
     params: Promise<{ appShortName: string }>;
@@ -21,7 +24,7 @@ export default async function Home({ params }: Params) {
         const { appInfo } = await fetchAppData(appShortName);
 
         if (!appInfo) {
-            throw new Error("App info not found");
+            return;
         }
 
         const response = await axiosInstance.get(
@@ -29,29 +32,44 @@ export default async function Home({ params }: Params) {
         );
 
         const topics: ITopic[] = response?.data?.data?.topic || [];
+        const appType = getAppType(appInfo.appShortName);
 
-        return (
-            <section className="w-full h-full mx-auto max-w-page px-4 sm:px-6">
-                <div className="w-full h-full flex flex-col gap-4 sm:gap-8 py-6 sm:py-9">
-                    <TitleHomeApp appInfo={appInfo} />
-                    <GridTopics
-                        isAll={topics.length > 0}
-                        topics={topics.map((item, index) => ({
-                            ...item,
-                            color: RANDOM_COLORS[index % RANDOM_COLORS.length],
-                        }))}
-                        appInfo={appInfo}
-                    />
-                    <GridTest />
-                    <DownloadApp />
-                    <div className="p-4 mb-28 sm:mb-0 sm:p-6 rounded-md  overflow-hidden bg-white dark:bg-black">
-                        <SeoContent content={""} />
+        if (appType === "default") {
+            return (
+                <section className="w-full h-full mx-auto max-w-page px-4 sm:px-6">
+                    <div className="w-full h-full flex flex-col gap-4 sm:gap-8 py-6 sm:py-9">
+                        <TitleHomeApp appInfo={appInfo} />
+                        <GridTopics
+                            isAll={topics.length > 0}
+                            topics={topics.map((item, index) => ({
+                                ...item,
+                                color: RANDOM_COLORS[
+                                    index % RANDOM_COLORS.length
+                                ],
+                            }))}
+                            appInfo={appInfo}
+                        />
+                        <GridTest />
+                        <DownloadApp />
+                        <div className="p-4 mb-28 sm:mb-0 sm:p-6 rounded-md  overflow-hidden bg-white dark:bg-black">
+                            <SeoContent content={""} />
+                        </div>
                     </div>
-                </div>
-            </section>
-        );
+                </section>
+            );
+        }
+        if (appType === "parent") {
+            return <ParentAppLayout appInfo={appInfo} />;
+        }
+        if (appType === "state") {
+            return (
+                <section className="w-full h-full  pb-12 sm:pb-6 ">
+                    <HomeSingleApp appInfo={appInfo} />
+                </section>
+            );
+        }
     } catch (error) {
-        console.error("Error loading Home component:", error);
+        console.log("🚀 ~ Home ~ error:", error);
         return (
             <section className="w-full h-full flex items-center justify-center">
                 <div className="text-center">

@@ -3,7 +3,7 @@ import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
 import Config from "../../../config";
 import { APP_NEW_DOMAIN, APP_SHORT_NAME } from "../../../config_app";
-import { PaymentInfo } from "../../../models/PaymentInfo";
+import { PaymentInfo } from "../../../models/payment/PaymentInfo";
 import * as ga from "../../../services/ga";
 import { updateUserInfoDashboard } from "../../../services/user";
 import "./PayPalButtonView.scss";

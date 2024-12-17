@@ -1,7 +1,7 @@
 :root {
-  --color-primary: rgba(252, 167, 45, 1);
-  --text-color: #212121;
-  --text-color-primary: rgba(252, 167, 45, 1);
-  --main-background-color: #f9f7ee;
-  --font-poppins: "Poppins-Regular";
+    --color-primary: rgba(252, 167, 45, 1);
+    --text-color: #212121;
+    --text-color-primary: rgba(252, 167, 45, 1);
+    --main-background-color: #f9f7ee;
+    /* --font-poppins: "Poppins-Semibold"; */
 }

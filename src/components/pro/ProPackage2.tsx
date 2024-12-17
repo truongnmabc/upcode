@@ -5,7 +5,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import MyContainer from "../v4-material/myContainer";
 import V4CircleProgress from "../v4-material/V4CircleProgress";
 import CancelSubscriptionDialog from "./CancelSubscriptionDialog";
-import { IPaymentInfo } from "../../models/PaymentInfo";
+import { IPaymentInfo } from "../../models/payment/PaymentInfo";
 
 const ProPackage2 = ({
     appInfo,

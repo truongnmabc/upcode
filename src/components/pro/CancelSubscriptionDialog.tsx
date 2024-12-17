@@ -6,13 +6,21 @@ import Dialog from "@mui/material/Dialog";
 import { useState } from "react";
 import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
-import { IPaymentInfo } from "../../models/PaymentInfo";
-import { cancelSubscriptionAPI, cancelSubscriptionEmailAPI } from "../../services/paypal.service";
+import { IPaymentInfo } from "../../models/payment/PaymentInfo";
+import {
+    cancelSubscriptionAPI,
+    cancelSubscriptionEmailAPI,
+} from "../../services/paypal.service";
 import "./CancelSubscriptionDialog.scss";
 import CheckboxCancelDialog from "../icon/CheckboxCancelDialog";
 import CheckboxCheckedIcon from "../icon/CheckboxCheckedIcon";
 
-const LIST_TEXT_CHECKBOX = ["I’ve passed my exam", "I’ve learnt all questions", "Bad question quality", "Others"];
+const LIST_TEXT_CHECKBOX = [
+    "I’ve passed my exam",
+    "I’ve learnt all questions",
+    "Bad question quality",
+    "Others",
+];
 
 const CancelSubscriptionDialog = ({
     open,
@@ -35,7 +43,9 @@ const CancelSubscriptionDialog = ({
         try {
             setListChoice([]);
             if (orderInfo?.status == "ACTIVE") {
-                let timeExpiration = new Date(orderInfo.billing_info.next_billing_time);
+                let timeExpiration = new Date(
+                    orderInfo.billing_info.next_billing_time
+                );
                 await cancelSubscriptionAPI(paymentInfo.orderId);
                 ga.event({
                     action: "cancel_subscription",
@@ -46,7 +56,12 @@ const CancelSubscriptionDialog = ({
                 });
                 setIsActive(false);
                 let name = orderInfo.subscriber?.name.given_name;
-                await cancelSubscriptionEmailAPI(appInfo, new Date(timeExpiration), name, paymentInfo.emailAddress);
+                await cancelSubscriptionEmailAPI(
+                    appInfo,
+                    new Date(timeExpiration),
+                    name,
+                    paymentInfo.emailAddress
+                );
                 window.location.reload();
             }
         } catch (error) {
@@ -64,11 +79,20 @@ const CancelSubscriptionDialog = ({
     };
 
     return (
-        <Dialog open={open} onClose={() => setOpen(false)} className="cancel-dialog">
+        <Dialog
+            open={open}
+            onClose={() => setOpen(false)}
+            className="cancel-dialog"
+        >
             <div className="dialog-container">
-                <CloseIcon className="close-icon" onClick={() => setOpen(false)}></CloseIcon>
+                <CloseIcon
+                    className="close-icon"
+                    onClick={() => setOpen(false)}
+                ></CloseIcon>
                 <div className="cancel-title">Why you leave us?</div>
-                <div className="dialog-description">Please tell us why you cancel using Pro version</div>
+                <div className="dialog-description">
+                    Please tell us why you cancel using Pro version
+                </div>
                 <div className="list-checkbox">
                     {LIST_TEXT_CHECKBOX.map((el) => {
                         return (
@@ -78,7 +102,9 @@ const CancelSubscriptionDialog = ({
                                     control={
                                         <Checkbox
                                             icon={<CheckboxCancelDialog />}
-                                            checkedIcon={<CheckboxCheckedIcon />}
+                                            checkedIcon={
+                                                <CheckboxCheckedIcon />
+                                            }
                                             checked={listChoice.includes(el)}
                                             onClick={() => handleSelected(el)}
                                         ></Checkbox>
@@ -88,7 +114,11 @@ const CancelSubscriptionDialog = ({
                         );
                     })}
                 </div>
-                <Button className="button-cancel" variant="outlined" onClick={() => cancelSubscriptionHandle()}>
+                <Button
+                    className="button-cancel"
+                    variant="outlined"
+                    onClick={() => cancelSubscriptionHandle()}
+                >
                     Cancel Subscription
                 </Button>
             </div>

@@ -17,7 +17,7 @@
             justify-content: flex-end;
             padding-left: 80px;
             padding-bottom: 48px;
-            background-image: url(/images/contacts/cdl/truck-contact-page.png);
+            background-image: url(/public/images/contacts/cdl/truck-contact-page.png);
             background-size: cover;
             background-position: center;
             height: 885px;
@@ -375,7 +375,8 @@
                         }
 
                         .group-input-noti {
-                            input {}
+                            input {
+                            }
                         }
                     }
 
@@ -383,7 +384,8 @@
                         margin-top: 0;
 
                         .group-textarea-noti {
-                            textarea {}
+                            textarea {
+                            }
                         }
                     }
 
@@ -393,7 +395,8 @@
                         line-height: 20px;
                     }
 
-                    img {}
+                    img {
+                    }
                 }
 
                 .contact-information {
@@ -453,7 +456,8 @@
                 text-align: center;
             }
 
-            p {}
+            p {
+            }
 
             .faqs-form {
                 .item-faq {
@@ -464,7 +468,8 @@
                     }
 
                     .cluster-aq {
-                        p {}
+                        p {
+                        }
 
                         .cluster-question-button {
                             svg {
