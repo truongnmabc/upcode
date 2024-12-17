@@ -178,9 +178,6 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
         const fetchMembers = async () => {
             const members = await getMemberApi();
             setListMember(handleMember(members));
-            console.log("log-1 ", members);
-
-            console.log("log-1 ", handleMember(members));
         };
 
         // Gọi hàm asyncs
