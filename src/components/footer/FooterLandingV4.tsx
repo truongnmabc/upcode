@@ -60,10 +60,10 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                 <div className="item-footer cluster-company">
                     <div className="title">Company</div>
                     <Link href={"/about-us"} prefetch={false}>
-                        About us
+                        About Us
                     </Link>
                     <Link href={"/contact"} prefetch={false}>
-                        Contact
+                        Contact Us
                     </Link>
                 </div>
                 <div className="item-footer cluster-legal">
@@ -102,7 +102,11 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                         {isMobile && <img src={"/images/dmca_protected.png"} alt="certificate" width="121" height="24" />}
                     </div>
 
-                    <span>{appInfo.descriptionSEO}</span>
+                    <span>
+                        {appInfo.appName == "CDL"
+                            ? "CDL Prep is your ultimate resource to ace your CDL exam with ease, providing simulated practice tests, key insights, and everything you need to hit the road successfully!"
+                            : appInfo.descriptionSEO}
+                    </span>
 
                     {!isMobile && <img src={"/images/dmca_protected.png"} alt="certificate" width="121" height="24" />}
                 </div>
@@ -110,60 +114,62 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                 {isMobile ? <div className="cluster-company-legal"> {groupCompanyLegal()} </div> : groupCompanyLegal()}
                 <div className="item-footer support">
                     <div className="title">Support</div>
-                    {emailSupport && (
-                        <div
-                            className="cluster-email"
-                            onClick={() => {
-                                router.push(`mailto:${emailSupport}`);
-                            }}
-                        >
-                            <img src="/images/contacts/sms.png" alt="" />
+                    <div className="cluster-info-send-mail">
+                        {emailSupport && (
+                            <div
+                                className="cluster-email"
+                                onClick={() => {
+                                    router.push(`mailto:${emailSupport}`);
+                                }}
+                            >
+                                <img src="/images/contacts/sms.png" alt="" />
 
-                            <div className="text-info">{emailSupport}</div>
-                        </div>
-                    )}
-                    <div
-                        className="cluster-location"
-                        onClick={() => {
-                            router.push("/");
-                        }}
-                    >
-                        <img src="/images/contacts/location.png" alt="" />
-                        <div className="text-info">209 S Rosemont Ave, Dallas, TX 75208</div>
-                    </div>
-                    <div className="intro-suport">Any questions or feedback? We’re here to help!</div>
-                    <div className="v4-input-field v4-border-radius">
-                        <input
-                            ref={_email}
-                            type="email"
-                            placeholder="Enter your email"
-                            onChange={(e) => {
-                                if (!!error_email.current.innerHTML) error_email.current.innerHTML = "";
-                            }}
-                        />
-                        <p ref={error_email} className="fieldset"></p>
-                    </div>
-                    <div className="v4-input-field v4-border-radius">
-                        <input
-                            ref={_message}
-                            type="text"
-                            placeholder="Enter your message"
-                            onChange={(e) => {
-                                if (!!error_message.current.innerHTML) error_message.current.innerHTML = "";
-                            }}
-                        />
-                        <p ref={error_message} className="fieldset"></p>
-                    </div>
-                    <div className="footer-support">
-                        <button
-                            ref={btn}
-                            className="v4-footer-btn-contact-us v4-border-radius v4-button-animtaion"
+                                <div className="text-info">{emailSupport}</div>
+                            </div>
+                        )}
+                        <div
+                            className="cluster-location"
                             onClick={() => {
-                                handleSubmit();
+                                router.push("/");
                             }}
                         >
-                            Send
-                        </button>
+                            <img src="/images/contacts/location.png" alt="" />
+                            <div className="text-info">209 S Rosemont Ave, Dallas, TX 75208</div>
+                        </div>
+                        <div className="intro-suport">Any questions or feedback? We’re here to help!</div>
+                        <div className="v4-input-field v4-border-radius">
+                            <input
+                                ref={_email}
+                                type="email"
+                                placeholder="Enter your email"
+                                onChange={(e) => {
+                                    if (!!error_email.current.innerHTML) error_email.current.innerHTML = "";
+                                }}
+                            />
+                            <p ref={error_email} className="fieldset"></p>
+                        </div>
+                        <div className="v4-input-field v4-border-radius">
+                            <input
+                                ref={_message}
+                                type="text"
+                                placeholder="Enter your message"
+                                onChange={(e) => {
+                                    if (!!error_message.current.innerHTML) error_message.current.innerHTML = "";
+                                }}
+                            />
+                            <p ref={error_message} className="fieldset"></p>
+                        </div>
+                        <div className="footer-support">
+                            <button
+                                ref={btn}
+                                className="v4-footer-btn-contact-us v4-border-radius v4-button-animtaion"
+                                onClick={() => {
+                                    handleSubmit();
+                                }}
+                            >
+                                Send
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -235,7 +241,7 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
             </div>
             <div className="v4-footer-landing-container-1">
                 <div className="footer-social max-w-component-desktop">
-                    <span>©2024 {appInfo.appName}Prep by ABC-Elearning. All Rights Reserved.</span>
+                    <span>©2024 {appInfo.appName} Prep by ABC-Elearning. All Rights Reserved.</span>
                     <PlatformContactsLogo />
                 </div>
             </div>
