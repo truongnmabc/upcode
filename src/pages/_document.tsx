@@ -14,6 +14,10 @@ class MyDocument extends Document {
                         href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap"
                         rel="stylesheet"
                     />
+                    <link
+                        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+                        rel="stylesheet"
+                    />
                 </Head>
                 <body id="canvas">
                     <script rel="preconnect" async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`} />
