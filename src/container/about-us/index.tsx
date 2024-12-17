@@ -364,7 +364,7 @@ const handleMember = (memberQueryWp: any[]) => {
             username: "sarah-patel",
             email: "sarah-patel@gmail.com",
             name: "Sarah Patel",
-            role: "Content Writer",
+            role: "Quality Assurance (QA) Specialist",
             avatar: "images/about/avatar-sarah-patel.png",
             user_nicename: "sarah-patel",
         },
