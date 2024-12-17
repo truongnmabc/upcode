@@ -22,9 +22,7 @@
                 width: 50%;
                 position: relative;
                 .img-back {
-                    width: initial;
-                    max-width: 662px;
-
+                    width: 100%;
                     height: 100%;
                     position: absolute;
                     z-index: 1;
@@ -37,6 +35,7 @@
                     padding-bottom: 48px;
                     position: absolute;
                     bottom: 0;
+                    left: 80px;
                     z-index: 2;
                     .title {
                         color: #ffffff;
