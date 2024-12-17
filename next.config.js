@@ -17,7 +17,19 @@ module.exports = () => {
             includePaths: [path.join(__dirname, "styles")],
         },
         images: {
-            domains: ["storage.googleapis.com"],
+            remotePatterns: [
+                {
+                  protocol: 'https',
+                  hostname: 'storage.googleapis.com',
+                 
+                },
+                {
+                    protocol: 'https',
+                    hostname: 'cdl-prep.com',
+                   
+                  },
+              ],
+            // domains: ["storage.googleapis.com","cdl-prep.com/"],
         },
         webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
             if (!dev) {
@@ -70,6 +82,7 @@ module.exports = () => {
                             }
 
                             let study = studyData.find((s) => s.appId === app.appId); // cần đảm bảo dữ liệu trong này đúng (dữ liệu được sinh ra từ genstudyDataJSON)
+                          
                             if (study) {
                                 let { topics, fullTests } = study;
                                 if (app.hasState) {
@@ -133,6 +146,27 @@ module.exports = () => {
                                 paths.push(_);
                             });
                         }
+                    } else {
+
+                        
+                        let study = studyData.find((s) => s.appId === app.appId); // cần đảm bảo dữ liệu trong này đúng (dữ liệu được sinh ra từ genstudyDataJSON)
+
+                        if(study) {
+                            let { topics, fullTests } = study;
+
+                            topics.forEach((t) => {
+                                let p = "/" + t.url;
+                                let _ = { source: p, destination: "/study" + p };
+                                paths.push(_);
+                            });
+    
+                            fullTests.forEach((t) => {
+                                let p = "/" + t;
+                                let _ = { source: p, destination: "/study" + p };
+                                paths.push(_);
+                            });
+                        }
+                        
                     }
                 });
             }
