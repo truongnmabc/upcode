@@ -298,6 +298,7 @@
             .cluster-intro-about-us {
                 flex-direction: column;
                 gap: 16px;
+                margin: 24px 0;
                 .item-intro {
                     max-width: unset;
                     svg {
@@ -321,7 +322,7 @@
             }
             .meet-the-team {
                 gap: 16px;
-                margin-top: 24px;
+                margin-top: 0;
                 margin-bottom: 48px;
                 .title-meet-the-team {
                     font-size: 30px;
