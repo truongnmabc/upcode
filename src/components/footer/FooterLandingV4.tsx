@@ -60,10 +60,10 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                 <div className="item-footer cluster-company">
                     <div className="title">Company</div>
                     <Link href={"/about-us"} prefetch={false}>
-                        About us
+                        About Us
                     </Link>
                     <Link href={"/contact"} prefetch={false}>
-                        Contact
+                        Contact Us
                     </Link>
                 </div>
                 <div className="item-footer cluster-legal">
