@@ -9,6 +9,12 @@ body {
     box-sizing: border-box;
     overflow: hidden;
 }
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
 ::-webkit-scrollbar {
     width: 8px !important;
     display: block !important;

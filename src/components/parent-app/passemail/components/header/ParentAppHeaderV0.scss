@@ -1,0 +1,100 @@
+.container-header-v0 {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 1);
+
+    .header-v0 {
+        z-index: -9999;
+        display: flex;
+        align-items: center;
+        height: 76px;
+        justify-content: space-between;
+
+        .logo-app {
+            width: 120px;
+            height: 26px;
+            cursor: pointer;
+        }
+
+        .icon-menu-v0 {
+            cursor: pointer;
+        }
+
+
+        .header-navigation-right-v0 {
+            display: flex;
+            width: 150px;
+            justify-content: space-around;
+
+            .link {
+                cursor: pointer;
+                color: rgba(139, 139, 139, 1);
+                text-decoration: none;
+            }
+
+        }
+    }
+
+    @media screen and (min-width : 769px) {
+        position: fixed;
+        z-index: 9999;
+
+        .header-v0 {
+
+            .logo-app {
+                width: 132px;
+                height: 30px;
+            }
+        }
+    }
+}
+
+.swipeable-drawer-v0 {
+    .MuiDrawer-paper {
+        width: 100%;
+    }
+
+    .swipeable-drawer-container-v0 {
+        display: flex;
+        flex-direction: column;
+        margin: 20px;
+
+        .swipeable-drawer-header-v0 {
+            display: flex;
+            justify-content: space-between;
+
+            .button-close-drawer-v4 {
+                cursor: pointer;
+                padding: 12px;
+                display: flex;
+                width: fit-content;
+                border-radius: 100%;
+                transition: 0.2s all ease;
+
+                &:hover {
+                    background-color: rgba(33, 33, 33, 0.12);
+                }
+            }
+        }
+
+        .swipeable-drawer-content-v0 {
+            display: flex;
+            flex-direction: column;
+            padding-top: 40px;
+            padding-left: 20px;
+
+            .text-navigation {
+                font-size: 36px;
+                padding-top: 20px;
+                cursor: pointer;
+                line-height: 54px;
+                text-decoration: none;
+            }
+
+            .text-menu {
+                font-size: 18px;
+                color: #b2b2b2;
+                line-height: 27px;
+            }
+        }
+    }
+}

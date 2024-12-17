@@ -4,7 +4,6 @@ import { API_PATH } from "@/common/constants/api.constants";
 import AppThemeProvider from "@/common/theme/themeProvider";
 import AppLayout from "@/components/appLayout";
 import InitData from "@/components/initData";
-import "@/css/globals.css";
 import { IAppInfo } from "@/models/app/appInfo";
 import { IAppConfigData } from "@/redux/features/appConfig";
 import TestModal from "@/tests";
@@ -14,6 +13,7 @@ import NotFound from "../not-found";
 import Head from "next/head";
 import EventListener from "@/components/event";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import replaceYear from "@/utils/replaceYear";
 
 type Props = {
     params: { appShortName: string };
@@ -72,7 +72,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const image = `/infos/${appInfo.appShortName}/logo60.png`;
 
     return {
-        title: appInfo.title,
+        title: replaceYear(appInfo.title),
         description: appInfo.descriptionSEO,
         keywords: appInfo.keywordSEO,
         icons: image,
