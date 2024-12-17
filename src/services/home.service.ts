@@ -110,6 +110,7 @@ export const getSEOAndHeaderContentApi = async (isHomePage: boolean, pathname?: 
             isState,
         },
     });
+    console.log("🚀 ~ getSEOAndHeaderContentApi ~ result:", result);
 
     return result;
 };

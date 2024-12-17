@@ -1,10 +1,9 @@
 import { IAppInfo } from "@/models/AppInfo";
 import React from "react";
 import SwiperBlock from "./swiperBlock";
-import { IItemBlock } from "@/pages/stateAndChildrenApp/[...stateAndChildrenApp]";
+import { IItemBlock } from "@/models/stateChildrenApp";
 
 const ListBlock = ({ appInfo, _state, listBlock }: { appInfo: IAppInfo; _state: string; listBlock?: IItemBlock[] }) => {
-    console.log("🚀 ~ ListBlock ~ listBlock:", listBlock);
     return (
         <div className="bg-[#E6E9FD]">
             <div className="v4-container-component  v4-container-maxWidth">
