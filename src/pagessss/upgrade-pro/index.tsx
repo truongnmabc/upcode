@@ -22,7 +22,7 @@ import {
     getConfigProV2,
 } from "../../config/config_paypal";
 import { IAppInfo } from "../../models/AppInfo";
-import { isSubscriptionId } from "../../models/PaymentInfo";
+import { isSubscriptionId } from "../../models/payment/PaymentInfo";
 import * as ga from "../../services/ga";
 import "./index.scss";
 import V4LoginDialog from "@/components/header/V4LoginDialog";

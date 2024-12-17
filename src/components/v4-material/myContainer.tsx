@@ -1,5 +1,4 @@
 import { CSSProperties } from "react";
-import "./MyContainer.scss";
 import ctx from "@/utils/mergeClass";
 const MyContainer = ({
     children,

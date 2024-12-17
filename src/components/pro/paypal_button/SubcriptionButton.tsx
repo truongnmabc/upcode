@@ -12,9 +12,16 @@ import {
 import { isProduction } from "../../../config/config_web";
 import * as ga from "../../../services/ga";
 import { IAppInfo } from "../../../models/AppInfo";
-import { PaymentInfo } from "../../../models/PaymentInfo";
-import { saveToDashboardAPI, uploadPaymentInfoAPI } from "../../../services/syncDataToWeb";
-import { cancelSubscriptionAPI, checkPaypalStatusAPI, sendEmailSubscribeSuccessAPI } from "../../../services/paypal.service";
+import { PaymentInfo } from "../../../models/payment/PaymentInfo";
+import {
+    saveToDashboardAPI,
+    uploadPaymentInfoAPI,
+} from "../../../services/syncDataToWeb";
+import {
+    cancelSubscriptionAPI,
+    checkPaypalStatusAPI,
+    sendEmailSubscribeSuccessAPI,
+} from "../../../services/paypal.service";
 import { updateUserInfoDashboard } from "../../../services/user";
 import "./SubcriptionButton.scss";
 import AppState from "@/redux/appState";
@@ -22,7 +29,11 @@ import { IButtonPropsV4 } from "../PopupGetPro";
 import { setCookieDate } from "@/utils/web";
 import { paymentSuccessAction } from "@/redux/features/user";
 
-const listEventName = ["basic_upgrade_success", "popular_upgrade_success", "economical_upgrade_success"];
+const listEventName = [
+    "basic_upgrade_success",
+    "popular_upgrade_success",
+    "economical_upgrade_success",
+];
 const SubcriptionButton = ({
     appConfig,
     paymentSuccess,
@@ -40,7 +51,9 @@ const SubcriptionButton = ({
     let eventName = "";
 
     const { prices: newPrice } = getConfigProV2(appInfo);
-    const eventIndex = newPrice?.findIndex((price) => price.planId === valueButton.planId);
+    const eventIndex = newPrice?.findIndex(
+        (price) => price.planId === valueButton.planId
+    );
     eventName = listEventName[eventIndex];
     PLAN_ID = valueButton.planId;
 
@@ -71,9 +84,12 @@ const SubcriptionButton = ({
             if (details.billing_info.last_payment) {
                 price = details.billing_info.last_payment?.amount?.value;
             } else {
-                let item = details.billing_info.cycle_executions?.find((e) => e.tenure_type == "REGULAR");
+                let item = details.billing_info.cycle_executions?.find(
+                    (e) => e.tenure_type == "REGULAR"
+                );
                 if (item) {
-                    price = item?.total_price_per_cycle?.total_item_amount?.value;
+                    price =
+                        item?.total_price_per_cycle?.total_item_amount?.value;
                 }
             }
             if (paymentInfo?.orderId) {
@@ -85,7 +101,10 @@ const SubcriptionButton = ({
         const emailSubcription = details.subscriber?.email_address ?? "";
         let payerName = details.subscriber?.name?.given_name ?? "";
         let expiryDate = details.billing_info?.next_billing_time;
-        console.log("details.billing_info.next_billing_time", details.billing_info.next_billing_time);
+        console.log(
+            "details.billing_info.next_billing_time",
+            details.billing_info.next_billing_time
+        );
         if (paymentInfo) {
             const currentOrderIds = paymentInfo.orderIds ?? [];
             paymentInfo = {
@@ -116,7 +135,10 @@ const SubcriptionButton = ({
         paymentInfo.orderId = details.id;
         paymentInfo.type = Config.PAY_SUBSCRIPTION;
         paymentInfo.appShortName = appInfo.appShortName;
-        paymentInfo.buyPro = details.status == "ACTIVE" ? Config.PAYMENT_SUCCESS : Config.PAYMENT_INIT;
+        paymentInfo.buyPro =
+            details.status == "ACTIVE"
+                ? Config.PAYMENT_SUCCESS
+                : Config.PAYMENT_INIT;
         paymentInfo.userId = userReducer.userInfo?.id;
         let obj = {
             ...paymentInfo,
@@ -163,7 +185,11 @@ const SubcriptionButton = ({
                     },
                     process.env.NEXT_PUBLIC_SECRET_KEY
                 );
-                setCookieDate(PAYPAL_SUBSCRIPTION_KEY, token, new Date(expiryDate));
+                setCookieDate(
+                    PAYPAL_SUBSCRIPTION_KEY,
+                    token,
+                    new Date(expiryDate)
+                );
             }
         } catch (error) {
             console.log("jwt error", error);
@@ -215,8 +241,12 @@ const SubcriptionButton = ({
                 }}
                 onApprove={async (data, actions) => {
                     try {
-                        const details: any = await checkPaypalStatusAPI(data.subscriptionID);
-                        let price = details?.billing_info?.last_payment?.amount?.value ?? 0;
+                        const details: any = await checkPaypalStatusAPI(
+                            data.subscriptionID
+                        );
+                        let price =
+                            details?.billing_info?.last_payment?.amount
+                                ?.value ?? 0;
                         if (eventName) {
                             ga.event({
                                 action: eventName,

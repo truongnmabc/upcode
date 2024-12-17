@@ -1,0 +1,102 @@
+.testimonals-container {
+    margin-top: 24px;
+    h2 {
+        margin: 0;
+        font-size: 24px;
+        line-height: 30px;
+        font-weight: 600;
+        text-align: center;
+    }
+    .testimonial {
+        padding-top: 24px;
+        width: 100%;
+        overflow-x: hidden;
+
+        .testimonial-item {
+            padding: 16px;
+            border-radius: 12px;
+            border: 1.5px solid #8e8177;
+            background-color: #fbeb9f;
+            width: initial !important;
+            .testimonial-feedback {
+                text-align: right;
+                font-size: 12px;
+                line-height: 15px;
+                margin: 12px 0;
+            }
+
+            .userName {
+                margin: 0;
+                font-size: 18px;
+                line-height: 24px;
+                font-weight: 600;
+            }
+        }
+    }
+    .prev-arrow,
+    .next-arrow {
+        width: 32px;
+        height: 32px;
+        border-radius: 32px;
+        background: #212121;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &.disabled {
+            background: rgba(33, 33, 33, 0.08);
+        }
+    }
+    .next-arrow {
+        transform: rotate(180deg);
+    }
+    .slick-track {
+        display: flex;
+        gap: 8px;
+    }
+
+    .slick-action {
+        margin: 8px auto 0;
+        width: fit-content;
+        span {
+            padding: 0 16px;
+            font-size: 16px;
+            line-height: 20px;
+            font-weight: 600;
+        }
+    }
+    @media screen and (min-width: 769px) {
+        margin-top: 40px;
+        h2 {
+            font-size: 40px;
+            line-height: 64px;
+        }
+        .testimonial {
+            padding-top: 40px;
+
+            .testimonial-item {
+                padding: 24px;
+                .testimonial-feedback {
+                    font-size: 16px;
+                    line-height: 20px;
+                }
+
+                .userName {
+                    margin: 0;
+                    font-size: 24px;
+                    line-height: 30px;
+                }
+            }
+        }
+
+        .slick-track {
+            display: flex;
+
+            gap: 24px;
+        }
+
+        .slick-action {
+            margin: 24px auto 0;
+        }
+    }
+}

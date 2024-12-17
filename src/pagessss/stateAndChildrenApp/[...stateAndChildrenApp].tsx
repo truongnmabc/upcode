@@ -1,10 +1,14 @@
 import Layout2 from "@/components/layout/layout-2/Layout2";
-import { stateName } from "@/container/single-app/HomeSingleApp";
-import NewHome from "@/container/single-app/newHome";
-import { IItemBlock } from "@/models/stateChildrenApp";
+import { stateName } from "@/components/state-app/HomeSingleApp";
+import NewHome from "@/components/state-app/newHome";
+import { IItemBlock } from "@/models/state/stateChildrenApp";
 import { ITestInfo } from "@/models/TestInfo";
 import StoreProvider from "@/redux/StoreProvider";
-import { getHomeSeoContentStateApi, getSEOAndHeaderContentApi, requestGetListBlock } from "@/services/home.service";
+import {
+    getHomeSeoContentStateApi,
+    getSEOAndHeaderContentApi,
+    requestGetListBlock,
+} from "@/services/home.service";
 import { readFileAppFromGoogleStorage } from "@/services/importAppData";
 import { getLink } from "@/utils";
 import convertToJSONObject from "@/utils/convertToJSONObject";
@@ -16,11 +20,16 @@ import states from "../../data/statesName.json";
 import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
-const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
-    ssr: false,
-});
+const ScrollToTopArrow = dynamic(
+    () => import("../../components/v4-material/ScrollToTopArrow"),
+    {
+        ssr: false,
+    }
+);
 const SeoHeader = dynamic(() => import("@/components/seo/SeoHeader"));
-const HomeSingleApp = dynamic(() => import("@/container/single-app/HomeSingleApp"));
+const HomeSingleApp = dynamic(
+    () => import("@/components/state-app/HomeSingleApp")
+);
 
 const ChildrenApp = ({
     listTopics,
@@ -46,9 +55,21 @@ const ChildrenApp = ({
     // appInfo ở đây là của app con nha
     return (
         <>
-            <SeoHeader title={titleSEO} description={descriptionSEO} keyword={keywordSEO} ads />
-            <StoreProvider appInfo={childAppInfo} webData={{ tests: tests, topics: listTopics }} />
-            <Layout2 appInfo={childAppInfo} listTopics={listTopics} tests={tests}>
+            <SeoHeader
+                title={titleSEO}
+                description={descriptionSEO}
+                keyword={keywordSEO}
+                ads
+            />
+            <StoreProvider
+                appInfo={childAppInfo}
+                webData={{ tests: tests, topics: listTopics }}
+            />
+            <Layout2
+                appInfo={childAppInfo}
+                listTopics={listTopics}
+                tests={tests}
+            >
                 <NewHome
                     listTopics={listTopics}
                     tests={tests}
@@ -88,11 +109,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             }
         }
 
-        let appData: any = await readFileAppFromGoogleStorage(appInfo, _state ?? "");
+        let appData: any = await readFileAppFromGoogleStorage(
+            appInfo,
+            _state ?? ""
+        );
         listTopics = appData?.topics ?? [];
         tests = appData?.fullTests ?? [];
 
-        let titleAndDescSeo = await getSEOAndHeaderContentApi(false, _state, true);
+        let titleAndDescSeo = await getSEOAndHeaderContentApi(
+            false,
+            _state,
+            true
+        );
 
         let listBlock;
         if (_state) {
@@ -138,7 +166,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         if (childAppInfo) {
             if (!childAppInfo.hasState || (childAppInfo.hasState && _state)) {
                 // nếu là trang app con không có state hoặc trang state của app con thì mới lấy dữ liệu test/topic về
-                let appData: any = await readFileAppFromGoogleStorage(childAppInfo, _state ?? "");
+                let appData: any = await readFileAppFromGoogleStorage(
+                    childAppInfo,
+                    _state ?? ""
+                );
                 listTopics = appData?.topics ?? [];
                 tests = appData?.fullTests ?? [];
             }

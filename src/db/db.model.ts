@@ -19,7 +19,7 @@ export class DB extends Dexie {
     useActions!: Table<IUserActions>;
     tests!: Table<ITest>;
     constructor() {
-        super("ABC");
+        super("abc-elearning");
         this.version(1).stores({
             // *NOTE: chứa câu trả lời của người dùng.
 

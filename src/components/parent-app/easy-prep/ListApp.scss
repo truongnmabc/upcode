@@ -1,0 +1,264 @@
+$transition: 0.2s all ease;
+.list-app-container {
+    padding: 0;
+
+    .category-and-list-app {
+        background: #fff;
+        padding-top: 16px;
+    }
+    h2 {
+        text-align: center;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 30px;
+        margin: 24px 16px;
+    }
+
+    .category-container {
+        overflow-x: clip;
+        margin: 0 7px;
+        position: relative;
+        ._blank {
+            display: none;
+        }
+
+        .slider-left,
+        .slider-right {
+            position: absolute;
+            z-index: 2;
+            top: 0;
+        }
+        .slider-left {
+            display: none;
+        }
+        .slider-right {
+            right: 0;
+            transform: rotate(180deg);
+        }
+        .left-icon,
+        .right-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 36px;
+            background-color: #fff;
+            box-shadow: 0 1px 5px 0 rgba(33, 33, 33, 0.12);
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .blur-gradient-left,
+        .blur-gradient-right {
+            width: 48px;
+            height: 36px;
+            z-index: -1;
+            left: 0px;
+            background: linear-gradient(90deg, #ffffff 0%, #ffffff 35.23%, rgba(255, 255, 255, 0) 103.09%);
+            position: absolute;
+            top: 0;
+        }
+        .blur-gradient-right {
+            background: linear-gradient(-90deg, rgba(255, 255, 255, 0) 0%, #ffffff 67.75%, #ffffff 103.09%);
+        }
+    }
+    .category {
+        padding: 0 44px;
+        overflow: auto;
+        transition: $transition;
+        &::-webkit-scrollbar,
+        &::-webkit-scrollbar-track,
+        &::-webkit-scrollbar-thumb {
+            display: none;
+        }
+    }
+    .category-item {
+        padding: 7px 15px;
+        background-color: transparent;
+        z-index: 1;
+        cursor: pointer;
+        border-radius: 30px;
+        border: 1px solid rgba(33, 33, 33, 0.12);
+        h3 {
+            margin: 0;
+            font-weight: 600;
+            transition: $transition;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        span {
+            display: none;
+        }
+        &.active {
+            background-color: #212121;
+            h3 {
+                color: #fff;
+            }
+        }
+    }
+
+    .list-app {
+        padding: 12px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 14px;
+        grid-gap: 8px;
+        .list-app-item {
+            border: 1px solid #8e8177;
+            background-color: #fbeb9f;
+            padding: 16px;
+            text-decoration: none;
+            border-radius: 8px;
+            justify-content: center;
+            cursor: pointer;
+
+            .app-name,
+            .dot,
+            .total-questions {
+                font-weight: 700;
+                padding: 4px;
+                text-align: center;
+            }
+
+            .question {
+                font-size: 12px;
+                line-height: 16px;
+                color: rgba(33, 33, 33, 0.52);
+            }
+            .dot,
+            .total-questions,
+            .question {
+                display: none;
+            }
+        }
+    }
+    @media screen and (min-width: 769px) {
+        padding: 0 24px;
+        .category-and-list-app {
+            background: transparent;
+            padding-top: 0;
+        }
+        h2 {
+            font-size: 40px;
+            line-height: 46px;
+            margin: 40px 0;
+        }
+        .category-container {
+            margin: 0 auto;
+            .slider-left .blur-gradient-left {
+                background: linear-gradient(90deg, #f8f3ef 0%, #f8f3ef 35.23%, rgba(248, 243, 239, 0) 103.09%);
+            }
+            .slider-right .blur-gradient-right {
+                background: linear-gradient(-90deg, rgba(248, 243, 239, 0) 0%, #f8f3ef 67.75%, #f8f3ef 103.09%);
+            }
+        }
+        .category {
+            overflow: auto;
+            position: relative;
+            #category-background {
+                height: 36px;
+                width: 232px;
+                transition: $transition;
+                position: absolute;
+                z-index: 0;
+                left: 44px;
+                background-color: #212121;
+                border-radius: 30px;
+            }
+        }
+        .category-item {
+            span {
+                transition: $transition;
+                padding: 0 5px;
+                height: 18px;
+                border-radius: 10px;
+                font-size: 12px;
+                line-height: 18px;
+                text-align: center;
+                margin-left: 8px;
+                display: block;
+                background-color: rgba(33, 33, 33, 0.12);
+            }
+
+            &.active {
+                background-color: transparent;
+                span {
+                    background-color: rgba(255, 255, 255, 0.239);
+                    color: #fff;
+                }
+            }
+        }
+
+        .list-app {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            gap: 24px;
+            grid-gap: 24px;
+            .list-app-item {
+                .dot,
+                .total-questions,
+                .question {
+                    display: block;
+                }
+            }
+            .list-app-item:hover {
+                box-shadow: 2.5px 2.5px #212121;
+            }
+        }
+    }
+    @media screen and (min-width: 881px) {
+        .list-app {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+    @media screen and (min-width: 1024px) {
+        .category-container {
+            width: fit-content;
+            .slider-left,
+            .slider-right {
+                display: none;
+            }
+            ._blank {
+                margin-top: 10px;
+                display: block;
+                height: 20px;
+                #triangle {
+                    width: 0;
+                    height: 0;
+                    margin-left: 92px;
+                    border-left: 20px solid transparent;
+                    border-right: 20px solid transparent;
+                    border-bottom: 20px solid #fff;
+                    transition: $transition;
+                }
+            }
+        }
+
+        .category {
+            width: fit-content;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            #category-background {
+                height: 44px;
+                left: 0;
+            }
+        }
+
+        .category-item {
+            padding: 12px 15px;
+            border: none;
+        }
+
+        .list-app {
+            margin-top: 0;
+        }
+    }
+    @media screen and (min-width: 1141px) {
+        .list-app {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+    }
+}

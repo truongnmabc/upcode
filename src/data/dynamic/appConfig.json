@@ -1,5 +1,5 @@
 {
-    "default": {
+    "passemall": {
         "gaId": "UA-167769768-1",
         "tagManagerId": "GTM-NFL5XHT",
         "appId": null,
@@ -33,7 +33,7 @@
         "mainColorUpgradePro": "#329678",
         "appleClientId": ""
     },
-    "cdl_v2": {
+    "cdl": {
         "gaId": "UA-167769768-3",
         "tagManagerId": "GTM-MLS2NPZ",
         "appId": 4902462618075136,

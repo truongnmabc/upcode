@@ -1,5 +1,5 @@
 import Config from "@/config";
-import { InAppSubscription, IPaymentInfo } from "@/models/PaymentInfo";
+import { InAppSubscription, IPaymentInfo } from "@/models/payment/PaymentInfo";
 
 const checkPro = (
     paymentInfo: IPaymentInfo,

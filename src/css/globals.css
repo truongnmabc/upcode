@@ -29,7 +29,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #adadad;
 }
-* {
+main {
     font-family: var(--font-poppins);
 }
 

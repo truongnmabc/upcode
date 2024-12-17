@@ -79,7 +79,7 @@ const ListStudyDrawer = ({
                     setIsExpand(!isExpand);
                 }}
             >
-                <div className=" font-poppins text-lg capitalize font-semibold">
+                <div className=" font-poppins text-2xl capitalize font-semibold">
                     {appInfo.appShortName} Sub Test
                 </div>
 

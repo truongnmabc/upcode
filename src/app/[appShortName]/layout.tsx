@@ -9,29 +9,12 @@ import { IAppInfo } from "@/models/app/appInfo";
 import { IAppConfigData } from "@/redux/features/appConfig";
 import TestModal from "@/tests";
 import type { Metadata } from "next";
-import { Poppins, Vampiro_One } from "next/font/google";
 import { Fragment } from "react";
 import NotFound from "../not-found";
 import Head from "next/head";
 import EventListener from "@/components/event";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
-const vampiro = Vampiro_One({
-    weight: ["400"],
-    style: "normal",
-    preload: true,
-    display: "swap",
-    variable: "--font-vampiro",
-    subsets: ["latin"],
-});
 
-const poppins = Poppins({
-    weight: ["400", "500", "600"],
-    style: "normal",
-    preload: true,
-    display: "swap",
-    variable: "--font-poppins",
-    subsets: ["latin"],
-});
 type Props = {
     params: { appShortName: string };
 };
@@ -76,6 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             description: "Application not found",
         };
     }
+
     const { appInfo } = await fetchAppData(appShortName);
 
     if (!appInfo) {
@@ -109,6 +93,7 @@ export default async function RootLayout({
 }) {
     const { appShortName } = await params;
     const { appInfo, appConfig } = await fetchAppData(appShortName, true);
+    console.log("🚀 ~ appConfig:", appConfig);
 
     if (!appInfo || !appConfig) {
         return <NotFound />;
@@ -118,9 +103,7 @@ export default async function RootLayout({
             <Head>
                 <link rel="icon" href="/favicon.ico" sizes="any" />
             </Head>
-            <main
-                className={`${vampiro?.variable} ${poppins?.variable} font-sans`}
-            >
+            <main>
                 <StoreProvider appInfo={appInfo} appConfig={appConfig}>
                     <AppThemeProvider>
                         <AppLayout>{children}</AppLayout>
