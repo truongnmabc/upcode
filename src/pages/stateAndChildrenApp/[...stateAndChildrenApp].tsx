@@ -103,8 +103,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             });
         }
 
-        console.log("🚀 ~ listBlock:", listBlock);
-
         let t = titleAndDescSeo.titleSEO;
         let d = titleAndDescSeo.descriptionSEO;
 
@@ -166,6 +164,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             .join("-");
 
         const contentSEO = await getHomeSeoContentStateApi(seoSlug);
+        console.log("🚀 ~ contentSEO:", contentSEO);
         contentSEO.content = replaceYear(contentSEO?.content ?? "");
         let t = "";
         let d = "";

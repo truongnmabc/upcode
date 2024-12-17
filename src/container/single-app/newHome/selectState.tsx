@@ -4,12 +4,15 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Collapse, Dialog, useMediaQuery } from "@mui/material";
 import clsx from "clsx";
 import Link from "next/link";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string }) => {
     const isDesktop = useMediaQuery("(min-width:769px)");
-    const [open, setOpen] = useState(isDesktop);
+    const [open, setOpen] = useState(false);
     const [openListState, setOpenListState] = useState(-1);
 
+    useEffect(() => {
+        setOpen(isDesktop);
+    }, [isDesktop]);
     return (
         <div
             className="w-full relative overflow-hidden  h-full  "
@@ -110,7 +113,7 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
                         onClick={() => {
                             setOpenListState(1);
                         }}
-                        className="bg-[#343F82] cursor-pointer mt-3 sm:mt-8 w-full text-center sm:w-fit rounded-lg text-white px-8 py-2 text-base font-semibold"
+                        className="bg-[#343F82] cursor-pointer mt-3 sm:mt-8 w-full text-center sm:w-fit rounded-lg text-white px-8 py-3 sm:py-4 text-base sm:text-2xl font-semibold"
                     >
                         Not your state?
                     </div>
@@ -124,7 +127,12 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
                     <div
                         className="absolute bottom-0 left-0 h-full w-full "
                         style={{
+<<<<<<< Updated upstream
                             background: "radial-gradient(34.11% 67.36% at 84.88% 63%, rgba(255, 255, 255, 0) 0%, #E5E9FF 100%)",
+=======
+                            background:
+                                "radial-gradient(34.11% 67.36% at 84.88% 63%, rgba(255, 255, 255, 0) 0%, rgba(240, 242, 254, 0.9) 100%)",
+>>>>>>> Stashed changes
                         }}
                     ></div>
                 </Fragment>
@@ -137,7 +145,11 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
                         className="absolute bottom-0 right-0 left-0 h-full w-full "
                         style={{
                             background:
+<<<<<<< Updated upstream
                                 "radial-gradient(78.52% 41.96% at 50.13% 28.79%, rgba(229, 233, 255, 0.32) 0.64%, #E5E9FF 85.9%)",
+=======
+                                "radial-gradient(78.52% 41.96% at 50.13% 30.79%, rgba(240, 242, 254, 0.32) 0.64%, #F0F2FE 85.9%)",
+>>>>>>> Stashed changes
                         }}
                     ></div>
                 </Fragment>
