@@ -14,5 +14,6 @@ declare namespace NodeJS {
         readonly GA_ID: string;
         readonly DEV_BASE_API: string;
         readonly NEXT_PUBLIC_API_URL: string;
+        readonly APP_SHORT_NAME: string;
     }
 }

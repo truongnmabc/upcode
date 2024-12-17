@@ -1,0 +1,106 @@
+.cookie-widget-v0 {
+    #spacer {
+        height: 300px;
+        width: 100%;
+        background-color: var(--main-color);
+    }
+
+    .popup-cookie-v0 {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        background-color: var(--cookie);
+        z-index: 10;
+        padding: 1.5rem 1rem;
+        font-size: 16px;
+        font-family: "Poppins", sans-serif !important;
+
+        p {
+            color: white;
+            font-weight: normal;
+            margin-bottom: 20px;
+        }
+
+        .container-cookie-v0 {
+            white-space: nowrap;
+            color: white;
+            margin-bottom: 0px;
+            display: flex;
+            align-items: center;
+
+            button {
+                cursor: pointer;
+                margin-bottom: 20px;
+            }
+
+            @media screen and (max-width:769px) {
+                align-items: start;
+                flex-direction: column;
+
+                button {
+                    margin-bottom: 20px;
+                }
+            }
+
+            div {
+                margin-right: 32px;
+
+                button {
+                    padding: 16px 60px;
+                    font-weight: 500;
+                    background: var(--bg-color-close-cookie);
+                    color: white;
+                    border: none;
+                    display: flex;
+                    align-items: center;
+                    border-radius: 12px;
+
+                    p {
+                        margin: 0px;
+                        margin-right: 10px;
+                    }
+                }
+
+                a {
+                    text-decoration: none;
+
+                    button {
+                        font-family: "Poppins", sans-serif;
+                        padding: 16px 20px;
+                        background: white;
+                        color: #000000;
+                        border-radius: 12px;
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    @media screen and (min-width :769px) {
+        #spacer {
+            height: 180px;
+            background-color: var(--main-color);
+            width: 100%;
+        }
+
+        @media screen and (max-width : 780px) {
+            .popup-cookie-v0 {
+                font-size: 16px;
+
+                .container-cookie-v0 {
+                    display: block !important;
+
+                    div {
+                        margin-bottom: 20px;
+
+                        button {
+                            padding: 16px 20px !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
