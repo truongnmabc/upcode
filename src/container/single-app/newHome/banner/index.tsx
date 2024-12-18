@@ -122,8 +122,15 @@ const BannerHome = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string }) 
                         <Image width={118} height={325} src={"/images/cdl_v2/home/banner_1.png"} />
                     </div>
                 </div>
-                <div className="w-full flex justify-end  sm:hidden">
-                    <Image width={280} height={180} src={"/images/cdl_v2/home/banner.png"} />
+                <div
+                    className="w-full flex justify-end relative sm:hidden"
+                    style={{
+                        height: "156px",
+                    }}
+                >
+                    <div className="absolute top-0 right-0 w-fit h-fit">
+                        <Image width={280} height={180} src={"/images/cdl_v2/home/banner.png"} />
+                    </div>
                 </div>
             </div>
         </div>
