@@ -127,12 +127,9 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
                     <div
                         className="absolute bottom-0 left-0 h-full w-full "
                         style={{
-<<<<<<< Updated upstream
                             background: "radial-gradient(34.11% 67.36% at 84.88% 63%, rgba(255, 255, 255, 0) 0%, #E5E9FF 100%)",
-=======
-                            background:
-                                "radial-gradient(34.11% 67.36% at 84.88% 63%, rgba(255, 255, 255, 0) 0%, rgba(240, 242, 254, 0.9) 100%)",
->>>>>>> Stashed changes
+                            // background:
+                            //     "radial-gradient(34.11% 67.36% at 84.88% 63%, rgba(255, 255, 255, 0) 0%, rgba(240, 242, 254, 0.9) 100%)",
                         }}
                     ></div>
                 </Fragment>
@@ -145,11 +142,8 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
                         className="absolute bottom-0 right-0 left-0 h-full w-full "
                         style={{
                             background:
-<<<<<<< Updated upstream
                                 "radial-gradient(78.52% 41.96% at 50.13% 28.79%, rgba(229, 233, 255, 0.32) 0.64%, #E5E9FF 85.9%)",
-=======
-                                "radial-gradient(78.52% 41.96% at 50.13% 30.79%, rgba(240, 242, 254, 0.32) 0.64%, #F0F2FE 85.9%)",
->>>>>>> Stashed changes
+                            // "radial-gradient(78.52% 41.96% at 50.13% 30.79%, rgba(240, 242, 254, 0.32) 0.64%, #F0F2FE 85.9%)",
                         }}
                     ></div>
                 </Fragment>
