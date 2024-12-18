@@ -27,7 +27,7 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
     const [checkMessageExist, setCheckMessageExist] = useState(true);
     const [checkEmailExist, setCheckEmailExist] = useState(true);
 
-    let emailSupport = getContactLink("email");
+    let emailSupport = "support@abc-elearning.org";
     const onChangeEmail = (e) => {
         if (e.target.value != "") {
             setCheckEmailExist(true);
@@ -166,9 +166,7 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
                                         >
                                             <img src="/images/contacts/sms.png" alt="" />
 
-                                            <div className="text-info">
-                                                {appInfo.appShortName === "cdl" ? "support@abc-elearning.org" : emailSupport}
-                                            </div>
+                                            <div className="text-info">{emailSupport}</div>
                                         </div>
                                     )}
                                     <div

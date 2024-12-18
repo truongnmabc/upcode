@@ -14,7 +14,7 @@ import { useMediaQuery } from "@mui/material";
 const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
     const isMobile = useMediaQuery("(max-width:768px)");
     const router = useRouter();
-    let emailSupport = getContactLink("email");
+    let emailSupport = "support@abc-elearning.org";
     const getSrcLogo = () => {
         let logo = `/images/${APP_SHORT_NAME}/logo-dark.png`;
         return logo;
@@ -172,76 +172,10 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                         </div>
                     </div>
                 </div>
-
-                {/* <div className="v4-footer-landing-container-11">
-                    <div className="v4-footer-landing-container-111">
-                        <Link href="/" className={"logo-footer-v4"}>
-                            <img className="img-logo-footer" src={getSrcLogo()} alt={"logo-" + APP_SHORT_NAME} />
-                        </Link>
-                        <img src={"/images/dmca_protected.png"} alt="certificate" width="121" height="24" />
-                        <div className="v4-contact-social-desktop">
-                            <PlatformContactsLogo />
-                        </div>
-                    </div>
-                    <div className="v4-footer-landing-container-112">
-                        <div>Any questions, comments or feedback? We’re here to help!</div>
-                        <div className="v4-input-field v4-border-radius">
-                            <input
-                                ref={_email}
-                                type="email"
-                                placeholder="Enter your email"
-                                onChange={(e) => {
-                                    if (!!error_email.current.innerHTML) error_email.current.innerHTML = "";
-                                }}
-                            />
-                            <p ref={error_email} className="fieldset"></p>
-                        </div>
-                        <div className="v4-input-field v4-border-radius">
-                            <input
-                                ref={_message}
-                                type="text"
-                                placeholder="Enter your message"
-                                onChange={(e) => {
-                                    if (!!error_message.current.innerHTML) error_message.current.innerHTML = "";
-                                }}
-                            />
-                            <p ref={error_message} className="fieldset"></p>
-                        </div>
-                        <button
-                            ref={btn}
-                            className="v4-footer-btn-contact-us v4-border-radius v4-button-animtaion"
-                            onClick={() => {
-                                handleSubmit();
-                            }}
-                        >
-                            Contact Us
-                        </button>
-                    </div>
-                </div> */}
-                {/* <div className="v4-footer-landing-container-12">
-                    <div className="v4-contact-social-mobile">
-                        <PlatformContactsLogo />
-                    </div>
-                    <div className="v4-footer-landing-container-121">
-                        <Link href={"/about-us"} prefetch={false}>
-                            About us
-                        </Link>
-                        <Link href={"/privacy"} prefetch={false}>
-                            Privacy
-                        </Link>
-                        <Link href={"/faq"} prefetch={false}>
-                            FAQs
-                        </Link>
-                        <Link href={"/contact"} prefetch={false}>
-                            Contact
-                        </Link>
-                    </div>
-                    <div className="v4-footer-landing-container-122">© 2021 ABC E-learning All Rights Reserved.</div>
-                </div> */}
             </div>
             <div className="v4-footer-landing-container-1">
                 <div className="footer-social max-w-component-desktop">
-                    <span>©2024 {appInfo.appName} Prep by ABC-Elearning. All Rights Reserved.</span>
+                    <span>©2024 {appInfo.appName} Prep by ABC-Elearning. All rights reserved.</span>
                     <PlatformContactsLogo />
                 </div>
             </div>
