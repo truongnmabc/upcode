@@ -4,12 +4,15 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Collapse, Dialog, useMediaQuery } from "@mui/material";
 import clsx from "clsx";
 import Link from "next/link";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string }) => {
     const isDesktop = useMediaQuery("(min-width:769px)");
-    const [open, setOpen] = useState(isDesktop);
+    const [open, setOpen] = useState(false);
     const [openListState, setOpenListState] = useState(-1);
 
+    useEffect(() => {
+        setOpen(isDesktop);
+    }, [isDesktop]);
     return (
         <div
             className="w-full relative overflow-hidden  h-full  "
@@ -20,7 +23,7 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
             <div className="v4-container-component v4-container-maxWidth">
                 <div
                     className={clsx(
-                        "sm:py-[48px] py-6 px-4  sm:max-w-[718px] relative z-10 text-2xl   sm:text-[48px] sm:leading-[72px] font-bold  font-poppins "
+                        "sm:py-[48px] pt-6 px-4  sm:max-w-[718px] relative z-10 text-2xl   sm:text-[48px] sm:leading-[72px] font-bold  font-poppins "
                     )}
                 >
                     <h1 className="sm:text-start text-center">
@@ -46,8 +49,8 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
                             <div className="flex flex-col pt-4 max-w-[480px] gap-4">
                                 <div className="text-sm sm:text-base flex gap-2  font-medium ">
                                     <IconCheck />
-                                    <p className="text-sm sm:text-base text-[#21212185] sm:text-[#212121] flex-1 font-medium">
-                                        <span className="text-[#212121]">
+                                    <p className="text-sm sm:text-base text-[#21212185] sm:text-[#212121] flex-1 font-normal">
+                                        <span className="text-[#212121] font-medium">
                                             Extensive{" "}
                                             <Link href={"/1"}>
                                                 <span className="text-sm sm:text-base capitalize font-semibold underline text-[#3477F5]">
@@ -66,28 +69,28 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
                                 <div className="text-sm sm:text-base flex gap-2  font-medium ">
                                     <IconCheck />
 
-                                    <p className="text-sm sm:text-base text-[#21212185] sm:text-[#212121] font-medium">
-                                        <span className="text-[#212121]">Expert blogs: </span> Address all your concerns on{" "}
-                                        <span className="capitalize">{_state}</span>{" "}
+                                    <p className="text-sm sm:text-base text-[#21212185] sm:text-[#212121] font-normal">
+                                        <span className="text-[#212121] font-medium">Expert blogs: </span> Address all your
+                                        concerns on <span className="capitalize">{_state}</span>{" "}
                                         <span className="uppercase">{appInfo?.appShortName}</span> {""}
                                         through our blog.
                                     </p>
                                 </div>
                                 <div className="text-sm sm:text-base flex gap-2  font-medium ">
                                     <IconCheck />
-                                    <p className="text-sm sm:text-base text-[#21212185] sm:text-[#212121] font-medium">
-                                        <span className="text-[#212121]">
+                                    <p className="text-sm sm:text-base text-[#21212185] sm:text-[#212121] font-normal ">
+                                        <span className="text-[#212121] font-medium">
                                             {" "}
                                             Official <span className="uppercase">{appInfo?.appShortName}</span> handbook:{" "}
                                         </span>{" "}
                                         Comprehend all rules and tips with this ultimate reference.
                                     </p>
                                 </div>
-                                <div className="text-sm sm:text-base flex gap-2  font-medium ">
+                                <div className="text-sm sm:text-base flex gap-2   ">
                                     <IconCheck />
-                                    <p className="text-sm sm:text-base text-[#21212185] sm:text-[#212121]   font-medium">
-                                        <span className="text-[#212121]">100% FREE access questions:</span> Unlimited attempts,
-                                        unlimited improvement for free!
+                                    <p className="text-sm sm:text-base text-[#21212185] sm:text-[#212121] font-normal  ">
+                                        <span className="text-[#212121] font-medium">100% FREE access questions:</span>{" "}
+                                        Unlimited attempts, unlimited improvement for free!
                                     </p>
                                 </div>
                             </div>
@@ -110,7 +113,7 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
                         onClick={() => {
                             setOpenListState(1);
                         }}
-                        className="bg-[#343F82] cursor-pointer mt-3 sm:mt-8 w-full text-center sm:w-fit rounded-lg text-white px-8 py-2 text-base font-semibold"
+                        className="bg-[#343F82] cursor-pointer mt-3 sm:mt-8 w-full text-center sm:w-fit rounded-lg text-white px-8 py-3 sm:py-4 text-base sm:text-2xl font-semibold"
                     >
                         Not your state?
                     </div>
@@ -118,13 +121,15 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
             </div>
             {isDesktop ? (
                 <Fragment>
-                    <div className=" absolute z-0 bottom-0 h-full   right-0">
-                        <img src="images/cdl_v2/image.png" className="h-full object-cover " />
+                    <div className=" absolute z-0 bottom-0 h-full w-full   right-0">
+                        <img src="images/cdl_v2/image.png" className="h-full w-full object-cover " />
                     </div>
                     <div
                         className="absolute bottom-0 left-0 h-full w-full "
                         style={{
-                            background: "radial-gradient(34.11% 67.36% at 84.88% 63%, rgba(255, 255, 255, 0) 0%, #E5E9FF 100%)",
+                            // background: "radial-gradient(34.11% 67.36% at 84.88% 63%, rgba(255, 255, 255, 0) 0%, #E5E9FF 100%)",
+                            background:
+                                "radial-gradient(34.11% 67.36% at 84.88% 63%, rgba(255, 255, 255, 0) 0%, rgba(240, 242, 254, 0.9) 100%)",
                         }}
                     ></div>
                 </Fragment>
@@ -134,10 +139,12 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
                         <img src="images/cdl_v2/image.png" className="h-full w-full" />
                     </div>
                     <div
-                        className="absolute bottom-0 right-0 left-0 h-full w-full "
+                        className="absolute top-0 right-0 left-0 aspect-video w-full "
                         style={{
+                            marginTop: "1px",
                             background:
-                                "radial-gradient(78.52% 41.96% at 50.13% 28.79%, rgba(229, 233, 255, 0.32) 0.64%, #E5E9FF 85.9%)",
+                                // "radial-gradient(78.52% 41.96% at 50.13% 28.79%, rgba(229, 233, 255, 0.32) 0.64%, #E5E9FF 85.9%)",
+                                "radial-gradient(78.52% 41.96% at 50.13% 30.79%, rgba(240, 242, 254, 0.32) 0.64%, #F0F2FE 85.9%)",
                         }}
                     ></div>
                 </Fragment>

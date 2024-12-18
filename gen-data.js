@@ -6,7 +6,7 @@ const BUCKET = "new-data-web/";
 const BUCKET2 = "new-data-web-test/";
 exports.genDataFunc = async (appInfos = [], origin = "", web) => {
     if (web === "development") {
-        await genStudyData(appInfos, web);
+        // await genStudyData(appInfos, web);
         // genXMLFunc(appInfos, origin);
     }
 };

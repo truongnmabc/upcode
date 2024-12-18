@@ -45,8 +45,8 @@ const SwiperBlock = ({ listBlock }: { listBlock?: IItemBlock[] }) => {
 
 export default SwiperBlock;
 
-import { IItemBlock } from "@/pages/stateAndChildrenApp/[...stateAndChildrenApp]";
 import { useMediaQuery } from "@mui/material";
+import { IItemBlock } from "@/models/stateChildrenApp";
 
 const ITemBlock = ({ item }: { item: IItemBlock }) => {
     const isDesktop = useMediaQuery("(min-width:769px)");
@@ -78,22 +78,13 @@ const ITemBlock = ({ item }: { item: IItemBlock }) => {
             </div>
             <div className="flex flex-row sm:flex-col gap-[10px] w-full overflow-hidden">
                 <div className="flex gap-2 w-8 h-8 sm:w-full sm:h-6 items-center">
-                    <Image
-                        className="rounded-full "
-                        // src={item?.authorAvatar}
-                        src={item.avatar.includes("secure") ? "/" : item.avatar}
-                        lang=""
-                        about=""
-                        width={24}
-                        height={24}
-                        alt="avatar"
-                    />
+                    <ImgCus url={item.avatar} />
                     <p className="text-[#343F82] hidden sm:block text-sm font-normal">
                         By {item?.author.display_name}
                     </p>
                 </div>
-                <div className="flex-1 flex flex-col gap-[10px] overflow-hidden">
-                    <p className="text-[#212121] text-sm sm:text-base w-full truncate sm:whitespace-normal sm:line-clamp-2 h-12 font-semibold">
+                <div className="flex-1 flex flex-col sm:gap-[10px] overflow-hidden">
+                    <p className="text-[#212121] text-sm sm:text-base w-full truncate sm:whitespace-normal sm:line-clamp-2 max-h-12 font-semibold">
                         {item?.post?.post_title}
                     </p>
                     <p className="text-[#212121] truncate sm:whitespace-normal text-xs sm:text-sm font-normal">
@@ -104,7 +95,12 @@ const ITemBlock = ({ item }: { item: IItemBlock }) => {
                             className="line-clamp-2"
                         />
                     </p>
-                    <div className="hidden sm:flex items-center justify-between">
+                    <div
+                        className="hidden sm:flex items-center w-full justify-between"
+                        style={{
+                            padding: "1px",
+                        }}
+                    >
                         <div
                             onClick={() => {
                                 const _href = `https://cdl-prep.com/${item?.post?.post_name}`;
@@ -121,5 +117,25 @@ const ITemBlock = ({ item }: { item: IItemBlock }) => {
                 </div>
             </div>
         </div>
+    );
+};
+
+const ImgCus = ({ url }) => {
+    const [src, setSrc] = useState(url);
+    let image = `/info/images/cdl/logo60.png`;
+
+    return (
+        <Image
+            className="rounded-full "
+            src={src}
+            onError={() => {
+                setSrc(image);
+            }}
+            lang=""
+            about=""
+            width={24}
+            height={24}
+            alt="avatar"
+        />
     );
 };

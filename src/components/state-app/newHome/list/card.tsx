@@ -122,7 +122,7 @@ const CardItem = ({
                             <span className=" uppercase">{appInfo?.appShortName}</span> {test?.title} test
                         </div>
                     )}
-                    <ul className="list-disc pt-3 list-inside marker:text-black">
+                    <ul className="list-disc pt-3 m-0 pl-1 list-inside marker:text-black">
                         {list?.map((item) => (
                             <li className="py-1 text-sm font-normal" key={item?.label}>
                                 {item.value()}

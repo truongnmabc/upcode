@@ -50,16 +50,35 @@ const BannerHome = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string }) 
                     background: "linear-gradient(90deg, #DBEBFD 0%, #E2DFFF 100%)",
                 }}
             >
-                <div className="flex-1 p-4 sm:p-6">
+                <div className="flex-1 pl-4 pt-4 sm:pl-6 sm:py-6">
                     <p className="text-[#343F82] sm:leading-[68px] font-semibold text-2xl text-center sm:text-start sm:text-[38px]">
                         Download our app
                     </p>
                     <p className=" font-normal sm:text-xl text-center sm:text-start text-smh ">
                         to practice anytime, anywhere!
                     </p>
-
+                    <div className="flex justify-center sm:hidden gap-4 mt-4 items-center ">
+                        <Link href={appInfo.linkIos} passHref>
+                            <a
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className=" cursor-pointer hover:scale-105 transition-all"
+                            >
+                                <Image src={"/images/download_ios.webp"} width={104} height={32} />
+                            </a>
+                        </Link>
+                        <Link href={appInfo.linkAndroid} passHref>
+                            <a
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className=" cursor-pointer hover:scale-105 transition-all"
+                            >
+                                <Image src={"/images/download_android.webp"} width={104} height={32} />
+                            </a>
+                        </Link>
+                    </div>
                     <div
-                        className="grid sm:max-w-[800px] rounded-lg sm:mt-6 mt-4 sm:w-full w-fit p-2 sm:p-0 grid-cols-1 gap-4 sm:grid-cols-3"
+                        className="grid sm:max-w-[800px] rounded-lg sm:mt-6 mt-3 sm:w-full w-fit p-4 sm:p-0 grid-cols-1 gap-4 sm:grid-cols-3"
                         style={{
                             background: isDesktop
                                 ? "transparent"
@@ -95,7 +114,7 @@ const BannerHome = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string }) 
                         </Link>
                     </div>
                 </div>
-                <div className="sm:h-[325px] hidden sm:block sm:w-[440px] relative">
+                <div className="sm:h-[325px] hidden sm:block sm:w-[400px] relative">
                     <div className=" absolute right-0 h-full bottom-0">
                         <Image width={441} height={325} src={"/images/cdl_v2/home/banner.png"} />
                     </div>
