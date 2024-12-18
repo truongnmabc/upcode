@@ -5,7 +5,7 @@ import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import "./HeaderV4.scss";
 import { ITopic } from "../../models/Topic";
-import MyContainer from "../v4-material/MyContainer";
+import div from "../v4-material/MyContainer";
 import CloseIcon from "../icon/CloseIcon";
 import MenuIcon from "../icon/MenuIcon";
 import ExpandMoreIcon from "../icon/ExpandMoreIcon";
@@ -58,7 +58,7 @@ const HeaderV4 = ({
     }, []);
     return (
         <div className="container-header-v4">
-            <MyContainer className="header-v4">
+            <div className="header-v4 max-w-component-desktop">
                 <div className="logo-header-v4">
                     <Link href="/">
                         <img src={getSrcLogo()} alt={"logo-" + APP_SHORT_NAME} />
@@ -129,7 +129,7 @@ const HeaderV4 = ({
                         }}
                     >
                         <span className="text-nemu">Menu</span>
-                        <MenuIcon />
+                        <MenuIcon color="#21212185" />
                     </div>
                 </div>
 
@@ -392,7 +392,7 @@ const HeaderV4 = ({
                     </div>
                 </SwipeableDrawer>
                 {openDialog && <V4LoginDialog appInfo={appInfo} open={open} setOpen={setOpen} />}
-            </MyContainer>
+            </div>
         </div>
     );
 };
