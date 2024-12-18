@@ -17,18 +17,18 @@ const nextConfig: NextConfig = {
         ignoreBuildErrors: true,
     },
 
-    // images: {
-    //   remotePatterns: [
-    //     {
-    //       protocol: "http",
-    //       hostname: "localhost",
-    //     },
-    //     {
-    //       protocol: "https",
-    //       hostname: "localhost",
-    //     },
-    //   ],
-    // },
+    images: {
+        remotePatterns: [
+            {
+                protocol: "http",
+                hostname: "localhost",
+            },
+            {
+                protocol: "https",
+                hostname: "storage.googleapis.com",
+            },
+        ],
+    },
     sassOptions: {
         implementation: "sass-embedded",
     },

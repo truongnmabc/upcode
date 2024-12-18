@@ -14,6 +14,11 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(redirectUrl);
     }
 
+    if (pathname === "/blog") {
+        const redirectUrl = `https://${process.env.APP_SHORT_NAME}.com/blog`;
+        return NextResponse.redirect(redirectUrl);
+    }
+
     const redirectPaths: string[] = [
         "score_calculator",
         "refund_policy",
@@ -23,16 +28,14 @@ export function middleware(request: NextRequest) {
         "blog",
     ];
 
-    // Kiểm tra subPath có trong danh sách không
     if (redirectPaths.includes(subPath)) {
         const redirectUrl = `https://${slug}-prep.com/${subPath}`;
         return NextResponse.redirect(redirectUrl);
     }
 
-    // Không có redirect nào phù hợp, tiếp tục request
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ["/", "/:slug/:path*"],
+    matcher: ["/", "/:slug/:path*", "/blog"],
 };
