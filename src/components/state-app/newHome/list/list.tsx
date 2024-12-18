@@ -1,8 +1,8 @@
 import React from "react";
 import ItemTopicHome from "./item";
-import { IAppInfo } from "@/models/AppInfo";
-import { ITopic } from "@/models/Topic";
-import { ITestInfo } from "@/models/TestInfo";
+import { ITopicResState } from "@/models/topics/topics";
+import { IAppInfo } from "@/models/app/appInfo";
+import { ITestInfo } from "@/models/tests/tests";
 const listImg = {
     "general-knowledge": {
         lear: "/images/cdl_v2/home/1.png",
@@ -40,7 +40,10 @@ const listImg = {
         lear: "/images/cdl_v2/home/9.png",
         test: "/images/cdl_v2/home/9.1.png",
     },
-};
+} as const;
+
+type ListImgKey = keyof typeof listImg;
+
 const ListHome = ({
     listTopics,
     tests,
@@ -48,7 +51,7 @@ const ListHome = ({
     _state,
 }: {
     appInfo: IAppInfo;
-    listTopics: ITopic[];
+    listTopics: ITopicResState[];
     tests: ITestInfo[];
     _state: string;
 }) => {
@@ -59,12 +62,12 @@ const ListHome = ({
                     key={index}
                     topic={{
                         ...topic,
-                        img: listImg[topic.tag]?.lear,
+                        img: listImg[topic.tag as ListImgKey]?.lear,
                     }}
                     test={tests
                         .map((item) => ({
                             ...item,
-                            img: listImg[item.tag]?.test,
+                            img: listImg[item.tag as ListImgKey]?.test,
                         }))
                         ?.find((t) => t.tag === topic.tag)}
                     appInfo={appInfo}

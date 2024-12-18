@@ -5,15 +5,23 @@ interface LinkBlankProps {
     onClick?: React.MouseEventHandler<HTMLAnchorElement>;
     href?: string;
     children: React.ReactNode;
+    classNames?: string;
 }
 
 // Use React.ForwardRefRenderFunction to properly type the forwarded ref
 const LinkBlank: React.ForwardRefRenderFunction<
     HTMLAnchorElement,
     LinkBlankProps
-> = ({ onClick, href, children }, ref) => {
+> = ({ onClick, href, children, classNames }, ref) => {
     return (
-        <a href={href} onClick={onClick} target="_blank" ref={ref}>
+        <a
+            className={classNames}
+            href={href}
+            onClick={onClick}
+            target="_blank"
+            ref={ref}
+            rel="noopener noreferrer"
+        >
             {children}
         </a>
     );

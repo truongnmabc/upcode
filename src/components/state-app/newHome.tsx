@@ -1,31 +1,24 @@
 import MyContainer from "@/components/v4-material/myContainer";
-import { IAppInfo } from "@/models/AppInfo";
-import { IItemBlock } from "@/models/state/stateChildrenApp";
-import { ITestInfo } from "@/models/TestInfo";
-import { ITopic } from "@/models/Topic";
-import { useMediaQuery } from "@mui/material";
-import dynamic from "next/dynamic";
+import { IAppInfo } from "@/models/app/appInfo";
+import { ITestInfo } from "@/models/tests/tests";
+import { ITopicResState } from "@/models/topics/topics";
 import BannerHome from "./newHome/banner";
 import Handbook from "./newHome/handBook";
 import ListHome from "./newHome/list/list";
 import SelectState from "./newHome/selectState";
-const ListBlock = dynamic(() => import("./newHome/slider"));
+import ListBlock from "./newHome/slider";
 
 const NewHome = ({
     appInfo,
     listTopics,
     _state,
     tests,
-    listBlock,
 }: {
     appInfo: IAppInfo;
-    listTopics: ITopic[];
+    listTopics: ITopicResState[];
     tests: ITestInfo[];
     _state: string;
-    listBlock?: IItemBlock[];
 }) => {
-    const isDesktop = useMediaQuery("(min-width:769px)");
-
     return (
         <div className="w-full h-full">
             <SelectState appInfo={appInfo} _state={_state} />
@@ -33,17 +26,15 @@ const NewHome = ({
                 <MyContainer>
                     <div className="landing-title-0">
                         <div className="landing-title-11">
-                            <h2 className="title-h1">
+                            <h2 className="title-h1 pt-6 sm:pt-12">
                                 <p className="text-2xl w-full sm:text-[40px] text-center font-bold sm:leading-[60px]">{`${_state} ${appInfo?.appName} Practice Test`}</p>
-                                {/* <span className="landing-title-22">
-                                Ace The <strong className="v4-font-semi-bold">{appInfo?.appName}</strong> On First Try
-                            </span> */}
                             </h2>
                         </div>
                         <div className="landing-title-12">
-                            <p className="text-base w-full font-normal text-center">
+                            <p className="text-sm sm:text-lg w-full font-normal text-center">
                                 Ace all {_state} DMV written tests with our two
-                                powerful systems: {isDesktop && <br />}
+                                powerful systems:{" "}
+                                <br className="hidden sm:block" />
                                 Master part by part in{" "}
                                 <span className="font-semibold">
                                     Practice mode
@@ -60,11 +51,8 @@ const NewHome = ({
                         tests={tests}
                     />
                 </MyContainer>
-                <ListBlock
-                    appInfo={appInfo}
-                    _state={_state}
-                    listBlock={listBlock}
-                />
+
+                <ListBlock appInfo={appInfo} _state={_state} />
                 <BannerHome appInfo={appInfo} _state={_state} />
                 <Handbook appInfo={appInfo} _state={_state} />
             </div>

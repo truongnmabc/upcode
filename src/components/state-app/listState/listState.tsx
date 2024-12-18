@@ -1,14 +1,12 @@
-import React, { useEffect } from "react";
-import "./ListState.scss";
-import { getLink } from "@/utils";
-import { IAppInfo } from "@/models/app/appInfo";
-import { useIsMobile } from "@/hooks/useIsMobile";
-import statesData from "@/data/statesName.json";
-import { Collapse, Dialog } from "@mui/material";
-import MyContainer from "@/components/v4-material/myContainer";
 import { MtUiButton } from "@/components/button";
-import { useRouter } from "next/navigation";
+import MyContainer from "@/components/v4-material/myContainer";
+import statesData from "@/data/statesName.json";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { IAppInfo } from "@/models/app/appInfo";
 import { revertPathName } from "@/utils/pathName";
+import { Collapse, Dialog } from "@mui/material";
+import { useRouter } from "next/navigation";
+import "./ListState.scss";
 
 interface State {
     id: number;
