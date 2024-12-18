@@ -330,6 +330,7 @@
             align-items: unset;
 
             .title {
+                font-size: 16px;
                 margin-bottom: 8px;
             }
             .cluster-logo-description {
@@ -351,24 +352,30 @@
                 gap: 8px;
             }
             .cluster-legal {
+                width: 163px;
                 gap: 8px;
+            }
+            a {
+                font-size: 14px;
             }
             .support {
                 max-width: 100%;
                 gap: 8px;
-                .text-info {
-                    font-size: 14px;
-                }
-                .intro-suport {
-                    color: #fff;
-                    font-size: 14px;
-                }
-                .footer-support {
-                    font-size: 14px;
-                    font-weight: 500;
-                    line-height: 20px;
-                    text-align: left;
-                    text-underline-position: from-font;
+                .cluster-info-send-mail {
+                    .text-info {
+                        font-size: 14px;
+                    }
+                    .intro-suport {
+                        color: #fff;
+                        font-size: 14px;
+                    }
+                    .footer-support {
+                        font-size: 14px;
+                        font-weight: 500;
+                        line-height: 20px;
+                        text-align: left;
+                        text-underline-position: from-font;
+                    }
                 }
             }
             // align-items: center;
