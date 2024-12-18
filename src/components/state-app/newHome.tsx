@@ -33,11 +33,8 @@ const NewHome = ({
                 <MyContainer>
                     <div className="landing-title-0">
                         <div className="landing-title-11">
-                            <h2 className="title-h1">
+                            <h2 className="title-h1 pt-6 sm:pt-12">
                                 <p className="text-2xl w-full sm:text-[40px] text-center font-bold sm:leading-[60px]">{`${_state} ${appInfo?.appName} Practice Test`}</p>
-                                {/* <span className="landing-title-22">
-                                Ace The <strong className="v4-font-semi-bold">{appInfo?.appName}</strong> On First Try
-                            </span> */}
                             </h2>
                         </div>
                         <div className="landing-title-12">

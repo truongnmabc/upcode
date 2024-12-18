@@ -115,6 +115,7 @@ export const getSEOAndHeaderContentApi = async (
             isState,
         },
     });
+    console.log("🚀 ~ getSEOAndHeaderContentApi ~ result:", result);
 
     return result;
 };

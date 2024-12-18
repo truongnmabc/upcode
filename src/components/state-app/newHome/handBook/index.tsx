@@ -27,11 +27,11 @@ const Handbook = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string }) =>
                         you closer to your <span className=" uppercase">{appInfo?.appShortName}</span> dream.
                     </p>
                     <ul className="flex sm:flex-row flex-col gap-4 pl-6 mt-4 list-disc">
-                        <li className="text-base mr-4 font-medium">Comprehensive coverage</li>
-                        <li className="text-base  mr-4 font-medium">Easy to navigate</li>
-                        <li className="text-base  mr-4 font-medium">100% free & accessible</li>
+                        <li className="text-base mr-4 font-normal">Comprehensive coverage</li>
+                        <li className="text-base  mr-4 font-normal">Easy to navigate</li>
+                        <li className="text-base  mr-4 font-normal">100% free & accessible</li>
                     </ul>
-                    <button className="py-4 px-8 w-full sm:w-fit  hover:opacity-80 hover:bg-slate-400  rounded-lg mt-6 bg-white border border-solid border-[#343F82]">
+                    <button className="py-3 px-8 w-full sm:w-fit  hover:opacity-80 hover:bg-slate-400  rounded-lg mt-6 bg-white border border-solid border-[#343F82]">
                         <div className="flex items-center w-full sm:w-fit text-[#343F82] text-base font-semibold justify-center gap-1">
                             Explore Handbook
                             <span>

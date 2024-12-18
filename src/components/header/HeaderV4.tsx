@@ -5,7 +5,7 @@ import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
 import "./HeaderV4.scss";
 import { ITopic } from "../../models/Topic";
-import MyContainer from "../v4-material/myContainer";
+import div from "../v4-material/MyContainer";
 import CloseIcon from "../icon/CloseIcon";
 import MenuIcon from "../icon/MenuIcon";
 import ExpandMoreIcon from "../icon/ExpandMoreIcon";
@@ -59,7 +59,7 @@ const HeaderV4 = ({
     }, []);
     return (
         <div className="container-header-v4">
-            <MyContainer className="header-v4">
+            <div className="header-v4 max-w-component-desktop">
                 <div className="logo-header-v4">
                     <Link href="/">
                         <img
@@ -153,7 +153,7 @@ const HeaderV4 = ({
                         }}
                     >
                         <span className="text-nemu">Menu</span>
-                        <MenuIcon />
+                        <MenuIcon color="#21212185" />
                     </div>
                 </div>
 
@@ -235,15 +235,15 @@ const HeaderV4 = ({
                                         onClick={() => {
                                             let btn = document.getElementById(
                                                 "v4-icon-expand-state"
-                                            );
+                                            ) as HTMLElement;
                                             let collapse =
                                                 document.getElementById(
                                                     "collapse-state"
-                                                );
+                                                ) as HTMLElement;
                                             let content =
                                                 document.getElementById(
                                                     "collapse-content-state"
-                                                );
+                                                ) as HTMLElement;
                                             let height = content.clientHeight;
                                             if (
                                                 btn.className.includes("true")
@@ -532,7 +532,7 @@ const HeaderV4 = ({
                         setOpen={setOpen}
                     />
                 )}
-            </MyContainer>
+            </div>
         </div>
     );
 };

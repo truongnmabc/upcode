@@ -16,6 +16,7 @@
     .v4-footer-landing-container-0 {
         width: 100%;
         height: 100%;
+        padding-bottom: 40px;
         // margin-top: -8px;
         // padding-top: 24px;
 
@@ -25,17 +26,17 @@
         box-sizing: border-box;
         .title {
             text-transform: uppercase;
-            margin-bottom: 24px;
+            margin-bottom: 8px;
             color: #fff;
             font-size: 18px;
             font-weight: 600;
             line-height: 20px;
             text-align: left;
+            text-underline-position: from-font;
         }
-        .item-footer {
-            min-width: 160px;
-        }
+
         .cluster-logo-description {
+            max-width: 284px;
             .logo-footer-v4 {
                 display: flex;
             }
@@ -49,7 +50,7 @@
                 line-height: 21px;
                 text-align: start;
                 color: #fff;
-                max-width: 284px;
+                text-underline-position: from-font;
             }
         }
         .cluster-company-legal {
@@ -68,7 +69,7 @@
         a {
             text-decoration: none;
             color: #fff;
-            font-size: 14px;
+            font-size: 16px;
         }
         // a:not(:first-child) {
         //     margin-left: 32px;
@@ -83,42 +84,49 @@
             text-align: left;
         }
         .support {
-            max-width: 283px;
-            > div {
-                color: #fff !important;
-                margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            max-width: 284px;
+            gap: 16px;
 
-                font-weight: 500;
-                line-height: 24px;
-                text-align: left;
-            }
-            .text-info {
-                color: #fff;
-                font-size: 16px;
-                font-weight: 500;
-                line-height: 24px;
-                text-align: left;
-            }
-            .cluster-email {
+            .cluster-info-send-mail {
                 display: flex;
-                gap: 12px;
-                align-items: center;
+                flex-direction: column;
+                gap: 16px;
                 img {
                     width: 24px;
                     height: 24px;
                 }
-            }
-            .cluster-location {
-                display: flex;
-                gap: 12px;
-                align-items: center;
-                img {
-                    width: 24px;
-                    height: 24px;
+                .text-info {
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 24px;
+                    text-align: left;
+                    text-underline-position: from-font;
+                    color: #fff;
+                }
+                .cluster-email {
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    gap: 12px;
+                }
+                .cluster-location {
+                    display: flex;
+                    align-items: center;
+
+                    gap: 12px;
+                }
+                .intro-suport {
+                    color: #fff;
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 24px;
+                    text-align: left;
+                    text-underline-position: from-font;
                 }
             }
             .v4-input-field {
-                margin: 12px 0;
                 input {
                     color: #fff;
                     width: 100%;
@@ -153,22 +161,27 @@
                     font-size: 14px;
                     text-align: left;
                     padding-left: 4px;
+                    line-height: 24px;
                 }
             }
             .footer-support {
-                margin-top: 28px;
                 display: flex;
                 width: 100%;
                 justify-content: flex-end;
                 .v4-footer-btn-contact-us {
-                    padding: 12px 27px;
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 24px;
+                    text-align: left;
+                    text-underline-position: from-font;
+                    padding: 12px 24px;
                     background-color: #fff;
                     width: fit-content;
                     align-self: flex-end;
                     cursor: pointer;
                     margin-top: 4px;
-                    font-size: 14px;
                     border: none;
+                    border-radius: 8px;
                     display: flex;
                     line-height: 24px; // = svg height
                 }
@@ -311,16 +324,19 @@
         padding: 24px 0 0 0;
         width: 100%;
         .v4-footer-landing-container-0 {
-            padding: 0 16px;
+            padding: 0 16px 24px 16px;
             flex-direction: column;
             gap: 16px;
             align-items: unset;
+
             .title {
+                font-size: 16px;
                 margin-bottom: 8px;
             }
             .cluster-logo-description {
                 margin-bottom: 16px;
                 width: 100%;
+                max-width: unset;
                 span {
                     text-align: center;
                     max-width: 100%;
@@ -336,16 +352,30 @@
                 gap: 8px;
             }
             .cluster-legal {
+                width: 163px;
                 gap: 8px;
+            }
+            a {
+                font-size: 14px;
             }
             .support {
                 max-width: 100%;
                 gap: 8px;
-                .text-info {
-                    font-size: 14px;
-                }
-                .intro-suport {
-                    font-size: 14px;
+                .cluster-info-send-mail {
+                    .text-info {
+                        font-size: 14px;
+                    }
+                    .intro-suport {
+                        color: #fff;
+                        font-size: 14px;
+                    }
+                    .footer-support {
+                        font-size: 14px;
+                        font-weight: 500;
+                        line-height: 20px;
+                        text-align: left;
+                        text-underline-position: from-font;
+                    }
                 }
             }
             // align-items: center;
