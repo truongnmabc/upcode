@@ -46,7 +46,7 @@ src/config_app.js
 src/data/appInfos.json
 src/data/footerMenus.json
 src/data/stateData.json
-src/data/studyData copy.json
+src/data/studyData.json
 src/styles/config.css
 .env
 ssh_keys/id_rsa
