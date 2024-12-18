@@ -1,8 +1,7 @@
 import { EmblaOptionsType } from "embla-carousel";
 import { NextButton, PrevButton, usePrevNextButtons } from "./button";
-
 import useEmblaCarousel from "embla-carousel-react";
-import Image from "next/image";
+
 const SwiperBlock = ({ listBlock }: { listBlock?: IItemBlock[] }) => {
     const options: EmblaOptionsType = {};
 
@@ -45,21 +44,17 @@ const SwiperBlock = ({ listBlock }: { listBlock?: IItemBlock[] }) => {
 
 export default SwiperBlock;
 
-import { IItemBlock } from "@/pages/stateAndChildrenApp/[...stateAndChildrenApp]";
-import { useMediaQuery } from "@mui/material";
+import { IItemBlock } from "@/models/state/stateChildrenApp";
+import LazyLoadImage from "@/components/images";
 
 const ITemBlock = ({ item }: { item: IItemBlock }) => {
-    const isDesktop = useMediaQuery("(min-width:769px)");
-
     return (
-        <div className="p-0 sm:p-4 w-silder_2/3 sm:w-slider flex-shrink-0 rounded-2xl bg-transparent sm:bg-white  flex flex-col gap-[10px] h-full">
+        <div className="p-0 sm:p-4 w-silder_2/3 sm:w-slider flex-shrink-0  rounded-2xl bg-transparent sm:bg-white  flex flex-col justify-between gap-[10px] h-full">
             <div className=" relative sm:static aspect-square sm:aspect-video w-full flex items-center rounded-lg ">
-                <Image
-                    width={360}
+                <LazyLoadImage
                     src={item?.thumbnail}
-                    height={240}
-                    layout={!isDesktop ? "fill" : "intrinsic"}
-                    className="h-full w-full object-cover rounded-lg"
+                    imgClassNames="h-full  w-full object-cover rounded-lg"
+                    classNames="w-[360px] h-[240px]"
                 />
                 <div className="sm:hidden absolute bottom-2 flex items-center justify-center w-full left-0">
                     <div
@@ -76,24 +71,20 @@ const ITemBlock = ({ item }: { item: IItemBlock }) => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-row sm:flex-col gap-[10px] w-full overflow-hidden">
+            <div className="flex flex-row  sm:flex-col gap-[10px] w-full overflow-hidden">
                 <div className="flex gap-2 w-8 h-8 sm:w-full sm:h-6 items-center">
-                    <Image
-                        className="rounded-full "
-                        // src={item?.authorAvatar}
-                        src={item.avatar.includes("secure") ? "/" : item.avatar}
-                        lang=""
-                        about=""
-                        width={24}
-                        height={24}
+                    <LazyLoadImage
+                        classNames=" w-6 h-6 "
+                        imgClassNames="rounded-full"
+                        src={item?.avatar}
                         alt="avatar"
                     />
                     <p className="text-[#343F82] hidden sm:block text-sm font-normal">
                         By {item?.author.display_name}
                     </p>
                 </div>
-                <div className="flex-1 flex flex-col gap-[10px] overflow-hidden">
-                    <p className="text-[#212121] text-sm sm:text-base w-full truncate sm:whitespace-normal sm:line-clamp-2 h-12 font-semibold">
+                <div className="flex-1 flex flex-col sm:gap-[10px] overflow-hidden">
+                    <p className="text-[#212121] text-sm sm:text-base w-full truncate sm:whitespace-normal sm:line-clamp-2  sm:h-12 max-h-12 font-semibold">
                         {item?.post?.post_title}
                     </p>
                     <p className="text-[#212121] truncate sm:whitespace-normal text-xs sm:text-sm font-normal">
@@ -104,7 +95,12 @@ const ITemBlock = ({ item }: { item: IItemBlock }) => {
                             className="line-clamp-2"
                         />
                     </p>
-                    <div className="hidden sm:flex items-center justify-between">
+                    <div
+                        className="hidden sm:flex items-center w-full justify-between"
+                        style={{
+                            padding: "1px",
+                        }}
+                    >
                         <div
                             onClick={() => {
                                 const _href = `https://cdl-prep.com/${item?.post?.post_name}`;
@@ -115,11 +111,21 @@ const ITemBlock = ({ item }: { item: IItemBlock }) => {
                             Read More
                         </div>
                         <p className="text-sm font-normal text-[#21212185]">
-                            {item?.post?.post_date}
+                            {formatDate(item?.post?.post_date)}
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     );
+};
+
+const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+    };
+    return date.toLocaleDateString("en-US", options);
 };
