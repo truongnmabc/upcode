@@ -5,6 +5,7 @@ const appInfos = require("./src/data/appInfos.json");
 const states = require("./src/data/statesName.json");
 const studyData = require("./src/data/studyData.json");
 const cdlJSON = require("./src/data/cdlLinkLandingPage.json");
+const { hostname } = require("os");
 const is_parent_app =
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.includes("passemall") ||
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.includes("easy-prep");
@@ -28,6 +29,10 @@ module.exports = () => {
                     hostname: 'cdl-prep.com',
                    
                   },
+                  {
+                    protocol:"https",
+                    hostname:"secure.gravatar.com"
+                  }
               ],
             // domains: ["storage.googleapis.com","cdl-prep.com/"],
         },
