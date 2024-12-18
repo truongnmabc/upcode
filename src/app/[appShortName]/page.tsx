@@ -9,7 +9,6 @@ import SeoContent from "@/components/seoContent/seoContent";
 import { ITopic } from "@/models/topics/topics";
 import { fetchAppData } from "./layout";
 import { getAppType } from "@/utils/config_web";
-import ParentAppLayout from "@/components/parent-app/parentAppLayout";
 import HomeSingleApp from "@/components/state-app";
 
 type Params = {
@@ -58,9 +57,7 @@ export default async function Home({ params }: Params) {
                 </section>
             );
         }
-        if (appType === "parent") {
-            return <ParentAppLayout appInfo={appInfo} />;
-        }
+
         if (appType === "state") {
             return (
                 <section className="w-full h-full  pb-12 sm:pb-6 ">

@@ -14,14 +14,17 @@ export default function StoreProvider({
 }: {
     children: React.ReactNode;
     appInfo: IAppInfo;
-    appConfig: IAppConfigData;
+    appConfig?: IAppConfigData;
 }) {
     const storeRef = useRef<AppStore>();
     if (!storeRef.current) {
         storeRef.current = makeStore();
-        storeRef.current.dispatch(setAppInfo(appInfo));
-        storeRef.current.dispatch(setAppConfig(appConfig));
+        if (appInfo) {
+            storeRef.current.dispatch(setAppInfo(appInfo));
+        }
+        if (appConfig) {
+            storeRef.current.dispatch(setAppConfig(appConfig));
+        }
     }
-
     return <Provider store={storeRef.current}>{children}</Provider>;
 }

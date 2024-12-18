@@ -3,45 +3,51 @@
 import "./ParentAppHeaderV0.scss";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-// import MyContainer from "@/components/v4-material/MyContainer";
 import Link from "next/link";
+import MyContainer from "@/components/v4-material/myContainer";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import MenuIcon from "@/asset/icon/MenuIcon";
+import CloseIcon from "@/asset/icon/CloseIcon";
 
 const SwipeableDrawer = dynamic(() => import("@mui/material/SwipeableDrawer"), {
     ssr: false,
 });
-// const MenuIcon = dynamic(() => import("@/components/icon/MenuIcon"), { ssr: false });
-// const CloseIcon = dynamic(() => import("@/components/icon/CloseIcon"), { ssr: false });
 
-const ParentAppHeaderV0 = ({ isDesktop }: { isDesktop: boolean }) => {
+const ParentAppHeaderV0 = () => {
     const srcLogoPassemall = "images/passemall/logo-light.png";
     const [showMenuHeader, setShowMenuHeader] = useState(false);
-
+    const isMobile = useIsMobile();
     return (
         <>
             <header className="container-header-v0">
-                {/* <MyContainer>
+                <MyContainer>
                     <div className="header-v0">
-                        <a href={"/"}>
-                            <img className="logo-app" src={srcLogoPassemall} alt="logo" />
-                        </a>
-                        {isDesktop ? (
+                        <Link href={"/"}>
+                            <img
+                                className="logo-app"
+                                src={srcLogoPassemall}
+                                alt="logo"
+                            />
+                        </Link>
+                        {!isMobile ? (
                             <div className="header-navigation-right-v0">
-                                <Link href={"/"}>
-                                    <a className="link">Home</a>
-                                </Link>
-                                <a href="/blog" className="link">
+                                <Link href={"/"}>Home</Link>
+                                <Link href="/blog" className="link">
                                     Blog
-                                </a>
+                                </Link>
                             </div>
                         ) : (
                             <>
-                                <div className="icon-menu-v0" onClick={() => setShowMenuHeader(true)}>
+                                <div
+                                    className="icon-menu-v0"
+                                    onClick={() => setShowMenuHeader(true)}
+                                >
                                     <MenuIcon color="black" />
                                 </div>
 
                                 <SwipeableDrawer
                                     className="swipeable-drawer-v0"
-                                    open={showMenuHeader && !isDesktop}
+                                    open={showMenuHeader && isMobile}
                                     onOpen={() => setShowMenuHeader(true)}
                                     onClose={() => setShowMenuHeader(false)}
                                     anchor="right"
@@ -55,29 +61,37 @@ const ParentAppHeaderV0 = ({ isDesktop }: { isDesktop: boolean }) => {
                                                 height={24}
                                                 alt="logo"
                                             />
-                                            <div className="button-close-drawer-v0" onClick={() => setShowMenuHeader(false)}>
+                                            <div
+                                                className="button-close-drawer-v0"
+                                                onClick={() =>
+                                                    setShowMenuHeader(false)
+                                                }
+                                            >
                                                 <CloseIcon />
                                             </div>
                                         </div>
                                         <div className="swipeable-drawer-content-v0">
-                                            <span className="text-menu">Menu</span>
+                                            <span className="text-menu">
+                                                Menu
+                                            </span>
                                             <Link href="/">
-                                                <a className="text-navigation">
-                                                    <span>Home</span>
-                                                </a>
+                                                <span className="text-navigation">
+                                                    Home
+                                                </span>
                                             </Link>
-                                            <a href="/blog" className="text-navigation">
-                                                <span>Blog</span>
-                                            </a>
+                                            <Link href="/blog">
+                                                <span className="text-navigation">
+                                                    Blog
+                                                </span>
+                                            </Link>
                                         </div>
                                     </div>
                                 </SwipeableDrawer>
                             </>
                         )}
                     </div>
-                </MyContainer> */}
+                </MyContainer>
             </header>
-            <div>123123</div>
         </>
     );
 };

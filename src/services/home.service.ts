@@ -99,14 +99,7 @@ export const getSEOAndHeaderContentApi = async (
     pathname?: string,
     isState?: boolean
 ) => {
-    if (!END_POINT_WORD_PRESS) {
-        return null;
-    }
-    const url =
-        END_POINT_WORD_PRESS +
-        Config.PREFIX_URL +
-        APIConfig.GET_SEO_AND_HEADER_CONTENT;
-
+    const url = "/wp-json/passemall/v1/get-seo-and-header-content";
     let result = await requestPostData({
         url: url,
         data: {
