@@ -67,6 +67,10 @@
                         gap: 16px;
                         cursor: pointer;
                         margin-top: 24px;
+                        &:hover {
+                            text-decoration: underline;
+                            text-decoration-color: #fff;
+                        }
                     }
 
                     .cluster-location {
