@@ -38,7 +38,7 @@ const NewHome = ({
                             </h2>
                         </div>
                         <div className="landing-title-12">
-                            <p className="text-base w-full font-normal text-center">
+                            <p className="text-sm sm:text-lg w-full font-normal text-center">
                                 Ace all {_state} DMV written tests with our two powerful systems: {isDesktop && <br />}
                                 Master part by part in <span className="font-semibold">Practice mode</span> and experience the
                                 real test atmosphere in <span className="font-semibold">Test mode</span>

@@ -38,7 +38,7 @@ const ITemBlock = ({ item }: { item: IItemBlock }) => {
     const isDesktop = useMediaQuery("(min-width:769px)");
 
     return (
-        <div className="p-0 sm:p-4 w-silder_2/3 sm:w-slider flex-shrink-0 rounded-2xl bg-transparent sm:bg-white  flex flex-col gap-[10px] h-full">
+        <div className="p-0 sm:p-4 w-silder_2/3 sm:w-slider flex-shrink-0  rounded-2xl bg-transparent sm:bg-white  flex flex-col justify-between gap-[10px] h-full">
             <div className=" relative sm:static aspect-square sm:aspect-video w-full flex items-center rounded-lg ">
                 <Image
                     width={360}
@@ -62,13 +62,13 @@ const ITemBlock = ({ item }: { item: IItemBlock }) => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-row sm:flex-col gap-[10px] w-full overflow-hidden">
+            <div className="flex flex-row  sm:flex-col gap-[10px] w-full overflow-hidden">
                 <div className="flex gap-2 w-8 h-8 sm:w-full sm:h-6 items-center">
                     <ImgCus url={item.avatar} />
                     <p className="text-[#343F82] hidden sm:block text-sm font-normal">By {item?.author.display_name}</p>
                 </div>
                 <div className="flex-1 flex flex-col sm:gap-[10px] overflow-hidden">
-                    <p className="text-[#212121] text-sm sm:text-base w-full truncate sm:whitespace-normal sm:line-clamp-2 max-h-12 font-semibold">
+                    <p className="text-[#212121] text-sm sm:text-base w-full truncate sm:whitespace-normal sm:line-clamp-2  sm:h-12 max-h-12 font-semibold">
                         {item?.post?.post_title}
                     </p>
                     <p className="text-[#212121] truncate sm:whitespace-normal text-xs sm:text-sm font-normal">
@@ -94,7 +94,7 @@ const ITemBlock = ({ item }: { item: IItemBlock }) => {
                         >
                             Read More
                         </div>
-                        <p className="text-sm font-normal text-[#21212185]">{item?.post?.post_date}</p>
+                        <p className="text-sm font-normal text-[#21212185]">{formatDate(item?.post?.post_date)}</p>
                     </div>
                 </div>
             </div>
@@ -120,4 +120,14 @@ const ImgCus = ({ url }) => {
             alt="avatar"
         />
     );
+};
+
+const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+    };
+    return date.toLocaleDateString("en-US", options);
 };

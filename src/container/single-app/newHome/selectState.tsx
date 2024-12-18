@@ -23,7 +23,7 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
             <div className="v4-container-component v4-container-maxWidth">
                 <div
                     className={clsx(
-                        "sm:py-[48px] pt-6 px-4  sm:max-w-[718px] relative z-10 text-2xl   sm:text-[48px] sm:leading-[72px] font-bold  font-poppins "
+                        "sm:py-[48px] pt-6 px-4  sm:max-w-[800px] relative z-10 text-2xl   sm:text-[48px] sm:leading-[72px] font-bold  font-poppins "
                     )}
                 >
                     <h1 className="sm:text-start text-center">
