@@ -1,44 +1,76 @@
-import ListState from "@/components/homepage/ListState";
-import { IAppInfo } from "@/models/AppInfo";
+"use client";
+import LazyLoadImage from "@/components/images";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { IAppInfo } from "@/models/app/appInfo";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { Collapse, Dialog, useMediaQuery } from "@mui/material";
+import { Collapse, Dialog } from "@mui/material";
 import clsx from "clsx";
 import Link from "next/link";
 import React, { Fragment, useEffect, useState } from "react";
-const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string }) => {
-    const isDesktop = useMediaQuery("(min-width:769px)");
+import ListState from "../listState/listState";
+const SelectState = ({
+    appInfo,
+    _state,
+}: {
+    appInfo: IAppInfo;
+    _state: string;
+}) => {
+    const isMobile = useIsMobile();
     const [open, setOpen] = useState(false);
-    const [openListState, setOpenListState] = useState(-1);
+    const [openListState, setOpenListState] = useState(false);
+
+    useEffect(() => {
+        setOpen(!isMobile);
+    }, [isMobile]);
 
     useEffect(() => {
         setOpen(isDesktop);
     }, [isDesktop]);
     return (
         <div
-            className="w-full relative overflow-hidden  h-full  "
+            className="w-full relative top-0 left-0 overflow-hidden aspect-video "
             style={{
-                background: "linear-gradient(180deg, #E5E9FF 0%, #F0F2FE 4.75%)",
+                background:
+                    "linear-gradient(180deg, #E5E9FF 0%, #F0F2FE 4.75%)",
             }}
         >
             <div className="v4-container-component v4-container-maxWidth">
                 <div
                     className={clsx(
-                        "sm:py-[48px] pt-6 px-4  sm:max-w-[718px] relative z-10 text-2xl   sm:text-[48px] sm:leading-[72px] font-bold  font-poppins "
+                        "sm:py-[48px] pt-6 px-4  sm:max-w-[800px] relative z-10 text-2xl   sm:text-[48px] sm:leading-[72px] font-bold  font-poppins "
                     )}
                 >
                     <h1 className="sm:text-start text-center">
-                        Take your <span className="text-[#4E60CA]">FREE</span> <span className=" capitalize">{_state}</span>
+                        Take your <span className="text-[#4E60CA]">FREE</span>{" "}
+                        <span className=" capitalize">{_state}</span>
                         <br />
-                        <span className=" uppercase">{appInfo?.appShortName}</span> Practice Test 2025 Now!
+                        <span className=" uppercase">
+                            {appInfo?.appShortName}
+                        </span>{" "}
+                        Practice Test 2025 Now!
                     </h1>
                     <p className="text-sm  sm:text-lg pt-3 sm:pt-6 text-center sm:text-start text-[#21212185] sm:text-[#212121] font-normal ">
-                        A <span className="font-semibold capitalize">{_state} Commercial Driver’s License</span> (
-                        <span className=" uppercase">{appInfo?.appShortName}</span>) opens countless opportunities in a dynamic
-                        industry like commercial trucking, and we are here to ensure you seize them with confidence! Say goodbye
-                        to guesswork and hello to a no-stress way to ace your{" "}
-                        <span className=" uppercase">{appInfo?.appShortName}</span> written test on your first try with{" "}
+                        A{" "}
+                        <span className="font-semibold capitalize">
+                            {_state} Commercial Driver’s License
+                        </span>{" "}
+                        (
+                        <span className=" uppercase">
+                            {appInfo?.appShortName}
+                        </span>
+                        ) opens countless opportunities in a dynamic industry
+                        like commercial trucking, and we are here to ensure you
+                        seize them with confidence! Say goodbye to guesswork and
+                        hello to a no-stress way to ace your{" "}
+                        <span className=" uppercase">
+                            {appInfo?.appShortName}
+                        </span>{" "}
+                        written test on your first try with{" "}
                         <span className="font-semibold">
-                            <span className=" uppercase">{appInfo?.appShortName}</span> Prep.
+                            <span className=" uppercase">
+                                {appInfo?.appShortName}
+                            </span>{" "}
+                            Prep.
                         </span>
                     </p>
                     <Collapse in={open} timeout="auto" unmountOnExit>
@@ -55,24 +87,40 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
                                             <Link href={"/1"}>
                                                 <span className="text-sm sm:text-base capitalize font-semibold underline text-[#3477F5]">
                                                     {_state}{" "}
-                                                    <span className="text-[#3477F5] uppercase">{appInfo?.appShortName}</span>{" "}
+                                                    <span className="text-[#3477F5] uppercase">
+                                                        {appInfo?.appShortName}
+                                                    </span>{" "}
                                                     practice tests
                                                 </span>
                                             </Link>
                                             :{" "}
                                         </span>{" "}
-                                        Ace the <span className="capitalize">{_state}</span>{" "}
-                                        <span className="uppercase">{appInfo?.appShortName}</span> tests with our expert
-                                        practice questions and practice tests for each endorsement.
+                                        Ace the{" "}
+                                        <span className="capitalize">
+                                            {_state}
+                                        </span>{" "}
+                                        <span className="uppercase">
+                                            {appInfo?.appShortName}
+                                        </span>{" "}
+                                        tests with our expert practice questions
+                                        and practice tests for each endorsement.
                                     </p>
                                 </div>
                                 <div className="text-sm sm:text-base flex gap-2  font-medium ">
                                     <IconCheck />
 
                                     <p className="text-sm sm:text-base text-[#21212185] sm:text-[#212121] font-normal">
-                                        <span className="text-[#212121] font-medium">Expert blogs: </span> Address all your
-                                        concerns on <span className="capitalize">{_state}</span>{" "}
-                                        <span className="uppercase">{appInfo?.appShortName}</span> {""}
+                                        <span className="text-[#212121] font-medium">
+                                            Expert blogs:{" "}
+                                        </span>{" "}
+                                        Address all your concerns on{" "}
+                                        <span className="capitalize">
+                                            {_state}
+                                        </span>{" "}
+                                        <span className="uppercase">
+                                            {appInfo?.appShortName}
+                                        </span>{" "}
+                                        {""}
                                         through our blog.
                                     </p>
                                 </div>
@@ -81,37 +129,49 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
                                     <p className="text-sm sm:text-base text-[#21212185] sm:text-[#212121] font-normal ">
                                         <span className="text-[#212121] font-medium">
                                             {" "}
-                                            Official <span className="uppercase">{appInfo?.appShortName}</span> handbook:{" "}
+                                            Official{" "}
+                                            <span className="uppercase">
+                                                {appInfo?.appShortName}
+                                            </span>{" "}
+                                            handbook:{" "}
                                         </span>{" "}
-                                        Comprehend all rules and tips with this ultimate reference.
+                                        Comprehend all rules and tips with this
+                                        ultimate reference.
                                     </p>
                                 </div>
                                 <div className="text-sm sm:text-base flex gap-2   ">
                                     <IconCheck />
                                     <p className="text-sm sm:text-base text-[#21212185] sm:text-[#212121] font-normal  ">
-                                        <span className="text-[#212121] font-medium">100% FREE access questions:</span>{" "}
-                                        Unlimited attempts, unlimited improvement for free!
+                                        <span className="text-[#212121] font-medium">
+                                            100% FREE access questions:
+                                        </span>{" "}
+                                        Unlimited attempts, unlimited
+                                        improvement for free!
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </Collapse>
 
-                    {!isDesktop && (
+                    {isMobile && (
                         <div
-                            className={clsx("w-full h-8   flex sm:hidden items-center justify-center")}
+                            className="w-full h-8   flex sm:hidden items-center justify-center"
                             onClick={() => {
                                 setOpen(!open);
                             }}
                         >
                             <p className="text-[#3477F5] text-sm">Show More</p>
-                            {open ? <ExpandLess htmlColor="#3477F5" /> : <ExpandMore htmlColor="#3477F5" />}
+                            {open ? (
+                                <ExpandLess htmlColor="#3477F5" />
+                            ) : (
+                                <ExpandMore htmlColor="#3477F5" />
+                            )}
                         </div>
                     )}
 
                     <div
                         onClick={() => {
-                            setOpenListState(1);
+                            setOpenListState(true);
                         }}
                         className="bg-[#343F82] cursor-pointer mt-3 sm:mt-8 w-full text-center sm:w-fit rounded-lg text-white px-8 py-3 sm:py-4 text-base sm:text-2xl font-semibold"
                     >
@@ -119,45 +179,49 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
                     </div>
                 </div>
             </div>
-            {isDesktop ? (
-                <Fragment>
-                    <div className=" absolute z-0 bottom-0 h-full w-full   right-0">
-                        <img src="images/cdl_v2/image.png" className="h-full w-full object-cover " />
-                    </div>
-                    <div
-                        className="absolute bottom-0 left-0 h-full w-full "
-                        style={{
-                            // background: "radial-gradient(34.11% 67.36% at 84.88% 63%, rgba(255, 255, 255, 0) 0%, #E5E9FF 100%)",
-                            background:
-                                "radial-gradient(34.11% 67.36% at 84.88% 63%, rgba(255, 255, 255, 0) 0%, rgba(240, 242, 254, 0.9) 100%)",
-                        }}
-                    ></div>
-                </Fragment>
-            ) : (
+            {isMobile ? (
                 <Fragment>
                     <div className=" absolute z-0 top-0 left-0 w-full aspect-video   right-0">
-                        <img src="images/cdl_v2/image.png" className="h-full w-full" />
+                        <LazyLoadImage
+                            src="/images/cdl_v2/image.png"
+                            classNames="h-full w-full"
+                        />
                     </div>
                     <div
                         className="absolute top-0 right-0 left-0 aspect-video w-full "
                         style={{
                             marginTop: "1px",
                             background:
-                                // "radial-gradient(78.52% 41.96% at 50.13% 28.79%, rgba(229, 233, 255, 0.32) 0.64%, #E5E9FF 85.9%)",
                                 "radial-gradient(78.52% 41.96% at 50.13% 30.79%, rgba(240, 242, 254, 0.32) 0.64%, #F0F2FE 85.9%)",
+                        }}
+                    ></div>
+                </Fragment>
+            ) : (
+                <Fragment>
+                    <div className=" absolute z-0 bottom-0 h-full w-full   right-0">
+                        <LazyLoadImage
+                            src="/images/cdl_v2/image.png"
+                            classNames="h-full w-full object-cover "
+                        />
+                    </div>
+                    <div
+                        className="absolute bottom-0 left-0 h-full w-full "
+                        style={{
+                            marginTop: "1px",
+                            background:
+                                "radial-gradient(34.11% 67.36% at 84.88% 63%, rgba(255, 255, 255, 0) 0%, rgba(240, 242, 254, 0.9) 100%)",
                         }}
                     ></div>
                 </Fragment>
             )}
             <Dialog
-                open={openListState === 1}
+                open={openListState}
                 onClose={() => {
-                    setOpenListState(-1);
+                    setOpenListState(false);
                 }}
             >
                 <ListState
                     appInfo={appInfo}
-                    isDesktop={isDesktop}
                     openListState={openListState}
                     setOpenListState={setOpenListState}
                 />
@@ -171,7 +235,13 @@ export default React.memo(SelectState);
 export const IconCheck = () => {
     return (
         <div>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
                 <path
                     opacity="0.16"
                     d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"

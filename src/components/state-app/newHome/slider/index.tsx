@@ -1,17 +1,39 @@
-import { IAppInfo } from "@/models/AppInfo";
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import SwiperBlock from "./swiperBlock";
 import { IItemBlock } from "@/models/state/stateChildrenApp";
+import { IAppInfo } from "@/models/app/appInfo";
+import axiosInstance from "@/common/config/axios";
+import { API_PATH } from "@/common/constants/api.constants";
+import { useParams } from "next/navigation";
 
 const ListBlock = ({
     appInfo,
     _state,
-    listBlock,
 }: {
     appInfo: IAppInfo;
     _state: string;
-    listBlock?: IItemBlock[];
 }) => {
+    const [listBlock, setListBlock] = useState([]);
+    const params = useParams();
+    useEffect(() => {
+        const handleGetData = async () => {
+            if (params.state) {
+                // *NOTE: để tạm do các bang khác chưa có data
+
+                const res = await axiosInstance.get(
+                    `${API_PATH.GET_LIST_BLOCK}/TX`
+                    // `${API_PATH.GET_LIST_BLOCK}/${ params.state}`
+                );
+                const data = res?.data?.response;
+                if (data) {
+                    setListBlock(data);
+                }
+                console.log("🚀 ~ handleGetData ~ data:", data);
+            }
+        };
+        handleGetData();
+    }, [params]);
     return (
         <div className="bg-[#E6E9FD]">
             <div className="v4-container-component  v4-container-maxWidth">
@@ -25,8 +47,10 @@ const ListBlock = ({
                     </h3>
                     <h4 className="text-center mt-3 sm:mt-4 text-sm font-normal text-[#21212185] sm:text-[#212121] sm:text-lg">
                         Unlock the one-stop source for everything about{" "}
-                        <span className=" capitalize">{_state}</span>{" "}
-                        <span className=" uppercase">
+                        <span className="font-normal text-[#21212185] sm:text-[#212121] capitalize">
+                            {_state}
+                        </span>{" "}
+                        <span className="font-normal text-[#21212185] sm:text-[#212121] uppercase">
                             {appInfo.appShortName}{" "}
                         </span>{" "}
                         with our expert blog! <br />
@@ -35,8 +59,8 @@ const ListBlock = ({
 
                     <ul className="mt-3 text-base font-medium list-disc sm:mt-4 hidden sm:flex w-full items-center gap-8 justify-center">
                         <li>
-                            <span className=" capitalize">{_state}</span>{" "}
-                            <span className=" uppercase">
+                            <span className="capitalize">{_state}</span>{" "}
+                            <span className="uppercase">
                                 {appInfo.appShortName}{" "}
                             </span>{" "}
                             process
@@ -49,8 +73,10 @@ const ListBlock = ({
                     <p className="text-sm sm:text-2xl mt-3 sm:mt-6 text-center font-medium">
                         And much more! Click now to explore!
                     </p>
-                    {listBlock?.length && listBlock?.length > 0 && (
+                    {listBlock?.length && listBlock?.length > 0 ? (
                         <SwiperBlock listBlock={listBlock} />
+                    ) : (
+                        <></>
                     )}
                 </div>
             </div>
@@ -58,4 +84,4 @@ const ListBlock = ({
     );
 };
 
-export default React.memo(ListBlock);
+export default ListBlock;

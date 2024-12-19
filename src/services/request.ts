@@ -4,7 +4,7 @@ import Axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 export const request = async <T>(config: AxiosRequestConfig): Promise<T> => {
     try {
         const response: AxiosResponse<T> = await Axios({
-            baseURL: Config.BASE_URL,
+            baseURL: Config.BASE_WP,
             timeout: Config.HTTP_REQUEST_TIMEOUT,
             ...config,
         });

@@ -29,7 +29,6 @@ const AppThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
     useLayoutEffect(() => {
         if (appConfig) {
-            console.log("🚀 ~ useLayoutEffect ~ appConfig:", appConfig);
             // setup property ở đây, các thuộc tính màu sẽ thay đổi theo app
             const root = window.document.documentElement;
             root.style.setProperty(

@@ -27,10 +27,8 @@
                     font-weight: 400;
                     line-height: 21px;
                     color: #848484;
-
                 }
             }
-
         }
 
         .container-img-mobile {
@@ -49,7 +47,7 @@
         }
     }
 
-    @media screen and (min-width : 769px) {
+    @media screen and (min-width: 769px) {
         .container-content-seo {
             display: flex;
             flex-direction: row;
@@ -79,13 +77,11 @@
                         line-height: 27px;
                     }
                 }
-
             }
 
             .container-img-web {
                 width: 500px;
                 z-index: 1;
-                flex: 1;
                 justify-content: center;
                 height: 500px;
                 align-items: center;
@@ -97,14 +93,14 @@
                     height: auto;
                 }
 
-                @media screen and (max-width : 1200px) {
+                @media screen and (max-width: 1200px) {
                     img {
                         width: 457px;
                         height: auto;
                     }
                 }
 
-                @media screen and (max-width : 992px) {
+                @media screen and (max-width: 992px) {
                     img {
                         width: 373px;
                         height: auto;

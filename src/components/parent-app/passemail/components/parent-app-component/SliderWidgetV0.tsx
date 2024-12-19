@@ -1,13 +1,14 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import Slider from "react-slick";
-import "../../../styles/slick.css";
-import "../../../styles/slick.min.css";
-import "../../../styles/slick-theme.min.css";
-import feedback from "../../../data/feedback.json";
-import MyContainer from "@/components/v4-material/MyContainer";
+import "@/styles/slick.css";
+import "@/styles/slick.min.css";
+import "@/styles/slick-theme.min.css";
+import feedback from "@/data/feedback.json";
 import "./SliderWidgetV0.scss";
-import { DotsSVG } from "@/components/icon/dots";
+import MyContainer from "@/components/v4-material/myContainer";
+import { DotsSVG } from "@/asset/icon/dots";
 const SliderFeedBack = () => {
     const settings = {
         dots: true,
@@ -25,7 +26,10 @@ const SliderFeedBack = () => {
                 <Slider {...settings}>
                     {feedback.map((data, index) => {
                         return (
-                            <div key={index + data.avatar} className="slider-comment">
+                            <div
+                                key={index + data.avatar}
+                                className="slider-comment"
+                            >
                                 <div className="slider-container">
                                     <p>{data.content}</p>
                                     <svg
@@ -44,7 +48,6 @@ const SliderFeedBack = () => {
                                 </div>
                                 <div className="slider-frame">
                                     <Image
-                                        // loader={() => data.avatar}
                                         src={data.avatar}
                                         alt="avatar"
                                         className="frame"

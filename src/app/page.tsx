@@ -9,7 +9,6 @@ const ParentAppPage = async () => {
     if (appInfo) {
         return (
             <ParentAppLayoutV0
-                appInfo={appInfo}
                 descriptionSEO={appInfo.descriptionSEO}
                 listAppInfo={listApp}
                 titleSEO={replaceYear(appInfo.title)}

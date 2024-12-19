@@ -1,7 +1,6 @@
-import MyContainer from "@/components/v4-material/MyContainer";
+import MyContainer from "@/components/v4-material/myContainer";
 import "./FeedbackV0.scss";
-import dynamic from "next/dynamic";
-const SliderFeedBack = dynamic(() => import("./SliderWidgetV0"));
+import SliderFeedBack from "./SliderWidgetV0";
 const FeedbackV0 = () => {
     return (
         <>
@@ -9,7 +8,9 @@ const FeedbackV0 = () => {
                 <div className="feedback-container">
                     <div className="feedback-parameter">
                         <MyContainer className="container-title-feedback">
-                            <h1 className="title-feedback">What Our Users Are Saying</h1>
+                            <h1 className="title-feedback">
+                                What Our Users Are Saying
+                            </h1>
                             <div className="numbers-feedback">
                                 <div className="number-feedback">
                                     <div>10,123</div>
