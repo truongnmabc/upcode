@@ -2,6 +2,9 @@ import { Poppins, Vampiro_One } from "next/font/google";
 import "@/css/globals.css";
 import { getAppInfoParentApp } from "@/utils/getAppInfos";
 import replaceYear from "@/utils/replaceYear";
+import Head from "next/head";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import StoreProvider from "@/app/StoreProvider";
 
 const vampiro = Vampiro_One({
     weight: ["400"],
@@ -47,12 +50,21 @@ export default function ParentAppLayout({
 }: {
     children: React.ReactNode;
 }) {
+    const { appInfo } = getAppInfoParentApp();
+
     return (
         <html
             lang="en"
             className={`${vampiro?.variable} ${poppins?.variable} font-sans`}
         >
-            <body>{children}</body>
+            <Head>
+                <link rel="icon" href="/favicon.ico" sizes="any" />
+            </Head>
+            <body>
+                <StoreProvider appInfo={appInfo}>{children}</StoreProvider>
+                <GoogleAnalytics gaId={process.env.GA_ID} />
+                <GoogleTagManager gtmId={process.env.GTM_ID} />
+            </body>
         </html>
     );
 }

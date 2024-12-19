@@ -1,19 +1,16 @@
-import StoreProvider from "@/app/StoreProvider";
 import axiosInstance from "@/common/config/axios";
 import { API_PATH } from "@/common/constants/api.constants";
 import AppThemeProvider from "@/common/theme/themeProvider";
 import AppLayout from "@/components/appLayout";
+import EventListener from "@/components/event";
 import InitData from "@/components/initData";
 import { IAppInfo } from "@/models/app/appInfo";
 import { IAppConfigData } from "@/redux/features/appConfig";
+import InitDataStore from "@/redux/initDataStore";
 import TestModal from "@/tests";
-import type { Metadata } from "next";
-import { Fragment } from "react";
-import NotFound from "../not-found";
-import Head from "next/head";
-import EventListener from "@/components/event";
-import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import replaceYear from "@/utils/replaceYear";
+import type { Metadata } from "next";
+import NotFound from "../not-found";
 
 type Props = {
     params: { appShortName: string };
@@ -93,31 +90,19 @@ export default async function RootLayout({
 }) {
     const { appShortName } = await params;
     const { appInfo, appConfig } = await fetchAppData(appShortName, true);
-    console.log("🚀 ~ appConfig:", appConfig);
 
     if (!appInfo || !appConfig) {
         return <NotFound />;
     }
     return (
-        <Fragment>
-            <Head>
-                <link rel="icon" href="/favicon.ico" sizes="any" />
-            </Head>
-            <main>
-                <StoreProvider appInfo={appInfo} appConfig={appConfig}>
-                    <AppThemeProvider>
-                        <AppLayout>{children}</AppLayout>
-                        <InitData appInfo={appInfo} />
-                        <EventListener />
-                        {process.env.NODE_ENV === "development" && (
-                            <TestModal />
-                        )}
-                    </AppThemeProvider>
-                </StoreProvider>
-
-                <GoogleAnalytics gaId={process.env.GA_ID} />
-                <GoogleTagManager gtmId={process.env.GTM_ID} />
-            </main>
-        </Fragment>
+        <main>
+            <InitDataStore appConfig={appConfig} appInfo={appInfo} />
+            <AppThemeProvider>
+                <AppLayout>{children}</AppLayout>
+                <InitData appInfo={appInfo} />
+                <EventListener />
+                {process.env.NODE_ENV === "development" && <TestModal />}
+            </AppThemeProvider>
+        </main>
     );
 }

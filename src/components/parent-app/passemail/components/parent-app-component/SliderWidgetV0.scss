@@ -8,7 +8,6 @@
 
     .group-dots {
         display: none;
-
     }
 
     .slider-v0 {
@@ -56,13 +55,14 @@
         }
 
         .slick-slider {
-
             .slick-dots li {
-                @media screen and (max-width : 425px) {
-                    display: none;
+                & {
+                    width: 50px;
                 }
 
-                width: 50px;
+                @media screen and (max-width: 425px) {
+                    display: none;
+                }
 
                 @media screen and (max-width: 768px) {
                     width: 30px;
@@ -89,8 +89,7 @@
         }
     }
 
-
-    @media screen and (min-width : 769px) {
+    @media screen and (min-width: 769px) {
         margin-bottom: 150px;
         z-index: 0;
 

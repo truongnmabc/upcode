@@ -1,10 +1,18 @@
-import { IAppInfo } from "@/models/AppInfo";
-import { useMediaQuery } from "@mui/material";
-import Image from "next/image";
+"use client";
+import LazyLoadImage from "@/components/images";
+import ForwardedLinkBlank from "@/components/nextLink/forwardedLinkBlank";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { IAppInfo } from "@/models/app/appInfo";
 import Link from "next/link";
 import React from "react";
 
-const BannerHome = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string }) => {
+const BannerHome = ({
+    appInfo,
+    _state,
+}: {
+    appInfo: IAppInfo;
+    _state: string;
+}) => {
     const list = [
         {
             icon: <IconWifi />,
@@ -31,23 +39,26 @@ const BannerHome = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string }) 
             name: "State-specific questions",
         },
     ];
-    const isDesktop = useMediaQuery("(min-width:769px)");
+    const isM0bile = useIsMobile();
 
     return (
         <div className="v4-container-component v4-container-maxWidth">
             <h3 className="text-center sm:leading-[60px] text-2xl sm:mt-12 mt-6 font-semibold px-4 sm:text-[40px]">
-                More <span className=" capitalize">{_state}</span> <span className="uppercase">{appInfo?.appShortName}</span>{" "}
-                Study Resources
+                More <span className=" capitalize">{_state}</span>{" "}
+                <span className="uppercase">{appInfo?.appShortName}</span> Study
+                Resources
             </h3>
 
             <h4 className="sm:text-2xl text-lg mt-4 sm:mt-8 font-medium sm:font-semibold text-center sm:text-start">
                 Practice for your <span className=" capitalize">{_state}</span>{" "}
-                <span className="uppercase">{appInfo?.appShortName}</span> on any device
+                <span className="uppercase">{appInfo?.appShortName}</span> on
+                any device
             </h4>
             <div
                 className="flex w-full mt-3 sm:mt-6 rounded-2xl sm:flex-row flex-col"
                 style={{
-                    background: "linear-gradient(90deg, #DBEBFD 0%, #E2DFFF 100%)",
+                    background:
+                        "linear-gradient(90deg, #DBEBFD 0%, #E2DFFF 100%)",
                 }}
             >
                 <div className="flex-1 pl-4 pt-4 sm:pl-6 sm:py-6">
@@ -58,83 +69,122 @@ const BannerHome = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string }) 
                         to practice anytime, anywhere!
                     </p>
                     <div className="flex justify-center sm:hidden gap-4 mt-4 items-center ">
-                        <Link href={appInfo.linkIos} passHref>
-                            <a
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className=" cursor-pointer hover:scale-105 transition-all"
-                            >
-                                <Image src={"/images/download_ios.webp"} width={104} height={32} />
-                            </a>
+                        <Link
+                            href={appInfo.linkIos || ""}
+                            legacyBehavior
+                            passHref
+                        >
+                            <ForwardedLinkBlank classNames=" cursor-pointer hover:scale-105 transition-all">
+                                <LazyLoadImage
+                                    src={"/images/download_ios.webp"}
+                                    classNames="w-[104] h-[32px]"
+                                />
+                            </ForwardedLinkBlank>
                         </Link>
-                        <Link href={appInfo.linkAndroid} passHref>
-                            <a
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className=" cursor-pointer hover:scale-105 transition-all"
-                            >
-                                <Image src={"/images/download_android.webp"} width={104} height={32} />
-                            </a>
+                        <Link
+                            href={appInfo.linkAndroid || ""}
+                            legacyBehavior
+                            passHref
+                        >
+                            <ForwardedLinkBlank classNames=" cursor-pointer hover:scale-105 transition-all">
+                                <LazyLoadImage
+                                    src={"/images/download_android.webp"}
+                                    classNames="w-[104] h-[32px]"
+                                />
+                            </ForwardedLinkBlank>
                         </Link>
                     </div>
                     <div
                         className="grid sm:max-w-[800px] rounded-lg sm:mt-6 mt-3 sm:w-full w-fit p-4 sm:p-0 grid-cols-1 gap-4 sm:grid-cols-3"
                         style={{
-                            background: isDesktop
+                            background: isM0bile
                                 ? "transparent"
                                 : "linear-gradient(151.29deg, rgba(255, 255, 255, 0.56) 5.17%, rgba(255, 255, 255, 0) 50.54%, rgba(255, 255, 255, 0.13) 67.35%, rgba(255, 255, 255, 0) 91.02%)",
                         }}
                     >
                         {list?.map((item) => (
-                            <div key={item.name} className="flex gap-2 w-full  items-center">
+                            <div
+                                key={item.name}
+                                className="flex gap-2 w-full  items-center"
+                            >
                                 <div className="w-6 h-6">{item.icon}</div>
-                                <span className="text-xs whitespace-nowrap flex-1 sm:text-base font-medium">{item.name}</span>
+                                <span className="text-xs whitespace-nowrap flex-1 sm:text-base font-medium">
+                                    {item.name}
+                                </span>
                             </div>
                         ))}
                     </div>
 
                     <div className="hidden sm:flex gap-6 mt-8 items-center ">
-                        <Link href={appInfo.linkIos} passHref>
-                            <a
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className=" cursor-pointer hover:scale-105 transition-all"
-                            >
-                                <Image src={"/images/download_ios.webp"} width={180} height={56} />
-                            </a>
+                        <Link
+                            href={appInfo.linkIos || ""}
+                            legacyBehavior
+                            passHref
+                        >
+                            <ForwardedLinkBlank classNames=" cursor-pointer hover:scale-105 transition-all">
+                                <LazyLoadImage
+                                    src={"/images/download_ios.webp"}
+                                    classNames="w-[180px] h-14"
+                                />
+                            </ForwardedLinkBlank>
                         </Link>
-                        <Link href={appInfo.linkAndroid} passHref>
-                            <a
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className=" cursor-pointer hover:scale-105 transition-all"
-                            >
-                                <Image src={"/images/download_android.webp"} width={180} height={56} />
-                            </a>
+                        <Link
+                            href={appInfo.linkAndroid || ""}
+                            legacyBehavior
+                            passHref
+                        >
+                            <ForwardedLinkBlank classNames=" cursor-pointer hover:scale-105 transition-all">
+                                <LazyLoadImage
+                                    src={"/images/download_android.webp"}
+                                    classNames="w-[180px] h-14"
+                                />
+                            </ForwardedLinkBlank>
                         </Link>
                     </div>
                 </div>
                 <div className="sm:h-[325px] hidden sm:block sm:w-[400px] relative">
                     <div className=" absolute right-0 h-full bottom-0">
-                        <Image width={441} height={325} src={"/images/cdl_v2/home/banner.png"} />
+                        <LazyLoadImage
+                            classNames="w-[441px] h-[325px]"
+                            src={"/images/cdl_v2/home/banner.png"}
+                        />
                     </div>
                     <div className=" absolute h-full right-0 bottom-0">
-                        <Image width={118} height={325} src={"/images/cdl_v2/home/banner_1.png"} />
+                        <LazyLoadImage
+                            classNames="w-[118px] h-[325px]"
+                            src={"/images/cdl_v2/home/banner_1.png"}
+                        />
                     </div>
                 </div>
-                <div className="w-full flex justify-end  sm:hidden">
-                    <Image width={280} height={180} src={"/images/cdl_v2/home/banner.png"} />
+                <div
+                    className="w-full flex justify-end relative sm:hidden"
+                    style={{
+                        height: "156px",
+                    }}
+                >
+                    <div className="absolute top-0 right-0 w-fit h-fit">
+                        <LazyLoadImage
+                            classNames="w-[280px] h-[180px]"
+                            src={"/images/cdl_v2/home/banner.png"}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
     );
 };
 
-export default BannerHome;
+export default React.memo(BannerHome);
 
 const IconWifi = () => {
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
             <path
                 d="M14.3533 19.0486C14.3533 20.4024 13.2995 21.5 11.9997 21.5C10.6999 21.5 9.64609 20.4024 9.64609 19.0486C9.64609 17.6949 10.6999 16.5972 11.9997 16.5972C13.2995 16.5972 14.3533 17.6949 14.3533 19.0486ZM20.0709 7.69385C20.8717 8.28341 21.5172 8.87787 21.9955 9.3663C22.4574 9.83881 23.197 9.83758 23.6548 9.36079C24.1161 8.88032 24.1155 8.09894 23.6501 7.62215C23.1088 7.06753 22.3915 6.40749 21.5071 5.74869C18.6528 3.62334 15.3648 2.5 12.0003 2.5C8.6358 2.5 5.34779 3.62334 2.49344 5.74869C1.60907 6.40749 0.891804 7.06753 0.349883 7.62215C-0.115545 8.09833 -0.116133 8.8797 0.345176 9.36017C0.801778 9.83574 1.54081 9.83942 2.00153 9.36814C3.58611 7.74717 7.03887 4.95138 12.0003 4.95138C14.8847 4.95138 17.6001 5.87371 20.0714 7.69324L20.0709 7.69385ZM16.0744 10.6104L17.3424 8.52855C15.8314 7.72572 14.0332 7.14045 11.9997 7.14045C8.25863 7.14045 5.3119 9.11994 3.4902 10.793C2.98005 11.2612 2.9571 12.0806 3.43783 12.5813C3.87619 13.0379 4.58169 13.0654 5.04712 12.6377C5.27306 12.4299 5.51902 12.2173 5.78439 12.0046C7.78438 10.4032 9.87557 9.59122 12.0003 9.59122C13.3777 9.59122 14.7411 9.93318 16.075 10.6092L16.0744 10.6104ZM13.7149 14.6337C13.7602 14.4627 13.8302 14.2936 13.9291 14.1312L14.9205 12.5041C14.075 12.1027 13.0941 11.8238 11.9997 11.8238C9.62196 11.8238 7.78026 13.1371 6.69877 14.1716C6.20569 14.6435 6.1898 15.4482 6.66346 15.9415C7.11065 16.4073 7.82968 16.4195 8.2957 15.974C9.07533 15.2294 10.3887 14.2752 11.9997 14.2752C12.6199 14.2752 13.1965 14.4174 13.7149 14.6337ZM23.6242 14.4596L20.0191 8.5408C19.799 8.17922 19.4366 7.97147 19.0253 7.97147C18.614 7.97147 18.2521 8.17861 18.0314 8.5408L14.4263 14.4596C14.1927 14.8427 14.1786 15.3091 14.3886 15.7068C14.5987 16.1045 14.9841 16.3417 15.4201 16.3417H22.6304C23.0664 16.3417 23.4518 16.1045 23.6619 15.7068C23.8719 15.3091 23.8578 14.8427 23.6242 14.4596ZM20.6899 14.2494C20.9199 14.4891 20.9199 14.877 20.6899 15.116C20.4598 15.3556 20.0873 15.3556 19.8578 15.116L19.0258 14.2494L18.1938 15.116C17.9638 15.3556 17.5913 15.3556 17.3618 15.116C17.1318 14.8764 17.1318 14.4885 17.3618 14.2494L18.1938 13.3829L17.3618 12.5163C17.1318 12.2767 17.1318 11.8888 17.3618 11.6498C17.5919 11.4101 17.9644 11.4101 18.1938 11.6498L19.0258 12.5163L19.8578 11.6498C20.0879 11.4101 20.4604 11.4101 20.6899 11.6498C20.9199 11.8894 20.9199 12.2773 20.6899 12.5163L19.8578 13.3829L20.6899 14.2494Z"
                 fill="#212121"
@@ -145,7 +195,13 @@ const IconWifi = () => {
 
 const IconFeedback = () => {
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
             <path
                 d="M6.6875 13.2109C6.6875 13.539 6.42973 13.7969 6.10156 13.7969C5.7734 13.7969 5.51562 13.539 5.51562 13.2109C5.51562 12.8828 5.7734 12.625 6.10156 12.625C6.42973 12.625 6.6875 12.8828 6.6875 13.2109Z"
                 fill="#212121"
@@ -164,7 +220,13 @@ const IconFeedback = () => {
 
 const IconFriendly = () => {
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
             <path
                 d="M15.0763 14.3047C16.5621 14.3047 17.8046 13.246 18.0906 11.8438H12.062C12.348 13.246 13.5905 14.3047 15.0763 14.3047Z"
                 fill="#212121"
@@ -183,7 +245,13 @@ const IconFriendly = () => {
 
 const IconUni = () => {
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
             <g clipPath="url(#clip0_3113_6561)">
                 <path
                     d="M13.6795 7.49086C12.3063 6.42687 10.2114 6.92308 9.39129 8.45466C9.30693 8.59303 9.32568 8.70277 9.45222 8.80296C9.75216 9.03676 10.0474 9.26578 10.3474 9.49957C10.488 9.60931 10.6051 9.59499 10.7176 9.45663C10.9144 9.22761 11.0925 8.96519 11.3409 8.78865C11.6877 8.55963 12.2314 8.58348 12.5688 8.83159C12.8828 9.06061 12.9109 9.4948 12.6157 9.75245C12.3017 10.0149 11.8939 10.1341 11.5987 10.4252C11.1769 10.8021 10.9379 11.2554 10.9988 11.8423C11.0222 11.9806 11.0597 12.1858 11.2378 12.1715H11.8892H12.5407C12.9672 12.1381 12.6391 11.7182 13.164 11.2697C13.5342 10.9787 14.0076 10.8021 14.2888 10.4013C15.0058 9.47094 14.5981 8.10159 13.6795 7.49086Z"
@@ -209,7 +277,13 @@ const IconUni = () => {
 
 const IconReg = () => {
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
             <g clipPath="url(#clip0_3113_6577)">
                 <path
                     d="M5.14357 20.3054C4.6372 20.3054 4.22053 19.8887 4.22053 19.3823V5.66868C4.22053 5.20453 4.56338 4.82474 5.0117 4.76145V3.55889C5.0117 3.42702 5.02754 3.30044 5.04863 3.17383C3.71417 3.22131 2.63818 4.31841 2.63818 5.66868V19.3823C2.63818 20.7643 3.76165 21.8877 5.14357 21.8877H11.9582C11.6997 21.3972 11.5152 20.8645 11.4202 20.3054H5.14357Z"
@@ -243,7 +317,13 @@ const IconReg = () => {
 
 const IconState = () => {
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
             <path
                 d="M16.5 14.625C14.0876 14.625 12.125 16.5876 12.125 19C12.125 21.4124 14.0876 23.375 16.5 23.375C18.9124 23.375 20.875 21.4124 20.875 19C20.875 16.5876 18.9124 14.625 16.5 14.625ZM16.5 21.375C16.2929 21.375 16.125 21.2071 16.125 21C16.125 20.7929 16.2929 20.625 16.5 20.625C16.7071 20.625 16.875 20.7929 16.875 21C16.875 21.2071 16.7071 21.375 16.5 21.375ZM17.0347 19.2651C16.9375 19.3059 16.875 19.3982 16.875 19.5C16.875 19.707 16.707 19.875 16.5 19.875C16.293 19.875 16.125 19.707 16.125 19.5C16.125 19.0957 16.3677 18.7322 16.7432 18.574C16.9751 18.4761 17.125 18.2502 17.125 17.9988C17.125 17.6548 16.8447 17.375 16.5 17.375C16.1553 17.375 15.875 17.6548 15.875 17.9988C15.875 18.2058 15.707 18.3738 15.5 18.3738C15.293 18.3738 15.125 18.2058 15.125 17.9988C15.125 17.2412 15.7417 16.625 16.5 16.625C17.2583 16.625 17.875 17.2412 17.875 17.9988C17.875 18.5525 17.5449 19.0496 17.0347 19.2651Z"
                 fill="#212121"

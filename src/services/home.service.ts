@@ -94,42 +94,30 @@ export const genLinkPro = (appInfo: IAppInfo, hasParams = false) => {
     return url;
 };
 
+type IRes = {
+    titleSEO: string;
+    title: string;
+    keywordSEO: string;
+    description: string;
+    descriptionSEO: string;
+};
+
 export const getSEOAndHeaderContentApi = async (
     isHomePage: boolean,
     pathname?: string,
     isState?: boolean
-) => {
-    if (!END_POINT_WORD_PRESS) {
-        return null;
-    }
-    const url =
-        END_POINT_WORD_PRESS +
-        Config.PREFIX_URL +
-        APIConfig.GET_SEO_AND_HEADER_CONTENT;
-
-    let result = await requestPostData({
+): Promise<IRes | null> => {
+    const url = "wp-json/passemall/v1/get-seo-and-header-content";
+    const result = (await requestPostData({
         url: url,
         data: {
             isHomePage,
             pathname,
             isState,
         },
-    });
-    console.log("🚀 ~ getSEOAndHeaderContentApi ~ result:", result);
+    })) as IRes;
 
     return result;
-};
-
-export const requestGetListBlock = async ({ state }: { state: string }) => {
-    try {
-        const response = await requestGetData({
-            url: `https://cdl-prep.com/wp-json/passemall/v1/get-post-by-category-name?category_name=${state}`,
-        });
-        return response;
-    } catch (err) {
-        console.log("🚀 ~ requestGetListBlock ~ err:", err);
-        return null;
-    }
 };
 
 export const sendEmailSubscribeApiV4 = async (

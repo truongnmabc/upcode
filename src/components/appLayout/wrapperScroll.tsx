@@ -12,7 +12,7 @@ const WrapperScroll = ({ children }: { children: React.ReactNode }) => {
         <SessionProvider>
             <div
                 id="pageScroll"
-                className="w-screen h-screen flex flex-col justify-between  overflow-auto"
+                className="w-screen h-screen flex flex-col justify-between relative overflow-auto"
                 onScroll={(e: React.UIEvent<HTMLDivElement, UIEvent>) => {
                     const { scrollTop } = e.target as HTMLElement;
 
