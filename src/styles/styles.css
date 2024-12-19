@@ -312,6 +312,7 @@ pre {
 .h-12 {
     height: 3rem;
 }
+
 .h-6 {
     height: 1.5rem;
 }
@@ -758,6 +759,9 @@ pre {
     filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
         var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
+.h-14 {
+    height: 3.5rem;
+}
 .pl-4 {
     padding-left: 1rem;
 }
@@ -890,11 +894,11 @@ pre {
     }
 
     .sm\:w-slider {
-        width: calc((100% / 3) - 48px);
+        width: calc((100% / 3) - 16px);
     }
 
-    .sm\:max-w-\[718px\] {
-        max-width: 718px;
+    .sm\:max-w-\[800px\] {
+        max-width: 800px;
     }
 
     .sm\:max-w-\[800px\] {
@@ -962,7 +966,12 @@ pre {
         padding-top: 3rem;
         padding-bottom: 3rem;
     }
-
+    .sm\:h-12 {
+        height: 3rem;
+    }
+    .sm\:h-14 {
+        height: 3.5rem;
+    }
     .sm\:py-\[48px\] {
         padding-top: 48px;
         padding-bottom: 48px;

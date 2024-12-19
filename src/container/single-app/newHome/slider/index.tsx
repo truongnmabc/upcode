@@ -13,8 +13,12 @@ const ListBlock = ({ appInfo, _state, listBlock }: { appInfo: IAppInfo; _state: 
                         <span className=" uppercase">{appInfo.appShortName} </span> Basic Knowledge
                     </h3>
                     <h4 className="text-center mt-3 sm:mt-4 text-sm font-normal text-[#21212185] sm:text-[#212121] sm:text-lg">
-                        Unlock the one-stop source for everything about <span className=" capitalize">{_state}</span>{" "}
-                        <span className=" uppercase">{appInfo.appShortName} </span> with our expert blog! <br />
+                        Unlock the one-stop source for everything about{" "}
+                        <span className="font-normal text-[#21212185] sm:text-[#212121] capitalize">{_state}</span>{" "}
+                        <span className="font-normal text-[#21212185] sm:text-[#212121] uppercase">
+                            {appInfo.appShortName}{" "}
+                        </span>{" "}
+                        with our expert blog! <br />
                         Packed with the ultimate guide to master the basics
                     </h4>
 
