@@ -49,25 +49,26 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
                 // router.push(_href);
             }
             if (item.id === "PT") {
-                const res = await db.tests
+                const res = await db?.tests
                     .where("testType")
                     .equals("practiceTests")
                     .toArray();
+                if (res) {
+                    const currentTest = res.find((item) => item?.status === 0);
+                    const id = currentTest?.id.toString();
+                    dispatch(
+                        initTestQuestionThunk({
+                            testId: id,
+                            duration: currentTest?.duration,
+                        })
+                    );
 
-                const currentTest = res.find((item) => item?.status === 0);
-                const id = currentTest?.id.toString();
-                dispatch(
-                    initTestQuestionThunk({
-                        testId: id,
-                        duration: currentTest?.duration,
-                    })
-                );
-
-                const _href = revertPathName({
-                    href: `/study/${item.name}?type=test&testId=${id}`,
-                    appName: appInfo.appShortName,
-                });
-                router.push(_href);
+                    const _href = revertPathName({
+                        href: `/study/${item.name}?type=test&testId=${id}`,
+                        appName: appInfo.appShortName,
+                    });
+                    router.push(_href);
+                }
             }
         },
         [
@@ -90,7 +91,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
             }}
         >
             <div
-                className="flex border relative overflow-hidden cursor-pointer w-full h-fit rounded-md"
+                className="flex border relative overflow-hidden cursor-pointer w-full h-[52px] sm:h-[72px] rounded-md"
                 onMouseOver={(e) => {
                     e.currentTarget.style.borderColor = item?.color || "";
                 }}
@@ -103,11 +104,11 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
                     style={{
                         backgroundColor: item.color,
                     }}
-                    className="p-5 rounded-bl-md flex item-center justify-center rounded-tl-md"
+                    className="w-[52px] h-[52px] sm:w-[72px] sm:h-[72px] rounded-bl-md flex  items-center justify-center rounded-tl-md"
                 >
-                    {item.icon}
+                    <div className="w-6  h-6 sm:w8 sm:h-8">{item.icon}</div>
                 </div>
-                <h3 className="pl-4 flex-1 text-base flex items-center justify-start font-medium ">
+                <h3 className="pl-4 flex-1 text-base sm:text-lg  flex items-center justify-start font-medium ">
                     {item.name}
                 </h3>
                 <MtUiRipple ripples={ripples} onClear={onClearRipple} />

@@ -9,6 +9,7 @@ import GridTopicProgress from "./gridTopic";
 import PassingFinishPage from "./passing";
 import ProgressFinishPage from "./progress";
 import TitleFinishPage from "./title";
+import MyContainer from "../v4-material/myContainer";
 
 const FinishLayout = () => {
     const subTopicProgressId = useSearchParams().get("subTopicProgressId");
@@ -78,15 +79,17 @@ const FinishLayout = () => {
     }, [subTopicProgressId, partId, turn]);
 
     return (
-        <div className="w-full py-6 h-full gap-8 flex flex-col">
-            <TitleFinishPage currentPart={game.currentPart} />
-            <ProgressFinishPage listAnswer={game.listAnswer} />
-            <PassingFinishPage
-                nextPart={game.nextPart}
-                currentPartTag={game.currentPartTag}
-            />
-            <GridTopicProgress />
-        </div>
+        <MyContainer>
+            <div className="w-full py-6 h-full gap-8 flex flex-col">
+                <TitleFinishPage currentPart={game.currentPart} />
+                <ProgressFinishPage listAnswer={game.listAnswer} />
+                <PassingFinishPage
+                    nextPart={game.nextPart}
+                    currentPartTag={game.currentPartTag}
+                />
+                <GridTopicProgress />
+            </div>
+        </MyContainer>
     );
 };
 

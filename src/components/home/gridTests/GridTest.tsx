@@ -39,18 +39,18 @@ const GridTest = () => {
     const { appInfo } = useAppSelector(appInfoState);
 
     return (
-        <div className="w-full flex flex-col gap-4 sm:gap-8">
-            <h3 className="sm:text-4xl text-center text-xl font-semibold">
+        <div className="w-full mt-6 sm:mt-12">
+            <h3 className="sm:text-[32px] sm:leading-[48px] text-center text-lg font-bold">
                 Take Full {appInfo.appName} Practice Test
             </h3>
-            <h4 className="text-xs sm:text-base  text-center">
+            <h4 className="text-xs my-2 sm:mt-8 sm:text-base text-[#212121CC] sm:text-[#212121] font-normal  text-center">
                 Ace your exam with our comprehensive practice tests! Get started
                 with a Diagnostic Test to identify your strengths and
                 weaknesses. Then, master the content with our Practice Tests.
                 Finally, fine-tune your skills with the Final Test and Custom
                 Test for ultimate confidence.
             </h4>
-            <div className="w-full ">
+            <div className="w-full mt-6 sm:mt-10 ">
                 <Grid2 container spacing={2}>
                     {mockGirdTests.map((test) => (
                         <ItemGridTest key={test.id} item={test} />

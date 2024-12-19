@@ -1,3 +1,4 @@
+import { listAppState } from "@/common/constants";
 import RouterApp from "@/common/router/router.constant";
 
 export const convertPathName = (pathName: string): string => {
@@ -13,14 +14,18 @@ export const convertPathName = (pathName: string): string => {
 export const revertPathName = ({
     href,
     appName,
-    state = "all",
+    state,
 }: {
-    href: string;
+    href?: string;
     appName: string;
     state?: string;
 }): string => {
     const isSingleApp = process.env.IS_SINGLE_APP === "true";
-    if (isSingleApp) return href;
+    if (isSingleApp && href) return href;
+
     if (href === RouterApp.Home) return `/${appName}`;
-    return `/${appName}/${state}/${href}`;
+
+    if (!href) return state ? `/${appName}/${state}` : `/${appName}`;
+
+    return `/${appName}/${state || "all"}/${href}`;
 };

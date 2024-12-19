@@ -4,4 +4,7 @@ export interface ITestQuestion {
     parentId: number;
     question: IQuestion[];
     duration: number;
+    isPaused: boolean;
+    startTime: number;
+    remainTime: number;
 }

@@ -3,7 +3,7 @@ import { useAppSelector } from "@/redux/hooks";
 import React, { useEffect, useState } from "react";
 
 const Time = () => {
-    const { time: timeTest } = useAppSelector(gameState);
+    const { time: timeTest, remainTime } = useAppSelector(gameState);
 
     const [time, setTime] = useState(0);
 
