@@ -1,3 +1,5 @@
+"use client";
+
 import { MtUiButton } from "@/components/button";
 import MyContainer from "@/components/v4-material/myContainer";
 import statesData from "@/data/statesName.json";

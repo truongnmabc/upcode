@@ -1,24 +1,27 @@
-import Link from "next/link";
-import { getContactLink, validateEmail } from "@/utils";
-import { APP_SHORT_NAME } from "../../config_app";
-import { memo, useRef } from "react";
+"use client";
+
+import { appInfoState } from "@/redux/features/appInfo";
+import { useAppSelector } from "@/redux/hooks";
 import { sendEmailSubscribeApiV4 } from "@/services/home.service";
-import { IAppInfo } from "../../models/AppInfo";
-import "./FooterLandingV4.scss";
-import MyContainer from "../v4-material/myContainer";
+import { validateEmail } from "@/utils";
+import { getContactApp } from "@/utils/getContact";
+import { useMediaQuery } from "@mui/material";
+import Link from "next/link";
+import { memo, useRef } from "react";
+import { IAppInfo } from "../../models/app/appInfo";
 import FacebookIcon from "../icon/FacebookIcon";
 import TwitterIcon from "../icon/TwitterIcon";
 import YoutubeIcon from "../icon/YoutubeIcon";
-import { useRouter } from "next/router";
-import { useMediaQuery } from "@mui/material";
-const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
+import "./FooterLandingV4.scss";
+
+const FooterLandingV4 = () => {
     const isMobile = useMediaQuery("(max-width:768px)");
-    const router = useRouter();
     let emailSupport = "support@abc-elearning.org";
     const getSrcLogo = () => {
-        let logo = `/images/${APP_SHORT_NAME}/logo-dark.png`;
+        let logo = `/images/${appInfo.appShortName}/logo-dark.png`;
         return logo;
     };
+    const { appInfo } = useAppSelector(appInfoState);
     const _email = useRef<HTMLInputElement>(null);
     const _message = useRef<HTMLInputElement>(null);
     const error_email = useRef<HTMLParagraphElement>(null);
@@ -26,40 +29,50 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
     const btn = useRef<HTMLButtonElement>(null);
     const handleSubmit = async () => {
         let result;
-        try {
-            let email = _email.current.value;
-            let message = _message.current.value;
-            const isValidEmail = validateEmail(email);
-            const isValidMessage = message.trim().length > 0;
-            if (isValidEmail && isValidMessage) {
-                btn.current.innerHTML = "Sending...";
-                btn.current.disabled = true;
-                error_email.current.innerHTML = "";
-                error_message.current.innerHTML = "";
-                result = await sendEmailSubscribeApiV4(
-                    email.trim(),
-                    message.trim(),
-                    appInfo.appName
-                );
-                _email.current.value = "";
-                _message.current.value = "";
-            } else {
-                (error_email.current.innerHTML = isValidEmail
-                    ? ""
-                    : "Please provide a valid email address!"),
-                    (error_message.current.innerHTML = isValidMessage
+        if (
+            _email.current &&
+            btn.current &&
+            _message.current &&
+            error_email.current &&
+            error_message.current
+        ) {
+            try {
+                const email = _email.current.value;
+                const message = _message.current.value;
+                const isValidEmail = validateEmail(email);
+                const isValidMessage = message.trim().length > 0;
+                if (isValidEmail && isValidMessage) {
+                    btn.current.innerHTML = "Sending...";
+                    btn.current.disabled = true;
+                    error_email.current.innerHTML = "";
+                    error_message.current.innerHTML = "";
+                    result = await sendEmailSubscribeApiV4(
+                        email.trim(),
+                        message.trim(),
+                        appInfo.appName
+                    );
+                    _email.current.value = "";
+                    _message.current.value = "";
+                } else {
+                    (error_email.current.innerHTML = isValidEmail
                         ? ""
-                        : "Type your message please!");
+                        : "Please provide a valid email address!"),
+                        (error_message.current.innerHTML = isValidMessage
+                            ? ""
+                            : "Type your message please!");
+                }
+            } catch (error) {
+                console.log("footer send mail error", error);
             }
-        } catch (error) {
-            console.log("footer send mail error", error);
-        }
-        if (result) {
-            btn.current.innerHTML = "Sent";
-            setTimeout(() => {
-                btn.current.disabled = false;
-                btn.current.innerHTML = "Send";
-            }, 2000);
+            if (result) {
+                btn.current.innerHTML = "Sent";
+                setTimeout(() => {
+                    if (btn.current) {
+                        btn.current.disabled = false;
+                        btn.current.innerHTML = "Send";
+                    }
+                }, 2000);
+            }
         }
     };
     const groupCompanyLegal = () => {
@@ -102,7 +115,7 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                                 <img
                                     className="img-logo-footer"
                                     src={getSrcLogo()}
-                                    alt={"logo-" + APP_SHORT_NAME}
+                                    alt={"logo-" + appInfo.appShortName}
                                     width={162}
                                 />
                             </div>
@@ -148,7 +161,7 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                             <div
                                 className="cluster-email"
                                 onClick={() => {
-                                    router.push(`mailto:${emailSupport}`);
+                                    // router.push(`mailto:${emailSupport}`);
                                 }}
                             >
                                 <img src="/images/contacts/sms.png" alt="" />
@@ -159,7 +172,7 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                         <div
                             className="cluster-location"
                             onClick={() => {
-                                router.push("/");
+                                // router.push("/");
                             }}
                         >
                             <img src="/images/contacts/location.png" alt="" />
@@ -176,7 +189,10 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                                 type="email"
                                 placeholder="Enter your email"
                                 onChange={(e) => {
-                                    if (!!error_email.current.innerHTML)
+                                    if (
+                                        error_email.current &&
+                                        !!error_email.current.innerHTML
+                                    )
                                         error_email.current.innerHTML = "";
                                 }}
                             />
@@ -188,7 +204,10 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                                 type="text"
                                 placeholder="Enter your message"
                                 onChange={(e) => {
-                                    if (!!error_message.current.innerHTML)
+                                    if (
+                                        error_message.current &&
+                                        !!error_message.current.innerHTML
+                                    )
                                         error_message.current.innerHTML = "";
                                 }}
                             />
@@ -214,39 +233,37 @@ const FooterLandingV4 = ({ appInfo }: { appInfo: IAppInfo }) => {
                         ©2024 {appInfo.appName} Prep by ABC-Elearning. All
                         rights reserved.
                     </span>
-                    <PlatformContactsLogo />
+                    <PlatformContactsLogo appInfo={appInfo} />
                 </div>
             </div>
         </div>
     );
 };
 
-const PlatformContactsLogo = () => {
-    let fb = getContactLink("facebook");
-    let tw = getContactLink("twitter");
-    let yt = getContactLink("youtube");
+const PlatformContactsLogo = ({ appInfo }: { appInfo: IAppInfo }) => {
+    const { facebook, twitter, youtube } = getContactApp(appInfo.appShortName);
     // viet kieu nay de check core web vital
     return (
         <div className="v4-platform-logo-contact-0">
-            {fb && (
+            {facebook && (
                 <div>
-                    <a href={fb}>
+                    <a href={facebook}>
                         {/* <img alt="facebook-icon" src="/images/v4-facebook.webp" width={24} height={24} /> */}
                         <FacebookIcon color="#fff" colorApp="#343F82" />
                     </a>
                 </div>
             )}
-            {tw && (
+            {twitter && (
                 <div>
-                    <a href={tw}>
+                    <a href={twitter}>
                         {/* <img alt="twitter-icon" src="/images/v4-twitter.webp" width={24} height={24} /> */}
                         <TwitterIcon color="#fff" colorApp="#343F82" />
                     </a>
                 </div>
             )}
-            {yt && (
+            {youtube && (
                 <div>
-                    <a href={yt}>
+                    <a href={youtube}>
                         {/* <img alt="youtube-icon" src="/images/v4-youtube.webp" width={24} height={24} /> */}
                         <YoutubeIcon color="#fff" colorApp="#343F82" />
                     </a>
@@ -256,12 +273,4 @@ const PlatformContactsLogo = () => {
     );
 };
 
-export default memo(FooterLandingV4, (prev, next) => {
-    if (
-        JSON.stringify(prev.appInfo).localeCompare(
-            JSON.stringify(next.appInfo)
-        ) == 0
-    )
-        return true;
-    return false;
-});
+export default memo(FooterLandingV4);

@@ -11,7 +11,6 @@ import TestModal from "@/tests";
 import replaceYear from "@/utils/replaceYear";
 import type { Metadata } from "next";
 import NotFound from "../not-found";
-
 type Props = {
     params: { appShortName: string };
 };

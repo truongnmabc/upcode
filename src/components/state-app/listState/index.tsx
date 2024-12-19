@@ -1,4 +1,5 @@
 "use client";
+
 import { IAppInfo } from "@/models/app/appInfo";
 import React, { useEffect, useState } from "react";
 import ListState from "./listState";
@@ -10,11 +11,13 @@ const BtnGotoState = ({ appInfo }: { appInfo: IAppInfo }) => {
     const [openListState, setOpenListState] = useState(false);
 
     useEffect(() => {
-        const _state = localStorage.getItem(
-            "select-state-" + appInfo.appNameId
-        );
-        if (_state) {
-            setCurrentState(_state);
+        if (typeof window !== "undefined") {
+            const _state = localStorage.getItem(
+                "select-state-" + appInfo.appNameId
+            );
+            if (_state) {
+                setCurrentState(_state);
+            }
         }
     }, [appInfo.appShortName]);
 
