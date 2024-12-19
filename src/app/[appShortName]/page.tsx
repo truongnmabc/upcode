@@ -6,10 +6,10 @@ import GridTest from "@/components/home/gridTests/GridTest";
 import GridTopics from "@/components/home/gridTopic/gridTopics";
 import TitleHomeApp from "@/components/home/title";
 import SeoContent from "@/components/seoContent/seoContent";
-import { ITopic } from "@/models/topics/topics";
-import { fetchAppData } from "./layout";
-import { getAppType } from "@/utils/config_web";
 import HomeSingleApp from "@/components/state-app";
+import { ITopic } from "@/models/topics/topics";
+import { getAppType } from "@/utils/config_web";
+import { fetchAppData } from "./layout";
 
 type Params = {
     params: Promise<{ appShortName: string }>;

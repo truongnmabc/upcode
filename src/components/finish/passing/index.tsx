@@ -1,11 +1,21 @@
 import { MtUiButton } from "@/components/button";
+import { db } from "@/db/db.model";
+import { ITopic } from "@/models/topics/topics";
 import { appInfoState } from "@/redux/features/appInfo";
-import { handleTryAgain } from "@/redux/features/game";
+import { gameState, setTurtGame } from "@/redux/features/game";
+import { selectSubTopics } from "@/redux/features/study";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initQuestion";
 import { revertPathName } from "@/utils/pathName";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
+
+type NavigateToHrefParams = {
+    topicName: string;
+    subTopicTag: string;
+    partTag: string;
+    appShortName: string;
+};
 
 const PassingFinishPage = ({
     nextPart,
@@ -22,30 +32,153 @@ const PassingFinishPage = ({
     const [passing] = useState(0);
     const topicName = useSearchParams().get("topic");
     const { appInfo } = useAppSelector(appInfoState);
+    const { turn } = useAppSelector(gameState);
 
-    const handleNextPart = useCallback(async () => {
-        if (nextPart.subTopicTag && nextPart.tag) {
+    const navigateToHref = useCallback(
+        ({
+            topicName,
+            subTopicTag,
+            partTag,
+            appShortName,
+        }: NavigateToHrefParams) => {
             dispatch(
                 initQuestionThunk({
-                    partTag: nextPart.tag,
-                    subTopicTag: nextPart.subTopicTag,
+                    partTag: partTag,
+                    subTopicTag: subTopicTag,
                 })
             );
-
             const _href = revertPathName({
-                href: `study/${topicName}?type=learn&subTopic=${nextPart.subTopicTag}&tag=${nextPart.tag}`,
-                appName: appInfo.appShortName,
+                href: `study/${topicName}?type=learn&subTopic=${subTopicTag}&tag=${partTag}`,
+                appName: appShortName,
             });
-
             router.push(_href);
+        },
+        [dispatch]
+    );
+
+    const updateDb = useCallback(
+        async ({
+            currentTopic,
+            listTopic,
+        }: {
+            listTopic: ITopic[];
+            currentTopic: ITopic;
+        }) => {
+            await db?.topics
+                .where("id")
+                .equals(currentTopic?.id)
+                .modify((item) => {
+                    item.status = 1;
+                });
+
+            const nextMainTopic = listTopic?.find(
+                (item) => item?.id !== currentTopic.id && item.status === 0
+            );
+            if (nextMainTopic && nextMainTopic.topics) {
+                for (const subTopic of nextMainTopic.topics) {
+                    const subTopicProgress = await db?.subTopicProgress
+                        .where("id")
+                        .equals(subTopic.id)
+                        .first();
+
+                    if (subTopicProgress && subTopicProgress.part) {
+                        const nextPart = subTopicProgress.part?.find(
+                            (item) => item.status === 0
+                        );
+                        if (nextPart && topicName) {
+                            navigateToHref({
+                                topicName,
+                                partTag: nextPart.tag,
+                                subTopicTag: subTopic.tag,
+                                appShortName: appInfo.appShortName,
+                            });
+                            return;
+                        }
+                    }
+                }
+            }
+        },
+        [navigateToHref, db, appInfo.appShortName, topicName]
+    );
+
+    const handleNextSubTopic = useCallback(async () => {
+        const listTopic = await db?.topics.toArray();
+
+        // *NOTE : next subtopic tiếp theo trong 1 mainTopic
+
+        const currentTopic = listTopic?.find((item) => item.slug === topicName);
+
+        if (listTopic && currentTopic && currentTopic?.topics) {
+            for (const t of currentTopic?.topics) {
+                const subTopic = await db?.subTopicProgress
+                    ?.where("id")
+                    .equals(t.id)
+                    .first();
+
+                if (subTopic && !subTopic?.pass) {
+                    const nextPart = subTopic.part?.find(
+                        (item) => item?.status === 0
+                    );
+                    if (nextPart && topicName) {
+                        navigateToHref({
+                            topicName,
+                            partTag: nextPart.tag,
+                            subTopicTag: subTopic.subTopicTag,
+                            appShortName: appInfo.appShortName,
+                        });
+                        dispatch(selectSubTopics(subTopic.id));
+                        return;
+                    }
+                }
+            }
+
+            updateDb({
+                currentTopic,
+                listTopic,
+            });
         }
-    }, [nextPart, appInfo.appShortName, dispatch, router, topicName]);
+    }, [appInfo.appShortName, topicName, db, navigateToHref]);
+
+    const handleNextPart = useCallback(async () => {
+        dispatch(
+            setTurtGame({
+                turn: 1,
+            })
+        );
+
+        // *NOTE : next part tiếp theo trong 1 subtopic
+        if (
+            nextPart.subTopicTag &&
+            nextPart.tag &&
+            topicName &&
+            appInfo &&
+            appInfo.appShortName
+        ) {
+            navigateToHref({
+                topicName,
+                partTag: nextPart.tag,
+                subTopicTag: nextPart.subTopicTag,
+                appShortName: appInfo.appShortName,
+            });
+            return;
+        }
+
+        await handleNextSubTopic();
+    }, [
+        nextPart,
+        navigateToHref,
+        appInfo.appShortName,
+        dispatch,
+        router,
+        topicName,
+        handleNextSubTopic,
+    ]);
 
     const handleTryAgainFn = useCallback(async () => {
         if (currentPartTag && nextPart.subTopicTag) {
             dispatch(
-                handleTryAgain({
-                    turn: 2,
+                setTurtGame({
+                    turn: turn + 1,
                 })
             );
             dispatch(
@@ -69,6 +202,7 @@ const PassingFinishPage = ({
         appInfo.appShortName,
         dispatch,
         router,
+        turn,
     ]);
 
     return (

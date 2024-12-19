@@ -11,9 +11,10 @@ const GridTopicProgress = () => {
     const [listSubTopics, setListSubTopics] = useState<ITopic | null>();
     const slug = useSearchParams().get("topic");
     const dispatch = useAppDispatch();
+
     const handleGetData = useCallback(async () => {
         if (slug) {
-            const data = await db.topics.where("slug").equals(slug).first();
+            const data = await db?.topics.where("slug").equals(slug).first();
             if (data) {
                 dispatch(selectTopics(data.id));
                 setListSubTopics(data as ITopic);

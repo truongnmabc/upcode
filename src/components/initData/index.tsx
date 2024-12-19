@@ -1,13 +1,13 @@
 "use client";
 import axiosInstance from "@/common/config/axios";
 import { API_PATH } from "@/common/constants/api.constants";
-import { db } from "@/db/db.model";
+import { DB, initializeDB } from "@/db/db.model";
 import { IAppInfo } from "@/models/app/appInfo";
 import { IQuestion } from "@/models/question/questions";
 import { ITest } from "@/models/tests/tests";
 import Topic from "@/models/topics/topics";
 import { Table } from "dexie";
-import { useCallback, useEffect } from "react";
+import { useCallback, useLayoutEffect } from "react";
 
 export interface ITopic {
     id: number;
@@ -46,7 +46,7 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
     );
 
     const processTreeData = useCallback(
-        async (topics: ITopic[]) => {
+        async (topics: ITopic[], db: DB) => {
             for (const topic of topics) {
                 const topicData = new Topic({
                     ...topic,
@@ -64,55 +64,61 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
         [addIfNotExists]
     );
 
-    const processQuestionsData = useCallback(async (topics: ITopic[]) => {
-        for (const topic of topics) {
-            const subTopicTag = topic.tag;
-            for (const part of topic?.topics) {
-                await db
-                    .transaction(
-                        "rw",
-                        db.topicQuestion,
-                        async () =>
-                            await db.topicQuestion.add({
-                                ...part,
-                                questions: part?.questions.map(
-                                    (item: IQuestion) => ({
-                                        ...item,
-                                        parentId: part.id,
-                                    })
-                                ),
-                                subTopicTag,
-                                status: 0,
-                            })
-                    )
-                    .catch((error) => {
-                        console.log("error 2", error);
-                    });
+    const processQuestionsData = useCallback(
+        async (topics: ITopic[], db: DB) => {
+            for (const topic of topics) {
+                const subTopicTag = topic.tag;
+                for (const part of topic?.topics) {
+                    await db
+                        .transaction(
+                            "rw",
+                            db.topicQuestion,
+                            async () =>
+                                await db.topicQuestion.add({
+                                    ...part,
+                                    questions: part?.questions.map(
+                                        (item: IQuestion) => ({
+                                            ...item,
+                                            parentId: part.id,
+                                        })
+                                    ),
+                                    subTopicTag,
+                                    status: 0,
+                                })
+                        )
+                        .catch((error) => {
+                            console.log("error 2", error);
+                        });
+                }
+                await initDataSubTopicProgress(topic, db);
             }
-            await initDataSubTopicProgress(topic);
-        }
-    }, []);
+        },
+        []
+    );
 
     // *NOTE: init data
 
-    const initDataSubTopicProgress = async (topic: ITopic) => {
-        await db.subTopicProgress.add({
-            id: topic?.id || 0,
-            parentId: topic.parentId,
-            part: topic?.topics?.map((item) => ({
-                id: item.id,
-                parentId: item.parentId,
-                status: 0,
-                totalQuestion: item.totalQuestion,
-                tag: item.tag,
-                turn: 1,
-            })),
-            subTopicTag: topic?.tag || "",
-            pass: false,
-        });
-    };
+    const initDataSubTopicProgress = useCallback(
+        async (topic: ITopic, db: DB) => {
+            await db.subTopicProgress.add({
+                id: topic?.id || 0,
+                parentId: topic.parentId,
+                part: topic?.topics?.map((item) => ({
+                    id: item.id,
+                    parentId: item.parentId,
+                    status: 0,
+                    totalQuestion: item.totalQuestion,
+                    tag: item.tag,
+                    turn: 1,
+                })),
+                subTopicTag: topic?.tag || "",
+                pass: false,
+            });
+        },
+        []
+    );
 
-    const initDataTest = async (tests: IResDataTest) => {
+    const initDataTest = useCallback(async (tests: IResDataTest, db: DB) => {
         const listKey = Object.keys(tests) as (keyof IResDataTest)[];
         for (const name of listKey) {
             if (name === "diagnosticTestFormat") {
@@ -138,10 +144,10 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
                 }
             }
         }
-    };
+    }, []);
 
     const fetchAndProcessTopicsRecursive = useCallback(
-        async (topics: ITopic[]) => {
+        async (topics: ITopic[], db: DB) => {
             if (!topics || topics.length === 0) return;
 
             const [currentTopic, ...remainingTopics] = topics;
@@ -161,7 +167,7 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
                     );
                     if (response.data.status === 1) {
                         const data = response.data.data;
-                        processQuestionsData(data);
+                        processQuestionsData(data, db);
                     }
                 } catch (err) {
                     console.error(
@@ -171,65 +177,72 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
                 }
             }
 
-            await fetchAndProcessTopicsRecursive(remainingTopics);
+            await fetchAndProcessTopicsRecursive(remainingTopics, db);
         },
         [processQuestionsData]
     );
 
-    const handleInitData = useCallback(async () => {
-        console.log(
-            "Start time init indexedDb data:",
-            new Date().toISOString()
-        );
-
-        const response = await axiosInstance.get(
-            `${API_PATH.GET_DATA_STUDY}/${appInfo.appShortName}`
-        );
-        if (response.data.data) {
-            const {
-                topic,
-                tests,
-            }: {
-                topic: ITopic[];
-                tests: IResDataTest;
-            } = response?.data?.data;
-
-            //*NOTE  Khởi tạo danh sách topic
-
-            await db
-                .transaction(
-                    "rw",
-                    db.topics,
-                    db.subTopicProgress,
-                    async () => await processTreeData(topic)
-                )
-                .catch((error) => {
-                    console.log("error", error);
-                });
-
-            // *NOTE Khởi tạo danh sách bài test
-            await db
-                .transaction(
-                    "rw",
-                    db.tests,
-                    async () => await initDataTest(tests)
-                )
-                .catch((error) => {
-                    console.log("error", error);
-                });
-
-            await fetchAndProcessTopicsRecursive(topic);
-
+    const handleInitData = useCallback(
+        async (db: DB) => {
             console.log(
-                "End time init indexedDb data:",
+                "Start time init indexedDb data:",
                 new Date().toISOString()
             );
-        }
-    }, [appInfo.appShortName, processTreeData, fetchAndProcessTopicsRecursive]);
 
-    useEffect(() => {
-        if (appInfo) handleInitData();
-    }, [appInfo, handleInitData]);
+            const response = await axiosInstance.get(
+                `${API_PATH.GET_DATA_STUDY}/${appInfo.appShortName}`
+            );
+            if (response.data.data) {
+                const {
+                    topic,
+                    tests,
+                }: {
+                    topic: ITopic[];
+                    tests: IResDataTest;
+                } = response?.data?.data;
+
+                //*NOTE  Khởi tạo danh sách topic
+
+                await db
+                    .transaction(
+                        "rw",
+                        db.topics,
+                        db.subTopicProgress,
+                        async () => await processTreeData(topic, db)
+                    )
+                    .catch((error) => {
+                        console.log("error", error);
+                    });
+
+                // *NOTE Khởi tạo danh sách bài test
+                await db
+                    .transaction(
+                        "rw",
+                        db.tests,
+                        async () => await initDataTest(tests, db)
+                    )
+                    .catch((error) => {
+                        console.log("error", error);
+                    });
+
+                await fetchAndProcessTopicsRecursive(topic, db);
+
+                console.log(
+                    "End time init indexedDb data:",
+                    new Date().toISOString()
+                );
+            }
+        },
+        [appInfo.appShortName, processTreeData, fetchAndProcessTopicsRecursive]
+    );
+
+    useLayoutEffect(() => {
+        if (appInfo) {
+            console.log("first");
+            const db = initializeDB(appInfo.appShortName);
+            handleInitData(db);
+        }
+    }, [appInfo]);
 
     return <></>;
 };

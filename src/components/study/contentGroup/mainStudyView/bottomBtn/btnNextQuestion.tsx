@@ -7,7 +7,7 @@ import nextQuestionThunk from "@/redux/repository/game/nextQuestion";
 import { revertPathName } from "@/utils/pathName";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-const FN = () => {
+const BtnNextQuestion = () => {
     const [isFinish, setIsFinish] = useState(false);
     const { currentGame, subTopicProgressId, idTopic, listQuestion } =
         useAppSelector(gameState);
@@ -54,10 +54,10 @@ const FN = () => {
             onClick={handleFinish}
             disabled={!currentGame?.selectedAnswer}
             type="primary"
+            className="py-3 px-8"
         >
             {isFinish ? "Finish" : "Continue"}
         </MtUiButton>
     );
 };
-const BottomBtnSticky = React.memo(FN);
-export default BottomBtnSticky;
+export default React.memo(BtnNextQuestion);

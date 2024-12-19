@@ -77,9 +77,7 @@
   animation: rotateIn 1s ease-in-out infinite;
 }
 
-.mtui-btn-type-default {
-  border-color: #d9d9d9;
-}
+
 .mtui-btn-type-primary {
   border-color: var(--color-primary);
   background-color: var(--color-primary);

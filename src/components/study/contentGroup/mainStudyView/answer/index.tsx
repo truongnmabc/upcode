@@ -69,7 +69,7 @@ const FN = ({ choice, index }: { choice: IAnswer; index: number }) => {
                     />
                 </MathJax>
             )}
-            {/* <BtnTets correct={choice.correct} /> */}
+            <BtnTets correct={choice.correct} />
         </div>
     );
 };

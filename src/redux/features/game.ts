@@ -8,6 +8,7 @@ import initQuestionThunk from "../repository/game/initQuestion";
 import initTestQuestionThunk from "../repository/game/initTestQuestion";
 import nextQuestionThunk from "../repository/game/nextQuestion";
 import { RootState } from "../store";
+import { reloadStateThunk } from "../repository/utils/reload";
 
 export interface ICurrentGame
     extends Omit<
@@ -73,11 +74,20 @@ export const gameSlice = createSlice({
         ) => {
             state.listQuestion = action.payload;
         },
-        handleTryAgain: (state, action) => {
+        setTurtGame: (
+            state,
+            action: PayloadAction<{
+                turn: number;
+            }>
+        ) => {
             state.turn = action.payload.turn;
         },
     },
     extraReducers(builder) {
+        builder.addCase(reloadStateThunk.fulfilled, (state, action) => {
+            state.turn = action.payload.turn;
+        });
+
         builder.addCase(nextQuestionThunk.fulfilled, (state, action) => {
             const data = action.payload;
             state.currentGame = data?.nextQuestion ?? state.listQuestion[0];
@@ -137,8 +147,13 @@ export const gameSlice = createSlice({
         });
 
         builder.addCase(initTestQuestionThunk.fulfilled, (state, action) => {
+            if (!action.payload) {
+                return;
+            }
+
             const { progressData, questions, type, id, duration } =
                 action.payload;
+
             state.time = duration;
             state.type = type;
             state.idTopic = id ?? -1;
@@ -242,7 +257,7 @@ export const gameSlice = createSlice({
 
 const { reducer: gameReducer, actions } = gameSlice;
 
-export const { setCurrentGame, setListQuestionGames, handleTryAgain } = actions;
+export const { setCurrentGame, setListQuestionGames, setTurtGame } = actions;
 
 export const gameState = (state: RootState) => state.gameReducer;
 

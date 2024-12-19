@@ -41,6 +41,8 @@ const Time = () => {
             return () => {
                 clearTimeout(timeId);
             };
+        } else {
+            console.log("het gio");
         }
     }, [time]);
     return <div>{formatTime(time * 1000)}</div>;

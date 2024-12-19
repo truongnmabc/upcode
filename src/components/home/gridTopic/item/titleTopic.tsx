@@ -33,10 +33,11 @@ export const handleGetNextPart = async ({
     partId?: number;
     subTopicId?: number;
 }> => {
-    const progress = await db.subTopicProgress
-        .where("parentId")
-        .equals(parentId)
-        .toArray();
+    const progress =
+        (await db?.subTopicProgress
+            .where("parentId")
+            .equals(parentId)
+            .toArray()) || [];
 
     if (!progress.length && topic) {
         const firstTopic = topic.topics?.[0];
@@ -51,7 +52,7 @@ export const handleGetNextPart = async ({
             turn: 1,
         })) as IPartProgress[];
 
-        await db.subTopicProgress.add({
+        await db?.subTopicProgress.add({
             id: firstTopic?.id || 0,
             parentId: topic.id,
             part: part,

@@ -23,6 +23,7 @@ export async function GET(
             status: 1,
         });
     }
+
     try {
         const data = await requestGetData({
             url: `new-data-web/${
