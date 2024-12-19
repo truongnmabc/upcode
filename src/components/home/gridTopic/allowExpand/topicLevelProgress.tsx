@@ -1,4 +1,5 @@
 "use client";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { db } from "@/db/db.model";
 import { IPartProgress } from "@/models/progress/subTopicProgress";
 import { ITopic } from "@/models/topics/topics";
@@ -6,10 +7,7 @@ import { studyState } from "@/redux/features/study";
 import { useAppSelector } from "@/redux/hooks";
 import { groupTopics } from "@/utils/math";
 import clsx from "clsx";
-import React, { useCallback, useEffect, useState } from "react";
 import IconProgress from "./iconProgress";
-
-type CanvasRenderingContext2DOrNull = CanvasRenderingContext2D | null;
 
 type CenterPosition = {
     x: number;
@@ -19,42 +17,41 @@ type CenterPosition = {
 function drawCurvedLine(
     start: CenterPosition,
     end: CenterPosition,
-    ctx: CanvasRenderingContext2DOrNull,
+    ctx: CanvasRenderingContext2D | null,
     isRight: boolean
 ) {
+    if (!ctx) return;
+
     const centerPoint = {
         x: (start.x + end.x) / 2 + (isRight ? 20 : -20),
         y: (start.y + end.y) / 2,
     };
     const radius = Math.abs(Math.ceil(end.y - start.y)) / 2;
 
-    if (ctx) {
-        ctx.beginPath();
-        if (isRight) {
-            ctx.arc(
-                centerPoint.x,
-                centerPoint.y,
-                radius,
-                (3 * Math.PI) / 2,
-                Math.PI / 2,
-                false
-            );
-        } else {
-            ctx.arc(
-                centerPoint.x,
-                centerPoint.y,
-                radius,
-                Math.PI / 2,
-                (3 * Math.PI) / 2,
-                false
-            );
-        }
-
-        ctx.fillStyle = "transparent";
-        ctx.fill();
-        ctx.strokeStyle = "#fcb03b";
-        ctx.stroke();
+    ctx.beginPath();
+    if (isRight) {
+        ctx.arc(
+            centerPoint.x,
+            centerPoint.y,
+            radius,
+            (3 * Math.PI) / 2,
+            Math.PI / 2,
+            false
+        );
+    } else {
+        ctx.arc(
+            centerPoint.x,
+            centerPoint.y,
+            radius,
+            Math.PI / 2,
+            (3 * Math.PI) / 2,
+            false
+        );
     }
+    ctx.fillStyle = "transparent";
+    ctx.fill();
+    ctx.strokeStyle = "#fcb03b";
+    ctx.stroke();
 }
 
 function getCenterPosition(
@@ -69,24 +66,20 @@ function getCenterPosition(
             y: rect.top + rect.height / 2 - containerRect.top,
         };
     }
-    return {
-        x: 0,
-        y: 0,
-    };
+    return { x: 0, y: 0 };
 }
 
 const TopicLevelProgress = ({ subTopic }: { subTopic: ITopic }) => {
-    const arr = groupTopics(subTopic?.topics || [], 3);
-
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const { selectedSubTopics } = useAppSelector(studyState);
 
     const isExpand = selectedSubTopics === subTopic.id;
-
     const [listPlayed, setListPlayed] = useState<IPartProgress[]>([]);
 
     const handleCheckProgress = useCallback(async () => {
         if (subTopic.id) {
-            const subTopicProgress = await db.subTopicProgress
+            const subTopicProgress = await db?.subTopicProgress
                 .where("id")
                 .equals(subTopic.id)
                 .first();
@@ -104,30 +97,24 @@ const TopicLevelProgress = ({ subTopic }: { subTopic: ITopic }) => {
     useEffect(() => {
         if (!isExpand) return;
 
-        const canvas = document.getElementById(
-            `lineCanvas-${subTopic.id}`
-        ) as HTMLCanvasElement | null;
+        const canvas = canvasRef.current;
+        const container = containerRef.current;
 
-        if (!canvas) return;
+        if (!canvas || !container) return;
 
-        const ctx: CanvasRenderingContext2DOrNull = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d");
         if (!ctx) return;
-
-        const container = document.getElementById(
-            `container-${subTopic.id}`
-        ) as HTMLDivElement | null;
-
-        if (!container) return;
 
         canvas.width = container.offsetWidth;
         canvas.height = container.offsetHeight;
 
         const icons =
-            document.querySelectorAll<HTMLDivElement>(".iconDrawCanvas");
+            container.querySelectorAll<HTMLDivElement>(".iconDrawCanvas");
 
         ctx.strokeStyle = "#fcb03b";
         ctx.lineWidth = 2;
         ctx.setLineDash([10, 5]);
+
         for (let i = 0; i < icons.length - 1; i++) {
             const start = getCenterPosition(icons[i], container);
             const end = getCenterPosition(icons[i + 1], container);
@@ -143,16 +130,17 @@ const TopicLevelProgress = ({ subTopic }: { subTopic: ITopic }) => {
         }
 
         return () => {
-            if (ctx) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            }
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
         };
     }, [subTopic, isExpand]);
 
+    const arr = groupTopics(subTopic?.topics || [], 3);
+
     return (
         <div
+            ref={containerRef}
             className={clsx(
-                "w-full  h-full relative bg-[#F3F5F6] py-2 justify-center  rounded-b-md  transition-all ",
+                "w-full h-full relative bg-[#F3F5F6] py-2 justify-center rounded-b-md transition-all",
                 {
                     flex: isExpand,
                     hidden: !isExpand,
@@ -160,12 +148,12 @@ const TopicLevelProgress = ({ subTopic }: { subTopic: ITopic }) => {
             )}
             id={`container-${subTopic.id}`}
         >
-            <div className="flex   flex-wrap gap-2 w-[200px]">
+            <div className="flex flex-wrap gap-2 w-[200px]">
                 {arr?.length > 0 &&
                     arr.map((line, index) => (
                         <div
                             className={clsx(
-                                "flex w-[200px] relative transition-all  flex-wrap gap-4",
+                                "flex w-[200px] relative transition-all flex-wrap gap-4",
                                 {
                                     "justify-center": index === 0,
                                     "justify-start": index % 2 === 0,
@@ -194,10 +182,11 @@ const TopicLevelProgress = ({ subTopic }: { subTopic: ITopic }) => {
                     ))}
             </div>
             <canvas
-                id={`lineCanvas-${subTopic.id}`}
-                className="absolute w-full h-full top-0 left-0  z-0"
+                ref={canvasRef}
+                className="absolute w-full h-full top-0 left-0 z-0"
             />
         </div>
     );
 };
+
 export default React.memo(TopicLevelProgress);

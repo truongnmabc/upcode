@@ -12,6 +12,7 @@ const RouterApp = {
     Score_Calculator: "score_calculator",
     Test: "test",
     Review: "review",
+    ResultTest: "result_test",
     Billing: "billing",
     Edit_policy: "editorial-policy",
 };

@@ -1,7 +1,5 @@
-"use client";
 import FinishLayout from "@/components/finish";
-const FinishPage = () => {
-  return <FinishLayout />;
-};
+
+const FinishPage = () => <FinishLayout />;
 
 export default FinishPage;

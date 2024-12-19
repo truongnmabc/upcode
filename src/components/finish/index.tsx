@@ -1,3 +1,4 @@
+"use client";
 import { db } from "@/db/db.model";
 import { IAnswer } from "@/models/question/questions";
 import { gameState } from "@/redux/features/game";
@@ -36,7 +37,7 @@ const FinishLayout = () => {
     useEffect(() => {
         const handleGetData = async () => {
             if (subTopicProgressId && turn && partId) {
-                const data = await db.subTopicProgress
+                const data = await db?.subTopicProgress
                     .where("id")
                     .equals(Number(subTopicProgressId))
                     .first();
@@ -44,10 +45,11 @@ const FinishLayout = () => {
                 const partIndex =
                     data?.part.findIndex((item) => item.status === 1) || 0;
 
-                const useProgress = await db.userProgress
-                    .where("parentId")
-                    .equals(Number(partId))
-                    .sortBy("index");
+                const useProgress =
+                    (await db?.userProgress
+                        .where("parentId")
+                        .equals(Number(partId))
+                        .sortBy("index")) || [];
 
                 const filteredAnswers = useProgress
                     .flatMap((item) =>

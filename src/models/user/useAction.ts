@@ -1,16 +1,19 @@
-export type IUserActionStatus = "like" | "dislike" | "save";
+export type IAction = ("like" | "dislike" | "save")[];
 export interface IUserActions {
-  userId: number;
-  status: IUserActionStatus;
-  questionId: number;
+    userId: number;
+    actions: IAction;
+    questionId: number;
+    partId: number;
 }
 export class UserActions implements IUserActions {
-  userId: number;
-  status: IUserActionStatus;
-  questionId: number;
-  constructor(object: Partial<IUserActions> = {}) {
-    this.userId = object.userId ?? -1;
-    this.questionId = object.questionId ?? -1;
-    this.status = object.status as IUserActionStatus;
-  }
+    userId: number;
+    actions: IAction;
+    questionId: number;
+    partId: number;
+    constructor(object: Partial<IUserActions> = {}) {
+        this.userId = object.userId ?? -1;
+        this.questionId = object.questionId ?? -1;
+        this.actions = object.actions ?? [];
+        this.partId = object.partId ?? -1;
+    }
 }

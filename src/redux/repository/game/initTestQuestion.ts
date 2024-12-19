@@ -18,7 +18,7 @@ const setDataStore = async (
     question: IQuestion[],
     duration: number
 ) => {
-    await db.testQuestions.add({ parentId, question, duration });
+    await db?.testQuestions.add({ parentId, question, duration });
 };
 
 const fetchQuestions = async (testId: string): Promise<IQuestion[]> => {
@@ -31,12 +31,14 @@ const fetchQuestions = async (testId: string): Promise<IQuestion[]> => {
 const getLocalProgress = async (
     parentId: number,
     type: "test"
-): Promise<IUserQuestionProgress[]> => {
-    return db.userProgress
-        .where("parentId")
-        .equals(parentId)
-        .filter((item) => item.type === type)
-        .toArray();
+): Promise<IUserQuestionProgress[] | null> => {
+    return (
+        db?.userProgress
+            .where("parentId")
+            .equals(parentId)
+            .filter((item) => item.type === type)
+            .toArray() ?? null
+    );
 };
 
 const mapQuestionsWithProgress = (
@@ -66,7 +68,7 @@ const initTestQuestionThunk = createAsyncThunk(
         let time = duration;
         let id = testId;
         if (!testId) {
-            const res = await db.tests
+            const res = await db?.tests
                 .filter((item) => item.status === 0)
                 .first();
             if (res) {
@@ -77,7 +79,7 @@ const initTestQuestionThunk = createAsyncThunk(
 
         if (!id) throw new Error("Test ID not found");
 
-        const currentTest = await db.testQuestions
+        const currentTest = await db?.testQuestions
             .where("parentId")
             .equals(Number(id))
             .first();
@@ -91,15 +93,20 @@ const initTestQuestionThunk = createAsyncThunk(
         }
 
         const progressData = await getLocalProgress(Number(id), "test");
-        const questions = mapQuestionsWithProgress(listQuestion, progressData);
+        if (progressData) {
+            const questions = mapQuestionsWithProgress(
+                listQuestion,
+                progressData
+            );
 
-        return {
-            questions,
-            progressData,
-            id: Number(id),
-            type: "test" as const,
-            duration: time || 60,
-        };
+            return {
+                questions,
+                progressData,
+                id: Number(id),
+                type: "test" as const,
+                duration: time || 60,
+            };
+        }
     }
 );
 

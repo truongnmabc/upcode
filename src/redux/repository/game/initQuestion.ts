@@ -30,7 +30,7 @@ const initQuestionThunk = createAsyncThunk(
         partTag,
         ...rest
     }: IInitQuestion): Promise<IResInitQuestion> => {
-        const res = await db.topicQuestion
+        const res = await db?.topicQuestion
             .where("[subTopicTag+tag]")
             .equals([subTopicTag, partTag])
             .first();
@@ -50,8 +50,8 @@ const initQuestionThunk = createAsyncThunk(
             return {
                 questions: data.map((item) => ({
                     ...item,
-                    text: MyCrypto.encrypt(item.text),
-                    explanation: MyCrypto.encrypt(item.explanation),
+                    text: item.text,
+                    explanation: item.explanation,
                     localStatus: "new",
                 })),
                 progressData: [],
@@ -62,15 +62,19 @@ const initQuestionThunk = createAsyncThunk(
         }
 
         if (res?.id) {
-            progressData = await db.userProgress
-                .where("parentId")
-                .equals(res?.id)
-                .filter((item) => item.type === "learn")
-                .toArray();
+            progressData =
+                (await db?.userProgress
+                    .where("parentId")
+                    .equals(res?.id)
+                    .filter((item) => item.type === "learn")
+                    .toArray()) || [];
         }
 
         const question = isReset
-            ? res.questions
+            ? res.questions?.map((item) => ({
+                  ...item,
+                  localStatus: "new" as IStatusAnswer,
+              }))
             : res?.questions?.map((que) => {
                   const progress = progressData?.find(
                       (pro) => que.id === pro.id
