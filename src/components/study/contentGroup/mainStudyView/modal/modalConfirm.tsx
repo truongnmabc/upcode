@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { MtUiButton } from "@/components/button";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { gameState, startOverGame } from "@/redux/features/game";
+import { db } from "@/db/db.model";
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement<any, any>;
@@ -13,24 +16,41 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const ModalConfirm = () => {
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
 
-    const handleClickOpen = () => setOpen(true);
+    const { isPaused, idTopic } = useAppSelector(gameState);
+    const dispatch = useAppDispatch();
+    const handleStartOver = useCallback(async () => {
+        await db?.testQuestions
+            .where("parentId")
+            .equals(idTopic)
+            .modify((item) => {
+                item.isPaused = false;
+                item.startTime = new Date().getTime();
+                item.remainTime = item.duration;
+            })
+            .then((res) => console.log("res", res))
+            .catch((err) => console.log("err", err));
+        dispatch(startOverGame());
+        setOpen(false);
+    }, [idTopic]);
 
-    const handleClose = () => setOpen(false);
+    const handleContinue = () => setOpen(false);
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        if (isPaused) {
+            setTimeout(() => setOpen(true), 200);
+        }
+    }, [isPaused]);
 
     return (
         <Dialog
             open={open}
             TransitionComponent={Transition}
-            keepMounted
             aria-describedby="alert-dialog-slide-description"
             sx={{
                 "& .MuiPaper-root": {
                     borderRadius: "12px",
-                    // border: "2px solid #ccc",
                 },
             }}
         >
@@ -43,6 +63,7 @@ const ModalConfirm = () => {
                     <MtUiButton
                         className="text-base text-primary border-primary font-medium py-[10px] "
                         block
+                        onClick={handleContinue}
                     >
                         Continue
                     </MtUiButton>
@@ -51,6 +72,7 @@ const ModalConfirm = () => {
                         block
                         type="primary"
                         className="text-base font-medium py-[10px] "
+                        onClick={handleStartOver}
                     >
                         Start over
                     </MtUiButton>

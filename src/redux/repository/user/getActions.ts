@@ -13,8 +13,6 @@ const getListActionThunk = createAsyncThunk(
             .equals(partId)
             .toArray();
 
-        console.log("🚀 ~ existingAction:", existingAction);
-
         return { list: existingAction || [] };
     }
 );

@@ -53,7 +53,6 @@ const SliderFeedBack = () => {
                                         className="frame"
                                         width="72"
                                         height="72"
-                                        objectFit="contain"
                                     />
                                 </div>
                                 <p className="userName">{data.userName}</p>

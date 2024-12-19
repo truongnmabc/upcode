@@ -11,6 +11,7 @@ export interface IAppInfo {
     keywordSEO: string;
     linkAndroid: string;
     linkIos: string;
+    link: string;
     rank_math_title: string;
     title: string;
     totalQuestion: number;
@@ -42,6 +43,7 @@ export class AppInfo implements IAppInfo {
     usingMathJax: boolean;
     icon: string;
     stateName?: string;
+    link: string;
     stateId?: number;
     ip?: string;
     currentTime?: number;
@@ -72,5 +74,6 @@ export class AppInfo implements IAppInfo {
         this.oneWeekPro = object.oneWeekPro ?? undefined;
         this.oneMonthPro = object.oneMonthPro ?? undefined;
         this.oneYearPro = object.oneYearPro ?? undefined;
+        this.link = object.link ?? "";
     }
 }

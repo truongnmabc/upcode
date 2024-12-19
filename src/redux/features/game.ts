@@ -38,6 +38,8 @@ export interface IGameReducer {
     turn: number;
     time: number;
     type: "test" | "learn";
+    isPaused: boolean;
+    remainTime: number;
 }
 const initGameReducer: IGameReducer = {
     currentGame: {
@@ -59,6 +61,8 @@ const initGameReducer: IGameReducer = {
     turn: 1,
     time: 60,
     type: "learn",
+    isPaused: false,
+    remainTime: 60,
 };
 
 export const gameSlice = createSlice({
@@ -81,6 +85,19 @@ export const gameSlice = createSlice({
             }>
         ) => {
             state.turn = action.payload.turn;
+        },
+        startOverGame: (state) => {
+            const list = [...state.listQuestion]?.map((item) => ({
+                ...item,
+                localStatus: "new" as const,
+                selectedAnswer: null,
+            }));
+
+            state.currentGame = list[0];
+            state.listQuestion = list;
+            state.indexCurrentQuestion = 0;
+            state.turn = 1;
+            state.isPaused = false;
         },
     },
     extraReducers(builder) {
@@ -151,15 +168,23 @@ export const gameSlice = createSlice({
                 return;
             }
 
-            const { progressData, questions, type, id, duration } =
-                action.payload;
+            const {
+                progressData,
+                questions,
+                type,
+                id,
+                duration,
+                isPaused,
+                remainTime,
+            } = action.payload;
 
             state.time = duration;
             state.type = type;
             state.idTopic = id ?? -1;
             state.listQuestion = questions;
             state.isFirst = true;
-
+            state.isPaused = isPaused;
+            state.remainTime = remainTime;
             if (!progressData || progressData.length === 0) {
                 // *NOTE: Khi người dùng chưa làm thì mặc định chọn câu đầu tiên.
                 state.indexCurrentQuestion = 0;
@@ -257,7 +282,12 @@ export const gameSlice = createSlice({
 
 const { reducer: gameReducer, actions } = gameSlice;
 
-export const { setCurrentGame, setListQuestionGames, setTurtGame } = actions;
+export const {
+    setCurrentGame,
+    setListQuestionGames,
+    setTurtGame,
+    startOverGame,
+} = actions;
 
 export const gameState = (state: RootState) => state.gameReducer;
 

@@ -4,12 +4,13 @@ import "./styles.scss";
 import React from "react";
 const FN = ({ appInfo }: { appInfo: IAppInfo }) => {
     return (
-        <div>
-            <h1 className="text-4xl sm:text-[52px] sm:leading-[64px] font-bold text-center capitalize  sm:pb-4  font-vampiro">{` ${appInfo?.appName} Practice Test`}</h1>
-
-            <h2 className="text-2xl  sm:text-[40px] font-normal font-poppins text-center">
+        <div className="pt-6 sm:pt-24">
+            <h1 className="text-[32px] leading-[40px] sm:text-[48px] sm:leading-[60px] font-normal text-center capitalize    font-vampiro">
+                {appInfo?.appName} Practice Test
+            </h1>
+            <h2 className="text-xl  sm:text-2xl pt-2 font-medium font-poppins text-center">
                 Ace The{" "}
-                <strong className="font-poppins font-medium">
+                <strong className="font-semibold text-xl  sm:text-2xl ">
                     {appInfo?.appName}
                 </strong>{" "}
                 On First Try

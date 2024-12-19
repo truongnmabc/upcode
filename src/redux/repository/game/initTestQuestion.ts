@@ -18,7 +18,16 @@ const setDataStore = async (
     question: IQuestion[],
     duration: number
 ) => {
-    await db?.testQuestions.add({ parentId, question, duration });
+    await db?.testQuestions.add({
+        parentId,
+        question,
+        duration,
+        isPaused: false,
+        startTime: new Date().getTime(),
+        remainTime: duration,
+    });
+
+    // *NOTE: Time chua dung
 };
 
 const fetchQuestions = async (testId: string): Promise<IQuestion[]> => {
@@ -85,11 +94,13 @@ const initTestQuestionThunk = createAsyncThunk(
             .first();
         let listQuestion = currentTest?.question;
 
-        time = currentTest?.duration;
+        console.log("🚀 ~ currentTest:", currentTest);
+
+        time = currentTest?.duration || 60;
 
         if (!listQuestion) {
             listQuestion = await fetchQuestions(id);
-            setDataStore(Number(id), listQuestion, time || 60);
+            setDataStore(Number(id), listQuestion, time);
         }
 
         const progressData = await getLocalProgress(Number(id), "test");
@@ -104,7 +115,9 @@ const initTestQuestionThunk = createAsyncThunk(
                 progressData,
                 id: Number(id),
                 type: "test" as const,
-                duration: time || 60,
+                duration: time,
+                isPaused: currentTest?.isPaused || false,
+                remainTime: currentTest?.remainTime || time,
             };
         }
     }

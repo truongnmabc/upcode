@@ -1,4 +1,5 @@
 import LazyLoadImage from "@/components/images";
+import MyContainer from "@/components/v4-material/myContainer";
 import { IAppInfo } from "@/models/app/appInfo";
 import React from "react";
 
@@ -10,7 +11,7 @@ const Handbook = ({
     _state: string;
 }) => {
     return (
-        <div className="v4-container-component pb-12 sm:pb-[120px] v4-container-maxWidth">
+        <MyContainer className="pb-12 sm:pb-[120px]">
             <h3 className="sm:pt-6 mt-4 text-lg px-6 sm:px-0 text-center sm:text-start font-medium sm:text-2xl sm:font-semibold ">
                 Study with the <span className="capitalize">{_state}</span>{" "}
                 <span className=" uppercase">{appInfo?.appShortName}</span>{" "}
@@ -56,7 +57,7 @@ const Handbook = ({
                             100% free & accessible
                         </li>
                     </ul>
-                    <button className="sm:h-14 h-12 px-8 w-full sm:w-fit  hover:opacity-80 hover:bg-slate-400  rounded-lg mt-6 bg-white border border-solid border-[#343F82]">
+                    <button className="sm:h-14  h-12 px-8 w-full sm:w-fit  hover:opacity-80 hover:bg-slate-400  rounded-lg mt-6 bg-white border border-solid border-[#343F82]">
                         <div className="flex items-center w-full sm:w-fit text-[#343F82] text-base font-semibold justify-center gap-1">
                             Explore Handbook
                             <svg
@@ -76,10 +77,11 @@ const Handbook = ({
                 </div>
                 <LazyLoadImage
                     src={"/images/cdl_v2/home/Rectangle.png"}
-                    classNames="w-[300px] h-[228px] rounded-lg"
+                    classNames="sm:w-[300px] sm:h-[228px] w-full rounded-lg"
+                    imgClassNames="object-cover w-full"
                 />
             </div>
-        </div>
+        </MyContainer>
     );
 };
 

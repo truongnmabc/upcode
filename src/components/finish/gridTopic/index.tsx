@@ -5,7 +5,7 @@ import { db } from "@/db/db.model";
 import { selectTopics } from "@/redux/features/study";
 import { useAppDispatch } from "@/redux/hooks";
 import { useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 
 const GridTopicProgress = () => {
     const [listSubTopics, setListSubTopics] = useState<ITopic | null>();
@@ -26,15 +26,15 @@ const GridTopicProgress = () => {
         handleGetData();
     }, [slug, handleGetData]);
     return (
-        <div className="px-2">
+        <Fragment>
             {listSubTopics && (
-                <div className="w-full h-full rounded-md p-4 bg-white">
+                <div className="w-full h-full rounded-md  bg-white">
                     <AllowExpandProvider topic={listSubTopics}>
                         <AllowExpand />
                     </AllowExpandProvider>
                 </div>
             )}
-        </div>
+        </Fragment>
     );
 };
 

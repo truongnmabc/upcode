@@ -10,6 +10,7 @@ import HomeSingleApp from "@/components/state-app";
 import { ITopic } from "@/models/topics/topics";
 import { getAppType } from "@/utils/config_web";
 import { fetchAppData } from "./layout";
+import MyContainer from "@/components/v4-material/myContainer";
 
 type Params = {
     params: Promise<{ appShortName: string }>;
@@ -26,35 +27,40 @@ export default async function Home({ params }: Params) {
             return;
         }
 
-        const response = await axiosInstance.get(
-            `${API_PATH.GET_DATA_STUDY}/${appInfo?.appShortName}`
-        );
-
+        const [response, dataSeo] = await Promise.all([
+            axiosInstance.get(
+                `${API_PATH.GET_DATA_STUDY}/${appInfo?.appShortName}`
+            ),
+            axiosInstance.get(`${API_PATH.GET_SEO}/${appInfo?.appShortName}`),
+        ]);
         const topics: ITopic[] = response?.data?.data?.topic || [];
         const appType = getAppType(appInfo.appShortName);
-
+        const contentSeo = dataSeo.data?.content;
         if (appType === "default") {
             return (
-                <section className="w-full h-full mx-auto max-w-page px-4 sm:px-6">
-                    <div className="w-full h-full flex flex-col gap-4 sm:gap-8 py-6 sm:py-9">
-                        <TitleHomeApp appInfo={appInfo} />
-                        <GridTopics
-                            isAll={topics.length > 0}
-                            topics={topics.map((item, index) => ({
-                                ...item,
-                                color: RANDOM_COLORS[
-                                    index % RANDOM_COLORS.length
-                                ],
-                            }))}
-                            appInfo={appInfo}
-                        />
-                        <GridTest />
+                <MyContainer>
+                    <TitleHomeApp appInfo={appInfo} />
+                    <GridTopics
+                        isAll={topics.length > 0}
+                        topics={topics.map((item, index) => ({
+                            ...item,
+                            color: RANDOM_COLORS[index % RANDOM_COLORS.length],
+                        }))}
+                        appInfo={appInfo}
+                    />
+                    <GridTest />
+                    <div className="sm:my-12 sm:mb-16 my-6">
+                        <h3 className="font-bold text-center px-3 text-lg sm:text-[32px] sm:mb-8 mb-6 sm:leading-[64px]">
+                            Prepare to Pass ASVAB on Any Device
+                        </h3>
                         <DownloadApp />
-                        <div className="p-4 mb-28 sm:mb-0 sm:p-6 rounded-md  overflow-hidden bg-white dark:bg-black">
-                            <SeoContent content={""} />
-                        </div>
                     </div>
-                </section>
+                    {contentSeo && (
+                        <div className="p-4 mb-28 sm:mb-0 sm:p-6 rounded-md  overflow-hidden bg-white dark:bg-black">
+                            <SeoContent content={contentSeo} />
+                        </div>
+                    )}
+                </MyContainer>
             );
         }
 

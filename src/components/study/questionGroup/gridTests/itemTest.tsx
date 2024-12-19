@@ -1,8 +1,10 @@
 import IconGridTest from "@/components/icon/iconGridTest";
 import { ITest } from "@/models/tests/tests";
 import { appInfoState } from "@/redux/features/appInfo";
+import { gameState } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initTestQuestionThunk from "@/redux/repository/game/initTestQuestion";
+import pauseTestThunk from "@/redux/repository/game/pauseTest";
 import { revertPathName } from "@/utils/pathName";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -13,7 +15,15 @@ const ItemTestLeft = ({ test, index }: { test: ITest; index: number }) => {
     const { appInfo } = useAppSelector(appInfoState);
     const dispatch = useAppDispatch();
     const testId = useSearchParams().get("testId");
+    const { idTopic } = useAppSelector(gameState);
+
     const handleCLick = useCallback(() => {
+        dispatch(
+            pauseTestThunk({
+                testId: idTopic,
+            })
+        );
+
         dispatch(
             initTestQuestionThunk({
                 testId: test.id.toString(),
@@ -26,7 +36,7 @@ const ItemTestLeft = ({ test, index }: { test: ITest; index: number }) => {
         });
 
         router.replace(_href);
-    }, [test.id, dispatch, appInfo.appShortName, router]);
+    }, [test.id, dispatch, appInfo.appShortName, router, idTopic]);
     return (
         <div
             className={clsx(

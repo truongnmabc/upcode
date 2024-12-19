@@ -23,7 +23,7 @@ const FN = () => {
     };
 
     const handleGetData = async () => {
-        const listData = await db.tests
+        const listData = await db?.tests
             .filter((test) => test.testType === "practiceTests")
             .toArray();
         if (listData) {
