@@ -1,4 +1,4 @@
-import FooterApp from "@/components/footer";
+import FooterApp from "@/components/footer/FooterLandingV4";
 import HeaderApp from "@/components/header";
 import React, { Fragment } from "react";
 import SheetApp from "../sheetApp";
