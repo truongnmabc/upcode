@@ -122,7 +122,10 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
             {isDesktop ? (
                 <Fragment>
                     <div className=" absolute z-0 bottom-0 h-full w-full   right-0">
-                        <img src="images/cdl_v2/image.png" className="h-full w-full object-cover " />
+                        <img
+                            src="https://storage.googleapis.com/worksheetzone/CDL/images/back-cdl-state-v2.png"
+                            className="h-full w-full object-cover "
+                        />
                     </div>
                     <div
                         className="absolute bottom-0 left-0 h-full w-full "
@@ -136,7 +139,10 @@ const SelectState = ({ appInfo, _state }: { appInfo: IAppInfo; _state: string })
             ) : (
                 <Fragment>
                     <div className=" absolute z-0 top-0 left-0 w-full aspect-video   right-0">
-                        <img src="images/cdl_v2/image.png" className="h-full w-full" />
+                        <img
+                            src="https://storage.googleapis.com/worksheetzone/CDL/images/back-cdl-state-v2.png"
+                            className="h-full w-full"
+                        />
                     </div>
                     <div
                         className="absolute top-0 right-0 left-0 aspect-video w-full "
