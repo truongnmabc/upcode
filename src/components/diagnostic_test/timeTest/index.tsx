@@ -1,16 +1,12 @@
-import React, { useEffect } from "react";
-import Time from "@/components/study/contentGroup/mainStudyView/time/time";
 import ClockIcon from "@/components/icon/ClockIcon";
 import LazyLoadImage from "@/components/images";
-import { useAppSelector } from "@/redux/hooks";
+import Time from "@/components/study/contentGroup/mainStudyView/time/time";
 import { gameState } from "@/redux/features/game";
+import { useAppSelector } from "@/redux/hooks";
 
 const TimeTestGetLever = () => {
     const { currentGame } = useAppSelector(gameState);
 
-    useEffect(() => {
-        console.log("🚀 ~ useEffect ~ currentGame:", currentGame);
-    }, [currentGame]);
     return (
         <div className="w-full bg-[#F0F4F9] px-3 py-[14px] rounded-lg flex items-center justify-between">
             <div className="flex items-center gap-1">
@@ -19,7 +15,7 @@ const TimeTestGetLever = () => {
                     src="/images/notebook-dynamic-color.png"
                 />
                 <p className=" capitalize text-sm font-medium">
-                    Arithmetic Reasoning
+                    {currentGame?.tag}
                 </p>
             </div>
             <div className="flex items-center justify-center w-fit gap-2">
@@ -30,9 +26,42 @@ const TimeTestGetLever = () => {
                 <p className="text-sm text-[#21212185]  font-medium pr-1">
                     Level
                 </p>
-                <IconStarLevel level={1} defaultLevel={1} />
-                <IconStarLevel level={1} defaultLevel={2} />
-                <IconStarLevel level={1} defaultLevel={3} />
+                <IconStarLevel
+                    level={
+                        currentGame?.level === -1
+                            ? 2
+                            : currentGame?.level < 30
+                            ? 1
+                            : currentGame?.level <= 60
+                            ? 2
+                            : 3
+                    }
+                    defaultLevel={1}
+                />
+                <IconStarLevel
+                    level={
+                        currentGame?.level === -1
+                            ? 2
+                            : currentGame?.level < 30
+                            ? 1
+                            : currentGame?.level <= 60
+                            ? 2
+                            : 3
+                    }
+                    defaultLevel={2}
+                />
+                <IconStarLevel
+                    level={
+                        currentGame?.level === -1
+                            ? 2
+                            : currentGame?.level < 30
+                            ? 1
+                            : currentGame?.level <= 60
+                            ? 2
+                            : 3
+                    }
+                    defaultLevel={3}
+                />
             </div>
         </div>
     );

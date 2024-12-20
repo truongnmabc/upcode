@@ -26,6 +26,7 @@ export interface ICurrentGame
     localStatus?: IStatusAnswer;
     selectedAnswer?: IAnswer | null;
     turn?: number;
+    tag?: string;
 }
 const init = new UserQuestionProgress();
 export interface IGameReducer {
