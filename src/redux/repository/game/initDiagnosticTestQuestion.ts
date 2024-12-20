@@ -28,15 +28,12 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                         (item) => item?.questions
                     ) as IQuestion[];
 
-                    const startQuestion = list?.filter(
-                        (item) => item?.level === -1 || item?.level === 50
-                    );
+                    const randomItem = {
+                        ...list[Math.floor(Math.random() * list.length)],
+                        tag: subTopic.tag,
+                    };
 
-                    if (startQuestion && startQuestion.length > 0 && list) {
-                        const randomItem =
-                            startQuestion[
-                                Math.floor(Math.random() * startQuestion.length)
-                            ];
+                    if (randomItem && list) {
                         const newItems: ICurrentGame[] = Array.from(
                             { length: 2 },
                             () => ({
@@ -51,6 +48,7 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                                 localStatus: undefined,
                                 selectedAnswer: null,
                                 turn: undefined,
+                                tag: subTopic.tag,
                             })
                         );
 
