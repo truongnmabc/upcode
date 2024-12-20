@@ -8,13 +8,13 @@ import React, { useEffect, useState } from "react";
 import { MathJax } from "better-react-mathjax";
 import StatusAnswer from "../statusAnswer/statusAnswer";
 
-const FN = () => {
+const FN = ({ showStatus = true }: { showStatus?: boolean }) => {
     const { currentGame } = useAppSelector(gameState);
     const [text, setText] = useState<string>("");
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (currentGame.text && currentGame.id) {
+        if (currentGame?.text && currentGame?.id) {
             try {
                 const content = MyCrypto.decrypt(currentGame?.text);
                 setText(content);
@@ -24,7 +24,7 @@ const FN = () => {
                 setLoading(false);
             }
         }
-    }, [currentGame?.id, currentGame.text]);
+    }, [currentGame?.id, currentGame?.text]);
 
     return (
         <div className="w-full rounded-md p-3 flex flex-col gap-2 bg-white sm:bg-transparent  shadow-custom sm:shadow-none relative py-2">
@@ -40,8 +40,7 @@ const FN = () => {
                     />
                 </MathJax>
             )}
-
-            <StatusAnswer />
+            {showStatus && <StatusAnswer />}
         </div>
     );
 };

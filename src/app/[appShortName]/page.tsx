@@ -26,7 +26,6 @@ export default async function Home({ params }: Params) {
         if (!appInfo) {
             return;
         }
-
         const [response, dataSeo] = await Promise.all([
             axiosInstance.get(
                 `${API_PATH.GET_DATA_STUDY}/${appInfo?.appShortName}`

@@ -37,7 +37,6 @@ type IRes = {
 
 export default async function StatePage({ params }: Params) {
     const { appShortName, state } = await params;
-
     if (listAppState.includes(appShortName)) {
         const response = await axiosInstance.get(
             `${API_PATH.GET_DATA_STATE}/${appShortName}?state=${state}`

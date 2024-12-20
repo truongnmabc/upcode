@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { MtUiButton } from "@/components/button";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { gameState, startOverGame } from "@/redux/features/game";
+import { continueGame, gameState, startOverGame } from "@/redux/features/game";
 import { db } from "@/db/db.model";
+import pauseTestThunk from "@/redux/repository/game/pauseTest";
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement<any, any>;
@@ -20,28 +21,56 @@ const ModalConfirm = () => {
 
     const { isPaused, idTopic } = useAppSelector(gameState);
     const dispatch = useAppDispatch();
+    const [loading, setLoading] = useState(false);
     const handleStartOver = useCallback(async () => {
+        setLoading(true);
         await db?.testQuestions
             .where("parentId")
             .equals(idTopic)
             .modify((item) => {
                 item.isPaused = false;
                 item.startTime = new Date().getTime();
-                item.remainTime = item.duration;
+                item.remainTime = item.duration * 60;
             })
-            .then((res) => console.log("res", res))
+            .then((res) => console.log("handleStartOver ~ update db", res))
             .catch((err) => console.log("err", err));
+
+        await db?.userProgress
+            .where("parentId")
+            .equals(idTopic)
+            .and((item) => item.type === "test")
+            .delete()
+            .then((res) => console.log("delete success", res));
+
         dispatch(startOverGame());
+
+        setLoading(true);
         setOpen(false);
     }, [idTopic]);
 
-    const handleContinue = () => setOpen(false);
+    const handleContinue = () => {
+        dispatch(continueGame());
+        setOpen(false);
+    };
+
+    useEffect(() => {
+        return () => {
+            if (idTopic && idTopic !== -1) {
+                console.log("🚀 ~ unmount ~ idTopic:", idTopic);
+                dispatch(
+                    pauseTestThunk({
+                        testId: idTopic,
+                    })
+                );
+            }
+        };
+    }, [idTopic]);
 
     useEffect(() => {
         if (isPaused) {
             setTimeout(() => setOpen(true), 200);
         }
-    }, [isPaused]);
+    }, [isPaused, idTopic]);
 
     return (
         <Dialog
@@ -73,6 +102,7 @@ const ModalConfirm = () => {
                         type="primary"
                         className="text-base font-medium py-[10px] "
                         onClick={handleStartOver}
+                        loading={loading}
                     >
                         Start over
                     </MtUiButton>
