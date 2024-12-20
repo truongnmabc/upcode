@@ -1,7 +1,7 @@
 "use client";
 import Config from "@/config";
 import { setSession } from "@/utils/session";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import React from "react";
 
 const getKeyTest = (pathname: string | string[] | undefined): string | null => {
@@ -12,9 +12,28 @@ const getKeyTest = (pathname: string | string[] | undefined): string | null => {
     }
     return decodeURI(pathname[pathname?.length - 1]);
 };
+
+const getLastPathSegment = (pathname: string): string | null => {
+    if (!pathname) {
+        console.log("Pathname is empty");
+        return null;
+    }
+
+    const segments = pathname.split("/").filter(Boolean);
+
+    const lastSegment =
+        segments[segments.length - 1]?.replaceAll("_", " ") || null;
+
+    return lastSegment;
+};
+
 const TitleQuestion = () => {
     const param = useParams();
-    const defaultTitle = getKeyTest(param?.slug);
+    const pathname = usePathname();
+
+    const defaultTitle =
+        getKeyTest(param?.slug) || getLastPathSegment(pathname);
+
     let tempCount = 0;
 
     const setIsTester = () => {

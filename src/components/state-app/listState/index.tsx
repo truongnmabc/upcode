@@ -11,11 +11,16 @@ const BtnGotoState = ({ appInfo }: { appInfo: IAppInfo }) => {
     const [openListState, setOpenListState] = useState(false);
 
     useEffect(() => {
-        const _state = localStorage.getItem(
-            "select-state-" + appInfo.appNameId
-        );
-        if (_state) {
-            setCurrentState(_state);
+        if (appInfo.appShortName) {
+            const _state = localStorage.getItem(
+                "select-state-" + appInfo.appNameId
+            );
+
+            console.log("🚀 ~ useEffect ~ _state:", _state);
+
+            if (_state) {
+                setCurrentState(_state);
+            }
         }
     }, [appInfo.appShortName]);
 
@@ -38,7 +43,7 @@ const BtnGotoState = ({ appInfo }: { appInfo: IAppInfo }) => {
                 }}
             >
                 {currentState
-                    ? `Go To ${currentState.replaceAll("-", " ")}`
+                    ? `Go To ${currentState?.replaceAll("-", " ")}`
                     : "Get Started"}
             </div>
 
@@ -61,4 +66,4 @@ const BtnGotoState = ({ appInfo }: { appInfo: IAppInfo }) => {
     );
 };
 
-export default BtnGotoState;
+export default React.memo(BtnGotoState);

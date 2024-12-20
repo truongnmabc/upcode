@@ -1,50 +1,47 @@
-import { gameState } from "@/redux/features/game";
-import { useAppSelector } from "@/redux/hooks";
+import RouterApp from "@/common/router/router.constant";
+import { appInfoState } from "@/redux/features/appInfo";
+import { endTest, gameState } from "@/redux/features/game";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { revertPathName } from "@/utils/pathName";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Time = () => {
-    const { time: timeTest, remainTime } = useAppSelector(gameState);
-
+    const { isPaused, remainTime } = useAppSelector(gameState);
+    const { appInfo } = useAppSelector(appInfoState);
+    const router = useRouter();
     const [time, setTime] = useState(0);
+    const dispatch = useAppDispatch();
+    const [isTimeInitialized, setIsTimeInitialized] = useState(false);
 
     useEffect(() => {
-        if (timeTest) {
-            const timeLocal = localStorage.getItem("timeLocal");
-            if (timeLocal) {
-                const startTime = JSON.parse(timeLocal);
-                const currentTime = new Date().getTime();
-
-                const elapsedSeconds = Math.floor(
-                    (currentTime - startTime) / 1000
-                );
-
-                const remainingTime = timeTest * 60 - elapsedSeconds;
-
-                if (remainingTime <= 0) {
-                    setTime(0);
-                } else {
-                    setTime(remainingTime);
-                }
-            } else {
-                const startTime = new Date().getTime();
-                localStorage.setItem("timeLocal", JSON.stringify(startTime));
-                setTime(timeTest * 60);
-            }
+        if (remainTime && !isPaused) {
+            setTime(remainTime);
+            setIsTimeInitialized(true);
         }
-    }, [timeTest]);
+    }, [remainTime, isPaused]);
 
     useEffect(() => {
         if (time > 0) {
             const timeId = setTimeout(() => {
                 setTime((prev) => prev - 1);
             }, 1000);
-            return () => {
-                clearTimeout(timeId);
-            };
-        } else {
-            console.log("het gio");
+            return () => clearTimeout(timeId);
+        } else if (time === 0 && isTimeInitialized) {
+            console.log("end");
+            setIsTimeInitialized(false);
+
+            const _href = revertPathName({
+                appName: appInfo.appShortName,
+                href: RouterApp.ResultTest,
+            });
+
+            dispatch(endTest());
+
+            router.push(_href);
         }
-    }, [time]);
+    }, [time, isTimeInitialized, router, appInfo]);
+
     return <div>{formatTime(time * 1000)}</div>;
 };
 

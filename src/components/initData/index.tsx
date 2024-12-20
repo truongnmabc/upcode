@@ -238,7 +238,6 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
 
     useLayoutEffect(() => {
         if (appInfo) {
-            console.log("first");
             const db = initializeDB(appInfo.appShortName);
             handleInitData(db);
         }

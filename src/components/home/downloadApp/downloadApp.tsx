@@ -140,7 +140,7 @@ const DownloadApp = () => {
                                         maxWidth: "100%",
                                         width: "100%",
                                     }}
-                                    value={appInfo.link}
+                                    value={appInfo?.link || ""}
                                     viewBox={`0 0 256 256`}
                                 />
                             </div>

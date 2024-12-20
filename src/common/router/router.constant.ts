@@ -15,5 +15,6 @@ const RouterApp = {
     ResultTest: "result_test",
     Billing: "billing",
     Edit_policy: "editorial-policy",
+    Diagnostic_test: "diagnostic_test",
 };
 export default RouterApp;
