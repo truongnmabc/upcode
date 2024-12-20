@@ -12,7 +12,7 @@
         "vampiro"
     ],
     "editor.codeActionsOnSave": {
-    "source.fixAll.tslint": "always",
-    "source.fixAll.eslint": "always"
-},
+        "source.fixAll.tslint": "always",
+        "source.fixAll.eslint": "always"
+    }
 }

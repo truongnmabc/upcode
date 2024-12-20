@@ -61,7 +61,7 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
         <Fragment>
             <div className="about-us-container">
                 <div className="bg-us-container">
-                    <div className="about-us-top max-w-page mx-auto">
+                    <div className="about-us-top">
                         <div className="cluster-info-title max-w-component-desktop">
                             <div className="content-about-us">
                                 <div className="title">ABOUT US</div>
