@@ -1,63 +1,77 @@
 import IconBookmark from "@/components/icon/iconBookmark";
 import IconDislike from "@/components/icon/iconDislike";
 import IconLike from "@/components/icon/iconLike";
-import { gameState } from "@/redux/features/game";
-import { userState } from "@/redux/features/user";
-import { useAppSelector } from "@/redux/hooks";
+
 import { Dialog } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import ReportMistake from "./reportMistake";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { gameState } from "@/redux/features/game";
+import { userState } from "@/redux/features/user";
+import useActionsThunk from "@/redux/repository/user/actions";
+import getListActionThunk from "@/redux/repository/user/getActions";
 
 const SubAction = () => {
-    // const { currentGame } = useAppSelector(gameState);
-    // const { listActions } = useAppSelector(userState);
+    const { currentGame, idTopic } = useAppSelector(gameState);
+    const { listActions } = useAppSelector(userState);
     const [openModal, setOpenModal] = useState(false);
-
+    const dispatch = useAppDispatch();
     const [status, setStatus] = useState({
         like: false,
         dislike: false,
-        save: true,
+        save: false,
     });
 
-    // useEffect(() => {
-    //     if (currentGame.id) {
-    //         const question = listActions.find(
-    //             (item) => item.questionId === currentGame.id
-    //         );
-    //         if (question) {
-    //             console.log("🚀 ~ useEffect ~ question:", question);
-    //             setStatus({
-    //                 like: question.isLike,
-    //                 dislike: question.isDisLike,
-    //                 save: question.isSave,
-    //             });
-    //         } else {
-    //             setStatus({
-    //                 like: false,
-    //                 dislike: false,
-    //                 save: false,
-    //             });
-    //         }
-    //     }
-    // }, [currentGame, listActions]);
+    useEffect(() => {
+        if (idTopic) {
+            dispatch(
+                getListActionThunk({
+                    partId: idTopic,
+                })
+            );
+        }
+    }, [idTopic]);
+
+    useEffect(() => {
+        if (currentGame.id) {
+            const question = listActions.find(
+                (item) => item.questionId === currentGame.id
+            );
+            if (question) {
+                setStatus({
+                    like: question.actions?.includes("like"),
+                    dislike: question.actions?.includes("dislike"),
+                    save: question.actions?.includes("save"),
+                });
+            } else {
+                setStatus({
+                    like: false,
+                    dislike: false,
+                    save: false,
+                });
+            }
+        }
+    }, [currentGame, listActions]);
 
     const saveAction = useCallback(() => {
-        // dispatch(
-        //     useActionsThunk({
-        //         status: "save",
-        //         questionId: currentGame.id,
-        //     })
-        // );
-    }, []);
+        dispatch(
+            useActionsThunk({
+                status: "save",
+                questionId: currentGame.id,
+                partId: currentGame.parentId,
+            })
+        );
+    }, [currentGame]);
 
     const likeAction = useCallback(() => {
-        // dispatch(
-        //     useActionsThunk({
-        //         status: "like",
-        //         questionId: currentGame.id,
-        //     })
-        // );
-    }, []);
+        dispatch(
+            useActionsThunk({
+                status: "like",
+                questionId: currentGame.id,
+                partId: currentGame.parentId,
+            })
+        );
+    }, [currentGame]);
 
     const dislikeAction = () => setOpenModal(true);
 

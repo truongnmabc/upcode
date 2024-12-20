@@ -11,39 +11,34 @@ const finishQuestionThunk = createAsyncThunk(
     "finishQuestionThunk",
     async ({ subTopicProgressId, topicId }: IInitQuestion) => {
         try {
-            const currentProgress = await db.subTopicProgress
+            const currentProgress = await db?.subTopicProgress
                 .where("id")
                 .equals(subTopicProgressId)
                 .first();
 
-            console.log("🚀 ~ currentProgress:", currentProgress);
-
             if (!currentProgress) throw new Error("Progress not found");
 
-            const isUnfinished = currentProgress.part?.some(
-                (item) => item.status === 0
-            );
+            // *NOTE : còn 1 thằng chưa hoàn thành thì khi finish thì part sẽ qua
+
+            const isUnfinished =
+                currentProgress.part?.filter((item) => item.status === 0)
+                    ?.length === 1;
+            console.log("🚀 ~ isUnfinished:", isUnfinished);
 
             const updatedPart = currentProgress.part?.map((item) => ({
                 ...item,
                 status: item.id === topicId ? 1 : item.status,
             }));
 
-            await db.subTopicProgress
+            await db?.subTopicProgress
                 .where("id")
                 .equals(subTopicProgressId)
                 .modify((item) => {
                     item.part = updatedPart;
-                    item.pass = !isUnfinished;
+                    item.pass = isUnfinished;
                 })
+                .then((res) => console.log("res", res))
                 .catch((err) => console.log("err", err));
-
-            const dbUpdate = await db.subTopicProgress
-                .where("id")
-                .equals(subTopicProgressId)
-                .first();
-
-            console.log("🚀 ~ currentProgress:", dbUpdate);
         } catch (error) {
             console.error("Error in finishQuestionThunk:", error);
         }

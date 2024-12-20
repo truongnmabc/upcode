@@ -18,8 +18,9 @@ export class DB extends Dexie {
     testQuestions!: Table<ITestQuestion>;
     useActions!: Table<IUserActions>;
     tests!: Table<ITest>;
-    constructor() {
-        super("abc-elearning");
+    constructor(appName: string) {
+        super(appName);
+
         this.version(1).stores({
             // *NOTE: chứa câu trả lời của người dùng.
 
@@ -44,7 +45,7 @@ export class DB extends Dexie {
             // *NOTE: chứa thông tin của part: id,name,slug,status,tag,...
 
             // part: "++id, parentId",
-            useActions: "++id,questionId",
+            useActions: "++id,partId,questionId",
 
             tests: "++id, testType",
 
@@ -53,4 +54,11 @@ export class DB extends Dexie {
     }
 }
 
-export const db = new DB();
+export let db: DB | null = null;
+
+export const initializeDB = (appShortName: string): DB => {
+    if (!db) {
+        db = new DB(appShortName);
+    }
+    return db;
+};

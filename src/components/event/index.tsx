@@ -1,5 +1,4 @@
 "use client";
-import { shouldOpenSubmitTest } from "@/redux/features/tests";
 import { useAppDispatch } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initQuestion";
 import initTestQuestionThunk from "@/redux/repository/game/initTestQuestion";

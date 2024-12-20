@@ -27,7 +27,7 @@ const ListStudyDrawer = ({
     const router = useRouter();
 
     const handleGetDataTopic = useCallback(async () => {
-        const data = await db.topics.toArray();
+        const data = await db?.topics.toArray();
         if (data) setList(data);
     }, []);
 

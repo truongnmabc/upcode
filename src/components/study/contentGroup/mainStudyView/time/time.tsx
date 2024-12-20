@@ -3,7 +3,7 @@ import { useAppSelector } from "@/redux/hooks";
 import React, { useEffect, useState } from "react";
 
 const Time = () => {
-    const { time: timeTest } = useAppSelector(gameState);
+    const { time: timeTest, remainTime } = useAppSelector(gameState);
 
     const [time, setTime] = useState(0);
 
@@ -41,6 +41,8 @@ const Time = () => {
             return () => {
                 clearTimeout(timeId);
             };
+        } else {
+            console.log("het gio");
         }
     }, [time]);
     return <div>{formatTime(time * 1000)}</div>;

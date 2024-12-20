@@ -30,7 +30,7 @@ const BtnGotoState = ({ appInfo }: { appInfo: IAppInfo }) => {
                 onClick={() => {
                     if (currentState) {
                         const _href = revertPathName({
-                            href: currentState,
+                            state: currentState,
                             appName: appInfo.appShortName,
                         });
                         router.push(_href);

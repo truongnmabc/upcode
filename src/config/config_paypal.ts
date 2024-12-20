@@ -1,6 +1,6 @@
 import { IAppInfo } from "@/models/AppInfo";
 import config_new_pro from "../data/config_new_pro.json";
-import { isProduction } from "./config_web";
+import { isProduction } from "@/common/constants";
 
 export const getConfigPro = (proType) => {
     if (config_new_pro) {
@@ -36,8 +36,14 @@ export const getConfigProV2 = (appInfo) => {
             const averagePrice1Month = getAveragePrice(oneMonth.price, 30);
             const averagePrice1Year = getAveragePrice(oneYear.price, 365);
             const savePercent1Week = 0;
-            const savePercent1Month = Math.floor(((averagePrice1Week - averagePrice1Month) / averagePrice1Week) * 100);
-            const savePercent1Year = Math.floor(((averagePrice1Week - averagePrice1Year) / averagePrice1Week) * 100);
+            const savePercent1Month = Math.floor(
+                ((averagePrice1Week - averagePrice1Month) / averagePrice1Week) *
+                    100
+            );
+            const savePercent1Year = Math.floor(
+                ((averagePrice1Week - averagePrice1Year) / averagePrice1Week) *
+                    100
+            );
             prices.push({
                 ...oneWeek,
                 type: "1 week",
@@ -135,8 +141,8 @@ const getAveragePrice = (value: number, days: number) => {
     return parseFloat((value / days).toFixed(2));
 };
 
-const parseJSONdata = (jsonString) => {
-    const isJSONString = (str) => {
+const parseJSONdata = (jsonString: string) => {
+    const isJSONString = (str: string) => {
         try {
             JSON.parse(str);
         } catch (e) {
@@ -160,13 +166,13 @@ export const ONETIMEPRO = "oneTimePro";
 export const SUBSCRIPTION = "subcription";
 export const ONETIME = "onetime";
 
-export const PAYPAL_SUBCRIPTION_CLIENT_ID = isProduction()
+export const PAYPAL_SUBCRIPTION_CLIENT_ID = isProduction
     ? "AdB2eO_M5-okrwgabqjSMgbxuJGSXuw7tOTXNIPonty8TiHtCTZGjIErVHaBRYhsGQWNYZQjQlq4tJat"
     : "AVyimUfmrrnWOGW7GFSXlYm77H4O-JvvRBSBMqBDNj1_ATxF-hRsccOmXxx8lenoD1SND5UjC-MlY9Jm";
 
 export const PAYPAL_SUBSCRIPTION_KEY = "subcription_key";
 
-export const PAYPAL_CLIENT_ID = isProduction()
+export const PAYPAL_CLIENT_ID = isProduction
     ? "AdB2eO_M5-okrwgabqjSMgbxuJGSXuw7tOTXNIPonty8TiHtCTZGjIErVHaBRYhsGQWNYZQjQlq4tJat"
     : "ASZuK4V1rzGFj333OzSTQM_TeNeD7VWkhTCUjoy2y6p7dgbIAoSYTSGaKwMGiGVoaHMxC-Mdb8D3wa3E";
 export const PAYPAL_CURRENCY = "USD";

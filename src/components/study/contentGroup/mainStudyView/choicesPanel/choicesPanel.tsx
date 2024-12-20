@@ -5,6 +5,10 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import nextQuestionThunk from "@/redux/repository/game/nextQuestion";
 import { useEffect, useState } from "react";
 import AnswerButton from "../answer";
+import { useParams, useRouter } from "next/navigation";
+import { revertPathName } from "@/utils/pathName";
+import { appInfoState } from "@/redux/features/appInfo";
+import finishQuestionThunk from "@/redux/repository/game/finishQuestion";
 
 const TEMP_LIST_ANSWER: IAnswer[] = [
     {
@@ -50,8 +54,12 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 const ChoicesPanel = () => {
     const dispatch = useAppDispatch();
+    const router = useRouter();
+    const params = useParams();
+    const { currentGame, idTopic, listQuestion, subTopicProgressId } =
+        useAppSelector(gameState);
 
-    const { currentGame, idTopic } = useAppSelector(gameState);
+    const { appInfo } = useAppSelector(appInfoState);
 
     const [listRandomQuestion, setListRandomQuestion] =
         useState(TEMP_LIST_ANSWER);
@@ -77,6 +85,27 @@ const ChoicesPanel = () => {
             }
 
             if (event && event.code === "Enter" && currentGame.selectedAnswer) {
+                const isFinal = listQuestion.every(
+                    (item) => item.localStatus === "correct"
+                );
+                if (isFinal) {
+                    dispatch(
+                        finishQuestionThunk({
+                            subTopicProgressId: subTopicProgressId,
+                            topicId: idTopic,
+                        })
+                    );
+
+                    const _href = revertPathName({
+                        href: `/finish?subTopicProgressId=${subTopicProgressId}&topic=${params?.slug}&partId=${idTopic}`,
+                        appName: appInfo.appShortName,
+                    });
+
+                    router.push(_href, {
+                        scroll: true,
+                    });
+                    return;
+                }
                 dispatch(nextQuestionThunk());
             }
         };
@@ -86,7 +115,16 @@ const ChoicesPanel = () => {
         return () => {
             document.removeEventListener("keydown", handleEnterEvent, true);
         };
-    }, [currentGame.answers, currentGame.selectedAnswer, idTopic, dispatch]);
+    }, [
+        currentGame.answers,
+        currentGame.selectedAnswer,
+        idTopic,
+        dispatch,
+        listQuestion,
+        appInfo.appShortName,
+        subTopicProgressId,
+        params?.slug,
+    ]);
 
     return (
         <div className={"grid gap-2 grid-cols-1 sm:grid-cols-2"}>

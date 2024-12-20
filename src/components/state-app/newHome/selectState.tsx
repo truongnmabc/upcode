@@ -8,6 +8,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import React, { Fragment, useEffect, useState } from "react";
 import ListState from "../listState/listState";
+import MyContainer from "@/components/v4-material/myContainer";
 const SelectState = ({
     appInfo,
     _state,
@@ -28,13 +29,13 @@ const SelectState = ({
     }, [isDesktop]);
     return (
         <div
-            className="w-full relative top-0 left-0 overflow-hidden aspect-video "
+            className="w-full relative overflow-hidden "
             style={{
                 background:
                     "linear-gradient(180deg, #E5E9FF 0%, #F0F2FE 4.75%)",
             }}
         >
-            <div className="v4-container-component v4-container-maxWidth">
+            <MyContainer className="px-0">
                 <div
                     className={clsx(
                         "sm:py-[48px] pt-6 px-4  sm:max-w-[800px] relative z-10 text-2xl   sm:text-[48px] sm:leading-[72px] font-bold  font-poppins "
@@ -153,21 +154,19 @@ const SelectState = ({
                         </div>
                     </Collapse>
 
-                    {isMobile && (
-                        <div
-                            className="w-full h-8   flex sm:hidden items-center justify-center"
-                            onClick={() => {
-                                setOpen(!open);
-                            }}
-                        >
-                            <p className="text-[#3477F5] text-sm">Show More</p>
-                            {open ? (
-                                <ExpandLess htmlColor="#3477F5" />
-                            ) : (
-                                <ExpandMore htmlColor="#3477F5" />
-                            )}
-                        </div>
-                    )}
+                    <div
+                        className="w-full h-8   flex sm:hidden items-center justify-center"
+                        onClick={() => {
+                            setOpen(!open);
+                        }}
+                    >
+                        <p className="text-[#3477F5] text-sm">Show More</p>
+                        {open ? (
+                            <ExpandLess htmlColor="#3477F5" />
+                        ) : (
+                            <ExpandMore htmlColor="#3477F5" />
+                        )}
+                    </div>
 
                     <div
                         onClick={() => {
@@ -178,42 +177,37 @@ const SelectState = ({
                         Not your state?
                     </div>
                 </div>
+            </MyContainer>
+            {/* Mobile  */}
+            <div className=" absolute z-0 block sm:hidden top-0 left-0 w-full aspect-video  right-0">
+                <LazyLoadImage
+                    src="/images/cdl_v2/image.png"
+                    imgClassNames="h-full w-full"
+                />
             </div>
-            {isMobile ? (
-                <Fragment>
-                    <div className=" absolute z-0 top-0 left-0 w-full aspect-video   right-0">
-                        <LazyLoadImage
-                            src="/images/cdl_v2/image.png"
-                            classNames="h-full w-full"
-                        />
-                    </div>
-                    <div
-                        className="absolute top-0 right-0 left-0 aspect-video w-full "
-                        style={{
-                            marginTop: "1px",
-                            background:
-                                "radial-gradient(78.52% 41.96% at 50.13% 30.79%, rgba(240, 242, 254, 0.32) 0.64%, #F0F2FE 85.9%)",
-                        }}
-                    ></div>
-                </Fragment>
-            ) : (
-                <Fragment>
-                    <div className=" absolute z-0 bottom-0 h-full w-full   right-0">
-                        <LazyLoadImage
-                            src="/images/cdl_v2/image.png"
-                            classNames="h-full w-full object-cover "
-                        />
-                    </div>
-                    <div
-                        className="absolute bottom-0 left-0 h-full w-full "
-                        style={{
-                            marginTop: "1px",
-                            background:
-                                "radial-gradient(34.11% 67.36% at 84.88% 63%, rgba(255, 255, 255, 0) 0%, rgba(240, 242, 254, 0.9) 100%)",
-                        }}
-                    ></div>
-                </Fragment>
-            )}
+            <div
+                className="absolute top-0 block sm:hidden right-0 left-0 aspect-video w-full "
+                style={{
+                    marginTop: "1px",
+                    background:
+                        "radial-gradient(78.52% 41.96% at 50.13% 30.79%, rgba(240, 242, 254, 0.32) 0.64%, #F0F2FE 85.9%)",
+                }}
+            ></div>
+            {/* PC  */}
+            <div className=" absolute z-0 sm:block hidden bottom-0 h-full w-full   right-0">
+                <LazyLoadImage
+                    src="/images/cdl_v2/image.png"
+                    imgClassNames="h-full w-full object-cover "
+                />
+            </div>
+            <div
+                className="absolute bottom-0 sm:block hidden left-0 h-full w-full "
+                style={{
+                    background:
+                        "radial-gradient(34.11% 67.36% at 84.88% 63%, rgba(255, 255, 255, 0) 0%, rgba(240, 242, 254, 0.9) 100%)",
+                }}
+            ></div>
+
             <Dialog
                 open={openListState}
                 onClose={() => {

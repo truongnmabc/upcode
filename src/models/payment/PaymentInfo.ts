@@ -1,7 +1,7 @@
 import Config from "../../config";
 
 export interface IPaymentInfo {
-    id: any;
+    id: string | number;
     createdDate: number;
     amount: number;
     orderId: string; // orderId của gói đang active
@@ -20,7 +20,7 @@ export interface IPaymentInfo {
     expiredDate: number; // trường này được lấy theo next_billing_time của paypal nhé (nếu cancel thì sẽ k có trường đó thì cần check)
 }
 export class PaymentInfo {
-    id: any; // can thong nhat
+    id: string | number; // can thong nhat
     createdDate: number; // can thong nhat
     amount: number;
     orderId: string;
@@ -38,12 +38,12 @@ export class PaymentInfo {
     orderIds: string[];
     expiredDate: number;
 
-    constructor(object: any = {}) {
-        this.id = object.id;
-        this.createdDate = object.createdDate;
-        this.amount = object.amount;
+    constructor(object: Partial<IPaymentInfo> = {}) {
+        this.id = object.id ?? "";
+        this.createdDate = object.createdDate ?? 0;
+        this.amount = object.amount ?? 0;
         this.orderId = object.orderId ?? "";
-        this.emailAddress = object.emailAddress;
+        this.emailAddress = object.emailAddress ?? "";
         this.paymentStatus = object.paymentStatus ?? Config.PAYMENT_INIT;
         this.appId = object.appId ?? -1;
         this.appShortName = object.appShortName ?? "";
