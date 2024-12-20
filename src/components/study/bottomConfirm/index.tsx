@@ -3,11 +3,12 @@ import RouterApp from "@/common/router/router.constant";
 import { MtUiButton } from "@/components/button";
 import Sheet from "@/components/sheet";
 import { appInfoState } from "@/redux/features/appInfo";
+import { endTest } from "@/redux/features/game";
 import { shouldOpenSubmitTest, testState } from "@/redux/features/tests";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { revertPathName } from "@/utils/pathName";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useCallback } from "react";
 
 const BottomConfigTest = () => {
     const { openSubmit } = useAppSelector(testState);
@@ -16,17 +17,19 @@ const BottomConfigTest = () => {
     const { appInfo } = useAppSelector(appInfoState);
 
     const router = useRouter();
-    const handleConfirm = () => {
+    const handleConfirm = useCallback(() => {
         const _href = revertPathName({
             href: RouterApp.ResultTest,
             appName: appInfo.appShortName,
         });
-        localStorage.removeItem("timeLocal");
+
         dispatch(shouldOpenSubmitTest(false));
+        dispatch(endTest());
         router.push(_href);
-    };
+    }, [RouterApp, dispatch, appInfo.appShortName]);
+
     return (
-        <div className="zaui-sheet-content-border-none">
+        <div className=" hidden zaui-sheet-content-border-none">
             <Sheet
                 mask
                 maskClosable

@@ -14,9 +14,11 @@ const pauseTestThunk = createAsyncThunk(
             .modify((item) => {
                 item.isPaused = true;
                 item.remainTime =
-                    item.remainTime - (new Date().getTime() - item.startTime);
+                    item.remainTime -
+                    (new Date().getTime() - item.startTime) / 1000;
+                item.startTime = new Date().getTime();
             })
-            .then((res) => console.log("res", res))
+            .then((res) => console.log("pauseTestThunk ~ get data db", res))
             .catch((err) => console.log("err", err));
     }
 );

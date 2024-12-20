@@ -9,6 +9,7 @@ import initTestQuestionThunk from "../repository/game/initTestQuestion";
 import nextQuestionThunk from "../repository/game/nextQuestion";
 import { RootState } from "../store";
 import { reloadStateThunk } from "../repository/utils/reload";
+import initDiagnosticTestQuestionThunk from "../repository/game/initDiagnosticTestQuestion";
 
 export interface ICurrentGame
     extends Omit<
@@ -59,10 +60,10 @@ const initGameReducer: IGameReducer = {
 
     subTopicProgressId: -1,
     turn: 1,
-    time: 60,
+    time: -1,
     type: "learn",
     isPaused: false,
-    remainTime: 60,
+    remainTime: -1,
 };
 
 export const gameSlice = createSlice({
@@ -98,9 +99,29 @@ export const gameSlice = createSlice({
             state.indexCurrentQuestion = 0;
             state.turn = 1;
             state.isPaused = false;
+            state.remainTime = state.time * 60;
+        },
+        continueGame: (state) => {
+            state.isPaused = false;
+        },
+        endTest: (state) => {
+            state.indexCurrentQuestion = 0;
+            state.turn = 1;
+            state.isPaused = false;
+            state.remainTime = -1;
         },
     },
     extraReducers(builder) {
+        builder.addCase(
+            initDiagnosticTestQuestionThunk.fulfilled,
+            (state, action) => {
+                const { listQuestion } = action.payload;
+
+                state.listQuestion = listQuestion;
+                state.currentGame = listQuestion[0];
+            }
+        );
+
         builder.addCase(reloadStateThunk.fulfilled, (state, action) => {
             state.turn = action.payload.turn;
         });
@@ -196,6 +217,8 @@ export const gameSlice = createSlice({
                             (answer) => answer?.id === question?.id
                         )
                 );
+                state.indexCurrentQuestion =
+                    firstUnansweredIndex > 0 ? firstUnansweredIndex : 0;
                 state.currentGame = {
                     ...state.listQuestion[firstUnansweredIndex],
                     localStatus: "new",
@@ -287,6 +310,8 @@ export const {
     setListQuestionGames,
     setTurtGame,
     startOverGame,
+    continueGame,
+    endTest,
 } = actions;
 
 export const gameState = (state: RootState) => state.gameReducer;

@@ -2,6 +2,7 @@
 import { useAppDispatch } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initQuestion";
 import initTestQuestionThunk from "@/redux/repository/game/initTestQuestion";
+import pauseTestThunk from "@/redux/repository/game/pauseTest";
 import beforeUnLoadThunk, {
     reloadStateThunk,
 } from "@/redux/repository/utils/reload";
@@ -52,33 +53,17 @@ const EventListener = () => {
         };
     }, [handleBeforeUnload]);
 
-    // const handlePopState = useCallback(() => {
-    //     const { pathname, search } = window.location;
-    //     console.log("🚀 ~ handlePopState ~ search:", search);
-    //     console.log("🚀 ~ handlePopState ~ pathname:", pathname);
+    const handlePopState = useCallback(() => {
+        // dispatch(pauseTestThunk());
+        console.log("event listener popstate");
+    }, [dispatch]);
+    useEffect(() => {
+        window.addEventListener("popstate", handlePopState);
 
-    //     // if (pathname.includes("/study") && search.includes("type=test")) {
-    //     console.log("🚀 ~ Handle popstate triggered on /study with ?type=test");
-
-    //     dispatch(shouldOpenSubmitTest(true));
-
-    //     window.history.pushState(
-    //         null,
-    //         "",
-    //         "http://localhost:3030/asvab/study/Practice%20Tests?type=test&testId=4668183050977280"
-    //     );
-    //     // }
-    // }, [dispatch]);
-    // useEffect(() => {
-    //     console.log("Adding popstate event listener to window");
-
-    //     window.addEventListener("popstate", handlePopState);
-
-    //     return () => {
-    //         console.log("Removing popstate event listener from window");
-    //         window.removeEventListener("popstate", handlePopState);
-    //     };
-    // }, []);
+        return () => {
+            window.removeEventListener("popstate", handlePopState);
+        };
+    }, []);
 
     return <></>;
 };

@@ -8,6 +8,8 @@ import { Grid2 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
 import { IPropsItemTest } from "../type";
+import RouterApp from "@/common/router/router.constant";
+import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initDiagnosticTestQuestion";
 
 const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     const router = useRouter();
@@ -41,12 +43,14 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
             }
 
             if (item.id === "DT") {
-                // const res = await db.tests.where("type").equals("diagnosticTestFormat").toArray();
-                // const _href = revertPathName({
-                //     href: `/study/${item.name}?type=test&testId=${id}`,
-                //     appName: appInfo.appShortName,
-                // });
-                // router.push(_href);
+                console.log("Start time next:", new Date().toISOString());
+
+                dispatch(initDiagnosticTestQuestionThunk());
+                const _href = revertPathName({
+                    href: RouterApp.Diagnostic_test,
+                    appName: appInfo.appShortName,
+                });
+                router.push(_href);
             }
             if (item.id === "PT") {
                 const res = await db?.tests
