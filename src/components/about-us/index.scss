@@ -18,7 +18,9 @@
         display: flex;
         justify-content: center;
         padding: 48px 0;
-
+        background-image: url(https://storage.googleapis.com/worksheetzone/CDL/images/about-us-img.png);
+        background-size: cover;
+        background-position: center;
         .cluster-info-title {
             display: flex;
             align-items: center;

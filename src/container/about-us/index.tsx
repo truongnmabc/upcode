@@ -1,29 +1,18 @@
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
-import React, { useEffect, useRef, useState } from "react";
-import Slider from "react-slick";
-import dataAboutUs from "../../data/about-us-member.json";
+import { useEffect, useState } from "react";
 // import SectionFooter from "../../components/SectionHome/SectionFooter/SectionFooter";
-import "./index.scss";
-import { IAppInfo } from "../../models/AppInfo";
-import Routes from "@/config/routes";
-import Link from "next/link";
-import { APP_SHORT_NAME } from "@/config_app";
-import Footer1 from "@/components/footer/Footer1";
-import MyContainer from "@/components/v4-material/MyContainer";
-import "../../styles/slick.css";
-import "../../styles/slick.min.css";
-import "../../styles/slick-theme.min.css";
-import Layout2 from "@/components/layout/layout-2/Layout2";
 import CoreValueIcon from "@/components/icon/about/CoreValueIcon";
+import DropDown from "@/components/icon/about/DropDown";
 import MissionIcon from "@/components/icon/about/MissionIcon";
 import VisionIcon from "@/components/icon/about/VisionIcon";
-import MemberAbout from "../../data/about-us-member.json";
-import DropDown from "@/components/icon/about/DropDown";
+import Layout2 from "@/components/layout/layout-2/Layout2";
 import { getMemberApi } from "@/services/contact.service";
+import { IAppInfo } from "../../models/AppInfo";
+import "../../styles/slick-theme.min.css";
+import "../../styles/slick.css";
+import "../../styles/slick.min.css";
+import "./index.scss";
 const urlStorage = "https://storage.googleapis.com/micro-enigma-235001.appspot.com/about-us";
 const listApp = [
     {
@@ -167,10 +156,6 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
 
     // const width = isMobile ? "132" : "150";
     // const height = isMobile ? "41" : "100";
-    const getSrcLogo = () => {
-        let logo = `/images/${APP_SHORT_NAME}/logo-dark.png`;
-        return logo;
-    };
     const [isExpanded, setIsExpanded] = useState(false);
     const [listMember, setListMember] = useState([]);
     useEffect(() => {
