@@ -68,6 +68,19 @@ p {
 .text-primary {
     color: var(--text-color-primary);
 }
+
+.hover-main-color:hover {
+    color: var(--main-color);
+}
+
+.main-color {
+    color: var(--main-color);
+}
+
+.main-color-bold {
+    color: var(--main-color-bold);
+}
+
 .bg-primary {
     background-color: var(--color-primary);
 }
