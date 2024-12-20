@@ -24,9 +24,6 @@ const SelectState = ({
         setOpen(!isMobile);
     }, [isMobile]);
 
-    useEffect(() => {
-        setOpen(isDesktop);
-    }, [isDesktop]);
     return (
         <div
             className="w-full relative overflow-hidden "
@@ -196,7 +193,7 @@ const SelectState = ({
             {/* PC  */}
             <div className=" absolute z-0 sm:block hidden bottom-0 h-full w-full   right-0">
                 <LazyLoadImage
-                    src="/images/cdl_v2/image.png"
+                    src="https://storage.googleapis.com/worksheetzone/CDL/images/back-cdl-state-v2.png"
                     imgClassNames="h-full w-full object-cover "
                 />
             </div>
