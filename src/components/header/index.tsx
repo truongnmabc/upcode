@@ -23,11 +23,11 @@ const FN = () => {
                 ) : (
                     <div
                         className={clsx(
-                            " h-fit w-full flex bg-white dark:bg-black border-b   border-[#e4e4e4] border-solid  justify-center "
+                            " h-fit w-full flex bg-white dark:bg-black border-b  border-[#e4e4e4] border-solid  justify-center "
                         )}
                         id="headerRootLayout"
                     >
-                        <div className="px-6 py-2  w-full z-0 h-full max-w-page">
+                        <div className="py-2 w-full z-0 h-full max-w-page">
                             <Grid2 container>
                                 <Grid2
                                     size={{
