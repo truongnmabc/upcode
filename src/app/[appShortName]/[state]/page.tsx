@@ -1,4 +1,3 @@
-import { fetchAppData } from "@/app/[appShortName]/layout";
 import axiosInstance from "@/common/config/axios";
 import { listAppState } from "@/common/constants";
 import { API_PATH } from "@/common/constants/api.constants";
@@ -6,6 +5,7 @@ import NewHome from "@/components/state-app/newHome";
 import { ITestInfo } from "@/models/tests/tests";
 import { ITopicResState } from "@/models/topics/topics";
 import { getSEOAndHeaderContentApi } from "@/services/home.service";
+import { fetchAppData } from "@/utils/getAppInfos";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 

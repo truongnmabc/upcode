@@ -54,8 +54,6 @@ export class DB extends Dexie {
     }
 }
 
-let dbInstance: DB | null = null;
-
 export let db: DB | null = null;
 
 export const initializeDB = (appShortName: string): DB => {
@@ -63,8 +61,4 @@ export const initializeDB = (appShortName: string): DB => {
         db = new DB(appShortName);
     }
     return db;
-};
-
-export const getDB = (): DB | null => {
-    return dbInstance;
 };

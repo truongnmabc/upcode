@@ -1,5 +1,5 @@
 import ContactsScreenView from "@/components/contact";
-import { fetchAppData } from "../../layout";
+import { fetchAppData } from "@/utils/getAppInfos";
 
 type Params = {
     params: Promise<{ appShortName: string; slug: string }>;

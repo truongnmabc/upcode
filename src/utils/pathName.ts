@@ -1,4 +1,3 @@
-import { listAppState } from "@/common/constants";
 import RouterApp from "@/common/router/router.constant";
 
 export const convertPathName = (pathName: string): string => {

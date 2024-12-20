@@ -9,8 +9,8 @@ import SeoContent from "@/components/seoContent/seoContent";
 import HomeSingleApp from "@/components/state-app";
 import { ITopic } from "@/models/topics/topics";
 import { getAppType } from "@/utils/config_web";
-import { fetchAppData } from "./layout";
 import MyContainer from "@/components/v4-material/myContainer";
+import { fetchAppData } from "@/utils/getAppInfos";
 
 type Params = {
     params: Promise<{ appShortName: string }>;

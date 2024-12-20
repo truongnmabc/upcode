@@ -1,6 +1,6 @@
 import React from "react";
-import { fetchAppData } from "../../layout";
 import AboutUsContainer from "@/components/about-us";
+import { fetchAppData } from "@/utils/getAppInfos";
 type Params = {
     params: Promise<{ appShortName: string; slug: string }>;
 };

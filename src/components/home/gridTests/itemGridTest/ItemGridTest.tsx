@@ -91,7 +91,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
             }}
         >
             <div
-                className="flex border relative overflow-hidden cursor-pointer w-full h-[52px] sm:h-[72px] rounded-md"
+                className="flex border relative overflow-hidden bg-white cursor-pointer w-full h-[52px] sm:h-[72px] rounded-md"
                 onMouseOver={(e) => {
                     e.currentTarget.style.borderColor = item?.color || "";
                 }}
