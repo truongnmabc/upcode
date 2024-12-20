@@ -50,10 +50,10 @@ const AnswerSheet = () => {
                         <div
                             key={index}
                             className={ctx(
-                                "w-[30px] h-[30px] text-xs cursor-not-allowed  rounded transition-all flex items-center justify-center border border-solid",
+                                "w-[30px] h-[30px] text-xs rounded transition-all flex items-center justify-center border border-solid",
                                 {
                                     "border-[#5497FF] pointer-events-auto cursor-pointer":
-                                        currentGame.id === q.id,
+                                        currentGame?.id === q.id,
                                     "border-[#07C58C] text-white bg-[#07C58C]":
                                         q.localStatus === "correct" &&
                                         indexCurrentQuestion !== index,
@@ -61,6 +61,12 @@ const AnswerSheet = () => {
                                         q.localStatus === "incorrect" &&
                                         indexCurrentQuestion !== index,
                                     "opacity-90": q.localStatus === "new",
+                                    "cursor-pointer":
+                                        type === "test" &&
+                                        q.localStatus !== "new",
+                                    "cursor-not-allowed":
+                                        type === "test" &&
+                                        q.localStatus === "new",
                                 }
                             )}
                             onClick={() => {

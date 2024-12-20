@@ -4,7 +4,6 @@ import { appInfoState } from "@/redux/features/appInfo";
 import { gameState } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initTestQuestionThunk from "@/redux/repository/game/initTestQuestion";
-import pauseTestThunk from "@/redux/repository/game/pauseTest";
 import { revertPathName } from "@/utils/pathName";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -18,12 +17,6 @@ const ItemTestLeft = ({ test, index }: { test: ITest; index: number }) => {
     const { idTopic } = useAppSelector(gameState);
 
     const handleCLick = useCallback(() => {
-        dispatch(
-            pauseTestThunk({
-                testId: idTopic,
-            })
-        );
-
         dispatch(
             initTestQuestionThunk({
                 testId: test.id.toString(),

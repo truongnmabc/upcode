@@ -16,7 +16,8 @@ type IInitQuestion = {
 const setDataStore = async (
     parentId: number,
     question: IQuestion[],
-    duration: number
+    duration: number,
+    remainTime: number
 ) => {
     await db?.testQuestions.add({
         parentId,
@@ -24,7 +25,7 @@ const setDataStore = async (
         duration,
         isPaused: false,
         startTime: new Date().getTime(),
-        remainTime: duration,
+        remainTime: remainTime,
     });
 
     // *NOTE: Time chua dung
@@ -94,13 +95,13 @@ const initTestQuestionThunk = createAsyncThunk(
             .first();
         let listQuestion = currentTest?.question;
 
-        console.log("🚀 ~ currentTest:", currentTest);
-
         time = currentTest?.duration || 60;
+
+        const remainTime = currentTest?.remainTime || time * 60;
 
         if (!listQuestion) {
             listQuestion = await fetchQuestions(id);
-            setDataStore(Number(id), listQuestion, time);
+            setDataStore(Number(id), listQuestion, time, remainTime);
         }
 
         const progressData = await getLocalProgress(Number(id), "test");
@@ -117,7 +118,7 @@ const initTestQuestionThunk = createAsyncThunk(
                 type: "test" as const,
                 duration: time,
                 isPaused: currentTest?.isPaused || false,
-                remainTime: currentTest?.remainTime || time,
+                remainTime: remainTime,
             };
         }
     }
