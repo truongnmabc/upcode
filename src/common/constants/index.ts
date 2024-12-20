@@ -2,6 +2,7 @@ export type IContactInfo = {
     facebook?: string;
     twitter?: string;
     youtube?: string;
+    linkedin?: string;
     email?: string;
     reddit?: string;
 };
@@ -13,6 +14,7 @@ export const listContactApp: ListContactApp = {
         facebook: "https://www.facebook.com/CDL-prep-101878645343877",
         twitter: "https://twitter.com/CLprep",
         youtube: "https://www.youtube.com/channel/UCke4KGWOxPP8R2aPVQTUAlA",
+        linkedin: "",
         email: "support@cdl-prep.com",
     },
     asvab: {

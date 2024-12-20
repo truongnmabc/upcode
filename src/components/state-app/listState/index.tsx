@@ -11,13 +11,11 @@ const BtnGotoState = ({ appInfo }: { appInfo: IAppInfo }) => {
     const [openListState, setOpenListState] = useState(false);
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            const _state = localStorage.getItem(
-                "select-state-" + appInfo.appNameId
-            );
-            if (_state) {
-                setCurrentState(_state);
-            }
+        const _state = localStorage.getItem(
+            "select-state-" + appInfo.appNameId
+        );
+        if (_state) {
+            setCurrentState(_state);
         }
     }, [appInfo.appShortName]);
 
