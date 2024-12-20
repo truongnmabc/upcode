@@ -1,10 +1,10 @@
 import type { NextConfig } from "next";
-// const withBundleAnalyzer = require("@next/bundle-analyzer")({
-//   enabled: true,
-// });
-// const withPlugins = require("next-compose-plugins");
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+    enabled: true,
+});
+const withPlugins = require("next-compose-plugins");
 
-const nextConfig: NextConfig = {
+const nextConfig: NextConfig = withPlugins([[withBundleAnalyzer()]], {
     /* config options here */
 
     // Bỏ qua lỗi khi build
@@ -54,7 +54,14 @@ const nextConfig: NextConfig = {
         //         // Creates `style` nodes from JS strings
         //         "style-loader",
         //         // Translates CSS into CommonJS
-        //         "css-loader",
+        //         {
+        //             loader: "css-loader",
+        //             options: {
+        //                 importLoaders: 1,
+        //             },
+        //         },
+        //         // Compiles tailwinds to CSS
+        //         "postcss-loader",
         //         // Compiles Sass to CSS
         //         "sass-loader",
         //     ],
@@ -70,6 +77,6 @@ const nextConfig: NextConfig = {
     //     },
     //   ];
     // },
-};
+});
 
 export default nextConfig;

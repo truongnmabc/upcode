@@ -41,7 +41,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         icons: image,
         openGraph: {
             description: appInfo.descriptionSEO,
-            title: appInfo.title,
+            title: replaceYear(appInfo.title),
+            images: image,
+        },
+        twitter: {
+            title: replaceYear(appInfo.title),
+            description: appInfo.descriptionSEO,
             images: image,
         },
     };
