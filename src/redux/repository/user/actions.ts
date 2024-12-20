@@ -1,45 +1,51 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
 import { db } from "@/db/db.model";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export interface IUserActions {
-  status: "like" | "dislike" | "save";
-  questionId: number;
+    status: "like" | "dislike" | "save";
+    questionId: number;
+    partId: number;
 }
 
 const useActionsThunk = createAsyncThunk(
-  "useActionsThunk",
-  async ({ status, questionId }: IUserActions, { getState }) => {
-    const state = getState() as RootState;
-    const existingAction = state.userReducer.listActions.find(
-      (action) => action.questionId === questionId
-    );
-    console.log("🚀 ~ existingAction:", existingAction);
+    "useActionsThunk",
+    async ({ status, questionId, partId }: IUserActions) => {
+        const existingAction = await db?.useActions
+            .where("questionId")
+            .equals(questionId)
+            .first();
 
-    if (
-      existingAction &&
-      (existingAction.isDisLike ||
-        existingAction.isLike ||
-        existingAction.isSave)
-    ) {
-      await db.useActions
-        .where("questionId")
-        .equals(existingAction.questionId)
-        .filter((action) => action.status === status)
-        .delete()
-        .then(function (deleteCount) {
-          console.log("Deleted " + deleteCount + " objects");
-        });
-    } else {
-      await db.useActions.add({
-        questionId,
-        status,
-        userId: -1,
-      });
+        if (existingAction) {
+            const newListActions = existingAction.actions.includes(status)
+                ? existingAction.actions.filter((s) => s !== status)
+                : [...existingAction.actions, status];
+
+            await db?.useActions
+                .where("questionId")
+                .equals(existingAction.questionId)
+                .modify((item) => {
+                    item.actions = newListActions;
+                })
+                .then(function (deleteCount) {
+                    console.log("Deleted " + deleteCount + " objects");
+                });
+
+            return {
+                questionId,
+                status: newListActions,
+                partId,
+            };
+        } else {
+            await db?.useActions.add({
+                questionId,
+                actions: [status],
+                userId: -1,
+                partId,
+            });
+        }
+
+        return { status: [status], questionId, partId };
     }
-
-    return { status, questionId };
-  }
 );
 
 export default useActionsThunk;

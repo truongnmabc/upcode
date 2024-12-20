@@ -6,6 +6,7 @@ import { IAppInfo } from "@/models/app/appInfo";
 import axiosInstance from "@/common/config/axios";
 import { API_PATH } from "@/common/constants/api.constants";
 import { useParams } from "next/navigation";
+import MyContainer from "@/components/v4-material/myContainer";
 
 const ListBlock = ({
     appInfo,
@@ -36,7 +37,7 @@ const ListBlock = ({
     }, [params]);
     return (
         <div className="bg-[#E6E9FD]">
-            <div className="v4-container-component  v4-container-maxWidth">
+            <MyContainer>
                 <div className="py-6 sm:py-12">
                     <h3 className="sm:leading-[60px] text-center font-bold text-2xlh sm:text-[40px]">
                         <span className=" capitalize">{_state}</span>{" "}
@@ -79,7 +80,7 @@ const ListBlock = ({
                         <></>
                     )}
                 </div>
-            </div>
+            </MyContainer>
         </div>
     );
 };

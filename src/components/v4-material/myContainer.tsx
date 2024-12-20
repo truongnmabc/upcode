@@ -5,7 +5,7 @@ const MyContainer = ({
     className,
     style,
 }: {
-    children?: any;
+    children?: React.ReactNode;
     className?: string;
     style?: CSSProperties;
 }) => {

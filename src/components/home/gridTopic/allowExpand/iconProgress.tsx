@@ -41,10 +41,11 @@ const IconProgress = ({
     const [progress, setProgress] = useState(0);
 
     const handleListenerChange = useCallback(async () => {
-        const result = await db.userProgress
-            .where("parentId")
-            .equals(part.id)
-            .toArray();
+        const result =
+            (await db?.userProgress
+                .where("parentId")
+                .equals(part.id)
+                .toArray()) || [];
 
         const pass = result.filter((item) =>
             item.selectedAnswers?.find(
@@ -134,7 +135,9 @@ const IconProgress = ({
                     activeAnim={currentGame.parentId === part?.id}
                     isFinishThisLevel={isPass}
                     currentLevelScore={
-                        currentGame.parentId !== part?.id && isPass
+                        isPass
+                            ? 100
+                            : currentGame.parentId !== part?.id && isPass
                             ? 100
                             : progress
                     }

@@ -8,6 +8,7 @@ import initQuestionThunk from "../repository/game/initQuestion";
 import initTestQuestionThunk from "../repository/game/initTestQuestion";
 import nextQuestionThunk from "../repository/game/nextQuestion";
 import { RootState } from "../store";
+import { reloadStateThunk } from "../repository/utils/reload";
 
 export interface ICurrentGame
     extends Omit<
@@ -37,6 +38,8 @@ export interface IGameReducer {
     turn: number;
     time: number;
     type: "test" | "learn";
+    isPaused: boolean;
+    remainTime: number;
 }
 const initGameReducer: IGameReducer = {
     currentGame: {
@@ -58,6 +61,8 @@ const initGameReducer: IGameReducer = {
     turn: 1,
     time: 60,
     type: "learn",
+    isPaused: false,
+    remainTime: 60,
 };
 
 export const gameSlice = createSlice({
@@ -73,11 +78,33 @@ export const gameSlice = createSlice({
         ) => {
             state.listQuestion = action.payload;
         },
-        handleTryAgain: (state, action) => {
+        setTurtGame: (
+            state,
+            action: PayloadAction<{
+                turn: number;
+            }>
+        ) => {
             state.turn = action.payload.turn;
+        },
+        startOverGame: (state) => {
+            const list = [...state.listQuestion]?.map((item) => ({
+                ...item,
+                localStatus: "new" as const,
+                selectedAnswer: null,
+            }));
+
+            state.currentGame = list[0];
+            state.listQuestion = list;
+            state.indexCurrentQuestion = 0;
+            state.turn = 1;
+            state.isPaused = false;
         },
     },
     extraReducers(builder) {
+        builder.addCase(reloadStateThunk.fulfilled, (state, action) => {
+            state.turn = action.payload.turn;
+        });
+
         builder.addCase(nextQuestionThunk.fulfilled, (state, action) => {
             const data = action.payload;
             state.currentGame = data?.nextQuestion ?? state.listQuestion[0];
@@ -137,14 +164,27 @@ export const gameSlice = createSlice({
         });
 
         builder.addCase(initTestQuestionThunk.fulfilled, (state, action) => {
-            const { progressData, questions, type, id, duration } =
-                action.payload;
+            if (!action.payload) {
+                return;
+            }
+
+            const {
+                progressData,
+                questions,
+                type,
+                id,
+                duration,
+                isPaused,
+                remainTime,
+            } = action.payload;
+
             state.time = duration;
             state.type = type;
             state.idTopic = id ?? -1;
             state.listQuestion = questions;
             state.isFirst = true;
-
+            state.isPaused = isPaused;
+            state.remainTime = remainTime;
             if (!progressData || progressData.length === 0) {
                 // *NOTE: Khi người dùng chưa làm thì mặc định chọn câu đầu tiên.
                 state.indexCurrentQuestion = 0;
@@ -242,7 +282,12 @@ export const gameSlice = createSlice({
 
 const { reducer: gameReducer, actions } = gameSlice;
 
-export const { setCurrentGame, setListQuestionGames, handleTryAgain } = actions;
+export const {
+    setCurrentGame,
+    setListQuestionGames,
+    setTurtGame,
+    startOverGame,
+} = actions;
 
 export const gameState = (state: RootState) => state.gameReducer;
 

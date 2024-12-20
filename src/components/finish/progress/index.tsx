@@ -99,11 +99,12 @@ const ProgressFinishPage = ({ listAnswer }: { listAnswer: IAnswer[] }) => {
                 </div>
             </div>
 
-            <div className="text-base pt-8 font-semibold">
-                <h4>
-                    You correctly answered {success}/{total} questions on the
-                    first turn.
-                </h4>
+            <div className="text-sm sm:text-base pt-6 text-center sm:pt-8 font-normal">
+                You correctly answered{" "}
+                <span className="text-base font-semibold">
+                    {success}/{total}
+                </span>{" "}
+                questions on the first turn.
             </div>
         </div>
     );

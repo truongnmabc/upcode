@@ -39,19 +39,22 @@ const FN = () => {
     const handleClick = () => setOpen(!open);
 
     const handleGetData = async () => {
-        const listData = await db.topics.toArray();
-        setListMainTopics(
-            listData.map((item, index) => ({
-                ...item,
-                id: Number(item.id),
-                color: RANDOM_COLORS[index],
-            }))
-            // .sort((a, b) => {
-            //   if (a.id === selectedTopics) return -1;
-            //   if (b.id === selectedTopics) return 1;
-            //   return 0;
-            // })
-        );
+        const listData = await db?.topics.toArray();
+        if (listData) {
+            setListMainTopics(
+                listData
+                    .map((item, index) => ({
+                        ...item,
+                        id: Number(item.id),
+                        color: RANDOM_COLORS[index],
+                    }))
+                    .sort((a, b) => {
+                        if (a.id === selectedTopics) return -1;
+                        if (b.id === selectedTopics) return 1;
+                        return 0;
+                    })
+            );
+        }
     };
 
     useEffect(() => {
@@ -74,7 +77,12 @@ const FN = () => {
                 <div className="w-full flex flex-col gap-2">
                     {listMainTopics?.map((subTopic, index) => (
                         <Fragment key={index}>
-                            <TitleTopic topic={subTopic} priority={3} />
+                            <TitleTopic
+                                topic={subTopic}
+                                priority={3}
+                                classNames=" h-[52px] "
+                                imgClassNames="w-[52px] h-[52px]"
+                            />
                             {selectedTopics === subTopic.id && (
                                 <AllowExpandProvider topic={subTopic}>
                                     <AllowExpand />

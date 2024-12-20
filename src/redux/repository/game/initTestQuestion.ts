@@ -18,7 +18,16 @@ const setDataStore = async (
     question: IQuestion[],
     duration: number
 ) => {
-    await db.testQuestions.add({ parentId, question, duration });
+    await db?.testQuestions.add({
+        parentId,
+        question,
+        duration,
+        isPaused: false,
+        startTime: new Date().getTime(),
+        remainTime: duration,
+    });
+
+    // *NOTE: Time chua dung
 };
 
 const fetchQuestions = async (testId: string): Promise<IQuestion[]> => {
@@ -31,12 +40,14 @@ const fetchQuestions = async (testId: string): Promise<IQuestion[]> => {
 const getLocalProgress = async (
     parentId: number,
     type: "test"
-): Promise<IUserQuestionProgress[]> => {
-    return db.userProgress
-        .where("parentId")
-        .equals(parentId)
-        .filter((item) => item.type === type)
-        .toArray();
+): Promise<IUserQuestionProgress[] | null> => {
+    return (
+        db?.userProgress
+            .where("parentId")
+            .equals(parentId)
+            .filter((item) => item.type === type)
+            .toArray() ?? null
+    );
 };
 
 const mapQuestionsWithProgress = (
@@ -66,7 +77,7 @@ const initTestQuestionThunk = createAsyncThunk(
         let time = duration;
         let id = testId;
         if (!testId) {
-            const res = await db.tests
+            const res = await db?.tests
                 .filter((item) => item.status === 0)
                 .first();
             if (res) {
@@ -77,29 +88,38 @@ const initTestQuestionThunk = createAsyncThunk(
 
         if (!id) throw new Error("Test ID not found");
 
-        const currentTest = await db.testQuestions
+        const currentTest = await db?.testQuestions
             .where("parentId")
             .equals(Number(id))
             .first();
         let listQuestion = currentTest?.question;
 
-        time = currentTest?.duration;
+        console.log("🚀 ~ currentTest:", currentTest);
+
+        time = currentTest?.duration || 60;
 
         if (!listQuestion) {
             listQuestion = await fetchQuestions(id);
-            setDataStore(Number(id), listQuestion, time || 60);
+            setDataStore(Number(id), listQuestion, time);
         }
 
         const progressData = await getLocalProgress(Number(id), "test");
-        const questions = mapQuestionsWithProgress(listQuestion, progressData);
+        if (progressData) {
+            const questions = mapQuestionsWithProgress(
+                listQuestion,
+                progressData
+            );
 
-        return {
-            questions,
-            progressData,
-            id: Number(id),
-            type: "test" as const,
-            duration: time || 60,
-        };
+            return {
+                questions,
+                progressData,
+                id: Number(id),
+                type: "test" as const,
+                duration: time,
+                isPaused: currentTest?.isPaused || false,
+                remainTime: currentTest?.remainTime || time,
+            };
+        }
     }
 );
 

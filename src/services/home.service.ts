@@ -1,3 +1,7 @@
+import APIConfig from "@/config/api_config";
+import Routes from "@/config/routes";
+import { IAppInfo } from "@/models/app/appInfo";
+import Config from "../config";
 import { requestGetData, requestPostData } from "./request";
 
 export const sendEmailApi = async ({
@@ -12,10 +16,6 @@ export const sendEmailApi = async ({
         params: { email, appName },
     });
 };
-import APIConfig from "@/config/api_config";
-import Routes from "@/config/routes";
-import Config from "../config";
-import { IAppInfo } from "@/models/app/appInfo";
 
 export const END_POINT_WORD_PRESS =
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.length &&
@@ -28,13 +28,13 @@ export const getHomeSeoContentApi = async (postUrl: string) => {
     if (!END_POINT_WORD_PRESS?.length) {
         return "";
     }
-    let url =
+    const url =
         END_POINT_WORD_PRESS +
         Config.PREFIX_URL +
         APIConfig.GET_HOME_SEO_CONTENT +
         "?posturl=" +
         postUrl; //cdl cũ
-    let content = await requestGetData({ url });
+    const content = await requestGetData({ url });
     return content;
 };
 
@@ -75,7 +75,7 @@ export const sendEmailSubscribe = async ({
 };
 
 export const getAppReviewApi = async (appId: string) => {
-    let data = await requestGetData({
+    const data = await requestGetData({
         url:
             "https://dashboard-api2.abc-elearning.org/ratings-reviews?appID=" +
             appId,

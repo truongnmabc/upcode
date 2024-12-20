@@ -6,7 +6,7 @@ const beforeUnLoadThunk = createAsyncThunk(
     async (_, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
         const { selectedSubTopics, selectedTopics } = state.studyReducer;
-        const { type } = state.gameReducer;
+        const { type, turn } = state.gameReducer;
 
         localStorage.setItem(
             "optQuery",
@@ -14,6 +14,7 @@ const beforeUnLoadThunk = createAsyncThunk(
                 selectedSubTopics,
                 selectedTopics,
                 type,
+                turn,
             })
         );
     }

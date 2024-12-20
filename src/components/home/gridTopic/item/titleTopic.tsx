@@ -33,10 +33,11 @@ export const handleGetNextPart = async ({
     partId?: number;
     subTopicId?: number;
 }> => {
-    const progress = await db.subTopicProgress
-        .where("parentId")
-        .equals(parentId)
-        .toArray();
+    const progress =
+        (await db?.subTopicProgress
+            .where("parentId")
+            .equals(parentId)
+            .toArray()) || [];
 
     if (!progress.length && topic) {
         const firstTopic = topic.topics?.[0];
@@ -51,7 +52,7 @@ export const handleGetNextPart = async ({
             turn: 1,
         })) as IPartProgress[];
 
-        await db.subTopicProgress.add({
+        await db?.subTopicProgress.add({
             id: firstTopic?.id || 0,
             parentId: topic.id,
             part: part,
@@ -83,9 +84,13 @@ export const handleGetNextPart = async ({
 const TitleTopic = ({
     topic,
     priority,
+    classNames,
+    imgClassNames,
 }: {
     topic: ITopic;
     priority: number;
+    classNames: string;
+    imgClassNames?: string;
 }) => {
     const { appInfo } = useAppSelector(appInfoState);
     const router = useRouter();
@@ -154,11 +159,12 @@ const TitleTopic = ({
     return (
         <div
             className={ctx(
-                "flex items-center relative overflow-hidden h-full bg-white max-h-11 sm:max-h-[74px] cursor-pointer w-full transition-all  border-solid border border-[#2121211F]",
+                "flex items-center relative overflow-hidden  bg-white max-h-[52px] sm:max-h-[74px] cursor-pointer w-full transition-all  border-solid border border-[#2121211F]",
                 {
                     "rounded-tl-md rounded-tr-md ": isAllowExpand,
                     "rounded-md ": !isAllowExpand,
-                }
+                },
+                classNames
             )}
             onMouseEnter={(e) => {
                 (e.currentTarget as HTMLDivElement).style.borderColor =
@@ -172,13 +178,14 @@ const TitleTopic = ({
         >
             <div
                 className={ctx(
-                    "p-2 sm:p-5 border border-solid h-full transition-all flex items-center rounded-tl-md  justify-center",
+                    " border border-solid  transition-all flex items-center rounded-tl-md  justify-center",
                     {
                         "rounded-bl-md":
                             !isAllowExpand &&
                             currentPathname === RouterApp.Home,
                         "sm:p-2": currentPathname.includes("/study"),
-                    }
+                    },
+                    imgClassNames
                 )}
                 style={{
                     background: topic.color,

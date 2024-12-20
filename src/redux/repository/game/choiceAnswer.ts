@@ -13,7 +13,7 @@ const choiceAnswer = createAsyncThunk(
         const state = thunkAPI.getState() as RootState;
         const { type, turn, indexCurrentQuestion, idTopic } = state.gameReducer;
 
-        const isEx = await db.userProgress.get(question.id);
+        const isEx = await db?.userProgress.get(question.id);
         const data = {
             parentId: type === "learn" ? question.parentId : idTopic,
             selectedAnswers: isEx
@@ -42,11 +42,11 @@ const choiceAnswer = createAsyncThunk(
         };
 
         if (isEx) {
-            await db.userProgress.update(question.id, data).catch((err) => {
+            await db?.userProgress.update(question.id, data).catch((err) => {
                 console.log("🚀 db.userProgress.update ~ err:", err);
             });
         } else {
-            await db.userProgress.add(data).catch((err) => {
+            await db?.userProgress.add(data).catch((err) => {
                 console.log("🚀 db.userProgress.add ~ err:", err);
             });
         }

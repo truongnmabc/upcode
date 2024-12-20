@@ -1,6 +1,7 @@
 "use client";
 import LazyLoadImage from "@/components/images";
 import ForwardedLinkBlank from "@/components/nextLink/forwardedLinkBlank";
+import MyContainer from "@/components/v4-material/myContainer";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { IAppInfo } from "@/models/app/appInfo";
 import Link from "next/link";
@@ -42,7 +43,7 @@ const BannerHome = ({
     const isM0bile = useIsMobile();
 
     return (
-        <div className="v4-container-component v4-container-maxWidth">
+        <MyContainer>
             <h3 className="text-center sm:leading-[60px] text-2xl sm:mt-12 mt-6 font-semibold px-4 sm:text-[40px]">
                 More <span className=" capitalize">{_state}</span>{" "}
                 <span className="uppercase">{appInfo?.appShortName}</span> Study
@@ -159,18 +160,19 @@ const BannerHome = ({
                 <div
                     className="w-full flex justify-end relative sm:hidden"
                     style={{
-                        height: "156px",
+                        height: "162px",
                     }}
                 >
                     <div className="absolute top-0 right-0 w-fit h-fit">
                         <LazyLoadImage
                             classNames="w-[280px] h-[180px]"
                             src={"/images/cdl_v2/home/banner.png"}
+                            imgClassNames="object-cover w-full"
                         />
                     </div>
                 </div>
             </div>
-        </div>
+        </MyContainer>
     );
 };
 
