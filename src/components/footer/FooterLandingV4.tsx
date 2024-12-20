@@ -13,12 +13,14 @@ import FacebookIcon from "../icon/FacebookIcon";
 import TwitterIcon from "../icon/TwitterIcon";
 import YoutubeIcon from "../icon/YoutubeIcon";
 import "./FooterLandingV4.scss";
+import { DmcaIcon } from "./info/iconDmca";
+import { appConfigState } from "@/redux/features/appConfig";
 
 const FooterLandingV4 = () => {
     const isMobile = useMediaQuery("(max-width:768px)");
     let emailSupport = "support@abc-elearning.org";
     const getSrcLogo = () => {
-        let logo = `/images/${appInfo.appShortName}/logo-dark.png`;
+        let logo = `/${appInfo.appShortName}/logo/logo-dark.png`;
         return logo;
     };
     const { appInfo } = useAppSelector(appInfoState);
@@ -120,14 +122,7 @@ const FooterLandingV4 = () => {
                                 />
                             </div>
                         </Link>
-                        {isMobile && (
-                            <img
-                                src={"/images/dmca_protected.png"}
-                                alt="certificate"
-                                width="121"
-                                height="24"
-                            />
-                        )}
+                        {isMobile && <DmcaIcon />}
                     </div>
 
                     <span>
@@ -136,14 +131,7 @@ const FooterLandingV4 = () => {
                             : appInfo.descriptionSEO}
                     </span>
 
-                    {!isMobile && (
-                        <img
-                            src={"/images/dmca_protected.png"}
-                            alt="certificate"
-                            width="121"
-                            height="24"
-                        />
-                    )}
+                    {!isMobile && <DmcaIcon />}
                 </div>
 
                 {isMobile ? (
@@ -242,30 +230,36 @@ const FooterLandingV4 = () => {
 
 const PlatformContactsLogo = ({ appInfo }: { appInfo: IAppInfo }) => {
     const { facebook, twitter, youtube } = getContactApp(appInfo.appShortName);
-    // viet kieu nay de check core web vital
+    const { appConfig } = useAppSelector(appConfigState);
     return (
         <div className="v4-platform-logo-contact-0">
             {facebook && (
                 <div>
                     <a href={facebook}>
-                        {/* <img alt="facebook-icon" src="/images/v4-facebook.webp" width={24} height={24} /> */}
-                        <FacebookIcon color="#fff" colorApp="#343F82" />
+                        <FacebookIcon
+                            color="#fff"
+                            colorApp={appConfig.mainColorBold}
+                        />
                     </a>
                 </div>
             )}
             {twitter && (
                 <div>
                     <a href={twitter}>
-                        {/* <img alt="twitter-icon" src="/images/v4-twitter.webp" width={24} height={24} /> */}
-                        <TwitterIcon color="#fff" colorApp="#343F82" />
+                        <TwitterIcon
+                            color="#fff"
+                            colorApp={appConfig.mainColorBold}
+                        />
                     </a>
                 </div>
             )}
             {youtube && (
                 <div>
                     <a href={youtube}>
-                        {/* <img alt="youtube-icon" src="/images/v4-youtube.webp" width={24} height={24} /> */}
-                        <YoutubeIcon color="#fff" colorApp="#343F82" />
+                        <YoutubeIcon
+                            color="#fff"
+                            colorApp={appConfig.mainColorBold}
+                        />
                     </a>
                 </div>
             )}

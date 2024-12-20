@@ -10,7 +10,7 @@ import { convertPathName } from "@/utils/pathName";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 const FN = () => {
-    const pathname = usePathname();
+    const pathname = usePathname() || "";
     const path = convertPathName(pathname);
     const isMobile = useIsMobile();
 
