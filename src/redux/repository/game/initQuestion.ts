@@ -4,7 +4,6 @@ import { db } from "@/db/db.model";
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
 import { IQuestion } from "@/models/question/questions";
 import { requestGetData } from "@/services/request";
-import { MyCrypto } from "@/utils/myCrypto";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 type IInitQuestion = {

@@ -33,9 +33,9 @@ const nextConfig: NextConfig = {
             },
         ],
     },
-    sassOptions: {
-        implementation: "sass-embedded",
-    },
+    // sassOptions: {
+    //     implementation: "sass-embedded",
+    // },
     pageExtensions: ["mdx", "md", "jsx", "js", "tsx", "ts"],
     experimental: {
         turbo: {
@@ -48,17 +48,17 @@ const nextConfig: NextConfig = {
         },
     },
     webpack: (config: any) => {
-        config.module.rules.push({
-            test: /\.(sa|sc|c)ss$/,
-            use: [
-                // Creates `style` nodes from JS strings
-                "style-loader",
-                // Translates CSS into CommonJS
-                "css-loader",
-                // Compiles Sass to CSS
-                "sass-loader",
-            ],
-        });
+        // config.module.rules.push({
+        //     test: /\.(sa|sc|c)ss$/,
+        //     use: [
+        //         // Creates `style` nodes from JS strings
+        //         "style-loader",
+        //         // Translates CSS into CommonJS
+        //         "css-loader",
+        //         // Compiles Sass to CSS
+        //         "sass-loader",
+        //     ],
+        // });
         return config;
     },
     // async redirects() {

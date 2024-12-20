@@ -1,25 +1,20 @@
-import {
-    IPaymentInfo,
-    InAppSubscription,
-    PaymentInfo,
-} from "@/models/payment/PaymentInfo";
-import checkPro from "@/utils/checkPro";
+import { IPaymentInfo, InAppSubscription } from "@/models/payment/PaymentInfo";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 // import { getUserDeviceLogin } from "../reporsitory/syncData.repository";
-import { RootState } from "../store";
-import { IUserInfo } from "@/models/user/userInfo";
 import { IUserActions } from "@/models/user/useAction";
+import { IUserInfo } from "@/models/user/userInfo";
 import useActionsThunk from "../repository/user/actions";
 import getListActionThunk from "../repository/user/getActions";
+import { RootState } from "../store";
 
 export interface IUserReducer {
     userId: string; // userId này có thể được gen ra mà k cần login nên không dùng trường id này để check là login hay chưa
     userInfo: IUserInfo | null;
     // paymentInfo: IPaymentInfo | null; // thông tin mua hàng của app đang được xét, được tải về khi vào trang
     // paymentInfos: IPaymentInfo[]; // thông tin mua hàng của toàn bộ app
-    mapLastSyncTime: any;
+    // mapLastSyncTime: number;
+    // mapImportedStudyData: any; // trường này đánh dấu việc đã tải dữ liệu phần học về chưa (cần phải đảm bảo nó đồng bộ với dữ liệu phần học) để không tải lại nữa
     lastSyncTime: number;
-    mapImportedStudyData: any; // trường này đánh dấu việc đã tải dữ liệu phần học về chưa (cần phải đảm bảo nó đồng bộ với dữ liệu phần học) để không tải lại nữa
     loading: boolean;
     reload: boolean; // reload ở HeaderV4
     inAppPurchasedInfo: InAppSubscription[]; // 1 app có thể mua nhiều gói (giống với nhiều orderId trên web)
@@ -34,9 +29,9 @@ const initState: IUserReducer = {
     userInfo: null,
     // paymentInfo: new PaymentInfo(),
     // paymentInfos: [],
-    mapLastSyncTime: {},
+    // mapLastSyncTime: {},
     lastSyncTime: -2,
-    mapImportedStudyData: {},
+    // mapImportedStudyData: {},
     loading: true,
     reload: false, // reload sau khi login/logout
     inAppPurchasedInfo: [],
@@ -54,9 +49,9 @@ export const userSlice = createSlice({
             state.userInfo = null;
             // state.paymentInfo = null;
             // state.paymentInfos = [];
-            state.mapLastSyncTime = {};
+            // state.mapLastSyncTime = {};
+            // state.mapImportedStudyData = {};
             state.lastSyncTime = -2;
-            state.mapImportedStudyData = {};
             state.loading = true;
             state.reload = false; // reload sau khi login/logout
             state.inAppPurchasedInfo = [];
