@@ -3,11 +3,11 @@ import { appInfoState } from "@/redux/features/appInfo";
 import { useAppSelector } from "@/redux/hooks";
 import { Grid2 } from "@mui/material";
 import React from "react";
-import ItemGridTest from "./itemGridTest/ItemGridTest";
-import CustomTestSvg from "./itemGridTest/icon/CustomTestSvg";
-import DiagnosticTestSvg from "./itemGridTest/icon/DiagnosticTestSvg";
-import FinalTestSvg from "./itemGridTest/icon/FinalTestSvg";
-import PracticeTestsSvg from "./itemGridTest/icon/PracticeTestsSvg";
+import ItemGridTest from "./itemGridTest/itemGridTest";
+import CustomTestSvg from "./itemGridTest/icon/iconCustomTest";
+import DiagnosticTestSvg from "./itemGridTest/icon/iconDiagnosticTest";
+import FinalTestSvg from "./itemGridTest/icon/iconFinalTest";
+import PracticeTestsSvg from "./itemGridTest/icon/iconPracticeTests";
 
 export const mockGirdTests = [
     {

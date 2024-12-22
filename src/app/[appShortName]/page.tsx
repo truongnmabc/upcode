@@ -2,7 +2,7 @@ import axiosInstance from "@/common/config/axios";
 import { RANDOM_COLORS } from "@/common/constants";
 import { API_PATH } from "@/common/constants/api.constants";
 import DownloadApp from "@/components/home/downloadApp/downloadApp";
-import GridTest from "@/components/home/gridTests/GridTest";
+import GridTest from "@/components/home/gridTests/gridTest";
 import GridTopics from "@/components/home/gridTopic/gridTopics";
 import TitleHomeApp from "@/components/home/title";
 import SeoContent from "@/components/seoContent/seoContent";

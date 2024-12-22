@@ -5,7 +5,7 @@ import { ITopic } from "@/models/topics/topics";
 import { appInfoState } from "@/redux/features/appInfo";
 import { gameState } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import initQuestionThunk from "@/redux/repository/game/initQuestion";
+import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 import { revertPathName } from "@/utils/pathName";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
