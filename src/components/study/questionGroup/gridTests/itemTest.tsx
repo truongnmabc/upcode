@@ -3,7 +3,7 @@ import { ITest } from "@/models/tests/tests";
 import { appInfoState } from "@/redux/features/appInfo";
 import { gameState } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import initTestQuestionThunk from "@/redux/repository/game/initTestQuestion";
+import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
 import { revertPathName } from "@/utils/pathName";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";

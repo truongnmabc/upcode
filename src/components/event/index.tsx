@@ -1,12 +1,14 @@
 "use client";
 import { useAppDispatch } from "@/redux/hooks";
-import initQuestionThunk from "@/redux/repository/game/initQuestion";
-import initTestQuestionThunk from "@/redux/repository/game/initTestQuestion";
-import pauseTestThunk from "@/redux/repository/game/pauseTest";
+import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
+import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
+import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
+import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
+import pauseTestThunk from "@/redux/repository/game/pauseAndResumed/pauseTest";
 import beforeUnLoadThunk, {
     reloadStateThunk,
 } from "@/redux/repository/utils/reload";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useLayoutEffect } from "react";
 
 const EventListener = () => {
@@ -15,7 +17,7 @@ const EventListener = () => {
     const partTag = useSearchParams().get("tag");
     const type = useSearchParams().get("type");
     const testId = useSearchParams().get("testId");
-
+    const pathname = usePathname();
     const handlePageReload = useCallback(() => {
         const data = localStorage.getItem("optQuery");
         if (data) {
@@ -27,23 +29,33 @@ const EventListener = () => {
                     })
                 );
             }
-
+            // practice test
             if (type === "test") {
-                dispatch(initTestQuestionThunk({}));
+                dispatch(initDiagnosticTestQuestionThunk());
+            }
+
+            if (pathname?.includes("diagnostic_test")) {
+                dispatch(initDiagnosticTestQuestionThunk());
+            }
+            if (pathname?.includes("custom_test")) {
+                dispatch(initCustomTestThunk());
+            }
+            if (pathname?.includes("final_test")) {
+                dispatch(initFinalTestThunk());
             }
             dispatch(reloadStateThunk());
             setTimeout(() => localStorage.removeItem("optQuery"), 100);
         }
-    }, [dispatch, subTopicTag, partTag, type, testId]);
+    }, [dispatch, subTopicTag, partTag, type, testId, pathname]);
 
     useLayoutEffect(() => {
         handlePageReload();
     }, [handlePageReload, subTopicTag, partTag, type]);
 
-    const handleBeforeUnload = useCallback(
-        () => dispatch(beforeUnLoadThunk()),
-        [dispatch]
-    );
+    const handleBeforeUnload = useCallback(() => {
+        dispatch(beforeUnLoadThunk());
+        dispatch(pauseTestThunk({}));
+    }, [dispatch]);
 
     useEffect(() => {
         window.addEventListener("beforeunload", handleBeforeUnload);
@@ -52,18 +64,6 @@ const EventListener = () => {
             window.removeEventListener("beforeunload", handleBeforeUnload);
         };
     }, [handleBeforeUnload]);
-
-    const handlePopState = useCallback(() => {
-        // dispatch(pauseTestThunk());
-        console.log("event listener popstate");
-    }, [dispatch]);
-    useEffect(() => {
-        window.addEventListener("popstate", handlePopState);
-
-        return () => {
-            window.removeEventListener("popstate", handlePopState);
-        };
-    }, []);
 
     return <></>;
 };

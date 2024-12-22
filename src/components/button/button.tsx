@@ -107,20 +107,8 @@ const BtnComponent: ForwardRefRenderFunction<
                     ) : loading ? (
                         <MtUiLSpinningBubbles
                             color="#ccc"
-                            width={
-                                size === "large"
-                                    ? 24
-                                    : size === "middle"
-                                    ? 16
-                                    : 12
-                            }
-                            height={
-                                size === "large"
-                                    ? 24
-                                    : size === "middle"
-                                    ? 16
-                                    : 12
-                            }
+                            width={16}
+                            height={16}
                         />
                     ) : null}
                 </div>
@@ -134,21 +122,9 @@ const BtnComponent: ForwardRefRenderFunction<
                         icon
                     ) : loading ? (
                         <MtUiLSpinningBubbles
-                            width={
-                                size === "large"
-                                    ? 24
-                                    : size === "middle"
-                                    ? 16
-                                    : 12
-                            }
-                            height={
-                                size === "large"
-                                    ? 24
-                                    : size === "middle"
-                                    ? 16
-                                    : 12
-                            }
                             color="#ccc"
+                            width={16}
+                            height={16}
                         />
                     ) : null}
                 </div>

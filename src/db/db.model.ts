@@ -49,7 +49,7 @@ export class DB extends Dexie {
 
             tests: "++id, testType",
 
-            testQuestions: "++id,parentId",
+            testQuestions: "++id,parentId,type",
         });
     }
 }

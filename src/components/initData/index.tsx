@@ -122,14 +122,7 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
         const listKey = Object.keys(tests) as (keyof IResDataTest)[];
         for (const name of listKey) {
             if (name === "diagnosticTestFormat") {
-                const exists = await db.tests.get(tests[name].id);
-                if (!exists) {
-                    await db.tests.add({
-                        ...tests[name],
-                        status: 0,
-                        testType: name,
-                    });
-                }
+                return;
             } else {
                 const list = tests[name];
                 for (const test of list) {

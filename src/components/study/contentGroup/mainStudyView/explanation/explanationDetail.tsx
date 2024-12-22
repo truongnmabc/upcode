@@ -9,7 +9,11 @@ import { MyCrypto } from "@/utils/myCrypto";
 import { MathJax } from "better-react-mathjax";
 import React, { useEffect, useState } from "react";
 
-const FN = () => {
+type IProps = {
+    unLock?: boolean;
+};
+
+const FN: React.FC<IProps> = ({ unLock = false }) => {
     const isMobile = useIsMobile();
     const isProUser = false;
 
@@ -19,7 +23,7 @@ const FN = () => {
     useEffect(() => {
         if (currentGame?.text && currentGame?.id) {
             try {
-                const content = MyCrypto.decrypt(currentGame?.text);
+                const content = MyCrypto.decrypt(currentGame?.explanation);
                 setText(content);
             } catch (err) {
                 console.log("🚀 ~ useEffect ~ err:", err);
@@ -29,7 +33,7 @@ const FN = () => {
     return (
         <div
             className={ctx(" transition-all", {
-                hidden: !currentGame?.selectedAnswer,
+                hidden: !currentGame?.selectedAnswer || !unLock,
                 block: currentGame?.selectedAnswer,
             })}
             onClick={() => {
@@ -45,7 +49,7 @@ const FN = () => {
         >
             <div className="flex text-[#004fc2] text-sm sm:text-base gap-2 items-center">
                 Detailed Explanation
-                {!isProUser && (
+                {!isProUser && !unLock && (
                     <div className="flex items-center gap-1">
                         {!isMobile ? "(Get" : ""}
                         <div className="flex gap-1 px-2 text-white text-xs py-1 rounded-2xl bg-black items-center">
@@ -58,8 +62,8 @@ const FN = () => {
             </div>
 
             <div
-                className={ctx({
-                    "blur-content": !isProUser,
+                className={ctx("mt-2 ", {
+                    "blur-content": !isProUser && !unLock,
                 })}
             >
                 <MathJax
@@ -73,6 +77,7 @@ const FN = () => {
                         dangerouslySetInnerHTML={{
                             __html: text,
                         }}
+                        className="text-sm font-normal sm:text-base"
                     />
                 </MathJax>
             </div>
