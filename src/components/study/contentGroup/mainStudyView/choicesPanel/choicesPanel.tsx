@@ -17,6 +17,7 @@ import RouterApp from "@/common/router/router.constant";
 import nextQuestionThunk from "@/redux/repository/game/nextQuestion/nextQuestion";
 import nextQuestionDiagnosticThunk from "@/redux/repository/game/nextQuestion/nextQuestionDiagnosticTest";
 import finishDiagnosticThunk from "@/redux/repository/game/finish/finishDiagnostic";
+import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTest";
 
 const TEMP_LIST_ANSWER: IAnswer[] = [
     {
@@ -122,6 +123,29 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         router,
     ]);
 
+    const handleEnterPractice = useCallback(async () => {
+        if (indexCurrentQuestion + 1 === listQuestion?.length) {
+            dispatch(finishPracticeThunk());
+
+            const _href = revertPathName({
+                href: RouterApp.ResultTest,
+                appName: appInfo.appShortName,
+            });
+
+            router.replace(_href, {
+                scroll: true,
+            });
+            return;
+        }
+        dispatch(nextQuestionThunk());
+    }, [
+        dispatch,
+        indexCurrentQuestion,
+        appInfo.appShortName,
+        listQuestion,
+        router,
+    ]);
+
     const handleEnterDiagnostic = useCallback(async () => {
         if (indexCurrentQuestion + 1 === listQuestion?.length) {
             dispatch(finishDiagnosticThunk());
@@ -181,9 +205,11 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
             }
 
             if (event && event.code === "Enter" && currentGame.selectedAnswer) {
-                if (type) handleEnterLearning();
-                if (pathname?.includes("diagnostic_test"))
+                if (type === "learn") handleEnterLearning();
+                if (type === "test") handleEnterPractice();
+                if (pathname?.includes("diagnostic_test")) {
                     handleEnterDiagnostic();
+                }
 
                 if (pathname?.includes("final_test")) handleEnterFinalTest();
             }

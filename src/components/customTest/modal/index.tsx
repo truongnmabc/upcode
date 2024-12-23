@@ -1,7 +1,7 @@
 import Dialog from "@mui/material/Dialog";
 import React, { useEffect, useState } from "react";
 
-type IFeedBack = "newbie" | "expert" | "exam";
+export type IFeedBack = "newbie" | "expert" | "exam";
 
 type IProps = {
     open: boolean;
@@ -69,10 +69,6 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
                                     ?.where("id")
                                     .equals(part.id)
                                     .first();
-                                // console.log(
-                                //     "🚀 ~ onStart ~ topicData:",
-                                //     topicData
-                                // );
 
                                 if (topicData?.questions) {
                                     const questionCount =
@@ -82,14 +78,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
                                             : countQuestionPart;
 
                                     const randomQuestions = topicData.questions
-                                        // .filter((item) =>
-                                        //     selectFeedback === "newbie"
-                                        //         ? item.level < 50
-                                        //         : selectFeedback === "expert"
-                                        //         ? item.level === 50 ||
-                                        //           item.level === -1
-                                        //         : item.level > 50
-                                        // )
+
                                         .sort(() => Math.random() - 0.5)
                                         .slice(0, questionCount);
 
@@ -115,15 +104,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
                                 if (extraQuestions?.questions) {
                                     const extraRandomQuestions =
                                         extraQuestions.questions
-                                            // .filter((item) =>
-                                            //     selectFeedback === "newbie"
-                                            //         ? item.level < 50
-                                            //         : selectFeedback ===
-                                            //           "expert"
-                                            //         ? item.level === 50 ||
-                                            //           item.level === -1
-                                            //         : item.level > 50
-                                            // )
+
                                             .sort(() => Math.random() - 0.5)
                                             .slice(0, remainderQuestionTopic);
 
@@ -136,12 +117,12 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
                         }
                     }
                 }
-
+                const parentId = generateRandomNegativeId();
                 await db?.testQuestions.add({
                     duration: duration,
                     passing: passing,
                     isPaused: false,
-                    parentId: -1,
+                    parentId: parentId,
                     question: listQuestion as IQuestion[],
                     remainTime: duration * 60,
                     startTime: new Date().getTime(),
@@ -156,6 +137,8 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
                     startCustomTest({
                         listQuestion,
                         time: duration * 60,
+                        parentId: parentId,
+                        feedBack: selectFeedback,
                     })
                 );
                 onCancel();
@@ -177,7 +160,6 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
     };
     return (
         <Dialog
-            onClose={onCancel}
             open={open}
             sx={{
                 "& .MuiDialog-paper": {
@@ -302,6 +284,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { startCustomTest } from "@/redux/features/game";
 import { ICurrentGame } from "@/models/game/game";
 import { IQuestion } from "@/models/question/questions";
+import { generateRandomNegativeId } from "@/utils/math";
 type ICardFeeBack = {
     text: string;
     des: string;

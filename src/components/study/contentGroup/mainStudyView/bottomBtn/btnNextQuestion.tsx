@@ -9,8 +9,14 @@ import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 const BtnNextQuestion = () => {
     const [isFinish, setIsFinish] = useState(false);
-    const { currentGame, subTopicProgressId, idTopic, listQuestion } =
-        useAppSelector(gameState);
+    const {
+        currentGame,
+        subTopicProgressId,
+        idTopic,
+        listQuestion,
+        type,
+        indexCurrentQuestion,
+    } = useAppSelector(gameState);
 
     const params = useParams();
 
@@ -47,6 +53,10 @@ const BtnNextQuestion = () => {
         }
         dispatch(nextQuestionThunk());
     };
+
+    if (indexCurrentQuestion + 1 === listQuestion?.length && type === "test") {
+        return <></>;
+    }
     return (
         <MtUiButton
             animated

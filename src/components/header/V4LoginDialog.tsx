@@ -5,13 +5,16 @@ import Config from "../../config";
 import { IAppInfo } from "../../models/AppInfo";
 import { UserInfo } from "../../models/UserInfo";
 import { validateEmail } from "../../utils";
-import V4CircleProgress from "../v4-material/V4CircleProgress";
+import V4CircleProgress from "../container/V4CircleProgress";
 import "./V4LoginDialog.scss";
 import { APPLE_CLIENT_ID } from "../../config_app";
 import Dialog from "@mui/material/Dialog";
 import { loginSuccess } from "@/redux/features/user";
 import { getSession, isProduction, setSession } from "@/config/config_web";
-import { sendEmailApi, verifiedCodeApi } from "@/redux/reporsitory/User.repositories";
+import {
+    sendEmailApi,
+    verifiedCodeApi,
+} from "@/redux/reporsitory/User.repositories";
 import CloseIcon from "../icon/CloseIcon";
 const GoogleAuth = dynamic(() => import("../../components/google-button"));
 const LoginWithApple = dynamic(() => import("../../components/login-apple"));
@@ -99,7 +102,9 @@ export const V4LoginDialog = ({
     };
 
     const login = (email: string) => {
-        dispatch(loginSuccess({ userInfo: new UserInfo({ email, id: email }) }));
+        dispatch(
+            loginSuccess({ userInfo: new UserInfo({ email, id: email }) })
+        );
     };
 
     useEffect(() => {
@@ -117,7 +122,10 @@ export const V4LoginDialog = ({
             >
                 <div className="v4-login">
                     {allowClose && (
-                        <div className="button-close-dialog-v4" onClick={() => setOpen(false)}>
+                        <div
+                            className="button-close-dialog-v4"
+                            onClick={() => setOpen(false)}
+                        >
                             <CloseIcon />
                         </div>
                     )}
@@ -127,12 +135,15 @@ export const V4LoginDialog = ({
                                 setIsTester();
                             }}
                         >
-                            Pass on Your First Attempt With <span>{appInfo.appName} Prep!</span>
+                            Pass on Your First Attempt With{" "}
+                            <span>{appInfo.appName} Prep!</span>
                         </p>
                         <ul>
                             <li>Synchronize among All devices</li>
                             <li>
-                                {appInfo.totalQuestion - (appInfo.totalQuestion % 10)}+ free {appInfo.appName} Questions
+                                {appInfo.totalQuestion -
+                                    (appInfo.totalQuestion % 10)}
+                                + free {appInfo.appName} Questions
                             </li>
                             <li>Smart & Fun Learning Technique</li>
                             <li>98% Pass on the First Attempt</li>
@@ -146,11 +157,19 @@ export const V4LoginDialog = ({
                         <div className="main">
                             {step == 1 ? (
                                 <>
-                                    <p className="log-in-to-your-account">Log in to your account</p>
-                                    <div className="login-with" id="login-width">
+                                    <p className="log-in-to-your-account">
+                                        Log in to your account
+                                    </p>
+                                    <div
+                                        className="login-with"
+                                        id="login-width"
+                                    >
                                         {GOOGLE_ID && (
                                             <div>
-                                                <GoogleAuth submitSuccessFc={() => {}} isRenderButton></GoogleAuth>
+                                                <GoogleAuth
+                                                    submitSuccessFc={() => {}}
+                                                    isRenderButton
+                                                ></GoogleAuth>
                                             </div>
                                         )}
                                         {/* {APPLE_CLIENT_ID && (
@@ -168,14 +187,19 @@ export const V4LoginDialog = ({
                                         <div />
                                         or <div />
                                     </div>
-                                    <p className="emaill-address">Email Address</p>
+                                    <p className="emaill-address">
+                                        Email Address
+                                    </p>
                                     <input
                                         placeholder="Enter your email address"
                                         onChange={(e) => {
                                             setEmail(e.target.value);
                                         }}
                                         onKeyDown={(e) => {
-                                            if (e.key === "Enter" || e.key === "NumpadEnter") {
+                                            if (
+                                                e.key === "Enter" ||
+                                                e.key === "NumpadEnter"
+                                            ) {
                                                 verifyEmail();
                                             }
                                         }}
@@ -184,16 +208,22 @@ export const V4LoginDialog = ({
                                 </>
                             ) : (
                                 <>
-                                    <p className="enter-your-verification-code">Enter your verification code</p>
+                                    <p className="enter-your-verification-code">
+                                        Enter your verification code
+                                    </p>
                                     <p className="please-check">
-                                        Please check your inbox for the verification code sent to {email}
+                                        Please check your inbox for the
+                                        verification code sent to {email}
                                     </p>
                                     <p className="your-code">Your code</p>
                                     <input
                                         placeholder="Enter your code here"
                                         ref={codeRef}
                                         onKeyDown={(e) => {
-                                            if (e.key === "Enter" || e.key === "NumpadEnter") {
+                                            if (
+                                                e.key === "Enter" ||
+                                                e.key === "NumpadEnter"
+                                            ) {
                                                 verifyCode();
                                             }
                                         }}
@@ -226,15 +256,34 @@ export const V4LoginDialog = ({
 
 const Blur = () => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="601" height="352" fill="none" viewBox="0 0 601 352">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="601"
+            height="352"
+            fill="none"
+            viewBox="0 0 601 352"
+        >
             <g clipPath="url(#clip0_1947_294)">
                 <path fill="#fff" d="M0 0H601V352H0z"></path>
                 <g opacity="0.6">
                     <g filter="url(#filter0_f_1947_294)" opacity="0.3">
-                        <ellipse cx="154" cy="405.5" fill="#FBE83D" rx="154" ry="99.5"></ellipse>
+                        <ellipse
+                            cx="154"
+                            cy="405.5"
+                            fill="#FBE83D"
+                            rx="154"
+                            ry="99.5"
+                        ></ellipse>
                     </g>
                     <g filter="url(#filter1_f_1947_294)" opacity="0.55">
-                        <ellipse cx="462.5" cy="350" fill="#7C6F5B" fillOpacity="0.54" rx="308.5" ry="224"></ellipse>
+                        <ellipse
+                            cx="462.5"
+                            cy="350"
+                            fill="#7C6F5B"
+                            fillOpacity="0.54"
+                            rx="308.5"
+                            ry="224"
+                        ></ellipse>
                     </g>
                 </g>
             </g>
@@ -248,9 +297,19 @@ const Blur = () => {
                     colorInterpolationFilters="sRGB"
                     filterUnits="userSpaceOnUse"
                 >
-                    <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-                    <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-                    <feGaussianBlur result="effect1_foregroundBlur_1947_294" stdDeviation="85"></feGaussianBlur>
+                    <feFlood
+                        floodOpacity="0"
+                        result="BackgroundImageFix"
+                    ></feFlood>
+                    <feBlend
+                        in="SourceGraphic"
+                        in2="BackgroundImageFix"
+                        result="shape"
+                    ></feBlend>
+                    <feGaussianBlur
+                        result="effect1_foregroundBlur_1947_294"
+                        stdDeviation="85"
+                    ></feGaussianBlur>
                 </filter>
                 <filter
                     id="filter1_f_1947_294"
@@ -261,9 +320,19 @@ const Blur = () => {
                     colorInterpolationFilters="sRGB"
                     filterUnits="userSpaceOnUse"
                 >
-                    <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-                    <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-                    <feGaussianBlur result="effect1_foregroundBlur_1947_294" stdDeviation="91"></feGaussianBlur>
+                    <feFlood
+                        floodOpacity="0"
+                        result="BackgroundImageFix"
+                    ></feFlood>
+                    <feBlend
+                        in="SourceGraphic"
+                        in2="BackgroundImageFix"
+                        result="shape"
+                    ></feBlend>
+                    <feGaussianBlur
+                        result="effect1_foregroundBlur_1947_294"
+                        stdDeviation="91"
+                    ></feGaussianBlur>
                 </filter>
                 <clipPath id="clip0_1947_294">
                     <path fill="#fff" d="M0 0H601V352H0z"></path>

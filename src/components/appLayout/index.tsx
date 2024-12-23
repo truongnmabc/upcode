@@ -1,11 +1,11 @@
 import FooterApp from "@/components/footer/FooterLandingV4";
 import HeaderApp from "@/components/header";
 import React, { Fragment } from "react";
+import { ToastContainer } from "react-toastify";
 import SheetApp from "../sheetApp";
-import WrapperScroll from "./wrapperScroll";
-import { ProgressBar } from "./progressBar";
 import { NavigationEvents } from "./navigationEvents";
-
+import { ProgressBar } from "./progressBar";
+import WrapperScroll from "./wrapperScroll";
 const FN = ({ children }: { children: React.ReactNode }) => {
     return (
         <Fragment>
@@ -15,10 +15,12 @@ const FN = ({ children }: { children: React.ReactNode }) => {
                 </ProgressBar>
 
                 <HeaderApp />
+
                 <div className="flex-1 flex flex-col bg-theme-white dark:bg-theme-dark  justify-between">
                     {children}
                     <FooterApp />
                 </div>
+                <ToastContainer />
                 <SheetApp />
             </WrapperScroll>
         </Fragment>

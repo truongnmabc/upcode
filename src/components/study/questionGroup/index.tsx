@@ -15,17 +15,17 @@ const QuestionGroup = () => {
                 {type === "test" ? (
                     <>
                         <GridTestsLeft />
-                        <div className="w-full h-[2px] bg-[#21212129]"></div>
+                        <div className="w-full h-[1px] bg-[#21212129]"></div>
                         <GridTopicLeft />
                     </>
                 ) : (
                     <>
                         <GridTopicLeft />
-                        <div className="w-full h-[2px] bg-[#21212129]"></div>
+                        <div className="w-full h-[1px] bg-[#21212129]"></div>
                         <GridTestsLeft />
                     </>
                 )}
-                <div className="w-full h-[2px] bg-[#21212129]"></div>
+                <div className="w-full h-[1px] bg-[#21212129]"></div>
                 <FinalTestBtn />
             </div>
         </div>

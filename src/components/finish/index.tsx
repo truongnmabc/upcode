@@ -9,7 +9,7 @@ import GridTopicProgress from "./gridTopic";
 import PassingFinishPage from "./passing";
 import ProgressFinishPage from "./progress";
 import TitleFinishPage from "./title";
-import MyContainer from "../v4-material/myContainer";
+import MyContainer from "../container/myContainer";
 
 const FinishLayout = () => {
     const subTopicProgressId = useSearchParams().get("subTopicProgressId");

@@ -7,27 +7,37 @@ import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
 import { MathJaxContext } from "better-react-mathjax";
 
+import ExplanationDetail from "@/components/study/contentGroup/mainStudyView/explanation/explanationDetail";
 import React, { Fragment } from "react";
+import ClockIcon from "@/components/icon/ClockIcon";
+import CountTimeCustomTest from "../countTimeCustomTest";
 
 const ContentCustomTest = () => {
-    const { listQuestion } = useAppSelector(gameState);
+    const { feedBack } = useAppSelector(gameState);
 
     return (
         <MathJaxContext>
             <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
-                {listQuestion.length > 0 ? (
-                    <Fragment>
-                        <div className="sm:p-4 flex flex-col gap-3">
-                            <TitleQuestion />
-                            <ProgressQuestion />
-                            <QuestionContent showStatus={false} />
-                            <ChoicesPanel />
+                <Fragment>
+                    <div className="sm:p-4 flex flex-col gap-3">
+                        <TitleQuestion />
+                        <ProgressQuestion />
+                        <div className="w-full flex items-center justify-center">
+                            <div className="flex items-center justify-center w-fit gap-2">
+                                <ClockIcon />
+                                <CountTimeCustomTest />
+                            </div>
                         </div>
-                        <BottomBtn />
-                    </Fragment>
-                ) : (
-                    <div className="p-4">Empty</div>
-                )}
+                        <QuestionContent
+                            showStatus={feedBack !== "exam" ? true : false}
+                        />
+                        <ChoicesPanel />
+                        {feedBack !== "exam" && (
+                            <ExplanationDetail unLock={feedBack === "newbie"} />
+                        )}
+                    </div>
+                    <BottomBtn />
+                </Fragment>
             </div>
         </MathJaxContext>
     );

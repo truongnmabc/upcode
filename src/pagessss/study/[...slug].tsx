@@ -19,9 +19,12 @@ import { ITestInfo } from "@/models/TestInfo";
 import { ITopic } from "@/models/Topic";
 import states from "../../data/statesName.json";
 import { useEffect } from "react";
-const ScrollToTopArrow = dynamic(() => import("../../components/v4-material/ScrollToTopArrow"), {
-    ssr: false,
-});
+const ScrollToTopArrow = dynamic(
+    () => import("../../components/container/ScrollToTopArrow"),
+    {
+        ssr: false,
+    }
+);
 const StudyPage = ({
     appInfo,
     data,
@@ -58,7 +61,8 @@ const StudyPage = ({
         _state,
     };
     useEffect(() => {
-        if (appInfo.hasState && !!_state) localStorage.setItem("select-state-" + appInfo.appNameId, _state);
+        if (appInfo.hasState && !!_state)
+            localStorage.setItem("select-state-" + appInfo.appNameId, _state);
     }, []);
     return (
         <>
@@ -95,7 +99,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         listAppInfo = listAppInfo.map((app) => new AppInfo(app));
 
         let appInfo = getAppInfo();
-        if (_isParentApp) appInfo = listAppInfo.find((app) => getLink(app) === "/" + appNameId);
+        if (_isParentApp)
+            appInfo = listAppInfo.find(
+                (app) => getLink(app) === "/" + appNameId
+            );
 
         if (!!appInfo) {
             let listTopics = [];
@@ -115,7 +122,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 });
                 // _state = states[appInfo.appShortName].find((s) => slug.includes(s.tag)).tag; // WARNING!
             }
-            let appData: any = await readFileAppFromGoogleStorage(appInfo, _state);
+            let appData: any = await readFileAppFromGoogleStorage(
+                appInfo,
+                _state
+            );
             listTopics = appData?.topics ?? [];
             tests = appData?.fullTests ?? [];
 
@@ -144,8 +154,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
             // console.log(contentSeo, titleSEO, descriptionSEO);
 
-            const topic = listTopics.find((t) => t.slug.includes(slug) && !slug.includes("full-length")); // WARNING!
-            const test = tests.find((t) => t.slug.includes(slug) && slug.includes("full-length")); // WARNING!
+            const topic = listTopics.find(
+                (t) => t.slug.includes(slug) && !slug.includes("full-length")
+            ); // WARNING!
+            const test = tests.find(
+                (t) => t.slug.includes(slug) && slug.includes("full-length")
+            ); // WARNING!
             const _branchTests = appData.branchTests;
             let branchTest;
             for (let key in _branchTests) {

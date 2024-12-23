@@ -18,8 +18,8 @@ import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
 // import HotQuestions from "../hot-questions";
 // import QasContent from "../qas";
 import "./index.scss";
-import V4CircleProgress from "../../v4-material/V4CircleProgress";
-import MyContainer from "../../v4-material/myContainer";
+import V4CircleProgress from "../../container/V4CircleProgress";
+import MyContainer from "../../container/myContainer";
 // import { useMediaQuery } from "@mui/material";
 
 export const TYPE_TAB = {

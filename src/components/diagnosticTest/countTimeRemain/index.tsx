@@ -30,19 +30,21 @@ const CountTimeDiagnostic = () => {
 
             router.replace(_href, { scroll: true });
         } else {
-            dispatch(
-                choiceAnswer({
-                    question: currentGame,
-                    choice: {
-                        correct: false,
-                        explanation: "",
-                        id: -1,
-                        index: -1,
-                        text: "",
-                        turn: 1,
-                    },
-                })
-            );
+            if (!currentGame.selectedAnswer) {
+                dispatch(
+                    choiceAnswer({
+                        question: currentGame,
+                        choice: {
+                            correct: false,
+                            explanation: "",
+                            id: -1,
+                            index: -1,
+                            text: "",
+                            turn: 1,
+                        },
+                    })
+                );
+            }
 
             setTimeout(() => {
                 dispatch(nextQuestionDiagnosticThunk());
