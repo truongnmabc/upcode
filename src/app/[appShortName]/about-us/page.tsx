@@ -5,7 +5,7 @@ type Params = {
     params: Promise<{ appShortName: string; slug: string }>;
 };
 export default async function Page({ params }: Params) {
-    const { appShortName, slug } = await params;
+    const { appShortName } = await params;
 
     const { appInfo } = await fetchAppData(appShortName);
 

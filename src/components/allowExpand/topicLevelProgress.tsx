@@ -50,7 +50,7 @@ function drawCurvedLine(
     }
     ctx.fillStyle = "transparent";
     ctx.fill();
-    ctx.strokeStyle = "#fcb03b";
+    ctx.strokeStyle = "#2121213D";
     ctx.stroke();
 }
 
@@ -111,9 +111,9 @@ const TopicLevelProgress = ({ subTopic }: { subTopic: ITopic }) => {
         const icons =
             container.querySelectorAll<HTMLDivElement>(".iconDrawCanvas");
 
-        ctx.strokeStyle = "#fcb03b";
-        ctx.lineWidth = 2;
-        ctx.setLineDash([10, 5]);
+        ctx.strokeStyle = "#2121213D";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([10, 10]);
 
         for (let i = 0; i < icons.length - 1; i++) {
             const start = getCenterPosition(icons[i], container);
@@ -167,7 +167,7 @@ const TopicLevelProgress = ({ subTopic }: { subTopic: ITopic }) => {
                                     part={part}
                                     subTopicTag={subTopic.tag}
                                     subTopic={subTopic}
-                                    index={i}
+                                    index={index * 3 + i + 1}
                                     key={i}
                                     isCurrentPlaying={listPlayed?.find(
                                         (item) => item.status === 0

@@ -20,6 +20,7 @@ import { convertPathName, revertPathName } from "@/utils/pathName";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Priority from "./priority";
+import { setIndexSubTopic } from "@/redux/features/game";
 
 export const handleGetNextPart = async ({
     parentId,
@@ -32,6 +33,7 @@ export const handleGetNextPart = async ({
     subTopicTag: string;
     partId?: number;
     subTopicId?: number;
+    index?: number;
 }> => {
     const progress =
         (await db?.subTopicProgress
@@ -65,6 +67,7 @@ export const handleGetNextPart = async ({
             subTopicTag: firstTopic?.tag || "",
             partId: firstSubTopic?.id,
             subTopicId: firstTopic?.id,
+            index: 0,
         };
     }
 
@@ -73,11 +76,12 @@ export const handleGetNextPart = async ({
     );
 
     const nextPart = incompleteProgress?.part?.find((p) => p.status === 0);
-
+    const index = incompleteProgress?.part?.findIndex((p) => p === nextPart);
     return {
         tag: nextPart?.tag,
         subTopicTag: incompleteProgress?.subTopicTag || "",
         subTopicId: incompleteProgress?.id,
+        index: index,
     };
 };
 
@@ -100,7 +104,7 @@ const TitleTopic = ({
 
     const isMobile = useIsMobile();
     const { selectedTopics } = useAppSelector(studyState);
-    const disPatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     const isAllowExpand = selectedTopics === topic?.id;
 
@@ -120,21 +124,20 @@ const TitleTopic = ({
         });
 
         if (!isMobile && currentPathname === RouterApp.Home) {
-            const { tag, subTopicTag, partId, subTopicId } =
+            const { tag, subTopicTag, partId, subTopicId, index } =
                 await handleGetNextPart({
                     parentId: topic.id,
                     topic,
                 });
-
             const _href = revertPathName({
                 href: `study/${topic.tag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${tag}`,
                 appName: appInfo.appShortName,
             });
-            disPatch(selectTopics(topic.id));
-            if (subTopicId) disPatch(selectSubTopics(subTopicId));
+            dispatch(selectTopics(topic.id));
+            if (subTopicId) dispatch(selectSubTopics(subTopicId));
 
             if (tag && subTopicTag) {
-                disPatch(
+                dispatch(
                     initQuestionThunk({
                         partTag: tag,
                         subTopicTag,
@@ -143,11 +146,13 @@ const TitleTopic = ({
                     })
                 );
             }
+            dispatch(setIndexSubTopic((index || 0) + 1));
+
             router.push(_href);
             return;
         }
 
-        disPatch(selectTopics(isAllowExpand ? -1 : topic.id));
+        dispatch(selectTopics(isAllowExpand ? -1 : topic.id));
     };
 
     const {

@@ -1,10 +1,10 @@
 .blur-content {
-  filter: blur(4px);
-  -webkit-filter: blur(4px);
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
-  pointer-events: none;
+    filter: blur(4px);
+    -webkit-filter: blur(4px);
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    pointer-events: none;
 }
 
 .html-content-revert div,
@@ -14,11 +14,11 @@
 .html-content-revert article,
 .html-content-revert aside,
 .html-content-revert main {
-  display: block;
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+    display: block;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 .html-content-revert span,
 .html-content-revert a,
@@ -26,10 +26,10 @@
 .html-content-revert em,
 .html-content-revert b,
 .html-content-revert i {
-  display: inline;
-  margin: 0;
-  padding: 0;
-  font-size: inherit;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
 }
 .html-content-revert h1,
 .html-content-revert h2,
@@ -37,54 +37,54 @@
 .html-content-revert h4,
 .html-content-revert h5,
 .html-content-revert h6 {
-  display: block;
-  margin-top: 0;
-  margin-bottom: 0.67em;
-  font-weight: bold;
+    display: block;
+    margin-top: 0;
+    margin-bottom: 0.67em;
+    font-weight: bold;
 }
 .html-content-revert h1 {
-  font-size: 2em;
+    font-size: 2em;
 }
 .html-content-revert h2 {
-  font-size: 1.5em;
+    font-size: 1.5em;
 }
 .html-content-revert h3 {
-  font-size: 1.17em;
+    font-size: 1.17em;
 }
 .html-content-revert h4 {
-  font-size: 1em;
+    font-size: 1em;
 }
 .html-content-revert h5 {
-  font-size: 0.83em;
+    font-size: 0.83em;
 }
 .html-content-revert h6 {
-  font-size: 0.75em;
+    font-size: 0.75em;
 }
 .html-content-revert p {
-  display: block;
-  margin-top: 0;
-  margin-bottom: 1em;
-  padding: 0;
-  line-height: 1.4;
+    display: block;
+    margin-top: 0;
+    margin-bottom: 1em;
+    padding: 0;
+    line-height: 1.4;
 }
 .html-content-revert ul,
 .html-content-revert ol {
-  display: block;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  padding-left: 40px;
-  /* Mặc định cho danh sách */
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-left: 40px;
+    /* Mặc định cho danh sách */
 }
 .html-content-revert ul {
-  list-style-type: disc;
+    list-style-type: disc;
 }
 .html-content-revert ol {
-  list-style-type: decimal;
+    list-style-type: decimal;
 }
 .html-content-revert li {
-  display: list-item;
-  margin: 0;
-  padding: 0;
+    display: list-item;
+    margin: 0;
+    padding: 0;
 }
 .html-content-revert blockquote,
 .html-content-revert dl,
@@ -92,14 +92,19 @@
 .html-content-revert hr,
 .html-content-revert figure,
 .html-content-revert pre {
-  margin: unset;
+    margin: unset;
 }
 
 .html-content-revert a {
-  color: blue; /* Màu chữ xanh */
-  text-decoration: underline; /* Gạch chân */
+    color: blue; /* Màu chữ xanh */
+    text-decoration: underline; /* Gạch chân */
+}
+.html-content-revert a span {
+    color: inherit; /* Màu chữ xanh */
+    text-decoration: inherit; /* Gạch chân */
+    font-size: inherit;
 }
 
 .html-content-revert a:hover {
-  text-decoration: none; /* Không gạch chân khi hover */
+    text-decoration: none; /* Không gạch chân khi hover */
 }

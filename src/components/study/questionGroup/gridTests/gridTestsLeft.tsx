@@ -42,7 +42,7 @@ const FN = () => {
                 onClick={handleClick}
             >
                 <h3 className="font-semibold text-xl font-poppins">
-                    Move {appInfo.appShortName} Tests
+                    More {appInfo.appShortName} Tests
                 </h3>
                 {open ? <ExpandLess /> : <ExpandMore />}
             </div>

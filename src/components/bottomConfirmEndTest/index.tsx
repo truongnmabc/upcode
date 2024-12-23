@@ -33,7 +33,7 @@ const BottomConfigTest = () => {
         dispatch(shouldOpenSubmitTest(false));
         dispatch(endTest());
         router.replace(_href);
-    }, [RouterApp, dispatch, appInfo.appShortName, pathname]);
+    }, [RouterApp, dispatch, appInfo.appShortName, router, pathname]);
 
     return (
         <div className="zaui-sheet-content-border-none">

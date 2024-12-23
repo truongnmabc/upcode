@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import ScrollToTopArrow from "../scrollTop";
 import { SessionProvider } from "next-auth/react";
+import React, { useRef, useState } from "react";
+import ScrollToTopArrow from "../scrollTop";
 
 const WrapperScroll = ({ children }: { children: React.ReactNode }) => {
     const [isScrollRef, setIsShowRef] = useState(false);

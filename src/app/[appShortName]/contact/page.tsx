@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     description: "...",
 };
 const ContactsScreen = async ({ params }: Params) => {
-    const { appShortName, slug } = await params;
+    const { appShortName } = await params;
 
     const { appInfo } = await fetchAppData(appShortName);
 

@@ -31,6 +31,7 @@ export interface IGameReducer {
     time: number;
     type: "test" | "learn";
     isPaused: boolean;
+    indexSubTopic: number;
     remainTime: number;
     belowFifty: Record<string, ICurrentGame[]>;
     aboveFifty: Record<string, ICurrentGame[]>;

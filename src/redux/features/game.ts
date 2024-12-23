@@ -35,7 +35,7 @@ const initGameReducer: IGameReducer = {
     idTopic: -1,
     listWrongAnswers: [],
     isFirst: true,
-
+    indexSubTopic: 1,
     subTopicProgressId: -1,
     turn: 1,
     time: -1,
@@ -52,6 +52,9 @@ export const gameSlice = createSlice({
     reducers: {
         setCurrentGame: (state, action: PayloadAction<ICurrentGame>) => {
             state.currentGame = action.payload;
+        },
+        setIndexSubTopic: (state, action) => {
+            state.indexSubTopic = action.payload;
         },
         setListQuestionGames: (
             state,
@@ -219,6 +222,7 @@ export const {
     endTest,
     startCustomTest,
     resetState,
+    setIndexSubTopic,
 } = actions;
 
 export const gameState = (state: RootState) => state.gameReducer;

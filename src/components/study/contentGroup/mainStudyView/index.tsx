@@ -18,7 +18,7 @@ const FN = () => {
         <MathJaxContext>
             <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
                 <div className="sm:p-4 flex flex-col gap-3">
-                    <TitleQuestion />
+                    {type === "learn" && <TitleQuestion />}
                     <ProgressQuestion />
                     {type === "test" && (
                         <div className="w-full flex items-center justify-center">

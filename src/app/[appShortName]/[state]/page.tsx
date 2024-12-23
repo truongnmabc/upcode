@@ -30,7 +30,6 @@ type Params = {
 };
 
 type IRes = {
-    branchTests?: {};
     fullTests: ITestInfo[];
     topics: ITopicResState[];
 };

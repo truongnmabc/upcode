@@ -17,13 +17,13 @@ export class Member implements IMember {
     avatar: string;
     user_nicename: string;
 
-    constructor(object: any = {}) {
+    constructor(object: Partial<IMember> = {}) {
         this.ID = object.ID ?? 0;
         this.username = object.username ?? "";
         this.email = object.email ?? "";
         this.name = object.name ?? "";
         this.role = object.role ?? "";
-        this.avatar = object.avatar ?? null;
+        this.avatar = object.avatar ?? "";
         this.user_nicename = object.user_nicename ?? "";
     }
 }

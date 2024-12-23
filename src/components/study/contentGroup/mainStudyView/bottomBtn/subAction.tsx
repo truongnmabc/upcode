@@ -53,7 +53,7 @@ const SubAction = () => {
         }
     }, [currentGame, listActions]);
 
-    const saveAction = useCallback(() => {
+    const saveAction = () => {
         dispatch(
             useActionsThunk({
                 status: "save",
@@ -61,9 +61,9 @@ const SubAction = () => {
                 partId: currentGame.parentId,
             })
         );
-    }, [currentGame.id, currentGame.parentId, dispatch]);
+    };
 
-    const likeAction = useCallback(() => {
+    const likeAction = () => {
         dispatch(
             useActionsThunk({
                 status: "like",
@@ -71,7 +71,7 @@ const SubAction = () => {
                 partId: currentGame.parentId,
             })
         );
-    }, [currentGame.id, currentGame.parentId, dispatch]);
+    };
 
     const dislikeAction = () => setOpenModal(true);
 

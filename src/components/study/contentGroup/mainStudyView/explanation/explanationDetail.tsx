@@ -29,7 +29,7 @@ const FN: React.FC<IProps> = ({ unLock = false }) => {
                 console.log("🚀 ~ useEffect ~ err:", err);
             }
         }
-    }, [currentGame?.id, currentGame?.text]);
+    }, [currentGame?.id, currentGame?.text, currentGame?.explanation]);
     return (
         <div
             className={ctx(" transition-all", {

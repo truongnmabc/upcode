@@ -1,8 +1,8 @@
 "use client";
 
 import { RANDOM_COLORS } from "@/common/constants";
-import AllowExpand from "@/components/home/gridTopic/allowExpand";
-import AllowExpandProvider from "@/components/home/gridTopic/allowExpand/provider";
+import AllowExpand from "@/components/allowExpand";
+import AllowExpandProvider from "@/components/allowExpand/provider";
 import TitleTopic from "@/components/home/gridTopic/item/titleTopic";
 import { db } from "@/db/db.model";
 import Topic, { ITopic } from "@/models/topics/topics";
@@ -13,7 +13,7 @@ import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 export const generateMockTopics = (size: number): ITopic[] => {
     return Array.from({ length: size }, (_, index) => {
@@ -38,7 +38,7 @@ const FN = () => {
 
     const handleClick = () => setOpen(!open);
 
-    const handleGetData = async () => {
+    const handleGetData = useCallback(async () => {
         const listData = await db?.topics.toArray();
         if (listData) {
             setListMainTopics(
@@ -55,7 +55,7 @@ const FN = () => {
                     })
             );
         }
-    };
+    }, [RANDOM_COLORS]);
 
     useEffect(() => {
         handleGetData();

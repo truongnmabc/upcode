@@ -24,33 +24,33 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     const { appInfo } = useAppSelector(appInfoState);
     const dispatch = useAppDispatch();
 
-    const handleCustomTest = useCallback(() => {
+    const handleCustomTest = useCallback(async () => {
         dispatch(initCustomTestThunk());
 
         const _href = revertPathName({
             href: "custom_test",
             appName: appInfo.appShortName,
         });
-        router.push(_href);
+        await router.push(_href);
     }, [dispatch, appInfo.appShortName, router]);
 
-    const handleFinalTest = useCallback(() => {
+    const handleFinalTest = useCallback(async () => {
         dispatch(initFinalTestThunk());
 
         const _href = revertPathName({
             href: RouterApp.Final_test,
             appName: appInfo.appShortName,
         });
-        router.push(_href);
+        await router.push(_href);
     }, [dispatch, appInfo.appShortName, router]);
 
-    const handleDiagnosticTest = useCallback(() => {
+    const handleDiagnosticTest = useCallback(async () => {
         dispatch(initDiagnosticTestQuestionThunk());
         const _href = revertPathName({
             href: RouterApp.Diagnostic_test,
             appName: appInfo.appShortName,
         });
-        router.push(_href);
+        await router.push(_href);
     }, [dispatch, appInfo.appShortName, router]);
 
     const handlePracticeTest = useCallback(async () => {
@@ -72,7 +72,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
                 href: `/study/${item.name}?type=test&testId=${id}`,
                 appName: appInfo.appShortName,
             });
-            router.push(_href);
+            await router.push(_href);
         }
     }, [dispatch, item.name, appInfo.appShortName, router]);
 
@@ -106,7 +106,10 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
             onRippleClickHandler,
         ]
     );
-
+    const _href = revertPathName({
+        href: `/study/${item.name}?type=test&testId=${1}`,
+        appName: appInfo.appShortName,
+    });
     return (
         <Grid2
             size={{

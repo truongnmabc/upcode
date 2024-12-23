@@ -1,12 +1,9 @@
 "use client";
-import React from "react";
 import CloseIcon from "@/asset/icon/CloseIcon";
+import { MtUiButton } from "@/components/button";
 import MyContainer from "@/components/v4-material/myContainer";
 import { IconPassResultTest } from "../icon/iconPassResultTest";
-import { MtUiButton } from "@/components/button";
 import DashboardCard from "./chartHeader";
-import { useAppSelector } from "@/redux/hooks";
-import { gameState } from "@/redux/features/game";
 
 const HeaderResultTest = () => {
     return (
@@ -26,7 +23,7 @@ const HeaderResultTest = () => {
                         <p className="text-base mt-3 font-normal text-[#21212185]">
                             That was a tough one, but every wrong answer is a
                             stepping stone to the right one. Keep at it, and
-                            you'll be a knowledge ninja soon!
+                            you&apos;ll be a knowledge ninja soon!
                         </p>
                     </div>
                     <div className="flex gap-6 items-center">

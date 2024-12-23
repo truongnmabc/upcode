@@ -117,7 +117,6 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         dispatch,
         subTopicProgressId,
         params?.slug,
-        idTopic,
         listQuestion,
         appInfo.appShortName,
         router,
@@ -140,9 +139,6 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         dispatch(nextQuestionDiagnosticThunk());
     }, [
         dispatch,
-        subTopicProgressId,
-        params?.slug,
-        idTopic,
         indexCurrentQuestion,
         appInfo.appShortName,
         listQuestion,
@@ -166,9 +162,6 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         dispatch(nextQuestionDiagnosticThunk());
     }, [
         dispatch,
-        subTopicProgressId,
-        params?.slug,
-        idTopic,
         indexCurrentQuestion,
         appInfo.appShortName,
         listQuestion,

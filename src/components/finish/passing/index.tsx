@@ -2,7 +2,11 @@ import { MtUiButton } from "@/components/button";
 import { db } from "@/db/db.model";
 import { ITopic } from "@/models/topics/topics";
 import { appInfoState } from "@/redux/features/appInfo";
-import { gameState, setTurtGame } from "@/redux/features/game";
+import {
+    gameState,
+    setIndexSubTopic,
+    setTurtGame,
+} from "@/redux/features/game";
 import { selectSubTopics } from "@/redux/features/study";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
@@ -32,7 +36,7 @@ const PassingFinishPage = ({
     const [passing] = useState(0);
     const topicName = useSearchParams().get("topic");
     const { appInfo } = useAppSelector(appInfoState);
-    const { turn } = useAppSelector(gameState);
+    const { turn, indexSubTopic } = useAppSelector(gameState);
 
     const navigateToHref = useCallback(
         ({
@@ -53,7 +57,7 @@ const PassingFinishPage = ({
             });
             router.push(_href);
         },
-        [dispatch]
+        [dispatch, router]
     );
 
     const updateDb = useCallback(
@@ -98,7 +102,7 @@ const PassingFinishPage = ({
                 }
             }
         },
-        [navigateToHref, db, appInfo.appShortName, topicName]
+        [navigateToHref, appInfo.appShortName, topicName]
     );
 
     const handleNextSubTopic = useCallback(async () => {
@@ -119,6 +123,10 @@ const PassingFinishPage = ({
                     const nextPart = subTopic.part?.find(
                         (item) => item?.status === 0
                     );
+                    const index = subTopic?.part?.findIndex(
+                        (p) => p === nextPart
+                    );
+
                     if (nextPart && topicName) {
                         navigateToHref({
                             topicName,
@@ -126,6 +134,7 @@ const PassingFinishPage = ({
                             subTopicTag: subTopic.subTopicTag,
                             appShortName: appInfo.appShortName,
                         });
+                        dispatch(setIndexSubTopic(index + 1));
                         dispatch(selectSubTopics(subTopic.id));
                         return;
                     }
@@ -137,7 +146,7 @@ const PassingFinishPage = ({
                 listTopic,
             });
         }
-    }, [appInfo.appShortName, topicName, db, navigateToHref]);
+    }, [appInfo.appShortName, topicName, dispatch, updateDb, navigateToHref]);
 
     const handleNextPart = useCallback(async () => {
         dispatch(
@@ -160,6 +169,9 @@ const PassingFinishPage = ({
                 subTopicTag: nextPart.subTopicTag,
                 appShortName: appInfo.appShortName,
             });
+
+            dispatch(setIndexSubTopic(indexSubTopic + 1));
+
             return;
         }
 
@@ -168,10 +180,12 @@ const PassingFinishPage = ({
         nextPart,
         navigateToHref,
         appInfo.appShortName,
+        appInfo,
         dispatch,
         router,
         topicName,
         handleNextSubTopic,
+        indexSubTopic,
     ]);
 
     const handleTryAgainFn = useCallback(async () => {

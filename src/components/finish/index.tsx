@@ -81,7 +81,7 @@ const FinishLayout = () => {
     return (
         <MyContainer>
             <div className="w-full py-6 h-full gap-8 flex flex-col">
-                <TitleFinishPage currentPart={game.currentPart} />
+                <TitleFinishPage />
                 <ProgressFinishPage listAnswer={game.listAnswer} />
                 <PassingFinishPage
                     nextPart={game.nextPart}
