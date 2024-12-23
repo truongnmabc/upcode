@@ -158,6 +158,7 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                     diagnostic.question,
                     progressData
                 );
+                console.log("kk", questions);
 
                 return {
                     progressData: progressData,

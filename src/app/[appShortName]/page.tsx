@@ -7,7 +7,7 @@ import GridTopics from "@/components/home/gridTopic/gridTopics";
 import TitleHomeApp from "@/components/home/title";
 import SeoContent from "@/components/seoContent/seoContent";
 import HomeSingleApp from "@/components/state-app";
-import MyContainer from "@/components/v4-material/myContainer";
+import MyContainer from "@/components/container/myContainer";
 import { ITopic } from "@/models/topics/topics";
 import { getAppType } from "@/utils/config_web";
 import { fetchAppData } from "@/utils/getAppInfos";

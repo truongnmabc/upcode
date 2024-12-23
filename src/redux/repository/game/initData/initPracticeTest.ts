@@ -27,6 +27,7 @@ const setDataStore = async (
         startTime: new Date().getTime(),
         remainTime: remainTime,
         type: "practiceTests",
+        status: 0,
     });
 };
 

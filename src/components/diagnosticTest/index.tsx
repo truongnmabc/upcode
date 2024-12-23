@@ -6,7 +6,7 @@ import AnswerSheet from "../study/questionGroup/answer/answerSheet";
 import FinalTestBtn from "../study/questionGroup/finalTestBtn/finalTestBtn";
 import GridTestsLeft from "../study/questionGroup/gridTests/gridTestsLeft";
 import GridTopicLeft from "../study/questionGroup/gridTopics/gridTopicLeft";
-import MyContainer from "../v4-material/myContainer";
+import MyContainer from "../container/myContainer";
 import ContentTestView from "./content";
 
 const Diagnostic_test = ({ contentSeo }: { contentSeo: string }) => {
@@ -39,7 +39,7 @@ const Diagnostic_test = ({ contentSeo }: { contentSeo: string }) => {
                             <div className="flex flex-col gap-4">
                                 <AnswerSheet />
                                 <GridTestsLeft />
-                                <div className="w-full h-[1x] bg-[#21212129]"></div>
+                                <div className="w-full h-[1px] bg-[#21212129]"></div>
                                 <GridTopicLeft />
                                 <div className="w-full h-[1px] bg-[#21212129]"></div>
                                 <FinalTestBtn />

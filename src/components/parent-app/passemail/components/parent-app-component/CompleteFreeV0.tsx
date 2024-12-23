@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import "./CompleteFreeV0.scss";
-import MyContainer from "@/components/v4-material/myContainer";
+import MyContainer from "@/components/container/myContainer";
 import LazyLoadImage from "@/components/images";
 interface DataType {
     id: number;

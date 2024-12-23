@@ -6,10 +6,13 @@ import { appInfoState } from "@/redux/features/appInfo";
 import { endTest } from "@/redux/features/game";
 import { shouldOpenSubmitTest, testState } from "@/redux/features/tests";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import finishCustomTestThunk from "@/redux/repository/game/finish/finishCustomTest";
 import finishDiagnosticThunk from "@/redux/repository/game/finish/finishDiagnostic";
+import finishFinalThunk from "@/redux/repository/game/finish/finishFinal";
+import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTest";
 import { revertPathName } from "@/utils/pathName";
-import { usePathname, useRouter } from "next/navigation";
-import React, { useCallback } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
 
 const BottomConfigTest = () => {
     const { openSubmit } = useAppSelector(testState);
@@ -19,10 +22,19 @@ const BottomConfigTest = () => {
     const pathname = usePathname();
 
     const router = useRouter();
-
+    const type = useSearchParams().get("type");
     const handleConfirm = useCallback(() => {
         if (pathname?.includes("diagnostic_test")) {
             dispatch(finishDiagnosticThunk());
+        }
+        if (pathname?.includes("final_test")) {
+            dispatch(finishFinalThunk());
+        }
+        if (pathname?.includes("custom_test")) {
+            dispatch(finishCustomTestThunk());
+        }
+        if (type === "test") {
+            dispatch(finishPracticeThunk());
         }
 
         const _href = revertPathName({
@@ -33,7 +45,7 @@ const BottomConfigTest = () => {
         dispatch(shouldOpenSubmitTest(false));
         dispatch(endTest());
         router.replace(_href);
-    }, [RouterApp, dispatch, appInfo.appShortName, router, pathname]);
+    }, [RouterApp, dispatch, appInfo.appShortName, router, pathname, type]);
 
     return (
         <div className="zaui-sheet-content-border-none">

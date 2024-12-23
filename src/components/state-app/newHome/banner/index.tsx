@@ -1,7 +1,7 @@
 "use client";
 import LazyLoadImage from "@/components/images";
 import ForwardedLinkBlank from "@/components/nextLink/forwardedLinkBlank";
-import MyContainer from "@/components/v4-material/myContainer";
+import MyContainer from "@/components/container/myContainer";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { IAppInfo } from "@/models/app/appInfo";
 import Link from "next/link";

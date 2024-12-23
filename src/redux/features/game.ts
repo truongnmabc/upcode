@@ -44,6 +44,7 @@ const initGameReducer: IGameReducer = {
     remainTime: -1,
     belowFifty: {},
     aboveFifty: {},
+    feedBack: "newbie",
 };
 
 export const gameSlice = createSlice({
@@ -52,6 +53,12 @@ export const gameSlice = createSlice({
     reducers: {
         setCurrentGame: (state, action: PayloadAction<ICurrentGame>) => {
             state.currentGame = action.payload;
+        },
+        viewTest: (state, action) => {
+            const index = action.payload;
+
+            state.currentGame = state.listQuestion[index];
+            state.indexCurrentQuestion = index;
         },
         setIndexSubTopic: (state, action) => {
             state.indexSubTopic = action.payload;
@@ -94,13 +101,15 @@ export const gameSlice = createSlice({
             state.remainTime = -1;
         },
         startCustomTest: (state, action) => {
-            const { listQuestion, time } = action.payload;
+            const { listQuestion, time, parentId, feedBack } = action.payload;
             state.listQuestion = listQuestion;
             state.currentGame = listQuestion[0];
+            state.idTopic = parentId;
             state.remainTime = time;
             state.indexCurrentQuestion = 0;
             state.turn = 1;
             state.isFirst = true;
+            state.feedBack = feedBack;
         },
         resetState: () => {
             return initGameReducer;
@@ -223,6 +232,7 @@ export const {
     startCustomTest,
     resetState,
     setIndexSubTopic,
+    viewTest,
 } = actions;
 
 export const gameState = (state: RootState) => state.gameReducer;

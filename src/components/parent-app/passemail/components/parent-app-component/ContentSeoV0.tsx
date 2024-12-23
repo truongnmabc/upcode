@@ -1,4 +1,4 @@
-import MyContainer from "@/components/v4-material/myContainer";
+import MyContainer from "@/components/container/myContainer";
 import "./ContentSeoV0.scss";
 import LazyLoadImage from "@/components/images";
 const ContentSeoV0 = ({

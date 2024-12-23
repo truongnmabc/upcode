@@ -1,5 +1,6 @@
 import { IAnswer, IQuestion } from "@/models/question/questions";
 import { IStatusAnswer } from "@/components/study/contentGroup/mainStudyView/statusAnswer/statusAnswer";
+import { IFeedBack } from "@/components/customTest/modal";
 
 export interface ICurrentGame
     extends Omit<
@@ -17,6 +18,7 @@ export interface ICurrentGame
     selectedAnswer?: IAnswer | null;
     turn?: number;
     tag?: string;
+    feedBack?: IFeedBack;
 }
 
 export interface IGameReducer {
@@ -35,4 +37,5 @@ export interface IGameReducer {
     remainTime: number;
     belowFifty: Record<string, ICurrentGame[]>;
     aboveFifty: Record<string, ICurrentGame[]>;
+    feedBack?: IFeedBack;
 }

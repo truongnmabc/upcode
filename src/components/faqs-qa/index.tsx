@@ -3,7 +3,7 @@ import { IAppInfo } from "../../models/AppInfo";
 import FaqsAndQaContent, { TYPE_TAB } from "./content";
 import "./index.scss";
 import SearchQuestion from "./search-question";
-import MyContainer from "../v4-material/myContainer";
+import MyContainer from "../container/myContainer";
 
 const FaqsAndQaComponent = ({
     appInfo,

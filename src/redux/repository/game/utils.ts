@@ -32,7 +32,6 @@ export const handleInitTestQuestion = (
     state.isPaused = isPaused;
     state.remainTime = remainTime;
     if (!progressData || progressData.length === 0) {
-        // *NOTE: Khi người dùng chưa làm thì mặc định chọn câu đầu tiên.
         state.indexCurrentQuestion = 0;
         state.currentGame = questions[0];
     } else {
@@ -42,8 +41,9 @@ export const handleInitTestQuestion = (
         );
         state.indexCurrentQuestion =
             firstUnansweredIndex > 0 ? firstUnansweredIndex : 0;
+
         state.currentGame = {
-            ...state.listQuestion[firstUnansweredIndex],
+            ...questions[firstUnansweredIndex],
             localStatus: "new",
             selectedAnswer: null,
         };

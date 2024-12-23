@@ -2,7 +2,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useEffect, useState } from "react";
 import { convertTime } from "../../utils";
 import "./V0ProDiscountDrawer.scss";
-import MyContainer from "@/components/v4-material/myContainer";
+import MyContainer from "@/components/container/myContainer";
 import dynamic from "next/dynamic";
 const Drawer = dynamic(() => import("@mui/material/Drawer"));
 

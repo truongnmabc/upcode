@@ -6,6 +6,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { trackingEventGa4 } from "@/services/googleEvent";
 import ctx from "@/utils/mergeClass";
 import { MyCrypto } from "@/utils/myCrypto";
+import { Collapse } from "@mui/material";
 import { MathJax } from "better-react-mathjax";
 import React, { useEffect, useState } from "react";
 
@@ -31,22 +32,7 @@ const FN: React.FC<IProps> = ({ unLock = false }) => {
         }
     }, [currentGame?.id, currentGame?.text, currentGame?.explanation]);
     return (
-        <div
-            className={ctx(" transition-all", {
-                hidden: !currentGame?.selectedAnswer || !unLock,
-                block: currentGame?.selectedAnswer,
-            })}
-            onClick={() => {
-                if (!isProUser) {
-                    trackingEventGa4({
-                        eventName: "click_pro_explain",
-                        value: {},
-                    });
-
-                    window.open("/get-pro", "_blank");
-                }
-            }}
-        >
+        <Collapse in={currentGame?.selectedAnswer ? true : false} timeout={200}>
             <div className="flex text-[#004fc2] text-sm sm:text-base gap-2 items-center">
                 Detailed Explanation
                 {!isProUser && !unLock && (
@@ -60,11 +46,20 @@ const FN: React.FC<IProps> = ({ unLock = false }) => {
                     </div>
                 )}
             </div>
-
             <div
                 className={ctx("mt-2 ", {
                     "blur-content": !isProUser && !unLock,
                 })}
+                onClick={() => {
+                    if (!isProUser) {
+                        trackingEventGa4({
+                            eventName: "click_pro_explain",
+                            value: {},
+                        });
+
+                        window.open("/get-pro", "_blank");
+                    }
+                }}
             >
                 <MathJax
                     style={{
@@ -81,7 +76,7 @@ const FN: React.FC<IProps> = ({ unLock = false }) => {
                     />
                 </MathJax>
             </div>
-        </div>
+        </Collapse>
     );
 };
 const ExplanationDetail = React.memo(FN);
