@@ -13,7 +13,7 @@ import {
     studyState,
 } from "@/redux/features/study";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import initQuestionThunk from "@/redux/repository/game/initQuestion";
+import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 import { trackingEventGa4 } from "@/services/googleEvent";
 import ctx from "@/utils/mergeClass";
 import { convertPathName, revertPathName } from "@/utils/pathName";

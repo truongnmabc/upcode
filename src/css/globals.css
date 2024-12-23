@@ -2,6 +2,7 @@
 @import "./root.css";
 @import "./zmp-ui.css";
 @import "./local.css";
+@import "./progress.css";
 
 html,
 body {

@@ -1,17 +1,15 @@
 "use client";
+import ClockIcon from "@/components/icon/ClockIcon";
 import { MathJaxContext } from "better-react-mathjax";
-import React, { Fragment } from "react";
-import BottomConfigTest from "../../bottomConfirm";
+import { useSearchParams } from "next/navigation";
+import React from "react";
 import BottomBtn from "./bottomBtn/bottomBtn";
 import ChoicesPanel from "./choicesPanel/choicesPanel";
+import CountTimeRemain from "./countTime";
 import ExplanationDetail from "./explanation/explanationDetail";
 import ProgressQuestion from "./progress/progressQuestion";
 import QuestionContent from "./question/questionContent";
 import TitleQuestion from "./title/titleQuestion";
-import { useSearchParams } from "next/navigation";
-import ClockIcon from "@/components/icon/ClockIcon";
-import Time from "./time/time";
-import ModalConfirm from "./modal/modalConfirm";
 
 const FN = () => {
     const type = useSearchParams().get("type");
@@ -26,7 +24,7 @@ const FN = () => {
                         <div className="w-full flex items-center justify-center">
                             <div className="flex items-center justify-center w-fit gap-2">
                                 <ClockIcon />
-                                <Time />
+                                <CountTimeRemain />
                             </div>
                         </div>
                     )}
@@ -38,13 +36,6 @@ const FN = () => {
 
                 <BottomBtn />
             </div>
-
-            {type === "test" && (
-                <Fragment>
-                    <BottomConfigTest />
-                    <ModalConfirm />
-                </Fragment>
-            )}
         </MathJaxContext>
     );
 };

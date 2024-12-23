@@ -8,12 +8,11 @@ import GridTestsLeft from "../study/questionGroup/gridTests/gridTestsLeft";
 import GridTopicLeft from "../study/questionGroup/gridTopics/gridTopicLeft";
 import MyContainer from "../v4-material/myContainer";
 import ContentTestView from "./content";
-import BottomConfigTest from "../study/bottomConfirm";
 
 const Diagnostic_test = ({ contentSeo }: { contentSeo: string }) => {
     return (
         <MyContainer>
-            <Grid2 container>
+            {/* <Grid2 container>
                 <Grid2
                     size={{
                         sm: 0,
@@ -23,7 +22,7 @@ const Diagnostic_test = ({ contentSeo }: { contentSeo: string }) => {
                 >
                     <HeaderMobile />
                 </Grid2>
-            </Grid2>
+            </Grid2> */}
             <div className="sm:py-4" id="v4-study-main-view-0">
                 <Grid2
                     container
@@ -40,6 +39,7 @@ const Diagnostic_test = ({ contentSeo }: { contentSeo: string }) => {
                             <div className="flex flex-col gap-4">
                                 <AnswerSheet />
                                 <GridTestsLeft />
+                                <div className="w-full h-[2px] bg-[#21212129]"></div>
                                 <GridTopicLeft />
                                 <div className="w-full h-[2px] bg-[#21212129]"></div>
                                 <FinalTestBtn />
@@ -63,7 +63,6 @@ const Diagnostic_test = ({ contentSeo }: { contentSeo: string }) => {
                         </div>
                     </Grid2>
                 </Grid2>
-                <BottomConfigTest />
             </div>
         </MyContainer>
     );

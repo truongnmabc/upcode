@@ -2,14 +2,17 @@ import MtUiRipple, { useRipple } from "@/components/ripple";
 import { db } from "@/db/db.model";
 import { appInfoState } from "@/redux/features/appInfo";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import initTestQuestionThunk from "@/redux/repository/game/initTestQuestion";
+import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
 import { revertPathName } from "@/utils/pathName";
 import { Grid2 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
 import { IPropsItemTest } from "../type";
 import RouterApp from "@/common/router/router.constant";
-import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initDiagnosticTestQuestion";
+import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
+import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
+import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
+import { resetState } from "@/redux/features/game";
 
 const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     const router = useRouter();
@@ -20,68 +23,87 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     } = useRipple();
     const { appInfo } = useAppSelector(appInfoState);
     const dispatch = useAppDispatch();
+
+    const handleCustomTest = useCallback(() => {
+        dispatch(initCustomTestThunk());
+
+        const _href = revertPathName({
+            href: "custom_test",
+            appName: appInfo.appShortName,
+        });
+        router.push(_href);
+    }, [dispatch, appInfo.appShortName, router]);
+
+    const handleFinalTest = useCallback(() => {
+        dispatch(initFinalTestThunk());
+
+        const _href = revertPathName({
+            href: RouterApp.Final_test,
+            appName: appInfo.appShortName,
+        });
+        router.push(_href);
+    }, [dispatch, appInfo.appShortName, router]);
+
+    const handleDiagnosticTest = useCallback(() => {
+        dispatch(initDiagnosticTestQuestionThunk());
+        const _href = revertPathName({
+            href: RouterApp.Diagnostic_test,
+            appName: appInfo.appShortName,
+        });
+        router.push(_href);
+    }, [dispatch, appInfo.appShortName, router]);
+
+    const handlePracticeTest = useCallback(async () => {
+        const res = await db?.tests
+            .where("testType")
+            .equals("practiceTests")
+            .toArray();
+        if (res) {
+            const currentTest = res.find((item) => item?.status === 0);
+            const id = currentTest?.id.toString();
+            dispatch(
+                initTestQuestionThunk({
+                    testId: id,
+                    duration: currentTest?.duration,
+                })
+            );
+
+            const _href = revertPathName({
+                href: `/study/${item.name}?type=test&testId=${id}`,
+                appName: appInfo.appShortName,
+            });
+            router.push(_href);
+        }
+    }, [dispatch, item.name, appInfo.appShortName, router]);
+
     const handleClick: React.MouseEventHandler<HTMLDivElement> = useCallback(
         async (e) => {
             onRippleClickHandler(e);
-
-            if (item.id === "CT") {
-                const _href = revertPathName({
-                    href: "custom_test",
-                    appName: appInfo.appShortName,
-                });
-                router.push(_href);
-                return;
-            }
-
-            if (item.id === "FT") {
-                const _href = revertPathName({
-                    href: `/final_test/full-length-${appInfo?.appShortName}-practice-test`,
-                    appName: appInfo.appShortName,
-                });
-                router.push(_href);
-                return;
-            }
-
-            if (item.id === "DT") {
-                console.log("Start time next:", new Date().toISOString());
-
-                dispatch(initDiagnosticTestQuestionThunk());
-                const _href = revertPathName({
-                    href: RouterApp.Diagnostic_test,
-                    appName: appInfo.appShortName,
-                });
-                router.push(_href);
-            }
-            if (item.id === "PT") {
-                const res = await db?.tests
-                    .where("testType")
-                    .equals("practiceTests")
-                    .toArray();
-                if (res) {
-                    const currentTest = res.find((item) => item?.status === 0);
-                    const id = currentTest?.id.toString();
-                    dispatch(
-                        initTestQuestionThunk({
-                            testId: id,
-                            duration: currentTest?.duration,
-                        })
-                    );
-
-                    const _href = revertPathName({
-                        href: `/study/${item.name}?type=test&testId=${id}`,
-                        appName: appInfo.appShortName,
-                    });
-                    router.push(_href);
-                }
+            dispatch(resetState());
+            switch (item.id) {
+                case "CT":
+                    handleCustomTest();
+                    break;
+                case "FT":
+                    handleFinalTest();
+                    break;
+                case "DT":
+                    handleDiagnosticTest();
+                    break;
+                case "PT":
+                    await handlePracticeTest();
+                    break;
+                default:
+                    break;
             }
         },
         [
-            appInfo.appShortName,
-            dispatch,
             item.id,
-            item.name,
+            handleCustomTest,
+            handleFinalTest,
+            handleDiagnosticTest,
+            handlePracticeTest,
             onRippleClickHandler,
-            router,
         ]
     );
 

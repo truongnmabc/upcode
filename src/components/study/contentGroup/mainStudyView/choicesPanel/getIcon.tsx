@@ -1,10 +1,28 @@
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import RadioButtonUncheckedRoundedIcon from "@mui/icons-material/RadioButtonUncheckedRounded";
+import RadioButtonCheckedRounded from "@mui/icons-material/RadioButtonCheckedRounded";
 import React from "react";
 
-const FN = ({ statusChoice }: { statusChoice: "miss" | "pass" | "other" }) => {
+const FN = ({
+    statusChoice,
+    isActions = false,
+    isSelect,
+}: {
+    isActions?: boolean;
+    isSelect?: boolean;
+    statusChoice: "miss" | "pass" | "other";
+}) => {
     const _sx = { width: "20px", height: "20px" };
+    if (isActions) {
+        if (isSelect) {
+            return <RadioButtonCheckedRounded htmlColor="#AEAEB2" sx={_sx} />;
+        } else {
+            return (
+                <RadioButtonUncheckedRoundedIcon htmlColor="#AEAEB2" sx={_sx} />
+            );
+        }
+    }
     switch (statusChoice) {
         case "miss":
             return <CancelRoundedIcon htmlColor="#fb7072" sx={_sx} />; // chọn sai

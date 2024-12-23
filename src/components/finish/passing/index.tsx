@@ -5,7 +5,7 @@ import { appInfoState } from "@/redux/features/appInfo";
 import { gameState, setTurtGame } from "@/redux/features/game";
 import { selectSubTopics } from "@/redux/features/study";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import initQuestionThunk from "@/redux/repository/game/initQuestion";
+import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 import { revertPathName } from "@/utils/pathName";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
