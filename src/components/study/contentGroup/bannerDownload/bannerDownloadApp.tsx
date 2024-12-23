@@ -12,9 +12,7 @@ const BannerDownloadApp = () => {
     return (
         <div className="bg-white hidden sm:flex  justify-between items-center gap-3 flex-col sm:flex-row dark:bg-black rounded-md overflow-hidden">
             <div className="p-4 flex flex-col gap-6 sm:p-6">
-                <h4 className="text-sm sm:text-xl  text-center  font-semibold">{`Get all ${
-                    appInfo.totalQuestion
-                }+ ${appInfo.appName.toUpperCase()} exam-like questions with our mobile apps!`}</h4>
+                <h4 className="text-sm sm:text-xl  text-center  font-semibold">{`Download our ${appInfo.appName.toUpperCase()} Prep app now to study anywhere, anytime!`}</h4>
                 {!isMobile && (
                     <div className="flex items-center justify-center gap-2">
                         <IconLinkStoreApp type="ios" />

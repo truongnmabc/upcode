@@ -1,4 +1,3 @@
-import "./emotionComponent.scss";
 import CongratsAnim from "./congratsAnim";
 import LazyLoadImage from "@/components/images";
 import { useAppSelector } from "@/redux/hooks";
@@ -9,11 +8,10 @@ const EmotionComponent = () => {
     const { currentGame } = useAppSelector(gameState);
 
     const percentUser = getPercentUser(currentGame);
-    // const percentUser = 20;
 
     if (currentGame.selectedAnswer) {
         return (
-            <div className="flex emotion-component justify-center relative gap-[10px] items-center">
+            <div className="flex  justify-center relative gap-[10px] items-center">
                 {/* {isCorrect ? <CongratsAnim /> : null} */}
 
                 {currentGame.selectedAnswer?.correct && (

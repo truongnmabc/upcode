@@ -45,7 +45,7 @@ const AnswerSheet: React.FC<IProps> = ({ isActions = false }) => {
 
     return (
         <div className="bg-white flex flex-col gap-3 dark:bg-black p-4 rounded-md">
-            <h3 className="font-semibold text-xl truncate font-poppins">
+            <h3 className="font-semibold text-center text-xl truncate font-poppins">
                 Questions
             </h3>
             <div className="flex gap-2 flex-wrap ">
@@ -56,6 +56,7 @@ const AnswerSheet: React.FC<IProps> = ({ isActions = false }) => {
                             className={ctx(
                                 "w-[30px] h-[30px] text-xs rounded transition-all flex items-center justify-center border border-solid",
                                 {
+                                    "border-red-500": q.localStatus === "skip",
                                     "border-[#5497FF] pointer-events-auto cursor-pointer":
                                         currentGame?.id === q.id && !isActions,
                                     "border-[#07C58C] text-white bg-[#07C58C]":

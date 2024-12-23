@@ -90,20 +90,22 @@ const ModalConfirm = () => {
 
                 <div className="mt-6 w-full flex items-center justify-between gap-4">
                     <MtUiButton
-                        className="text-base text-primary border-primary font-medium py-[10px] "
                         block
-                        onClick={handleContinue}
+                        className="text-base font-medium py-[10px] "
+                        onClick={handleStartOver}
+                        animated
                     >
-                        Continue
+                        Start over
                     </MtUiButton>
 
                     <MtUiButton
+                        className="text-base text-primary border-primary font-medium py-[10px] "
                         block
                         type="primary"
-                        className="text-base font-medium py-[10px] "
-                        onClick={handleStartOver}
+                        animated
+                        onClick={handleContinue}
                     >
-                        Start over
+                        Continue
                     </MtUiButton>
                 </div>
             </div>

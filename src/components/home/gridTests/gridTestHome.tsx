@@ -3,7 +3,7 @@ import { appInfoState } from "@/redux/features/appInfo";
 import { useAppSelector } from "@/redux/hooks";
 import { Grid2 } from "@mui/material";
 import React from "react";
-import ItemGridTest from "./itemGridTest/itemGridTest";
+import ItemGridTest from "./itemGridTest/itemGridTestHome";
 import CustomTestSvg from "./itemGridTest/icon/iconCustomTest";
 import DiagnosticTestSvg from "./itemGridTest/icon/iconDiagnosticTest";
 import FinalTestSvg from "./itemGridTest/icon/iconFinalTest";
