@@ -5,7 +5,7 @@ import { ITopic } from "@/models/topics/topics";
 import { appInfoState } from "@/redux/features/appInfo";
 import { selectSubTopics, selectTopics } from "@/redux/features/study";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import initQuestionThunk from "@/redux/repository/game/initQuestion";
+import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 import { trackingEventGa4 } from "@/services/googleEvent";
 import ctx from "@/utils/mergeClass";
 import { revertPathName } from "@/utils/pathName";

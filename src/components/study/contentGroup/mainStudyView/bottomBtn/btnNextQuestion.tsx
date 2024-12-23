@@ -2,8 +2,8 @@ import { MtUiButton } from "@/components/button";
 import { appInfoState } from "@/redux/features/appInfo";
 import { gameState } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import finishQuestionThunk from "@/redux/repository/game/finishQuestion";
-import nextQuestionThunk from "@/redux/repository/game/nextQuestion";
+import finishQuestionThunk from "@/redux/repository/game/finish/finishQuestion";
+import nextQuestionThunk from "@/redux/repository/game/nextQuestion/nextQuestion";
 import { revertPathName } from "@/utils/pathName";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -39,7 +39,7 @@ const BtnNextQuestion = () => {
                 appName: appInfo.appShortName,
             });
 
-            router.push(_href, {
+            router.replace(_href, {
                 scroll: true,
             });
 

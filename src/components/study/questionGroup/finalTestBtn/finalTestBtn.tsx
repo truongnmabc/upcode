@@ -2,34 +2,38 @@
 
 import { MtUiButton } from "@/components/button";
 import { appInfoState } from "@/redux/features/appInfo";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import { revertPathName } from "@/utils/pathName";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 const FN = () => {
-  const { appInfo } = useAppSelector(appInfoState);
+    const { appInfo } = useAppSelector(appInfoState);
+    const dispatch = useAppDispatch();
 
-  const path = revertPathName({
-    href: `/final_test/full-length-${appInfo?.appShortName}-practice-test`,
-    appName: appInfo.appShortName,
-  });
+    const path = revertPathName({
+        href: `/final_test`,
+        appName: appInfo.appShortName,
+    });
 
-  const router = useRouter();
+    const router = useRouter();
 
-  return (
-    <MtUiButton
-      block
-      type="primary"
-      onClick={() => {
-        router.push(path);
-      }}
-    >
-      <p className="text-base capitalize font-semibold text-white">
-        {appInfo.appShortName} Final Test
-      </p>
-    </MtUiButton>
-  );
+    return (
+        <MtUiButton
+            block
+            type="primary"
+            onClick={() => {
+                dispatch(initFinalTestThunk());
+
+                router.replace(path);
+            }}
+        >
+            <p className="text-base capitalize font-semibold text-white">
+                {appInfo.appShortName} Final Test
+            </p>
+        </MtUiButton>
+    );
 };
 const FinalTestBtn = React.memo(FN);
 export default FinalTestBtn;

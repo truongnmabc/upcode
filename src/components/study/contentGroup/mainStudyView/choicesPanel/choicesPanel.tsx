@@ -2,13 +2,21 @@
 import { IAnswer } from "@/models/question/questions";
 import { gameState } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import nextQuestionThunk from "@/redux/repository/game/nextQuestion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AnswerButton from "../answer";
-import { useParams, useRouter } from "next/navigation";
+import {
+    useParams,
+    usePathname,
+    useRouter,
+    useSearchParams,
+} from "next/navigation";
 import { revertPathName } from "@/utils/pathName";
 import { appInfoState } from "@/redux/features/appInfo";
-import finishQuestionThunk from "@/redux/repository/game/finishQuestion";
+import finishQuestionThunk from "@/redux/repository/game/finish/finishQuestion";
+import RouterApp from "@/common/router/router.constant";
+import nextQuestionThunk from "@/redux/repository/game/nextQuestion/nextQuestion";
+import nextQuestionDiagnosticThunk from "@/redux/repository/game/nextQuestion/nextQuestionDiagnosticTest";
+import finishDiagnosticThunk from "@/redux/repository/game/finish/finishDiagnostic";
 
 const TEMP_LIST_ANSWER: IAnswer[] = [
     {
@@ -52,15 +60,25 @@ function shuffleArray<T>(array: T[]): T[] {
     }
     return [];
 }
-const ChoicesPanel = () => {
+
+type IProps = {
+    isActions?: boolean;
+};
+const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const params = useParams();
-    const { currentGame, idTopic, listQuestion, subTopicProgressId } =
-        useAppSelector(gameState);
+    const pathname = usePathname();
+    const {
+        currentGame,
+        idTopic,
+        listQuestion,
+        subTopicProgressId,
+        indexCurrentQuestion,
+    } = useAppSelector(gameState);
 
     const { appInfo } = useAppSelector(appInfoState);
-
+    const type = useSearchParams().get("type");
     const [listRandomQuestion, setListRandomQuestion] =
         useState(TEMP_LIST_ANSWER);
 
@@ -71,6 +89,91 @@ const ChoicesPanel = () => {
                 setListRandomQuestion(listRandomQuestion);
         }
     }, [currentGame?.answers]);
+
+    const handleEnterLearning = useCallback(async () => {
+        const isFinal = listQuestion.every(
+            (item) => item.localStatus === "correct"
+        );
+        if (isFinal) {
+            dispatch(
+                finishQuestionThunk({
+                    subTopicProgressId: subTopicProgressId,
+                    topicId: idTopic,
+                })
+            );
+
+            const _href = revertPathName({
+                href: `/finish?subTopicProgressId=${subTopicProgressId}&topic=${params?.slug}&partId=${idTopic}`,
+                appName: appInfo.appShortName,
+            });
+
+            router.replace(_href, {
+                scroll: true,
+            });
+            return;
+        }
+        dispatch(nextQuestionThunk());
+    }, [
+        dispatch,
+        subTopicProgressId,
+        params?.slug,
+        idTopic,
+        listQuestion,
+        appInfo.appShortName,
+        router,
+    ]);
+
+    const handleEnterDiagnostic = useCallback(async () => {
+        if (indexCurrentQuestion + 1 === listQuestion?.length) {
+            dispatch(finishDiagnosticThunk());
+
+            const _href = revertPathName({
+                href: RouterApp.ResultTest,
+                appName: appInfo.appShortName,
+            });
+
+            router.replace(_href, {
+                scroll: true,
+            });
+            return;
+        }
+        dispatch(nextQuestionDiagnosticThunk());
+    }, [
+        dispatch,
+        subTopicProgressId,
+        params?.slug,
+        idTopic,
+        indexCurrentQuestion,
+        appInfo.appShortName,
+        listQuestion,
+        router,
+    ]);
+
+    const handleEnterFinalTest = useCallback(async () => {
+        if (indexCurrentQuestion + 1 === listQuestion?.length) {
+            dispatch(finishDiagnosticThunk());
+
+            const _href = revertPathName({
+                href: RouterApp.ResultTest,
+                appName: appInfo.appShortName,
+            });
+
+            router.replace(_href, {
+                scroll: true,
+            });
+            return;
+        }
+        dispatch(nextQuestionDiagnosticThunk());
+    }, [
+        dispatch,
+        subTopicProgressId,
+        params?.slug,
+        idTopic,
+        indexCurrentQuestion,
+        appInfo.appShortName,
+        listQuestion,
+        router,
+    ]);
 
     useEffect(() => {
         const handleEnterEvent = (event: globalThis.KeyboardEvent) => {
@@ -85,51 +188,37 @@ const ChoicesPanel = () => {
             }
 
             if (event && event.code === "Enter" && currentGame.selectedAnswer) {
-                const isFinal = listQuestion.every(
-                    (item) => item.localStatus === "correct"
-                );
-                if (isFinal) {
-                    dispatch(
-                        finishQuestionThunk({
-                            subTopicProgressId: subTopicProgressId,
-                            topicId: idTopic,
-                        })
-                    );
+                if (type) handleEnterLearning();
+                if (pathname?.includes("diagnostic_test"))
+                    handleEnterDiagnostic();
 
-                    const _href = revertPathName({
-                        href: `/finish?subTopicProgressId=${subTopicProgressId}&topic=${params?.slug}&partId=${idTopic}`,
-                        appName: appInfo.appShortName,
-                    });
-
-                    router.push(_href, {
-                        scroll: true,
-                    });
-                    return;
-                }
-                dispatch(nextQuestionThunk());
+                if (pathname?.includes("final_test")) handleEnterFinalTest();
             }
         };
-
         document.addEventListener("keydown", handleEnterEvent, true);
 
         return () => {
             document.removeEventListener("keydown", handleEnterEvent, true);
         };
     }, [
+        handleEnterLearning,
+        handleEnterDiagnostic,
+        handleEnterFinalTest,
         currentGame.answers,
         currentGame.selectedAnswer,
-        idTopic,
-        dispatch,
-        listQuestion,
-        appInfo.appShortName,
-        subTopicProgressId,
-        params?.slug,
+        type,
+        pathname,
     ]);
 
     return (
         <div className={"grid gap-2 grid-cols-1 sm:grid-cols-2"}>
             {listRandomQuestion?.map((choice, index) => (
-                <AnswerButton choice={choice} index={index} key={choice?.id} />
+                <AnswerButton
+                    choice={choice}
+                    index={index}
+                    key={choice?.id}
+                    isActions={isActions}
+                />
             ))}
         </div>
     );

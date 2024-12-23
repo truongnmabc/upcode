@@ -7,9 +7,17 @@ import ctx from "@/utils/mergeClass";
 import { MathJax } from "better-react-mathjax";
 import React from "react";
 import GetIconPrefix from "../choicesPanel/getIcon";
-import choiceAnswer from "@/redux/repository/game/choiceAnswer";
+import choiceAnswer from "@/redux/repository/game/choiseAnswer/choiceAnswer";
 import BtnTets from "@/tests/btn";
-const FN = ({ choice, index }: { choice: IAnswer; index: number }) => {
+const AnswerButton = ({
+    choice,
+    index,
+    isActions,
+}: {
+    choice: IAnswer;
+    index: number;
+    isActions?: boolean;
+}) => {
     const dispatch = useAppDispatch();
     const { currentGame } = useAppSelector(gameState);
 
@@ -27,7 +35,8 @@ const FN = ({ choice, index }: { choice: IAnswer; index: number }) => {
             onClick={() => {
                 if (
                     currentGame?.selectedAnswer === null ||
-                    !currentGame?.selectedAnswer
+                    !currentGame?.selectedAnswer ||
+                    isActions
                 ) {
                     dispatch(
                         choiceAnswer({
@@ -40,8 +49,11 @@ const FN = ({ choice, index }: { choice: IAnswer; index: number }) => {
             className={ctx(
                 "flex gap-2 w-full h-full bg-white sm:bg-transparent items-center rounded-md border border-solid px-4 py-3 hover:bg-[#2121210a]",
                 {
-                    "border-[#07C58C]": statusChoice === "pass",
-                    "border-[#FF746D]": statusChoice === "miss",
+                    "border-[#21212185]":
+                        isActions &&
+                        currentGame?.selectedAnswer?.id === choice?.id,
+                    "border-[#07C58C]": statusChoice === "pass" && !isActions,
+                    "border-[#FF746D]": statusChoice === "miss" && !isActions,
                     "cursor-not-allowed ": currentGame?.selectedAnswer !== null,
                     "cursor-pointer ":
                         currentGame?.selectedAnswer === null ||
@@ -50,7 +62,11 @@ const FN = ({ choice, index }: { choice: IAnswer; index: number }) => {
             )}
             id={(index + 1).toString()}
         >
-            <GetIconPrefix statusChoice={statusChoice} />
+            <GetIconPrefix
+                isActions={isActions}
+                isSelect={currentGame?.selectedAnswer?.id === choice?.id}
+                statusChoice={statusChoice}
+            />
 
             {!choice.text ? (
                 <MtUiSkeleton className="min-h-8 h-8 w-full" />
@@ -73,5 +89,4 @@ const FN = ({ choice, index }: { choice: IAnswer; index: number }) => {
         </div>
     );
 };
-const AnswerButton = React.memo(FN);
-export default AnswerButton;
+export default React.memo(AnswerButton);
