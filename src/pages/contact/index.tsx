@@ -193,6 +193,9 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
                 <div className="cluster-faqs">
                     <div className="title max-w-component-desktop">FAQs</div>
                     <div className="faqs-form max-w-component-desktop">
+                        <a href="https://www.paypal.com/us/cshelp/article/how-do-i-get-a-refund-help100">
+                            PayPal Refund Support
+                        </a>
                         {DataFaqs.map((item, index) => (
                             <ViewFAQs faq={item} index={index} key={index} />
                         ))}
