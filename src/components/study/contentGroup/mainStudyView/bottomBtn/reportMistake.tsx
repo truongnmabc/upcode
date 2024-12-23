@@ -20,7 +20,16 @@ const listReport = [
     { label: "Type", value: "6" },
     { label: "Bad Image Quality", value: "7" },
 ];
-
+const useHandleAction = () => {
+    const dispatch = useAppDispatch();
+    return (payload: {
+        status: "like" | "dislike" | "save";
+        questionId: number;
+        partId: number;
+    }) => {
+        dispatch(useActionsThunk(payload));
+    };
+};
 const ReportMistake = ({ onClose }: { onClose: () => void }) => {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const [otherReason, setOtherReason] = useState<string>("");
@@ -34,17 +43,14 @@ const ReportMistake = ({ onClose }: { onClose: () => void }) => {
                 : [...prev, value]
         );
     };
-
+    const handleAction = useHandleAction();
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        dispatch(
-            useActionsThunk({
-                status: "dislike",
-                questionId: currentGame.id,
-                partId: idTopic,
-            })
-        );
+        handleAction({
+            status: "dislike",
+            questionId: currentGame.id,
+            partId: idTopic,
+        });
         onClose();
     };
 

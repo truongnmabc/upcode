@@ -3,12 +3,12 @@ import { db } from "@/db/db.model";
 import { IPartProgress } from "@/models/progress/subTopicProgress";
 import { ITopic } from "@/models/topics/topics";
 import { appInfoState } from "@/redux/features/appInfo";
-import { gameState } from "@/redux/features/game";
+import { gameState, setIndexSubTopic } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 import { revertPathName } from "@/utils/pathName";
 import clsx from "clsx";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { IconSubTopic } from "./iconTopic";
 import { AllowExpandContext, IContextAllowExpand } from "./provider";
@@ -38,6 +38,7 @@ const IconProgress = ({
     const router = useRouter();
     const dispatch = useAppDispatch();
     const pathname = usePathname();
+    const tag = useSearchParams().get("tag");
     const [progress, setProgress] = useState(0);
 
     const handleListenerChange = useCallback(async () => {
@@ -58,7 +59,7 @@ const IconProgress = ({
 
     useEffect(() => {
         if (
-            !isPass &&
+            (!isPass || (isPass && idTopic === part.id)) &&
             isCurrentPlaying &&
             idTopic &&
             part.id &&
@@ -76,6 +77,15 @@ const IconProgress = ({
     ]);
 
     const handleClick = useCallback(async () => {
+        if (
+            pathname.includes(`/study/${mainTopicTag}-practice-test`) &&
+            tag === part.tag
+        ) {
+            return;
+        }
+
+        dispatch(setIndexSubTopic(index));
+
         if (isPass) {
             const _href = revertPathName({
                 href: `/finish?subTopicProgressId=${subTopic.id}&topic=${mainTopicTag}-practice-test&partId=${part.id}`,
@@ -102,6 +112,7 @@ const IconProgress = ({
             if (pathname.includes("/study")) {
                 return router.replace(_href);
             }
+
             return router.push(_href);
         }
     }, [
@@ -115,6 +126,7 @@ const IconProgress = ({
         router,
         subTopic.id,
         subTopicTag,
+        tag,
     ]);
 
     return (
@@ -135,8 +147,8 @@ const IconProgress = ({
                     activeAnim={currentGame.parentId === part?.id}
                     isFinishThisLevel={isPass}
                     currentLevelScore={
-                        isPass
-                            ? 100
+                        isPass && currentGame.parentId !== part?.id
+                            ? progress
                             : currentGame.parentId !== part?.id && isPass
                             ? 100
                             : progress
@@ -144,7 +156,7 @@ const IconProgress = ({
                 />
 
                 <div className="max-w-14 text-center pt-1 text-[10px] text-[#212121] truncate">
-                    Core {index + 1}
+                    Core {index}
                 </div>
             </div>
         </>

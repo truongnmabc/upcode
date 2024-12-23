@@ -4,8 +4,8 @@ import React from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { appInfoState } from "@/redux/features/appInfo";
-import LazyLoadImage from "@/components/images";
 import IconLinkStoreApp from "@/components/iconLinkStoreApp";
+import ImgRightBannerApp from "./imgRight";
 const BannerDownloadApp = () => {
     const { appInfo } = useAppSelector(appInfoState);
     const isMobile = useIsMobile();
@@ -22,11 +22,8 @@ const BannerDownloadApp = () => {
                     </div>
                 )}
             </div>
+            <ImgRightBannerApp />
 
-            <LazyLoadImage
-                src="/images/banner/study-banner-download-app.webp"
-                classNames="w-full flex justify-center sm:w-1/3 h-full bg-no-repeat "
-            />
             {isMobile && (
                 <div className="flex pt-4 flex-col gap-2">
                     <IconLinkStoreApp type="ios" />

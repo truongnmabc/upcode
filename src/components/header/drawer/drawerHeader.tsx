@@ -3,7 +3,6 @@ import CloseIcon from "@/asset/icon/CloseIcon";
 import RouterApp from "@/common/router/router.constant";
 import IconLinkStoreApp from "@/components/iconLinkStoreApp";
 import { appInfoState } from "@/redux/features/appInfo";
-import { userState } from "@/redux/features/user";
 import { useAppSelector } from "@/redux/hooks";
 import { trackingEventGa4 } from "@/services/googleEvent";
 import { revertPathName } from "@/utils/pathName";

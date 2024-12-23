@@ -5,6 +5,7 @@ import replaceYear from "@/utils/replaceYear";
 import Head from "next/head";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import StoreProvider from "@/app/StoreProvider";
+import Link from "next/link";
 
 const vampiro = Vampiro_One({
     weight: ["400"],
@@ -60,7 +61,7 @@ export default function ParentAppLayout({
         >
             <Head>
                 <link rel="icon" href="/favicon.ico" sizes="any" />
-                <link
+                <Link
                     href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
                     rel="stylesheet"
                 />

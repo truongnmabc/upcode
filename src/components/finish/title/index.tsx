@@ -1,6 +1,7 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
 import RouterApp from "@/common/router/router.constant";
 import { appInfoState } from "@/redux/features/appInfo";
+import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
 import { revertPathName } from "@/utils/pathName";
 import { ArrowBack } from "@mui/icons-material";
@@ -12,7 +13,7 @@ const replaceName = (path?: string) => {
     return key?.replaceAll("-", " ");
 };
 
-const TitleFinishPage = ({ currentPart }: { currentPart: number }) => {
+const TitleFinishPage = () => {
     const topicName = useSearchParams().get("topic");
     const topic = replaceName(topicName || "");
     const router = useRouter();
@@ -22,7 +23,7 @@ const TitleFinishPage = ({ currentPart }: { currentPart: number }) => {
         appName: appInfo?.appShortName,
     });
     const handleBack = () => router.push(mainHref);
-
+    const { indexSubTopic } = useAppSelector(gameState);
     return (
         <div className="w-full flex flex-col gap-4 sm:gap-6">
             <div className="text-center hidden sm:block mx-6 py-2 relative bg-white rounded-full">
@@ -49,7 +50,7 @@ const TitleFinishPage = ({ currentPart }: { currentPart: number }) => {
 
             <div>
                 <h2 className="text-2xl sm:text-3xl text-center font-semibold">
-                    Core {currentPart} Completed!
+                    Core {indexSubTopic} Completed!
                 </h2>
                 <h3 className="text-center pt-2 sm:pt-4 text-sm  sm:text-base font-normal">
                     Time for a dance break! (Disclaimer: App is not responsible

@@ -1,5 +1,5 @@
-import AllowExpand from "@/components/home/gridTopic/allowExpand";
-import AllowExpandProvider from "@/components/home/gridTopic/allowExpand/provider";
+import AllowExpand from "@/components/allowExpand";
+import AllowExpandProvider from "@/components/allowExpand/provider";
 import { ITopic } from "@/components/initData";
 import { db } from "@/db/db.model";
 import { selectTopics } from "@/redux/features/study";

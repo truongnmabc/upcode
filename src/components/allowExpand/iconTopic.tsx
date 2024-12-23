@@ -39,7 +39,7 @@ export const IconSubTopic = ({
                         "bg-[#15CB9F]":
                             isFinishThisLevel ||
                             (!lock && currentLevelScore >= 50),
-                        "bg-[#EE6769] text-white":
+                        "bg-[#E3A651] text-white":
                             !lock && currentLevelScore < 50,
                     }
                 )}

@@ -1,26 +1,22 @@
 "use client";
 
 import IconBack from "@/components/icon/iconBack";
-import { useIsMobile } from "@/hooks/useIsMobile";
 import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { Fragment, useState } from "react";
 import MobileDrawerConfirmExit from "./mobileDrawerConfirmExit";
 
 const HeaderStudy = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
-    const { indexCurrentQuestion, listQuestion, type } =
+    const { indexCurrentQuestion, listQuestion, type, indexSubTopic } =
         useAppSelector(gameState);
-    const isMobile = useIsMobile();
-    const partGame = useSearchParams().get("part");
-    const router = useRouter();
 
-    if (!isMobile) return <></>;
+    const router = useRouter();
 
     return (
         <Fragment>
-            <div className="flex items-center mt-2 justify-between w-full">
+            <div className="flex sm:hidden items-center mt-2 justify-between w-full">
                 <div
                     onClick={() => {
                         if (type === "test") {
@@ -34,17 +30,22 @@ const HeaderStudy = () => {
                     <IconBack size={20} />
                 </div>
 
-                <div className=" text-center flex-1 capitalize text-sm font-medium">
-                    {partGame?.replaceAll("-", " ")}
+                <div className=" text-center flex-1 capitalize text-lg font-medium">
+                    {type === "learn"
+                        ? `Core ${indexSubTopic}`
+                        : "Practice Tests"}
                 </div>
                 <div className=" text-sm font-normal ">
                     {indexCurrentQuestion + 1}/{listQuestion?.length}
                 </div>
             </div>
-            <MobileDrawerConfirmExit
-                open={openDrawer}
-                setOpen={setOpenDrawer}
-            />
+            {/* *NOTE: cho nay loi  */}
+            <div>
+                <MobileDrawerConfirmExit
+                    open={openDrawer}
+                    setOpen={setOpenDrawer}
+                />
+            </div>
         </Fragment>
     );
 };

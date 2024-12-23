@@ -43,16 +43,9 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
         console.log("Start time :", new Date().toISOString());
 
         if (duration > 0 && count > 0 && selectListTopic.length > 0) {
-            let listQuestion: any[] = [];
+            let listQuestion: ICurrentGame[] = [];
             try {
                 setLoading(true);
-
-                const level =
-                    selectFeedback === "newbie"
-                        ? 1
-                        : selectFeedback === "expert"
-                        ? 2
-                        : 3;
 
                 const countQuestionTopic = Math.floor(
                     count / selectListTopic.length
@@ -149,7 +142,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
                     passing: passing,
                     isPaused: false,
                     parentId: -1,
-                    question: listQuestion,
+                    question: listQuestion as IQuestion[],
                     remainTime: duration * 60,
                     startTime: new Date().getTime(),
                     type: "customTets",
@@ -307,6 +300,8 @@ import Slider from "@mui/material/Slider";
 import clsx from "clsx";
 import { useAppDispatch } from "@/redux/hooks";
 import { startCustomTest } from "@/redux/features/game";
+import { ICurrentGame } from "@/models/game/game";
+import { IQuestion } from "@/models/question/questions";
 type ICardFeeBack = {
     text: string;
     des: string;
