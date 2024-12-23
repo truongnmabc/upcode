@@ -3,7 +3,7 @@
     // height: 600px;
     // overflow: hidden;
     width: 100%;
-    background: #343f82;
+    background: var(--main-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,6 +16,7 @@
     .v4-footer-landing-container-0 {
         width: 100%;
         height: 100%;
+        padding-bottom: 40px;
         // margin-top: -8px;
         // padding-top: 24px;
 
@@ -25,17 +26,17 @@
         box-sizing: border-box;
         .title {
             text-transform: uppercase;
-            margin-bottom: 24px;
+            margin-bottom: 8px;
             color: #fff;
             font-size: 18px;
             font-weight: 600;
             line-height: 20px;
             text-align: left;
+            text-underline-position: from-font;
         }
-        .item-footer {
-            min-width: 160px;
-        }
+
         .cluster-logo-description {
+            max-width: 284px;
             .logo-footer-v4 {
                 display: flex;
             }
@@ -49,7 +50,7 @@
                 line-height: 21px;
                 text-align: start;
                 color: #fff;
-                max-width: 284px;
+                text-underline-position: from-font;
             }
         }
         .cluster-company-legal {
@@ -68,7 +69,7 @@
         a {
             text-decoration: none;
             color: #fff;
-            font-size: 14px;
+            font-size: 16px;
         }
         // a:not(:first-child) {
         //     margin-left: 32px;
@@ -83,42 +84,49 @@
             text-align: left;
         }
         .support {
-            max-width: 283px;
-            > div {
-                color: #fff !important;
-                margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            max-width: 284px;
+            gap: 16px;
 
-                font-weight: 500;
-                line-height: 24px;
-                text-align: left;
-            }
-            .text-info {
-                color: #fff;
-                font-size: 16px;
-                font-weight: 500;
-                line-height: 24px;
-                text-align: left;
-            }
-            .cluster-email {
+            .cluster-info-send-mail {
                 display: flex;
-                gap: 12px;
-                align-items: center;
+                flex-direction: column;
+                gap: 16px;
                 img {
                     width: 24px;
                     height: 24px;
                 }
-            }
-            .cluster-location {
-                display: flex;
-                gap: 12px;
-                align-items: center;
-                img {
-                    width: 24px;
-                    height: 24px;
+                .text-info {
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 24px;
+                    text-align: left;
+                    text-underline-position: from-font;
+                    color: #fff;
+                }
+                .cluster-email {
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    gap: 12px;
+                }
+                .cluster-location {
+                    display: flex;
+                    align-items: center;
+
+                    gap: 12px;
+                }
+                .intro-suport {
+                    color: #fff;
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 24px;
+                    text-align: left;
+                    text-underline-position: from-font;
                 }
             }
             .v4-input-field {
-                margin: 12px 0;
                 input {
                     color: #fff;
                     width: 100%;
@@ -153,133 +161,32 @@
                     font-size: 14px;
                     text-align: left;
                     padding-left: 4px;
+                    line-height: 24px;
                 }
             }
             .footer-support {
-                margin-top: 28px;
                 display: flex;
                 width: 100%;
                 justify-content: flex-end;
                 .v4-footer-btn-contact-us {
-                    padding: 12px 27px;
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 24px;
+                    text-align: left;
+                    text-underline-position: from-font;
+                    padding: 12px 24px;
                     background-color: #fff;
                     width: fit-content;
                     align-self: flex-end;
                     cursor: pointer;
                     margin-top: 4px;
-                    font-size: 14px;
                     border: none;
+                    border-radius: 8px;
                     display: flex;
                     line-height: 24px; // = svg height
                 }
             }
         }
-
-        // .v4-footer-landing-container-11 {
-        //     .v4-footer-landing-container-111 {
-        //         display: flex;
-        //         justify-content: space-between;
-        //         align-items: center;
-        //         .v4-contact-social-desktop {
-        //             display: none;
-        //         }
-        //         .logo-footer-v4 {
-        //             display: flex;
-        //         }
-        //         .img-logo-footer {
-        //             height: 40px; //1:4
-        //             max-width: 160px;
-        //         }
-        //     }
-
-        //     .v4-footer-landing-container-112 {
-        //         display: flex;
-        //         flex-direction: column;
-        //         padding-top: 32px;
-        //         > div {
-        //             color: #fff !important;
-        //             margin-bottom: 16px;
-        //             font-size: 18px;
-        //             font-weight: 500;
-        //             text-align: center;
-        //             line-height: 28px;
-        //         }
-        //         .v4-input-field {
-        //             margin: 4px 0;
-        //             input {
-        //                 color: #fff;
-        //                 padding: 10px;
-        //                 border: 1px solid #fff;
-        //                 border-radius: 6px;
-        //                 box-sizing: border-box;
-        //                 outline: none;
-        //                 background-color: transparent;
-        //                 width: -webkit-fill-available;
-        //                 &::placeholder {
-        //                     color: #fff;
-        //                 }
-        //                 &:-ms-input-placeholder {
-        //                     /* Internet Explorer 10-11 */
-        //                     color: #fff;
-        //                 }
-        //                 &::-ms-input-placeholder {
-        //                     /* Microsoft Edge */
-        //                     color: #fff;
-        //                 }
-        //                 &:focus {
-        //                     border: 1px solid #fff;
-        //                 }
-        //             }
-        //             p {
-        //                 color: #880000; //alert text
-        //                 margin: 0;
-        //                 font-size: 14px;
-        //                 text-align: left;
-        //                 padding-left: 4px;
-        //             }
-        //         }
-
-        //         .v4-footer-btn-contact-us {
-        //             padding: 12px 20px;
-        //             background-color: #fff;
-        //             width: fit-content;
-        //             align-self: flex-end;
-        //             cursor: pointer;
-        //             margin-top: 4px;
-        //             font-size: 14px;
-        //             border: none;
-        //             display: flex;
-        //             line-height: 24px; // = svg height
-        //         }
-        //     }
-        // }
-
-        // .v4-footer-landing-container-12 {
-        //     padding-top: 32px;
-        //     border-top: 1px solid #e4e4e4;
-        //     display: flex;
-        //     margin-top: 16px;
-        //     justify-content: space-between;
-        //     flex-direction: column;
-        //     align-items: center;
-
-        //     .v4-footer-landing-container-121 {
-        //         padding-top: 32px;
-        //         a {
-        //             text-decoration: none;
-        //             color: #fff;
-        //             font-size: 14px;
-        //         }
-        //         a:not(:first-child) {
-        //             margin-left: 32px;
-        //         }
-        //     }
-        //     .v4-footer-landing-container-122 {
-        //         color: rgb(230, 230, 230);
-        //         font-size: 12px;
-        //         padding-top: 16px;
-        //     }
-        // }
     }
 
     .v4-footer-landing-container-1 {
@@ -287,7 +194,7 @@
         width: 100%;
         justify-content: center;
         padding: 32px 0;
-        background-color: #181f47;
+        background-color: var(--main-color-bold);
         .footer-social {
             display: flex;
             width: 100%;
@@ -311,16 +218,19 @@
         padding: 24px 0 0 0;
         width: 100%;
         .v4-footer-landing-container-0 {
-            padding: 0 16px;
+            padding: 0 16px 24px 16px;
             flex-direction: column;
             gap: 16px;
             align-items: unset;
+
             .title {
+                font-size: 16px;
                 margin-bottom: 8px;
             }
             .cluster-logo-description {
                 margin-bottom: 16px;
                 width: 100%;
+                max-width: unset;
                 span {
                     text-align: center;
                     max-width: 100%;
@@ -336,16 +246,30 @@
                 gap: 8px;
             }
             .cluster-legal {
+                width: 163px;
                 gap: 8px;
+            }
+            a {
+                font-size: 14px;
             }
             .support {
                 max-width: 100%;
                 gap: 8px;
-                .text-info {
-                    font-size: 14px;
-                }
-                .intro-suport {
-                    font-size: 14px;
+                .cluster-info-send-mail {
+                    .text-info {
+                        font-size: 14px;
+                    }
+                    .intro-suport {
+                        color: #fff;
+                        font-size: 14px;
+                    }
+                    .footer-support {
+                        font-size: 14px;
+                        font-weight: 500;
+                        line-height: 20px;
+                        text-align: left;
+                        text-underline-position: from-font;
+                    }
                 }
             }
             // align-items: center;

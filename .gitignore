@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.idea/
+
+public/info/images/logo192.png
+public/info/images/logo512.png
+public/info/images/logo60.png
+src/config_app.js
+src/data/appInfos.json
+src/data/footerMenus.json
+src/data/stateData.json
+src/data/studyData.json
+src/styles/config.css
+.env
+ssh_keys/id_rsa
+deploy_.sh
+build-easyprep.zip

@@ -3,11 +3,13 @@
 import { IContactInfo, listContactApp } from "@/common/constants";
 
 export const getContactApp = (appName: string): IContactInfo => {
-  return (
-    listContactApp[appName] || {
-      facebook: "",
-      youtube: "",
-      twitter: "",
-    }
-  );
+    return (
+        listContactApp[appName] || {
+            facebook: "",
+            youtube: "",
+            twitter: "",
+            linkedin: "",
+            instagram: "",
+        }
+    );
 };

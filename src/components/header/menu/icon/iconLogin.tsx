@@ -55,7 +55,7 @@ const FN = ({ classNames }: { classNames?: string }) => {
                 >
                     <div
                         className={ctx(
-                            "text-base font-normal hover:text-primary cursor-pointer text-[var(--text-color)]",
+                            "text-base font-normal hover-main-color cursor-pointer text-[#21212185]",
                             classNames
                         )}
                     >
