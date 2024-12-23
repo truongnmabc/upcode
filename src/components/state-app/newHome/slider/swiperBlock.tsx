@@ -80,7 +80,7 @@ const ITemBlock = ({ item }: { item: IItemBlock }) => {
                         alt="avatar"
                     />
                     <p className="text-[#343F82] hidden sm:block text-sm font-normal">
-                        By {item?.author.display_name}
+                        By {item?.author?.display_name}
                     </p>
                 </div>
                 <div className="flex-1 flex flex-col sm:gap-[10px] overflow-hidden">

@@ -9,13 +9,13 @@ import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 const FN = () => {
     const { push } = useRouter();
-    const pathname = usePathname();
+    const pathname = usePathname() || "";
     const currentPath = convertPathName(pathname);
     const { theme } = useTheme();
     const { appInfo } = useAppSelector(appInfoState);
     return (
         <div
-            className="h-full max-h-14 w-full flex items-center cursor-pointer"
+            className="h-full max-h-10 w-full flex items-center cursor-pointer"
             onClick={() => {
                 if (currentPath === RouterApp.Home) return;
                 push(

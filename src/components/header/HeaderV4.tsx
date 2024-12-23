@@ -1,27 +1,26 @@
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-import { APP_SHORT_NAME } from "../../config_app";
-import * as ga from "../../services/ga";
-import { IAppInfo } from "../../models/AppInfo";
-import "./HeaderV4.scss";
-import { ITopic } from "../../models/Topic";
-import MyContainer from "../v4-material/myContainer";
-import CloseIcon from "../icon/CloseIcon";
-import MenuIcon from "../icon/MenuIcon";
-import ExpandMoreIcon from "../icon/ExpandMoreIcon";
-import Link from "next/link";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { ITestInfo } from "@/models/TestInfo";
-import states from "../../data/statesName.json";
-import { getLink } from "@/utils";
-import V4LoginDialog from "./V4LoginDialog";
-import AppState from "@/redux/appState";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "@/redux/features/user";
 import Routes from "@/config/routes";
+import { ITestInfo } from "@/models/TestInfo";
+import AppState from "@/redux/appState";
+import { logout } from "@/redux/features/user";
+import { getLink } from "@/utils";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
-import GetPro from "../icon/GetPro";
 import { Tooltip, useMediaQuery } from "@mui/material";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { APP_SHORT_NAME } from "../../config_app";
+import states from "../../data/statesName.json";
+import { IAppInfo } from "../../models/AppInfo";
+import { ITopic } from "../../models/Topic";
+import * as ga from "../../services/ga";
+import CloseIcon from "../icon/CloseIcon";
+import ExpandMoreIcon from "../icon/ExpandMoreIcon";
+import GetPro from "../icon/GetPro";
+import MenuIcon from "../icon/MenuIcon";
+import "./HeaderV4.scss";
+import V4LoginDialog from "./V4LoginDialog";
 const DownloadAppV4 = dynamic(() => import("../homepage/DownloadAppV4"));
 
 const HeaderV4 = ({
@@ -59,7 +58,7 @@ const HeaderV4 = ({
     }, []);
     return (
         <div className="container-header-v4">
-            <MyContainer className="header-v4">
+            <div className="header-v4 max-w-component-desktop">
                 <div className="logo-header-v4">
                     <Link href="/">
                         <img
@@ -153,7 +152,7 @@ const HeaderV4 = ({
                         }}
                     >
                         <span className="text-nemu">Menu</span>
-                        <MenuIcon />
+                        <MenuIcon color="#21212185" />
                     </div>
                 </div>
 
@@ -235,15 +234,15 @@ const HeaderV4 = ({
                                         onClick={() => {
                                             let btn = document.getElementById(
                                                 "v4-icon-expand-state"
-                                            );
+                                            ) as HTMLElement;
                                             let collapse =
                                                 document.getElementById(
                                                     "collapse-state"
-                                                );
+                                                ) as HTMLElement;
                                             let content =
                                                 document.getElementById(
                                                     "collapse-content-state"
-                                                );
+                                                ) as HTMLElement;
                                             let height = content.clientHeight;
                                             if (
                                                 btn.className.includes("true")
@@ -532,7 +531,7 @@ const HeaderV4 = ({
                         setOpen={setOpen}
                     />
                 )}
-            </MyContainer>
+            </div>
         </div>
     );
 };

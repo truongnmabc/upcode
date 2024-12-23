@@ -1,4 +1,5 @@
 "use client";
+
 import { appInfoState } from "@/redux/features/appInfo";
 import { useAppSelector } from "@/redux/hooks";
 import React, { CSSProperties } from "react";
