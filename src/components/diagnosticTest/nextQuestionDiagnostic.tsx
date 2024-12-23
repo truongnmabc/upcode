@@ -5,12 +5,15 @@ import nextQuestionDiagnosticThunk from "@/redux/repository/game/nextQuestion/ne
 
 import React from "react";
 const NextQuestionDiagnostic = () => {
-    const { currentGame } = useAppSelector(gameState);
+    const { currentGame, indexCurrentQuestion, listQuestion } =
+        useAppSelector(gameState);
 
     const dispatch = useAppDispatch();
 
     const handleFinish = () => dispatch(nextQuestionDiagnosticThunk());
-
+    if (indexCurrentQuestion + 1 === listQuestion?.length) {
+        return <></>;
+    }
     return (
         <MtUiButton
             animated

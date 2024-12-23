@@ -247,7 +247,7 @@ const PassingFinishPage = ({
                     onClick={handleNextPart}
                     type="primary"
                 >
-                    Next Part
+                    Continue
                 </MtUiButton>
             </div>
         </div>

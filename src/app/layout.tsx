@@ -32,7 +32,7 @@ export async function generateMetadata() {
         if (appInfo) {
             const image = `/infos/${appInfo?.appShortName}/logo60.png`;
             return {
-                metadataBase: new URL("https://asvab-prep.com/"),
+                metadataBase: new URL("http://localhost:3030/"),
                 title: replaceYear(appInfo.title),
                 description: appInfo.descriptionSEO,
                 keywords: appInfo.keywordSEO,

@@ -39,9 +39,9 @@ const Diagnostic_test = ({ contentSeo }: { contentSeo: string }) => {
                             <div className="flex flex-col gap-4">
                                 <AnswerSheet />
                                 <GridTestsLeft />
-                                <div className="w-full h-[2px] bg-[#21212129]"></div>
+                                <div className="w-full h-[1x] bg-[#21212129]"></div>
                                 <GridTopicLeft />
-                                <div className="w-full h-[2px] bg-[#21212129]"></div>
+                                <div className="w-full h-[1px] bg-[#21212129]"></div>
                                 <FinalTestBtn />
                             </div>
                         </div>

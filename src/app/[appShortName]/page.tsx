@@ -2,14 +2,14 @@ import axiosInstance from "@/common/config/axios";
 import { RANDOM_COLORS } from "@/common/constants";
 import { API_PATH } from "@/common/constants/api.constants";
 import DownloadApp from "@/components/home/downloadApp/downloadApp";
-import GridTest from "@/components/home/gridTests/gridTest";
+import GridTest from "@/components/home/gridTests/gridTestHome";
 import GridTopics from "@/components/home/gridTopic/gridTopics";
 import TitleHomeApp from "@/components/home/title";
 import SeoContent from "@/components/seoContent/seoContent";
 import HomeSingleApp from "@/components/state-app";
+import MyContainer from "@/components/v4-material/myContainer";
 import { ITopic } from "@/models/topics/topics";
 import { getAppType } from "@/utils/config_web";
-import MyContainer from "@/components/v4-material/myContainer";
 import { fetchAppData } from "@/utils/getAppInfos";
 
 type Params = {
@@ -40,7 +40,6 @@ export default async function Home({ params }: Params) {
                 <MyContainer>
                     <TitleHomeApp appInfo={appInfo} />
                     <GridTopics
-                        isAll={topics.length > 0}
                         topics={topics.map((item, index) => ({
                             ...item,
                             color: RANDOM_COLORS[index % RANDOM_COLORS.length],

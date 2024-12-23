@@ -9,13 +9,14 @@ import { calculatorAverageLevel } from "@/utils/math";
 const PassingProbability = () => {
     const [passingValue, setPassingValue] = useState(0);
     const [averageLevel, setAverageLevel] = useState(0);
+    console.log("🚀 ~ PassingProbability ~ averageLevel:", averageLevel);
     const { idTopic, currentGame } = useAppSelector(gameState);
 
     useEffect(() => {
         const calculateAverageLevel = async () => {
             if (!idTopic) return;
 
-            const topicQuestion = await db.topicQuestion
+            const topicQuestion = await db?.topicQuestion
                 .where("id")
                 .equals(idTopic)
                 .first();
@@ -25,7 +26,6 @@ const PassingProbability = () => {
                 setAverageLevel(average);
             }
         };
-
         calculateAverageLevel();
     }, [idTopic]);
 
@@ -33,7 +33,7 @@ const PassingProbability = () => {
         const calculatePassingValue = async () => {
             if (!idTopic || !averageLevel) return;
 
-            const userProgress = await db.userProgress
+            const userProgress = await db?.userProgress
                 .where("parentId")
                 .equals(idTopic)
                 .toArray();
@@ -68,17 +68,19 @@ const PassingProbability = () => {
     }, [idTopic, averageLevel, currentGame.id]);
 
     return (
-        <div className="p-4 rounded-md bg-white dark:bg-black">
-            <h3 className="font-semibold truncate text-xl">
+        <div className="p-4 rounded-md bg-[#2121210A] dark:bg-black">
+            <h3 className="font-semibold truncate text-lg">
                 Passing Probability
             </h3>
-            <div className="mt-3 h-6 w-full custom-progress relative">
+            <div className="mt-3 h-12 w-full custom-progress relative">
                 <progress
                     value={passingValue}
                     max={100}
                     className="w-full"
                 ></progress>
-                <div className="progress-label">{passingValue.toFixed(0)}%</div>
+                <div className="progress-label ">
+                    {passingValue.toFixed(0)}%
+                </div>
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 "use client";
-import NextQuestionDiagnostic from "@/components/diagnostic_test/nextQuestionDiagnostic";
+import NextQuestionDiagnostic from "@/components/diagnosticTest/nextQuestionDiagnostic";
 import BtnSubmit from "@/components/study/contentGroup/mainStudyView/bottomBtn/btnSubmit";
 import Keyboard from "@/components/study/contentGroup/mainStudyView/bottomBtn/keyboard";
 import SubAction from "@/components/study/contentGroup/mainStudyView/bottomBtn/subAction";

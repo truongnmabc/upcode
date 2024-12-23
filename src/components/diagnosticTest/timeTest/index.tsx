@@ -5,6 +5,21 @@ import { useAppSelector } from "@/redux/hooks";
 import React from "react";
 import CountTimeDiagnostic from "../countTimeRemain";
 import Rating from "@mui/material/Rating";
+
+import { styled } from "@mui/material/styles";
+
+const CustomRating = styled(Rating)(({ theme }) => ({
+    "& .MuiRating-iconEmpty svg": {
+        color: "#21212133", // Màu nền khi không active
+    },
+    "& .MuiRating-iconFilled": {
+        color: theme.palette.primary.main, // Màu primary khi active
+    },
+    "& .MuiRating-iconHover": {
+        color: theme.palette.primary.light, // Màu sáng hơn khi hover
+    },
+}));
+
 const TimeTestGetLever = () => {
     const { currentGame } = useAppSelector(gameState);
 
@@ -28,7 +43,7 @@ const TimeTestGetLever = () => {
                     Level
                 </p>
 
-                <Rating
+                <CustomRating
                     name="read-only"
                     value={
                         currentGame?.level === -1
@@ -40,61 +55,9 @@ const TimeTestGetLever = () => {
                     max={3}
                     readOnly
                 />
-                {/* <IconStarLevel
-                    level={
-                        currentGame?.level === -1
-                            ? 2
-                            : currentGame?.level < 50
-                            ? 1
-                            : 3
-                    }
-                    defaultLevel={1}
-                />
-                <IconStarLevel
-                    level={
-                        currentGame?.level === -1
-                            ? 2
-                            : currentGame?.level < 50
-                            ? 1
-                            : 3
-                    }
-                    defaultLevel={2}
-                />
-                <IconStarLevel
-                    level={
-                        currentGame?.level === -1
-                            ? 2
-                            : currentGame?.level < 50
-                            ? 1
-                            : 3
-                    }
-                    defaultLevel={3}
-                /> */}
             </div>
         </div>
     );
 };
 
 export default React.memo(TimeTestGetLever);
-
-const IconStarLevel = ({
-    level,
-    defaultLevel,
-}: {
-    level: number;
-    defaultLevel: number;
-}) => {
-    const isActive = level >= defaultLevel && level > 0;
-    console.log("🚀 ~ isActive:", isActive);
-
-    return (
-        <LazyLoadImage
-            classNames="w-6 h-6"
-            src={
-                isActive
-                    ? "/images/rate/star-dynamic-color.png"
-                    : "/images/rate/star-dynamic-color-1.png"
-            }
-        />
-    );
-};

@@ -1,9 +1,6 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
-import RouterApp from "@/common/router/router.constant";
-import { appInfoState } from "@/redux/features/appInfo";
 import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
-import { revertPathName } from "@/utils/pathName";
 import { ArrowBack } from "@mui/icons-material";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
@@ -17,12 +14,7 @@ const TitleFinishPage = () => {
     const topicName = useSearchParams().get("topic");
     const topic = replaceName(topicName || "");
     const router = useRouter();
-    const { appInfo } = useAppSelector(appInfoState);
-    const mainHref = revertPathName({
-        href: RouterApp.Home,
-        appName: appInfo?.appShortName,
-    });
-    const handleBack = () => router.push(mainHref);
+    const handleBack = () => router.back();
     const { indexSubTopic } = useAppSelector(gameState);
     return (
         <div className="w-full flex flex-col gap-4 sm:gap-6">
