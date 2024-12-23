@@ -29,7 +29,14 @@ const ItemTestLeft = ({ test, index }: { test: ITest; index: number }) => {
         });
 
         router.replace(_href);
-    }, [test.id, dispatch, appInfo.appShortName, router, idTopic]);
+    }, [
+        test.id,
+        test.duration,
+        dispatch,
+        appInfo.appShortName,
+        router,
+        idTopic,
+    ]);
     return (
         <div
             className={clsx(

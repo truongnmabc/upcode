@@ -8,7 +8,6 @@ import {
 } from "./features/appConfig";
 import { appInfoState, setAppInfo } from "./features/appInfo";
 import { useAppDispatch, useAppSelector } from "./hooks";
-import InitData from "@/components/initData";
 
 const InitDataStore = ({
     appConfig,

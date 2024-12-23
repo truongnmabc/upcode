@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import CountTime from "@/components/countTime";
 import { gameState } from "@/redux/features/game";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import nextQuestionDiagnosticThunk from "@/redux/repository/game/nextQuestion/nextQuestionDiagnosticTest";
+import React from "react";
 
 const CountTimeRemain = () => {
     const dispatch = useAppDispatch();

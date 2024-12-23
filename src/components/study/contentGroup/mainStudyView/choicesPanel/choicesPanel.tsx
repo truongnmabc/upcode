@@ -120,6 +120,7 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         idTopic,
         listQuestion,
         appInfo.appShortName,
+        router,
     ]);
 
     const handleEnterDiagnostic = useCallback(async () => {
@@ -145,6 +146,7 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         indexCurrentQuestion,
         appInfo.appShortName,
         listQuestion,
+        router,
     ]);
 
     const handleEnterFinalTest = useCallback(async () => {
@@ -170,6 +172,7 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         indexCurrentQuestion,
         appInfo.appShortName,
         listQuestion,
+        router,
     ]);
 
     useEffect(() => {
@@ -199,6 +202,8 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         };
     }, [
         handleEnterLearning,
+        handleEnterDiagnostic,
+        handleEnterFinalTest,
         currentGame.answers,
         currentGame.selectedAnswer,
         type,

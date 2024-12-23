@@ -5,6 +5,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import choiceAnswer, {
     processChoiceAnswer,
 } from "../repository/game/choiseAnswer/choiceAnswer";
+import initCustomTestThunk from "../repository/game/initData/initCustomTest";
 import initDiagnosticTestQuestionThunk from "../repository/game/initData/initDiagnosticTest";
 import initFinalTestThunk from "../repository/game/initData/initFinalTest";
 import initLearnQuestionThunk, {
@@ -13,11 +14,10 @@ import initLearnQuestionThunk, {
 import initPracticeThunk from "../repository/game/initData/initPracticeTest";
 import nextQuestionThunk from "../repository/game/nextQuestion/nextQuestion";
 import nextQuestionDiagnosticThunk from "../repository/game/nextQuestion/nextQuestionDiagnosticTest";
-import { reloadStateThunk } from "../repository/utils/reload";
-import { RootState } from "../store";
-import initCustomTestThunk from "../repository/game/initData/initCustomTest";
 import resumedTestThunk from "../repository/game/pauseAndResumed/resumedTest";
 import { handleInitTestQuestion } from "../repository/game/utils";
+import { reloadStateThunk } from "../repository/utils/reload";
+import { RootState } from "../store";
 
 const init = new UserQuestionProgress();
 
@@ -107,13 +107,15 @@ export const gameSlice = createSlice({
         builder.addCase(
             nextQuestionDiagnosticThunk.fulfilled,
             (state, action) => {
-                const { nextLever, listQuestion, indexCurrentQuestion } =
-                    action.payload;
+                if (action.payload) {
+                    const { nextLever, listQuestion, indexCurrentQuestion } =
+                        action.payload;
 
-                state.listQuestion = listQuestion;
-                state.currentGame = nextLever;
-                state.indexCurrentQuestion = indexCurrentQuestion;
-                state.remainTime = 60;
+                    state.listQuestion = listQuestion;
+                    state.currentGame = nextLever;
+                    state.indexCurrentQuestion = indexCurrentQuestion;
+                    state.remainTime = 60;
+                }
             }
         );
         builder.addCase(reloadStateThunk.fulfilled, (state, action) => {
@@ -169,8 +171,7 @@ export const gameSlice = createSlice({
 
         builder.addCase(initCustomTestThunk.fulfilled, (state, action) => {
             if (action.payload) {
-                const { question, duration, isPaused, remainTime } =
-                    action.payload;
+                const { question, isPaused, remainTime } = action.payload;
                 state.listQuestion = question;
                 state.currentGame = question[0];
                 state.remainTime = remainTime;
@@ -182,7 +183,6 @@ export const gameSlice = createSlice({
             initDiagnosticTestQuestionThunk.fulfilled,
             (state, action) => {
                 if (action.payload) {
-                    console.log("payload", action.payload);
                     const {
                         listQuestion,
                         belowFifty,
@@ -200,8 +200,8 @@ export const gameSlice = createSlice({
                         isPaused,
                         remainTime: 60,
                     });
-                    state.belowFifty = belowFifty;
-                    state.aboveFifty = aboveFifty;
+                    if (belowFifty) state.belowFifty = belowFifty;
+                    if (aboveFifty) state.aboveFifty = aboveFifty;
                 }
             }
         );
