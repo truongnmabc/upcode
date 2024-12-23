@@ -41,6 +41,10 @@ const AppThemeProvider = ({ children }: { children: React.ReactNode }) => {
                 "--main-color-bold",
                 appConfig.mainColorBold
             );
+            root.style.setProperty(
+                "--main-back-color-contact",
+                appConfig.mainBackgroundColorContact
+            );
         }
     }, [appConfig]);
 
