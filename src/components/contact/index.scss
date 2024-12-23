@@ -342,6 +342,10 @@
                             transition: all 0.65s ease;
                             visibility: hidden;
                             color: #fff;
+                            a {
+                                color: #fff;
+                                text-decoration: underline;
+                            }
                         }
                     }
                 }
