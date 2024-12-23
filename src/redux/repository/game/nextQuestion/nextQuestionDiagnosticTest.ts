@@ -24,7 +24,7 @@ const updateDb = async (idTopic: number, listQuestion: ICurrentGame[]) => {
 };
 const nextQuestionDiagnosticThunk = createAsyncThunk(
     "nextQuestionDiagnostic",
-    async (_, thunkAPI): Promise<IRes> => {
+    async (_, thunkAPI): Promise<IRes | undefined> => {
         const state = thunkAPI.getState() as RootState;
         const {
             listQuestion,
@@ -36,7 +36,7 @@ const nextQuestionDiagnosticThunk = createAsyncThunk(
         } = state.gameReducer;
 
         let nextQuestion;
-        let updatedList: ICurrentGame[] = [...listQuestion];
+        const updatedList: ICurrentGame[] = [...listQuestion];
 
         if ((indexCurrentQuestion + 1) % 3 === 0) {
             return {
@@ -69,18 +69,17 @@ const nextQuestionDiagnosticThunk = createAsyncThunk(
         }
         if (nextQuestion) {
             updatedList[indexCurrentQuestion + 1] = nextQuestion;
+            updateDb(idTopic, updatedList);
+            return {
+                listQuestion: updatedList,
+                nextLever: {
+                    ...nextQuestion,
+                    tag: listQuestion[indexCurrentQuestion + 1]?.tag,
+                },
+                isFirst: false,
+                indexCurrentQuestion: indexCurrentQuestion + 1,
+            };
         }
-
-        updateDb(idTopic, updatedList);
-        return {
-            listQuestion: updatedList,
-            nextLever: {
-                ...nextQuestion,
-                tag: listQuestion[indexCurrentQuestion + 1]?.tag,
-            },
-            isFirst: false,
-            indexCurrentQuestion: indexCurrentQuestion + 1,
-        };
     }
 );
 

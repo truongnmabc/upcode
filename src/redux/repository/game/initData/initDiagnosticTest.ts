@@ -1,6 +1,5 @@
 "use client";
 
-import { parentIdDefault } from "@/common/constants";
 import { db } from "@/db/db.model";
 import { ICurrentGame } from "@/models/game/game";
 import { IQuestion } from "@/models/question/questions";
@@ -46,9 +45,9 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
             .first();
         if (!diagnostic) {
             const parentId = generateRandomNegativeId();
-            let listQuestion: ICurrentGame[] = [];
-            let belowFifty: Record<string, ICurrentGame[]> = {};
-            let aboveFifty: Record<string, ICurrentGame[]> = {};
+            const listQuestion: ICurrentGame[] = [];
+            const belowFifty: Record<string, ICurrentGame[]> = {};
+            const aboveFifty: Record<string, ICurrentGame[]> = {};
             const topic = await db?.topics.toArray();
 
             if (topic) {

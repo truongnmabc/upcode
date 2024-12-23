@@ -1,8 +1,6 @@
 "use client";
 
 import { db } from "@/db/db.model";
-import { ICurrentGame } from "@/models/game/game";
-import { IQuestion } from "@/models/question/questions";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const initCustomTestThunk = createAsyncThunk(

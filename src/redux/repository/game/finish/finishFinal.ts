@@ -1,6 +1,5 @@
 "use client";
 import { db } from "@/db/db.model";
-import { IQuestion } from "@/models/question/questions";
 import { RootState } from "@/redux/store";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -8,7 +7,7 @@ const finishFinalThunk = createAsyncThunk(
     "finishFinalThunk",
     async (_, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
-        const { listQuestion, idTopic } = state.gameReducer;
+        const { idTopic } = state.gameReducer;
         try {
             await db?.testQuestions
                 .where("parentId")

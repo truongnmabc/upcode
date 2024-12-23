@@ -30,7 +30,7 @@ const SubAction = () => {
                 })
             );
         }
-    }, [idTopic]);
+    }, [idTopic, dispatch]);
 
     useEffect(() => {
         if (currentGame.id) {
@@ -61,7 +61,7 @@ const SubAction = () => {
                 partId: currentGame.parentId,
             })
         );
-    }, [currentGame]);
+    }, [currentGame.id, currentGame.parentId, dispatch]);
 
     const likeAction = useCallback(() => {
         dispatch(
@@ -71,7 +71,7 @@ const SubAction = () => {
                 partId: currentGame.parentId,
             })
         );
-    }, [currentGame]);
+    }, [currentGame.id, currentGame.parentId, dispatch]);
 
     const dislikeAction = () => setOpenModal(true);
 
