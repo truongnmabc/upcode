@@ -9,6 +9,7 @@ export type IAppConfigData = {
     mainColor: string; // Màu chính
     mainColorBold: string; // Màu chính đậm
     mainBackgroundColor: string; // Màu nền chính
+    mainBackgroundColorContact: string; // Màu back của contact
     GA4ID: string; // Google Analytics 4 ID
     pageId: string; // Page ID (Facebook hoặc hệ thống khác)
     wpDomain: string; // Domain chính (WordPress hoặc khác)
@@ -31,6 +32,7 @@ const initialState: IAppConfigReducer = {
         mainColor: "#329678",
         mainColorBold: "#39B08C",
         mainBackgroundColor: "#f8fdff",
+        mainBackgroundColorContact: "#f8fdff",
         GA4ID: "G-9WFY79Y40M",
         pageId: "110654290809849",
         wpDomain: "https://passemall.com",

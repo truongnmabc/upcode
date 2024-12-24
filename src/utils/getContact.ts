@@ -3,8 +3,9 @@
 import { IContactInfo, listContactApp } from "@/common/constants";
 
 export const getContactApp = (appName: string): IContactInfo => {
+    const lowerAppName = appName.toLowerCase();
     return (
-        listContactApp[appName] || {
+        listContactApp[lowerAppName] || {
             facebook: "",
             youtube: "",
             twitter: "",
