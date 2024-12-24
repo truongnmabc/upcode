@@ -24,6 +24,17 @@ const DownloadApp = () => {
             mobile: false,
         },
         {
+            title: "Instant feedback",
+            icon: (
+                <LazyLoadImage
+                    alt="Instant feedback"
+                    src="/images/home/v4-instant-feedback.webp"
+                    classNames="w-6 h-6"
+                />
+            ),
+            mobile: true,
+        },
+        {
             title:
                 appInfo.totalQuestion -
                 (appInfo.totalQuestion % 10) +
@@ -48,17 +59,7 @@ const DownloadApp = () => {
             ),
             mobile: false,
         },
-        {
-            title: "Instant feedback",
-            icon: (
-                <LazyLoadImage
-                    alt="Instant feedback"
-                    src="/images/home/v4-instant-feedback.webp"
-                    classNames="w-6 h-6"
-                />
-            ),
-            mobile: true,
-        },
+
         {
             title: "No registration",
             icon: (

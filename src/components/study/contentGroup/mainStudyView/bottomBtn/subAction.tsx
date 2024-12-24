@@ -10,11 +10,15 @@ import { gameState } from "@/redux/features/game";
 import { userState } from "@/redux/features/user";
 import useActionsThunk from "@/redux/repository/user/actions";
 import getListActionThunk from "@/redux/repository/user/getActions";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import Sheet from "@/components/sheet";
 
 const SubAction = () => {
     const { currentGame, idTopic } = useAppSelector(gameState);
     const { listActions } = useAppSelector(userState);
     const [openModal, setOpenModal] = useState(false);
+
+    const isMobile = useIsMobile();
     const dispatch = useAppDispatch();
     const [status, setStatus] = useState({
         like: false,
@@ -92,19 +96,33 @@ const SubAction = () => {
                     color={status.save ? "var(--color-primary)" : "#7C6F5B"}
                 />
             </div>
-
-            <Dialog
-                open={openModal}
-                onClose={() => {
-                    setOpenModal(false);
-                }}
-            >
-                <ReportMistake
+            {isMobile ? (
+                <Sheet
+                    visible={openModal}
                     onClose={() => {
                         setOpenModal(false);
                     }}
-                />
-            </Dialog>
+                >
+                    <ReportMistake
+                        onClose={() => {
+                            setOpenModal(false);
+                        }}
+                    />
+                </Sheet>
+            ) : (
+                <Dialog
+                    open={openModal}
+                    onClose={() => {
+                        setOpenModal(false);
+                    }}
+                >
+                    <ReportMistake
+                        onClose={() => {
+                            setOpenModal(false);
+                        }}
+                    />
+                </Dialog>
+            )}
         </div>
     );
 };
