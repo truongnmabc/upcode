@@ -1,11 +1,12 @@
-import { Poppins, Vampiro_One } from "next/font/google";
+import StoreProvider from "@/app/StoreProvider";
 import "@/css/globals.css";
 import { getAppInfoParentApp } from "@/utils/getAppInfos";
 import replaceYear from "@/utils/replaceYear";
-import Head from "next/head";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
-import StoreProvider from "@/app/StoreProvider";
+import { Poppins, Vampiro_One } from "next/font/google";
+import Head from "next/head";
 import Link from "next/link";
+import Script from "next/script";
 
 const vampiro = Vampiro_One({
     weight: ["400"],
@@ -71,6 +72,12 @@ export default function ParentAppLayout({
                 <GoogleAnalytics gaId={process.env.GA_ID} />
                 <GoogleTagManager gtmId={process.env.GTM_ID} />
             </body>
+            <Script src="https://accounts.google.com/gsi/client" async defer />
+            <Script
+                src="https://apis.google.com/js/platform.js?onload=renderButton"
+                async
+                defer
+            />
         </html>
     );
 }

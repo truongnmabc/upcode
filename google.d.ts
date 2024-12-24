@@ -36,7 +36,8 @@ interface GsiButtonConfiguration {
     shape?: "rectangular" | "pill" | "circle" | "square";
     logo_alignment?: "left" | "center";
     width?: any;
-    local?: string;
+    height?: string;
+    locale?: string;
 }
 
 interface PromptMomentNotification {
