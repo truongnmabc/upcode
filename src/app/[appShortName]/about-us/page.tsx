@@ -12,5 +12,5 @@ export default async function Page({ params }: Params) {
     if (!appInfo) {
         throw new Error("App info not found");
     }
-    return <AboutUsContainer />;
+    return <AboutUsContainer appInfo={appInfo} />;
 }

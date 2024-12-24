@@ -21,7 +21,7 @@ const BodyComponent = ({ appInfo }: { appInfo: IAppInfo }) => {
         }
     }
     return (
-        <div className="contact-body-component">
+        <div className="contact-body-component max-w-component-desktop">
             <div className="contact-body-container">
                 <div className="title">FAQs</div>
                 {returnFaq()}

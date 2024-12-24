@@ -1,6 +1,7 @@
 .about-us-container,
 .about-us-container * {
     box-sizing: border-box;
+    letter-spacing: normal;
 }
 
 .about-us-container {
@@ -18,87 +19,9 @@
         display: flex;
         justify-content: center;
         padding: 48px 0;
-        background-image: url(https://storage.googleapis.com/worksheetzone/CDL/images/about-us-img.png);
+        // background-image: url(/images/about/background-header.png);
         background-size: cover;
         background-position: center;
-        .cluster-info-title {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            justify-content: space-between;
-
-            .content-about-us {
-                display: flex;
-                max-width: 615px;
-                gap: 24px;
-                flex-direction: column;
-
-                .title {
-                    color: #fff;
-                    font-size: 52px;
-                    font-weight: 700;
-                    line-height: 78px;
-                    text-align: left;
-                }
-
-                .list-contents {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 16px;
-
-                    .content {
-                        color: #fff;
-                        font-size: 18px;
-                        font-weight: 400;
-                        line-height: 27px;
-                        text-align: left;
-
-                        span {
-                            display: block;
-                            margin: 16px 0;
-                        }
-
-                        .show-more {
-                            display: none;
-                        }
-                    }
-                }
-            }
-
-            .list-records {
-                display: flex;
-                flex-direction: column;
-                gap: 24px;
-
-                .record {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 4px;
-                    padding: 16px;
-                    border-radius: 12px;
-                    max-width: 410px;
-                    background: #dee3e952;
-                    outline: 1px solid #ffffff03;
-                    backdrop-filter: blur(24px);
-
-                    .summary {
-                        color: #fff;
-                        font-size: 24px;
-                        font-weight: 700;
-                        line-height: 36px;
-                        text-align: left;
-                    }
-
-                    .content {
-                        color: #ffffffcc;
-                        font-size: 14px;
-                        font-weight: 400;
-                        line-height: 21px;
-                        text-align: left;
-                    }
-                }
-            }
-        }
     }
 
     .about-us-bottom {
@@ -107,90 +30,6 @@
         justify-content: center;
         align-items: center;
         width: 100%;
-
-        .cluster-intro-about-us {
-            display: flex;
-            width: 100%;
-            align-items: center;
-            justify-content: center;
-            gap: 56px;
-            margin: 78px 0;
-            // position: relative;
-            // img {
-            //     position: absolute;
-            //     width: 100%;
-            //     height: 135%;
-            // }
-            .item-intro {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-direction: column;
-                padding: 24px;
-                max-width: 335px;
-                gap: 16px;
-                background-color: #e5e8fe;
-                border-radius: 66px;
-                position: relative;
-
-                img {
-                    position: absolute;
-                    width: 413px;
-                    max-width: unset;
-                }
-
-                svg {
-                    width: 120px;
-                    height: 120px;
-                }
-
-                .title {
-                    color: white;
-                    width: 100%;
-                    padding: 8px 0;
-                    font-size: 24px;
-                    font-weight: 600;
-                    border-radius: 8px;
-                    border-top-right-radius: 24px;
-                    border-bottom-left-radius: 24px;
-                    text-align: center;
-                    // angle: -180 deg;
-                }
-
-                .content {
-                    font-size: 16px;
-                    font-weight: 400;
-                    line-height: 24px;
-                    text-align: center;
-                    text-underline-position: from-font;
-                    color: #212121cc;
-                }
-            }
-
-            .intro-1 {
-                transform: translateX(+5px);
-
-                img {
-                    top: -31px;
-                }
-            }
-
-            .intro-2 {
-                max-width: 335px;
-                transform: translateY(+45px);
-
-                img {
-                    bottom: -31px;
-                }
-            }
-
-            .intro-3 {
-                transform: translateX(-5px);
-                img {
-                    top: -31px;
-                }
-            }
-        }
 
         .meet-the-team {
             display: flex;
@@ -263,7 +102,6 @@
 
     @media screen and (max-width: 768px) {
         .about-us-top {
-            background-image: url(/images/about/about-us-img-mobile.png);
             padding: 30px 0 24px 0;
 
             .cluster-info-title {
@@ -344,35 +182,6 @@
 
         .about-us-bottom {
             padding: 0 16px;
-
-            .cluster-intro-about-us {
-                flex-direction: column;
-                gap: 16px;
-                margin: 24px 0;
-                .item-intro {
-                    max-width: unset;
-
-                    svg {
-                        width: 80px;
-                        height: 80px;
-                    }
-
-                    .title {
-                        padding: 12px;
-                        font-size: 18px;
-                        line-height: 27px;
-                    }
-
-                    .content {
-                        font-size: 14px;
-                        line-height: 21px;
-                        text-align: center;
-                    }
-                }
-                .intro-2 {
-                    transform: unset;
-                }
-            }
 
             .meet-the-team {
                 gap: 16px;
