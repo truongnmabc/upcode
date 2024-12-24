@@ -1,6 +1,6 @@
 import { IAppInfo } from "../../models/AppInfo";
 import "./index.scss";
-import MyContainer from "../../components/v4-material/myContainer";
+import MyContainer from "../../components/container/myContainer";
 import ProPackage2 from "../../components/pro/ProPackage2";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import {
     getConfigProV2,
 } from "../../config/config_paypal";
 import { isSubscriptionId } from "../../models/payment/PaymentInfo";
-import V4CircleProgress from "../../components/v4-material/V4CircleProgress";
+import V4CircleProgress from "../../components/container/V4CircleProgress";
 import PopupGetPro, { IButtonPropsV4 } from "../../components/pro/PopupGetPro";
 import * as ga from "../../services/ga";
 import useMediaQuery from "@mui/material/useMediaQuery";

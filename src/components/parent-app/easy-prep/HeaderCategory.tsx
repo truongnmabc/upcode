@@ -1,10 +1,9 @@
 import categories from "@/data/categories.json";
-// import "./HeaderCategory.scss";
-import { useEffect, useRef, useState } from "react";
-import Collapse from "@mui/material/Collapse";
 import { IAppInfo } from "@/models/app/appInfo";
 import { getLink } from "@/utils";
 import { ExpandMore } from "@mui/icons-material";
+import Collapse from "@mui/material/Collapse";
+import { useRef, useState } from "react";
 const HeaderCategory = ({
     isDesktop,
     listAppInfos,
@@ -20,22 +19,6 @@ const HeaderCategory = ({
 }) => {
     const [activeCategory, setActiveCategory] = useState(-1);
     const areaRef = useRef<HTMLDivElement>(null);
-
-    // useEffect(() => {
-    //     if (isDesktop) {
-    //         const clickEvent = (e: MouseEvent) => {
-    //             if (e.target) {
-    //                 if (!areaRef.current?.contains(e.target as Node) && !buttonRef.current?.contains(e.target as Node))
-    //                     hideMenu();
-    //             }
-    //         };
-
-    //         window.addEventListener("mousedown", clickEvent);
-    //         return () => {
-    //             window.removeEventListener("mousedown", clickEvent);
-    //         };
-    //     }
-    // }, [isDesktop]);
 
     if (!isDesktop) {
         return (

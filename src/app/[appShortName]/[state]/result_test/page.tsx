@@ -1,7 +1,7 @@
 import ChartContentResultPage from "@/components/resultTest/chartContent";
 import HeaderResultTest from "@/components/resultTest/header";
 import ReviewAnswerResult from "@/components/resultTest/reviewAnswers";
-import MyContainer from "@/components/v4-material/myContainer";
+import MyContainer from "@/components/container/myContainer";
 
 export default async function Page() {
     return (

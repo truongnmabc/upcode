@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import React from "react";
 import BottomBtn from "./bottomBtn/bottomBtn";
 import ChoicesPanel from "./choicesPanel/choicesPanel";
-import CountTimeRemain from "./countTime";
+import CountTimeRemainPracticeTest from "./countTimeTest";
 import ExplanationDetail from "./explanation/explanationDetail";
 import ProgressQuestion from "./progress/progressQuestion";
 import QuestionContent from "./question/questionContent";
@@ -18,13 +18,13 @@ const FN = () => {
         <MathJaxContext>
             <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
                 <div className="sm:p-4 flex flex-col gap-3">
-                    <TitleQuestion />
+                    {type && <TitleQuestion />}
                     <ProgressQuestion />
                     {type === "test" && (
                         <div className="w-full flex items-center justify-center">
                             <div className="flex items-center justify-center w-fit gap-2">
                                 <ClockIcon />
-                                <CountTimeRemain />
+                                <CountTimeRemainPracticeTest />
                             </div>
                         </div>
                     )}

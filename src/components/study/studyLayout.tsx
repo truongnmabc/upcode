@@ -4,7 +4,7 @@ import ContentGroup from "./contentGroup";
 import HeaderMobile from "./headerMobile";
 import QuestionGroup from "./questionGroup";
 
-const FN = ({ contentSeo }: { contentSeo: string }) => {
+const StudyLayout = ({ contentSeo }: { contentSeo: string }) => {
     return (
         <div className="flex-1 max-w-page sm:px-4 mx-auto">
             <Grid2 container>
@@ -46,5 +46,4 @@ const FN = ({ contentSeo }: { contentSeo: string }) => {
     );
 };
 
-const StudyLayout = React.memo(FN);
-export default StudyLayout;
+export default React.memo(StudyLayout);

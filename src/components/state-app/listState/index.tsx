@@ -16,13 +16,11 @@ const BtnGotoState = ({ appInfo }: { appInfo: IAppInfo }) => {
                 "select-state-" + appInfo.appNameId
             );
 
-            console.log("🚀 ~ useEffect ~ _state:", _state);
-
             if (_state) {
                 setCurrentState(_state);
             }
         }
-    }, [appInfo.appShortName]);
+    }, [appInfo.appNameId]);
 
     const router = useRouter();
 

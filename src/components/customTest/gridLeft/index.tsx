@@ -1,11 +1,16 @@
+import { db } from "@/db/db.model";
+import { ITestQuestion } from "@/models/tests/testQuestions";
+import { gameState } from "@/redux/features/game";
+import { useAppSelector } from "@/redux/hooks";
 import React, { Fragment, useEffect, useState } from "react";
 import ModalSettingCustomTest from "../modal";
-import { db } from "@/db/db.model";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import { MtUiButton } from "@/components/button";
-import { ITestQuestion } from "@/models/tests/testQuestions";
-import { useAppSelector } from "@/redux/hooks";
-import { gameState } from "@/redux/features/game";
-
 const GridLeftCustomTest = () => {
     const [listTest, setListTest] = useState<ITestQuestion[]>([]);
     const [open, setOpen] = React.useState(false);
@@ -13,16 +18,16 @@ const GridLeftCustomTest = () => {
     const { listQuestion } = useAppSelector(gameState);
     useEffect(() => {
         const handleGetData = async () => {
-            const diagnostic = await db?.testQuestions
+            const list = await db?.testQuestions
                 .where("type")
                 .equals("customTets")
                 .toArray();
 
-            if (diagnostic?.length === 0) {
+            if (list?.length === 0) {
                 setOpen(true);
             }
-            if (diagnostic) {
-                setListTest(diagnostic);
+            if (list) {
+                setListTest(list);
             }
         };
         handleGetData();
@@ -30,7 +35,15 @@ const GridLeftCustomTest = () => {
 
     const onClose = () => setOpen(false);
     const onOpen = () => setOpen(true);
+    const [openDelete, setOpenDelete] = React.useState(false);
 
+    const handleClickOpen = () => {
+        setOpenDelete(true);
+    };
+
+    const handleClose = () => {
+        setOpenDelete(false);
+    };
     return (
         <Fragment>
             <div className="flex justify-between items-center">
@@ -52,11 +65,17 @@ const GridLeftCustomTest = () => {
                             <p className="text-sm font-medium">
                                 Custom Test {index + 1}
                             </p>
-                            <div className="flex items-center gap-2">
-                                <div className="w-6 h-6 rounded flex items-center justify-center bg-[#2121210F]">
+                            <div
+                                className="flex items-center gap-2"
+                                onClick={onOpen}
+                            >
+                                <div className="w-6 h-6 rounded flex cursor-pointer items-center justify-center bg-[#2121210F]">
                                     <IconEdit />
                                 </div>
-                                <div className="w-6 h-6 rounded flex items-center justify-center bg-[#2121210F]">
+                                <div
+                                    onClick={handleClickOpen}
+                                    className="w-6 h-6 rounded flex items-center cursor-pointer justify-center bg-[#2121210F]"
+                                >
                                     <IconDelete />
                                 </div>
                             </div>
@@ -64,7 +83,25 @@ const GridLeftCustomTest = () => {
                     ))}
                 </div>
             )}
-
+            <Dialog
+                open={openDelete}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <div className="min-w-[400px] p-4">
+                    <div className="pb-4">
+                        Are you sure you want to delete this custom test?
+                    </div>
+                    <div className="w-full flex items-center gap-4 justify-center">
+                        <MtUiButton block>Ok</MtUiButton>
+                        <MtUiButton type="primary" block onClick={handleClose}>
+                            {" "}
+                            Cancel
+                        </MtUiButton>
+                    </div>
+                </div>
+            </Dialog>
             <ModalSettingCustomTest open={open} onClose={onClose} />
         </Fragment>
     );

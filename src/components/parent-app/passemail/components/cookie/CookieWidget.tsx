@@ -1,7 +1,11 @@
-import MyContainer from "@/components/v4-material/MyContainer";
+import MyContainer from "@/components/container/myContainer";
 import "./CookieWidget.scss";
 import Link from "next/link";
-const CookieWidget = ({ handleOnClickClose }: { handleOnClickClose: () => void }) => {
+const CookieWidget = ({
+    handleOnClickClose,
+}: {
+    handleOnClickClose: () => void;
+}) => {
     return (
         <>
             <div className="cookie-widget-v0">
@@ -11,19 +15,25 @@ const CookieWidget = ({ handleOnClickClose }: { handleOnClickClose: () => void }
                     <MyContainer>
                         <p>Privacy and Cookies</p>
                         <p>
-                            This site uses cookies to offer you a better browsing experience. Find out more on how we use
+                            This site uses cookies to offer you a better
+                            browsing experience. Find out more on how we use
                             cookies.
                         </p>
                         <div className="container-cookie-v0">
                             <div>
                                 <Link href="/privacy">
                                     <a>
-                                        <button id="learn-more">Learn More</button>
+                                        <button id="learn-more">
+                                            Learn More
+                                        </button>
                                     </a>
                                 </Link>
                             </div>
                             <div>
-                                <button id="accept" onClick={() => handleOnClickClose()}>
+                                <button
+                                    id="accept"
+                                    onClick={() => handleOnClickClose()}
+                                >
                                     <p> Close and continue</p>
                                     <svg
                                         width="8"
