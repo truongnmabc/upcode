@@ -22,6 +22,7 @@
         cursor: pointer;
         display: flex;
         justify-content: center;
+        box-shadow: 0px 2px 4px rgba(139, 139, 139, 0.72);
     }
 }
 
@@ -130,6 +131,7 @@
                 line-height: 24px;
                 color: #ffffff;
                 .percent {
+                    color: #ffffff;
                     font-weight: 600;
                     font-size: 20px;
                     line-height: 30px;
@@ -252,7 +254,7 @@
         }
 
         .price-item-container {
-            padding: 8px 12px 15px 12px;
+            padding: 8px 8px 15px 8px;
             transition: padding 0.25s;
             .price-section {
                 white-space: nowrap;
@@ -348,7 +350,7 @@
             }
         }
         .price-item-container {
-            padding: 8px 16px 15px 16px;
+            padding: 8px 8px 15px 8px;
         }
 
         .upgrade-section {

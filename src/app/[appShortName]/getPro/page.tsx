@@ -48,7 +48,7 @@ const Page = () => {
                 </div>
             </div>
 
-            <div className="packages bg-white" id="app-pro-package">
+            <div className="packages mt-8 bg-white" id="app-pro-package">
                 <ProPackage />
             </div>
             <div className="w-full bg-white max-w-page mx-auto mt-8">

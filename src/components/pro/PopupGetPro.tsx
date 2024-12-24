@@ -5,7 +5,7 @@ import {
     getConfigAppPro,
     getConfigProV2,
 } from "../../config/config_paypal";
-import SubcriptionButton from "./paypal_button/SubcriptionButton";
+// import SubcriptionButton from "./paypal_button/SubcriptionButton";
 import "./PopupGetPro.scss";
 import { IAppInfo } from "../../models/AppInfo";
 import ProPlanSvg from "../icon/ProPlanSvg";
@@ -87,7 +87,7 @@ const PopUpGetProContent = ({
                     Upgrade for <span>${valueButton.value.toString()}</span>
                 </div>
             </div>
-            {appConfig?.subscription || isSubscription ? (
+            {/* {appConfig?.subscription || isSubscription ? (
                 <SubcriptionButton
                     appConfig={appConfig}
                     paymentSuccess={onPaymentSuccess}
@@ -100,7 +100,7 @@ const PopUpGetProContent = ({
                     stateValue={valueButton.stateValue}
                     paymentSuccess={onPaymentSuccess}
                 />
-            )}
+            )} */}
         </div>
     );
 };
