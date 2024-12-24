@@ -10,16 +10,16 @@ import * as ga from "../../services/ga";
 import "./index.scss";
 import { isProduction } from "@/config/config_web";
 import { APPLE_CLIENT_ID } from "@/config_app";
-import { UserInfo } from "@/models/UserInfo";
+import { UserInfo } from "@/models/user/userInfo";
 import { loginSuccess } from "@/redux/features/user";
 const loadScript = (src: string) =>
     new Promise((resolve, reject) => {
-        if (document.querySelector(`script[src="${src}"] async `)) return resolve(() => {});
+        if (document.querySelector(`script[src="${src}"] async `)) return resolve(() => { });
         const script = document.createElement("script");
         script.src = src;
         script.async = true;
         script.defer = true;
-        script.onload = () => resolve(() => {});
+        script.onload = () => resolve(() => { });
         script.onerror = (err) => reject(err);
         document.body.appendChild(script);
     });
