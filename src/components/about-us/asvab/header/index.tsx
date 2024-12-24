@@ -23,7 +23,7 @@ const HeaderComponent = ({ appInfo }: { appInfo: IAppInfo }) => {
                         <div className="title">About Us</div>
                         <DescriptionComponent />
                         <div className="stats-container">
-                            <Link href={"/contact"} prefetch={false}>
+                            <Link href={`/${appInfo.appShortName}/contact`} prefetch={false}>
                                 <div className="contact-button">Contacts</div>
                             </Link>
                             <div className="stats-area">
@@ -63,7 +63,7 @@ const HeaderComponent = ({ appInfo }: { appInfo: IAppInfo }) => {
             <div className="about-header-container">
                 <div className="title">About Us</div>
                 <DescriptionComponent />
-                <Link href={`/asvab/contact`} prefetch={false}>
+                <Link href={`/${appInfo.appShortName}/contact`} prefetch={false}>
                     <div className="contact-button">Contacts</div>
                 </Link>
                 <div className="stats-container">
