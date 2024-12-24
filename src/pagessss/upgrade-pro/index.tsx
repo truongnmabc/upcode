@@ -1,18 +1,8 @@
-import Layout2 from "@/components/layout/layout-2/Layout2";
-import StoreArchievement from "@/components/pro/StoreArchievement";
-// import V0FeaturesPro from "@/components/pro/features-pro/V0FeaturesPro";
-import SeoHeader from "@/components/seo/SeoHeader";
+"use client";
+
 import Config from "@/config";
-import { isParentApp } from "@/config/config_web";
-import Routes from "@/config/routes";
-import StoreProvider from "@/redux/StoreProvider";
-import AppState from "@/redux/appState";
-import { getListTransactionAPI } from "@/services/paypal.service";
-import convertToJSONObject from "@/utils/convertToJSONObject";
-import { getAppInfo } from "@/utils/getAppInfo";
-import dynamic from "next/dynamic";
+
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import PopupGetPro, { IButtonPropsV4 } from "../../components/pro/PopupGetPro";
 import ProPackage from "../../components/pro/ProPackage";
 import MyContainer from "../../components/container/myContainer";
@@ -21,22 +11,19 @@ import {
     SUBSCRIPTION,
     getConfigProV2,
 } from "../../config/config_paypal";
-import { IAppInfo } from "../../models/AppInfo";
 import { isSubscriptionId } from "../../models/payment/PaymentInfo";
-import * as ga from "../../services/ga";
+import * as ga from "@/services/ga";
 import "./index.scss";
 import V4LoginDialog from "@/components/header/V4LoginDialog";
-
-const StoreReviews = dynamic(
-    () => import("../../components/store-review/StoreReviews"),
-    {
-        ssr: false,
-        loading: () => <div className="review-frame" />,
-    }
-);
+import { IAppInfo } from "@/models/app/appInfo";
+import { getListTransactionAPI } from "@/services/paypal.service";
+import { useAppSelector } from "@/redux/hooks";
+import { userState } from "@/redux/features/user";
+import StoreArchievement from "./StoreArchievement";
+import StoreReviews from "./store-review/StoreReviews";
 
 const GetProPage = ({ appInfo }: { appInfo: IAppInfo }) => {
-    const userReducer = useSelector((state: AppState) => state.userReducer);
+    const userReducer = useAppSelector(userState);
     const paymentInfo = userReducer.paymentInfo;
     const userInfo = userReducer.userInfo;
     const [loading, setLoading] = useState(false);
@@ -145,72 +132,65 @@ const GetProPage = ({ appInfo }: { appInfo: IAppInfo }) => {
                     valueButton={valueButton}
                 />
             )}
-            <SeoHeader description="" keyword="" title="" />
-            <StoreProvider
-                appInfo={appInfo}
-                webData={{ appId: appInfo.appId, type: "", getUserData: true }}
-            />
-            <Layout2 appInfo={appInfo} listTopics={[]} tests={[]}>
-                <div style={{ overflow: "hidden" }}>
-                    <div className="pro-background">
-                        <MyContainer>
-                            <h1>
-                                Pass for the first time <small>with</small>{" "}
-                                <span>
-                                    {appInfo.appName}{" "}
-                                    <span>
-                                        Pro{" "}
-                                        <img src="/images/passemall/new-pro/pro.png" />
-                                    </span>
-                                </span>{" "}
-                                Plan
-                            </h1>
 
-                            <div className="app-feature">
-                                <p>
-                                    <img src="/images/passemall/new-pro/Checkbox.png" />
-                                    Unlock Detailed Explanations
-                                </p>
-                                <p>
-                                    <img src="/images/passemall/new-pro/Checkbox.png" />
-                                    Get {appInfo.totalQuestion}+ Questions On
-                                    Mobile App
-                                </p>
-                                <p>
-                                    <img src="/images/passemall/new-pro/Checkbox.png" />
-                                    Remove All Disturbing Ads
-                                </p>
-                            </div>
-                        </MyContainer>
-                        <div className="logo-line">
-                            <StoreArchievement appInfo={appInfo} reverse />
+            <div style={{ overflow: "hidden" }}>
+                <div className="pro-background">
+                    <MyContainer>
+                        <h1>
+                            Pass for the first time <small>with</small>{" "}
+                            <span>
+                                {appInfo.appName}{" "}
+                                <span>
+                                    Pro{" "}
+                                    <img src="/images/passemall/new-pro/pro.png" />
+                                </span>
+                            </span>{" "}
+                            Plan
+                        </h1>
+
+                        <div className="app-feature">
+                            <p>
+                                <img src="/images/passemall/new-pro/Checkbox.png" />
+                                Unlock Detailed Explanations
+                            </p>
+                            <p>
+                                <img src="/images/passemall/new-pro/Checkbox.png" />
+                                Get {appInfo.totalQuestion}+ Questions On Mobile
+                                App
+                            </p>
+                            <p>
+                                <img src="/images/passemall/new-pro/Checkbox.png" />
+                                Remove All Disturbing Ads
+                            </p>
                         </div>
-                    </div>
-                    <div className="packages" id="app-pro-package">
-                        <ProPackage
-                            // appInfo={appInfo}
-                            handleClickGetPro={handleClickGetPro}
-                            loading={loading}
-                            prices={prices}
-                        />
-                    </div>
-                    <MyContainer className="pro-content">
-                        <p className="pro-description">
-                            Subscriptions auto-renew at the cost of the chosen
-                            package, unless cancelled 24 hours in advance of the
-                            end of the current period. The subscription fee is
-                            charged to your PayPal account upon purchase. You
-                            may manage your subscription and turn off
-                            auto-renewal by accessing your Account Settings
-                            after purchase. Per our policy, you cannot cancel
-                            your current subscription during the active
-                            subscription period. No refunds will be provided for
-                            any unused portion of the subscription term.
-                        </p>
-                        <StoreReviews appId={appInfo.appId} />
                     </MyContainer>
+                    <div className="logo-line">
+                        <StoreArchievement appInfo={appInfo} reverse />
+                    </div>
                 </div>
-            </Layout2>
+                <div className="packages" id="app-pro-package">
+                    {/* <ProPackage
+                        // appInfo={appInfo}
+                        handleClickGetPro={handleClickGetPro}
+                        loading={loading}
+                        prices={prices}
+                    /> */}
+                </div>
+                <MyContainer className="pro-content">
+                    <p className="pro-description">
+                        Subscriptions auto-renew at the cost of the chosen
+                        package, unless cancelled 24 hours in advance of the end
+                        of the current period. The subscription fee is charged
+                        to your PayPal account upon purchase. You may manage
+                        your subscription and turn off auto-renewal by accessing
+                        your Account Settings after purchase. Per our policy,
+                        you cannot cancel your current subscription during the
+                        active subscription period. No refunds will be provided
+                        for any unused portion of the subscription term.
+                    </p>
+                    <StoreReviews appId={appInfo.appId} />
+                </MyContainer>
+            </div>
             <V4LoginDialog
                 appInfo={appInfo}
                 open={openLoginDialog}
@@ -218,42 +198,6 @@ const GetProPage = ({ appInfo }: { appInfo: IAppInfo }) => {
             />
         </>
     );
-};
-export const getServerSideProps = async (context) => {
-    const _isParentApp = isParentApp();
-    let appInfo;
-
-    if (_isParentApp) {
-        const appNameId = context.query.appNameId as string;
-        if (!appNameId?.length) {
-            context.res
-                .writeHead(302, { Location: Routes.LANDING_PAGE_SCREEN })
-                .end();
-            return { props: {} };
-        }
-        appInfo = getAppInfo(appNameId);
-    } else {
-        appInfo = getAppInfo();
-    }
-
-    if (!appInfo) {
-        context.res
-            .writeHead(302, { Location: Routes.LANDING_PAGE_SCREEN })
-            .end();
-        return { props: {} };
-    } else if (_isParentApp && !appInfo.usingFeaturePro) {
-        context.res
-            .writeHead(302, {
-                Location: Routes.LANDING_PAGE_SCREEN + appInfo.appNameId,
-            })
-            .end();
-        return { props: {} };
-    }
-    return convertToJSONObject({
-        props: {
-            appInfo,
-        },
-    });
 };
 
 export default GetProPage;
