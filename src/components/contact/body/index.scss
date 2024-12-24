@@ -11,6 +11,9 @@
         box-sizing: border-box;
         ul {
             list-style: inside;
+            li {
+                word-break: break-word;
+            }
         }
         a {
             text-decoration: underline;
