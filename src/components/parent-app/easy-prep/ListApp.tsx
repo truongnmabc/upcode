@@ -1,4 +1,4 @@
-import MyContainer from "@/components/v4-material/myContainer";
+import MyContainer from "@/components/container/myContainer";
 import { IAppInfo } from "@/models/app/appInfo";
 // import "./ListApp.scss";
 // import categories from "../../data/categories.json";

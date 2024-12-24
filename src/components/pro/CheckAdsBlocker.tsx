@@ -5,9 +5,16 @@ import IWebData from "@/types/webData";
 import { SYNC_TYPE } from "@/config/config_sync";
 const Dialog = dynamic(() => import("@mui/material/Dialog"), { ssr: false });
 
-const CheckAdsBlocker = ({ webData, upgradedPro }: { webData: IWebData; upgradedPro: boolean }) => {
+const CheckAdsBlocker = ({
+    webData,
+    upgradedPro,
+}: {
+    webData: IWebData;
+    upgradedPro: boolean;
+}) => {
     const adBlockDetected = useDetectAdBlock();
-    const [showPopUpDetectAdsBlock, setShowPopUpDetectAdsBlock] = useState(false);
+    const [showPopUpDetectAdsBlock, setShowPopUpDetectAdsBlock] =
+        useState(false);
     useEffect(() => {
         console.log("adBlockDetected ", adBlockDetected);
         if (adBlockDetected && webData?.type == SYNC_TYPE.TYPE_LEARN_TEST) {
@@ -24,7 +31,7 @@ const CheckAdsBlocker = ({ webData, upgradedPro }: { webData: IWebData; upgraded
                 setShowPopUpDetectAdsBlock(true);
             }
         }
-    }, [adBlockDetected]);
+    }, [adBlockDetected, webData?.typ]);
     return (
         showPopUpDetectAdsBlock && (
             <Dialog
@@ -60,7 +67,8 @@ const CheckAdsBlocker = ({ webData, upgradedPro }: { webData: IWebData; upgraded
                         color: "#6E6E70",
                     }}
                 >
-                    Please help us continue to provide free, quality contents by disabling your ad blocker
+                    Please help us continue to provide free, quality contents by
+                    disabling your ad blocker
                 </span>
                 <div
                     onClick={() => {

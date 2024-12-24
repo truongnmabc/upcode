@@ -21,7 +21,7 @@ import { IAppInfo } from "../../models/AppInfo";
 import { ITopic } from "../../models/Topic";
 import { getAppInfo, readAllAppInfos } from "../../utils/getAppInfo";
 const ScrollToTopArrow = dynamic(
-    () => import("../../components/v4-material/ScrollToTopArrow"),
+    () => import("../../components/container/ScrollToTopArrow"),
     {
         ssr: false,
     }

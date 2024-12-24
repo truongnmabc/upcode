@@ -30,7 +30,10 @@ const FN = () => {
             }}
         >
             <p className="text-base capitalize font-semibold text-white">
-                {appInfo.appShortName} Final Test
+                <span className="text-base  font-semibold text-white uppercase">
+                    {appInfo.appShortName}
+                </span>{" "}
+                Final Test
             </p>
         </MtUiButton>
     );

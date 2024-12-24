@@ -1,6 +1,6 @@
 import "./ClientHeader.scss";
 import React, { useState } from "react";
-import MyContainer from "@/components/v4-material/MyContainer";
+import MyContainer from "@/components/container/myContainer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@/components/icon/MenuIcon";
 import dynamic from "next/dynamic";
@@ -16,14 +16,24 @@ import SwitchTheme from "../SwitchTheme";
 import useThemeCustom from "@/components/v4-material/useThemeCustom";
 import Config from "@/config";
 import getRoutesFromStep from "@/utils/getRoutesFromStep";
-const SwipeableDrawer = dynamic(() => import("@mui/material/SwipeableDrawer"), { ssr: false });
+const SwipeableDrawer = dynamic(() => import("@mui/material/SwipeableDrawer"), {
+    ssr: false,
+});
 const DownloadAppV0 = dynamic(() => import("./DownloadAppV0"), { ssr: false });
 
 // header này về build client-side để check hiện Get pro
-const ClientHeader = ({ appInfo, isReview }: { appInfo: IAppInfo; isReview?: boolean }) => {
+const ClientHeader = ({
+    appInfo,
+    isReview,
+}: {
+    appInfo: IAppInfo;
+    isReview?: boolean;
+}) => {
     const isDesktop = useMediaQuery("(min-width: 769px)");
     const isPro = useSelector((state: AppState) => state.userReducer.isPro);
-    const currentStep = useSelector((state: AppState) => state.studyReducer.currentStep);
+    const currentStep = useSelector(
+        (state: AppState) => state.studyReducer.currentStep
+    );
     const isLearning = !!currentStep && currentStep !== Config.STEP_HOME;
     const haveGetProBtn = !isPro && appInfo.usingFeaturePro;
     const havePro = isPro && appInfo.usingFeaturePro;
@@ -44,7 +54,10 @@ const ClientHeader = ({ appInfo, isReview }: { appInfo: IAppInfo; isReview?: boo
                         <div className="v0-app-header-option-right">
                             {/* <a href={"/study-plan?appNameId=" + appInfo.appNameId}>Study Plan</a> */}
                             {haveGetProBtn && ( // load xong rồi và không phải pro thì hiện
-                                <a className={"option-get-pro"} href={genLinkPro(appInfo)}>
+                                <a
+                                    className={"option-get-pro"}
+                                    href={genLinkPro(appInfo)}
+                                >
                                     Get Pro
                                 </a>
                             )}
@@ -66,7 +79,10 @@ const ClientHeader = ({ appInfo, isReview }: { appInfo: IAppInfo; isReview?: boo
                     </>
                 ) : (
                     <>
-                        <div className="menu-btn-icon" onClick={() => setOpenMenu(true)}>
+                        <div
+                            className="menu-btn-icon"
+                            onClick={() => setOpenMenu(true)}
+                        >
                             <MenuIcon />
                         </div>
                         <SwipeableDrawer
@@ -80,11 +96,21 @@ const ClientHeader = ({ appInfo, isReview }: { appInfo: IAppInfo; isReview?: boo
                                 <div className="v0-drawer-menu-container-top">
                                     <Link href="/">
                                         <a className="app-logo-in-drawer-menu">
-                                            <img src={"/images/" + APP_SHORT_NAME + srcLogo} alt="logo" />
+                                            <img
+                                                src={
+                                                    "/images/" +
+                                                    APP_SHORT_NAME +
+                                                    srcLogo
+                                                }
+                                                alt="logo"
+                                            />
                                             {/* web cũ tạm lấy theo appShortName, web mới lấy theo bucket rồi*/}
                                         </a>
                                     </Link>
-                                    <div className="close-drawer-menu-btn" onClick={() => setOpenMenu(false)}>
+                                    <div
+                                        className="close-drawer-menu-btn"
+                                        onClick={() => setOpenMenu(false)}
+                                    >
                                         <CloseIcon />
                                     </div>
                                 </div>
@@ -95,12 +121,19 @@ const ClientHeader = ({ appInfo, isReview }: { appInfo: IAppInfo; isReview?: boo
                                     </Link>
                                     {/* <a href={"/study-plan?appNameId=" + appInfo.appNameId}>Study Plan</a> */}
                                     {haveGetProBtn && ( // load xong rồi và không phải pro thì hiện
-                                        <a className={"option-get-pro"} href={genLinkPro(appInfo)}>
+                                        <a
+                                            className={"option-get-pro"}
+                                            href={genLinkPro(appInfo)}
+                                        >
                                             Get Pro
                                         </a>
                                     )}
                                     {isLearning && !isReview && (
-                                        <Link href={"/review/" + appInfo.appNameId}>
+                                        <Link
+                                            href={
+                                                "/review/" + appInfo.appNameId
+                                            }
+                                        >
                                             <a>Review</a>
                                         </Link>
                                     )}
@@ -111,7 +144,10 @@ const ClientHeader = ({ appInfo, isReview }: { appInfo: IAppInfo; isReview?: boo
                                     )}
                                     <a href="/blog">Blog</a>
                                     <div className="avt">
-                                        <UserAvatar appInfo={appInfo} pro={havePro} />
+                                        <UserAvatar
+                                            appInfo={appInfo}
+                                            pro={havePro}
+                                        />
                                     </div>
 
                                     {haveGetProBtn && (

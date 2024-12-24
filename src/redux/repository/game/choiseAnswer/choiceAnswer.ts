@@ -42,13 +42,19 @@ const choiceAnswer = createAsyncThunk(
         };
 
         if (isEx) {
-            await db?.userProgress.update(question.id, data).catch((err) => {
-                console.log("🚀 db.userProgress.update ~ err:", err);
-            });
+            await db?.userProgress
+                .update(question.id, data)
+                .then((res) => console.log("update", res))
+                .catch((err) => {
+                    console.log("🚀 db.userProgress.update ~ err:", err);
+                });
         } else {
-            await db?.userProgress.add(data).catch((err) => {
-                console.log("🚀 db.userProgress.add ~ err:", err);
-            });
+            await db?.userProgress
+                .add(data)
+                .then((res) => console.log("add", res))
+                .catch((err) => {
+                    console.log("🚀 db.userProgress.add ~ err:", err);
+                });
         }
 
         return {

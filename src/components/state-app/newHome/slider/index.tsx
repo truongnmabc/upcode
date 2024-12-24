@@ -1,12 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import SwiperBlock from "./swiperBlock";
-import { IItemBlock } from "@/models/state/stateChildrenApp";
-import { IAppInfo } from "@/models/app/appInfo";
 import axiosInstance from "@/common/config/axios";
 import { API_PATH } from "@/common/constants/api.constants";
+import MyContainer from "@/components/container/myContainer";
+import { IAppInfo } from "@/models/app/appInfo";
 import { useParams } from "next/navigation";
-import MyContainer from "@/components/v4-material/myContainer";
+import { useEffect, useState } from "react";
+import SwiperBlock from "./swiperBlock";
 
 const ListBlock = ({
     appInfo,

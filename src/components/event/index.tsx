@@ -4,6 +4,7 @@ import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
+import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
 import pauseTestThunk from "@/redux/repository/game/pauseAndResumed/pauseTest";
 import beforeUnLoadThunk, {
     reloadStateThunk,
@@ -31,7 +32,7 @@ const EventListener = () => {
             }
             // practice test
             if (type === "test") {
-                dispatch(initDiagnosticTestQuestionThunk());
+                dispatch(initPracticeThunk({}));
             }
 
             if (pathname?.includes("diagnostic_test")) {

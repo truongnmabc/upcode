@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./ProPackage.scss";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import MyContainer from "../v4-material/myContainer";
-import V4CircleProgress from "../v4-material/V4CircleProgress";
+import MyContainer from "../container/myContainer";
+import V4CircleProgress from "../container/V4CircleProgress";
 import V0ProDiscountDrawer from "./V0ProDiscountDrawer";
 
 /** Component này áp dụng cho trường hợp không phải one-time */

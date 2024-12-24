@@ -44,7 +44,25 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
         },
         []
     );
-
+    const initDataSubTopicProgress = useCallback(
+        async (topic: ITopic, db: DB) => {
+            await db.subTopicProgress.add({
+                id: topic?.id || 0,
+                parentId: topic.parentId,
+                part: topic?.topics?.map((item) => ({
+                    id: item.id,
+                    parentId: item.parentId,
+                    status: 0,
+                    totalQuestion: item.totalQuestion,
+                    tag: item.tag,
+                    turn: 1,
+                })),
+                subTopicTag: topic?.tag || "",
+                pass: false,
+            });
+        },
+        []
+    );
     const processTreeData = useCallback(
         async (topics: ITopic[], db: DB) => {
             for (const topic of topics) {
@@ -93,30 +111,10 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
                 await initDataSubTopicProgress(topic, db);
             }
         },
-        []
+        [initDataSubTopicProgress]
     );
 
     // *NOTE: init data
-
-    const initDataSubTopicProgress = useCallback(
-        async (topic: ITopic, db: DB) => {
-            await db.subTopicProgress.add({
-                id: topic?.id || 0,
-                parentId: topic.parentId,
-                part: topic?.topics?.map((item) => ({
-                    id: item.id,
-                    parentId: item.parentId,
-                    status: 0,
-                    totalQuestion: item.totalQuestion,
-                    tag: item.tag,
-                    turn: 1,
-                })),
-                subTopicTag: topic?.tag || "",
-                pass: false,
-            });
-        },
-        []
-    );
 
     const initDataTest = useCallback(async (tests: IResDataTest, db: DB) => {
         const listKey = Object.keys(tests) as (keyof IResDataTest)[];
@@ -226,7 +224,12 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
                 );
             }
         },
-        [appInfo.appShortName, processTreeData, fetchAndProcessTopicsRecursive]
+        [
+            appInfo.appShortName,
+            processTreeData,
+            fetchAndProcessTopicsRecursive,
+            initDataTest,
+        ]
     );
 
     useLayoutEffect(() => {
@@ -234,7 +237,7 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
             const db = initializeDB(appInfo.appShortName);
             handleInitData(db);
         }
-    }, [appInfo]);
+    }, [appInfo, handleInitData]);
 
     return <></>;
 };

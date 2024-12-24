@@ -1,6 +1,10 @@
 import Dialog from "@mui/material/Dialog";
 import React from "react";
-import { SUBSCRIPTION, getConfigAppPro, getConfigProV2 } from "../../config/config_paypal";
+import {
+    SUBSCRIPTION,
+    getConfigAppPro,
+    getConfigProV2,
+} from "../../config/config_paypal";
 import SubcriptionButton from "./paypal_button/SubcriptionButton";
 import "./PopupGetPro.scss";
 import { IAppInfo } from "../../models/AppInfo";
@@ -41,7 +45,11 @@ const PopupGetPro = ({
                     },
                 }}
             >
-                <PopUpGetProContent appInfo={appInfo} valueButton={valueButton} onClose={onClose} />
+                <PopUpGetProContent
+                    appInfo={appInfo}
+                    valueButton={valueButton}
+                    onClose={onClose}
+                />
             </Dialog>
         </React.Fragment>
     );
@@ -61,7 +69,7 @@ const PopUpGetProContent = ({
         window.location.href = "/billing";
         onClose();
     };
-    let isSubscription = getConfigProV2(appInfo).type === SUBSCRIPTION;
+    const isSubscription = getConfigProV2(appInfo).type === SUBSCRIPTION;
     return (
         <div className="popup-new-pro">
             {!appConfig?.subscription && (
@@ -72,7 +80,9 @@ const PopUpGetProContent = ({
             )}
 
             <div className="popup-text">
-                <div className="title-popup pro-title">{valueButton.mainTitlePopUp}</div>
+                <div className="title-popup pro-title">
+                    {valueButton.mainTitlePopUp}
+                </div>
                 <div className="price">
                     Upgrade for <span>${valueButton.value.toString()}</span>
                 </div>
