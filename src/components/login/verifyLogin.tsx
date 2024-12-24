@@ -9,10 +9,12 @@ import AppleIcon from "@mui/icons-material/Apple";
 import GoogleIcon from "@mui/icons-material/Google";
 import Divider from "@mui/material/Divider";
 import { signIn } from "next-auth/react";
-import React, { useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { MtUiButton } from "../button";
 import InputCodeVerify from "./inputCodeLogin";
 import InputEmailAddress from "./inputEmailLogin";
+import Script from "next/script";
+import LoginWithApple from "../login-apple";
 
 const GOOGLE_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
 
@@ -66,6 +68,24 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
         }
     };
 
+    const btnRef = useRef<HTMLDivElement | null>(null);
+    useLayoutEffect(() => {
+        if (btnRef.current && window.google) {
+            window.google.accounts.id.renderButton(btnRef.current, {
+                theme: "outline",
+                size: "large",
+                logo_alignment: "center",
+                type: "standard",
+                text: "signin_with",
+                width: btnRef.current.clientWidth,
+                height: "40px",
+                locale: "en-us",
+            });
+            return () => {
+                btnRef.current = null;
+            };
+        }
+    }, []);
     return (
         <div className="w-full sm:w-1/3 flex flex-col justify-between px-4 py-6 h-full">
             <div className="flex flex-col gap-8 ">
@@ -86,33 +106,8 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
                                 Log in to your account
                             </p>
 
-                            <MtUiButton
-                                type="default"
-                                className="border-[#2121211f] rounded-md"
-                                onClick={() => {
-                                    signIn("google");
-                                }}
-                                size="large"
-                            >
-                                <div className="flex gap-1 items-center">
-                                    <GoogleIcon />
-                                    <p>Sign in with Google</p>
-                                </div>
-                            </MtUiButton>
-                            {appConfig.appleClientId && (
-                                <MtUiButton
-                                    className="border-[#2121211f] rounded-md"
-                                    onClick={() => {
-                                        signIn("apple");
-                                    }}
-                                    size="large"
-                                >
-                                    <div className="flex gap-1 items-center">
-                                        <AppleIcon />
-                                        <p>Login with Apple</p>
-                                    </div>
-                                </MtUiButton>
-                            )}
+                            <div ref={btnRef} className="w-full h-10" />
+                            {appConfig.appleClientId && <LoginWithApple />}
 
                             {(GOOGLE_ID || appConfig.appleClientId) && (
                                 <div className="flex w-full items-center justify-between gap-1">

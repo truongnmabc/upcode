@@ -2,28 +2,34 @@ import AppleIcon from "@mui/icons-material/Apple";
 import jwt from "jsonwebtoken";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import * as ga from "../../services/ga";
+import * as ga from "@/services/ga";
 // import { syncUserDataAction } from "../../redux/actions/sync.action";
 // import { SYNC_USER_DATA_STATUS } from "../../redux/reducers/sync.reducer";
 // import { sendErrorToDiscord } from "../../utils";
 
 import "./index.scss";
-import { isProduction } from "@/config/config_web";
-import { APPLE_CLIENT_ID } from "@/config_app";
 import { UserInfo } from "@/models/user/userInfo";
 import { loginSuccess } from "@/redux/features/user";
+import { isProduction } from "@/common/constants";
 const loadScript = (src: string) =>
     new Promise((resolve, reject) => {
-        if (document.querySelector(`script[src="${src}"] async `)) return resolve(() => { });
+        if (document.querySelector(`script[src="${src}"] async `))
+            return resolve(() => {});
         const script = document.createElement("script");
         script.src = src;
         script.async = true;
         script.defer = true;
-        script.onload = () => resolve(() => { });
+        script.onload = () => resolve(() => {});
         script.onerror = (err) => reject(err);
         document.body.appendChild(script);
     });
-const LoginWithApple = ({ sendEmail, submitSuccessFc }: { sendEmail?: Function; submitSuccessFc?: Function }) => {
+const LoginWithApple = ({
+    sendEmail,
+    submitSuccessFc,
+}: {
+    sendEmail?: Function;
+    submitSuccessFc?: Function;
+}) => {
     const dispatch = useDispatch();
     // const [isLoading, setLoading] = useState(true);
     const handleLoginInSuccess = async (event: any) => {
@@ -72,23 +78,29 @@ const LoginWithApple = ({ sendEmail, submitSuccessFc }: { sendEmail?: Function; 
         }
     };
     useEffect(() => {
-        if (!APPLE_CLIENT_ID) {
-            return;
-        }
-        const src = "https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js";
+        const src =
+            "https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js";
 
         loadScript(src)
             .then(() => {
                 if (typeof window !== "undefined" && window?.AppleID) {
                     window.AppleID.auth.init({
-                        clientId: APPLE_CLIENT_ID, // This is the service ID we created.
+                        clientId: "APPLE_CLIENT_ID", // This is the service ID we created.
                         scope: "email", // To tell apple we want the user name and emails fields in the response it sends us.
-                        redirectURI: isProduction() ? window.location.origin : "https://dev.cdl-prep.com", // As registered along with our service ID
+                        redirectURI: isProduction
+                            ? window.location.origin
+                            : "https://dev.cdl-prep.com", // As registered along with our service ID
                         usePopup: true,
                         responseMode: "form_post",
                     });
-                    document.addEventListener("AppleIDSignInOnSuccess", handleLoginInSuccess);
-                    document.addEventListener("AppleIDSignInOnFailure", handleLoginFailed);
+                    document.addEventListener(
+                        "AppleIDSignInOnSuccess",
+                        handleLoginInSuccess
+                    );
+                    document.addEventListener(
+                        "AppleIDSignInOnFailure",
+                        handleLoginFailed
+                    );
                     // setLoading(false);
                 }
             })
@@ -98,28 +110,30 @@ const LoginWithApple = ({ sendEmail, submitSuccessFc }: { sendEmail?: Function; 
         return () => {
             const scriptTag = document.querySelector(`script[src="${src}"]`);
             if (scriptTag) document.body.removeChild(scriptTag);
-            document.removeEventListener("AppleIDSignInOnSuccess", handleLoginInSuccess);
-            document.removeEventListener("AppleIDSignInOnFailure", handleLoginFailed);
+            document.removeEventListener(
+                "AppleIDSignInOnSuccess",
+                handleLoginInSuccess
+            );
+            document.removeEventListener(
+                "AppleIDSignInOnFailure",
+                handleLoginFailed
+            );
         };
     }, []);
     return (
-        <>
-            {APPLE_CLIENT_ID && (
-                <div
-                    className="apple-button"
-                    onClick={() => {
-                        if (window && window?.AppleID) {
-                            window.AppleID.auth.signIn();
-                        }
-                    }}
-                >
-                    <div className="apple-icon">
-                        <AppleIcon htmlColor="#fff" />
-                    </div>
-                    <span>Login with Apple</span>
-                </div>
-            )}
-        </>
+        <div
+            className="apple-button"
+            onClick={() => {
+                if (window && window?.AppleID) {
+                    window.AppleID.auth.signIn();
+                }
+            }}
+        >
+            <div className="apple-icon">
+                <AppleIcon htmlColor="#fff" />
+            </div>
+            <span>Login with Apple</span>
+        </div>
     );
 };
 export default LoginWithApple;
