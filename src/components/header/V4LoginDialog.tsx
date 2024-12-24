@@ -2,25 +2,26 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import Config from "../../config";
-import { IAppInfo } from "../../models/AppInfo";
-import { UserInfo } from "../../models/UserInfo";
 import { validateEmail } from "../../utils";
-import V4CircleProgress from "../container/V4CircleProgress";
+// import V4CircleProgress from "../container/V4CircleProgress";
 import "./V4LoginDialog.scss";
 import { APPLE_CLIENT_ID } from "../../config_app";
 import Dialog from "@mui/material/Dialog";
 import { loginSuccess } from "@/redux/features/user";
-import { getSession, isProduction, setSession } from "@/config/config_web";
 import {
     sendEmailApi,
     verifiedCodeApi,
 } from "@/redux/reporsitory/User.repositories";
-import CloseIcon from "../icon/CloseIcon";
+import { IAppInfo } from "@/models/app/appInfo";
+import { getSession, setSession } from "@/utils/session";
+import { isProduction } from "@/common/constants";
+import { UserInfo } from "@/models/user/userInfo";
+import CloseIcon from "@/asset/icon/CloseIcon";
 const GoogleAuth = dynamic(() => import("../../components/google-button"));
 const LoginWithApple = dynamic(() => import("../../components/login-apple"));
 const GOOGLE_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
 const IS_TESTER = getSession(Config.TESTER_KEY);
-const DEV_MODE = !isProduction() ? true : IS_TESTER;
+const DEV_MODE = !isProduction ? true : IS_TESTER;
 
 export const V4LoginDialog = ({
     appInfo,
@@ -78,28 +79,30 @@ export const V4LoginDialog = ({
     };
 
     const verifyCode = async () => {
-        let code = DEV_MODE ? "abc" : codeRef.current.value;
-        if (code?.length) {
-            if (DEV_MODE) {
-                // login
-                login(email);
-            } else {
-                setProcess(true);
-                let res = await verifiedCodeApi({
-                    email,
-                    code,
-                });
-                setProcess(false);
-                if (res === 1) {
+        if (codeRef.current) {
+            let code = DEV_MODE ? "abc" : codeRef.current.value;
+            if (code?.length) {
+                if (DEV_MODE) {
+                    // login
                     login(email);
                 } else {
-                    alert("Code invalid");
+                    setProcess(true);
+                    let res = await verifiedCodeApi({
+                        email,
+                        code,
+                    });
+                    setProcess(false);
+                    if (res === 1) {
+                        login(email);
+                    } else {
+                        alert("Code invalid");
+                    }
                 }
+            } else {
+                alert("Please enter code ");
             }
-        } else {
-            alert("Please enter code ");
-        }
-    };
+        };
+    }
 
     const login = (email: string) => {
         dispatch(
@@ -167,7 +170,7 @@ export const V4LoginDialog = ({
                                         {GOOGLE_ID && (
                                             <div>
                                                 <GoogleAuth
-                                                    submitSuccessFc={() => {}}
+                                                    submitSuccessFc={() => { }}
                                                     isRenderButton
                                                 ></GoogleAuth>
                                             </div>
@@ -243,7 +246,7 @@ export const V4LoginDialog = ({
                             Verify{" "}
                             {processing && (
                                 <div className="processing">
-                                    <V4CircleProgress size={12} thickness={2} />
+                                    {/* <V4CircleProgress size={12} thickness={2} /> */}
                                 </div>
                             )}
                         </div>

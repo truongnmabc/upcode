@@ -11,9 +11,7 @@ import { IAppInfo } from "@/models/app/appInfo";
 
 const HeaderComponent = ({ appInfo }: { appInfo: IAppInfo }) => {
     const isMobile = useIsMobile();
-    useEffect(() => {
-        console.log("log-1 appInfo", `http://localhost:3030/${appInfo.appName.toLocaleLowerCase()}/contact`);
-    }, [])
+
     if (!isMobile) {
         return (
             <div className="about-header-component">

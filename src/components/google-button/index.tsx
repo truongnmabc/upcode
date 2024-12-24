@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import * as ga from "../../services/ga";
 import "./index.scss";
-import { UserInfo } from "@/models/UserInfo";
 import { loginSuccess } from "@/redux/features/user";
+import { UserInfo } from "@/models/user/userInfo";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
 
@@ -63,7 +63,7 @@ const GoogleAuth = ({ submitSuccessFc, isRenderButton }: { submitSuccessFc?: Fun
             }
             ga.event({ action: "login_success_google", params: {} });
             dispatch(loginSuccess({ userInfo: new UserInfo({ email, id: email, avatar, name }) }));
-        } catch (error) {}
+        } catch (error) { }
     }
     return (
         <div className="login-container-btn" id="google-login-button">
