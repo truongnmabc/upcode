@@ -18,8 +18,18 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
     const [listMember, setListMember] = useState<IMember[]>([]);
     useEffect(() => {
         const fetchMembers = async () => {
-            const members: IMember[] = await getMemberApi();
-            setListMember(handleMember(members));
+            let baseUrl = "";
+            switch (appInfo.appShortName) {
+                case "cdl":
+                    baseUrl = "https://cdl-prep.com";
+                    break;
+                case "asvab":
+                    baseUrl = "https://asvab-prep.com";
+                    break;
+
+            }
+            const members: IMember[] = await getMemberApi(baseUrl);
+            setListMember(handleMember(members, appInfo.appShortName));
         };
         fetchMembers();
     }, []);
@@ -87,7 +97,121 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
     );
 };
 
-const handleMember = (memberQueryWp: IMember[]) => {
+const handleMember = (memberQueryWp: IMember[], appShortName: string) => {
+    const listDataAsvab: IMember[] = [
+        {
+            ID: 100,
+            username: "samantha@gmail.com",
+            email: "samantha@gmail.com",
+            name: "Samantha Johnson",
+            role: "Project Manager",
+            avatar: "/images/about/samantha.png",
+            user_nicename: "samantha",
+        },
+        {
+            ID: 101,
+            username: "alex@gmail.com",
+            email: "alex@gmail.com",
+            name: "Alex Rodriguez",
+            role: "Lead Web Developer",
+            avatar: "/images/about/alex.png",
+            user_nicename: "alex",
+
+
+        },
+        {
+            ID: 102,
+            username: "lucas@gmail.com",
+            email: "lucas@gmail.com",
+            name: "Lucas Clark",
+            role: "Lead App Developer",
+            avatar: "/images/about/lucas.png",
+            user_nicename: "lucas",
+        },
+        {
+
+            ID: 103,
+            username: "michael@gmail.com",
+            email: "michael@gmail.com",
+            name: "Michael Wilson",
+            role: "ASVAB Subject Matter Expert",
+            avatar: "/images/about/michael.png",
+            user_nicename: "michael",
+        },
+        {
+            ID: 104,
+            username: "mason@gmail.com",
+            email: "mason@gmail.com",
+            name: "Mason Taylor",
+            role: "ASVAB Assessment Specialist",
+            avatar: "/images/about/mason.png",
+            user_nicename: "mason",
+        },
+        {
+            ID: 105,
+            username: "sarah@gmail.com",
+            email: "sarah@gmail.com",
+            name: "Sarah Wilson",
+            role: "Content Manager",
+            avatar: "/images/about/sarah.png",
+            user_nicename: "sarah",
+        },
+        {
+            ID: 106,
+            username: "oceanites@gmail.com",
+            email: "oceanites@gmail.com",
+            name: "Oceanites Nguyen",
+            role: "Content Writer",
+            avatar: "/images/about/oceanites.png",
+            user_nicename: "oceanites",
+        },
+        {
+            ID: 107,
+            username: "cloudy@gmail.com",
+            email: "cloudy@gmail.com",
+            name: "Cloudy Nguyen",
+            role: "Content Writer",
+            avatar: "/images/about/cloudy.png",
+            user_nicename: "cloudy",
+        },
+        {
+            ID: 108,
+            username: "amy@gmail.com",
+            email: "amy@gmail.com",
+            name: "Amy Duong",
+            role: "Content Writer",
+            avatar: "/images/about/amy.png",
+            user_nicename: "amy",
+        },
+        {
+            ID: 109,
+            username: "olivia@gmail.com",
+            email: "olivia@gmail.com",
+            name: "Olivia Gonzalez",
+            role: "UI/UX Designer",
+            avatar: "/images/about/olivia.png",
+            user_nicename: "olivia",
+        },
+        {
+
+            ID: 110,
+            username: "jennifer@gmail.com",
+            email: "jennifer@gmail.com",
+            name: "Jennifer Williamson",
+            role: "Editor",
+            avatar: "/images/about/jennifer.png",
+            user_nicename: "jennifer",
+        },
+        {
+            ID: 111,
+            username: "thomas@gmail.com",
+            email: "thomas@gmail.com",
+            name: "Thomas Perez",
+            role: "Quality Assurance Tester",
+            avatar: "/images/about/thomas.png",
+            user_nicename: "thomas",
+        },
+    ];
     const listMember: IMember[] = [
         {
             ID: 100,
@@ -189,7 +313,14 @@ const handleMember = (memberQueryWp: IMember[]) => {
         return item;
     });
     const remainingFromB = Array.from(mapB.values());
+    switch (appShortName) {
+        case "cdl":
+            return [...mergeArray, ...remainingFromB];
+        case "asvab":
+            return listDataAsvab;
+        default:
+            return listDataAsvab;
 
-    return [...mergeArray, ...remainingFromB];
+    }
 };
 export default AboutUsContainer;

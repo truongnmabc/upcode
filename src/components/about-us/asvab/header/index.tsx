@@ -11,9 +11,9 @@ import { IAppInfo } from "@/models/app/appInfo";
 
 const HeaderComponent = ({ appInfo }: { appInfo: IAppInfo }) => {
     const isMobile = useIsMobile();
-    // useEffect(() => {
-    //     console.log("log-1 appInfo", `http://localhost:3030/${appInfo.appName.toLocaleLowerCase()}/contact`);
-    // }, [])
+    useEffect(() => {
+        console.log("log-1 appInfo", `http://localhost:3030/${appInfo.appName.toLocaleLowerCase()}/contact`);
+    }, [])
     if (!isMobile) {
         return (
             <div className="about-header-component">
@@ -63,7 +63,7 @@ const HeaderComponent = ({ appInfo }: { appInfo: IAppInfo }) => {
             <div className="about-header-container">
                 <div className="title">About Us</div>
                 <DescriptionComponent />
-                <Link href="/contact" prefetch={false}>
+                <Link href={`/asvab/contact`} prefetch={false}>
                     <div className="contact-button">Contacts</div>
                 </Link>
                 <div className="stats-container">

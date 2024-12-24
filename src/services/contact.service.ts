@@ -1,14 +1,14 @@
 import { IMember, Member } from "@/models/member-contact/member";
 import { requestGetData } from "./request";
 
-export const getMemberApi = async (): Promise<IMember[]> => {
+export const getMemberApi = async (baseURL: string): Promise<IMember[]> => {
     try {
         const response = await requestGetData({
             config: {
-                baseURL: "https://cdl-prep.com",
+                baseURL: baseURL,
                 headers: {},
             },
-            url: "https://cdl-prep.com/wp-json/passemall/v1/get-all-members",
+            url: "/wp-json/passemall/v1/get-all-members",
         });
         if (Array.isArray(response)) {
             return response.map((item) => new Member(item));
