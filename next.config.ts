@@ -77,6 +77,15 @@ const nextConfig: NextConfig = withPlugins([[withBundleAnalyzer()]], {
     //     },
     //   ];
     // },
+
+    // async rewrites() {
+    //     return [
+    //         {
+    //             source: "/:appShortName",
+    //             destination: "/",
+    //         },
+    //     ];
+    // },
 });
 
 export default nextConfig;

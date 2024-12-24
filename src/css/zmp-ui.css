@@ -1354,6 +1354,12 @@ body[zaui-theme="dark"]
     background-color: var(--zaui-dark-sheet-handler, #36383a);
 }
 
+/* custom css */
+
 .zaui-sheet-content-border-none .zaui-sheet-content {
     border-radius: 0;
+}
+
+.custom-sheet-handler .zaui-sheet-content-handler-wrapper {
+    background-color: var(--main-background-color);
 }

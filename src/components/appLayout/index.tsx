@@ -20,7 +20,7 @@ const FN = ({ children }: { children: React.ReactNode }) => {
                     {children}
                     <FooterApp />
                 </div>
-                <ToastContainer />
+                <ToastContainer autoClose={2000} />
                 <SheetApp />
             </WrapperScroll>
         </Fragment>

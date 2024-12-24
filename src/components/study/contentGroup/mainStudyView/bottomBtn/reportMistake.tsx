@@ -56,7 +56,7 @@ const ReportMistake = ({ onClose }: { onClose: () => void }) => {
 
     return (
         <form
-            className="h-full py-4 px-6 bg-white sm:w-[600px] rounded-md flex flex-col gap-4"
+            className="h-full py-4 px-6 bg-theme-white sm:bg-white sm:w-[600px] rounded-md flex flex-col gap-4"
             onSubmit={handleSubmit}
         >
             <h3 className="font-poppins text-2xl font-semibold text-center">
