@@ -61,7 +61,6 @@ export default async function RootLayout({
 }) {
     const { appShortName } = await params;
     const { appInfo, appConfig } = await fetchAppData(appShortName, true);
-    console.log("🚀 ~ appInfo:", appInfo);
 
     if (!appInfo || !appConfig) {
         return <NotFound />;

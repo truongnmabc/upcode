@@ -3,7 +3,7 @@ import { appInfoState } from "@/redux/features/appInfo";
 import { useAppSelector } from "@/redux/hooks";
 import { revertPathName } from "@/utils/pathName";
 import Link, { LinkProps } from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 interface IProps extends LinkProps {
     children: React.ReactNode;
@@ -12,7 +12,7 @@ interface IProps extends LinkProps {
 
 const FN: React.FC<IProps> = ({ children, href, ...rest }) => {
     const { appInfo } = useAppSelector(appInfoState);
-    const [link, setLink] = useState(href);
+    const [link, setLink] = useState("");
     useEffect(() => {
         if (appInfo.appShortName) {
             const _href = revertPathName({
@@ -22,6 +22,8 @@ const FN: React.FC<IProps> = ({ children, href, ...rest }) => {
             setLink(_href);
         }
     }, [appInfo.appShortName, href]);
+
+    if (!link) return <Fragment>{children}</Fragment>;
 
     return (
         <Link href={link} scroll={false} {...rest}>
