@@ -12,12 +12,11 @@ import useActionsThunk from "@/redux/repository/user/actions";
 import getListActionThunk from "@/redux/repository/user/getActions";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import Sheet from "@/components/sheet";
-
+import { toast } from "react-toastify";
 const SubAction = () => {
     const { currentGame, idTopic } = useAppSelector(gameState);
     const { listActions } = useAppSelector(userState);
     const [openModal, setOpenModal] = useState(false);
-
     const isMobile = useIsMobile();
     const dispatch = useAppDispatch();
     const [status, setStatus] = useState({
@@ -58,6 +57,11 @@ const SubAction = () => {
     }, [currentGame, listActions]);
 
     const saveAction = () => {
+        if (!status.save) {
+            toast.success(" Added To Saved List!");
+        } else {
+            toast.info(" Removed From Saved List!");
+        }
         dispatch(
             useActionsThunk({
                 status: "save",
@@ -68,6 +72,9 @@ const SubAction = () => {
     };
 
     const likeAction = () => {
+        if (!status.like) {
+            toast.success("You find this question useful!");
+        }
         dispatch(
             useActionsThunk({
                 status: "like",
@@ -102,6 +109,7 @@ const SubAction = () => {
                     onClose={() => {
                         setOpenModal(false);
                     }}
+                    className="custom-sheet-handler"
                 >
                     <ReportMistake
                         onClose={() => {
