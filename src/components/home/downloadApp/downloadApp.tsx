@@ -90,10 +90,10 @@ const DownloadApp = () => {
         },
     ];
     const customStyles: CSSProperties & Record<string, string> = {
-        "--img-mobile-url": `url(/images/home/banner-download-app-mobile.webp)`,
+        "--img-mobile-url": `url(/images/home/banner-download-app-desktop.webp)`,
         "--img-desktop-url": `url(/images/home/banner-download-app-desktop.webp)`,
-        "--background-mobile-url": `url(/images/home/ballon-mobile.svg)`,
-        "--background-desktop-url": `url(/images/home/ballon-desktop.svg)`,
+        "--background-mobile-url": `url(/images/home/asvab/ballon-mobile.svg)`,
+        "--background-desktop-url": `url(/images/home/asvab/ballon-desktop.svg)`,
     };
     return (
         <div className={"v4-banner-download-app-0 v4-border-radius"}>
