@@ -45,6 +45,10 @@ const AppThemeProvider = ({ children }: { children: React.ReactNode }) => {
                 "--main-back-color-contact",
                 appConfig.mainBackgroundColorContact
             );
+            root.style.setProperty(
+                "--main-linear-gradient-banner-download",
+                appConfig.linearGradientBanner
+            );
         }
     }, [appConfig]);
 

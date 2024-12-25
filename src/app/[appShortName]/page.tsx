@@ -11,7 +11,10 @@ import HomeSingleApp from "@/components/state-app";
 import { ITopic } from "@/models/topics/topics";
 import { getAppType } from "@/utils/config_web";
 import { fetchAppData } from "@/utils/getAppInfos";
-
+import dynamic from "next/dynamic";
+const BannerHome = dynamic(
+    () => import("@/components/state-app/newHome/banner/index")
+);
 type Params = {
     params: Promise<{ appShortName: string }>;
 };
@@ -48,10 +51,7 @@ export default async function Home({ params }: Params) {
                     />
                     <GridTest />
                     <div className="sm:my-12 sm:mb-16 my-6">
-                        <h3 className="font-bold text-center px-3 text-lg sm:text-[32px] sm:mb-8 mb-6 sm:leading-[64px]">
-                            Prepare to Pass ASVAB on Any Device
-                        </h3>
-                        <DownloadApp />
+                        <BannerHome appInfo={appInfo} isHomePage={true} />
                     </div>
                     {contentSeo && (
                         <div className="p-4 mb-28 sm:mb-0 sm:p-6 rounded-md  overflow-hidden bg-white dark:bg-black">
