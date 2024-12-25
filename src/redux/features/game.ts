@@ -56,9 +56,9 @@ export const gameSlice = createSlice({
         },
         viewTest: (state, action) => {
             const index = action.payload;
-
-            state.currentGame = state.listQuestion[index];
-            state.indexCurrentQuestion = index;
+            state.indexCurrentQuestion =
+                index + 1 === state.listQuestion?.length ? 0 : index;
+            state.currentGame = state.listQuestion[state.indexCurrentQuestion];
         },
         setIndexSubTopic: (state, action) => {
             state.indexSubTopic = action.payload;

@@ -17,4 +17,5 @@ export interface ITestQuestion {
     status?: number;
     belowFifty?: Record<string, ICurrentGame[]>;
     aboveFifty?: Record<string, ICurrentGame[]>;
+    turn: number;
 }

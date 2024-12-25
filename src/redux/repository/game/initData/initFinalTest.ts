@@ -25,35 +25,24 @@ const setDataStore = async (
         remainTime: remainTime,
         type: "finalTests",
         status: 0,
+        turn: 0,
     });
 };
 
 const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
-    const diagnostic = await db?.tests
-        .where("testType")
+    const dataStore = await db?.testQuestions
+        .where("type")
         .equals("finalTests")
         .first();
 
-    if (diagnostic) {
-        const dataStore = await db?.testQuestions
-            .where("parentId")
-            .equals(Number(diagnostic.id))
-            .first();
+    let listQuestion = dataStore?.question;
 
-        console.log("dataStore", dataStore);
-        let listQuestion = dataStore?.question;
-
-        if (!dataStore) {
-            listQuestion = await fetchQuestions(diagnostic.id);
-            setDataStore(
-                diagnostic.id,
-                listQuestion,
-                diagnostic.duration,
-                diagnostic.duration * 60
-            );
-        }
-
-        const progressData = await getLocalUserProgress(diagnostic.id, "test");
+    if (dataStore) {
+        const progressData = await getLocalUserProgress(
+            dataStore.parentId,
+            "test",
+            dataStore.turn + 1
+        );
         if (progressData) {
             const questions = mapQuestionsWithProgress(
                 listQuestion as ICurrentGame[],
@@ -62,13 +51,22 @@ const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
             return {
                 questions,
                 progressData,
-                idTopic: diagnostic.id,
+                idTopic: dataStore.parentId,
                 type: "test" as const,
-                duration: diagnostic.duration,
+                duration: dataStore.duration,
                 isPaused: dataStore?.isPaused || false,
-                remainTime: dataStore?.remainTime || diagnostic.duration * 60,
+                remainTime: dataStore?.remainTime || dataStore.duration * 60,
             };
         }
+    } else {
+        // *NOTE: doi check
+        //     listQuestion = await fetchQuestions(diagnostic.id);
+        //     setDataStore(
+        //         diagnostic.id,
+        //         listQuestion,
+        //         diagnostic.duration,
+        //         diagnostic.duration * 60
+        //     );
     }
 });
 

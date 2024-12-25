@@ -12,10 +12,9 @@ const finishFinalThunk = createAsyncThunk(
             await db?.testQuestions
                 .where("parentId")
                 .equals(idTopic)
-                .filter((item) => item.status === 0)
                 .modify((item) => {
-                    item.status = 1;
-                    // item.question = listQuestion as IQuestion[];
+                    item.turn = item.turn + 1;
+                    item.remainTime = item.duration * 60;
                 })
                 .then((res) => console.log("res", res))
                 .catch((err) => console.log("err", err));

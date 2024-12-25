@@ -6,15 +6,11 @@ import { appInfoState } from "@/redux/features/appInfo";
 import { useAppSelector } from "@/redux/hooks";
 import { sendEmailApi, verifiedCodeApi } from "@/services/home.service";
 import AppleIcon from "@mui/icons-material/Apple";
-import GoogleIcon from "@mui/icons-material/Google";
 import Divider from "@mui/material/Divider";
-import { signIn } from "next-auth/react";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { MtUiButton } from "../button";
 import InputCodeVerify from "./inputCodeLogin";
 import InputEmailAddress from "./inputEmailLogin";
-import Script from "next/script";
-import LoginWithApple from "../login-apple";
 
 const GOOGLE_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
 
@@ -23,6 +19,7 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
     const [processing, setProcess] = useState(false);
     const [email, setEmail] = useState("");
     const [code, setCode] = useState("");
+    const btnRef = useRef<HTMLDivElement | null>(null);
     const login = () => {
         // dispatch(loginSuccess(new UserInfo({ email, id: email })));
     };
@@ -68,7 +65,6 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
         }
     };
 
-    const btnRef = useRef<HTMLDivElement | null>(null);
     useLayoutEffect(() => {
         if (btnRef.current && window.google) {
             window.google.accounts.id.renderButton(btnRef.current, {
@@ -84,6 +80,12 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
             return () => {
                 btnRef.current = null;
             };
+        }
+    }, []);
+
+    const handleLoginApple = useCallback(() => {
+        if (window && window?.AppleID) {
+            window.AppleID.auth.signIn();
         }
     }, []);
     return (
@@ -107,7 +109,23 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
                             </p>
 
                             <div ref={btnRef} className="w-full h-10" />
-                            {appConfig.appleClientId && <LoginWithApple />}
+                            {appConfig.appleClientId && (
+                                <MtUiButton
+                                    className=" rounded "
+                                    onClick={handleLoginApple}
+                                    block
+                                >
+                                    <div className="flex items-center gap-1">
+                                        <AppleIcon
+                                            className="w-[18px] h-"
+                                            htmlColor="#283544"
+                                        />
+                                        <span className="text-xs">
+                                            Login with Apple
+                                        </span>
+                                    </div>
+                                </MtUiButton>
+                            )}
 
                             {(GOOGLE_ID || appConfig.appleClientId) && (
                                 <div className="flex w-full items-center justify-between gap-1">

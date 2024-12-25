@@ -1,22 +1,55 @@
 import NextAuth from "next-auth";
-import AppleProvider from "next-auth/providers/apple";
-import GoogleProvider from "next-auth/providers/google";
-// import EmailProvider from "next-auth/providers/email";
+type IAccountInfo = {
+    email: string;
+    picture: string;
+    name: string;
+    id: string;
+    email_verified: boolean;
+    given_name: string;
+    family_name: string;
+};
 
+import jwt from "jsonwebtoken";
+
+import CredentialsProvider from "next-auth/providers/credentials";
 export const { auth, handlers, signIn, signOut } = NextAuth({
     providers: [
-        AppleProvider({
-            clientId: process.env.NEXT_PUBLIC_APPLE_ID || "",
-            clientSecret: process.env.NEXT_PUBLIC_APPLE_SECRET || "",
+        CredentialsProvider({
+            name: "Credentials",
+            credentials: {
+                token: { label: "Token", type: "text" },
+            },
+            async authorize(credentials) {
+                const { token } = credentials;
+                if (token && typeof token === "string") {
+                    const accountInfo = jwt.decode(token) as IAccountInfo;
+                    return {
+                        ...accountInfo,
+                        image: accountInfo.picture,
+                    };
+                }
+                return null;
+            },
         }),
-        GoogleProvider({
-            clientId: process.env.NEXT_PUBLIC_GOOGLE_ID || "",
-            clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET || "",
-            authorization: {},
-        }),
-        // EmailProvider({
-        //   server: process.env.MAIL_SERVER,
-        //   from: "<no-reply@example.com>",
-        // }),
     ],
+    callbacks: {
+        async jwt({ token, user }) {
+            // if (user) {
+            //     token.email = user.email;
+            //     token.picture = user.picture;
+            //     token.name = user.name;
+            // }
+            return token;
+        },
+        async session({ session, token }) {
+            // session.user = {
+            //     ...session.user,
+            //     email: token.email,
+            //     picture: token.picture,
+            //     name: token.name,
+            // };
+            return session;
+        },
+    },
+    secret: process.env.AUTH_SECRET,
 });

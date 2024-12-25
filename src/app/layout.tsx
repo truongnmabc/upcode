@@ -69,12 +69,12 @@ export default function ParentAppLayout({
             </Head>
             <body>
                 <StoreProvider appInfo={appInfo}>{children}</StoreProvider>
-                <GoogleAnalytics gaId={process.env.GA_ID} />
-                <GoogleTagManager gtmId={process.env.GTM_ID} />
+                {/* <GoogleAnalytics gaId={process.env.GA_ID} /> */}
+                {/* <GoogleTagManager gtmId={process.env.GTM_ID} /> */}
             </body>
             <Script src="https://accounts.google.com/gsi/client" async defer />
             <Script
-                src="https://apis.google.com/js/platform.js?onload=renderButton"
+                src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"
                 async
                 defer
             />

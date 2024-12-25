@@ -18,7 +18,7 @@ export type IStatusAnswer =
 
 const StatusAnswer = () => {
     const { currentGame } = useAppSelector(gameState);
-    if (currentGame.localStatus === "incorrect") {
+    if (currentGame?.localStatus === "incorrect") {
         return (
             <div className="flex text-sm sm:text-base transition-all gap-2">
                 <div className="w-6 h-6">
@@ -33,7 +33,7 @@ const StatusAnswer = () => {
             </div>
         );
     }
-    if (currentGame.localStatus === "correct") {
+    if (currentGame?.localStatus === "correct") {
         return (
             <div className="flex text-sm sm:text-base transition-all gap-2">
                 <div className="w-6 h-6">
@@ -49,7 +49,7 @@ const StatusAnswer = () => {
         );
     }
 
-    if (currentGame.localStatus === "learning") {
+    if (currentGame?.localStatus === "learning") {
         return (
             <div className="flex text-sm sm:text-base transition-all gap-2">
                 <div className="w-6 h-6">
@@ -65,7 +65,7 @@ const StatusAnswer = () => {
         );
     }
 
-    if (currentGame.localStatus === "new") {
+    if (currentGame?.localStatus === "new") {
         return (
             <div className="flex text-sm sm:text-base transition-all gap-2">
                 <div className="w-6 h-6">
@@ -78,7 +78,7 @@ const StatusAnswer = () => {
         );
     }
 
-    if (currentGame.localStatus === "review")
+    if (currentGame?.localStatus === "review")
         return (
             <div className="flex transition-all text-sm sm:text-base gap-2">
                 <div className="w-6 h-6">

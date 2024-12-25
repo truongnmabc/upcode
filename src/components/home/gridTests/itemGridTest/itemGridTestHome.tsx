@@ -54,30 +54,32 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     }, [dispatch, appInfo.appShortName, router]);
 
     const handlePracticeTest = useCallback(async () => {
-        const res = await db?.tests
-            .where("testType")
+        const res = await db?.testQuestions
+            .where("type")
             .equals("practiceTests")
             .toArray();
         if (res) {
             const currentTest = res.find((item) => item?.status === 0);
-            const id = currentTest?.id.toString();
-            dispatch(
-                initTestQuestionThunk({
-                    testId: id,
-                    duration: currentTest?.duration,
-                })
-            );
+            if (currentTest && currentTest?.id) {
+                const id = currentTest?.parentId;
+                dispatch(
+                    initTestQuestionThunk({
+                        testId: id,
+                        duration: currentTest?.duration,
+                    })
+                );
 
-            const _href = revertPathName({
-                href: `/study/${item.name}?type=test&testId=${id}`,
-                appName: appInfo.appShortName,
-            });
-            await router.push(_href);
+                const _href = revertPathName({
+                    href: `/study/${item.name}?type=test&testId=${id}`,
+                    appName: appInfo.appShortName,
+                });
+                await router.push(_href);
+            }
         }
     }, [dispatch, item.name, appInfo.appShortName, router]);
 
     const handleClick: React.MouseEventHandler<HTMLDivElement> = useCallback(
-        async (e) => {
+        (e) => {
             onRippleClickHandler(e);
             dispatch(resetState());
             switch (item.id) {
@@ -91,7 +93,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
                     handleDiagnosticTest();
                     break;
                 case "PT":
-                    await handlePracticeTest();
+                    handlePracticeTest();
                     break;
                 default:
                     break;
