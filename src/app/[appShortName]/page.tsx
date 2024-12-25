@@ -1,13 +1,13 @@
 import axiosInstance from "@/common/config/axios";
 import { RANDOM_COLORS } from "@/common/constants";
 import { API_PATH } from "@/common/constants/api.constants";
+import MyContainer from "@/components/container/myContainer";
 import DownloadApp from "@/components/home/downloadApp/downloadApp";
 import GridTest from "@/components/home/gridTests/gridTestHome";
 import GridTopics from "@/components/home/gridTopic/gridTopics";
 import TitleHomeApp from "@/components/home/title";
 import SeoContent from "@/components/seoContent/seoContent";
 import HomeSingleApp from "@/components/state-app";
-import MyContainer from "@/components/container/myContainer";
 import { ITopic } from "@/models/topics/topics";
 import { getAppType } from "@/utils/config_web";
 import { fetchAppData } from "@/utils/getAppInfos";

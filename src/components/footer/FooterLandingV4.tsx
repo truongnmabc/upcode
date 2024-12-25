@@ -15,6 +15,8 @@ import YoutubeIcon from "../icon/YoutubeIcon";
 import "./FooterLandingV4.scss";
 import { DmcaIcon } from "./info/iconDmca";
 import { appConfigState } from "@/redux/features/appConfig";
+import RouterApp from "@/common/router/router.constant";
+import ForwardedLinkBlank from "../nextLink/forwardedLinkBlank";
 
 const FooterLandingV4 = () => {
     const isMobile = useMediaQuery("(max-width:768px)");
@@ -82,26 +84,56 @@ const FooterLandingV4 = () => {
             <>
                 <div className="item-footer cluster-company">
                     <div className="title">Company</div>
-                    <Link href={"/about-us"} prefetch={false}>
+                    <Link
+                        href={`/${appInfo.appShortName}/${RouterApp.About}`}
+                        prefetch={false}
+                    >
                         About Us
                     </Link>
-                    <Link href={"/contact"} prefetch={false}>
+                    <Link
+                        href={`/${appInfo.appShortName}/${RouterApp.Contacts}`}
+                        prefetch={false}
+                    >
                         Contact Us
                     </Link>
                 </div>
                 <div className="item-footer cluster-legal">
                     <div className="title">Legal</div>
-                    <Link href={"/editorial-policy"} prefetch={false}>
-                        Editorial Policy
+                    <Link
+                        href={`/${appInfo.appShortName}/${RouterApp.Edit_policy}`}
+                        prefetch={false}
+                        passHref
+                        legacyBehavior
+                    >
+                        <ForwardedLinkBlank>
+                            Editorial Policy
+                        </ForwardedLinkBlank>
                     </Link>
-                    <Link href={"/privacy-policy"} prefetch={false}>
-                        Privacy Policy
+                    <Link
+                        href={`/${appInfo.appShortName}/${RouterApp.Privacy}`}
+                        prefetch={false}
+                        passHref
+                        legacyBehavior
+                    >
+                        <ForwardedLinkBlank>Privacy Policy</ForwardedLinkBlank>
                     </Link>
-                    <Link href={"/"} prefetch={false}>
-                        Terms & Conditions
+                    <Link
+                        href={`/${appInfo.appShortName}/${RouterApp.Teams_of_service}`}
+                        prefetch={false}
+                        passHref
+                        legacyBehavior
+                    >
+                        <ForwardedLinkBlank>
+                            Terms & Conditions
+                        </ForwardedLinkBlank>
                     </Link>
-                    <Link href={"/refund-policy"} prefetch={false}>
-                        Refund Policy
+                    <Link
+                        href={`/${appInfo.appShortName}/${RouterApp.Refund_policy}`}
+                        prefetch={false}
+                        passHref
+                        legacyBehavior
+                    >
+                        <ForwardedLinkBlank>Refund Policy</ForwardedLinkBlank>
                     </Link>
                 </div>
             </>

@@ -1,13 +1,14 @@
-import AppThemeProvider from "@/components/theme/themeProvider";
 import AppLayout from "@/components/appLayout";
 import EventListener from "@/components/event";
+import AppThemeProvider from "@/components/theme/themeProvider";
 
+import InitData from "@/components/initData";
 import InitDataStore from "@/redux/initDataStore";
+import { fetchAppData } from "@/utils/getAppInfos";
 import replaceYear from "@/utils/replaceYear";
 import type { Metadata } from "next";
 import NotFound from "../not-found";
-import InitData from "@/components/initData";
-import { fetchAppData } from "@/utils/getAppInfos";
+import Script from "next/script";
 
 type Props = {
     params: { appShortName: string };
@@ -61,7 +62,6 @@ export default async function RootLayout({
 }) {
     const { appShortName } = await params;
     const { appInfo, appConfig } = await fetchAppData(appShortName, true);
-    console.log("🚀 ~ appInfo:", appInfo);
 
     if (!appInfo || !appConfig) {
         return <NotFound />;

@@ -20,8 +20,8 @@ export function middleware(request: NextRequest) {
     }
 
     const redirectPaths: string[] = [
-        "score_calculator",
-        "refund_policy",
+        "score-calculator",
+        "refund-policy",
         "terms-of-service",
         "privacy",
         "editorial-policy",
