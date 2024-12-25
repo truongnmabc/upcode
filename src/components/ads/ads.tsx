@@ -52,11 +52,11 @@ function getAdClientId() {
 }
 
 function hasAds() {
-    return isProduction() && isWebCDL();
+    return isProduction && isWebCDL();
 }
 
 function addLinkAdsen() {
-    return hasAds() || isProduction();
+    return hasAds() || isProduction;
 }
 
 const hasShowAds = () => {
@@ -84,4 +84,12 @@ function getAdsId(name) {
         HomeAdsAfterTests: "5143719422",
     }[name];
 }
-export { getAdClientId, hasAds, addLinkAdsen, checkCountryVN, hasShowAds, isAdsGoogle, getAdsId };
+export {
+    getAdClientId,
+    hasAds,
+    addLinkAdsen,
+    checkCountryVN,
+    hasShowAds,
+    isAdsGoogle,
+    getAdsId,
+};

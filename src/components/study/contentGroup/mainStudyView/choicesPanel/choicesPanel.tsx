@@ -76,6 +76,7 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         listQuestion,
         subTopicProgressId,
         indexCurrentQuestion,
+        feedBack,
     } = useAppSelector(gameState);
 
     const { appInfo } = useAppSelector(appInfoState);
@@ -173,6 +174,17 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         dispatch(viewTest(indexCurrentQuestion + 1));
     }, [dispatch, indexCurrentQuestion]);
 
+    const handleEnterCustomTest = useCallback(async () => {
+        if (feedBack === "newbie") {
+            dispatch(nextQuestionDiagnosticThunk());
+        }
+        if (feedBack === "exam") {
+            dispatch(viewTest(indexCurrentQuestion + 1));
+        }
+        if (feedBack === "expert") {
+            dispatch(nextQuestionThunk());
+        }
+    }, [feedBack, indexCurrentQuestion, dispatch]);
     useEffect(() => {
         const handleEnterEvent = (event: globalThis.KeyboardEvent) => {
             console.log("🚀 ~ handleEnterEvent ~ event:", event);
@@ -194,6 +206,7 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
                 }
 
                 if (pathname?.includes("final_test")) handleEnterFinalTest();
+                if (pathname?.includes("custom_test")) handleEnterCustomTest();
             }
         };
         document.addEventListener("keydown", handleEnterEvent, true);

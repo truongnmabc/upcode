@@ -14,7 +14,7 @@ const StoreReviews = ({ appId }: { appId: number }) => {
     // useEffect(() => {
     //     const getAppReviews = async () => {
     //         let res = null;
-    //         if (!isProduction()) res = REVIEWS;
+    //         if (!isProduction) res = REVIEWS;
     //         else res = await getAppReviewApi(appId);
 
     //         if (res) {

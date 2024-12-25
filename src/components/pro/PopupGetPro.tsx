@@ -86,7 +86,7 @@ const PopUpGetProContent = ({
                     Upgrade for <span>${valueButton.value.toString()}</span>
                 </div>
             </div>
-            {appConfig?.subscription || isSubscription ? (
+            {/* {appConfig?.subscription || isSubscription ? (
                 <SubcriptionButton
                     appConfig={appConfig}
                     paymentSuccess={onPaymentSuccess}
@@ -99,7 +99,7 @@ const PopUpGetProContent = ({
                     stateValue={valueButton.stateValue}
                     paymentSuccess={onPaymentSuccess}
                 />
-            )}
+            )} */}
         </div>
     );
 };

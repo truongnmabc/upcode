@@ -10,7 +10,15 @@ import "./ReviewsDrawerV0.scss";
 /**
  * use-client
  */
-const ReviewsDrawerV0 = ({ data, chosenReviewId, onClose }: { data: any; chosenReviewId; onClose }) => {
+const ReviewsDrawerV0 = ({
+    data,
+    chosenReviewId,
+    onClose,
+}: {
+    data: any;
+    chosenReviewId;
+    onClose;
+}) => {
     let numOfVote = data.app?.userRatingCountForCurrentVersion ?? 0;
     let score = data.app?.averageUserRating ?? 0;
     let displayScore = score.toFixed(1);
@@ -37,20 +45,38 @@ const ReviewsDrawerV0 = ({ data, chosenReviewId, onClose }: { data: any; chosenR
     let link =
         `/wp-content/themes/passemall_theme/assets/images/${appName}/` +
         (appName === "passemall" ? "logo-white.svg" : "logo.svg");
-    if (!isProduction()) {
+    if (!isProduction) {
         let baseUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL;
-        link = baseUrl + "/wp-content/themes/passemall_theme/assets/images/" + APP_SHORT_NAME + "/logo.svg";
+        link =
+            baseUrl +
+            "/wp-content/themes/passemall_theme/assets/images/" +
+            APP_SHORT_NAME +
+            "/logo.svg";
     }
 
     return (
-        <SwipeableDrawer anchor={"left"} open={!!chosenReviewId} onOpen={(event) => {}} onClose={(event) => onClose()}>
+        <SwipeableDrawer
+            anchor={"left"}
+            open={!!chosenReviewId}
+            onOpen={(event) => {}}
+            onClose={(event) => onClose()}
+        >
             <div className="get-pro-drawer-container">
                 <div className="drawer-header">
-                    <div className="drawer_close_icon-container" onClick={onClose}>
+                    <div
+                        className="drawer_close_icon-container"
+                        onClick={onClose}
+                    >
                         <CloseIcon />
                     </div>
                     <div className="drawer-app-icon-container">
-                        <Image loader={() => link} src={link} width="150" height="30" quality={100} />
+                        <Image
+                            loader={() => link}
+                            src={link}
+                            width="150"
+                            height="30"
+                            quality={100}
+                        />
                     </div>
                     <div className="drawer-feedback-text">Feedback</div>
                 </div>
@@ -60,7 +86,10 @@ const ReviewsDrawerV0 = ({ data, chosenReviewId, onClose }: { data: any; chosenR
                             <div className="vote-number">5</div>
                             <div className="get-pro-linear-progress-container">
                                 <div className="get-pro-linear-progress">
-                                    <LinearProgress variant="determinate" value={92} />
+                                    <LinearProgress
+                                        variant="determinate"
+                                        value={92}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -68,7 +97,10 @@ const ReviewsDrawerV0 = ({ data, chosenReviewId, onClose }: { data: any; chosenR
                             <div className="vote-number">4</div>
                             <div className="get-pro-linear-progress-container">
                                 <div className="get-pro-linear-progress">
-                                    <LinearProgress variant="determinate" value={4} />
+                                    <LinearProgress
+                                        variant="determinate"
+                                        value={4}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -76,7 +108,10 @@ const ReviewsDrawerV0 = ({ data, chosenReviewId, onClose }: { data: any; chosenR
                             <div className="vote-number">3</div>
                             <div className="get-pro-linear-progress-container">
                                 <div className="get-pro-linear-progress">
-                                    <LinearProgress variant="determinate" value={2} />
+                                    <LinearProgress
+                                        variant="determinate"
+                                        value={2}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -84,7 +119,10 @@ const ReviewsDrawerV0 = ({ data, chosenReviewId, onClose }: { data: any; chosenR
                             <div className="vote-number">2</div>
                             <div className="get-pro-linear-progress-container">
                                 <div className="get-pro-linear-progress">
-                                    <LinearProgress variant="determinate" value={1} />
+                                    <LinearProgress
+                                        variant="determinate"
+                                        value={1}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -92,7 +130,10 @@ const ReviewsDrawerV0 = ({ data, chosenReviewId, onClose }: { data: any; chosenR
                             <div className="vote-number">1</div>
                             <div className="get-pro-linear-progress-container">
                                 <div className="get-pro-linear-progress">
-                                    <LinearProgress variant="determinate" value={1} />
+                                    <LinearProgress
+                                        variant="determinate"
+                                        value={1}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -100,7 +141,9 @@ const ReviewsDrawerV0 = ({ data, chosenReviewId, onClose }: { data: any; chosenR
 
                     <div className="drawer-vote-result">
                         <div className="vote-result">{displayScore}</div>
-                        <div className="total-vote">{numOfVote + " reviews"}</div>
+                        <div className="total-vote">
+                            {numOfVote + " reviews"}
+                        </div>
                     </div>
                 </div>
                 <div className="get-pro-review-list">
@@ -119,16 +162,26 @@ const ReviewUnit = ({ review }) => {
         <div key={review.id} className={"review-item-drawer"}>
             <div className={"review-panel-drawer"}>
                 <div className="user-info-container">
-                    <div className="avatar" style={{ backgroundColor: review.color }}>
+                    <div
+                        className="avatar"
+                        style={{ backgroundColor: review.color }}
+                    >
                         {review.author[0]}
                     </div>
                     <div className="get-pro-info-container">
                         <div className="author-name">{authorName}</div>
-                        <div className="last-update-text">{review.lastUpdate}</div>
+                        <div className="last-update-text">
+                            {review.lastUpdate}
+                        </div>
                     </div>
 
                     <div className="rating-container">
-                        <Rating name="disabled" value={review.rating} readOnly size={"small"} />
+                        <Rating
+                            name="disabled"
+                            value={review.rating}
+                            readOnly
+                            size={"small"}
+                        />
                     </div>
                 </div>
 
