@@ -4,6 +4,7 @@ import TitleGetPro from "@/components/getPro/titleGetPro";
 import TotalQuestion from "@/components/getPro/totalQuestion";
 import WrapperProPage from "@/components/getPro/wrapperProPage";
 import LazyLoadImage from "@/components/images";
+
 const Page = () => {
     return (
         <WrapperProPage>
