@@ -10,8 +10,8 @@ import { RootState } from "../store";
 export interface IUserReducer {
     userId: string; // userId này có thể được gen ra mà k cần login nên không dùng trường id này để check là login hay chưa
     userInfo: IUserInfo | null;
-    // paymentInfo: IPaymentInfo | null; // thông tin mua hàng của app đang được xét, được tải về khi vào trang
-    // paymentInfos: IPaymentInfo[]; // thông tin mua hàng của toàn bộ app
+    paymentInfo: IPaymentInfo | null; // thông tin mua hàng của app đang được xét, được tải về khi vào trang
+    paymentInfos: IPaymentInfo[]; // thông tin mua hàng của toàn bộ app
     // mapLastSyncTime: number;
     // mapImportedStudyData: any; // trường này đánh dấu việc đã tải dữ liệu phần học về chưa (cần phải đảm bảo nó đồng bộ với dữ liệu phần học) để không tải lại nữa
     lastSyncTime: number;
@@ -27,8 +27,8 @@ export interface IUserReducer {
 const initState: IUserReducer = {
     userId: "",
     userInfo: null,
-    // paymentInfo: new PaymentInfo(),
-    // paymentInfos: [],
+    paymentInfo: null,
+    paymentInfos: [],
     // mapLastSyncTime: {},
     lastSyncTime: -2,
     // mapImportedStudyData: {},

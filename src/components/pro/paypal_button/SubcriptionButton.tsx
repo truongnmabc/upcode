@@ -1,33 +1,34 @@
 import jwt from "jsonwebtoken";
 import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
-import Config from "../../../config";
-import { APP_NEW_DOMAIN } from "../../../config_app";
+import Config from "@/config";
+import { APP_NEW_DOMAIN } from "@/config_app";
 import {
     PAYPAL_STYLE,
     PAYPAL_SUBCRIPTION_CLIENT_ID,
     PAYPAL_SUBSCRIPTION_KEY,
     getConfigProV2,
-} from "../../../config/config_paypal";
-import { isProduction } from "../../../config/config_web";
-import * as ga from "../../../services/ga";
-import { IAppInfo } from "../../../models/AppInfo";
-import { PaymentInfo } from "../../../models/payment/PaymentInfo";
-import {
-    saveToDashboardAPI,
-    uploadPaymentInfoAPI,
-} from "../../../services/syncDataToWeb";
+} from "@/config/config_paypal";
+import { isProduction } from "@/config/config_web";
+import * as ga from "@/services/ga";
+// import { IAppInfo } from "@/models/AppInfo";
+import { PaymentInfo } from "@/models/payment/PaymentInfo";
+// import {
+//     saveToDashboardAPI,
+//     uploadPaymentInfoAPI,
+// } from "@/services/syncDataToWeb";
 import {
     cancelSubscriptionAPI,
     checkPaypalStatusAPI,
     sendEmailSubscribeSuccessAPI,
-} from "../../../services/paypal.service";
-import { updateUserInfoDashboard } from "../../../services/user";
+} from "@/services/paypal.service";
+import { updateUserInfoDashboard } from "@/services/user";
 import "./SubcriptionButton.scss";
-import AppState from "@/redux/appState";
 import { IButtonPropsV4 } from "../PopupGetPro";
 import { setCookieDate } from "@/utils/web";
-import { paymentSuccessAction } from "@/redux/features/user";
+import { paymentSuccessAction, userState } from "@/redux/features/user";
+import { IAppInfo } from "@/models/app/appInfo";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 const listEventName = [
     "basic_upgrade_success",
@@ -45,8 +46,9 @@ const SubcriptionButton = ({
     valueButton?: IButtonPropsV4;
     appInfo: IAppInfo;
 }) => {
-    const dispatch = useDispatch();
-    let userReducer = useSelector((state: AppState) => state.userReducer);
+    const dispatch = useAppDispatch();
+    let { paymentInfo } = useAppSelector(userState);
+
     let PLAN_ID = "";
     let eventName = "";
 
@@ -76,7 +78,6 @@ const SubcriptionButton = ({
             },
         });
 
-        let paymentInfo = userReducer.paymentInfo;
         const appId = appInfo.appId ?? APP_NEW_DOMAIN;
         let price = 0;
         try {

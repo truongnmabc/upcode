@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
-import Config from "../../../config";
-import { APP_NEW_DOMAIN, APP_SHORT_NAME } from "../../../config_app";
-import { PaymentInfo } from "../../../models/payment/PaymentInfo";
-import * as ga from "../../../services/ga";
-import { updateUserInfoDashboard } from "../../../services/user";
+import Config from "@/config";
+import { APP_NEW_DOMAIN, APP_SHORT_NAME } from "@/config_app";
+import { PaymentInfo } from "@/models/payment/PaymentInfo";
+import * as ga from "@/services/ga";
+import { updateUserInfoDashboard } from "@/services/user";
 import "./PayPalButtonView.scss";
 import {
     PAYPAL_CLIENT_ID,
@@ -13,12 +13,12 @@ import {
     PAYPAL_STYLE,
 } from "@/config/config_paypal";
 import { isProduction } from "@/config/config_web";
-import AppState from "@/redux/appState";
-import {
-    saveToDashboardAPI,
-    uploadPaymentInfoAPI,
-} from "@/services/syncDataToWeb";
-import { paymentSuccessAction } from "@/redux/features/user";
+// import {
+//     saveToDashboardAPI,
+//     uploadPaymentInfoAPI,
+// } from "@/services/syncDataToWeb";
+import { paymentSuccessAction, userState } from "@/redux/features/user";
+import { useAppSelector } from "@/redux/hooks";
 
 const PayPalButtonView = ({
     paymentSuccess,
@@ -29,7 +29,7 @@ const PayPalButtonView = ({
     price: number;
     stateValue: string;
 }) => {
-    let userReducer = useSelector((state: AppState) => state.userReducer);
+    let { paymentInfo } = useAppSelector(userState);
     let appInfo = useSelector(
         (state: AppState) => state.appInfoReducer.appInfo
     );
@@ -37,7 +37,6 @@ const PayPalButtonView = ({
     const [paymentSource, setPaySource] = useState("");
     const dispatch = useDispatch();
     const onSavePayment = async (details) => {
-        let paymentInfo = userReducer.paymentInfo;
         if (paymentInfo) {
             paymentInfo = {
                 ...paymentInfo,
@@ -66,7 +65,7 @@ const PayPalButtonView = ({
         let obj = {
             ...paymentInfo,
             appId,
-            userId: userReducer.userInfo?.id,
+            userId: userInfo?.id,
         };
         try {
             let result = await uploadPaymentInfoAPI(obj);
