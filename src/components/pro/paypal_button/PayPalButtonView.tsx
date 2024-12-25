@@ -96,7 +96,7 @@ const PayPalButtonView = ({
                 },
             });
         }
-        if (isProduction()) {
+        if (isProduction) {
             saveToDashboardAPI({
                 app: APP_SHORT_NAME,
                 price: price,

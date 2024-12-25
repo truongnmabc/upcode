@@ -4,7 +4,7 @@ const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
 import { signIn, useSession } from "next-auth/react";
 
 const SignInProvider = () => {
-    const { data } = useSession();
+    const { status } = useSession();
     async function handleCredentialResponse(response: CredentialResponse) {
         if (response.credential) {
             signIn("credentials", {
@@ -59,7 +59,11 @@ const SignInProvider = () => {
     };
 
     useEffect(() => {
-        if (!data && typeof window !== "undefined" && window?.google) {
+        if (
+            status === "unauthenticated" &&
+            typeof window !== "undefined" &&
+            window?.google
+        ) {
             const timeOut = setTimeout(() => {
                 try {
                     window.google?.accounts?.id?.prompt((e) => {
@@ -74,11 +78,15 @@ const SignInProvider = () => {
                 clearTimeout(timeOut);
             };
         }
-    }, [data]);
+    }, [status]);
 
     useLayoutEffect(() => {
         try {
-            if (typeof window !== "undefined" && window?.google) {
+            if (
+                typeof window !== "undefined" &&
+                window?.google &&
+                GOOGLE_CLIENT_ID
+            ) {
                 window.google?.accounts?.id?.initialize({
                     client_id: GOOGLE_CLIENT_ID,
                     callback: (res) => handleCredentialResponse(res),

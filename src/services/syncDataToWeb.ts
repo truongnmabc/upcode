@@ -3,9 +3,9 @@
 // import { getSession, isProduction } from "../config/config_web";
 // import Config from "@/config";
 // const SYNC_DEV_VALUE = getSession(Config.TESTER_KEY);
-// export const SYNC_DEV_MODE = !isProduction() ? true : SYNC_DEV_VALUE; //!isProduction();
+// export const SYNC_DEV_MODE = !isProduction ? true : SYNC_DEV_VALUE; //!isProduction;
 
-// const BASE_URL = isProduction() ? null : Config.BASE_URL_DEV;
+// const BASE_URL = isProduction ? null : Config.BASE_URL_DEV;
 
 // export function uploadUserStudyPlanAPI(data: any) {
 //     return callApi({

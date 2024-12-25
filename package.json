@@ -21,6 +21,7 @@
         "@mui/material-nextjs": "^6.1.9",
         "@mui/styles": "^5.15.3",
         "@next/third-parties": "^15.0.3",
+        "@paypal/react-paypal-js": "^8.7.0",
         "@react-spring/web": "^9.7.5",
         "@reduxjs/toolkit": "^2.3.0",
         "@use-gesture/react": "^10.3.1",

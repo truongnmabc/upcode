@@ -2,11 +2,12 @@ import { MtUiButton } from "@/components/button";
 import { db } from "@/db/db.model";
 import { ITestQuestion } from "@/models/tests/testQuestions";
 import { gameState } from "@/redux/features/game";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Dialog from "@mui/material/Dialog";
 import React, { Fragment, useEffect, useState } from "react";
 import ModalSettingCustomTest from "../modal";
 import { IconDelete, IconEdit, IconPlus } from "./iconGridLeft";
+import choiceStartCustomTestThunk from "@/redux/repository/game/customTest/choiceStartTest";
 const GridLeftCustomTest = () => {
     const [listTest, setListTest] = useState<ITestQuestion[]>([]);
     const [openModalSetting, setOpenModalSetting] = React.useState(false);
@@ -50,7 +51,6 @@ const GridLeftCustomTest = () => {
 
     const handleDelete = async () => {
         if (itemSelect) {
-            console.log("🚀 ~ handleDelete ~ itemSelect:", itemSelect);
             await db?.testQuestions
                 .where("parentId")
                 .equals(itemSelect?.parentId)
@@ -67,6 +67,13 @@ const GridLeftCustomTest = () => {
             setOpenDelete(false);
         }
     };
+
+    const dispatch = useAppDispatch();
+
+    const handleClickChoiceTest = (item: ITestQuestion) => {
+        dispatch(choiceStartCustomTestThunk({ item }));
+    };
+
     return (
         <Fragment>
             <div className="flex justify-between items-center">
@@ -88,7 +95,12 @@ const GridLeftCustomTest = () => {
                             key={index}
                             className="flex bg-[#2121210A] rounded-lg px-3 py-[10px] gap-2 justify-between items-center"
                         >
-                            <p className="text-sm font-medium">
+                            <p
+                                className="text-sm cursor-pointer font-medium"
+                                onClick={() => {
+                                    handleClickChoiceTest(item);
+                                }}
+                            >
                                 Custom Test {index + 1}
                             </p>
                             <div className="flex items-center gap-2">

@@ -4,7 +4,7 @@ import UserQuestionProgress from "@/models/progress/userQuestionProgress";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import choiceAnswer, {
     processChoiceAnswer,
-} from "../repository/game/choiseAnswer/choiceAnswer";
+} from "../repository/game/choiceAnswer/choiceAnswer";
 import initCustomTestThunk from "../repository/game/initData/initCustomTest";
 import initDiagnosticTestQuestionThunk from "../repository/game/initData/initDiagnosticTest";
 import initFinalTestThunk from "../repository/game/initData/initFinalTest";
@@ -18,6 +18,7 @@ import resumedTestThunk from "../repository/game/pauseAndResumed/resumedTest";
 import { handleInitTestQuestion } from "../repository/game/utils";
 import { reloadStateThunk } from "../repository/utils/reload";
 import { RootState } from "../store";
+import choiceStartCustomTestThunk from "../repository/game/customTest/choiceStartTest";
 
 const init = new UserQuestionProgress();
 
@@ -180,7 +181,16 @@ export const gameSlice = createSlice({
                 handleInitTestQuestion(state, action.payload);
             }
         });
+        builder.addCase(
+            choiceStartCustomTestThunk.fulfilled,
+            (state, action) => {
+                state.type = "test";
 
+                if (action.payload) {
+                    handleInitTestQuestion(state, action.payload);
+                }
+            }
+        );
         builder.addCase(initCustomTestThunk.fulfilled, (state, action) => {
             if (action.payload) {
                 const { question, isPaused, remainTime } = action.payload;
