@@ -6,7 +6,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import { IAppInfo } from "@/models/app/appInfo";
 import Link from "next/link";
 import React from "react";
-
+import ctx from "@/utils/mergeClass";
 const BannerHome = ({
     appInfo,
     _state,
@@ -45,7 +45,11 @@ const BannerHome = ({
     const isMobile = useIsMobile();
 
     return (
-        <MyContainer>
+        <div
+            className={ctx(
+                "w-full block box-border mx-auto  flex-1  xl:max-w-[1280px]"
+            )}
+        >
             {_state && (
                 <>
                     <h3 className="text-center sm:leading-[60px] text-2xl sm:mt-12 mt-6 font-semibold px-4 sm:text-[40px]">
@@ -189,7 +193,7 @@ const BannerHome = ({
                     </div>
                 </div>
             </div>
-        </MyContainer>
+        </div>
     );
 };
 
