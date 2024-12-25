@@ -30,7 +30,7 @@ const FN = () => {
                 src={`/${appInfo.appShortName}/logo/${
                     theme == "dark" ? "logo-dark" : "logo-light"
                 }.png`}
-                classNames=" w-full max-w-[128px] max-h-14 min-h-[40px] sm:max-w-[160px]"
+                classNames=" w-full max-w-[128px] max-h-14 min-h-[40px] sm:max-w-[160px] ml-4 md:ml-0"
             />
         </div>
     );
