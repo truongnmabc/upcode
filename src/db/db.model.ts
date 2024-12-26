@@ -5,7 +5,6 @@ import { ISubTopicProgress } from "../models/progress/subTopicProgress";
 import { IUserQuestionProgress } from "../models/progress/userQuestionProgress";
 import { ITopicQuestion } from "../models/question/topicQuestion";
 import { ITopicStatus } from "../models/question/topicStatus";
-import { ITest } from "../models/tests/tests";
 import { ITopic } from "../models/topics/topics";
 import { IUserActions } from "../models/user/useAction";
 
@@ -17,7 +16,6 @@ export class DB extends Dexie {
     topics!: Table<ITopic>;
     testQuestions!: Table<ITestQuestion>;
     useActions!: Table<IUserActions>;
-    // tests!: Table<ITest>;
     constructor(appName: string) {
         super(appName);
 
@@ -44,10 +42,7 @@ export class DB extends Dexie {
 
             // *NOTE: chứa thông tin của part: id,name,slug,status,tag,...
 
-            // part: "++id, parentId",
             useActions: "++id,partId,questionId",
-
-            // tests: "++id, testType",
 
             testQuestions: "++id,parentId,type",
         });

@@ -1,17 +1,16 @@
 "use client";
 
-import { db } from "@/db/db.model";
+import { ICurrentGame } from "@/models/game/game";
 import { ITestQuestion } from "@/models/tests/testQuestions";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
     getLocalUserProgress,
     mapQuestionsWithProgress,
 } from "../initData/initPracticeTest";
-import { ICurrentGame } from "@/models/game/game";
 
 const choiceStartCustomTestThunk = createAsyncThunk(
     "startCustomTest",
-    async ({ item }: { item: ITestQuestion }, thunkAPI) => {
+    async ({ item }: { item: ITestQuestion }) => {
         const listQuestion = item?.question;
         const progressData = await getLocalUserProgress(
             item.parentId,

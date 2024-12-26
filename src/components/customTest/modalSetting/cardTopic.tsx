@@ -32,7 +32,7 @@ const CardTopic = ({
                 " cursor-pointer w-full flex bg-white items-center justify-between gap-[10px] rounded-lg border border-solid p-4 ",
                 {
                     "border-primary ": isCheck,
-                    "border-[#21212152]  ": !isCheck,
+                    "border-[#2121211F]  ": !isCheck,
                 }
             )}
         >

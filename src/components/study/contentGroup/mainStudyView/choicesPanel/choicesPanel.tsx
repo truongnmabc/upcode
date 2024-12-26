@@ -122,6 +122,7 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         listQuestion,
         appInfo.appShortName,
         router,
+        idTopic,
     ]);
 
     const handleEnterPractice = useCallback(async () => {
@@ -218,6 +219,7 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         handleEnterLearning,
         handleEnterDiagnostic,
         handleEnterFinalTest,
+        handleEnterCustomTest,
         currentGame.answers,
         currentGame.selectedAnswer,
         type,

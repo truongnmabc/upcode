@@ -31,7 +31,7 @@ const initGameReducer: IGameReducer = {
         turn: 1,
     },
     listQuestion: [],
-
+    passing: 10,
     indexCurrentQuestion: 0,
     idTopic: -1,
     listWrongAnswers: [],

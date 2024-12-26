@@ -5,7 +5,6 @@ import { ICurrentGame } from "@/models/game/game";
 import { IQuestion } from "@/models/question/questions";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
-    fetchQuestions,
     getLocalUserProgress,
     mapQuestionsWithProgress,
 } from "./initPracticeTest";

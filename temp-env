@@ -1,0 +1,12 @@
+DEV_BASE_API="http://localhost:3000/"
+NEXT_PUBLIC_APPLE_SECRET=
+NEXT_PUBLIC_APPLE_ID="com.abc.asvabtestweb"
+# NEXT_PUBLIC_GOOGLE_ID=34834267607-62p4hbpi85rbo5dns1sfcoo7s8ucdt7v.apps.googleusercontent.com
+# NEXT_PUBLIC_GOOGLE_SECRET=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
+AUTH_SECRET="0muSwmVqTlh4H+WF82zC89b3VMYmRC0I9kxETNzb9ik=" # Added by `npx auth`. Read more: https://cli.authjs.dev
+APP_SHORT_NAME="passemall"
+NEXT_PUBLIC_GOOGLE_ID=792314426707-gp1p1ml492uqehflmnm96r6in0jait6n.apps.googleusercontent.com
+
+NEXT_PUBLIC_API_URL="http://truongnm-new-asvab.cd.worksheetzone.org/"
+# NEXT_PUBLIC_API_URL="http://localhost:3000/"
+
