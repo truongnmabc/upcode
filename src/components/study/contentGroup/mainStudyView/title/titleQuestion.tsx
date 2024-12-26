@@ -1,10 +1,13 @@
 "use client";
 import Config from "@/config";
 import { setSession } from "@/utils/session";
+import clsx from "clsx";
 import { useParams, usePathname } from "next/navigation";
 import React from "react";
 
-const getKeyTest = (pathname: string | string[] | undefined): string | null => {
+export const getKeyTest = (
+    pathname: string | string[] | undefined
+): string | null => {
     if (!pathname) return null;
     if (typeof pathname === "string") {
         const name = pathname?.replace("-practice-test", "");
@@ -13,7 +16,7 @@ const getKeyTest = (pathname: string | string[] | undefined): string | null => {
     return decodeURI(pathname[pathname?.length - 1]);
 };
 
-const getLastPathSegment = (pathname: string): string | null => {
+export const getLastPathSegment = (pathname: string): string | null => {
     if (!pathname) {
         console.log("Pathname is empty");
         return null;
@@ -51,7 +54,9 @@ const TitleQuestion = () => {
     };
     return (
         <div
-            className="w-full text-center capitalize text-xl font-semibold"
+            className={clsx(
+                "w-full text-center hidden sm:block capitalize text-xl font-semibold"
+            )}
             onClick={setIsTester}
         >
             {defaultTitle}

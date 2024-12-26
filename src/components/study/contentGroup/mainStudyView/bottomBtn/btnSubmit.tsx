@@ -1,3 +1,4 @@
+"use client";
 import { MtUiButton } from "@/components/button";
 import { shouldOpenSubmitTest } from "@/redux/features/tests";
 import { useAppDispatch } from "@/redux/hooks";

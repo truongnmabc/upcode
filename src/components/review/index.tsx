@@ -1,6 +1,6 @@
 import Grid2 from "@mui/material/Grid2";
 import SeoContent from "../seoContent/seoContent";
-import BannerDownloadApp from "../study/contentGroup/bannerDownload/bannerDownloadApp";
+import BannerDownloadApp from "../bannerDownload/bannerDownloadApp";
 import GridLeftReview from "./gridLeftReview";
 import ReviewContentGroup from "./gridLeftReview/content";
 

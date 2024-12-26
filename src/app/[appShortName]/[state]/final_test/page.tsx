@@ -20,11 +20,5 @@ export default async function FinalTestPage({ params }: Params) {
         `${API_PATH.GET_SEO}/${appShortName}?search=${slug}&type=final_test`
     );
 
-    return (
-        <section className="w-full h-full mx-auto max-w-page px-4 sm:px-6">
-            <div className="w-full h-full  py-6 sm:py-9">
-                <FinalTestLayout contentSeo={seoData.data.data.content} />
-            </div>
-        </section>
-    );
+    return <FinalTestLayout contentSeo={seoData.data.data.content} />;
 }

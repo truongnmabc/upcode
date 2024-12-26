@@ -2,11 +2,12 @@ import ClockIcon from "@/components/icon/ClockIcon";
 import LazyLoadImage from "@/components/images";
 import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
-import React from "react";
+import React, { Fragment } from "react";
 import CountTimeDiagnostic from "../countTimeRemain";
 import Rating from "@mui/material/Rating";
 
 import { styled } from "@mui/material/styles";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const CustomRating = styled(Rating)(({ theme }) => ({
     "& .MuiRating-iconEmpty svg": {
@@ -22,41 +23,52 @@ const CustomRating = styled(Rating)(({ theme }) => ({
 
 const TimeTestGetLever = () => {
     const { currentGame } = useAppSelector(gameState);
-
+    const isMobile = useIsMobile();
     return (
-        <div className="w-full bg-[#F0F4F9] px-3 py-[14px] rounded-lg flex items-center justify-between">
-            <div className="flex items-center gap-1">
-                <LazyLoadImage
-                    classNames="w-6 h-6"
-                    src="/images/notebook-dynamic-color.png"
-                />
-                <p className=" capitalize text-sm font-medium">
-                    {currentGame?.tag?.replaceAll("-", " ")}
-                </p>
-            </div>
-            <div className="flex items-center justify-center w-fit gap-2">
-                <ClockIcon />
-                <CountTimeDiagnostic />
-            </div>
-            <div className="px-2 py-1 flex items-center rounded-lg bg-[#FCFCFC]">
-                <p className="text-sm text-[#21212185]  font-medium pr-1">
-                    Level
-                </p>
+        <Fragment>
+            {isMobile && (
+                <div className="flex items-center justify-center w-full gap-2">
+                    <ClockIcon />
+                    <CountTimeDiagnostic />
+                </div>
+            )}
+            <div className="w-full bg-[#F0F4F9] px-3 py-[14px] rounded-lg flex items-center justify-between">
+                <div className="flex items-center gap-1">
+                    <LazyLoadImage
+                        classNames="w-6 h-6"
+                        src="/images/notebook-dynamic-color.png"
+                    />
+                    <p className=" capitalize text-sm font-medium">
+                        {currentGame?.tag?.replaceAll("-", " ")}
+                    </p>
+                </div>
+                {!isMobile && (
+                    <div className="flex items-center justify-center w-fit gap-2">
+                        <ClockIcon />
+                        <CountTimeDiagnostic />
+                    </div>
+                )}
 
-                <CustomRating
-                    name="read-only"
-                    value={
-                        currentGame?.level === -1
-                            ? 2
-                            : currentGame?.level < 50
-                            ? 1
-                            : 3
-                    }
-                    max={3}
-                    readOnly
-                />
+                <div className="px-2 py-1 flex items-center rounded-lg bg-[#FCFCFC]">
+                    <p className="text-sm text-[#21212185]  font-medium pr-1">
+                        Level
+                    </p>
+
+                    <CustomRating
+                        name="read-only"
+                        value={
+                            currentGame?.level === -1
+                                ? 2
+                                : currentGame?.level < 50
+                                ? 1
+                                : 3
+                        }
+                        max={3}
+                        readOnly
+                    />
+                </div>
             </div>
-        </div>
+        </Fragment>
     );
 };
 

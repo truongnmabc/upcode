@@ -1,3 +1,4 @@
+"use client";
 import { MtUiButton } from "@/components/button";
 import { appInfoState } from "@/redux/features/appInfo";
 import { gameState } from "@/redux/features/game";
