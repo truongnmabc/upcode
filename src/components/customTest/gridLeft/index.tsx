@@ -1,13 +1,16 @@
+"use client";
 import { MtUiButton } from "@/components/button";
 import { db } from "@/db/db.model";
 import { ITestQuestion } from "@/models/tests/testQuestions";
 import { gameState } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import Dialog from "@mui/material/Dialog";
 import React, { Fragment, useEffect, useState } from "react";
-import ModalSettingCustomTest from "../modal";
+import ModalSettingCustomTest from "../modalSetting";
 import { IconDelete, IconEdit, IconPlus } from "./iconGridLeft";
 import choiceStartCustomTestThunk from "@/redux/repository/game/customTest/choiceStartTest";
+import { Modal } from "@mui/material";
+import ModalDeleteTsx from "../modalDelete.tsx";
+import { useIsMobile } from "@/hooks/useIsMobile";
 const GridLeftCustomTest = () => {
     const [listTest, setListTest] = useState<ITestQuestion[]>([]);
     const [openModalSetting, setOpenModalSetting] = React.useState(false);
@@ -73,78 +76,69 @@ const GridLeftCustomTest = () => {
     const handleClickChoiceTest = (item: ITestQuestion) => {
         dispatch(choiceStartCustomTestThunk({ item }));
     };
-
+    const isMobile = useIsMobile();
     return (
         <Fragment>
-            <div className="flex justify-between items-center">
-                <p className="font-semibold text-xl">Custom Test</p>
-                <div
-                    onClick={() => {
-                        setOpenModalSetting(true);
-                        setItemSelect(null);
-                    }}
-                    className="w-7 h-7 cursor-pointer rounded-full bg-[#21212114] flex items-center justify-center "
-                >
-                    <IconPlus />
-                </div>
-            </div>
-            {listTest?.length > 0 && (
-                <div className="flex flex-col gap-3 bg-white p-4 rounded-md">
-                    {listTest?.map((item, index) => (
+            {!isMobile && (
+                <Fragment>
+                    <div className="flex justify-between items-center">
+                        <p className="font-semibold text-xl">Custom Test</p>
                         <div
-                            key={index}
-                            className="flex bg-[#2121210A] rounded-lg px-3 py-[10px] gap-2 justify-between items-center"
+                            onClick={() => {
+                                setOpenModalSetting(true);
+                                setItemSelect(null);
+                            }}
+                            className="w-7 h-7 cursor-pointer rounded-full bg-[#21212114] flex items-center justify-center "
                         >
-                            <p
-                                className="text-sm cursor-pointer font-medium"
-                                onClick={() => {
-                                    handleClickChoiceTest(item);
-                                }}
-                            >
-                                Custom Test {index + 1}
-                            </p>
-                            <div className="flex items-center gap-2">
-                                <div
-                                    onClick={() => {
-                                        handleOpenModalSetting(item);
-                                    }}
-                                    className="w-6 h-6 rounded flex cursor-pointer items-center justify-center bg-[#2121210F]"
-                                >
-                                    <IconEdit />
-                                </div>
-                                <div
-                                    onClick={() => {
-                                        handleOpenModalDelete(item);
-                                    }}
-                                    className="w-6 h-6 rounded flex items-center cursor-pointer justify-center bg-[#2121210F]"
-                                >
-                                    <IconDelete />
-                                </div>
-                            </div>
+                            <IconPlus />
                         </div>
-                    ))}
-                </div>
+                    </div>
+                    {listTest?.length > 0 && (
+                        <div className="flex flex-col gap-3 bg-white p-4 rounded-md">
+                            {listTest?.map((item, index) => (
+                                <div
+                                    key={index}
+                                    className="flex bg-[#2121210A] rounded-lg px-3 py-[10px] gap-2 justify-between items-center"
+                                >
+                                    <p
+                                        className="text-sm cursor-pointer font-medium"
+                                        onClick={() => {
+                                            handleClickChoiceTest(item);
+                                        }}
+                                    >
+                                        Custom Test {index + 1}
+                                    </p>
+                                    <div className="flex items-center gap-2">
+                                        <div
+                                            onClick={() => {
+                                                handleOpenModalSetting(item);
+                                            }}
+                                            className="w-6 h-6 rounded flex cursor-pointer items-center justify-center bg-[#2121210F]"
+                                        >
+                                            <IconEdit />
+                                        </div>
+                                        <div
+                                            onClick={() => {
+                                                handleOpenModalDelete(item);
+                                            }}
+                                            className="w-6 h-6 rounded flex items-center cursor-pointer justify-center bg-[#2121210F]"
+                                        >
+                                            <IconDelete />
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </Fragment>
             )}
-            <Dialog
-                open={openDelete}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <div className="min-w-[400px] p-4">
-                    <div className="pb-4">
-                        Are you sure you want to delete this custom test?
-                    </div>
-                    <div className="w-full flex items-center gap-4 justify-center">
-                        <MtUiButton block onClick={handleDelete}>
-                            Ok
-                        </MtUiButton>
-                        <MtUiButton type="primary" block onClick={handleClose}>
-                            Cancel
-                        </MtUiButton>
-                    </div>
-                </div>
-            </Dialog>
+            {openDelete && (
+                <ModalDeleteTsx
+                    openDelete={openDelete}
+                    handleClose={handleClose}
+                    handleDelete={handleDelete}
+                />
+            )}
             {openModalSetting && (
                 <ModalSettingCustomTest
                     item={itemSelect}
@@ -157,4 +151,4 @@ const GridLeftCustomTest = () => {
     );
 };
 
-export default GridLeftCustomTest;
+export default React.memo(GridLeftCustomTest);

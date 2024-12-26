@@ -1,8 +1,8 @@
+"use client";
 import BottomBtn from "@/components/study/contentGroup/mainStudyView/bottomBtn/bottomBtn";
 import ChoicesPanel from "@/components/study/contentGroup/mainStudyView/choicesPanel/choicesPanel";
 import ProgressQuestion from "@/components/study/contentGroup/mainStudyView/progress/progressQuestion";
 import QuestionContent from "@/components/study/contentGroup/mainStudyView/question/questionContent";
-import TitleQuestion from "@/components/study/contentGroup/mainStudyView/title/titleQuestion";
 import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
 import { MathJaxContext } from "better-react-mathjax";
@@ -20,7 +20,7 @@ const ContentCustomTest = () => {
             <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
                 <Fragment>
                     <div className="sm:p-4 flex flex-col gap-3">
-                        <div className="w-full text-center capitalize text-xl font-semibold">
+                        <div className="w-full hidden sm:block text-center capitalize text-xl font-semibold">
                             Custom Test
                         </div>
                         <ProgressQuestion />

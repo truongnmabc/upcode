@@ -1,3 +1,4 @@
+"use client";
 import { MtUiButton } from "@/components/button";
 import { gameState } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";

@@ -3,20 +3,34 @@
 import IconBack from "@/components/icon/iconBack";
 import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
-import { useRouter } from "next/navigation";
-import React, { Fragment, useState } from "react";
-import MobileDrawerConfirmExit from "./mobileDrawerConfirmExit";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import React, { Fragment, lazy, useState } from "react";
+
+const MobileDrawerConfirmExit = dynamic(
+    () => import("./mobileDrawerConfirmExit"),
+    {
+        ssr: false,
+    }
+);
+
+import {
+    getKeyTest,
+    getLastPathSegment,
+} from "../contentGroup/mainStudyView/title/titleQuestion";
+import dynamic from "next/dynamic";
 
 const HeaderStudy = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const { indexCurrentQuestion, listQuestion, type, indexSubTopic } =
         useAppSelector(gameState);
-
+    const param = useParams();
+    const pathname = usePathname();
     const router = useRouter();
-
+    const defaultTitle =
+        getKeyTest(param?.slug) || getLastPathSegment(pathname);
     return (
         <Fragment>
-            <div className="flex sm:hidden items-center mt-2 justify-between w-full">
+            <div className="flex sm:hidden items-center mt-2 px-2 justify-between w-full">
                 <div
                     onClick={() => {
                         if (type === "test") {
@@ -31,21 +45,16 @@ const HeaderStudy = () => {
                 </div>
 
                 <div className=" text-center flex-1 capitalize text-lg font-medium">
-                    {type === "learn"
-                        ? `Core ${indexSubTopic}`
-                        : "Practice Tests"}
+                    {type === "learn" ? `Core ${indexSubTopic}` : defaultTitle}
                 </div>
                 <div className=" text-sm font-normal ">
                     {indexCurrentQuestion + 1}/{listQuestion?.length}
                 </div>
             </div>
-            {/* *NOTE: cho nay loi  */}
-            <div>
-                <MobileDrawerConfirmExit
-                    open={openDrawer}
-                    setOpen={setOpenDrawer}
-                />
-            </div>
+            <MobileDrawerConfirmExit
+                open={openDrawer}
+                setOpen={setOpenDrawer}
+            />
         </Fragment>
     );
 };

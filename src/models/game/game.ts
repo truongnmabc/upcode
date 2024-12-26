@@ -1,6 +1,6 @@
 import { IAnswer, IQuestion } from "@/models/question/questions";
 import { IStatusAnswer } from "@/components/study/contentGroup/mainStudyView/statusAnswer/statusAnswer";
-import { IFeedBack } from "@/components/customTest/modal";
+import { IFeedBack } from "@/components/customTest/modalSetting";
 
 export interface ICurrentGame
     extends Omit<
