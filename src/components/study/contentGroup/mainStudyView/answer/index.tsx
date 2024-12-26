@@ -7,7 +7,7 @@ import ctx from "@/utils/mergeClass";
 import { MathJax } from "better-react-mathjax";
 import React from "react";
 import GetIconPrefix from "../choicesPanel/getIcon";
-import choiceAnswer from "@/redux/repository/game/choiseAnswer/choiceAnswer";
+import choiceAnswer from "@/redux/repository/game/choiceAnswer/choiceAnswer";
 import BtnTets from "@/tests/btn";
 const AnswerButton = ({
     choice,

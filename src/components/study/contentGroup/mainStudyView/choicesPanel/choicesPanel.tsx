@@ -1,6 +1,6 @@
 "use client";
 import { IAnswer } from "@/models/question/questions";
-import { gameState } from "@/redux/features/game";
+import { gameState, viewTest } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useCallback, useEffect, useState } from "react";
 import AnswerButton from "../answer";
@@ -76,6 +76,7 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         listQuestion,
         subTopicProgressId,
         indexCurrentQuestion,
+        feedBack,
     } = useAppSelector(gameState);
 
     const { appInfo } = useAppSelector(appInfoState);
@@ -170,30 +171,23 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
     ]);
 
     const handleEnterFinalTest = useCallback(async () => {
-        if (indexCurrentQuestion + 1 === listQuestion?.length) {
-            dispatch(finishDiagnosticThunk());
+        dispatch(viewTest(indexCurrentQuestion + 1));
+    }, [dispatch, indexCurrentQuestion]);
 
-            const _href = revertPathName({
-                href: RouterApp.ResultTest,
-                appName: appInfo.appShortName,
-            });
-
-            router.replace(_href, {
-                scroll: true,
-            });
-            return;
+    const handleEnterCustomTest = useCallback(async () => {
+        if (feedBack === "newbie") {
+            dispatch(nextQuestionDiagnosticThunk());
         }
-        dispatch(nextQuestionDiagnosticThunk());
-    }, [
-        dispatch,
-        indexCurrentQuestion,
-        appInfo.appShortName,
-        listQuestion,
-        router,
-    ]);
-
+        if (feedBack === "exam") {
+            dispatch(viewTest(indexCurrentQuestion + 1));
+        }
+        if (feedBack === "expert") {
+            dispatch(nextQuestionThunk());
+        }
+    }, [feedBack, indexCurrentQuestion, dispatch]);
     useEffect(() => {
         const handleEnterEvent = (event: globalThis.KeyboardEvent) => {
+            console.log("🚀 ~ handleEnterEvent ~ event:", event);
             if (currentGame?.answers && !currentGame.selectedAnswer) {
                 const key = event.key;
                 const index = parseInt(key, 10);
@@ -212,6 +206,7 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
                 }
 
                 if (pathname?.includes("final_test")) handleEnterFinalTest();
+                if (pathname?.includes("custom_test")) handleEnterCustomTest();
             }
         };
         document.addEventListener("keydown", handleEnterEvent, true);

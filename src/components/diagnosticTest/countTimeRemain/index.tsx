@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import CountTime from "@/components/countTime";
 import { gameState } from "@/redux/features/game";
 import nextQuestionDiagnosticThunk from "@/redux/repository/game/nextQuestion/nextQuestionDiagnosticTest";
-import choiceAnswer from "@/redux/repository/game/choiseAnswer/choiceAnswer";
+import choiceAnswer from "@/redux/repository/game/choiceAnswer/choiceAnswer";
 import { useRouter } from "next/navigation";
 import finishDiagnosticThunk from "@/redux/repository/game/finish/finishDiagnostic";
 import { revertPathName } from "@/utils/pathName";

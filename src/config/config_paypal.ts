@@ -1,4 +1,4 @@
-import { IAppInfo } from "@/models/AppInfo";
+import { IAppInfo } from "@/models/app/appInfo";
 import config_new_pro from "../data/config_new_pro.json";
 import { isProduction } from "@/common/constants";
 
@@ -18,7 +18,7 @@ export const PAYPAL_STYLE = {
     layout: "vertical",
 };
 
-export const getConfigProV2 = (appInfo) => {
+export const getConfigProV2 = (appInfo: IAppInfo) => {
     const result = {
         type: SUBSCRIPTION,
         prices: [],
@@ -77,7 +77,7 @@ export const getConfigProV2 = (appInfo) => {
                 },
                 initPrice: getInitPrice(oneYear.price, savePercent1Year),
             });
-            if (!isProduction()) {
+            if (!isProduction) {
                 prices[0].planId = "P-5GE18939GM962423UMQVLK5Y";
                 prices[1].planId = "P-2SH95524CM0826016MQVLLUI";
                 prices[2].planId = "P-1VY99078S4786524AMQVLL4A";

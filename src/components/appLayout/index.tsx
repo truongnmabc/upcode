@@ -6,6 +6,7 @@ import SheetApp from "../sheetApp";
 import { NavigationEvents } from "./navigationEvents";
 import { ProgressBar } from "./progressBar";
 import WrapperScroll from "./wrapperScroll";
+import SignInProvider from "./signInProvider";
 const FN = ({ children }: { children: React.ReactNode }) => {
     return (
         <Fragment>
@@ -22,6 +23,7 @@ const FN = ({ children }: { children: React.ReactNode }) => {
                 </div>
                 <ToastContainer autoClose={2000} />
                 <SheetApp />
+                <SignInProvider />
             </WrapperScroll>
         </Fragment>
     );

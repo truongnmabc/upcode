@@ -6,8 +6,15 @@ export type IFeedBack = "newbie" | "expert" | "exam";
 type IProps = {
     open: boolean;
     onClose: () => void;
+    item?: ITestQuestion | null;
+    isShowBtnCancel: boolean;
 };
-const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
+const ModalSettingCustomTest: React.FC<IProps> = ({
+    open,
+    onClose,
+    item,
+    isShowBtnCancel,
+}) => {
     const [listTopic, setListTopic] = useState<ITopic[]>([]);
     const [count, setCount] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -26,6 +33,17 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
         handleGetData();
     }, []);
 
+    useEffect(() => {
+        if (item) {
+            setCount(item.count || 0);
+            setDuration(item.duration);
+            setPassing(item.passing ?? 0);
+            setSelectFeedback(item.feedBack ?? "newbie");
+            setSelectListTopic(
+                item.subject ? item.subject.map((id) => ({ id })) : []
+            );
+        }
+    }, [item]);
     const resetState = () => {
         setCount(0);
         setDuration(0);
@@ -118,6 +136,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
                     }
                 }
                 const parentId = generateRandomNegativeId();
+
                 await db?.testQuestions.add({
                     duration: duration,
                     passing: passing,
@@ -131,6 +150,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
                     feedBack: selectFeedback,
                     subject: selectListTopic?.map((item) => item.id),
                     status: 0,
+                    turn: 0,
                 });
 
                 dispatch(
@@ -161,6 +181,9 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
     return (
         <Dialog
             open={open}
+            onClose={() => {
+                isShowBtnCancel && onClose();
+            }}
             sx={{
                 "& .MuiDialog-paper": {
                     width: "100%",
@@ -175,12 +198,14 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
                     <p className="text-2xl font-semibold">
                         Customize Your Test
                     </p>
-                    <div
-                        onClick={onCancel}
-                        className="w-8 h-8 cursor-pointer rounded-full bg-white flex items-center justify-center"
-                    >
-                        <CloseIcon />
-                    </div>
+                    {isShowBtnCancel && (
+                        <div
+                            onClick={onCancel}
+                            className="w-8 h-8 cursor-pointer rounded-full bg-white flex items-center justify-center"
+                        >
+                            <CloseIcon />
+                        </div>
+                    )}
                 </div>
 
                 <div className="mt-6 flex-1">
@@ -214,17 +239,20 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
                         <CardProgress
                             title="Question Count:"
                             max={100}
+                            defaultValue={count}
                             changeProgress={setCount}
                         />{" "}
                         <CardProgress
                             title="Duration:"
                             suffix="minutes"
+                            defaultValue={duration}
                             max={90}
                             changeProgress={setDuration}
                         />{" "}
                         <CardProgress
                             changeProgress={setPassing}
                             title="Passing Score:"
+                            defaultValue={passing}
                             suffix="%"
                             max={100}
                         />
@@ -252,9 +280,12 @@ const ModalSettingCustomTest: React.FC<IProps> = ({ open, onClose }) => {
                     </div>
                 </div>
                 <div className="flex mt-6 items-center justify-end gap-4">
-                    <MtUiButton size="large" onClick={onCancel}>
-                        Cancel
-                    </MtUiButton>
+                    {isShowBtnCancel && (
+                        <MtUiButton size="large" onClick={onCancel}>
+                            Cancel
+                        </MtUiButton>
+                    )}
+
                     <MtUiButton
                         size="large"
                         type="primary"
@@ -285,6 +316,7 @@ import { startCustomTest } from "@/redux/features/game";
 import { ICurrentGame } from "@/models/game/game";
 import { IQuestion } from "@/models/question/questions";
 import { generateRandomNegativeId } from "@/utils/math";
+import { ITestQuestion } from "@/models/tests/testQuestions";
 type ICardFeeBack = {
     text: string;
     des: string;
@@ -325,16 +357,20 @@ type ICardProgress = {
     suffix?: string;
     max: number;
     changeProgress: (e: number) => void;
+    defaultValue: number;
 };
 
 const CardProgress = ({
     title,
     suffix,
     max,
+    defaultValue,
     changeProgress,
 }: ICardProgress) => {
-    const [value, setValue] = useState(0);
-
+    const [value, setValue] = useState(defaultValue);
+    useEffect(() => {
+        if (defaultValue) setValue(defaultValue);
+    }, [defaultValue]);
     const progress = useDebounce(value, 500);
 
     useEffect(() => {
@@ -419,7 +455,7 @@ const CardTopic = ({
             <div className="w-8 p-1 h-8 rounded-lg bg-[#7C6F5B]">
                 <LazyLoadImage src={item.icon} />
             </div>
-            <p className="text-sm font-medium">{item.name}</p>
+            <p className="text-sm flex-1 font-medium">{item.name}</p>
             <div
                 className={ctx(
                     "w-5 h-5 rounded-md border border-solid flex items-center overflow-hidden  justify-center ",

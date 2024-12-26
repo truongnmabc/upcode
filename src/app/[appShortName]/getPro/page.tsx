@@ -1,4 +1,4 @@
-import ProPackage from "@/components/getPro/proPackage/ProPackage";
+import ProPackage from "@/components/getPro/proPackage/listProPackage";
 import StoreLogoV4 from "@/components/getPro/storeLogo/StoreLogo";
 import TitleGetPro from "@/components/getPro/titleGetPro";
 import TotalQuestion from "@/components/getPro/totalQuestion";
