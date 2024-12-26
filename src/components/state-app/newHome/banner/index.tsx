@@ -6,13 +6,15 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import { IAppInfo } from "@/models/app/appInfo";
 import Link from "next/link";
 import React from "react";
-
+import ctx from "@/utils/mergeClass";
 const BannerHome = ({
     appInfo,
     _state,
+    isHomePage,
 }: {
     appInfo: IAppInfo;
-    _state: string;
+    _state?: string;
+    isHomePage?: boolean;
 }) => {
     const list = [
         {
@@ -40,26 +42,45 @@ const BannerHome = ({
             name: "State-specific questions",
         },
     ];
-    const isM0bile = useIsMobile();
+    const isMobile = useIsMobile();
 
     return (
-        <MyContainer>
-            <h3 className="text-center sm:leading-[60px] text-2xl sm:mt-12 mt-6 font-semibold px-4 sm:text-[40px]">
-                More <span className=" capitalize">{_state}</span>{" "}
-                <span className="uppercase">{appInfo?.appShortName}</span> Study
-                Resources
-            </h3>
-
-            <h4 className="sm:text-2xl text-lg mt-4 sm:mt-8 font-medium sm:font-semibold text-center sm:text-start">
-                Practice for your <span className=" capitalize">{_state}</span>{" "}
-                <span className="uppercase">{appInfo?.appShortName}</span> on
-                any device
-            </h4>
+        <div
+            className={ctx(
+                "w-full block box-border mx-auto  flex-1  xl:max-w-[1280px]"
+            )}
+        >
+            {_state && (
+                <>
+                    <h3 className="text-center sm:leading-[60px] text-2xl sm:mt-12 mt-6 font-semibold px-4 sm:text-[40px]">
+                        More <span className=" capitalize">{_state}</span>{" "}
+                        <span className="uppercase">
+                            {appInfo?.appShortName}
+                        </span>{" "}
+                        Study Resources
+                    </h3>
+                    <h4 className="sm:text-2xl text-lg mt-4 sm:mt-8 font-medium sm:font-semibold text-center sm:text-start">
+                        Practice for your{" "}
+                        <span className=" capitalize">{_state}</span>{" "}
+                        <span className="uppercase">
+                            {appInfo?.appShortName}
+                        </span>{" "}
+                        on any device
+                    </h4>
+                </>
+            )}
+            {isHomePage && (
+                <h3 className="text-center px-4 text-xl font-bold sm:text-[30px] sm:leading-[48px] py-6 sm:py-8">
+                    Practice for your{" "}
+                    <span className=" capitalize">{_state}</span>{" "}
+                    <span className="uppercase">{appInfo?.appShortName}</span>{" "}
+                    on any device
+                </h3>
+            )}
             <div
                 className="flex w-full mt-3 sm:mt-6 rounded-2xl sm:flex-row flex-col"
                 style={{
-                    background:
-                        "linear-gradient(90deg, #DBEBFD 0%, #E2DFFF 100%)",
+                    background: "var(--main-linear-gradient-banner-download)",
                 }}
             >
                 <div className="flex-1 pl-4 pt-4 sm:pl-6 sm:py-6">
@@ -98,9 +119,9 @@ const BannerHome = ({
                     <div
                         className="grid sm:max-w-[800px] rounded-lg sm:mt-6 mt-3 sm:w-full w-fit p-4 sm:p-0 grid-cols-1 gap-4 sm:grid-cols-3"
                         style={{
-                            background: isM0bile
-                                ? "transparent"
-                                : "linear-gradient(151.29deg, rgba(255, 255, 255, 0.56) 5.17%, rgba(255, 255, 255, 0) 50.54%, rgba(255, 255, 255, 0.13) 67.35%, rgba(255, 255, 255, 0) 91.02%)",
+                            background: isMobile
+                                ? "linear-gradient(151.29deg, rgba(255, 255, 255, 0.56) 5.17%, rgba(255, 255, 255, 0) 50.54%, rgba(255, 255, 255, 0.13) 67.35%, rgba(255, 255, 255, 0) 91.02%)"
+                                : "transparent",
                         }}
                     >
                         {list?.map((item) => (
@@ -147,13 +168,13 @@ const BannerHome = ({
                     <div className=" absolute right-0 h-full bottom-0">
                         <LazyLoadImage
                             classNames="w-[441px] h-[325px]"
-                            src={"/images/cdl_v2/home/banner.png"}
+                            src={`/images/home/${appInfo.appShortName}/banner-device.png`}
                         />
                     </div>
                     <div className=" absolute h-full right-0 bottom-0">
                         <LazyLoadImage
                             classNames="w-[118px] h-[325px]"
-                            src={"/images/cdl_v2/home/banner_1.png"}
+                            src={`/images/home/${appInfo.appShortName}/banner-device_1.png`}
                         />
                     </div>
                 </div>
@@ -166,13 +187,13 @@ const BannerHome = ({
                     <div className="absolute top-0 right-0 w-fit h-fit">
                         <LazyLoadImage
                             classNames="w-[280px] h-[180px]"
-                            src={"/images/cdl_v2/home/banner.png"}
+                            src={`/images/home/${appInfo.appShortName}/banner-device.png`}
                             imgClassNames="object-cover w-full"
                         />
                     </div>
                 </div>
             </div>
-        </MyContainer>
+        </div>
     );
 };
 

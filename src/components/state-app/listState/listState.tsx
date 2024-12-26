@@ -39,7 +39,7 @@ const ListState = ({
     const handleNavigateState = (state: string) => {
         localStorage.setItem("select-state-" + appInfo.appNameId, state);
         const _href = revertPathName({
-            href: state,
+            state: state,
             appName: appInfo.appShortName,
         });
         router.push(_href);

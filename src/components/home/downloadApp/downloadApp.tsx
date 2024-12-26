@@ -3,7 +3,8 @@
 import { appInfoState } from "@/redux/features/appInfo";
 import { useAppSelector } from "@/redux/hooks";
 import React, { CSSProperties } from "react";
-import "./styles.css";
+// import "./styles.css";
+import "./style.scss";
 
 import IconLinkStoreApp from "@/components/iconLinkStoreApp";
 import QRCode from "react-qr-code";
@@ -21,7 +22,7 @@ const DownloadApp = () => {
                     classNames="w-6 h-6"
                 />
             ),
-            mobile: false,
+            mobile: true,
         },
         {
             title: "Instant feedback",
@@ -57,7 +58,7 @@ const DownloadApp = () => {
                     classNames="w-6 h-6"
                 />
             ),
-            mobile: false,
+            mobile: true,
         },
 
         {
@@ -69,7 +70,7 @@ const DownloadApp = () => {
                     classNames="w-6 h-6"
                 />
             ),
-            mobile: false,
+            mobile: true,
         },
         {
             title: appInfo.hasState
@@ -90,13 +91,15 @@ const DownloadApp = () => {
         },
     ];
     const customStyles: CSSProperties & Record<string, string> = {
-        "--img-mobile-url": `url(/images/home/banner-download-app-mobile.webp)`,
-        "--img-desktop-url": `url(/images/home/banner-download-app-desktop.webp)`,
-        "--background-mobile-url": `url(/images/home/ballon-mobile.svg)`,
-        "--background-desktop-url": `url(/images/home/ballon-desktop.svg)`,
+        "--img-mobile-url": `url(/images/home/asvab/banner-download-app-desktop.webp)`,
+        "--img-desktop-url": `url(/images/home/asvab/banner-download-app-desktop.webp)`,
+        "--background-mobile-url": `url(/images/home/asvab/ballon-mobile.svg)`,
+        "--background-desktop-url": `url(/images/home/asvab/ballon-desktop.svg)`,
     };
+    const featuresMobile = [...features];
+    featuresMobile.splice(2, 0, featuresMobile.splice(4, 1)[0])
     return (
-        <div className={"v4-banner-download-app-0 v4-border-radius"}>
+        <div className="v4-banner-download-app-0 ">
             <div className="v4-banner-download-app-1">
                 <div className="v4-banner-download-app-11">
                     <figure
@@ -105,7 +108,8 @@ const DownloadApp = () => {
                     ></figure>
                     <div className="v4-banner-download-app-content-0">
                         <div>
-                            <strong>DOWNLOAD</strong> OUR APP
+                            <strong>DOWNLOAD</strong><br />
+                            <p>OUR APP</p>
                         </div>
 
                         <div className="v4-banner-download-app-grid-feature-0">
@@ -121,7 +125,7 @@ const DownloadApp = () => {
                         </div>
 
                         <div className="grid-feature-item">
-                            {features
+                            {featuresMobile
                                 .filter((f) => f?.mobile)
                                 .map((f) => f.title)
                                 .join(" - ")}

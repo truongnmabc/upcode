@@ -10,6 +10,7 @@ export type IAppConfigData = {
     mainColorBold: string; // Màu chính đậm
     mainBackgroundColor: string; // Màu nền chính
     mainBackgroundColorContact: string; // Màu back của contact
+    linearGradientBanner: string; // banner download
     GA4ID: string; // Google Analytics 4 ID
     pageId: string; // Page ID (Facebook hoặc hệ thống khác)
     wpDomain: string; // Domain chính (WordPress hoặc khác)
@@ -33,6 +34,8 @@ const initialState: IAppConfigReducer = {
         mainColorBold: "#39B08C",
         mainBackgroundColor: "#f8fdff",
         mainBackgroundColorContact: "#f8fdff",
+        linearGradientBanner:
+            "linear-gradient(90deg, #FFEED5 0%, #FFFCD9 100%)",
         GA4ID: "G-9WFY79Y40M",
         pageId: "110654290809849",
         wpDomain: "https://passemall.com",
