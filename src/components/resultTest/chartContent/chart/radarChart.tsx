@@ -10,6 +10,7 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
+import { ITopicEndTest } from "..";
 
 ChartJS.register(
     RadialLinearScale,
@@ -19,22 +20,16 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-
-const RadarChart = () => {
+type IProps = {
+    listTopic: ITopicEndTest[];
+};
+const RadarChart: React.FC<IProps> = ({ listTopic }) => {
     const data = {
-        labels: [
-            "Eating",
-            "Drinking",
-            "Sleeping",
-            "Designing",
-            "Coding",
-            "Cycling",
-            "Running",
-        ],
+        labels: listTopic.map((item) => item.name?.slice(0, 5)),
         datasets: [
             {
                 label: "My First Dataset",
-                data: [65, 59, 90, 81, 56, 55, 40],
+                data: listTopic.map((item) => item.incorrect),
                 fill: true,
                 backgroundColor: "rgba(255, 99, 132, 0.2)",
                 borderColor: "rgb(255, 99, 132)",
@@ -43,24 +38,13 @@ const RadarChart = () => {
                 pointHoverBackgroundColor: "#fff",
                 pointHoverBorderColor: "rgb(255, 99, 132)",
             },
-            {
-                label: "My Second Dataset",
-                data: [28, 48, 40, 19, 96, 27, 100],
-                fill: true,
-                backgroundColor: "rgba(54, 162, 235, 0.2)",
-                borderColor: "rgb(54, 162, 235)",
-                pointBackgroundColor: "rgb(54, 162, 235)",
-                pointBorderColor: "#fff",
-                pointHoverBackgroundColor: "#fff",
-                pointHoverBorderColor: "rgb(54, 162, 235)",
-            },
         ],
     };
     const options = {
         responsive: true,
         plugins: {
             legend: {
-                display: true, // Hiển thị chú thích (legend)
+                display: false, // Hiển thị chú thích (legend)
                 position: "top",
             },
             tooltip: {
@@ -73,7 +57,7 @@ const RadarChart = () => {
                     display: true, // Hiển thị các đường góc
                 },
                 suggestedMin: 0, // Giá trị tối thiểu
-                suggestedMax: 100, // Giá trị tối đa
+                suggestedMax: 3, // Giá trị tối đa
             },
         },
     };

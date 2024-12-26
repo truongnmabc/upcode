@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ReviewContext } from "../../context/reviewContext";
+import clsx from "clsx";
 
 const ListReview = () => {
     return (
@@ -8,30 +10,35 @@ const ListReview = () => {
                 title="Random Questions"
                 des="Select questions randomly from the question bank."
                 bg="#BAE8DB"
+                type="random"
             />{" "}
             <ItemCard
                 icon={<IconWeakQuestion />}
                 title="Weak Questions"
                 des="Retake missed questions to improve your score."
                 bg="#FFC7C7"
+                type="weak"
             />{" "}
             <ItemCard
                 icon={<IconHardQuestion />}
                 title="Hard Questions"
                 des="Practice commonly answered incorrectly questions."
                 bg="#D3F7FF"
+                type="hard"
             />{" "}
             <ItemCard
                 icon={<IconSavedQuestion />}
                 title="Saved Questions"
                 des="Practice saved questions from lessons."
                 bg="#FEEDD5"
+                type="saved"
             />{" "}
             <ItemCard
                 icon={<IconAnsweredQuestion />}
                 title="Answered Questions"
                 des="Revisit all questions you have previously attempted."
                 bg="#DEEBFF"
+                type="answered"
             />
         </div>
     );
@@ -44,14 +51,23 @@ type IItemCard = {
     title: string;
     des: string;
     bg: string;
+    type: string;
 };
-const ItemCard: React.FC<IItemCard> = ({ icon, title, des, bg }) => {
+const ItemCard: React.FC<IItemCard> = ({ icon, title, des, bg, type }) => {
+    const { setSelectType, selectType } = useContext(ReviewContext);
+
     return (
         <div
-            className="p-4 rounded-xl flex gap-3  bg-white border border-solid border-[#2B4E44]"
+            className={clsx(
+                "p-4 rounded-xl flex gap-3 cursor-pointer  bg-white border border-solid ",
+                {
+                    "border-[#FC5656]": selectType === type,
+                }
+            )}
             style={{
                 boxShadow: "0px 2px 4px 0px #2121211F",
             }}
+            onClick={() => setSelectType(type)}
         >
             <div
                 className="rounded-2xl p-3 flex items-center justify-center"
