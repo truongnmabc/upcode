@@ -46,7 +46,7 @@ const ProgressFinishPage = ({ listAnswer }: { listAnswer: IAnswer[] }) => {
                 label: "Questions",
                 data: groupedAnswers.map((item) => item.count),
                 backgroundColor: groupedAnswers.map((item) =>
-                    item.label === "correct" ? "#5394fd" : "#F9586B"
+                    item.label === "correct" ? "#12E1AF" : "#F9586B"
                 ),
                 borderWidth: 4,
                 borderColor: "transparent",

@@ -1,6 +1,6 @@
 "use client";
 import { ICurrentGame } from "@/models/game/game";
-import { gameState, setCurrentGame, viewTest } from "@/redux/features/game";
+import { gameState, viewTest } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
 import React, { useEffect, useState } from "react";
@@ -61,29 +61,22 @@ const AnswerSheet: React.FC<IProps> = ({ isActions = false }) => {
                                         currentGame?.id === q.id,
                                     "border-[#07C58C] text-white bg-[#07C58C]":
                                         q.localStatus === "correct" &&
-                                        indexCurrentQuestion !== index &&
                                         !isActions,
                                     "border-[#FF746D] text-white bg-[#FF746D]":
                                         q.localStatus === "incorrect" &&
-                                        indexCurrentQuestion !== index &&
                                         !isActions,
                                     "opacity-90": q.localStatus === "new",
-                                    "cursor-pointer":
-                                        isActions && q.localStatus === "new",
+                                    "cursor-pointer": isActions,
                                     "cursor-not-allowed":
                                         type === "test" &&
                                         q.localStatus === "new" &&
                                         !isActions,
-                                    "border-[#21212185]":
+                                    "border-[#5497FF] text-white bg-[#5497FF]":
                                         isActions && q.localStatus !== "new",
                                 }
                             )}
                             onClick={() => {
-                                if (
-                                    q.localStatus === "new" &&
-                                    isActions &&
-                                    currentGame?.id !== q.id
-                                )
+                                if (isActions && currentGame?.id !== q.id)
                                     dispatch(viewTest(index));
                             }}
                         >

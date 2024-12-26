@@ -4,24 +4,40 @@ import Rating from "@mui/material/Rating";
 import { useEffect, useState } from "react";
 import "./StoreReviews.scss";
 import dynamic from "next/dynamic";
-const ReviewsDrawerV0 = dynamic(() => import("./ReviewsDrawerV0"), { ssr: false });
+const ReviewsDrawerV0 = dynamic(() => import("./ReviewsDrawerV0"), {
+    ssr: false,
+});
 
-const StoreReviews = ({ appId, callback }: { appId: number; callback?: () => void }) => {
+const StoreReviews = ({
+    appId,
+    callback,
+}: {
+    appId: number;
+    callback?: () => void;
+}) => {
     const [reviews, setReviews] = useState<any>({});
     const [reviewId, setChoosenReviewId] = useState();
     useEffect(() => {
         const getAppReviews = async () => {
             let res = await getAppReviewApi(appId);
-            if (!isProduction()) res = REVIEWS;
+            if (!isProduction) res = REVIEWS;
             if (res && !!res?.reviews?.length) {
                 let _reviews = res.reviews;
                 _reviews = _reviews.filter((r) => r.rating === 5);
-                const randomColorList = ["#666444", "#F1EFD8", "#767462", "#3A3523", "#505130", "#252F14"];
+                const randomColorList = [
+                    "#666444",
+                    "#F1EFD8",
+                    "#767462",
+                    "#3A3523",
+                    "#505130",
+                    "#252F14",
+                ];
                 const min = 0;
                 const max = randomColorList.length - 1;
 
                 for (let index = 0; index < _reviews.length; index++) {
-                    let intNumber = Math.floor(Math.random() * (max - min)) + min;
+                    let intNumber =
+                        Math.floor(Math.random() * (max - min)) + min;
                     let chosenColor = randomColorList[intNumber];
                     _reviews[index].color = chosenColor;
                 }
@@ -63,7 +79,11 @@ const RVColumnV0 = ({ rv, openDrawer }) => {
         <div className="rv-grid-column">
             {rv?.map((review, index) => {
                 return (
-                    <div className="rv-item-wrapper" onClick={() => openDrawer(review.id)} key={index}>
+                    <div
+                        className="rv-item-wrapper"
+                        onClick={() => openDrawer(review.id)}
+                        key={index}
+                    >
                         <div className="rv-item">
                             <div className="profile-wrapper">
                                 <div
@@ -72,18 +92,29 @@ const RVColumnV0 = ({ rv, openDrawer }) => {
                                         backgroundColor: review.color,
                                     }}
                                 >
-                                    <span className="letter">{review.author[0]}</span>
+                                    <span className="letter">
+                                        {review.author[0]}
+                                    </span>
                                 </div>
                                 <div className="profile-name">
-                                    <span className="name">{review.author}</span>
-                                    <span className="last-update">{review.lastUpdate}</span>
+                                    <span className="name">
+                                        {review.author}
+                                    </span>
+                                    <span className="last-update">
+                                        {review.lastUpdate}
+                                    </span>
                                 </div>
                             </div>
                             <div className="twitted">
                                 <span>{review.content}</span>
                             </div>
                             <div className="rate">
-                                <Rating name="disabled" value={review.rating} readOnly size={"small"} />
+                                <Rating
+                                    name="disabled"
+                                    value={review.rating}
+                                    readOnly
+                                    size={"small"}
+                                />
                             </div>
                         </div>
                     </div>
@@ -133,7 +164,8 @@ const REVIEWS = {
         {
             id: 3943,
             title: "Good",
-            content: "Really good studying app. Recruiters recommended it to me",
+            content:
+                "Really good studying app. Recruiters recommended it to me",
             author: "levibestdog",
             lastUpdate: "2022-05-25",
             rating: 5,
@@ -190,7 +222,8 @@ const REVIEWS = {
         {
             id: 3858,
             title: null,
-            content: "i love this app, its really helps for better understanding the question you may not know.",
+            content:
+                "i love this app, its really helps for better understanding the question you may not know.",
             author: "Raymond Quintero",
             lastUpdate: "2022-05-19",
             rating: 4,
@@ -224,7 +257,8 @@ const REVIEWS = {
         {
             id: 3814,
             title: null,
-            content: "This app is so Amazing and effective I recommend it for anyone looking to join the military!",
+            content:
+                "This app is so Amazing and effective I recommend it for anyone looking to join the military!",
             author: "Warnerboyz",
             lastUpdate: "2022-05-13",
             rating: 5,
@@ -312,7 +346,8 @@ const REVIEWS = {
         {
             id: 3684,
             title: null,
-            content: "i scored a 78 on PiCAT after studying for about 2 weeks. highly recommend the free version. take notes!",
+            content:
+                "i scored a 78 on PiCAT after studying for about 2 weeks. highly recommend the free version. take notes!",
             author: "Shayna Smart",
             lastUpdate: "2022-04-30",
             rating: 5,
@@ -334,7 +369,8 @@ const REVIEWS = {
         {
             id: 3651,
             title: null,
-            content: "really good app definitely guaranteed to help with the asvab",
+            content:
+                "really good app definitely guaranteed to help with the asvab",
             author: "cameron bishop",
             lastUpdate: "2022-04-27",
             rating: 5,
@@ -425,7 +461,8 @@ const REVIEWS = {
         {
             id: 3587,
             title: null,
-            content: "I love this app, Just a slight issue with explaining the problem.",
+            content:
+                "I love this app, Just a slight issue with explaining the problem.",
             author: "Ahmad Henley",
             lastUpdate: "2022-04-20",
             rating: 4,
@@ -447,7 +484,8 @@ const REVIEWS = {
         {
             id: 3557,
             title: null,
-            content: "excellent app, using it for the second time to prepare myself and refresh my memory for the ASVAB.",
+            content:
+                "excellent app, using it for the second time to prepare myself and refresh my memory for the ASVAB.",
             author: "Tim Colby",
             lastUpdate: "2022-04-16",
             rating: 5,

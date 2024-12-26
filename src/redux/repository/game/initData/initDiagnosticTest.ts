@@ -32,6 +32,7 @@ const setDataStoreDiagnostic = async ({
         remainTime: 60,
         type: "diagnosticTest",
         status: 0,
+        turn: 0,
     });
 };
 
@@ -158,7 +159,6 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                     diagnostic.question,
                     progressData
                 );
-                console.log("kk", questions);
 
                 return {
                     progressData: progressData,

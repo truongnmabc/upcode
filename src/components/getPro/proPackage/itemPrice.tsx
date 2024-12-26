@@ -1,84 +1,17 @@
-import React, { useEffect, useState } from "react";
-import "./ProPackage.scss";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import MyContainer from "../container/myContainer";
-import V0ProDiscountDrawer from "./V0ProDiscountDrawer";
+import LazyLoadImage from "@/components/images";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { IOneWeek, IPriceConfig } from "@/utils/config_paypal";
+import React from "react";
 
-/** Component này áp dụng cho trường hợp không phải one-time */
-const ProPackage = ({
-    handleClickGetPro,
-    loading,
-    prices,
+const ItemPrice = ({
+    price,
+    active = false,
+    handleActive,
 }: {
-    handleClickGetPro: (index: number) => void;
-    loading: boolean;
-    prices: any[];
+    price: IPriceConfig;
+    active: boolean;
+    handleActive: () => void;
 }) => {
-    const isMobile = useMediaQuery("(max-width: 768px)");
-    let dataConfigPro = prices;
-    const [active, setActive] = useState(1);
-    const [openDiscountDrawer, setOpenDiscountDrawer] = useState(false);
-    useEffect(() => {
-        const el = document.querySelector("#text-save-price");
-        if (el) {
-            const observer = new IntersectionObserver(
-                ([entry]) => {
-                    if (entry.isIntersecting) {
-                        setOpenDiscountDrawer(false);
-                        return;
-                    }
-                    const KEY = "DISCOUNT_TIME";
-                    const timeFromStorage = parseInt(localStorage.getItem(KEY));
-                    if (!isNaN(timeFromStorage) && timeFromStorage > 0) {
-                        setOpenDiscountDrawer(true);
-                    }
-                },
-                {
-                    root: null,
-                    threshold: 1,
-                }
-            );
-            observer.observe(el);
-        }
-    }, []);
-
-    return (
-        <>
-            <div className="app-pro-package">
-                <MyContainer className="pro-package">
-                    {dataConfigPro.map((price, i) => (
-                        <PriceItem
-                            price={price}
-                            key={i}
-                            active={i === active}
-                            handleActive={() => setActive(i)}
-                            isMobile={isMobile}
-                        />
-                    ))}
-                </MyContainer>
-                <div
-                    className="upgrade-btn v4-button-animtaion"
-                    onClick={() => {
-                        if (!loading) handleClickGetPro(active);
-                    }}
-                >
-                    Upgrade Now{" "}
-                </div>
-            </div>
-            <V0ProDiscountDrawer
-                // appInfo={appInfo}
-                onClickGetPro={(index: number) => {
-                    handleClickGetPro(index);
-                }}
-                open={openDiscountDrawer}
-                setOpen={setOpenDiscountDrawer}
-                saleIndex={active}
-                prices={prices}
-            />
-        </>
-    );
-};
-const PriceItem = ({ price, active = false, handleActive, isMobile }) => {
     const {
         price: salePrice,
         initPrice,
@@ -87,6 +20,8 @@ const PriceItem = ({ price, active = false, handleActive, isMobile }) => {
         trialDay,
         savePrice,
     } = price;
+
+    const isMobile = useIsMobile();
     return (
         <div
             className={`price-item ${active ? "active" : ""}`}
@@ -94,8 +29,8 @@ const PriceItem = ({ price, active = false, handleActive, isMobile }) => {
         >
             {active && (
                 <div className="icon-check">
-                    <img
-                        src="./images/passemall/new-pro/check-price.png"
+                    <LazyLoadImage
+                        src="/images/passemall/new-pro/check-price.png"
                         alt="icon-check"
                     />
                 </div>
@@ -125,7 +60,7 @@ const PriceItem = ({ price, active = false, handleActive, isMobile }) => {
                         <div className="trial-day">
                             {trialDay && (
                                 <>
-                                    {trialDay}-day <b>FREE</b> trial
+                                    {trialDay}-days <b>FREE</b> trial
                                 </>
                             )}
                         </div>
@@ -158,13 +93,13 @@ const PriceItem = ({ price, active = false, handleActive, isMobile }) => {
                         <div className="trial-day">
                             {trialDay && (
                                 <>
-                                    {trialDay}-day <b>FREE</b> trial
+                                    {trialDay}-days <b>FREE</b> trial
                                 </>
                             )}
                         </div>
                     </div>
                     <div className="save-price">
-                        {savePrice?.text && (
+                        {savePrice.text && (
                             <div className="save-price-container">
                                 <div className="text">{savePrice?.text}</div>
                                 <div className="save-percent">
@@ -182,4 +117,5 @@ const PriceItem = ({ price, active = false, handleActive, isMobile }) => {
         </div>
     );
 };
-export default ProPackage;
+
+export default ItemPrice;

@@ -17,7 +17,7 @@ export class DB extends Dexie {
     topics!: Table<ITopic>;
     testQuestions!: Table<ITestQuestion>;
     useActions!: Table<IUserActions>;
-    tests!: Table<ITest>;
+    // tests!: Table<ITest>;
     constructor(appName: string) {
         super(appName);
 
@@ -47,7 +47,7 @@ export class DB extends Dexie {
             // part: "++id, parentId",
             useActions: "++id,partId,questionId",
 
-            tests: "++id, testType",
+            // tests: "++id, testType",
 
             testQuestions: "++id,parentId,type",
         });

@@ -1,5 +1,4 @@
 import IconGridTest from "@/components/icon/iconGridTest";
-import { ITest } from "@/models/tests/tests";
 import { appInfoState } from "@/redux/features/appInfo";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
@@ -7,8 +6,11 @@ import { revertPathName } from "@/utils/pathName";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
-
-const ItemTestLeft = ({ test, index }: { test: ITest; index: number }) => {
+type IListTest = {
+    parentId: number;
+    duration: number;
+};
+const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
     const router = useRouter();
     const { appInfo } = useAppSelector(appInfoState);
     const dispatch = useAppDispatch();
@@ -17,24 +19,24 @@ const ItemTestLeft = ({ test, index }: { test: ITest; index: number }) => {
     const handleCLick = useCallback(() => {
         dispatch(
             initTestQuestionThunk({
-                testId: test.id.toString(),
+                testId: test.parentId,
                 duration: test.duration,
             })
         );
         const _href = revertPathName({
-            href: `study/practice-test?type=test&testId=${test.id}`,
+            href: `study/practice-test?type=test&testId=${test.parentId}`,
             appName: appInfo.appShortName,
         });
 
         router.replace(_href);
-    }, [test.id, test.duration, dispatch, appInfo.appShortName, router]);
+    }, [test.parentId, test.duration, dispatch, appInfo.appShortName, router]);
 
     return (
         <div
             className={clsx(
                 "bg-white cursor-pointer hover:border-[#4797B1] rounded-md border border-solid w-full flex items-center",
                 {
-                    "border-[#4797B1]": testId === test.id.toString(),
+                    "border-[#4797B1]": testId === test.parentId.toString(),
                 }
             )}
             onClick={handleCLick}

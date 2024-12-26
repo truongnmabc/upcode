@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { hostname } from "os";
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: false,
 });
@@ -30,6 +31,10 @@ const nextConfig: NextConfig = withPlugins([[withBundleAnalyzer()]], {
             {
                 protocol: "https",
                 hostname: "cdl-prep.com",
+            },
+            {
+                protocol: "https",
+                hostname: "lh3.googleusercontent.com",
             },
         ],
     },

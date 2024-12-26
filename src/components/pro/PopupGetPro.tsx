@@ -7,9 +7,10 @@ import {
 } from "../../config/config_paypal";
 // import SubcriptionButton from "./paypal_button/SubcriptionButton";
 import "./PopupGetPro.scss";
-import { IAppInfo } from "../../models/AppInfo";
 import ProPlanSvg from "../icon/ProPlanSvg";
 import PayPalButtonView from "./paypal_button/PayPalButtonView";
+import { IAppInfo } from "@/models/app/appInfo";
+import SubcriptionButton from "./paypal_button/SubcriptionButton";
 
 export interface IButtonPropsV4 {
     price: string;
@@ -32,26 +33,24 @@ const PopupGetPro = ({
     appInfo: IAppInfo;
 }) => {
     return (
-        <React.Fragment>
-            <Dialog
-                className="pop-up-new-pro-pc"
-                onClose={() => onClose()}
-                open={true}
-                PaperProps={{
-                    style: {
-                        borderRadius: "20px",
-                        maxHeight: "70vh",
-                        width: "100%",
-                    },
-                }}
-            >
-                <PopUpGetProContent
-                    appInfo={appInfo}
-                    valueButton={valueButton}
-                    onClose={onClose}
-                />
-            </Dialog>
-        </React.Fragment>
+        <Dialog
+            className="pop-up-new-pro-pc"
+            onClose={() => onClose()}
+            open={true}
+            PaperProps={{
+                style: {
+                    borderRadius: "20px",
+                    maxHeight: "70vh",
+                    width: "100%",
+                },
+            }}
+        >
+            <PopUpGetProContent
+                appInfo={appInfo}
+                valueButton={valueButton}
+                onClose={onClose}
+            />
+        </Dialog>
     );
 };
 const PopUpGetProContent = ({

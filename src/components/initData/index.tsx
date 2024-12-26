@@ -6,6 +6,7 @@ import { IAppInfo } from "@/models/app/appInfo";
 import { IQuestion } from "@/models/question/questions";
 import { ITest } from "@/models/tests/tests";
 import Topic from "@/models/topics/topics";
+import { fetchQuestions } from "@/redux/repository/game/initData/initPracticeTest";
 import { Table } from "dexie";
 import { useCallback, useLayoutEffect } from "react";
 
@@ -124,13 +125,29 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
             } else {
                 const list = tests[name];
                 for (const test of list) {
-                    const exists = await db.tests.get(test.id);
+                    const exists = await db?.testQuestions
+                        .where("parentId")
+                        .equals(test.id)
+                        .first();
                     if (!exists) {
-                        await db.tests.add({
-                            ...test,
-                            status: 0,
-                            testType: name,
-                        });
+                        const listQuestion = await fetchQuestions(test.id);
+                        await db
+                            .transaction("rw", db.testQuestions, async () =>
+                                db?.testQuestions.add({
+                                    parentId: test.id,
+                                    question: listQuestion,
+                                    duration: test.duration,
+                                    isPaused: false,
+                                    startTime: new Date().getTime(),
+                                    remainTime: test.duration * 60,
+                                    type: name,
+                                    status: 0,
+                                    turn: 0,
+                                })
+                            )
+                            .catch((error) => {
+                                console.log("error", error);
+                            });
                     }
                 }
             }
@@ -206,15 +223,8 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
                     });
 
                 // *NOTE Khởi tạo danh sách bài test
-                await db
-                    .transaction(
-                        "rw",
-                        db.tests,
-                        async () => await initDataTest(tests, db)
-                    )
-                    .catch((error) => {
-                        console.log("error", error);
-                    });
+
+                await initDataTest(tests, db);
 
                 await fetchAndProcessTopicsRecursive(topic, db);
 

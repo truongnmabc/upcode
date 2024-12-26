@@ -1,4 +1,4 @@
-import { APP_SHORT_NAME } from "../config_app";
+const APP_SHORT_NAME = process.env.NEXT_PUBLIC_APP_SHORT_NAME;
 export const IOS_STORE_PATH = "app-ios";
 export const ANDROID_STORE_PATH = "app-android";
 

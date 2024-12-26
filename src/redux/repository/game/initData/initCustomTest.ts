@@ -12,7 +12,6 @@ const initCustomTestThunk = createAsyncThunk(
             .toArray();
 
         if (diagnostic && diagnostic?.length > 0) {
-            console.log("🚀 ~ diagnostic:", diagnostic);
             const currentTest = diagnostic.find((item) => item.status === 0);
             if (currentTest) return currentTest;
         }

@@ -20,7 +20,9 @@ const ContentCustomTest = () => {
             <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
                 <Fragment>
                     <div className="sm:p-4 flex flex-col gap-3">
-                        <TitleQuestion />
+                        <div className="w-full text-center capitalize text-xl font-semibold">
+                            Custom Test
+                        </div>
                         <ProgressQuestion />
                         <div className="w-full flex items-center justify-center">
                             <div className="flex items-center justify-center w-fit gap-2">
