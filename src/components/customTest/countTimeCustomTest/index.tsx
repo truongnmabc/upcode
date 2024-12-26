@@ -1,3 +1,4 @@
+"use client";
 import RouterApp from "@/common/router/router.constant";
 import CountTime from "@/components/countTime";
 import { appInfoState } from "@/redux/features/appInfo";

@@ -1,5 +1,5 @@
 import React from "react";
-import BannerDownloadApp from "./bannerDownload/bannerDownloadApp";
+import BannerDownloadApp from "../../bannerDownload/bannerDownloadApp";
 import SeoContent from "../../seoContent/seoContent";
 import MainStudyView from "./mainStudyView";
 

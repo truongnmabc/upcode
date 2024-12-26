@@ -1,3 +1,4 @@
+"use client";
 import IconBookmark from "@/components/icon/iconBookmark";
 import IconDislike from "@/components/icon/iconDislike";
 import IconLike from "@/components/icon/iconLike";
