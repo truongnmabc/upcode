@@ -1,5 +1,4 @@
-import { APP_SHORT_NAME } from "../config_app";
-
+const APP_SHORT_NAME = "passemall";
 export const IOS_STORE_PATH = "app-ios";
 export const ANDROID_STORE_PATH = "app-android";
 

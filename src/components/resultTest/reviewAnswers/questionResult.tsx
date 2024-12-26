@@ -5,8 +5,9 @@ import ExplanationDetail from "@/components/study/contentGroup/mainStudyView/exp
 import QuestionContent from "@/components/study/contentGroup/mainStudyView/question/questionContent";
 import React from "react";
 import { MathJaxContext } from "better-react-mathjax";
+import { ICurrentGame } from "@/models/game/game";
 
-const QuestionResult = () => {
+const QuestionResult = ({ item }: { item: ICurrentGame }) => {
     return (
         <div
             className="rounded-lg"
@@ -28,7 +29,7 @@ const QuestionResult = () => {
             <div className="rounded-b-lg bg-white p-4">
                 <MathJaxContext>
                     <QuestionContent />
-                    <ChoicesPanel />
+                    <ChoicesPanel isBlockEnter />
                     <ExplanationDetail unLock />
                 </MathJaxContext>
             </div>

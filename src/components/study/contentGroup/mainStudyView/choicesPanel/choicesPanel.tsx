@@ -64,8 +64,12 @@ function shuffleArray<T>(array: T[]): T[] {
 
 type IProps = {
     isActions?: boolean;
+    isBlockEnter?: boolean;
 };
-const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
+const ChoicesPanel: React.FC<IProps> = ({
+    isActions = false,
+    isBlockEnter = false,
+}) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const params = useParams();
@@ -210,7 +214,8 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
                 if (pathname?.includes("custom_test")) handleEnterCustomTest();
             }
         };
-        document.addEventListener("keydown", handleEnterEvent, true);
+        if (!isBlockEnter)
+            document.addEventListener("keydown", handleEnterEvent, true);
 
         return () => {
             document.removeEventListener("keydown", handleEnterEvent, true);
@@ -224,6 +229,7 @@ const ChoicesPanel: React.FC<IProps> = ({ isActions = false }) => {
         currentGame.selectedAnswer,
         type,
         pathname,
+        isBlockEnter,
     ]);
 
     return (

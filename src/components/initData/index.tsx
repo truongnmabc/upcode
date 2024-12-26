@@ -10,7 +10,7 @@ import { fetchQuestions } from "@/redux/repository/game/initData/initPracticeTes
 import { Table } from "dexie";
 import { useCallback, useLayoutEffect } from "react";
 
-export interface ITopic {
+interface ITopic {
     id: number;
     parentId: number;
     name: string;
