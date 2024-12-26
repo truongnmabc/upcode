@@ -1,9 +1,48 @@
 "use client";
 import React from "react";
+import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-const DashboardCard = () => {
+ChartJS.register(ArcElement, Tooltip, Legend);
+const DashboardCard = ({
+    info,
+}: {
+    info: {
+        total: number;
+        pass: number;
+        percent: number;
+    };
+}) => {
     const handleClickImprove = () => {
         console.log("handleClickImprove");
+    };
+
+    const data = {
+        labels: ["correct", "incorrect"],
+        datasets: [
+            {
+                data: [info.percent, 100 - info.percent],
+                backgroundColor: ["#12E1AF", "transparent"],
+                borderColor: "transparent",
+                cutout: "90%",
+                borderRadius: 16,
+                spacing: 2,
+            },
+        ],
+    };
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                enabled: true,
+            },
+        },
+        rotation: 270,
+        circumference: 180,
+        aspectRatio: 2,
     };
     return (
         <div className="relative min-w-[320px] h-[340px] z-0 flex flex-col items-center">
@@ -20,25 +59,21 @@ const DashboardCard = () => {
                         strokeDashoffset="440"
                         strokeLinecap="round"
                     ></circle>
-                    {/* <circle
-                        cx="160"
-                        cy="160"
-                        r="140"
-                        stroke="#4ADE80"
-                        strokeWidth="16"
-                        fill="none"
-                        strokeDasharray="60"
-                        // strokeDashoffset="220"
-                    ></circle> */}
                 </svg>
+                <div className="w-[320px]  h-[320px] z-10  absolute top-0 pt-[10px] left-0 flex justify-center">
+                    <div className="w-[300px]   h-[160px]   ">
+                        <Doughnut data={data} options={options} />
+                    </div>
+                </div>
+
                 <div className="absolute z-10 inset-0 flex pt-[126px] justify-center">
                     <span className="text-5xl font-bold text-[#F87171]">
-                        30%
+                        {info.percent} %
                     </span>
                 </div>
             </div>
 
-            <div className=" absolute bottom-0 left-0 w-full z-20">
+            <div className=" absolute  bottom-0 left-0 w-full z-20">
                 <div className="mt-4 flex justify-between w-full ">
                     <div className="flex  gap-2">
                         <div className="h-1 mt-3 rounded-md bg-[#15CB9F] w-3"></div>
@@ -47,7 +82,7 @@ const DashboardCard = () => {
                                 Correct
                             </p>
                             <p className="text-[#0C1827] text-lg font-semibold">
-                                15 questions
+                                {info.pass} questions
                             </p>
                         </div>
                     </div>
@@ -59,7 +94,7 @@ const DashboardCard = () => {
                                 Incorrect
                             </p>
                             <p className="text-[#0C1827] text-lg font-semibold">
-                                45 questions
+                                {info.total} questions
                             </p>
                         </div>
                     </div>

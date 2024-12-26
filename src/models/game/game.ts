@@ -19,6 +19,7 @@ export interface ICurrentGame
     turn?: number;
     tag?: string;
     feedBack?: IFeedBack;
+    passing?: number;
 }
 
 export interface IGameReducer {
@@ -38,4 +39,5 @@ export interface IGameReducer {
     belowFifty: Record<string, ICurrentGame[]>;
     aboveFifty: Record<string, ICurrentGame[]>;
     feedBack?: IFeedBack;
+    passing?: number;
 }

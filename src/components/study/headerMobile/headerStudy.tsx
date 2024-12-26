@@ -4,7 +4,7 @@ import IconBack from "@/components/icon/iconBack";
 import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import React, { Fragment, lazy, useState } from "react";
+import React, { Fragment, useState } from "react";
 
 const MobileDrawerConfirmExit = dynamic(
     () => import("./mobileDrawerConfirmExit"),
@@ -13,11 +13,11 @@ const MobileDrawerConfirmExit = dynamic(
     }
 );
 
+import dynamic from "next/dynamic";
 import {
     getKeyTest,
     getLastPathSegment,
 } from "../contentGroup/mainStudyView/title/titleQuestion";
-import dynamic from "next/dynamic";
 
 const HeaderStudy = () => {
     const [openDrawer, setOpenDrawer] = useState(false);

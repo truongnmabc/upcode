@@ -55,7 +55,7 @@ const FN = () => {
                     })
             );
         }
-    }, [RANDOM_COLORS]);
+    }, [RANDOM_COLORS, selectedTopics]);
 
     useEffect(() => {
         handleGetData();

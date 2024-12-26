@@ -31,8 +31,7 @@ type IProps = {
     isActions?: boolean;
 };
 const AnswerSheet: React.FC<IProps> = ({ isActions = false }) => {
-    const { listQuestion, indexCurrentQuestion, currentGame, type } =
-        useAppSelector(gameState);
+    const { listQuestion, currentGame, type } = useAppSelector(gameState);
 
     const [list, setList] = useState<ICurrentGame[]>(defaultData);
 
@@ -48,13 +47,13 @@ const AnswerSheet: React.FC<IProps> = ({ isActions = false }) => {
             <h3 className="font-semibold text-center text-xl truncate font-poppins">
                 Questions
             </h3>
-            <div className="flex gap-2 flex-wrap ">
+            <div className="flex gap-2  flex-wrap ">
                 {list?.map((q, index) => {
                     return (
                         <div
                             key={index}
                             className={ctx(
-                                "w-[30px] h-[30px] text-xs rounded transition-all flex items-center justify-center border border-solid",
+                                "w-[30px] h-[30px]  text-xs rounded transition-all flex items-center justify-center border border-solid",
                                 {
                                     "border-red-500": q.localStatus === "skip",
                                     "border-[#5497FF] pointer-events-auto cursor-pointer":

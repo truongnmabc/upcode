@@ -80,7 +80,7 @@ const initPracticeThunk = createAsyncThunk(
     "initPracticeThunk",
     async ({ testId, duration }: IInitQuestion) => {
         let time = duration;
-        let id = testId;
+        const id = testId;
         let currentTest;
         if (!testId) {
             const res = await db?.testQuestions

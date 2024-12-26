@@ -4,7 +4,7 @@ import IconDislike from "@/components/icon/iconDislike";
 import IconLike from "@/components/icon/iconLike";
 
 import { Dialog } from "@mui/material";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReportMistake from "./reportMistake";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { gameState } from "@/redux/features/game";

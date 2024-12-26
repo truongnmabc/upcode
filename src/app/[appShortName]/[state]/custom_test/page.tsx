@@ -22,7 +22,7 @@ export default async function CustomPage() {
                     <HeaderMobile />
                 </Grid2>
             </Grid2>
-            <MyContainer>
+            <MyContainer className="py-4">
                 <Grid2
                     container
                     spacing={{ xs: 0, sm: 2 }}
@@ -42,7 +42,7 @@ export default async function CustomPage() {
                             xs: 12,
                         }}
                     >
-                        <div className="w-full  min-h-full flex flex-1 flex-col gap-4 sm:gap-6  p-4 sm:p-0  h-full">
+                        <div className="w-full  min-h-full flex flex-1 flex-col gap-4 sm:gap-6    h-full">
                             <ContentCustomTest />
                             <BannerDownloadApp />
                             {contentSeo && (
