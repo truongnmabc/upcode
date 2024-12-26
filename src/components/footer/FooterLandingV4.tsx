@@ -158,9 +158,9 @@ const FooterLandingV4 = () => {
                     </div>
 
                     <span>
-                        {appInfo.appName == "CDL"
+                        {appInfo.appShortName == "cdl"
                             ? "CDL Prep is your ultimate resource to ace your CDL exam with ease, providing simulated practice tests, key insights, and everything you need to hit the road successfully!"
-                            : appInfo.descriptionSEO}
+                            : appInfo.appShortName == "asvab" ? "ASVAB Prep provides simulated ASVAB practice tests and insights on the test to help you achieve your military career goals." : appInfo.descriptionSEO}
                     </span>
 
                     {!isMobile && <DmcaIcon />}

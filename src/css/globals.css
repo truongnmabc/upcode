@@ -64,7 +64,9 @@ p {
     }
 }
 .max-w-component-desktop {
-    max-width: 1206px;
+    max-width: 1238px;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 * {
@@ -72,7 +74,9 @@ p {
 }
 
 .max-w-page {
-    max-width: 1206px;
+    max-width: 1238px;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 .text-primary {
     color: var(--text-color-primary);
