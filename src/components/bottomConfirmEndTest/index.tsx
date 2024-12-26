@@ -1,7 +1,6 @@
 "use client";
 import RouterApp from "@/common/router/router.constant";
 import { MtUiButton } from "@/components/button";
-import Sheet from "@/components/sheet";
 import { appInfoState } from "@/redux/features/appInfo";
 import { endTest } from "@/redux/features/game";
 import { shouldOpenSubmitTest, testState } from "@/redux/features/tests";
@@ -11,9 +10,12 @@ import finishDiagnosticThunk from "@/redux/repository/game/finish/finishDiagnost
 import finishFinalThunk from "@/redux/repository/game/finish/finishFinal";
 import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTest";
 import { revertPathName } from "@/utils/pathName";
+import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
-
+import { useCallback, useEffect, useState } from "react";
+const Sheet = dynamic(() => import("@/components/sheet"), {
+    ssr: false,
+});
 const BottomConfigTest = () => {
     const { openSubmit } = useAppSelector(testState);
     const dispatch = useAppDispatch();
@@ -21,6 +23,10 @@ const BottomConfigTest = () => {
     const { appInfo } = useAppSelector(appInfoState);
     const pathname = usePathname();
 
+    const [open, setOpen] = useState(false);
+    useEffect(() => {
+        setOpen(true);
+    }, []);
     const router = useRouter();
     const type = useSearchParams().get("type");
     const handleConfirm = useCallback(() => {

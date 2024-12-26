@@ -7,6 +7,7 @@ import { NavigationEvents } from "./navigationEvents";
 import { ProgressBar } from "./progressBar";
 import WrapperScroll from "./wrapperScroll";
 import SignInProvider from "./signInProvider";
+import AdsProvider from "../ads/adsProvider";
 const FN = ({ children }: { children: React.ReactNode }) => {
     return (
         <Fragment>
@@ -14,9 +15,7 @@ const FN = ({ children }: { children: React.ReactNode }) => {
                 <ProgressBar className="fixed z-50 top-0 h-1 bg-sky-500">
                     <NavigationEvents />
                 </ProgressBar>
-
                 <HeaderApp />
-
                 <div className="flex-1 flex flex-col bg-theme-white dark:bg-theme-dark  justify-between">
                     {children}
                     <FooterApp />
@@ -24,6 +23,7 @@ const FN = ({ children }: { children: React.ReactNode }) => {
                 <ToastContainer autoClose={2000} />
                 <SheetApp />
                 <SignInProvider />
+                <AdsProvider />
             </WrapperScroll>
         </Fragment>
     );

@@ -9,7 +9,18 @@ import { usePathname } from "next/navigation";
 import { convertPathName } from "@/utils/pathName";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
-const FN = () => {
+export const listPageNotHeader = [
+    "/study",
+    "/diagnostic_test",
+    "/final_test",
+    "/custom_test",
+];
+
+const isPathInList = (path: string, list: string[]) => {
+    return list.some((item) => path.includes(item));
+};
+
+const HeaderApp = () => {
     const pathname = usePathname() || "";
     const path = convertPathName(pathname);
     const isMobile = useIsMobile();
@@ -18,7 +29,7 @@ const FN = () => {
         <Fragment>
             <div className="w-full">
                 <DownLoadApp />
-                {isMobile && path?.includes("/study") ? (
+                {isMobile && isPathInList(path, listPageNotHeader) ? (
                     <></>
                 ) : (
                     <div
@@ -56,5 +67,4 @@ const FN = () => {
     );
 };
 
-const HeaderApp = React.memo(FN);
-export default HeaderApp;
+export default React.memo(HeaderApp);
