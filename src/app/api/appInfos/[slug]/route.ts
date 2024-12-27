@@ -8,6 +8,7 @@ export async function GET(
     { params }: { params: Promise<{ slug: string }> }
 ) {
     const slug = (await params)?.slug;
+    console.log("🚀 ~ slug:", slug);
     if (!slug) throw new Error("");
 
     const cachingValue = cache.get(slug);

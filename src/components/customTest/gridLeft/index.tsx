@@ -31,7 +31,17 @@ const GridLeftCustomTest = () => {
                 setListTest(list);
             }
         };
-        handleGetData();
+        if (listQuestion?.length) handleGetData();
+
+        return () => {
+            setOpenModalSetting(false);
+        };
+    }, [listQuestion?.length]);
+
+    useEffect(() => {
+        if (listQuestion?.length === 0) {
+            setOpenModalSetting(true);
+        }
     }, [listQuestion?.length]);
 
     const onClose = () => {
@@ -142,7 +152,9 @@ const GridLeftCustomTest = () => {
             {openModalSetting && (
                 <ModalSettingCustomTest
                     item={itemSelect}
-                    isShowBtnCancel={listTest?.length > 0}
+                    isShowBtnCancel={
+                        listTest?.length > 0 || listQuestion?.length > 0
+                    }
                     open={openModalSetting}
                     onClose={onClose}
                 />

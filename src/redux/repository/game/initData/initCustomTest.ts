@@ -14,6 +14,7 @@ const initCustomTestThunk = createAsyncThunk(
         if (list && list?.length > 0) {
             const currentTest = list.find((item) => item.status === 0);
             if (currentTest) return currentTest;
+            return null;
         }
         return null;
     }

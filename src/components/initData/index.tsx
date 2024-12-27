@@ -143,6 +143,8 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
                                     type: name,
                                     status: 0,
                                     turn: 0,
+                                    topicIds: test.topicIds,
+                                    groupExamData: test.groupExamData,
                                 })
                             )
                             .catch((error) => {

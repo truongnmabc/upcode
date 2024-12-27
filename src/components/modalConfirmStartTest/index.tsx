@@ -56,6 +56,11 @@ const ModalConfirm = () => {
     useEffect(() => {
         return () => {
             setOpen(false);
+        };
+    });
+
+    useEffect(() => {
+        return () => {
             if (idTopic && idTopic !== -1 && type === "test") {
                 dispatch(
                     pauseTestThunk({
@@ -67,7 +72,9 @@ const ModalConfirm = () => {
     }, [idTopic, type]);
 
     useEffect(() => {
-        if (isPaused) {
+        console.log("🚀 ~ ModalConfirm ~ isPaused:", isPaused);
+
+        if (isPaused && idTopic) {
             setTimeout(() => setOpen(true), 200);
         }
     }, [isPaused, idTopic]);

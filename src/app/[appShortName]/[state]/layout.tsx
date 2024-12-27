@@ -1,5 +1,6 @@
-import BottomConfigTest from "@/components/bottomConfirmEndTest";
+import BottomConfirmTest from "@/components/bottomConfirmEndTest";
 import ModalConfirm from "@/components/modalConfirmStartTest";
+import UserActionListen from "@/components/userAction";
 
 export default function BlogLayout({
     children,
@@ -9,8 +10,9 @@ export default function BlogLayout({
     return (
         <section>
             {children}
-            <BottomConfigTest />
+            <BottomConfirmTest />
             <ModalConfirm />
+            <UserActionListen />
         </section>
     );
 }

@@ -25,7 +25,7 @@ type IProps = {
 };
 const RadarChart: React.FC<IProps> = ({ listTopic }) => {
     const data = {
-        labels: listTopic.map((item) => item.name?.slice(0, 5)),
+        labels: listTopic.map((item) => item.name),
         datasets: [
             {
                 label: "My First Dataset",

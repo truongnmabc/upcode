@@ -1,9 +1,11 @@
 import { ICurrentGame } from "../game/game";
 import { IQuestion } from "../question/questions";
+import { IGroupExam } from "./tests";
 
 export interface ITestQuestion {
     parentId: number;
     id?: number;
+    // Danh sách câu hỏi
     question: IQuestion[];
     duration: number;
     isPaused: boolean;
@@ -18,4 +20,7 @@ export interface ITestQuestion {
     belowFifty?: Record<string, ICurrentGame[]>;
     aboveFifty?: Record<string, ICurrentGame[]>;
     turn: number;
+
+    topicIds?: number[];
+    groupExamData?: IGroupExam[];
 }

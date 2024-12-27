@@ -3,17 +3,16 @@ import IconBookmark from "@/components/icon/iconBookmark";
 import IconDislike from "@/components/icon/iconDislike";
 import IconLike from "@/components/icon/iconLike";
 
-import { Dialog } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import ReportMistake from "./reportMistake";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import Sheet from "@/components/sheet";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { gameState } from "@/redux/features/game";
 import { userState } from "@/redux/features/user";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import useActionsThunk from "@/redux/repository/user/actions";
-import getListActionThunk from "@/redux/repository/user/getActions";
-import { useIsMobile } from "@/hooks/useIsMobile";
-import Sheet from "@/components/sheet";
+import { Dialog } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import ReportMistake from "./reportMistake";
 const SubAction = () => {
     const { currentGame, idTopic } = useAppSelector(gameState);
     const { listActions } = useAppSelector(userState);
@@ -25,16 +24,6 @@ const SubAction = () => {
         dislike: false,
         save: false,
     });
-
-    useEffect(() => {
-        if (idTopic) {
-            dispatch(
-                getListActionThunk({
-                    partId: idTopic,
-                })
-            );
-        }
-    }, [idTopic, dispatch]);
 
     useEffect(() => {
         if (currentGame.id) {
