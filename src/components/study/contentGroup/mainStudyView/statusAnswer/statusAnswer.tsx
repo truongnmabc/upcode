@@ -18,7 +18,6 @@ export type IStatusAnswer =
 
 const StatusAnswer = () => {
     const { currentGame } = useAppSelector(gameState);
-    console.log("🚀 ~ StatusAnswer ~ currentGame:", currentGame.localStatus);
     if (currentGame?.localStatus === "incorrect") {
         return (
             <div className="flex text-sm sm:text-base transition-all gap-2">

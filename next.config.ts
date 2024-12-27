@@ -51,6 +51,7 @@ const nextConfig: NextConfig = withPlugins([[withBundleAnalyzer()]], {
                 },
             },
         },
+        optimizePackageImports: ["@mui/icons-material", "@mui/material"],
     },
     webpack: (config: any) => {
         // config.module.rules.push({

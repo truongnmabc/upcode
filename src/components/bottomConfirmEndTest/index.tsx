@@ -12,44 +12,59 @@ import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTe
 import { revertPathName } from "@/utils/pathName";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 const Sheet = dynamic(() => import("@/components/sheet"), {
     ssr: false,
 });
-const BottomConfigTest = () => {
+
+enum TestType {
+    Diagnostic = "diagnostic_test",
+    Final = "final_test",
+    Custom = "custom_test",
+}
+
+const actionMap = {
+    [TestType.Diagnostic]: finishDiagnosticThunk,
+    [TestType.Final]: finishFinalThunk,
+    [TestType.Custom]: finishCustomTestThunk,
+};
+
+const BottomConfirmTest = () => {
     const { openSubmit } = useAppSelector(testState);
     const dispatch = useAppDispatch();
     const setOpenConfirm = () => dispatch(shouldOpenSubmitTest(false));
     const { appInfo } = useAppSelector(appInfoState);
     const pathname = usePathname();
 
-    const [open, setOpen] = useState(false);
-    useEffect(() => {
-        setOpen(true);
-    }, []);
     const router = useRouter();
     const type = useSearchParams().get("type");
+
     const handleConfirm = useCallback(() => {
-        if (pathname?.includes("diagnostic_test")) {
-            dispatch(finishDiagnosticThunk());
-        }
-        if (pathname?.includes("final_test")) {
-            dispatch(finishFinalThunk());
-        }
-        if (pathname?.includes("custom_test")) {
-            dispatch(finishCustomTestThunk());
-        }
-        if (type === "test") {
+        console.log("Start handleConfirm:", new Date().toISOString());
+
+        const testType = Object.values(TestType).find((key) =>
+            pathname?.includes(key)
+        );
+
+        if (testType) {
+            dispatch(actionMap[testType]());
+        } else if (type === "test") {
             dispatch(finishPracticeThunk());
         }
 
+        const segments = pathname.split("/").filter(Boolean);
+
+        const lastSegment = segments[segments.length - 1];
         const _href = revertPathName({
-            href: RouterApp.ResultTest,
+            href: `${RouterApp.ResultTest}?type=${lastSegment}`,
             appName: appInfo.appShortName,
         });
 
         dispatch(shouldOpenSubmitTest(false));
         dispatch(endTest());
+
+        console.log("End handleConfirm:", new Date().toISOString());
+
         router.replace(_href);
     }, [RouterApp, dispatch, appInfo.appShortName, router, pathname, type]);
 
@@ -94,4 +109,4 @@ const BottomConfigTest = () => {
     );
 };
 
-export default BottomConfigTest;
+export default React.memo(BottomConfirmTest);

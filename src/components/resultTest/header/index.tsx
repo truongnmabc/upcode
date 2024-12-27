@@ -3,19 +3,37 @@ import CloseIcon from "@/asset/icon/CloseIcon";
 import { MtUiButton } from "@/components/button";
 import MyContainer from "@/components/container/myContainer";
 import { IconPassResultTest } from "../icon/iconPassResultTest";
-import DashboardCard from "./chartHeader";
-import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/redux/hooks";
-import { gameState } from "@/redux/features/game";
-import { Fragment, useEffect, useLayoutEffect, useState } from "react";
-import { db } from "@/db/db.model";
 import { IconFailResultTest } from "../icon/iconFailResultTest";
+
+import DashboardCard from "./chartHeader";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { gameState, startOverGame } from "@/redux/features/game";
+import {
+    Fragment,
+    useCallback,
+    useEffect,
+    useLayoutEffect,
+    useState,
+} from "react";
+import { db } from "@/db/db.model";
+import { revertPathName } from "@/utils/pathName";
+import { appInfoState } from "@/redux/features/appInfo";
+import RouterApp from "@/common/router/router.constant";
+import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
+import { TypeParam } from "@/common/constants";
+import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
+import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
+import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
+import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic";
 
 const HeaderResultTest = () => {
     const router = useRouter();
 
     const { idTopic, turn, passing, listQuestion } = useAppSelector(gameState);
-
+    const { appInfo } = useAppSelector(appInfoState);
+    const type = useSearchParams().get("type");
+    const dispatch = useAppDispatch();
     const [info, setInfo] = useState({
         pass: 0,
         percent: 0,
@@ -46,9 +64,76 @@ const HeaderResultTest = () => {
         }
     };
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         handleGetData();
     }, [idTopic, passing, listQuestion]);
+
+    const handleTryAgain = useCallback(async () => {
+        if (type === TypeParam.diagnosticTest) {
+            dispatch(startOverGame());
+            const _href = revertPathName({
+                appName: appInfo.appShortName,
+                href: RouterApp.Diagnostic_test,
+            });
+            return router.replace(_href);
+        }
+        if (type === TypeParam.finalTest) {
+            dispatch(initFinalTestThunk());
+            const _href = revertPathName({
+                appName: appInfo.appShortName,
+                href: RouterApp.Final_test,
+            });
+            return router.replace(_href);
+        }
+
+        if (type === TypeParam.practiceTest) {
+            dispatch(startOverGame());
+            const _href = revertPathName({
+                appName: appInfo.appShortName,
+                href: `study/${TypeParam.practiceTest}?type=test&testId=${idTopic}`,
+            });
+            return router.replace(_href);
+        }
+    }, [router, appInfo, idTopic]);
+
+    const handleNextTets = useCallback(async () => {
+        if (type === TypeParam.practiceTest) {
+            const currentTest = await db?.testQuestions
+                .where("type")
+                .equals("practiceTests")
+                .filter((item) => item.status === 0)
+                .first();
+
+            dispatch(initPracticeThunk({}));
+            const _href = revertPathName({
+                appName: appInfo.appShortName,
+                href: `study/${TypeParam.practiceTest}?type=test&testId=${currentTest?.parentId}`,
+            });
+            return router.replace(_href);
+        }
+        if (type === TypeParam.customTest) {
+            dispatch(initCustomTestThunk());
+            const _href = revertPathName({
+                appName: appInfo.appShortName,
+                href: RouterApp.Custom_test,
+            });
+            return router.push(_href);
+        }
+    }, [router, appInfo, type]);
+
+    const handleStartLearning = useCallback(async () => {
+        const listTopic = await db?.topics.toArray();
+        if (listTopic?.length) {
+            handleNavigateStudy({
+                dispatch,
+                router,
+                appShortName: appInfo.appShortName,
+                topic: listTopic[0],
+                isReplace: true,
+            });
+        }
+    }, [dispatch, router, appInfo.appShortName]);
+
     return (
         <MyContainer className="py-8 flex gap-8">
             <div
@@ -59,11 +144,11 @@ const HeaderResultTest = () => {
             </div>
             <div className="flex-1 flex gap-10 items-end">
                 <div className="w-[234px] h-[232px]">
-                    {info.isPass ? (
+                    {/* {info.isPass ? (
                         <IconPassResultTest />
                     ) : (
                         <IconFailResultTest />
-                    )}
+                    )} */}
                 </div>
                 <div className="flex-1 flex flex-col gap-6 overflow-hidden justify-between h-full pt-16">
                     <div className="flex-1">
@@ -74,17 +159,33 @@ const HeaderResultTest = () => {
                             className="py-4 max-h-14 text-lg font-medium rounded-2xl text-primary border-primary"
                             block
                             size="large"
+                            onClick={handleTryAgain}
                         >
                             Try Again
                         </MtUiButton>
-                        <MtUiButton
-                            className="py-4 max-h-14 text-lg font-medium rounded-2xl "
-                            block
-                            type="primary"
-                            size="large"
-                        >
-                            Next Test
-                        </MtUiButton>
+                        {(type === TypeParam.practiceTest ||
+                            type === TypeParam.customTest) && (
+                            <MtUiButton
+                                className="py-4 max-h-14 text-lg font-medium rounded-2xl "
+                                block
+                                type="primary"
+                                size="large"
+                                onClick={handleNextTets}
+                            >
+                                Next Test
+                            </MtUiButton>
+                        )}
+                        {type === TypeParam.diagnosticTest && (
+                            <MtUiButton
+                                className="py-4 max-h-14 text-lg font-medium rounded-2xl "
+                                block
+                                type="primary"
+                                size="large"
+                                onClick={handleStartLearning}
+                            >
+                                Start Learning
+                            </MtUiButton>
+                        )}
                     </div>
                 </div>
                 <DashboardCard

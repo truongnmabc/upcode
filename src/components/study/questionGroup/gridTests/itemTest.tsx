@@ -1,3 +1,4 @@
+import { TypeParam } from "@/common/constants";
 import IconGridTest from "@/components/icon/iconGridTest";
 import { appInfoState } from "@/redux/features/appInfo";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -24,7 +25,7 @@ const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
             })
         );
         const _href = revertPathName({
-            href: `study/practice-test?type=test&testId=${test.parentId}`,
+            href: `study/${TypeParam.practiceTest}?type=test&testId=${test.parentId}`,
             appName: appInfo.appShortName,
         });
 

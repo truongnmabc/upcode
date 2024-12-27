@@ -7,6 +7,7 @@ import { IAppInfo } from "@/models/app/appInfo";
 import { IAppConfigData } from "@/redux/features/appConfig";
 import axiosInstance from "@/common/config/axios";
 import { API_PATH } from "@/common/constants/api.constants";
+
 export const getAppInfoParentApp = () => {
     const cachedAppInfos = cache.get("appInfos");
     if (cachedAppInfos) {

@@ -15,6 +15,7 @@ const finishFinalThunk = createAsyncThunk(
                 .modify((item) => {
                     item.turn = item.turn + 1;
                     item.remainTime = item.duration * 60;
+                    item.isPaused = false;
                 })
                 .then((res) => console.log("res", res))
                 .catch((err) => console.log("err", err));

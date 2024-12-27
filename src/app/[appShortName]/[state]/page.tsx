@@ -40,7 +40,9 @@ export default async function StatePage({ params }: Params) {
         const response = await axiosInstance.get(
             `${API_PATH.GET_DATA_STATE}/${appShortName}?state=${state}`
         );
+
         const { appInfo } = await fetchAppData(appShortName);
+
         const data: IRes = response?.data?.data;
         if (!data || !appInfo) {
             redirect(`/${appShortName}`);

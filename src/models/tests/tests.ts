@@ -18,7 +18,6 @@ export interface ITest {
     groupExamData: IGroupExam[];
     testType?: string;
 }
-
 export interface IGroupExam {
     groupId: number;
     title: string;
@@ -27,7 +26,6 @@ export interface IGroupExam {
     duration: number;
     examData: IExamData[];
 }
-
 export interface IExamData {
     topicName: string;
     totalQuestion: number;

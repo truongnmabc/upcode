@@ -19,17 +19,21 @@ import { handleInitTestQuestion } from "../repository/game/utils";
 import { reloadStateThunk } from "../repository/utils/reload";
 import { RootState } from "../store";
 import choiceStartCustomTestThunk from "../repository/game/customTest/choiceStartTest";
+import { IAnswer } from "@/models/question/questions";
+import { IStatusAnswer } from "@/components/study/contentGroup/mainStudyView/statusAnswer/statusAnswer";
 
 const init = new UserQuestionProgress();
 
+const plateHolder = {
+    ...init,
+    localStatus: "new" as IStatusAnswer,
+    selectedAnswer: null,
+    text: "",
+    turn: 1,
+};
+
 const initGameReducer: IGameReducer = {
-    currentGame: {
-        ...init,
-        localStatus: "new",
-        selectedAnswer: null,
-        text: "",
-        turn: 1,
-    },
+    currentGame: plateHolder,
     listQuestion: [],
     passing: 10,
     indexCurrentQuestion: 0,
@@ -198,6 +202,10 @@ export const gameSlice = createSlice({
                 state.currentGame = question[0];
                 state.remainTime = remainTime;
                 state.isPaused = isPaused;
+            } else {
+                state.listQuestion = [];
+                state.currentGame = plateHolder;
+                state.isPaused = false;
             }
         });
 

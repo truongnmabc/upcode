@@ -4,9 +4,15 @@ import { AntTab, AntTabs, CustomTabPanel } from "./tabsReviewAnswer";
 import { useAppSelector } from "@/redux/hooks";
 import { gameState } from "@/redux/features/game";
 import FilterIcon from "./filterAnswers";
-import QuestionResult from "./questionResult";
+// import QuestionResult from "./questionResult";
 import { ITopicEndTest } from "../chartContent";
 import { ICurrentGame } from "@/models/game/game";
+import dynamic from "next/dynamic";
+import { MathJax, MathJaxContext } from "better-react-mathjax";
+
+const QuestionResult = dynamic(() => import("./questionResult"), {
+    ssr: false,
+});
 const ReviewAnswerResult = () => {
     const { listQuestion } = useAppSelector(gameState);
     const [value, setValue] = React.useState(0);
@@ -55,12 +61,13 @@ const ReviewAnswerResult = () => {
                     </AntTabs>
                     <FilterIcon />
                 </div>
-                <CustomTabPanel value={value} index={0}>
+                <MathJaxContext>
+                    {/* <CustomTabPanel value={value} index={0}> */}
                     {listTopic.all.map((item, index) => (
                         <QuestionResult key={index} item={item} />
                     ))}
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={1}>
+                    {/* </CustomTabPanel> */}
+                    {/* <CustomTabPanel value={value} index={1}>
                     {listTopic.correct.map((item, index) => (
                         <QuestionResult key={index} item={item} />
                     ))}
@@ -69,7 +76,8 @@ const ReviewAnswerResult = () => {
                     {listTopic.incorrect.map((item, index) => (
                         <QuestionResult key={index} item={item} />
                     ))}
-                </CustomTabPanel>
+                </CustomTabPanel> */}
+                </MathJaxContext>
             </div>
         </Fragment>
     );

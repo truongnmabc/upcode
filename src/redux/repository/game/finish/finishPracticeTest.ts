@@ -15,16 +15,10 @@ const finishPracticeThunk = createAsyncThunk(
                 .filter((item) => item.status === 0)
                 .modify((item) => {
                     item.status = 1;
+                    item.isPaused = false;
                 })
                 .then((res) => console.log("res", res))
                 .catch((err) => console.log("err", err));
-
-            await db?.tests
-                .where("id")
-                .equals(idTopic)
-                .modify((item) => {
-                    item.status = 1;
-                });
         } catch (error) {
             console.error("Error in finishQuestionThunk:", error);
         }

@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
 import { MathJax } from "better-react-mathjax";
 import React from "react";
-import GetIconPrefix from "../choicesPanel/getIcon";
+import GetIconPrefix from "../study/contentGroup/mainStudyView/choicesPanel/getIcon";
 import choiceAnswer from "@/redux/repository/game/choiceAnswer/choiceAnswer";
 import BtnTets from "@/tests/btn";
 const AnswerButton = ({

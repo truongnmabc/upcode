@@ -125,6 +125,9 @@ export const isProduction = process.env.NODE_ENV === "production";
 
 export const listAppState = ["cdl"];
 
-export const parentIdDefault = {
-    diagnosticTest: -2,
+export const TypeParam = {
+    diagnosticTest: "diagnostic_test",
+    finalTest: "final_test",
+    customTest: "custom_test",
+    practiceTest: "practice_test",
 };

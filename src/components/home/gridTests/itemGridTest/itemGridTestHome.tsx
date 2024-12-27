@@ -13,6 +13,7 @@ import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/in
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import { resetState } from "@/redux/features/game";
+import { TypeParam } from "@/common/constants";
 
 const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     const router = useRouter();
@@ -70,7 +71,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
                 );
 
                 const _href = revertPathName({
-                    href: `/study/${item.name}?type=test&testId=${id}`,
+                    href: `/study/${TypeParam.practiceTest}?type=test&testId=${id}`,
                     appName: appInfo.appShortName,
                 });
                 await router.push(_href);

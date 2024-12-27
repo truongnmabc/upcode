@@ -21,6 +21,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Priority from "./priority";
 import { setIndexSubTopic } from "@/redux/features/game";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import { AppDispatch } from "@/redux/store";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export const handleGetNextPart = async ({
     parentId,
@@ -85,6 +88,48 @@ export const handleGetNextPart = async ({
     };
 };
 
+type IPropsHandleNavigateStudy = {
+    topic: ITopic;
+    dispatch: AppDispatch;
+    router: AppRouterInstance;
+    appShortName: string;
+    isReplace?: boolean;
+};
+export const handleNavigateStudy = async ({
+    topic,
+    dispatch,
+    router,
+    appShortName,
+    isReplace = false,
+}: IPropsHandleNavigateStudy) => {
+    const { tag, subTopicTag, partId, subTopicId, index } =
+        await handleGetNextPart({
+            parentId: topic.id,
+            topic,
+        });
+    const _href = revertPathName({
+        href: `study/${topic.tag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${tag}`,
+        appName: appShortName,
+    });
+    dispatch(selectTopics(topic.id));
+
+    if (tag && subTopicTag) {
+        dispatch(
+            initQuestionThunk({
+                partTag: tag,
+                subTopicTag,
+                partId,
+                subTopicId,
+            })
+        );
+    }
+    if (subTopicId) dispatch(selectSubTopics(subTopicId));
+    dispatch(setIndexSubTopic((index || 0) + 1));
+
+    if (isReplace) return router.replace(_href);
+    router.push(_href);
+};
+
 const TitleTopic = ({
     topic,
     priority,
@@ -124,32 +169,12 @@ const TitleTopic = ({
         });
 
         if (!isMobile && currentPathname === RouterApp.Home) {
-            const { tag, subTopicTag, partId, subTopicId, index } =
-                await handleGetNextPart({
-                    parentId: topic.id,
-                    topic,
-                });
-            const _href = revertPathName({
-                href: `study/${topic.tag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${tag}`,
-                appName: appInfo.appShortName,
+            return handleNavigateStudy({
+                appShortName: appInfo.appShortName,
+                dispatch,
+                router,
+                topic,
             });
-            dispatch(selectTopics(topic.id));
-            if (subTopicId) dispatch(selectSubTopics(subTopicId));
-
-            if (tag && subTopicTag) {
-                dispatch(
-                    initQuestionThunk({
-                        partTag: tag,
-                        subTopicTag,
-                        partId,
-                        subTopicId,
-                    })
-                );
-            }
-            dispatch(setIndexSubTopic((index || 0) + 1));
-
-            router.push(_href);
-            return;
         }
 
         dispatch(selectTopics(isAllowExpand ? -1 : topic.id));

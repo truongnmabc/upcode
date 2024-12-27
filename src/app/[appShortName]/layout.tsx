@@ -8,7 +8,6 @@ import { fetchAppData } from "@/utils/getAppInfos";
 import replaceYear from "@/utils/replaceYear";
 import type { Metadata } from "next";
 import NotFound from "../not-found";
-import Script from "next/script";
 
 type Props = {
     params: { appShortName: string };
@@ -61,6 +60,7 @@ export default async function RootLayout({
     params: { appShortName: string };
 }) {
     const { appShortName } = await params;
+
     const { appInfo, appConfig } = await fetchAppData(appShortName, true);
 
     if (!appInfo || !appConfig) {

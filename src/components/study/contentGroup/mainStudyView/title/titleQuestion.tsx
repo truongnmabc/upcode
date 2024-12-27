@@ -11,7 +11,7 @@ export const getKeyTest = (
     if (!pathname) return null;
     if (typeof pathname === "string") {
         const name = pathname?.replace("-practice-test", "");
-        return decodeURI(name.replaceAll("-", " "));
+        return decodeURI(name.replaceAll("-", " ")?.replaceAll("_", " "));
     }
     return decodeURI(pathname[pathname?.length - 1]);
 };

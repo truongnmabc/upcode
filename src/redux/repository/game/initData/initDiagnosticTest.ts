@@ -151,7 +151,8 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
         } else {
             const progressData = await getLocalUserProgress(
                 diagnostic.parentId,
-                "test"
+                "test",
+                diagnostic.turn
             );
 
             if (progressData) {

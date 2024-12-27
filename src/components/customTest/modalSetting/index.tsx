@@ -31,7 +31,6 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
     const [duration, setDuration] = useState(0);
     const [passing, setPassing] = useState(0);
     const isMobile = useIsMobile();
-    console.log("🚀 ~ isMobile:", isMobile);
     const [selectFeedback, setSelectFeedback] = useState<IFeedBack>("newbie");
     const [selectListTopic, setSelectListTopic] = useState<ITopic[]>([]);
 

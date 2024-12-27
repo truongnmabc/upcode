@@ -6,7 +6,6 @@ import { useAppSelector } from "@/redux/hooks";
 
 const NextQuestionCustomTest = () => {
     const { feedBack } = useAppSelector(gameState);
-    console.log("🚀 ~ NextQuestionCustomTest ~ feedBack:", feedBack);
     if (feedBack === "exam") return <NextQuestionFinalPage />;
     return <BtnNextQuestion />;
 };

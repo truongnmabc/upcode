@@ -22,4 +22,5 @@ export const appInfoSlice = createSlice({
 
 export const appInfoReducer = appInfoSlice.reducer;
 export const { setAppInfo } = appInfoSlice.actions;
+
 export const appInfoState = (state: RootState) => state.appInfoReducer;
