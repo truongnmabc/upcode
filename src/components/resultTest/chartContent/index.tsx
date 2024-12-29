@@ -39,7 +39,10 @@ const ChartContentResultPage = () => {
                 }
             }
 
-            if (type === TypeParam.practiceTest) {
+            if (
+                type === TypeParam.practiceTest ||
+                type === TypeParam.finalTest
+            ) {
                 const topics = await db?.topics.toArray();
 
                 const data = await db?.testQuestions

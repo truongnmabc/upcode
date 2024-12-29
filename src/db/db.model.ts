@@ -7,6 +7,7 @@ import { ITopicQuestion } from "../models/question/topicQuestion";
 import { ITopicStatus } from "../models/question/topicStatus";
 import { ITopic } from "../models/topics/topics";
 import { IUserActions } from "../models/user/useAction";
+import { IPassingModel } from "@/models/passing/passingModel";
 
 export class DB extends Dexie {
     userProgress!: Table<IUserQuestionProgress>;
@@ -16,6 +17,8 @@ export class DB extends Dexie {
     topics!: Table<ITopic>;
     testQuestions!: Table<ITestQuestion>;
     useActions!: Table<IUserActions>;
+    passing!: Table<IPassingModel>;
+
     constructor(appName: string) {
         super(appName);
 
@@ -45,6 +48,8 @@ export class DB extends Dexie {
             useActions: "++id,partId,questionId",
 
             testQuestions: "++id,parentId,type",
+
+            passing: "++id,parentId",
         });
     }
 }
