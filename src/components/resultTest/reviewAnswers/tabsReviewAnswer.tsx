@@ -1,9 +1,8 @@
 "use client";
-import React from "react";
+import React, { Fragment } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { styled } from "@mui/material/styles";
-
 export const AntTabs = styled(Tabs)({
     borderBottom: "1px solid #e8e8e8",
     backgroundColor: "#E9E6D7",
@@ -49,25 +48,58 @@ export const AntTab = styled((props: StyledTabProps) => (
 }));
 
 interface TabPanelProps {
-    children?: React.ReactNode;
     index: number;
     value: number;
+    data: ICurrentGame[];
 }
+
+import AutoSizer from "react-virtualized-auto-sizer";
+import { VariableSizeList as List } from "react-window";
+import { ICurrentGame } from "@/models/game/game";
+import QuestionResult from "./questionResult";
+import { MyCrypto } from "@/utils/myCrypto";
 
 export function CustomTabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
+    const { value, index, data } = props;
 
+    const getItemSize = (index: number) =>
+        MyCrypto.decrypt(data[index]?.text)?.length > 240 ? 400 : 330;
+
+    if (data.length === 0) return null;
     return (
-        <div
-            role="tabpanel"
-            // hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
+        <Fragment>
             {value === index && (
-                <div className="flex flex-col gap-4">{children}</div>
+                <AutoSizer>
+                    {({ height, width }) => (
+                        <List
+                            height={height}
+                            itemCount={1000}
+                            itemSize={getItemSize}
+                            width={width}
+                            itemData={data}
+                            className="scrollbar-none"
+                        >
+                            {Row}
+                        </List>
+                    )}
+                </AutoSizer>
             )}
-        </div>
+        </Fragment>
     );
 }
+
+const Row = ({
+    index,
+    style,
+    data,
+}: {
+    index: number;
+    style: React.CSSProperties;
+    data: ICurrentGame[];
+}) => {
+    return (
+        <div style={style} className="w-full py-2  h-full">
+            <QuestionResult key={index} item={data[index]} />
+        </div>
+    );
+};

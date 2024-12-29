@@ -1,11 +1,11 @@
-import AnswerSheet from "@/components/study/questionGroup/answer/answerSheet";
-import React, { useContext } from "react";
+import React from "react";
+import AnswerReview from "./answer";
 import ListReview from "./listReview";
 
 const GridLeftReview = () => {
     return (
         <div className="hidden sm:flex flex-col gap-3">
-            <AnswerSheet />
+            <AnswerReview />
             <p className="text-xl font-semibold">Review</p>
             <ListReview />
         </div>

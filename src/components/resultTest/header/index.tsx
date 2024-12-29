@@ -2,35 +2,27 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
 import { MtUiButton } from "@/components/button";
 import MyContainer from "@/components/container/myContainer";
-import { IconPassResultTest } from "../icon/iconPassResultTest";
 import { IconFailResultTest } from "../icon/iconFailResultTest";
+import { IconPassResultTest } from "../icon/iconPassResultTest";
 
-import DashboardCard from "./chartHeader";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { gameState, startOverGame } from "@/redux/features/game";
-import {
-    Fragment,
-    useCallback,
-    useEffect,
-    useLayoutEffect,
-    useState,
-} from "react";
-import { db } from "@/db/db.model";
-import { revertPathName } from "@/utils/pathName";
-import { appInfoState } from "@/redux/features/appInfo";
-import RouterApp from "@/common/router/router.constant";
-import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
 import { TypeParam } from "@/common/constants";
-import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
+import RouterApp from "@/common/router/router.constant";
+import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic";
+import { db } from "@/db/db.model";
+import { appInfoState } from "@/redux/features/appInfo";
+import { gameState, startOverGame } from "@/redux/features/game";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
-import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic";
+import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
+import { revertPathName } from "@/utils/pathName";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Fragment, useCallback, useEffect, useState } from "react";
+import DashboardCard from "./chartHeader";
 
 const HeaderResultTest = () => {
     const router = useRouter();
-
-    const { idTopic, turn, passing, listQuestion } = useAppSelector(gameState);
+    const { idTopic, passing, listQuestion } = useAppSelector(gameState);
     const { appInfo } = useAppSelector(appInfoState);
     const type = useSearchParams().get("type");
     const dispatch = useAppDispatch();
@@ -144,11 +136,11 @@ const HeaderResultTest = () => {
             </div>
             <div className="flex-1 flex gap-10 items-end">
                 <div className="w-[234px] h-[232px]">
-                    {/* {info.isPass ? (
+                    {info.isPass ? (
                         <IconPassResultTest />
                     ) : (
                         <IconFailResultTest />
-                    )} */}
+                    )}
                 </div>
                 <div className="flex-1 flex flex-col gap-6 overflow-hidden justify-between h-full pt-16">
                     <div className="flex-1">

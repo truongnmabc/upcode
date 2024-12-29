@@ -54,7 +54,6 @@ export default function ParentAppLayout({
     children: React.ReactNode;
 }) {
     const { appInfo } = getAppInfoParentApp();
-
     return (
         <html
             lang="en"

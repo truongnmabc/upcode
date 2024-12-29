@@ -1,15 +1,21 @@
 import React, { useContext } from "react";
-import ChoiceRangeQuestion from "./choiceRangeQuestion";
+import RandomQuestions from "./random";
 import { ReviewContext } from "../../context/reviewContext";
+import WeakQuestions from "./weak";
+import HardQuestions from "./hard";
+import SavedQuestions from "./saved";
+import AllQuestions from "./all";
 
 const ReviewContentGroup = () => {
-    const { setSelectType, selectType } = useContext(ReviewContext);
-
-    return (
-        <div>
-            <ChoiceRangeQuestion />
-        </div>
-    );
+    const { selectType } = useContext(ReviewContext);
+    const componentMapping = {
+        random: <RandomQuestions />,
+        weak: <WeakQuestions />,
+        hard: <HardQuestions />,
+        saved: <SavedQuestions />,
+        all: <AllQuestions />,
+    };
+    return <div>{componentMapping[selectType]}</div>;
 };
 
 export default React.memo(ReviewContentGroup);

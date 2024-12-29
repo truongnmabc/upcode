@@ -11,7 +11,7 @@ const QuestionResult = ({ item }: { item: ICurrentGame }) => {
     if (item?.status > 0) {
         return (
             <div
-                className="rounded-lg"
+                className="rounded-lg  w-full h-full flex flex-col flex-1"
                 style={{
                     boxShadow: " 0px 2px 8px 0px #21212129",
                 }}
@@ -40,28 +40,12 @@ import GetIconPrefix from "@/components/study/contentGroup/mainStudyView/choices
 import ctx from "@/utils/mergeClass";
 
 const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
-    const [text, setText] = useState<string>("");
-    const [explanationDetail, setExplanationDetail] = useState<string>("");
-    useEffect(() => {
-        if (item.text) {
-            try {
-                const content = MyCrypto.decrypt(item.text);
-                const explanation = MyCrypto.decrypt(item.explanation);
-                setText(content);
-                setExplanationDetail(explanation);
-            } catch (err) {
-                console.log("🚀 ~ useEffect ~ err:", err);
-            } finally {
-            }
-        }
-    }, [item.text, item.explanation]);
-
     return (
-        <div className="rounded-b-lg bg-white flex flex-col gap-2 p-4">
+        <div className="rounded-b-lg  bg-white flex flex-1 overflow-hidden  flex-col gap-2 p-4">
             <MathJax>
                 <span
                     dangerouslySetInnerHTML={{
-                        __html: text,
+                        __html: MyCrypto.decrypt(item?.text),
                     }}
                     className="text-sm font-normal sm:text-base"
                 />
@@ -96,30 +80,30 @@ const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
                             }
                         />
 
-                        {/* <MathJax
+                        <MathJax
                             style={{
                                 fontSize: 12,
                             }}
-                            // dynamic
-                            // renderMode="post"
-                        > */}
-                        <span
-                            dangerouslySetInnerHTML={{
-                                __html: choice.text,
-                            }}
-                        />
-                        {/* </MathJax> */}
+                            dynamic
+                            renderMode="post"
+                        >
+                            <span
+                                dangerouslySetInnerHTML={{
+                                    __html: choice?.text,
+                                }}
+                            />
+                        </MathJax>
                     </div>
                 ))}
             </div>
-            {/* <MathJax> */}
-            <span
-                dangerouslySetInnerHTML={{
-                    __html: explanationDetail,
-                }}
-                className="text-sm font-normal sm:text-base"
-            />
-            {/* </MathJax> */}
+            <MathJax className="">
+                <span
+                    dangerouslySetInnerHTML={{
+                        __html: MyCrypto.decrypt(item?.explanation),
+                    }}
+                    className="text-sm font-normal line-clamp-3 h-full  sm:text-base"
+                />
+            </MathJax>
         </div>
     );
 };

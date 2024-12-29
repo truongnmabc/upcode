@@ -119,6 +119,14 @@ export const gameSlice = createSlice({
         resetState: () => {
             return initGameReducer;
         },
+        startRandomReview: (state, action) => {
+            const { listQuestion } = action.payload;
+            state.listQuestion = listQuestion;
+            state.currentGame = listQuestion[0];
+            state.indexCurrentQuestion = 0;
+            state.turn = 1;
+            state.isFirst = true;
+        },
     },
     extraReducers(builder) {
         builder.addCase(
@@ -251,6 +259,7 @@ export const {
     resetState,
     setIndexSubTopic,
     viewTest,
+    startRandomReview,
 } = actions;
 
 export const gameState = (state: RootState) => state.gameReducer;

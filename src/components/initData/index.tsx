@@ -8,7 +8,7 @@ import { ITest } from "@/models/tests/tests";
 import Topic from "@/models/topics/topics";
 import { fetchQuestions } from "@/redux/repository/game/initData/initPracticeTest";
 import { Table } from "dexie";
-import { useCallback, useLayoutEffect } from "react";
+import { useCallback, useEffect, useLayoutEffect } from "react";
 
 interface ITopic {
     id: number;
@@ -82,6 +82,57 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
         },
         [addIfNotExists]
     );
+    const calculatePassing = useCallback(
+        async ({ topic, db }: { topic: ITopic; db: DB }) => {
+            const exists = await db.passing.get(topic.id);
+            if (!exists) {
+                let listSubTopic = [];
+
+                for (const part of topic.topics) {
+                    const totalLevel = part.questions.reduce(
+                        (sum, question) =>
+                            sum + (question.level === -1 ? 50 : question.level),
+                        0
+                    );
+                    const totalQuestions = part.questions.length;
+                    const averageLevelPart =
+                        totalQuestions > 0 ? totalLevel / totalQuestions : 0;
+
+                    listSubTopic.push({
+                        id: part.id,
+                        parentId: part.parentId,
+                        averageLevel: averageLevelPart,
+                        totalQuestion: part.totalQuestion,
+                        topics: [],
+                        passing: 0,
+                    });
+                }
+
+                const totalAverageLevel = listSubTopic.reduce(
+                    (sum, subTopic) => sum + subTopic.averageLevel,
+                    0
+                );
+                await db
+                    .transaction(
+                        "rw",
+                        db.passing,
+                        async () =>
+                            await db.passing.add({
+                                parentId: topic.parentId,
+                                id: topic.id,
+                                averageLevel: totalAverageLevel,
+                                totalQuestion: topic.totalQuestion,
+                                topics: listSubTopic,
+                                passing: 0,
+                            })
+                    )
+                    .catch((error) => {
+                        console.log("error 2", error);
+                    });
+            }
+        },
+        []
+    );
 
     const processQuestionsData = useCallback(
         async (topics: ITopic[], db: DB) => {
@@ -109,10 +160,14 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
                             console.log("error 2", error);
                         });
                 }
+                await calculatePassing({
+                    topic,
+                    db,
+                });
                 await initDataSubTopicProgress(topic, db);
             }
         },
-        [initDataSubTopicProgress]
+        [initDataSubTopicProgress, calculatePassing]
     );
 
     // *NOTE: init data
@@ -244,7 +299,7 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
         ]
     );
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (appInfo) {
             const db = initializeDB(appInfo.appShortName);
             handleInitData(db);

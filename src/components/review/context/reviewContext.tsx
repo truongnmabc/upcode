@@ -2,18 +2,19 @@
 import { ITopic } from "@/models/topics/topics";
 import React, { ReactNode } from "react";
 
+export type ISelectReview = "random" | "weak" | "hard" | "saved" | "all";
 export interface IContextReview {
-    selectType?: string;
-    setSelectType: (e: string) => void;
+    selectType: ISelectReview;
+    setSelectType: (e: ISelectReview) => void;
 }
 
 export const ReviewContext = React.createContext<IContextReview>({
-    selectType: "random",
+    selectType: "random" as ISelectReview,
     setSelectType: () => {},
 });
 
 const ReviewProvider = ({ children }: { children: ReactNode }) => {
-    const [selectType, setSelectType] = React.useState<string>("random");
+    const [selectType, setSelectType] = React.useState<ISelectReview>("random");
 
     return (
         <ReviewContext.Provider

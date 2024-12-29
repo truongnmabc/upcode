@@ -1,6 +1,8 @@
-import React, { useContext } from "react";
-import { ReviewContext } from "../../context/reviewContext";
+import React, { useCallback, useContext } from "react";
+import { ISelectReview, ReviewContext } from "../../context/reviewContext";
 import clsx from "clsx";
+import { useAppDispatch } from "@/redux/hooks";
+import { resetState } from "@/redux/features/game";
 
 const ListReview = () => {
     return (
@@ -38,7 +40,7 @@ const ListReview = () => {
                 title="Answered Questions"
                 des="Revisit all questions you have previously attempted."
                 bg="#DEEBFF"
-                type="answered"
+                type="all"
             />
         </div>
     );
@@ -51,11 +53,15 @@ type IItemCard = {
     title: string;
     des: string;
     bg: string;
-    type: string;
+    type: ISelectReview;
 };
 const ItemCard: React.FC<IItemCard> = ({ icon, title, des, bg, type }) => {
     const { setSelectType, selectType } = useContext(ReviewContext);
-
+    const dispatch = useAppDispatch();
+    const handleSelectType = useCallback(() => {
+        setSelectType(type);
+        dispatch(resetState());
+    }, [type]);
     return (
         <div
             className={clsx(
@@ -67,7 +73,7 @@ const ItemCard: React.FC<IItemCard> = ({ icon, title, des, bg, type }) => {
             style={{
                 boxShadow: "0px 2px 4px 0px #2121211F",
             }}
-            onClick={() => setSelectType(type)}
+            onClick={handleSelectType}
         >
             <div
                 className="rounded-2xl p-3 flex items-center justify-center"
