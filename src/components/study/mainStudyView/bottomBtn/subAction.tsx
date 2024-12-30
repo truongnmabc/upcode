@@ -14,7 +14,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import ReportMistake from "./reportMistake";
 const SubAction = () => {
-    const { currentGame, idTopic } = useAppSelector(gameState);
+    const { currentGame } = useAppSelector(gameState);
     const { listActions } = useAppSelector(userState);
     const [openModal, setOpenModal] = useState(false);
     const isMobile = useIsMobile();

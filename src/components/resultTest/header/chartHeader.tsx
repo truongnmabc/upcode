@@ -45,7 +45,7 @@ const DashboardCard = ({
         aspectRatio: 2,
     };
     return (
-        <div className="relative min-w-[320px] h-[340px] z-0 flex flex-col items-center">
+        <div className="relative mx-auto min-w-[320px] h-[340px] z-0 flex flex-col items-center">
             <div className=" absolute top-0 z-10 w-full left-0">
                 <svg className="w-[320px]  h-[320px]">
                     <circle

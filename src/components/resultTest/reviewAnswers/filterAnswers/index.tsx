@@ -1,13 +1,74 @@
-import React from "react";
-import ModalFilter from "./modalFilter";
-
-const FilterIcon = () => {
+import React, { useCallback, useEffect, useState } from "react";
+import { ITopic } from "@/models/topics/topics";
+import { db } from "@/db/db.model";
+import Dialog from "@mui/material/Dialog";
+import { MtUiButton } from "@/components/button";
+import CardTopic from "@/components/customTest/modalSetting/cardTopic";
+import { ICurrentGame } from "@/models/game/game";
+import { ITopicEndTest } from "../..";
+type IProps = {
+    result: {
+        listTopic: ITopicEndTest[];
+        pass: number;
+        percent: number;
+        isPass: boolean;
+        all: ICurrentGame[];
+        correct: ICurrentGame[];
+        incorrect: ICurrentGame[];
+    };
+    setTabletData: (e: {
+        all: ICurrentGame[];
+        correct: ICurrentGame[];
+        incorrect: ICurrentGame[];
+    }) => void;
+};
+const FilterIcon: React.FC<IProps> = ({ setTabletData, result }) => {
     const [open, setOpen] = React.useState(false);
-    const handleClose = () => setOpen(false);
-    const handleOpen = () => setOpen(true);
+
+    const [listTopic, setListTopic] = useState<ITopic[]>([]);
+    const [selectListTopic, setSelectListTopic] = useState<ITopic[]>([]);
+
+    const handleClose = useCallback(() => setOpen(false), []);
+    const handleOpen = useCallback(() => setOpen(true), []);
+
+    const handleSelectAll = useCallback(() => {
+        setSelectListTopic(result?.listTopic);
+    }, [result?.listTopic]);
+
+    const handleApply = useCallback(() => {
+        const newList = result?.all?.filter((item) =>
+            selectListTopic.some(
+                (selectedTopic) => item.parentId === selectedTopic.id
+            )
+        );
+
+        setTabletData({
+            all: newList,
+            correct: newList.filter((item) => item.selectedAnswer?.correct),
+            incorrect: newList.filter((item) => !item.selectedAnswer?.correct),
+        });
+
+        handleClose();
+    }, [selectListTopic, handleClose, result]);
+
+    useEffect(() => {
+        const handleGetData = async () => {
+            const data = await db?.topics.toArray();
+            if (data) {
+                setListTopic(data);
+            }
+        };
+        handleGetData();
+    }, []);
+
+    useEffect(() => {
+        if (result.listTopic?.length > 0) {
+            setSelectListTopic(result.listTopic);
+        }
+    }, [result.listTopic]);
 
     return (
-        <div className=" rounded-lg px-5 py-2 bg-[#5497FF1F]">
+        <div className=" rounded-lg px-2 sm:px-5 py-2 bg-[#5497FF1F]">
             <div
                 onClick={handleOpen}
                 className="text-[#5497FF] cursor-pointer flex items-center text-base gap-1 font-medium"
@@ -29,7 +90,50 @@ const FilterIcon = () => {
                     Filter
                 </span>
             </div>
-            <ModalFilter open={open} close={handleClose} />
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                sx={{
+                    "& .MuiDialog-paper": {
+                        width: "100%",
+                        maxWidth: "1100px",
+                        maxHeight: "360px",
+                        boxShadow: "4px 8px 23.8px 0px #2121213D",
+                        borderRadius: "16px",
+                    },
+                }}
+            >
+                <div className="p-6 h-full w-full">
+                    <div className="w-full flex items-center justify-between">
+                        <div className="flex items-center gap-3 ">
+                            <p className="text-lg font-semibold">Subjects</p>
+                            <span
+                                className=" underline cursor-pointer text-sm font-normal"
+                                onClick={handleSelectAll}
+                            >
+                                Select All
+                            </span>
+                        </div>
+                        <MtUiButton
+                            type="primary"
+                            size="large"
+                            onClick={handleApply}
+                        >
+                            Apply Filter
+                        </MtUiButton>
+                    </div>
+                    <div className="grid mt-4 gap-4 grid-cols-1 sm:grid-cols-3">
+                        {listTopic?.map((item) => (
+                            <CardTopic
+                                item={item}
+                                key={item.id}
+                                selectListTopic={selectListTopic}
+                                setSelectListTopic={setSelectListTopic}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </Dialog>
         </div>
     );
 };

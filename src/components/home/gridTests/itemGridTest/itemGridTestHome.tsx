@@ -138,9 +138,9 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
                     }}
                     className="w-[52px] h-[52px] sm:w-[72px] sm:h-[72px] rounded-bl-md flex  items-center justify-center rounded-tl-md"
                 >
-                    <div className="w-6  h-6 sm:w8 sm:h-8">{item.icon}</div>
+                    <div className="w-6  h-6 sm:w-8 sm:h-8">{item.icon}</div>
                 </div>
-                <h3 className="pl-4 flex-1 text-base sm:text-lg  flex items-center justify-start font-medium ">
+                <h3 className="pl-4 flex-1 text-xs sm:text-lg  flex items-center justify-start font-medium ">
                     {item.name}
                 </h3>
                 <MtUiRipple ripples={ripples} onClear={onClearRipple} />

@@ -1,5 +1,5 @@
 import { IAnswer, IQuestion } from "@/models/question/questions";
-import { IStatusAnswer } from "@/components/study/contentGroup/mainStudyView/statusAnswer/statusAnswer";
+import { IStatusAnswer } from "@/components/study/mainStudyView/statusAnswer/statusAnswer";
 import { IFeedBack } from "@/components/customTest/modalSetting";
 
 export interface ICurrentGame
@@ -20,6 +20,7 @@ export interface ICurrentGame
     tag?: string;
     feedBack?: IFeedBack;
     passing?: number;
+    image?: string;
 }
 
 export interface IGameReducer {

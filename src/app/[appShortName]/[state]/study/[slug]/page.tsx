@@ -3,7 +3,7 @@ import { API_PATH } from "@/common/constants/api.constants";
 import BannerDownloadApp from "@/components/bannerDownload/bannerDownloadApp";
 import MyContainer from "@/components/container/myContainer";
 import SeoContent from "@/components/seoContent/seoContent";
-import MainStudyView from "@/components/study/contentGroup/mainStudyView";
+import MainStudyView from "@/components/study/mainStudyView";
 import HeaderMobile from "@/components/study/headerMobile";
 import QuestionGroup from "@/components/study/questionGroup";
 import Grid2 from "@mui/material/Grid2";

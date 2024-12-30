@@ -1,16 +1,14 @@
 "use client";
-import { MtUiButton } from "@/components/button";
 import { db } from "@/db/db.model";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { ITestQuestion } from "@/models/tests/testQuestions";
 import { gameState } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import choiceStartCustomTestThunk from "@/redux/repository/game/customTest/choiceStartTest";
 import React, { Fragment, useEffect, useState } from "react";
+import ModalDeleteTsx from "../modalDelete.tsx";
 import ModalSettingCustomTest from "../modalSetting";
 import { IconDelete, IconEdit, IconPlus } from "./iconGridLeft";
-import choiceStartCustomTestThunk from "@/redux/repository/game/customTest/choiceStartTest";
-import { Modal } from "@mui/material";
-import ModalDeleteTsx from "../modalDelete.tsx";
-import { useIsMobile } from "@/hooks/useIsMobile";
 const GridLeftCustomTest = () => {
     const [listTest, setListTest] = useState<ITestQuestion[]>([]);
     const [openModalSetting, setOpenModalSetting] = React.useState(false);

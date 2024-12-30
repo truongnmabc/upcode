@@ -49,12 +49,7 @@ const choiceAnswer = createAsyncThunk(
                     console.log("🚀 db.userProgress.update ~ err:", err);
                 });
         } else {
-            await db?.userProgress
-                .add(data)
-                .then((res) => console.log("add", res))
-                .catch((err) => {
-                    console.log("🚀 db.userProgress.add ~ err:", err);
-                });
+            await db?.userProgress.add(data);
         }
 
         return {

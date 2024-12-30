@@ -25,7 +25,7 @@ export const AntTabs = styled(Tabs)({
 });
 
 interface StyledTabProps {
-    label: string;
+    label: React.ReactNode;
 }
 
 export const AntTab = styled((props: StyledTabProps) => (
@@ -45,6 +45,10 @@ export const AntTab = styled((props: StyledTabProps) => (
         color: "#7C6F5B",
         fontWeight: "500",
     },
+    "@media (max-width: 600px)": {
+        fontSize: "12px", // Font chữ nhỏ hơn cho mobile
+        padding: "4px 4px",
+    },
 }));
 
 interface TabPanelProps {
@@ -58,14 +62,22 @@ import { VariableSizeList as List } from "react-window";
 import { ICurrentGame } from "@/models/game/game";
 import QuestionResult from "./questionResult";
 import { MyCrypto } from "@/utils/myCrypto";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export function CustomTabPanel(props: TabPanelProps) {
     const { value, index, data } = props;
+    const isMobile = useIsMobile();
 
     const getItemSize = (index: number) =>
-        MyCrypto.decrypt(data[index]?.text)?.length > 240 ? 400 : 330;
+        MyCrypto.decrypt(data[index]?.text)?.length > 240
+            ? isMobile
+                ? 660
+                : 400
+            : isMobile
+            ? 500
+            : 330;
 
-    if (data.length === 0) return null;
+    if (data?.length === 0) return null;
     return (
         <Fragment>
             {value === index && (

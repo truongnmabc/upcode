@@ -1,4 +1,4 @@
-import { IStatusAnswer } from "@/components/study/contentGroup/mainStudyView/statusAnswer/statusAnswer";
+import { IStatusAnswer } from "@/components/study/mainStudyView/statusAnswer/statusAnswer";
 
 export interface IAnswer {
     correct: boolean;

@@ -272,7 +272,6 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
                     .transaction(
                         "rw",
                         db.topics,
-                        db.subTopicProgress,
                         async () => await processTreeData(topic, db)
                     )
                     .catch((error) => {
@@ -299,10 +298,10 @@ const InitData = ({ appInfo }: { appInfo: IAppInfo }) => {
         ]
     );
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (appInfo) {
-            const db = initializeDB(appInfo.appShortName);
-            handleInitData(db);
+            // const db = initializeDB(appInfo.appShortName);
+            // handleInitData(db);
         }
     }, [appInfo, handleInitData]);
 
