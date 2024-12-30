@@ -107,9 +107,14 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                                             : countQuestionPart;
 
                                     const randomQuestions = topicData.questions
-
                                         .sort(() => Math.random() - 0.5)
-                                        .slice(0, questionCount);
+                                        .slice(0, questionCount)
+                                        .map((item) => ({
+                                            ...item,
+                                            tag: topic.tag,
+                                            image: topic.icon,
+                                            parentId: topic.id,
+                                        }));
 
                                     listQuestion = [
                                         ...listQuestion,
@@ -135,7 +140,13 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                                         extraQuestions.questions
 
                                             .sort(() => Math.random() - 0.5)
-                                            .slice(0, remainderQuestionTopic);
+                                            .slice(0, remainderQuestionTopic)
+                                            .map((item) => ({
+                                                ...item,
+                                                tag: topic.tag,
+                                                image: topic.icon,
+                                                parentId: topic.id,
+                                            }));
 
                                     listQuestion = [
                                         ...listQuestion,
@@ -147,6 +158,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                     }
                 }
                 const parentId = generateRandomNegativeId();
+                console.log("🚀 ~ onStart ~ listQuestion:", listQuestion);
 
                 await db?.testQuestions.add({
                     duration: duration,
@@ -227,7 +239,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                 <Dialog
                     open={open}
                     onClose={() => {
-                        isShowBtnCancel && onClose();
+                        if (isShowBtnCancel) onClose();
                     }}
                     sx={{
                         "& .MuiDialog-paper": {

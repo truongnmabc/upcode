@@ -66,7 +66,7 @@ const BottomConfirmTest = () => {
         console.log("End handleConfirm:", new Date().toISOString());
 
         router.replace(_href);
-    }, [RouterApp, dispatch, appInfo.appShortName, router, pathname, type]);
+    }, [dispatch, appInfo.appShortName, router, pathname, type]);
 
     return (
         <div className="zaui-sheet-content-border-none">

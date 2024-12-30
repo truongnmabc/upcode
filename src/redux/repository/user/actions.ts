@@ -7,7 +7,7 @@ export interface IUserActions {
     partId: number;
 }
 
-const useActionsThunk = createAsyncThunk(
+const userActionsThunk = createAsyncThunk(
     "useActionsThunk",
     async ({ status, questionId, partId }: IUserActions) => {
         const existingAction = await db?.useActions
@@ -48,4 +48,4 @@ const useActionsThunk = createAsyncThunk(
     }
 );
 
-export default useActionsThunk;
+export default userActionsThunk;

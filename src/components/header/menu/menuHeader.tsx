@@ -24,7 +24,7 @@ const menus: IItemMenuHeader[] = [
         icon: <IconReviewHeader />,
     },
     {
-        name: "Login",
+        name: "Log in",
         icon: <LoginHeader />,
     },
     {

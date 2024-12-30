@@ -65,74 +65,74 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                             (item) => item?.questions
                         ) as IQuestion[];
 
-                        const start = list?.find((item) => item.level === -1);
-
+                        const listLevel2 = list?.filter(
+                            (item) => item.level === -1 || item.level === 50
+                        );
+                        const start =
+                            listLevel2?.[
+                                Math.floor(Math.random() * listLevel2.length)
+                            ];
                         const randomItem = {
                             ...(start ||
                                 list[Math.floor(Math.random() * list.length)]),
                             tag: subTopic.tag,
+                            image: subTopic.icon,
                         };
 
                         if (randomItem && list) {
-                            const newItems: ICurrentGame[] = Array.from(
-                                { length: 2 },
-                                () => ({
-                                    id: generateRandomNegativeId(),
-                                    status: -1,
-                                    text: "",
-                                    level: 0,
-                                    parentId: 0,
-                                    syncStatus: 0,
-                                    explanation: "",
-                                    answers: [],
-                                    localStatus: "new",
-                                    selectedAnswer: null,
-                                    turn: 1,
-                                    tag: subTopic.tag,
-                                })
+                            const belowFiftyQuestions = list.filter(
+                                (item) =>
+                                    (item?.level || 0) < 50 &&
+                                    item.id !== randomItem?.id
+                            );
+                            const randomBelowFifty = belowFiftyQuestions
+                                .sort(() => 0.5 - Math.random())
+                                .slice(0, 2);
+
+                            // level : 3
+
+                            const aboveFiftyQuestions = list.filter(
+                                (item) =>
+                                    item?.level > 50 &&
+                                    item.id !== randomItem?.id
                             );
 
-                            if (randomItem && newItems) {
-                                listQuestion.push(randomItem, ...newItems);
-                                // level : 1
+                            const randomAboveFifty = aboveFiftyQuestions
+                                .sort(() => 0.5 - Math.random())
+                                .slice(0, 2);
 
-                                const belowFiftyQuestions = list.filter(
-                                    (item) =>
-                                        (item?.level || 0) < 50 &&
-                                        item.id !== randomItem?.id
-                                );
-                                const randomBelowFifty = belowFiftyQuestions
-                                    .sort(() => 0.5 - Math.random())
-                                    .slice(0, 2);
+                            const randomList =
+                                randomBelowFifty.length > 0
+                                    ? randomBelowFifty
+                                    : randomAboveFifty;
 
-                                // level : 3
+                            listQuestion.push(
+                                randomItem,
+                                ...randomList?.map((item) => ({
+                                    ...item,
+                                    tag: subTopic.tag,
+                                    image: subTopic.icon,
+                                }))
+                            );
 
-                                const aboveFiftyQuestions = list.filter(
-                                    (item) =>
-                                        item?.level > 50 &&
-                                        item.id !== randomItem?.id
-                                );
+                            belowFifty[subTopic.tag] = [
+                                ...(randomBelowFifty.length > 0
+                                    ? randomBelowFifty
+                                    : randomAboveFifty),
+                            ];
 
-                                const randomAboveFifty = aboveFiftyQuestions
-                                    .sort(() => 0.5 - Math.random())
-                                    .slice(0, 2);
-
-                                belowFifty[subTopic.tag] = [
-                                    ...(randomBelowFifty.length > 0
-                                        ? randomBelowFifty
-                                        : randomAboveFifty),
-                                ];
-
-                                aboveFifty[subTopic.tag] = [
-                                    ...(randomAboveFifty.length > 0
-                                        ? randomAboveFifty
-                                        : randomBelowFifty),
-                                ];
-                            }
+                            aboveFifty[subTopic.tag] = [
+                                ...(randomAboveFifty.length > 0
+                                    ? randomAboveFifty
+                                    : randomBelowFifty),
+                            ];
                         }
                     }
                 }
             }
+
+            console.log("🚀 ~ listQuestion:", listQuestion);
+
             setDataStoreDiagnostic({
                 listQuestion,
                 belowFifty,

@@ -2,31 +2,11 @@
 
 import { db } from "@/db/db.model";
 import { ICurrentGame } from "@/models/game/game";
-import { IQuestion } from "@/models/question/questions";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
     getLocalUserProgress,
     mapQuestionsWithProgress,
 } from "./initPracticeTest";
-
-const setDataStore = async (
-    parentId: number,
-    question: IQuestion[],
-    duration: number,
-    remainTime: number
-) => {
-    await db?.testQuestions.add({
-        parentId,
-        question,
-        duration,
-        isPaused: false,
-        startTime: new Date().getTime(),
-        remainTime: remainTime,
-        type: "finalTests",
-        status: 0,
-        turn: 0,
-    });
-};
 
 const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
     const dataStore = await db?.testQuestions
@@ -34,7 +14,7 @@ const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
         .equals("finalTests")
         .first();
 
-    let listQuestion = dataStore?.question;
+    const listQuestion = dataStore?.question;
 
     if (dataStore) {
         const progressData = await getLocalUserProgress(

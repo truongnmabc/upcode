@@ -1,5 +1,5 @@
 "use client";
-import { IStatusAnswer } from "@/components/study/contentGroup/mainStudyView/statusAnswer/statusAnswer";
+import { IStatusAnswer } from "@/components/study/mainStudyView/statusAnswer/statusAnswer";
 import { db } from "@/db/db.model";
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
 import { IQuestion } from "@/models/question/questions";
@@ -30,11 +30,15 @@ const initLearnQuestionThunk = createAsyncThunk(
         partTag,
         ...rest
     }: IInitQuestion): Promise<IResInitQuestion> => {
+        // console.log("🚀 ~ subTopicTag:", subTopicTag);
+        // console.log("🚀 ~ partTag:", partTag);
+
         const res = await db?.topicQuestion
             .where("[subTopicTag+tag]")
             .equals([subTopicTag, partTag])
             .first();
         let progressData: IUserQuestionProgress[] = [];
+        // console.log("🚀 ~ res:", res);
 
         const { partId, subTopicId, isReset } = rest;
 

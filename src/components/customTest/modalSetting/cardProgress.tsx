@@ -1,7 +1,5 @@
 import useDebounce from "@/hooks/useDebounce";
-import ctx from "@/utils/mergeClass";
 import Slider from "@mui/material/Slider";
-import clsx from "clsx";
 import { useEffect, useState } from "react";
 type ICardProgress = {
     title: string;
@@ -26,7 +24,7 @@ const CardProgress = ({
 
     useEffect(() => {
         changeProgress(progress);
-    }, [progress]);
+    }, [progress, changeProgress]);
     const handleSliderChange = (event: Event, newValue: number | number[]) => {
         setValue(newValue as number);
     };

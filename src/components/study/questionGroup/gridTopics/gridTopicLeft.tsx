@@ -1,6 +1,5 @@
 "use client";
 
-import { RANDOM_COLORS } from "@/common/constants";
 import AllowExpand from "@/components/allowExpand";
 import AllowExpandProvider from "@/components/allowExpand/provider";
 import TitleTopic from "@/components/home/gridTopic/item/titleTopic";
@@ -22,7 +21,6 @@ export const generateMockTopics = (size: number): ITopic[] => {
         });
         return {
             ...initData,
-            color: RANDOM_COLORS[index],
         };
     });
 };
@@ -43,19 +41,14 @@ const FN = () => {
         if (listData) {
             setListMainTopics(
                 listData
-                    .map((item, index) => ({
-                        ...item,
-                        id: Number(item.id),
-                        color: RANDOM_COLORS[index],
-                    }))
-                    .sort((a, b) => {
-                        if (a.id === selectedTopics) return -1;
-                        if (b.id === selectedTopics) return 1;
-                        return 0;
-                    })
+                // .sort((a, b) => {
+                //     if (a.id === selectedTopics) return -1;
+                //     if (b.id === selectedTopics) return 1;
+                //     return 0;
+                // })
             );
         }
-    }, [RANDOM_COLORS, selectedTopics]);
+    }, [selectedTopics]);
 
     useEffect(() => {
         handleGetData();
@@ -81,7 +74,7 @@ const FN = () => {
                                 topic={subTopic}
                                 priority={3}
                                 classNames=" h-[52px] "
-                                imgClassNames="w-[52px] h-[52px]"
+                                imgClassNames="w-8 h-8 sm:w-10 sm:h-10"
                             />
                             {selectedTopics === subTopic.id && (
                                 <AllowExpandProvider topic={subTopic}>

@@ -127,6 +127,7 @@ const IconProgress = ({
         subTopic.id,
         subTopicTag,
         tag,
+        index,
     ]);
 
     return (

@@ -9,7 +9,7 @@ const EmotionComponent = () => {
 
     const percentUser = getPercentUser(currentGame);
 
-    if (currentGame.selectedAnswer) {
+    if (currentGame?.selectedAnswer) {
         return (
             <div className="flex  justify-center relative gap-[10px] items-center">
                 {/* {isCorrect ? <CongratsAnim /> : null} */}
@@ -50,7 +50,8 @@ const EmotionComponent = () => {
 
 // /** fake dữ liệu */
 const getPercentUser = (question: ICurrentGame) => {
-    const dif = question.level === -1 ? 2 : question.level < 50 ? 1 : 3;
+    if (!question) return 0;
+    const dif = question?.level === -1 ? 2 : question.level < 50 ? 1 : 3;
     let per = question.id % 100;
     if (dif == 1) {
         while (per > 30) {

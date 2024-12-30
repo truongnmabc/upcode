@@ -1,14 +1,14 @@
-import React, { useEffect, useCallback } from "react";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import CountTime from "@/components/countTime";
-import { gameState } from "@/redux/features/game";
-import nextQuestionDiagnosticThunk from "@/redux/repository/game/nextQuestion/nextQuestionDiagnosticTest";
-import choiceAnswer from "@/redux/repository/game/choiceAnswer/choiceAnswer";
-import { useRouter } from "next/navigation";
-import finishDiagnosticThunk from "@/redux/repository/game/finish/finishDiagnostic";
-import { revertPathName } from "@/utils/pathName";
 import RouterApp from "@/common/router/router.constant";
+import CountTime from "@/components/countTime";
 import { appInfoState } from "@/redux/features/appInfo";
+import { gameState } from "@/redux/features/game";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import choiceAnswer from "@/redux/repository/game/choiceAnswer/choiceAnswer";
+import finishDiagnosticThunk from "@/redux/repository/game/finish/finishDiagnostic";
+import nextQuestionDiagnosticThunk from "@/redux/repository/game/nextQuestion/nextQuestionDiagnosticTest";
+import { revertPathName } from "@/utils/pathName";
+import { useRouter } from "next/navigation";
+import React, { useCallback } from "react";
 
 const CountTimeDiagnostic = () => {
     const dispatch = useAppDispatch();
@@ -61,7 +61,7 @@ const CountTimeDiagnostic = () => {
 
     return (
         <CountTime
-            key={currentGame.id}
+            key={currentGame?.id}
             duration={remainTime}
             onEndTime={handleEndTime}
         />

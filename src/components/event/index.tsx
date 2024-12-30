@@ -45,7 +45,7 @@ const EventListener = () => {
                 dispatch(initFinalTestThunk());
             }
             dispatch(reloadStateThunk());
-            setTimeout(() => localStorage.removeItem("optQuery"), 100);
+            // setTimeout(() => localStorage.removeItem("optQuery"), 100);
         }
     }, [dispatch, subTopicTag, partTag, type, testId, pathname]);
 

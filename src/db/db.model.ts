@@ -54,6 +54,7 @@ export class DB extends Dexie {
     }
 }
 
+// export let db: DB | null = new DB("asvab");
 export let db: DB | null = null;
 
 export const initializeDB = (appShortName: string): DB => {

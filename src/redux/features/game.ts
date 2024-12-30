@@ -1,10 +1,12 @@
 "use client";
+import { IStatusAnswer } from "@/components/study/mainStudyView/statusAnswer/statusAnswer";
 import { ICurrentGame, IGameReducer } from "@/models/game/game";
 import UserQuestionProgress from "@/models/progress/userQuestionProgress";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import choiceAnswer, {
     processChoiceAnswer,
 } from "../repository/game/choiceAnswer/choiceAnswer";
+import choiceStartCustomTestThunk from "../repository/game/customTest/choiceStartTest";
 import initCustomTestThunk from "../repository/game/initData/initCustomTest";
 import initDiagnosticTestQuestionThunk from "../repository/game/initData/initDiagnosticTest";
 import initFinalTestThunk from "../repository/game/initData/initFinalTest";
@@ -18,9 +20,6 @@ import resumedTestThunk from "../repository/game/pauseAndResumed/resumedTest";
 import { handleInitTestQuestion } from "../repository/game/utils";
 import { reloadStateThunk } from "../repository/utils/reload";
 import { RootState } from "../store";
-import choiceStartCustomTestThunk from "../repository/game/customTest/choiceStartTest";
-import { IAnswer } from "@/models/question/questions";
-import { IStatusAnswer } from "@/components/study/contentGroup/mainStudyView/statusAnswer/statusAnswer";
 
 const init = new UserQuestionProgress();
 

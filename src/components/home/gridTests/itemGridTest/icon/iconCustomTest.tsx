@@ -31,6 +31,23 @@ const CustomTestSvg = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
             />
+
+            <path
+                d="M12.7422 22.75L8.99219 19"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M12.7021 19.04L8.95215 22.79"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
         </svg>
     );
 };

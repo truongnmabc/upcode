@@ -3,7 +3,7 @@ import { IAnswer } from "@/models/question/questions";
 import { gameState, viewTest } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useCallback, useEffect, useState } from "react";
-import AnswerButton from "../../../../answer";
+import AnswerButton from "../../../answer";
 import {
     useParams,
     usePathname,
@@ -225,8 +225,9 @@ const ChoicesPanel: React.FC<IProps> = ({
         handleEnterDiagnostic,
         handleEnterFinalTest,
         handleEnterCustomTest,
-        currentGame.answers,
-        currentGame.selectedAnswer,
+        handleEnterPractice,
+        currentGame?.answers,
+        currentGame?.selectedAnswer,
         type,
         pathname,
         isBlockEnter,
