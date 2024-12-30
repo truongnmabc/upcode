@@ -70,7 +70,7 @@ const BannerHome = ({
                 </>
             )}
             {isHomePage && (
-                <h3 className="text-center px-4 text-xl font-bold sm:text-[30px] sm:leading-[48px] py-6 sm:py-8">
+                <h3 className="text-center px-4 text-[24px] leading-[36px] font-bold sm:text-[40px] sm:leading-[60px]">
                     Practice for your{" "}
                     <span className=" capitalize">{_state}</span>{" "}
                     <span className="uppercase">{appInfo?.appShortName}</span>{" "}
@@ -78,7 +78,7 @@ const BannerHome = ({
                 </h3>
             )}
             <div
-                className="flex w-full mt-3 sm:mt-6 rounded-2xl sm:flex-row flex-col"
+                className="flex w-full mt-3 sm:mt-[32px] rounded-2xl sm:flex-row flex-col"
                 style={{
                     background: "var(--main-linear-gradient-banner-download)",
                 }}
