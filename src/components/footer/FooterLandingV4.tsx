@@ -17,8 +17,10 @@ import { DmcaIcon } from "./info/iconDmca";
 import { appConfigState } from "@/redux/features/appConfig";
 import RouterApp from "@/common/router/router.constant";
 import ForwardedLinkBlank from "../nextLink/forwardedLinkBlank";
+import { useRouter } from "next/navigation";
 
 const FooterLandingV4 = () => {
+    const router = useRouter();
     const isMobile = useMediaQuery("(max-width:768px)");
     let emailSupport = "support@abc-elearning.org";
     const getSrcLogo = () => {
@@ -160,7 +162,9 @@ const FooterLandingV4 = () => {
                     <span>
                         {appInfo.appShortName == "cdl"
                             ? "CDL Prep is your ultimate resource to ace your CDL exam with ease, providing simulated practice tests, key insights, and everything you need to hit the road successfully!"
-                            : appInfo.appShortName == "asvab" ? "ASVAB Prep provides simulated ASVAB practice tests and insights on the test to help you achieve your military career goals." : appInfo.descriptionSEO}
+                            : appInfo.appShortName == "asvab"
+                            ? "ASVAB Prep provides simulated ASVAB practice tests and insights on the test to help you achieve your military career goals."
+                            : appInfo.descriptionSEO}
                     </span>
 
                     {!isMobile && <DmcaIcon />}
@@ -181,7 +185,7 @@ const FooterLandingV4 = () => {
                             <div
                                 className="cluster-email"
                                 onClick={() => {
-                                    // router.push(`mailto:${emailSupport}`);
+                                    router.push(`mailto:${emailSupport}`);
                                 }}
                             >
                                 <img src="/images/contacts/sms.png" alt="" />
@@ -192,7 +196,7 @@ const FooterLandingV4 = () => {
                         <div
                             className="cluster-location"
                             onClick={() => {
-                                // router.push("/");
+                                router.push("/");
                             }}
                         >
                             <img src="/images/contacts/location.png" alt="" />

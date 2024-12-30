@@ -50,7 +50,7 @@ export default async function Home({ params }: Params) {
                         appInfo={appInfo}
                     />
                     <GridTest />
-                    <div className="sm:my-12 sm:mb-16 my-6">
+                    <div className="sm:my-[48px] sm:mb-[120px] my-[24px] mb-[48px]">
                         <BannerHome appInfo={appInfo} isHomePage={true} />
                     </div>
                     {contentSeo && (
