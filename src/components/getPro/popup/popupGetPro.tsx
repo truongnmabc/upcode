@@ -9,6 +9,7 @@ import "./popupGetPro.scss";
 import { IAppInfo } from "@/models/app/appInfo";
 import ProPlanSvg from "@/components/icon/ProPlanSvg";
 import PayPalBtn from "@/components/getPro/paypalButton/payPalBtn";
+import SubcriptionButton from "../paypalButton/SubcriptionButton";
 
 export interface IButtonPropsV4 {
     price: string;
@@ -75,13 +76,12 @@ const PopupGetProPayment = ({
                 />
 
                 {appConfig?.subscription || isSubscription ? (
-                    // <SubcriptionButton
-                    //     appConfig={appConfig}
-                    //     paymentSuccess={onPaymentSuccess}
-                    //     valueButton={valueButton}
-                    //     appInfo={appInfo}
-                    // />
-                    <></>
+                    <SubcriptionButton
+                        appConfig={appConfig}
+                        paymentSuccess={onPaymentSuccess}
+                        valueButton={valueButton}
+                        appInfo={appInfo}
+                    />
                 ) : (
                     <PayPalBtn
                         price={valueButton.value}
