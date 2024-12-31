@@ -1,27 +1,23 @@
 "use client";
-import "./index.scss";
-import MyContainer from "../../components/container/myContainer";
-import ProPackage2 from "../../components/pro/ProPackage2";
+import StoreProvider from "@/app/StoreProvider";
+import { IAppInfo } from "@/models/app/appInfo";
+import { appInfoState } from "@/redux/features/appInfo";
+import { userState } from "@/redux/features/user";
+import { useAppSelector } from "@/redux/hooks";
+import { genLinkPro } from "@/services/home.service";
+import { getListTransactionAPI } from "@/services/paypal.service";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { useEffect, useState } from "react";
+import MyContainer from "../../components/container/myContainer";
+import PopupGetPro, { IButtonPropsV4 } from "../../components/pro/PopupGetPro";
 import {
     SUBSCRIPTION,
     getConfigPro,
     getConfigProV2,
 } from "../../config/config_paypal";
 import { isSubscriptionId } from "../../models/payment/PaymentInfo";
-import PopupGetPro, { IButtonPropsV4 } from "../../components/pro/PopupGetPro";
-import * as ga from "../../services/ga";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { GetServerSideProps } from "next";
-import { getListTransactionAPI } from "@/services/paypal.service";
-import { isParentApp } from "@/config/config_web";
-import Routes from "@/config/routes";
-import { genLinkPro } from "@/services/home.service";
-import { IAppInfo } from "@/models/app/appInfo";
-import { useAppSelector } from "@/redux/hooks";
-import { appInfoState } from "@/redux/features/appInfo";
-import { userState } from "@/redux/features/user";
-import StoreProvider from "@/app/StoreProvider";
+import "./index.scss";
+import ProPackage2 from "../pro/ProPackage2";
 const dataConfig = getConfigPro("default_5");
 
 const BillingPage = () => {
@@ -131,10 +127,10 @@ const BillingPage = () => {
                     valueButton={valueButton}
                 />
             )}
-            <StoreProvider
+            {/* <StoreProvider
                 appInfo={appInfo}
                 webData={{ appId: appInfo.appId, type: "", getUserData: true }}
-            />
+            /> */}
             <div>
                 <div style={{ overflow: "hidden" }}>
                     <div className="pro-background">
@@ -147,7 +143,7 @@ const BillingPage = () => {
                             </div>
                         )}
                         <h1>Account Info</h1>
-                        {/* {!!userInfo && (
+                        {!!userInfo && (
                             <>
                                 <p className="account-email">
                                     {userInfo.email}
@@ -161,7 +157,7 @@ const BillingPage = () => {
                                     handleClickGetPro={handleClickGetPro}
                                 />
                             </>
-                        )} */}
+                        )}
                     </div>
 
                     <MyContainer className="billing-history">
