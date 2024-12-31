@@ -15,7 +15,7 @@ import { loginSuccess } from "@/redux/features/user";
 import { UserInfo } from "@/models/user/userInfo";
 import { userInfo } from "os";
 import { signIn } from "next-auth/react";
-import { getUserDeviceLogin } from "@/redux/reporsitory/syncData.repository";
+import { getUserDeviceLogin } from "@/redux/repository/sync/syncData";
 
 const GOOGLE_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
 

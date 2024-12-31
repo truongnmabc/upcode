@@ -12,8 +12,8 @@ const ReviewPanelV2 = ({ currentReviews }: { currentReviews: IReview[] }) => {
         <Fragment>
             {currentReviews.length > 0 && (
                 <div className="max-w-page bg-white mt-6 sm:mt-8 w-full px-4  mx-auto columns-1 sm:columns-3 gap-8">
-                    {currentReviews?.map((item) => (
-                        <RVColumn review={item} key={item.id} />
+                    {currentReviews?.map((item, index) => (
+                        <RVColumn review={item} key={index} />
                     ))}
                 </div>
             )}

@@ -6,12 +6,18 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./UserAvatar.scss";
 import { useDialog } from "@/components/v4-material/DialogProvider";
-import { findAppExistedData, logout, syncDataFromWebToServer } from "@/redux/reporsitory/syncData.repository";
+import {
+    findAppExistedData,
+    logout,
+    syncDataFromWebToServer,
+} from "@/redux/repository/sync/syncData";
 import { genAppKey } from "@/utils/genKey";
 
 const UserAvatar = ({ appInfo, pro }: { appInfo: IAppInfo; pro: boolean }) => {
     const router = useRouter();
-    const userInfo = useSelector((state: AppState) => state.userReducer.userInfo);
+    const userInfo = useSelector(
+        (state: AppState) => state.userReducer.userInfo
+    );
     let url = Routes.LOGIN_PAGE + "?callback=" + router.asPath;
     if (appInfo.appNameId) {
         url += "&" + Routes.PARAM_APP_NAME_ID + "=" + appInfo.appNameId;
@@ -21,8 +27,20 @@ const UserAvatar = ({ appInfo, pro }: { appInfo: IAppInfo; pro: boolean }) => {
     return !!userInfo ? (
         <>
             <div className="user-avatar">
-                <img src={userInfo.avatar} alt="user-avatar" width={38} height={38} ref={avatarRef} className="avatar" />
-                {pro && <img src="/images/passemall/new-pro/pro-crown.png" className="pro-crown" />}
+                <img
+                    src={userInfo.avatar}
+                    alt="user-avatar"
+                    width={38}
+                    height={38}
+                    ref={avatarRef}
+                    className="avatar"
+                />
+                {pro && (
+                    <img
+                        src="/images/passemall/new-pro/pro-crown.png"
+                        className="pro-crown"
+                    />
+                )}
                 <AvatarOption appInfo={appInfo} avatarRef={avatarRef} />
             </div>
         </>
@@ -33,12 +51,19 @@ const UserAvatar = ({ appInfo, pro }: { appInfo: IAppInfo; pro: boolean }) => {
     );
 };
 
-const AvatarOption = ({ appInfo, avatarRef }: { appInfo: IAppInfo; avatarRef: React.MutableRefObject<HTMLImageElement> }) => {
+const AvatarOption = ({
+    appInfo,
+    avatarRef,
+}: {
+    appInfo: IAppInfo;
+    avatarRef: React.MutableRefObject<HTMLImageElement>;
+}) => {
     const router = useRouter();
     const _className = "popover-container";
     const handleClose = () => {
         if (!!areaRef.current) {
-            if (areaRef.current.className.includes("show")) areaRef.current.className = _className + " hide";
+            if (areaRef.current.className.includes("show"))
+                areaRef.current.className = _className + " hide";
         }
     };
     const handleOpen = () => {
@@ -70,7 +95,10 @@ const AvatarOption = ({ appInfo, avatarRef }: { appInfo: IAppInfo; avatarRef: Re
             avatarRef.current.addEventListener("click", onHoverAvatar);
             avatarRef.current.addEventListener("mouseenter", onHoverAvatar);
             return () => {
-                avatarRef.current?.removeEventListener("mouseenter", onHoverAvatar);
+                avatarRef.current?.removeEventListener(
+                    "mouseenter",
+                    onHoverAvatar
+                );
                 avatarRef.current?.removeEventListener("click", onHoverAvatar);
             };
         }
@@ -99,10 +127,16 @@ const AvatarOption = ({ appInfo, avatarRef }: { appInfo: IAppInfo; avatarRef: Re
                 Log out
             </div>
             <div
-                className={!router.asPath.includes("/billing") ? "" : "_disable"}
+                className={
+                    !router.asPath.includes("/billing") ? "" : "_disable"
+                }
                 onClick={() => {
                     if (!window.location.href.includes("/billing"))
-                        window.location.href = "/billing" + (appInfo.appNameId ? "?appNameId=" + appInfo.appNameId : "");
+                        window.location.href =
+                            "/billing" +
+                            (appInfo.appNameId
+                                ? "?appNameId=" + appInfo.appNameId
+                                : "");
                     // if (!router.asPath.includes("/billing"))
                     //     router.push("/billing" + (appInfo.appNameId ? "?appNameId=" + appInfo.appNameId : ""));
                 }}
@@ -113,7 +147,15 @@ const AvatarOption = ({ appInfo, avatarRef }: { appInfo: IAppInfo; avatarRef: Re
     );
 };
 
-const ConfirmLogout = ({ onClose, onConfirm, appInfo }: { onClose: any; onConfirm: any; appInfo: IAppInfo }) => {
+const ConfirmLogout = ({
+    onClose,
+    onConfirm,
+    appInfo,
+}: {
+    onClose: any;
+    onConfirm: any;
+    appInfo: IAppInfo;
+}) => {
     const dispatch = useDispatch();
     const appKey = genAppKey(appInfo);
     const state = useSelector((state: AppState) => state);

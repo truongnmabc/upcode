@@ -28,7 +28,8 @@ export interface IPriceConfig extends IOneWeek {
 
 export interface IResult {
     type: string;
-    prices: (IPriceConfig | { price: IOneWeek })[];
+    // prices: (IPriceConfig | { price: IOneWeek })[];
+    prices: IPriceConfig[];
 }
 
 export const getAveragePrice = (value: number, days: number): number => {
@@ -111,8 +112,9 @@ export const getConfigProV2 = (appInfo: IAppInfo): IResult => {
                 mockPlanIds(result.prices as IPriceConfig[]);
             }
         } else if (oneTime) {
-            result.type = ONETIME;
-            result.prices.push({ price: oneTime });
+            // *NOTE: oneTime hiện chưa check
+            // result.type = ONETIME;
+            // result.prices.push({ price: oneTime });
         }
     } catch {
         // Handle errors silently

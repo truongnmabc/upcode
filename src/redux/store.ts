@@ -5,6 +5,7 @@ import studyReducer from "./features/study";
 import gameReducer from "./features/game";
 import userReducer from "./features/user";
 import testReducer from "./features/tests";
+import paymentReducer from "./features/payment";
 
 export const makeStore = () => {
     return configureStore({
@@ -15,6 +16,7 @@ export const makeStore = () => {
             gameReducer,
             testReducer,
             userReducer,
+            paymentReducer,
         },
     });
 };
