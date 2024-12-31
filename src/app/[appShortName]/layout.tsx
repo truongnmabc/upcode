@@ -1,14 +1,13 @@
 import AppLayout from "@/components/appLayout";
 import EventListener from "@/components/event";
 import AppThemeProvider from "@/components/theme/themeProvider";
-
-import InitData from "@/components/initData";
+import InitializeDB from "@/components/initData/initializeDB";
+import ServiceWorkerInit from "@/components/initData/sw";
 import InitDataStore from "@/redux/initDataStore";
 import { fetchAppData } from "@/utils/getAppInfos";
 import replaceYear from "@/utils/replaceYear";
 import type { Metadata } from "next";
 import NotFound from "../not-found";
-import ServiceWorkerInit from "@/components/initData/sw";
 
 type Props = {
     params: { appShortName: string };
@@ -70,7 +69,7 @@ export default async function RootLayout({
     return (
         <main>
             <InitDataStore appConfig={appConfig} appInfo={appInfo} />
-            <InitData appInfo={appInfo} />
+            <InitializeDB appInfo={appInfo} />
             <ServiceWorkerInit appInfo={appInfo} />
             <AppThemeProvider>
                 <AppLayout>{children}</AppLayout>

@@ -10,6 +10,7 @@ import { IAppInfo } from "@/models/app/appInfo";
 import ProPlanSvg from "@/components/icon/ProPlanSvg";
 import PayPalBtn from "@/components/getPro/paypalButton/payPalBtn";
 import SubcriptionButton from "../paypalButton/SubcriptionButton";
+import { IPriceConfig } from "@/utils/config_paypal";
 
 export interface IButtonPropsV4 {
     price: string;
@@ -28,7 +29,7 @@ const PopupGetProPayment = ({
     appInfo,
 }: {
     onClose: () => void;
-    valueButton: IButtonPropsV4;
+    valueButton: IPriceConfig;
     appInfo: IAppInfo;
 }) => {
     const appConfig = getConfigAppPro(appInfo);
@@ -62,19 +63,19 @@ const PopupGetProPayment = ({
 
                 <div className="popup-text">
                     <div className="title-popup pro-title">
-                        {valueButton.mainTitlePopUp}
+                        Unlock all Features
                     </div>
                     <div className="price">
-                        Upgrade for <span>${valueButton.value.toString()}</span>
+                        Upgrade for <span>${valueButton.price.toString()}</span>
                     </div>
                 </div>
 
                 <PayPalBtn
-                    price={valueButton.value}
-                    stateValue={valueButton.stateValue}
+                    price={valueButton.price}
+                    // stateValue={valueButton.stateValue}
                     paymentSuccess={onPaymentSuccess}
                 />
-
+                {/* 
                 {appConfig?.subscription || isSubscription ? (
                     <SubcriptionButton
                         appConfig={appConfig}
@@ -88,7 +89,7 @@ const PopupGetProPayment = ({
                         stateValue={valueButton.stateValue}
                         paymentSuccess={onPaymentSuccess}
                     />
-                )}
+                )} */}
             </div>
         </Dialog>
     );

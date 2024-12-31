@@ -10,7 +10,7 @@ import {
     getConfigProV2,
 } from "@/config/config_paypal";
 // import { IAppInfo } from "@/models/AppInfo";
-import { PaymentInfo } from "@/models/payment/PaymentInfo";
+// import { PaymentInfo } from "@/models/payment/paymentInfos";
 import {
     saveToDashboardAPI,
     uploadPaymentInfoAPI,

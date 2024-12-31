@@ -101,14 +101,7 @@ export const getConfigAppPro = (appInfo: IAppInfo, parrentName?: string) => {
     if (parrentName) {
         appShortName = parrentName;
     }
-    // if (isWebASVAB()) {
-    //     return {
-    //         pricePro: 9.99,
-    //         valuePro: 9.99,
-    //         configName: "default_5",
-    //         questionNumber: "1000",
-    //     };
-    // }
+
     if (config_new_pro) {
         let appProInfo = config_new_pro.configApp[appShortName]; // lấy thông tin theo appShortName ???? đ hiểu khi mà cái appShortName nó như một cái tên mà mấy bố cũng dùng mà k check gì
         const { type, prices } = getConfigProV2(appInfo);
@@ -175,4 +168,5 @@ export const PAYPAL_SUBSCRIPTION_KEY = "subcription_key";
 export const PAYPAL_CLIENT_ID = isProduction
     ? "AdB2eO_M5-okrwgabqjSMgbxuJGSXuw7tOTXNIPonty8TiHtCTZGjIErVHaBRYhsGQWNYZQjQlq4tJat"
     : "ASZuK4V1rzGFj333OzSTQM_TeNeD7VWkhTCUjoy2y6p7dgbIAoSYTSGaKwMGiGVoaHMxC-Mdb8D3wa3E";
+
 export const PAYPAL_CURRENCY = "USD";

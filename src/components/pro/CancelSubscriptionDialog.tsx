@@ -6,7 +6,7 @@ import Dialog from "@mui/material/Dialog";
 import { useState } from "react";
 import * as ga from "../../services/ga";
 import { IAppInfo } from "../../models/AppInfo";
-import { IPaymentInfo } from "../../models/payment/PaymentInfo";
+import { IPaymentInfo } from "../../models/payment/paymentInfos";
 import {
     cancelSubscriptionAPI,
     cancelSubscriptionEmailAPI,

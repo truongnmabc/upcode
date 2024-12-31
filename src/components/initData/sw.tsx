@@ -12,11 +12,6 @@ const ServiceWorkerInit = ({ appInfo }: { appInfo: IAppInfo }) => {
                         "/sw.js"
                     );
 
-                    console.log(
-                        "🚀 ~ handleInit ~ registration:",
-                        registration
-                    );
-
                     // Kiểm tra nếu service worker đã active
                     let activeWorker = registration.active;
 

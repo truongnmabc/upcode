@@ -12,7 +12,7 @@ import {
 import { isProduction } from "@/config/config_web";
 import * as ga from "@/services/ga";
 // import { IAppInfo } from "@/models/AppInfo";
-import { PaymentInfo } from "@/models/payment/PaymentInfo";
+import { PaymentInfo } from "@/models/payment/paymentInfos";
 // import {
 //     saveToDashboardAPI,
 //     uploadPaymentInfoAPI,
