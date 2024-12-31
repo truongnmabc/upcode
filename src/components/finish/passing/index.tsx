@@ -160,7 +160,6 @@ const PassingFinishPage = ({
             nextPart.subTopicTag &&
             nextPart.tag &&
             topicName &&
-            appInfo &&
             appInfo.appShortName
         ) {
             navigateToHref({
@@ -180,7 +179,6 @@ const PassingFinishPage = ({
         nextPart,
         navigateToHref,
         appInfo.appShortName,
-        appInfo,
         dispatch,
         router,
         topicName,

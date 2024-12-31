@@ -1,11 +1,10 @@
 "use client";
 
 import LazyLoadImage from "@/components/images";
-import SubAction from "@/components/study/contentGroup/mainStudyView/bottomBtn/subAction";
+import SubAction from "@/components/study/mainStudyView/bottomBtn/subAction";
 
-import React, { useEffect, useState } from "react";
-import { MathJax } from "better-react-mathjax";
 import { ICurrentGame } from "@/models/game/game";
+import { MathJax } from "better-react-mathjax";
 
 const QuestionResult = ({ item }: { item: ICurrentGame }) => {
     if (item?.status > 0) {
@@ -16,10 +15,16 @@ const QuestionResult = ({ item }: { item: ICurrentGame }) => {
                     boxShadow: " 0px 2px 8px 0px #21212129",
                 }}
             >
-                <div className="w-full rounded-t-lg bg-[#FFFBE1] flex items-center justify-between p-4">
+                <div className="w-full rounded-t-lg bg-[#FFFBE1] overflow-hidden flex items-center justify-between p-4">
                     <div className="flex items-center gap-3">
-                        {/* <LazyLoadImage classNames="w-8 h-8" src="/" /> */}
-                        <p className="text-base font-medium capitalize ">
+                        <div className="w-8 h-8 bg-red-500 flex items-center justify-center rounded-md">
+                            <LazyLoadImage
+                                classNames="w-6 h-6"
+                                src={item?.image || ""}
+                            />
+                        </div>
+
+                        <p className="text-base flex-1  font-medium capitalize ">
                             {item.tag?.replaceAll("-", " ")}
                         </p>
                     </div>
@@ -35,9 +40,9 @@ const QuestionResult = ({ item }: { item: ICurrentGame }) => {
 
 export default QuestionResult;
 
-import { MyCrypto } from "@/utils/myCrypto";
-import GetIconPrefix from "@/components/study/contentGroup/mainStudyView/choicesPanel/getIcon";
+import GetIconPrefix from "@/components/study/mainStudyView/choicesPanel/getIcon";
 import ctx from "@/utils/mergeClass";
+import { MyCrypto } from "@/utils/myCrypto";
 
 const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
     return (
@@ -67,17 +72,8 @@ const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
                         <GetIconPrefix
                             isActions={false}
                             isSelect={item?.selectedAnswer?.id === choice?.id}
-                            statusChoice={
-                                item?.selectedAnswer &&
-                                ((item?.selectedAnswer?.id === item?.id &&
-                                    choice?.correct) ||
-                                    choice.correct)
-                                    ? "pass"
-                                    : item?.selectedAnswer?.id === choice?.id &&
-                                      !choice?.correct
-                                    ? "miss"
-                                    : "other"
-                            }
+                            isReview={true}
+                            answerCorrect={choice.correct}
                         />
 
                         <MathJax

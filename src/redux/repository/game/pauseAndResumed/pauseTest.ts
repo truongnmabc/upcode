@@ -21,9 +21,7 @@ const pauseTestThunk = createAsyncThunk(
                     item.remainTime -
                     (new Date().getTime() - item.startTime) / 1000;
                 item.startTime = new Date().getTime();
-            })
-            .then((res) => console.log("pauseTestThunk ~ get data db", res))
-            .catch((err) => console.log("err", err));
+            });
     }
 );
 

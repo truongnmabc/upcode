@@ -21,9 +21,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Priority from "./priority";
 import { setIndexSubTopic } from "@/redux/features/game";
-import { ThunkDispatch } from "@reduxjs/toolkit";
 import { AppDispatch } from "@/redux/store";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import clsx from "clsx";
 
 export const handleGetNextPart = async ({
     parentId,
@@ -112,7 +112,8 @@ export const handleNavigateStudy = async ({
         appName: appShortName,
     });
     dispatch(selectTopics(topic.id));
-
+    console.log("🚀 ~ subTopicTag:", subTopicTag);
+    console.log("🚀 ~ tag:", tag);
     if (tag && subTopicTag) {
         dispatch(
             initQuestionThunk({
@@ -189,45 +190,34 @@ const TitleTopic = ({
     return (
         <div
             className={ctx(
-                "flex items-center relative overflow-hidden  bg-white max-h-[52px] sm:max-h-[74px] cursor-pointer w-full transition-all  border-solid border border-[#2121211F]",
+                "flex items-center relative p-2 overflow-hidden hover:border-primary bg-white max-h-[52px] sm:max-h-[74px] cursor-pointer w-full transition-all  border-solid border border-[#2121211F]",
                 {
                     "rounded-tl-md rounded-tr-md ": isAllowExpand,
                     "rounded-md ": !isAllowExpand,
                 },
                 classNames
             )}
-            onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderColor =
-                    topic.color || "";
-            }}
-            onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderColor =
-                    "#2121211F";
-            }}
             onClick={handleClick}
         >
             <div
                 className={ctx(
-                    " border border-solid  transition-all flex items-center rounded-tl-md  justify-center",
-                    {
-                        "rounded-bl-md":
-                            !isAllowExpand &&
-                            currentPathname === RouterApp.Home,
-                        "sm:p-2": currentPathname.includes("/study"),
-                    },
+                    "  rounded-md border-solid bg-primary-16 border-primary transition-all flex items-center rounded-tl-md  justify-center",
                     imgClassNames
                 )}
-                style={{
-                    background: topic.color,
-                    borderColor: topic.color,
-                }}
             >
                 {topic.icon ? (
                     <LazyLoadImage
                         src={topic.icon}
                         alt={appInfo?.appName + topic.name + "Practice Test"}
-                        classNames="w-6  h-6 sm:w8 sm:h-8"
+                        classNames={clsx({
+                            "w-6  h-6  ": currentPathname.includes("/study"),
+                            "w-6  h-6 sm:w-8 sm:h-8 ":
+                                !currentPathname.includes("/study"),
+                        })}
                         priority={false}
+                        styles={{
+                            filter: "brightness(0) saturate(100%) invert(81%) sepia(50%) saturate(2746%) hue-rotate(336deg) brightness(100%) contrast(98%) ",
+                        }}
                     />
                 ) : (
                     <div className="w-8 h-8"></div>

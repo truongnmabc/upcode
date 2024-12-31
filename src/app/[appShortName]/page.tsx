@@ -1,8 +1,6 @@
 import axiosInstance from "@/common/config/axios";
-import { RANDOM_COLORS } from "@/common/constants";
 import { API_PATH } from "@/common/constants/api.constants";
 import MyContainer from "@/components/container/myContainer";
-import DownloadApp from "@/components/home/downloadApp/downloadApp";
 import GridTest from "@/components/home/gridTests/gridTestHome";
 import GridTopics from "@/components/home/gridTopic/gridTopics";
 import TitleHomeApp from "@/components/home/title";
@@ -22,6 +20,7 @@ type Params = {
 export default async function Home({ params }: Params) {
     try {
         const resolvedParams = await params;
+
         const appShortName = resolvedParams?.appShortName || process.env.APP_ID;
 
         const { appInfo } = await fetchAppData(appShortName);
@@ -35,20 +34,18 @@ export default async function Home({ params }: Params) {
             ),
             axiosInstance.get(`${API_PATH.GET_SEO}/${appInfo?.appShortName}`),
         ]);
+
         const topics: ITopic[] = response?.data?.data?.topic || [];
+
         const appType = getAppType(appInfo.appShortName);
+
         const contentSeo = dataSeo.data?.content;
+
         if (appType === "default") {
             return (
                 <MyContainer>
                     <TitleHomeApp appInfo={appInfo} />
-                    <GridTopics
-                        topics={topics.map((item, index) => ({
-                            ...item,
-                            color: RANDOM_COLORS[index % RANDOM_COLORS.length],
-                        }))}
-                        appInfo={appInfo}
-                    />
+                    <GridTopics topics={topics} appInfo={appInfo} />
                     <GridTest />
                     <div className="sm:my-[48px] sm:mb-[120px] my-[24px] mb-[48px]">
                         <BannerHome appInfo={appInfo} isHomePage={true} />

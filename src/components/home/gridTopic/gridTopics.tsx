@@ -44,7 +44,7 @@ const GridTopics = ({
                             topic={topic}
                             priority={3}
                             classNames=" h-[52px] sm:h-[72px]"
-                            imgClassNames="w-[52px] h-[52px] sm:w-[72px] sm:h-[72px]"
+                            imgClassNames="w-[36px] h-[36px] sm:w-[56px] sm:h-[56px]"
                         />
                         <Wrapper topic={topic} />
                     </div>

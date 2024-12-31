@@ -15,6 +15,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 export const { auth, handlers, signIn, signOut } = NextAuth({
     providers: [
         CredentialsProvider({
+            id: "token",
             name: "Credentials",
             credentials: {
                 token: { label: "Token", type: "text" },
@@ -31,9 +32,30 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 return null;
             },
         }),
+
+        CredentialsProvider({
+            id: "email",
+            name: "Email ",
+            credentials: {
+                email: { label: "Email", type: "text ", placeholder: "jsmith" },
+            },
+            async authorize(credentials) {
+                const { email } = credentials;
+                if (email) {
+                    return {
+                        ...email,
+                        email: email,
+                        image: "/images/totoro.jpg",
+                        id: email,
+                        name: email,
+                    };
+                }
+                return {};
+            },
+        }),
     ],
     callbacks: {
-        async jwt({ token, user }) {
+        async jwt({ token }) {
             // if (user) {
             //     token.email = user.email;
             //     token.picture = user.picture;
@@ -41,7 +63,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             // }
             return token;
         },
-        async session({ session, token }) {
+        async session({ session }) {
             // session.user = {
             //     ...session.user,
             //     email: token.email,

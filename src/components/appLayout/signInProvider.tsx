@@ -7,7 +7,7 @@ const SignInProvider = () => {
     const { status } = useSession();
     async function handleCredentialResponse(response: CredentialResponse) {
         if (response.credential) {
-            signIn("credentials", {
+            signIn("token", {
                 redirect: false,
                 token: response.credential,
             });
