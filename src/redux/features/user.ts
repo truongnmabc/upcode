@@ -1,19 +1,20 @@
 import { IPaymentInfo, InAppSubscription } from "@/models/payment/PaymentInfo";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-// import { getUserDeviceLogin } from "../reporsitory/syncData.repository";
+import { getUserDeviceLogin } from "../reporsitory/syncData.repository";
 import { IUserActions } from "@/models/user/useAction";
 import { IUserInfo } from "@/models/user/userInfo";
 import useActionsThunk from "../repository/user/actions";
 import getListActionThunk from "../repository/user/getActions";
 import { RootState } from "../store";
+import checkPro from "@/utils/checkPro";
 
 export interface IUserReducer {
     userId: string; // userId này có thể được gen ra mà k cần login nên không dùng trường id này để check là login hay chưa
     userInfo: IUserInfo | null;
     paymentInfo: IPaymentInfo | null; // thông tin mua hàng của app đang được xét, được tải về khi vào trang
     paymentInfos: IPaymentInfo[]; // thông tin mua hàng của toàn bộ app
-    // mapLastSyncTime: number;
-    // mapImportedStudyData: any; // trường này đánh dấu việc đã tải dữ liệu phần học về chưa (cần phải đảm bảo nó đồng bộ với dữ liệu phần học) để không tải lại nữa
+    mapLastSyncTime: number;
+    mapImportedStudyData: any; // trường này đánh dấu việc đã tải dữ liệu phần học về chưa (cần phải đảm bảo nó đồng bộ với dữ liệu phần học) để không tải lại nữa
     lastSyncTime: number;
     loading: boolean;
     reload: boolean; // reload ở HeaderV4
@@ -29,9 +30,9 @@ const initState: IUserReducer = {
     userInfo: null,
     paymentInfo: null,
     paymentInfos: [],
-    // mapLastSyncTime: {},
+    mapLastSyncTime: {},
     lastSyncTime: -2,
-    // mapImportedStudyData: {},
+    mapImportedStudyData: {},
     loading: true,
     reload: false, // reload sau khi login/logout
     inAppPurchasedInfo: [],
@@ -47,10 +48,10 @@ export const userSlice = createSlice({
         logout: (state) => {
             state.userId = "";
             state.userInfo = null;
-            // state.paymentInfo = null;
-            // state.paymentInfos = [];
-            // state.mapLastSyncTime = {};
-            // state.mapImportedStudyData = {};
+            state.paymentInfo = null;
+            state.paymentInfos = [];
+            state.mapLastSyncTime = {};
+            state.mapImportedStudyData = {};
             state.lastSyncTime = -2;
             state.loading = true;
             state.reload = false; // reload sau khi login/logout
@@ -64,25 +65,21 @@ export const userSlice = createSlice({
         },
 
         loginSuccess: (state, action) => {
-            const payload = action.payload;
-
-            if (payload) {
-                state.userInfo = payload.userInfo;
-                state.reload = true;
-            }
+            state.userInfo = action.payload;
+            state.reload = true;
         },
         paymentSuccessAction: (state, action: PayloadAction<IPaymentInfo>) => {
-            // state.paymentInfo = action.payload ?? null;
-            // if (action.payload) {
-            //     let index = state.paymentInfos.findIndex(
-            //         (paymentInfo) => paymentInfo.appId == action.payload.appId
-            //     );
-            //     if (index >= 0) {
-            //         state.paymentInfos[index] = action.payload;
-            //     } else {
-            //         state.paymentInfos.push(action.payload);
-            //     }
-            // }
+            state.paymentInfo = action.payload ?? null;
+            if (action.payload) {
+                let index = state.paymentInfos.findIndex(
+                    (paymentInfo) => paymentInfo.appId == action.payload.appId
+                );
+                if (index >= 0) {
+                    state.paymentInfos[index] = action.payload;
+                } else {
+                    state.paymentInfos.push(action.payload);
+                }
+            }
         },
     },
     extraReducers: (builder) => {
@@ -113,48 +110,21 @@ export const userSlice = createSlice({
             state.listActions = list;
         });
         //TODO
-        // builder.addCase(REHYDRATE, (state, action) => {
-        //     if (action["payload"]) {
-        //         let userIdExit = null;
-        //         if (action["payload"]["userReducer"]) {
-        //             state = action["payload"]["userReducer"];
-        //             userIdExit = state["userId"];
-        //             if (!userIdExit) {
-        //                 userIdExit = genUserId();
-        //                 state.userId = userIdExit; // trường hợp chưa login ??, hoặc chẳng may mất mát dữ liệu ??
-        //             }
-        //             if (state.userInfo) {
-        //                 state.userInfo.id = state.userInfo.id.toLowerCase();
-        //                 state.userInfo.email =
-        //                     state.userInfo.email.toLowerCase();
-        //                 state.userInfo = new UserInfo(state.userInfo);
-        //             }
-        //             if (!state.paymentInfos) {
-        //                 state.paymentInfos = [];
-        //                 state.paymentInfo = null; // cân nhắc REHYDATE sẽ không lấy lại trường này, mà ở StoreProvider đã gọi api lấy từ datastore về
-        //             }
-        //             // state.inAppPurchasedInfo = []
-        //         }
-        //     }
-        //     state.loading = false;
-        //     state.loadingPayment = false;
-        //     state.isPro = false;
-        //     state.reload = false;
-        // });
-        // builder.addCase(getUserDeviceLogin.fulfilled, (state, action) => {
-        //     if (action.payload) {
-        //         state.paymentInfo = action.payload.paymentInfo;
-        //         state.paymentInfos = action.payload.paymentInfos;
-        //         state.inAppPurchasedInfo = action.payload.inAppSubs;
-        //         if (state.paymentInfo) {
-        //             state.isPro = checkPro(
-        //                 state.paymentInfo,
-        //                 state.inAppPurchasedInfo
-        //             );
-        //         }
-        //         state.loadingPayment = true;
-        //     }
-        // });
+
+        builder.addCase(getUserDeviceLogin.fulfilled, (state, action) => {
+            if (action.payload) {
+                state.paymentInfo = action.payload.paymentInfo;
+                state.paymentInfos = action.payload.paymentInfos;
+                state.inAppPurchasedInfo = action.payload.inAppSubs;
+                if (state.paymentInfo) {
+                    state.isPro = checkPro(
+                        state.paymentInfo,
+                        state.inAppPurchasedInfo
+                    );
+                }
+                state.loadingPayment = true;
+            }
+        });
     },
 });
 

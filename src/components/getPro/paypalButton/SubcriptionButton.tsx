@@ -9,14 +9,12 @@ import {
     PAYPAL_SUBSCRIPTION_KEY,
     getConfigProV2,
 } from "@/config/config_paypal";
-import { isProduction } from "@/config/config_web";
-import * as ga from "@/services/ga";
 // import { IAppInfo } from "@/models/AppInfo";
 import { PaymentInfo } from "@/models/payment/PaymentInfo";
-// import {
-//     saveToDashboardAPI,
-//     uploadPaymentInfoAPI,
-// } from "@/services/syncDataToWeb";
+import {
+    saveToDashboardAPI,
+    uploadPaymentInfoAPI,
+} from "@/services/syncDataToWeb";
 import {
     cancelSubscriptionAPI,
     checkPaypalStatusAPI,
@@ -24,11 +22,12 @@ import {
 } from "@/services/paypal.service";
 import { updateUserInfoDashboard } from "@/services/user";
 import "./SubcriptionButton.scss";
-import { IButtonPropsV4 } from "../PopupGetPro";
 import { setCookieDate } from "@/utils/web";
 import { paymentSuccessAction, userState } from "@/redux/features/user";
 import { IAppInfo } from "@/models/app/appInfo";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { IButtonPropsV4 } from "@/components/pro/PopupGetPro";
+import { isProduction } from "@/common/constants";
 
 const listEventName = [
     "basic_upgrade_success",
@@ -60,23 +59,23 @@ const SubcriptionButton = ({
     PLAN_ID = valueButton.planId;
 
     const onSavePayment = async (details) => {
-        let index = valueButton.index;
-        let ga_Action = "";
-        if (index == 0) ga_Action = "success_basic_plan";
-        else if (index == 1) ga_Action = "success_pop_plan";
-        else if (index == 2) ga_Action = "success_eco_plan";
-        ga.event({
-            action: ga_Action,
-            params: {
-                appName: appInfo.appName,
-            },
-        });
-        ga.event({
-            action: "upgrade_success",
-            params: {
-                appName: appInfo.appName,
-            },
-        });
+        // let index = valueButton.index;
+        // let ga_Action = "";
+        // if (index == 0) ga_Action = "success_basic_plan";
+        // else if (index == 1) ga_Action = "success_pop_plan";
+        // else if (index == 2) ga_Action = "success_eco_plan";
+        // ga.event({
+        //     action: ga_Action,
+        //     params: {
+        //         appName: appInfo.appName,
+        //     },
+        // });
+        // ga.event({
+        //     action: "upgrade_success",
+        //     params: {
+        //         appName: appInfo.appName,
+        //     },
+        // });
 
         const appId = appInfo.appId ?? APP_NEW_DOMAIN;
         let price = 0;
@@ -148,14 +147,14 @@ const SubcriptionButton = ({
         try {
             let result = await uploadPaymentInfoAPI(obj);
             if (result != "ok") {
-                ga.event({
-                    action: "save_payment_error",
-                    params: {
-                        action_type: "ab_testing",
-                        value_win: price,
-                        email_address: paymentInfo.emailAddress,
-                    },
-                });
+                // ga.event({
+                //     action: "save_payment_error",
+                //     params: {
+                //         action_type: "ab_testing",
+                //         value_win: price,
+                //         email_address: paymentInfo.emailAddress,
+                //     },
+                // });
             }
             await updateUserInfoDashboard({
                 email: userReducer?.userInfo?.email,
@@ -164,15 +163,15 @@ const SubcriptionButton = ({
                 isBuy: true,
             });
         } catch (error) {
-            ga.event({
-                action: "save_payment_error",
-                params: {
-                    action_type: "ab_testing",
-                    value_win: price,
-                    email_address: paymentInfo.emailAddress,
-                    error: error,
-                },
-            });
+            // ga.event({
+            //     action: "save_payment_error",
+            //     params: {
+            //         action_type: "ab_testing",
+            //         value_win: price,
+            //         email_address: paymentInfo.emailAddress,
+            //         error: error,
+            //     },
+            // });
         }
         dispatch(paymentSuccessAction(paymentInfo));
         try {
@@ -228,14 +227,6 @@ const SubcriptionButton = ({
                     clientId: PAYPAL_SUBCRIPTION_CLIENT_ID,
                 }}
                 createSubscription={(data, actions) => {
-                    ga.event({
-                        action: "create_order_paypal",
-                        params: {
-                            price: 0,
-                            type_payment: "subscription",
-                            action_type: "click",
-                        },
-                    });
                     return actions.subscription.create({
                         plan_id: PLAN_ID,
                     });
@@ -248,45 +239,14 @@ const SubcriptionButton = ({
                         let price =
                             details?.billing_info?.last_payment?.amount
                                 ?.value ?? 0;
-                        if (eventName) {
-                            ga.event({
-                                action: eventName,
-                                params: {
-                                    price: price,
-                                    type_payment: "subscription",
-                                    action_type: "click",
-                                },
-                            });
-                        }
-                        ga.event({
-                            action: "create_order_paypal_success",
-                            params: {
-                                price: price,
-                                type_payment: "subscription",
-                                action_type: "click",
-                            },
-                        });
+
                         return onSavePayment(details);
                     } catch (error) {
                         // console.log("error", error);
                     }
                 }}
-                catchError={(err) => {
-                    ga.event({
-                        action: "subscription_catch_error",
-                        params: {
-                            error: err.message,
-                        },
-                    });
-                }}
-                onError={(err) => {
-                    ga.event({
-                        action: "subscription_catch_error",
-                        params: {
-                            error: err.message,
-                        },
-                    });
-                }}
+                catchError={(err) => {}}
+                onError={(err) => {}}
             />
         </div>
     );
