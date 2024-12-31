@@ -10,7 +10,7 @@ export const convertPathName = (pathName: string): string => {
     return pathParts.length > 1 ? `/${pathParts.slice(1).join("/")}` : "/";
 };
 
-const listAppNotState = ["getPro", "about-us", "contact"];
+const listAppNotState = ["getPro", "about-us", "contact", "billing"];
 
 export const revertPathName = ({
     href,
