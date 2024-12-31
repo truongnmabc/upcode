@@ -28,11 +28,11 @@ const AllowExpand = () => {
     return (
         <Collapse timeout="auto" unmountOnExit in={open}>
             <div
-                style={{
-                    borderColor: isAllowExpand ? color : "transparent",
-                }}
+                // style={{
+                //     borderColor: isAllowExpand ? color : "transparent",
+                // }}
                 className={ctx("bg-white transition-all p-3", {
-                    "border border-t-0 rounded-bl-md rounded-br-md border-solid":
+                    "border border-t-0 border-primary rounded-bl-md rounded-br-md border-solid":
                         isAllowExpand && currentPathname === RouterApp.Home,
                     " rounded-md": currentPathname !== RouterApp.Home,
                 })}

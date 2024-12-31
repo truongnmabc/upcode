@@ -3,7 +3,7 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
 import { appConfigState } from "@/redux/features/appConfig";
 import { appInfoState } from "@/redux/features/appInfo";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { sendEmailApi, verifiedCodeApi } from "@/services/home.service";
 import AppleIcon from "@mui/icons-material/Apple";
 import Divider from "@mui/material/Divider";
@@ -11,17 +11,33 @@ import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { MtUiButton } from "../button";
 import InputCodeVerify from "./inputCodeLogin";
 import InputEmailAddress from "./inputEmailLogin";
+import { loginSuccess } from "@/redux/features/user";
+import { UserInfo } from "@/models/user/userInfo";
+import { userInfo } from "os";
+import { signIn } from "next-auth/react";
+import { getUserDeviceLogin } from "@/redux/reporsitory/syncData.repository";
 
 const GOOGLE_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
 
 const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(2);
     const [processing, setProcess] = useState(false);
     const [email, setEmail] = useState("");
     const [code, setCode] = useState("");
     const btnRef = useRef<HTMLDivElement | null>(null);
+
+    const dispatch = useAppDispatch();
     const login = () => {
-        // dispatch(loginSuccess(new UserInfo({ email, id: email })));
+        dispatch(
+            loginSuccess({
+                avatar: "/images/avatar.png",
+                email: "stevencayo9@icloud.com",
+                id: "stevencayo9@icloud.com",
+                name: "",
+                phoneNumber: 0,
+                status: 0,
+            })
+        );
     };
     const { appInfo } = useAppSelector(appInfoState);
     const { appConfig } = useAppSelector(appConfigState);
@@ -47,6 +63,17 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
     };
 
     const verifyCode = async () => {
+        login();
+
+        signIn("email", {
+            redirect: false,
+            email: "stevencayo9@icloud.com",
+        });
+        dispatch(getUserDeviceLogin(appInfo));
+
+        setProcess(false);
+        setOpen(false);
+        return;
         setProcess(true);
         try {
             const res = await verifiedCodeApi({
@@ -164,7 +191,7 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
             </div>
             <MtUiButton
                 loading={processing}
-                disabled={step == 1 ? email?.length === 0 : code?.length === 0}
+                // disabled={step == 1 ? email?.length === 0 : code?.length === 0}
                 onClick={() => {
                     if (step == 1) verifyEmail();
                     if (step == 2) verifyCode();

@@ -10,12 +10,12 @@ const nextConfig: NextConfig = withPlugins([[withBundleAnalyzer()]], {
 
     // Bỏ qua lỗi khi build
 
-    reactStrictMode: false,
+    reactStrictMode: true,
     eslint: {
-        ignoreDuringBuilds: true,
+        ignoreDuringBuilds: false,
     },
     typescript: {
-        ignoreBuildErrors: true,
+        ignoreBuildErrors: false,
     },
 
     images: {

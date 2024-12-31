@@ -3,7 +3,6 @@ import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
 import Config from "@/config";
 import { PaymentInfo } from "@/models/payment/PaymentInfo";
-import * as ga from "@/services/ga";
 import { updateUserInfoDashboard } from "@/services/user";
 import "./PayPalButtonView.scss";
 import {
@@ -11,11 +10,10 @@ import {
     PAYPAL_CURRENCY,
     PAYPAL_STYLE,
 } from "@/config/config_paypal";
-import { isProduction } from "@/config/config_web";
-// import {
-//     saveToDashboardAPI,
-//     uploadPaymentInfoAPI,
-// } from "@/services/syncDataToWeb";
+import {
+    saveToDashboardAPI,
+    uploadPaymentInfoAPI,
+} from "@/services/syncDataToWeb";
 import { paymentSuccessAction, userState } from "@/redux/features/user";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
@@ -31,6 +29,7 @@ import {
     OnApproveActions,
     OnApproveData,
 } from "@paypal/paypal-js";
+import { isProduction } from "@/common/constants";
 
 export type CreateOrderData = {
     paymentSource: FUNDING_SOURCE;
@@ -45,79 +44,61 @@ const PayPalBtn = ({
     price: number;
     stateValue: string;
 }) => {
-    const { paymentInfo } = useAppSelector(userState);
+    let { paymentInfo } = useAppSelector(userState);
     const { appInfo } = useAppSelector(appInfoState);
     const appId = appInfo.appId;
     const [paymentSource, setPaySource] = useState("");
     const dispatch = useAppDispatch();
     const onSavePayment = async (details) => {
-        // if (paymentInfo) {
-        //     paymentInfo = {
-        //         ...paymentInfo,
-        //         timeLeftDiscount: stateValue === "buyPro" ? -2 : -1,
-        //         amount: paymentInfo.amount + price,
-        //     };
-        // } else {
-        //     paymentInfo = new PaymentInfo({
-        //         createdDate: new Date(details.create_time).getTime(),
-        //         amount: price,
-        //         emailAddress: details.payer.email_address,
-        //         id: details.id,
-        //         orderId: details.id,
-        //         osVersion: "web",
-        //         appId,
-        //         appShortName: appInfo.appShortName,
-        //         timeLeftDiscount: stateValue === "buyPro" ? -2 : -1,
-        //     });
-        // }
-        // paymentInfo.paymentSource = paymentSource;
-        // paymentInfo.appId = appId;
-        // paymentInfo[stateValue] = Config.PURCHASED;
-        // dispatch(paymentSuccessAction(paymentInfo));
-        // let obj = {
-        //     ...paymentInfo,
-        //     appId,
-        //     userId: userInfo?.id,
-        // };
-        // try {
-        //     let result = await uploadPaymentInfoAPI(obj);
-        //     await updateUserInfoDashboard({
-        //         email: userReducer?.userInfo?.email,
-        //         appShortName: appInfo.appShortName,
-        //         appId: appInfo.appId + "",
-        //         isBuy: true,
-        //     });
-        //     if (result != "ok") {
-        //         ga.event({
-        //             action: "save_payment_error",
-        //             params: {
-        //                 action_type: "ab_testing",
-        //                 value_win: price,
-        //                 email_address: paymentInfo.emailAddress,
-        //             },
-        //         });
-        //     }
-        // } catch (error) {
-        //     ga.event({
-        //         action: "save_payment_error",
-        //         params: {
-        //             action_type: "ab_testing",
-        //             value_win: price,
-        //             email_address: paymentInfo.emailAddress,
-        //             error: error,
-        //         },
-        //     });
-        // }
-        // if (isProduction) {
-        //     saveToDashboardAPI({
-        //         app: APP_SHORT_NAME,
-        //         price: price,
-        //         email: details.payer.email_address,
-        //     });
-        // }
-        // setTimeout(() => {
-        //     paymentSuccess(true);
-        // }, 2500);
+        if (paymentInfo) {
+            paymentInfo = {
+                ...paymentInfo,
+                timeLeftDiscount: stateValue === "buyPro" ? -2 : -1,
+                amount: paymentInfo.amount + price,
+            };
+        } else {
+            paymentInfo = new PaymentInfo({
+                createdDate: new Date(details.create_time).getTime(),
+                amount: price,
+                emailAddress: details.payer.email_address,
+                id: details.id,
+                orderId: details.id,
+                osVersion: "web",
+                appId,
+                appShortName: appInfo.appShortName,
+                timeLeftDiscount: stateValue === "buyPro" ? -2 : -1,
+            });
+        }
+        paymentInfo.paymentSource = paymentSource;
+        paymentInfo.appId = appId;
+        paymentInfo[stateValue] = Config.PURCHASED;
+        dispatch(paymentSuccessAction(paymentInfo));
+        let obj = {
+            ...paymentInfo,
+            appId,
+            userId: userInfo?.id,
+        };
+        try {
+            let result = await uploadPaymentInfoAPI(obj);
+            await updateUserInfoDashboard({
+                email: userReducer?.userInfo?.email,
+                appShortName: appInfo.appShortName,
+                appId: appInfo.appId + "",
+                isBuy: true,
+            });
+            if (result != "ok") {
+            }
+        } catch (error) {}
+        if (isProduction) {
+            saveToDashboardAPI({
+                app: appInfo.appShortName,
+                price: price,
+                email: details.payer.email_address,
+            });
+        }
+        setTimeout(() => {
+            paymentSuccess(true);
+        }, 2500);
     };
 
     const initialOptions = {
@@ -155,7 +136,7 @@ const PayPalBtn = ({
 
     return (
         <div className="main-paypal-button">
-            <PayPalScriptProvider options={initialOptions}>
+            {/* <PayPalScriptProvider options={initialOptions}>
                 <PayPalButtons
                     style={{
                         shape: "pill",
@@ -167,9 +148,9 @@ const PayPalBtn = ({
                     createOrder={handleCreateOrder}
                     onApprove={onApproveOrder}
                 />
-            </PayPalScriptProvider>
+            </PayPalScriptProvider> */}
 
-            {/* <PayPalButton
+            <PayPalButton
                 amount={price}
                 style={PAYPAL_STYLE}
                 options={{
@@ -181,14 +162,6 @@ const PayPalBtn = ({
                     let eventName = localStorage.getItem("event-name");
                     eventName = eventName ?? "buy_pro_" + price;
 
-                    ga.event({
-                        action: "create_order_paypal",
-                        params: {
-                            price: price,
-                            type_payment: "one_time",
-                            action_type: "click",
-                        },
-                    });
                     return actions.order.create({
                         purchase_units: [
                             {
@@ -201,19 +174,11 @@ const PayPalBtn = ({
                     });
                 }}
                 onSuccess={(details, data) => {
-                    ga.event({
-                        action: "create_order_paypal_success",
-                        params: {
-                            price: price,
-                            type_payment: "one_time",
-                            action_type: "click",
-                        },
-                    });
                     // trackABTestEvent(appInfo.appShortName, price, null);
 
                     onSavePayment(details);
                 }}
-            /> */}
+            />
         </div>
     );
 };

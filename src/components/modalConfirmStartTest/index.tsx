@@ -72,8 +72,6 @@ const ModalConfirm = () => {
     }, [idTopic, type]);
 
     useEffect(() => {
-        console.log("🚀 ~ ModalConfirm ~ isPaused:", isPaused);
-
         if (isPaused && idTopic) {
             setTimeout(() => setOpen(true), 200);
         }

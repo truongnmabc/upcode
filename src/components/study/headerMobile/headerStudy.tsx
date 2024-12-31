@@ -17,7 +17,7 @@ import dynamic from "next/dynamic";
 import {
     getKeyTest,
     getLastPathSegment,
-} from "../contentGroup/mainStudyView/title/titleQuestion";
+} from "../mainStudyView/title/titleQuestion";
 
 const HeaderStudy = () => {
     const [openDrawer, setOpenDrawer] = useState(false);

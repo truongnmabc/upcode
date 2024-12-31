@@ -5,10 +5,9 @@ import { appInfoState } from "@/redux/features/appInfo";
 import { gameState } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishCustomTestThunk from "@/redux/repository/game/finish/finishCustomTest";
-import finishFinalThunk from "@/redux/repository/game/finish/finishFinal";
 import { revertPathName } from "@/utils/pathName";
 import { useRouter } from "next/navigation";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 const CountTimeCustomTest = () => {
     const dispatch = useAppDispatch();
 

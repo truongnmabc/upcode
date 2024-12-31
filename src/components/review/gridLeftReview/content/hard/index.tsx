@@ -1,9 +1,9 @@
 import { MtUiButton } from "@/components/button";
-import BottomBtn from "@/components/study/contentGroup/mainStudyView/bottomBtn/bottomBtn";
-import ChoicesPanel from "@/components/study/contentGroup/mainStudyView/choicesPanel/choicesPanel";
-import ExplanationDetail from "@/components/study/contentGroup/mainStudyView/explanation/explanationDetail";
-import ProgressQuestion from "@/components/study/contentGroup/mainStudyView/progress/progressQuestion";
-import QuestionContent from "@/components/study/contentGroup/mainStudyView/question/questionContent";
+import BottomBtn from "@/components/study/mainStudyView/bottomBtn/bottomBtn";
+import ChoicesPanel from "@/components/study/mainStudyView/choicesPanel/choicesPanel";
+import ExplanationDetail from "@/components/study/mainStudyView/explanation/explanationDetail";
+import ProgressQuestion from "@/components/study/mainStudyView/progress/progressQuestion";
+import QuestionContent from "@/components/study/mainStudyView/question/questionContent";
 import { db } from "@/db/db.model";
 import { ICurrentGame } from "@/models/game/game";
 import { IQuestion } from "@/models/question/questions";
