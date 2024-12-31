@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { IAppInfo } from "../../models/AppInfo";
 import "./ProPackage2.scss";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MyContainer from "../container/myContainer";
-import V4CircleProgress from "../container/V4CircleProgress";
 import CancelSubscriptionDialog from "./CancelSubscriptionDialog";
 import { IPaymentInfo } from "../../models/payment/PaymentInfo";
+import { IAppInfo } from "@/models/app/appInfo";
 
 const ProPackage2 = ({
     appInfo,
@@ -128,7 +127,7 @@ const PriceItem = ({
             )}
             <div className={"popular-text " + (currentPlan ? "current" : "")}>
                 {currentPlan ? "Your current plan" : savePrice?.text}
-                {loading && <V4CircleProgress size={12} thickness={2} />}
+                {/* {loading && <V4CircleProgress size={12} thickness={2} />} */}
             </div>
             <div className="price-item-container">
                 <div className="price-section">
