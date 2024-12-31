@@ -4,8 +4,6 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Dialog from "@mui/material/Dialog";
 import { useState } from "react";
-import * as ga from "../../services/ga";
-import { IAppInfo } from "../../models/AppInfo";
 import { IPaymentInfo } from "../../models/payment/PaymentInfo";
 import {
     cancelSubscriptionAPI,
@@ -14,8 +12,9 @@ import {
 import "./CancelSubscriptionDialog.scss";
 import CheckboxCancelDialog from "../icon/CheckboxCancelDialog";
 import CheckboxCheckedIcon from "../icon/CheckboxCheckedIcon";
+import { IAppInfo } from "@/models/app/appInfo";
 
-const LIST_TEXT_CHECKBOX = [
+const LIST_TEXT_CHECKBOX: string[] = [
     "I’ve passed my exam",
     "I’ve learnt all questions",
     "Bad question quality",
@@ -37,7 +36,7 @@ const CancelSubscriptionDialog = ({
     orderInfo: any;
     paymentInfo: IPaymentInfo;
 }) => {
-    const [listChoice, setListChoice] = useState([]); // cái này để làm màu à?
+    const [listChoice, setListChoice] = useState<string[]>([]); // cái này để làm màu à?
     const cancelSubscriptionHandle = async () => {
         // cancel paymentInfo luônvif 1 app 1 thời điểm chỉ active được 1 paymentInfo (gọi api cancel tới paypal)
         try {
@@ -47,13 +46,7 @@ const CancelSubscriptionDialog = ({
                     orderInfo.billing_info.next_billing_time
                 );
                 await cancelSubscriptionAPI(paymentInfo.orderId);
-                ga.event({
-                    action: "cancel_subscription",
-                    params: {
-                        order_id: paymentInfo.orderId,
-                        user_id: paymentInfo.userId,
-                    },
-                });
+
                 setIsActive(false);
                 let name = orderInfo.subscriber?.name.given_name;
                 await cancelSubscriptionEmailAPI(
@@ -94,9 +87,9 @@ const CancelSubscriptionDialog = ({
                     Please tell us why you cancel using Pro version
                 </div>
                 <div className="list-checkbox">
-                    {LIST_TEXT_CHECKBOX.map((el) => {
+                    {LIST_TEXT_CHECKBOX.map((el: string, index: number) => {
                         return (
-                            <div className="checkbox-item" key={el}>
+                            <div className="checkbox-item" key={index}>
                                 <FormControlLabel
                                     label={el}
                                     control={
