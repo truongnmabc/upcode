@@ -90,3 +90,11 @@ p {
 .main-color-bold {
     color: var(--main-color-bold);
 }
+
+.v4-button-animation {
+    transition: transform 0.15s ease, opacity 0.2s;
+}
+.v4-button-animation:hover {
+    transform: translateY(-3px);
+    opacity: 0.9;
+}

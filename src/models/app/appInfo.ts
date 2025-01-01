@@ -1,7 +1,7 @@
 import { parseBoolean } from "@/utils";
 
 export interface IAppInfo {
-    appId: string;
+    appId: number;
     appName: string;
     appNameId: string;
     appShortName: string;
@@ -26,7 +26,7 @@ export interface IAppInfo {
 }
 
 export class AppInfo implements IAppInfo {
-    appId: string;
+    appId: number;
     appName: string;
     appNameId: string;
     categoryId: string;
@@ -54,7 +54,7 @@ export class AppInfo implements IAppInfo {
     oneTimePro?: { planId: string; price: number };
 
     constructor(object: Partial<IAppInfo> = {}) {
-        this.appId = object.appId ?? "";
+        this.appId = object.appId ?? -1;
         this.appName = object.appName ?? "";
         this.appNameId = object.appNameId ?? "";
         this.categoryId = object.categoryId ?? "";

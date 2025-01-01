@@ -11,7 +11,7 @@ import {
     SUBSCRIPTION,
     getConfigProV2,
 } from "../../config/config_paypal";
-import { isSubscriptionId } from "../../models/payment/paymentInfos";
+import { isSubscriptionId } from "../../models/payment/payment";
 import * as ga from "@/services/ga";
 import "./index.scss";
 import V4LoginDialog from "@/components/header/V4LoginDialog";

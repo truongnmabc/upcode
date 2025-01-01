@@ -1,4 +1,8 @@
 import NextAuth from "next-auth";
+import jwt from "jsonwebtoken";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { verifiedCodeApi } from "./services/home.service";
+
 type IAccountInfo = {
     email: string;
     picture: string;
@@ -9,9 +13,6 @@ type IAccountInfo = {
     family_name: string;
 };
 
-import jwt from "jsonwebtoken";
-
-import CredentialsProvider from "next-auth/providers/credentials";
 export const { auth, handlers, signIn, signOut } = NextAuth({
     providers: [
         CredentialsProvider({
@@ -26,6 +27,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                     const accountInfo = jwt.decode(token) as IAccountInfo;
                     return {
                         ...accountInfo,
+                        id: accountInfo.id,
                         image: accountInfo.picture,
                     };
                 }
@@ -37,41 +39,59 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             id: "email",
             name: "Email ",
             credentials: {
-                email: { label: "Email", type: "text ", placeholder: "jsmith" },
+                email: { label: "Email", type: "text " },
+                code: { label: "Code", type: "text " },
             },
             async authorize(credentials) {
-                const { email } = credentials;
-                if (email) {
-                    return {
-                        ...email,
-                        email: email,
-                        image: "/images/totoro.jpg",
-                        id: email,
-                        name: email,
-                    };
+                const { email, code } = credentials as {
+                    email: string;
+                    code: string;
+                };
+                if (email && code) {
+                    try {
+                        const res = await verifiedCodeApi({ email, code });
+                        if (res) {
+                            return {
+                                email: email,
+                                image: "/images/totoro.jpg",
+                                id: email,
+                                name: email,
+                            };
+                        } else {
+                            return null;
+                        }
+                    } catch (error) {
+                        console.error("🚀 ~ authorize ~ API error:", error);
+                        return null;
+                    }
                 }
                 return {};
             },
         }),
     ],
     callbacks: {
-        async jwt({ token }) {
-            // if (user) {
-            //     token.email = user.email;
-            //     token.picture = user.picture;
-            //     token.name = user.name;
-            // }
+        async jwt({ token, user }) {
+            if (user) {
+                token.email = user.email;
+                token.name = user.name;
+                token.id = user.id;
+            }
             return token;
         },
-        async session({ session }) {
-            // session.user = {
-            //     ...session.user,
-            //     email: token.email,
-            //     picture: token.picture,
-            //     name: token.name,
-            // };
+        async session({ session, token }) {
+            session.user = {
+                ...session.user,
+                id: (token.id as string) || "",
+            };
             return session;
         },
+    },
+    jwt: {
+        maxAge: 60 * 60 * 48,
+    },
+    session: {
+        strategy: "jwt",
+        maxAge: 60 * 60 * 48,
     },
     secret: process.env.AUTH_SECRET,
 });

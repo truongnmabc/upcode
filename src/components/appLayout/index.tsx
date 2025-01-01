@@ -6,7 +6,7 @@ import AdsProvider from "../ads/adsProvider";
 import SheetApp from "../sheetApp";
 import { NavigationEvents } from "./navigationEvents";
 import { ProgressBar } from "./progressBar";
-import SignInProvider from "./signInProvider";
+import AuthProvider from "./authProvider";
 import WrapperScroll from "./wrapperScroll";
 import SyncData from "../sync";
 const FN = ({ children }: { children: React.ReactNode }) => {
@@ -22,7 +22,7 @@ const FN = ({ children }: { children: React.ReactNode }) => {
             </div>
             <ToastContainer autoClose={2000} />
             <SheetApp />
-            <SignInProvider />
+            <AuthProvider />
             <AdsProvider />
             <SyncData />
         </WrapperScroll>

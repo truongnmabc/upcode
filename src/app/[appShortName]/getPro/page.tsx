@@ -32,7 +32,7 @@ const Page = () => {
                             </div>
                             <TotalQuestion />
 
-                            <div className="flex items-center gap-2 lg:text-lgtext-sm sm:text-base capitalize text-center text-white">
+                            <div className="flex items-center gap-2 lg:text-lg text-sm sm:text-base capitalize text-center text-white">
                                 <LazyLoadImage
                                     classNames="w-8 h-8 sm:w-10 sm:h-10 lg:w-[50px] lg:h-[50px]"
                                     src="/images/passemall/new-pro/Checkbox.png"

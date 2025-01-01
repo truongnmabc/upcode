@@ -127,10 +127,6 @@ const BillingPage = () => {
                     valueButton={valueButton}
                 />
             )}
-            {/* <StoreProvider
-                appInfo={appInfo}
-                webData={{ appId: appInfo.appId, type: "", getUserData: true }}
-            /> */}
             <div>
                 <div style={{ overflow: "hidden" }}>
                     <div className="pro-background">

@@ -1,18 +1,47 @@
 "use client";
-import React, { useEffect, useLayoutEffect } from "react";
-const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
+import React, { useCallback, useEffect, useLayoutEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+    loginHybrid,
+    logoutHybrid,
+    shouldOpenModalLogin,
+} from "@/redux/features/user";
+import ModalLogin from "../login";
+import {
+    selectOpenModalLogin,
+    selectUserInfo,
+} from "@/redux/features/user.reselect";
+const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
 
-const SignInProvider = () => {
-    const { status } = useSession();
-    async function handleCredentialResponse(response: CredentialResponse) {
-        if (response.credential) {
-            signIn("token", {
-                redirect: false,
-                token: response.credential,
-            });
-        }
-    }
+type IUser = {
+    id?: string;
+    email: string;
+    name: string;
+    image: string;
+};
+const AuthProvider = () => {
+    const { status, data } = useSession();
+    const openModal = useAppSelector(selectOpenModalLogin);
+    const userInfo = useAppSelector(selectUserInfo);
+    const dispatch = useAppDispatch();
+    const [isMount, setIsMount] = React.useState(false);
+    const handleClose = useCallback(() => {
+        dispatch(shouldOpenModalLogin(false));
+    }, [dispatch]);
+
+    const handleCredentialResponse = useCallback(
+        async (response: CredentialResponse) => {
+            if (response.credential) {
+                signIn("token", {
+                    redirect: false,
+                    token: response.credential,
+                });
+                handleClose();
+            }
+        },
+        [handleClose]
+    );
 
     const handleLoginInSuccess = async (event: any) => {
         if (event?.detail?.authorization?.id_token) {
@@ -62,13 +91,15 @@ const SignInProvider = () => {
         if (
             status === "unauthenticated" &&
             typeof window !== "undefined" &&
-            window?.google
+            window?.google &&
+            !isMount
         ) {
             const timeOut = setTimeout(() => {
                 try {
                     window.google?.accounts?.id?.prompt((e) => {
                         console.log("first prompt", e);
                     });
+                    setIsMount(true);
                 } catch (error) {
                     console.log("🚀 ~ useEffect ~ error", error);
                 }
@@ -78,9 +109,28 @@ const SignInProvider = () => {
                 clearTimeout(timeOut);
             };
         }
-    }, [status]);
+    }, [status, isMount]);
 
-    useLayoutEffect(() => {
+    const handleCheckUserInfo = useCallback(
+        async (user: IUser) => {
+            dispatch(loginHybrid(user));
+        },
+        [dispatch]
+    );
+
+    useEffect(() => {
+        console.log("🚀 ~ useEffect ~ data:", data?.user);
+
+        if (status === "authenticated" && data && !userInfo.id) {
+            if (data.user) handleCheckUserInfo(data.user);
+        }
+
+        if (status === "unauthenticated" && !data && userInfo.id) {
+            dispatch(logoutHybrid());
+        }
+    }, [status, data, userInfo, handleCheckUserInfo]);
+
+    useEffect(() => {
         try {
             if (
                 typeof window !== "undefined" &&
@@ -114,7 +164,8 @@ const SignInProvider = () => {
             console.log("🚀 ~ useLayoutEffect ~ error", error);
         }
     }, []);
-    return <></>;
+
+    return <ModalLogin open={openModal} setOpen={handleClose} />;
 };
 
-export default SignInProvider;
+export default AuthProvider;

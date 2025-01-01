@@ -1,21 +1,25 @@
 export interface IPaymentInfos {
-    id: string | number;
+    id?: string;
     amount: number;
     orderId: string; // orderId của gói đang active
     createdDate: number;
+    updateDate: number;
     emailAddress: string;
     userId: string;
     paymentStatus: number;
     appId: number;
     appShortName: string;
-    PURCHASED: number;
-    paymentSource: string;
     payerName: string;
-    buyPro: number; // trường này cần được gọi api để check và update vào đây
-    timeLeftDiscount: number;
-    type: number;
-    orderIds: string[]; // toàn bộ các orderId ~ các lần mua gói pro/ từ orderId => transaction data (transactionId) (các lần thanh toán / gia hạn cho orderId đó )
-    expiredDate: number; // trường này được lấy theo next_billing_time của paypal nhé (nếu cancel thì sẽ k có trường đó thì cần check)
+    payerId: string;
+
+    // *NOTE: chua ro can nhung truong gi
+
+    PURCHASED?: number;
+    paymentSource?: string;
+    buyPro?: number; // trường này cần được gọi api để check và update vào đây
+    timeLeftDiscount?: number;
+    type?: number;
+    expiredDate?: number; // trường này được lấy theo next_billing_time của paypal nhé (nếu cancel thì sẽ k có trường đó thì cần check)
 }
 
 export interface InAppSubscription {

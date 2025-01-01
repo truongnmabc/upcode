@@ -9,8 +9,11 @@ import "./popupGetPro.scss";
 import { IAppInfo } from "@/models/app/appInfo";
 import ProPlanSvg from "@/components/icon/ProPlanSvg";
 import PayPalBtn from "@/components/getPro/paypalButton/payPalBtn";
-import SubcriptionButton from "../paypalButton/SubcriptionButton";
+import SubScriptionButton from "../paypalButton/subScriptionBtnPayment";
 import { IPriceConfig } from "@/utils/config_paypal";
+import { useRouter } from "next/navigation";
+import { revertPathName } from "@/utils/pathName";
+import RouterApp from "@/common/router/router.constant";
 
 export interface IButtonPropsV4 {
     price: string;
@@ -33,9 +36,13 @@ const PopupGetProPayment = ({
     appInfo: IAppInfo;
 }) => {
     const appConfig = getConfigAppPro(appInfo);
-
+    const router = useRouter();
     const onPaymentSuccess = () => {
-        window.location.href = "/billing";
+        const _href = revertPathName({
+            appName: appInfo.appShortName,
+            href: RouterApp.Billing,
+        });
+        router.push(_href);
         onClose();
     };
     const isSubscription = getConfigProV2(appInfo).type === SUBSCRIPTION;
@@ -70,14 +77,8 @@ const PopupGetProPayment = ({
                     </div>
                 </div>
 
-                <PayPalBtn
-                    price={valueButton.price}
-                    // stateValue={valueButton.stateValue}
-                    paymentSuccess={onPaymentSuccess}
-                />
-                {/* 
                 {appConfig?.subscription || isSubscription ? (
-                    <SubcriptionButton
+                    <SubScriptionButton
                         appConfig={appConfig}
                         paymentSuccess={onPaymentSuccess}
                         valueButton={valueButton}
@@ -85,11 +86,10 @@ const PopupGetProPayment = ({
                     />
                 ) : (
                     <PayPalBtn
-                        price={valueButton.value}
-                        stateValue={valueButton.stateValue}
+                        price={valueButton.price}
                         paymentSuccess={onPaymentSuccess}
                     />
-                )} */}
+                )}
             </div>
         </Dialog>
     );

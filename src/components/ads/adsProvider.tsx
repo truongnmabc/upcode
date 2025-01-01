@@ -1,10 +1,12 @@
 "use client";
-import React, { useEffect } from "react";
+import { selectUserInfo } from "@/redux/features/user.reselect";
+import { useAppSelector } from "@/redux/hooks";
+import { useEffect } from "react";
 import { addLinkAdsen, checkCountryVN, getAdClientId, hasShowAds } from "./ads";
-import { useSession } from "next-auth/react";
 
 const AdsProvider = () => {
-    const { data: session } = useSession();
+    const userInfo = useAppSelector(selectUserInfo);
+
     useEffect(() => {
         let adClient = getAdClientId();
         if (!adClient?.length) {
@@ -17,7 +19,7 @@ const AdsProvider = () => {
                 addLinkAdsen() &&
                 !checkCountryVN() &&
                 hasShowAds() &&
-                !isProUser
+                !userInfo.isPro
             ) {
                 const elements = document.getElementsByTagName("script");
                 let hasScript = false;

@@ -7,7 +7,7 @@ import { IAppInfo } from "../../../models/AppInfo";
 import {
     IPaymentInfo,
     isSubscriptionId,
-} from "../../../models/payment/paymentInfos";
+} from "../../../models/payment/payment";
 import { checkPaypalStatusAPI } from "../../../services/paypal.service";
 import "./PopupSubscription.scss";
 import dynamic from "next/dynamic";

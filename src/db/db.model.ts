@@ -8,7 +8,7 @@ import { ITopicStatus } from "../models/question/topicStatus";
 import { ITopic } from "../models/topics/topics";
 import { IUserActions } from "../models/user/useAction";
 import { IPassingModel } from "@/models/passing/passingModel";
-import { IPaymentInfos } from "@/models/payment/paymentInfos";
+import { IPaymentInfos } from "@/models/payment/payment";
 
 export class DB extends Dexie {
     userProgress!: Table<IUserQuestionProgress>;
