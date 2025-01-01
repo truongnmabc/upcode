@@ -10,7 +10,7 @@ import { RootState } from "../../store";
 import { syncDataToWebAfterLoginAPI } from "@/services/user";
 import { IAppInfo } from "@/models/app/appInfo";
 import { IUserInfo } from "@/models/user/userInfo";
-import { IPaymentInfos } from "@/models/payment/paymentInfos";
+import { IPaymentInfos } from "@/models/payment/payment";
 
 /** lấy dữ liệu payment (web), inAppSubscription (mobile) và update vào redux, gọi mỗi khi vào trang */
 
@@ -80,7 +80,6 @@ const getUserDeviceLogin = createAsyncThunk(
                 appId: appInfo.appId,
                 lastUpdate: -1,
             })) as IRes;
-            console.log("🚀 ~ syncData:", syncData);
 
             const userDeviceLogin = syncData.UserDeviceLogins;
             const inAppSubscriptions = syncData.InAppSubscriptions; // mua trên mobile

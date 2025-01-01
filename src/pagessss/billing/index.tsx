@@ -9,7 +9,7 @@ import {
     getConfigPro,
     getConfigProV2,
 } from "../../config/config_paypal";
-import { isSubscriptionId } from "../../models/payment/paymentInfos";
+import { isSubscriptionId } from "../../models/payment/payment";
 import V4CircleProgress from "../../components/container/V4CircleProgress";
 import PopupGetPro, { IButtonPropsV4 } from "../../components/pro/PopupGetPro";
 import * as ga from "../../services/ga";

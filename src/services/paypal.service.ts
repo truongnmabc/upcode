@@ -4,22 +4,22 @@ import { genStudyLink } from "@/utils/getStudyLink";
 import { isProduction } from "@/common/constants";
 import { callApi } from ".";
 import { IAppInfo } from "@/models/app/appInfo";
+import { requestGetData } from "./request";
 
+// *NOTE: can check lai
 /**
  * https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_get
  * lấy thông tin của đơn hàng hiện tại
  */
 export const checkPaypalStatusAPI = async (orderId: string) => {
-    let data = await callApi({
+    return await requestGetData({
         url:
             "api/auth?type=check-status-subcription&orderId=" +
             orderId +
             (!isProduction ? "&dev=true" : ""),
-        params: null,
-        method: "get",
     });
-    return data;
 };
+
 /**
  * https://developer.paypal.com/docs/api/subscriptions/v1/#plans_get
  * lấy thông tin của gói (quan tâm đến thời gian hiệu lực của nó)
@@ -293,111 +293,3 @@ export const cancelSubscriptionEmailAPI = async (
         console.log("error", error);
     }
 };
-
-function getContactLink(contactMethod) {
-    let appName = "asvab";
-    if (appName == "cdl" || appName == "cdl_v2") {
-        if (contactMethod == "facebook") {
-            return "https://www.facebook.com/CDL-prep-101878645343877";
-        } else if (contactMethod == "twitter") {
-            return "https://twitter.com/CLprep";
-        } else if (contactMethod == "youtube") {
-            return "https://www.youtube.com/channel/UCke4KGWOxPP8R2aPVQTUAlA";
-        } else if (contactMethod == "linkedin") {
-            return "https://www.youtube.com/channel/UCke4KGWOxPP8R2aPVQTUAlA";
-        } else if (contactMethod == "email") {
-            return "support@cdl-prep.com";
-        }
-    } else if (appName == "asvab") {
-        if (contactMethod == "facebook") {
-            return "https://www.facebook.com/ASVAB-Test-Prep-by-ABC-Elearning-104795498352899";
-        } else if (contactMethod == "twitter") {
-            return "https://twitter.com/PrepAsvab";
-        } else if (contactMethod == "youtube") {
-            return "https://www.youtube.com/channel/UC9F-vTfB9PCbxvBT8zqMMJw";
-        } else if (contactMethod == "email") {
-            return "support@asvab-prep.com";
-        }
-    } else if (appName == "dmv") {
-        if (contactMethod == "youtube") {
-            return "https://www.youtube.com/channel/UClGYoBo4B7IoffZXcwDdRUw";
-        } else if (contactMethod == "twitter") {
-            return "https://twitter.com/dmvprepabcteam";
-        } else if (contactMethod == "email") {
-            return "support@dmv-practicetests.com";
-        }
-    } else if (appName == "cna") {
-        if (contactMethod == "email") {
-            return "support@cna-prep.com";
-        }
-    } else if (appName == "drivingtheory") {
-        if (contactMethod == "email") {
-            return "support@drivingtheory-tests.com";
-        }
-    } else if (appName == "passemall") {
-        if (contactMethod == "facebook") {
-            return "https://www.facebook.com/ABC-E-learning-110654290809849";
-        } else if (contactMethod == "twitter") {
-            return "https://twitter.com/abcelearningapp";
-        } else if (contactMethod == "youtube") {
-            return "https://www.youtube.com/channel/UCkLKqup_8asTJGtQIgXCOZg";
-        } else if (contactMethod == "email") {
-            return "support@passemall.com";
-        }
-    } else if (appName == "realestate") {
-        if (contactMethod == "facebook") {
-            return "https://www.facebook.com/Real-Estate-Exam-Prep-by-ABC-Elearning-107910338185108";
-        } else if (contactMethod == "youtube") {
-            return "https://www.youtube.com/channel/UCFWA5MkzvzHlHYBFvT9BH9A/about";
-        } else if (contactMethod == "email") {
-            return "support@realestate-prep.com";
-        }
-    } else if (appName == "servsafe") {
-        if (contactMethod == "facebook") {
-            return "facebook.com/Servsafe-Exam-Prep-104667911889218";
-        } else if (contactMethod == "youtube") {
-            return "https://www.youtube.com/channel/UC7A8HrEXgdiR7otcxgAqZZQ/about";
-        } else if (contactMethod == "email") {
-            return "support@servsafe-prep.com";
-        }
-    } else if (appName == "aws") {
-        if (contactMethod == "facebook") {
-            return "https://www.facebook.com/AWS-Exam-Prep-102525238774581";
-        } else if (contactMethod == "youtube") {
-            return "https://www.youtube.com/channel/UCht1edKzc3jXi6RHu-kAXRA/about";
-        } else if (contactMethod == "email") {
-            return "support@aws-prep.com";
-        }
-    } else if (appName == "ptce") {
-        if (contactMethod == "youtube") {
-            return "https://www.youtube.com/channel/UCwk8caoOY4DiyteWcv17nbQ/about";
-        } else if (contactMethod == "facebook") {
-            return "https://www.facebook.com/PTCB-Exam-Prep-by-ABC-Elearning-102646622056698";
-        } else if (contactMethod == "email") {
-            return "support@ptceprep.com";
-        }
-    } else if (appName == "pmp") {
-        if (contactMethod == "facebook") {
-            return "https://www.facebook.com/PMP-Exam-Prep-100596645638322";
-        } else if (contactMethod == "youtube") {
-            return "https://www.youtube.com/channel/UCv3MA6wPjfvmctrQbrrWYrQ/about";
-        } else if (contactMethod == "email") {
-            return "support@pmp-testprep.com";
-        }
-    } else if (appName == "ged") {
-        if (contactMethod == "facebook") {
-            return "https://www.facebook.com/people/TestPrep-Ged/100068351480720/";
-        } else if (contactMethod == "youtube") {
-            return "https://www.youtube.com/channel/UCsVHfTGvOjveDJSx6c4hdNQ/about";
-        } else if (contactMethod == "email") {
-            return "support@ged-testprep.com";
-        }
-    } else if (appName == "teas") {
-        if (contactMethod == "facebook") {
-            return "https://www.facebook.com/TEAS-Exam-Prep-113142767696481";
-        } else if (contactMethod == "email") {
-            return "support@teas-prep.com";
-        }
-    }
-    return null;
-}

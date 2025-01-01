@@ -1,50 +1,62 @@
 "use client";
-import LazyLoadImage from "@/components/images";
-import ModalLogin from "@/components/login";
-import ctx from "@/utils/mergeClass";
-import { Button, Menu, MenuItem } from "@mui/material";
-import React, { Fragment, useState } from "react";
-import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { revertPathName } from "@/utils/pathName";
-import { useAppSelector } from "@/redux/hooks";
-import { appInfoState } from "@/redux/features/appInfo";
 import RouterApp from "@/common/router/router.constant";
+import LazyLoadImage from "@/components/images";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
+import { shouldOpenModalLogin } from "@/redux/features/user";
+import { selectUserInfo } from "@/redux/features/user.reselect";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import ctx from "@/utils/mergeClass";
+import { revertPathName } from "@/utils/pathName";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Tooltip from "@mui/material/Tooltip";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import React, { Fragment, useCallback } from "react";
 
 const FN = ({ classNames }: { classNames?: string }) => {
-    const [openModal, setOpenModal] = useState(false);
     const router = useRouter();
-    const { data: session } = useSession();
-    const isPro = false;
+    const dispatch = useAppDispatch();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const { appInfo } = useAppSelector(appInfoState);
-    const _href = revertPathName({
-        appName: appInfo.appShortName,
-        href: RouterApp.Billing,
-    });
+    const appInfo = useAppSelector(selectAppInfo);
+    const userInfo = useAppSelector(selectUserInfo);
 
-    const handleNavigate = () => {
+    const handleNavigate = useCallback(() => {
         setAnchorEl(null);
+
+        const _href = revertPathName({
+            appName: appInfo.appShortName,
+            href: RouterApp.Billing,
+        });
         router.push(_href);
-    };
-    const handleLogout = () => {
+    }, [appInfo, router]);
+
+    const handleLogout = useCallback(() => {
         setAnchorEl(null);
-        signOut();
-    };
+        signOut({
+            redirect: false,
+        });
+    }, [dispatch]);
 
-    const handleClose = () => setAnchorEl(null);
+    const handleClose = useCallback(() => setAnchorEl(null), []);
 
-    const handleClick = (event: React.MouseEvent<HTMLDivElement>): void =>
-        setAnchorEl(event.currentTarget);
+    const handleClick = useCallback(
+        (event: React.MouseEvent<HTMLDivElement>): void =>
+            setAnchorEl(event.currentTarget),
+        []
+    );
 
-    if (!session) {
+    const handleOpenModalLogin = useCallback(() => {
+        dispatch(shouldOpenModalLogin(true));
+    }, []);
+
+    if (!userInfo.id) {
         return (
             <div className="hidden sm:block">
                 <Button
-                    onClick={() => {
-                        setOpenModal(true);
-                    }}
+                    onClick={handleOpenModalLogin}
                     sx={{
                         textTransform: "capitalize",
                         ":hover": {
@@ -62,35 +74,36 @@ const FN = ({ classNames }: { classNames?: string }) => {
                         Login
                     </div>
                 </Button>
-                <ModalLogin open={openModal} setOpen={setOpenModal} />
             </div>
         );
     }
 
     return (
         <Fragment>
-            <div className="cursor-pointer" onClick={handleClick}>
-                {isPro && (
+            <Tooltip title={userInfo?.email || ""} placement="bottom">
+                <div className="cursor-pointer" onClick={handleClick}>
+                    {userInfo.isPro && (
+                        <LazyLoadImage
+                            classNames="absolute bottom-full left-2 w-[14px] h-[9px]"
+                            src="images/header/crown.png"
+                            alt="crown"
+                            draggable={false}
+                        />
+                    )}
                     <LazyLoadImage
-                        classNames="absolute bottom-full left-2 w-[14px] h-[9px]"
-                        src="images/header/crown.png"
-                        alt="crown"
+                        // classNames={`cursor-pointer flex bg-[#cca68b] rounded-full w-[30px] h-[30px] box-border  ${
+                        //   isPro
+                        //     ? "border-2 border-white outline outline-[2px] outline-[#f0bd3a]"
+                        //     : ""
+                        // }`}
+                        classNames="w-8 h-8 "
+                        imgClassNames="rounded-full"
+                        src={userInfo?.image || ""}
+                        alt="avatar"
                         draggable={false}
                     />
-                )}
-                <LazyLoadImage
-                    // classNames={`cursor-pointer flex bg-[#cca68b] rounded-full w-[30px] h-[30px] box-border  ${
-                    //   isPro
-                    //     ? "border-2 border-white outline outline-[2px] outline-[#f0bd3a]"
-                    //     : ""
-                    // }`}
-                    classNames="w-8 h-8 "
-                    imgClassNames="rounded-full"
-                    src={session.user?.image || ""}
-                    alt="avatar"
-                    draggable={false}
-                />
-            </div>
+                </div>
+            </Tooltip>
 
             <Menu
                 id="basic-menu"

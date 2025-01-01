@@ -14,8 +14,32 @@ export const sendEmailApi = async ({
     return await requestGetData({
         url: `/api/auth?type=send-email&email=${email}&appName=${appName}`,
         params: { email, appName },
+        config: {
+            baseURL: "https://test-dot-micro-enigma-235001.appspot.com",
+        },
     });
 };
+
+export const verifiedCodeApi = async ({
+    email,
+    code,
+}: {
+    email: string;
+    code: string;
+}) => {
+    return await requestGetData({
+        url: `/api/auth?type=verify-code&email=${email}&code=${code}`,
+        params: {
+            email,
+            code,
+        },
+        config: {
+            baseURL: "https://test-dot-micro-enigma-235001.appspot.com",
+        },
+    });
+};
+
+// *NOTE: can check lai
 
 export const END_POINT_WORD_PRESS =
     process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.length &&
@@ -38,22 +62,6 @@ export const getHomeSeoContentApi = async (postUrl: string) => {
     return content;
 };
 
-export const verifiedCodeApi = async ({
-    email,
-    code,
-}: {
-    email: string;
-    code: string;
-}) => {
-    return await requestGetData({
-        url: `/api/auth?type=verify-code&email=${email}&code=${code}`,
-        params: {
-            email,
-            code,
-        },
-    });
-};
-
 export const sendEmailSubscribe = async ({
     email,
     message,
@@ -70,6 +78,9 @@ export const sendEmailSubscribe = async ({
             subject: `Web ${appName} Support`,
             fromEmail: email,
             content: message,
+        },
+        config: {
+            baseURL: "https://test-dot-micro-enigma-235001.appspot.com",
         },
     });
 };

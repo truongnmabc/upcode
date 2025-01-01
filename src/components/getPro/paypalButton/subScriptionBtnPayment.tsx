@@ -1,16 +1,11 @@
 import jwt from "jsonwebtoken";
-import { PayPalButton } from "react-paypal-button-v2";
-import { useDispatch, useSelector } from "react-redux";
 import Config from "@/config";
-import { APP_NEW_DOMAIN } from "@/config_app";
 import {
-    PAYPAL_STYLE,
-    PAYPAL_SUBCRIPTION_CLIENT_ID,
+    PAYPAL_SUBSCRIPTION_CLIENT_ID,
     PAYPAL_SUBSCRIPTION_KEY,
     getConfigProV2,
 } from "@/config/config_paypal";
-// import { IAppInfo } from "@/models/AppInfo";
-// import { PaymentInfo } from "@/models/payment/paymentInfos";
+
 import {
     saveToDashboardAPI,
     uploadPaymentInfoAPI,
@@ -23,18 +18,44 @@ import {
 import { updateUserInfoDashboard } from "@/services/user";
 import "./SubcriptionButton.scss";
 import { setCookieDate } from "@/utils/web";
-import { paymentSuccessAction, userState } from "@/redux/features/user";
 import { IAppInfo } from "@/models/app/appInfo";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { IButtonPropsV4 } from "@/components/pro/PopupGetPro";
 import { isProduction } from "@/common/constants";
 
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+
+import {
+    CreateSubscriptionActions,
+    OnApproveActions,
+    OnApproveData,
+} from "@paypal/paypal-js";
+import { useCallback } from "react";
+import { selectUserInfo } from "@/redux/features/user.reselect";
+import { selectPaymentInfo } from "@/redux/features/payment.reselect";
+import { IPriceConfig } from "@/utils/config_paypal";
+import { IPaymentInfos } from "@/models/payment/payment";
 const listEventName = [
     "basic_upgrade_success",
     "popular_upgrade_success",
     "economical_upgrade_success",
 ];
-const SubcriptionButton = ({
+
+const initialOptions = {
+    clientId: PAYPAL_SUBSCRIPTION_CLIENT_ID,
+    intent: "subscription",
+    vault: true,
+};
+
+// APPROVAL_PENDING. The subscription is created but not yet approved by the buyer.
+// APPROVED. The buyer has approved the subscription.
+// ACTIVE. The subscription is active.
+// SUSPENDED. The subscription is suspended.
+// CANCELLED. The subscription is cancelled.
+// EXPIRED. The subscription is expired.
+// paymentInfo.id = details.id;
+
+const SubScriptionButton = ({
     appConfig,
     paymentSuccess,
     valueButton,
@@ -42,13 +63,14 @@ const SubcriptionButton = ({
 }: {
     appConfig: any;
     paymentSuccess: Function;
-    valueButton?: IButtonPropsV4;
+    valueButton: IPriceConfig;
     appInfo: IAppInfo;
 }) => {
     const dispatch = useAppDispatch();
-    let { paymentInfo } = useAppSelector(userState);
+    const paymentInfo = useAppSelector(selectPaymentInfo);
+    const userInfo = useAppSelector(selectUserInfo);
 
-    let PLAN_ID = "";
+    let PLAN_ID = valueButton.planId;
     let eventName = "";
 
     const { prices: newPrice } = getConfigProV2(appInfo);
@@ -56,28 +78,9 @@ const SubcriptionButton = ({
         (price) => price.planId === valueButton.planId
     );
     eventName = listEventName[eventIndex];
-    PLAN_ID = valueButton.planId;
 
-    const onSavePayment = async (details) => {
-        // let index = valueButton.index;
-        // let ga_Action = "";
-        // if (index == 0) ga_Action = "success_basic_plan";
-        // else if (index == 1) ga_Action = "success_pop_plan";
-        // else if (index == 2) ga_Action = "success_eco_plan";
-        // ga.event({
-        //     action: ga_Action,
-        //     params: {
-        //         appName: appInfo.appName,
-        //     },
-        // });
-        // ga.event({
-        //     action: "upgrade_success",
-        //     params: {
-        //         appName: appInfo.appName,
-        //     },
-        // });
-
-        const appId = appInfo.appId ?? APP_NEW_DOMAIN;
+    const onSavePayment = async (details: IPaymentInfos) => {
+        const appId = appInfo.appId;
         let price = 0;
         try {
             // cancel subscription trước đó (trường hợp upgrade lên gói mới) (cancel trên paypal)
@@ -98,13 +101,10 @@ const SubcriptionButton = ({
         } catch (error) {
             // console.log("error", error);
         }
-        const emailSubcription = details.subscriber?.email_address ?? "";
+        const emailSubScription = details.subscriber?.email_address ?? "";
         let payerName = details.subscriber?.name?.given_name ?? "";
         let expiryDate = details.billing_info?.next_billing_time;
-        console.log(
-            "details.billing_info.next_billing_time",
-            details.billing_info.next_billing_time
-        );
+
         if (paymentInfo) {
             const currentOrderIds = paymentInfo.orderIds ?? [];
             paymentInfo = {
@@ -125,13 +125,7 @@ const SubcriptionButton = ({
                 expiredDate: new Date(expiryDate).getTime(),
             });
         }
-        // APPROVAL_PENDING. The subscription is created but not yet approved by the buyer.
-        // APPROVED. The buyer has approved the subscription.
-        // ACTIVE. The subscription is active.
-        // SUSPENDED. The subscription is suspended.
-        // CANCELLED. The subscription is cancelled.
-        // EXPIRED. The subscription is expired.
-        // paymentInfo.id = details.id;
+
         paymentInfo.orderId = details.id;
         paymentInfo.type = Config.PAY_SUBSCRIPTION;
         paymentInfo.appShortName = appInfo.appShortName;
@@ -157,7 +151,7 @@ const SubcriptionButton = ({
                 // });
             }
             await updateUserInfoDashboard({
-                email: userReducer?.userInfo?.email,
+                email: userInfo?.email,
                 appShortName: appInfo.appShortName,
                 appId: appInfo.appId + "",
                 isBuy: true,
@@ -218,38 +212,73 @@ const SubcriptionButton = ({
         }, 500);
     };
 
-    return (
-        <div className="main-paypal-button">
-            <PayPalButton
-                style={PAYPAL_STYLE}
-                options={{
-                    vault: true,
-                    clientId: PAYPAL_SUBCRIPTION_CLIENT_ID,
-                }}
-                createSubscription={(data, actions) => {
-                    return actions.subscription.create({
-                        plan_id: PLAN_ID,
-                    });
-                }}
-                onApprove={async (data, actions) => {
-                    try {
+    const handleCreateSubscription = useCallback(
+        (data: Record<string, unknown>, actions: CreateSubscriptionActions) => {
+            return actions.subscription.create({
+                plan_id: PLAN_ID,
+            });
+        },
+        []
+    );
+
+    const onApproveOrder = useCallback(
+        async (
+            data: OnApproveData,
+            actions: OnApproveActions
+        ): Promise<void> => {
+            if (actions.order) {
+                try {
+                    if (data.subscriptionID) {
                         const details: any = await checkPaypalStatusAPI(
                             data.subscriptionID
                         );
-                        let price =
-                            details?.billing_info?.last_payment?.amount
-                                ?.value ?? 0;
+                        const payment: IPaymentInfos = {
+                            appId: appInfo.appId,
+                            userId: userInfo?.id,
+                            createdDate: new Date(
+                                details.create_time || ""
+                            ).getTime(),
+                            updateDate: new Date(
+                                details.update_time || ""
+                            ).getTime(),
+                            emailAddress: userInfo.email,
+                            amount: details.price,
+                            orderId: details.id || "",
+                            paymentStatus: 1,
+                            appShortName: appInfo.appShortName,
+                            payerName: details.payer?.name?.given_name || "",
+                            payerId: details.payer?.payer_id || "",
+                        };
 
-                        return onSavePayment(details);
-                    } catch (error) {
-                        // console.log("error", error);
+                        return onSavePayment(payment);
                     }
-                }}
-                catchError={(err) => {}}
-                onError={(err) => {}}
-            />
+                } catch (error) {
+                    console.log("🚀 ~ error:", error);
+                }
+            } else {
+                return Promise.resolve();
+            }
+        },
+        [onSavePayment]
+    );
+
+    return (
+        <div className="main-paypal-button">
+            <PayPalScriptProvider options={initialOptions}>
+                <PayPalButtons
+                    style={{
+                        shape: "pill",
+                        tagline: false,
+                        height: 50,
+                        color: "white",
+                        layout: "vertical",
+                    }}
+                    createSubscription={handleCreateSubscription}
+                    onApprove={onApproveOrder}
+                />
+            </PayPalScriptProvider>
         </div>
     );
 };
 
-export default SubcriptionButton;
+export default SubScriptionButton;

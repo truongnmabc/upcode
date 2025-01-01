@@ -3,10 +3,7 @@ import { getUserDeviceLogin } from "../repository/sync/syncData";
 import { IUserActions } from "@/models/user/useAction";
 
 import { RootState } from "../store";
-import {
-    InAppSubscription,
-    IPaymentInfos,
-} from "@/models/payment/paymentInfos";
+import { InAppSubscription, IPaymentInfos } from "@/models/payment/payment";
 
 export interface IUserReducer {
     paymentInfo: IPaymentInfos | null; // thông tin mua hàng của app đang được xét, được tải về khi vào trang
@@ -30,6 +27,9 @@ const paymentSlice = createSlice({
     name: "user",
     initialState: { ...initState },
     reducers: {
+        setIsFetched: (state, action: PayloadAction<boolean>) => {
+            state.isFetched = action.payload;
+        },
         paymentSuccessAction: (state, action: PayloadAction<IPaymentInfos>) => {
             state.paymentInfo = action.payload ?? null;
             if (action.payload) {
@@ -67,7 +67,7 @@ const paymentSlice = createSlice({
 
 const { actions, reducer: paymentReducer } = paymentSlice;
 
-export const { paymentSuccessAction } = actions;
+export const { paymentSuccessAction, setIsFetched } = actions;
 
 export const paymentState = (state: RootState) => state.paymentReducer;
 

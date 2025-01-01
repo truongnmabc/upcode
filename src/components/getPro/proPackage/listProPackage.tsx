@@ -5,7 +5,7 @@ import ModalLogin from "@/components/login";
 import Config from "@/config";
 import { ONETIME, SUBSCRIPTION } from "@/config/config_paypal";
 
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { getListTransactionAPI } from "@/services/paypal.service";
 import { getConfigProV2, IPriceConfig } from "@/utils/config_paypal";
 import { revertPathName } from "@/utils/pathName";
@@ -17,19 +17,21 @@ import ItemPrice from "./itemPrice";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { selectPaymentInfo } from "@/redux/features/payment.reselect";
 import "./ProPackage.scss";
+import { selectUserInfo } from "@/redux/features/user.reselect";
+import { shouldOpenModalLogin } from "@/redux/features/user";
 
 const ProPackage = () => {
     const appInfo = useAppSelector(selectAppInfo);
     const paymentInfo = useAppSelector(selectPaymentInfo);
-    const { data: userInfo } = useSession();
+    const userInfo = useAppSelector(selectUserInfo);
+
     const [active, setActive] = useState<IPriceConfig | null>(null);
     const router = useRouter();
     const [prices, setPrices] = useState<IPriceConfig[]>([]);
     const [type, setType] = useState("");
-    const [openModal, setOpenModal] = useState(false);
     const [orderInfo, setOrderInfo] = useState<any>(null);
     const [openModalUpgrade, setOpenModalUpgrade] = useState(false);
-
+    const dispatch = useAppDispatch();
     useEffect(() => {
         if (appInfo) {
             const { prices, type } = getConfigProV2(appInfo);
@@ -58,8 +60,8 @@ const ProPackage = () => {
     // }, [paymentInfo?.orderId]);
 
     const handleClickGetPro = useCallback(() => {
-        if (!userInfo) {
-            setOpenModal(true);
+        if (!userInfo.id) {
+            dispatch(shouldOpenModalLogin(true));
             return;
         }
         const _href = revertPathName({
@@ -84,9 +86,10 @@ const ProPackage = () => {
         //     return;
         // }
         setOpenModalUpgrade(true);
-    }, [active, userInfo, paymentInfo]);
+    }, [active, userInfo, paymentInfo, dispatch]);
 
     const handleClose = useCallback(() => setOpenModalUpgrade(false), []);
+
     return (
         <div className="app-pro-package">
             <div className="max-w-page mx-auto w-full">
@@ -107,7 +110,7 @@ const ProPackage = () => {
             </div>
             <div className="flex items-center mt-6 justify-center w-full">
                 <MtUiButton
-                    className="text-white font-bold text-base text-center upgrade-btn v4-button-animtaion"
+                    className="text-white font-bold text-base text-center upgrade-btn v4-button-animation"
                     style={{
                         background:
                             "linear-gradient(93.11deg, #0bb177 0.93%, #3b6b5a 100%)",
@@ -125,7 +128,6 @@ const ProPackage = () => {
                     valueButton={active}
                 />
             )}
-            <ModalLogin open={openModal} setOpen={setOpenModal} />
         </div>
     );
 };
