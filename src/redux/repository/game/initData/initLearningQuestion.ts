@@ -30,15 +30,11 @@ const initLearnQuestionThunk = createAsyncThunk(
         partTag,
         ...rest
     }: IInitQuestion): Promise<IResInitQuestion> => {
-        // console.log("🚀 ~ subTopicTag:", subTopicTag);
-        // console.log("🚀 ~ partTag:", partTag);
-
         const res = await db?.topicQuestion
             .where("[subTopicTag+tag]")
             .equals([subTopicTag, partTag])
             .first();
         let progressData: IUserQuestionProgress[] = [];
-        // console.log("🚀 ~ res:", res);
 
         const { partId, subTopicId, isReset } = rest;
 
