@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles.css";
 import { IAnswer } from "@/models/question/questions";
 import { Doughnut } from "react-chartjs-2";
@@ -6,53 +6,41 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const groupAnswers = (listAnswer: { correct: boolean }[]) => {
-    const result = [];
-    let currentCount = 1;
-
-    for (let i = 1; i < listAnswer.length; i++) {
-        // Kiểm tra nếu câu hiện tại có trạng thái giống câu trước
-        if (listAnswer[i].correct === listAnswer[i - 1].correct) {
-            currentCount++; // Nếu giống thì tăng số lượng
-        } else {
-            // Nếu khác, push nhóm cũ vào kết quả và bắt đầu nhóm mới
-            result.push({
-                label: listAnswer[i - 1].correct ? "correct" : "incorrect",
-                count: currentCount,
-            });
-            currentCount = 1;
-        }
-    }
-
-    result.push({
-        label: listAnswer[listAnswer.length - 1]?.correct
-            ? "correct"
-            : "incorrect",
-        count: currentCount,
-    });
-
-    return result;
-};
-
 const ProgressFinishPage = ({ listAnswer }: { listAnswer: IAnswer[] }) => {
+    console.log("🚀 ~ ProgressFinishPage ~ listAnswer:", listAnswer);
     const success = listAnswer?.filter((item) => item.correct).length;
     const total = listAnswer.length;
-    const groupedAnswers = groupAnswers(listAnswer || []);
+    const [status, setStatus] = React.useState({
+        success: 0,
+        total: 0,
+    });
 
+    useEffect(() => {}, []);
+
+    const sortedAnswers = listAnswer.reduce(
+        (acc, item) => {
+            if (item.correct) acc.correct++;
+            else acc.incorrect++;
+            return acc;
+        },
+        { correct: 0, incorrect: 0 }
+    );
+
+    const dataValues = [sortedAnswers.correct, sortedAnswers.incorrect];
+    const labels = ["correct", "incorrect"];
+    const backgroundColors = ["#12E1AF", "#F9586B"];
     const data = {
-        labels: groupedAnswers.map((item) => item.label),
+        labels,
         datasets: [
             {
                 label: "Questions",
-                data: groupedAnswers.map((item) => item.count),
-                backgroundColor: groupedAnswers.map((item) =>
-                    item.label === "correct" ? "#12E1AF" : "#F9586B"
-                ),
+                data: dataValues,
+                backgroundColor: backgroundColors,
                 borderWidth: 4,
                 borderColor: "transparent",
                 cutout: "78%",
                 borderRadius: 16,
-                spacing: 2,
+                spacing: 1,
             },
         ],
     };
@@ -110,4 +98,4 @@ const ProgressFinishPage = ({ listAnswer }: { listAnswer: IAnswer[] }) => {
     );
 };
 
-export default ProgressFinishPage;
+export default React.memo(ProgressFinishPage);
