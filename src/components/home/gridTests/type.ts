@@ -1,10 +1,13 @@
+import { IAppInfo } from "@/models/app/appInfo";
+
 export interface IItemTest {
-  id: string;
-  name: string;
-  icon: React.ReactNode;
-  color: string;
+    id: string;
+    name: string;
+    icon: React.ReactNode;
+    color: string;
 }
 
 export interface IPropsItemTest {
-  item: IItemTest;
+    item: IItemTest;
+    appInfo: IAppInfo;
 }

@@ -1,13 +1,13 @@
 "use client";
-import { appInfoState } from "@/redux/features/appInfo";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { Grid2 } from "@mui/material";
 import React from "react";
-import ItemGridTest from "./itemGridTest/itemGridTestHome";
 import CustomTestSvg from "./itemGridTest/icon/iconCustomTest";
 import DiagnosticTestSvg from "./itemGridTest/icon/iconDiagnosticTest";
 import FinalTestSvg from "./itemGridTest/icon/iconFinalTest";
 import PracticeTestsSvg from "./itemGridTest/icon/iconPracticeTests";
+import ItemGridTest from "./itemGridTest/itemGridTestHome";
 
 export const mockGirdTests = [
     {
@@ -36,7 +36,7 @@ export const mockGirdTests = [
     },
 ];
 const GridTest = () => {
-    const { appInfo } = useAppSelector(appInfoState);
+    const appInfo = useAppSelector(selectAppInfo);
 
     return (
         <div className="w-full mt-6 sm:mt-12">
@@ -53,7 +53,11 @@ const GridTest = () => {
             <div className="w-full mt-6 sm:mt-10 ">
                 <Grid2 container spacing={2}>
                     {mockGirdTests.map((test) => (
-                        <ItemGridTest key={test.id} item={test} />
+                        <ItemGridTest
+                            appInfo={appInfo}
+                            key={test.id}
+                            item={test}
+                        />
                     ))}
                 </Grid2>
             </div>

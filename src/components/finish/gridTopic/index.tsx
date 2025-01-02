@@ -1,7 +1,7 @@
 import AllowExpand from "@/components/allowExpand";
 import AllowExpandProvider from "@/components/allowExpand/provider";
-import { ITopic } from "@/components/initData";
 import { db } from "@/db/db.model";
+import { ITopic } from "@/models/topics/topics";
 import { selectTopics } from "@/redux/features/study";
 import { useAppDispatch } from "@/redux/hooks";
 import { useSearchParams } from "next/navigation";

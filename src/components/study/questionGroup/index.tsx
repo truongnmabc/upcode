@@ -10,8 +10,8 @@ const QuestionGroup = () => {
     const type = useSearchParams().get("type");
     return (
         <div className="hidden sm:block w-full">
-            <div className="flex flex-col gap-4">
-                <AnswerSheet />
+            <div className="flex p-3 bg-white rounded-xl flex-col gap-4">
+                {type === "test" && <AnswerSheet />}
                 {type === "test" ? (
                     <>
                         <GridTestsLeft />

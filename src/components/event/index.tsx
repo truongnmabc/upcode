@@ -10,7 +10,7 @@ import beforeUnLoadThunk, {
     reloadStateThunk,
 } from "@/redux/repository/utils/reload";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useLayoutEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 const EventListener = () => {
     const dispatch = useAppDispatch();
@@ -19,6 +19,7 @@ const EventListener = () => {
     const type = useSearchParams().get("type");
     const testId = useSearchParams().get("testId");
     const pathname = usePathname();
+
     const handlePageReload = useCallback(() => {
         const data = localStorage.getItem("optQuery");
         if (data) {
@@ -45,11 +46,11 @@ const EventListener = () => {
                 dispatch(initFinalTestThunk());
             }
             dispatch(reloadStateThunk());
-            // setTimeout(() => localStorage.removeItem("optQuery"), 100);
+            setTimeout(() => localStorage.removeItem("optQuery"), 100);
         }
     }, [dispatch, subTopicTag, partTag, type, testId, pathname]);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         handlePageReload();
     }, [handlePageReload, subTopicTag, partTag, type]);
 

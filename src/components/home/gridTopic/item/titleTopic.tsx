@@ -24,6 +24,8 @@ import { setIndexSubTopic } from "@/redux/features/game";
 import { AppDispatch } from "@/redux/store";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import clsx from "clsx";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
+import { selectTopicsId } from "@/redux/features/study.reselect";
 
 export const handleGetNextPart = async ({
     parentId,
@@ -142,14 +144,13 @@ const TitleTopic = ({
     classNames: string;
     imgClassNames?: string;
 }) => {
-    const { appInfo } = useAppSelector(appInfoState);
+    const appInfo = useAppSelector(selectAppInfo);
     const router = useRouter();
     const pathname = usePathname();
-
     const [currentPathname, setCurrentPathname] = useState(pathname);
 
     const isMobile = useIsMobile();
-    const { selectedTopics } = useAppSelector(studyState);
+    const selectedTopics = useAppSelector(selectTopicsId);
     const dispatch = useAppDispatch();
 
     const isAllowExpand = selectedTopics === topic?.id;

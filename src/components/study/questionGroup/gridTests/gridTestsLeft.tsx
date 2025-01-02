@@ -1,7 +1,7 @@
 "use client";
-import { appInfoState } from "@/redux/features/appInfo";
-import { useAppSelector } from "@/redux/hooks";
 import { db } from "@/db/db.model";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
+import { useAppSelector } from "@/redux/hooks";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
@@ -14,16 +14,16 @@ type IListTest = {
     duration: number;
 };
 const FN = () => {
-    const { appInfo } = useAppSelector(appInfoState);
+    const appInfo = useAppSelector(selectAppInfo);
 
     const [listPracticeTests, setListPracticeTests] = useState<IListTest[]>([]);
     const type = useSearchParams().get("type");
 
     const [open, setOpen] = React.useState(type === "test");
 
-    const handleClick = () => {
+    const handleClick = useCallback(() => {
         setOpen(!open);
-    };
+    }, []);
 
     const handleGetData = useCallback(async () => {
         const listData = await db?.testQuestions

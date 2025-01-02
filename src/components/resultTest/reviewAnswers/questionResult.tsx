@@ -20,7 +20,7 @@ const QuestionResult = ({ item }: { item: ICurrentGame }) => {
                         <div className="w-8 h-8 bg-red-500 flex items-center justify-center rounded-md">
                             <LazyLoadImage
                                 classNames="w-6 h-6"
-                                src={item?.image || ""}
+                                src={item?.icon || ""}
                             />
                         </div>
 
@@ -43,18 +43,32 @@ export default QuestionResult;
 import GetIconPrefix from "@/components/study/mainStudyView/choicesPanel/getIcon";
 import ctx from "@/utils/mergeClass";
 import { MyCrypto } from "@/utils/myCrypto";
+import { useAppSelector } from "@/redux/hooks";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 
 const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
+    const appInfo = useAppSelector(selectAppInfo);
     return (
         <div className="rounded-b-lg  bg-white flex flex-1 overflow-hidden  flex-col gap-2 p-4">
-            <MathJax>
-                <span
-                    dangerouslySetInnerHTML={{
-                        __html: MyCrypto.decrypt(item?.text),
-                    }}
-                    className="text-sm font-normal sm:text-base"
-                />
-            </MathJax>
+            <div className="w-full flex justify-between gap-2 ">
+                {item?.text && (
+                    <MathJax>
+                        <span
+                            dangerouslySetInnerHTML={{
+                                __html: MyCrypto.decrypt(item?.text),
+                            }}
+                            className="text-sm font-normal sm:text-base"
+                        />
+                    </MathJax>
+                )}
+                {item?.image && (
+                    <LazyLoadImage
+                        src=""
+                        alt={item.image}
+                        classNames="w-16 sm:w-24 max-h-24 min-h-16"
+                    />
+                )}
+            </div>
             <div className={"grid gap-2 grid-cols-1 sm:grid-cols-2"}>
                 {item?.answers?.map((choice, index) => (
                     <div
@@ -75,31 +89,34 @@ const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
                             isReview={true}
                             answerCorrect={choice.correct}
                         />
-
-                        <MathJax
-                            style={{
-                                fontSize: 12,
-                            }}
-                            dynamic
-                            renderMode="post"
-                        >
-                            <span
-                                dangerouslySetInnerHTML={{
-                                    __html: choice?.text,
+                        {choice?.text && (
+                            <MathJax
+                                style={{
+                                    fontSize: 12,
                                 }}
-                            />
-                        </MathJax>
+                                dynamic
+                                renderMode="post"
+                            >
+                                <span
+                                    dangerouslySetInnerHTML={{
+                                        __html: choice?.text,
+                                    }}
+                                />
+                            </MathJax>
+                        )}
                     </div>
                 ))}
             </div>
-            <MathJax className="">
-                <span
-                    dangerouslySetInnerHTML={{
-                        __html: MyCrypto.decrypt(item?.explanation),
-                    }}
-                    className="text-sm font-normal line-clamp-3 h-full  sm:text-base"
-                />
-            </MathJax>
+            {item?.explanation && (
+                <MathJax className="">
+                    <span
+                        dangerouslySetInnerHTML={{
+                            __html: MyCrypto.decrypt(item?.explanation),
+                        }}
+                        className="text-sm font-normal line-clamp-3 h-full  sm:text-base"
+                    />
+                </MathJax>
+            )}
         </div>
     );
 };
