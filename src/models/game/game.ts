@@ -21,6 +21,7 @@ export interface ICurrentGame
     feedBack?: IFeedBack;
     passing?: number;
     image?: string;
+    icon?: string;
 }
 
 export interface IGameReducer {

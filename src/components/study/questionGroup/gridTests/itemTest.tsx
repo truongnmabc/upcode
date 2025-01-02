@@ -1,6 +1,6 @@
 import { TypeParam } from "@/common/constants";
 import IconGridTest from "@/components/icon/iconGridTest";
-import { appInfoState } from "@/redux/features/appInfo";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
 import { revertPathName } from "@/utils/pathName";
@@ -13,7 +13,7 @@ type IListTest = {
 };
 const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
     const router = useRouter();
-    const { appInfo } = useAppSelector(appInfoState);
+    const appInfo = useAppSelector(selectAppInfo);
     const dispatch = useAppDispatch();
     const testId = useSearchParams().get("testId");
 
@@ -35,14 +35,14 @@ const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
     return (
         <div
             className={clsx(
-                "bg-white cursor-pointer hover:border-[#4797B1] rounded-md border border-solid w-full flex items-center",
+                "bg-white cursor-pointer p-2 hover:border-primary rounded-md border border-solid w-full flex items-center",
                 {
-                    "border-[#4797B1]": testId === test.parentId.toString(),
+                    "border-primary": testId === test.parentId.toString(),
                 }
             )}
             onClick={handleCLick}
         >
-            <div className="bg-[#4797B1] rounded-l-md p-2 w-11 h-11 flex items-center justify-center">
+            <div className=" bg-primary-16 rounded-md p-[6px] h-full aspect-square flex items-center justify-center">
                 <IconGridTest />
             </div>
             <h3

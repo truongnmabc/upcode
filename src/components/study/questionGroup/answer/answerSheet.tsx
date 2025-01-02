@@ -1,8 +1,13 @@
 "use client";
 import { ICurrentGame } from "@/models/game/game";
 import { gameState, viewTest } from "@/redux/features/game";
+import {
+    selectCurrentGame,
+    selectListQuestion,
+} from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const createTempData = (size: number): ICurrentGame[] => {
@@ -31,16 +36,22 @@ type IProps = {
     isActions?: boolean;
 };
 const AnswerSheet: React.FC<IProps> = ({ isActions = false }) => {
-    const { listQuestion, currentGame, type } = useAppSelector(gameState);
-
-    const [list, setList] = useState<ICurrentGame[]>(defaultData);
-
+    const listQuestion = useAppSelector(selectListQuestion);
+    const currentGame = useAppSelector(selectCurrentGame);
+    const type = useSearchParams().get("type");
     const dispatch = useAppDispatch();
-    useEffect(() => {
-        if (listQuestion && listQuestion.length > 0) {
-            setList(listQuestion);
-        }
-    }, [listQuestion]);
+
+    const sortedListQuestion = [...listQuestion].sort((a, b) => {
+        if (a.localStatus === "correct" && b.localStatus !== "correct")
+            return -1;
+        if (a.localStatus !== "correct" && b.localStatus === "correct")
+            return 1;
+        if (a.localStatus === "incorrect" && b.localStatus !== "incorrect")
+            return -1;
+        if (a.localStatus !== "incorrect" && b.localStatus === "incorrect")
+            return 1;
+        return 0;
+    });
 
     return (
         <div className="bg-white flex flex-col gap-3 dark:bg-black p-4 rounded-md">
@@ -48,7 +59,7 @@ const AnswerSheet: React.FC<IProps> = ({ isActions = false }) => {
                 Questions
             </h3>
             <div className="flex gap-2  flex-wrap ">
-                {list?.map((q, index) => {
+                {sortedListQuestion?.map((q, index) => {
                     return (
                         <div
                             key={index}
@@ -56,8 +67,8 @@ const AnswerSheet: React.FC<IProps> = ({ isActions = false }) => {
                                 "w-[30px] h-[30px]  text-xs rounded transition-all flex items-center justify-center border border-solid",
                                 {
                                     "border-red-500": q.localStatus === "skip",
-                                    "border-[#5497FF] pointer-events-auto cursor-pointer":
-                                        currentGame?.id === q.id,
+                                    // "border-[#5497FF] pointer-events-auto cursor-pointer":
+                                    //     currentGame?.id === q.id,
                                     "border-[#07C58C] text-white bg-[#07C58C]":
                                         q.localStatus === "correct" &&
                                         !isActions,

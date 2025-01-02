@@ -1,8 +1,9 @@
 "use client";
-import { appInfoState } from "@/redux/features/appInfo";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
-import React, { CSSProperties, useState } from "react";
+import { Dialog } from "@mui/material";
+import React, { CSSProperties, useCallback, useState } from "react";
 // import Image from "next/image";
 
 export interface ILazyLoadImages {
@@ -15,6 +16,7 @@ export interface ILazyLoadImages {
     onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
     priority?: boolean;
     draggable?: boolean;
+    isPreview?: boolean;
 }
 
 const LazyLoadImage: React.FC<ILazyLoadImages> = ({
@@ -26,12 +28,27 @@ const LazyLoadImage: React.FC<ILazyLoadImages> = ({
     styles,
     onClick,
     priority = true,
+    isPreview = false,
     ...rest
 }) => {
-    const { appInfo } = useAppSelector(appInfoState);
+    const appInfo = useAppSelector(selectAppInfo);
     const imgAlt = alt || appInfo?.appShortName;
     const [currentSrc, setCurrentSrc] = useState(src);
+    const [open, setOpen] = useState(false);
     const image = `/images/logo/logo60.png`;
+
+    const handleOpen = useCallback(() => {
+        if (isPreview) setOpen(true);
+    }, [isPreview]);
+
+    const handleError = useCallback(() => {
+        setCurrentSrc(image);
+    }, []);
+
+    const handleClose = useCallback(() => {
+        setOpen(false);
+    }, []);
+
     return (
         <div
             style={styles}
@@ -41,7 +58,8 @@ const LazyLoadImage: React.FC<ILazyLoadImages> = ({
             <img
                 src={currentSrc}
                 alt={imgAlt}
-                onError={() => setCurrentSrc(image)}
+                onClick={handleOpen}
+                onError={handleError}
                 className={ctx(
                     "object-contain transition-all h-full",
                     imgClassNames
@@ -62,6 +80,20 @@ const LazyLoadImage: React.FC<ILazyLoadImages> = ({
         // onError={() => setCurrentSrc(image)}
         {...rest}
       /> */}
+            <Dialog open={open} onClose={handleClose}>
+                <img
+                    src={currentSrc}
+                    alt={imgAlt}
+                    onError={() => setCurrentSrc(image)}
+                    className={ctx(
+                        "object-contain transition-all h-full",
+                        imgClassNames
+                    )}
+                    loading={priority ? "eager" : "lazy"}
+                    style={imgStyles}
+                    {...rest}
+                />
+            </Dialog>
         </div>
     );
 };

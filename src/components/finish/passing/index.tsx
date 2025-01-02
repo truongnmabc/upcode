@@ -1,12 +1,9 @@
 import { MtUiButton } from "@/components/button";
 import { db } from "@/db/db.model";
 import { ITopic } from "@/models/topics/topics";
-import { appInfoState } from "@/redux/features/appInfo";
-import {
-    gameState,
-    setIndexSubTopic,
-    setTurtGame,
-} from "@/redux/features/game";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
+import { setIndexSubTopic, setTurtGame } from "@/redux/features/game";
+import { selectIndexSubTopic } from "@/redux/features/game.reselect";
 import { selectSubTopics } from "@/redux/features/study";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
@@ -24,19 +21,21 @@ type NavigateToHrefParams = {
 const PassingFinishPage = ({
     nextPart,
     currentPartTag,
+    currentTurn,
 }: {
     currentPartTag: string;
     nextPart: {
         subTopicTag: string;
         tag: string;
     };
+    currentTurn: number;
 }) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const [passing] = useState(0);
     const topicName = useSearchParams().get("topic");
-    const { appInfo } = useAppSelector(appInfoState);
-    const { turn, indexSubTopic } = useAppSelector(gameState);
+    const appInfo = useAppSelector(selectAppInfo);
+    const indexSubTopic = useAppSelector(selectIndexSubTopic);
 
     const navigateToHref = useCallback(
         ({
@@ -190,7 +189,7 @@ const PassingFinishPage = ({
         if (currentPartTag && nextPart.subTopicTag) {
             dispatch(
                 setTurtGame({
-                    turn: turn + 1,
+                    turn: currentTurn + 1,
                 })
             );
             dispatch(
@@ -209,12 +208,12 @@ const PassingFinishPage = ({
         }
     }, [
         currentPartTag,
+        currentTurn,
         nextPart.subTopicTag,
         topicName,
         appInfo.appShortName,
         dispatch,
         router,
-        turn,
     ]);
 
     return (

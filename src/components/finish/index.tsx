@@ -1,7 +1,6 @@
 "use client";
 import { db } from "@/db/db.model";
 import { IAnswer } from "@/models/question/questions";
-import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -10,12 +9,13 @@ import PassingFinishPage from "./passing";
 import ProgressFinishPage from "./progress";
 import TitleFinishPage from "./title";
 import MyContainer from "../container/myContainer";
+import { selectTurn } from "@/redux/features/game.reselect";
 
 const FinishLayout = () => {
     const subTopicProgressId = useSearchParams().get("subTopicProgressId");
     const partId = useSearchParams().get("partId");
 
-    const { turn } = useAppSelector(gameState);
+    const turn = useAppSelector(selectTurn);
 
     const [game, setGame] = useState<{
         currentPart: number;
@@ -25,6 +25,7 @@ const FinishLayout = () => {
             subTopicTag: string;
             tag: string;
         };
+        currentTurn: number;
     }>({
         currentPart: 0,
         listAnswer: [],
@@ -33,6 +34,7 @@ const FinishLayout = () => {
             subTopicTag: "",
             tag: "",
         },
+        currentTurn: 0,
     });
 
     useEffect(() => {
@@ -51,6 +53,13 @@ const FinishLayout = () => {
                         .where("parentId")
                         .equals(Number(partId))
                         .sortBy("index")) || [];
+
+                const maxTurn = useProgress.reduce((max, item) => {
+                    const turns = item.selectedAnswers
+                        ?.map((s) => s.turn)
+                        .filter((item) => item !== undefined);
+                    return Math.max(max, ...(turns || []));
+                }, 0);
 
                 const filteredAnswers = useProgress
                     .flatMap((item) =>
@@ -71,6 +80,7 @@ const FinishLayout = () => {
                         currentPartTag:
                             data.part.find((item) => item.id === Number(partId))
                                 ?.tag || "",
+                        currentTurn: maxTurn,
                     });
                 }
             }
@@ -86,6 +96,7 @@ const FinishLayout = () => {
                 <PassingFinishPage
                     nextPart={game.nextPart}
                     currentPartTag={game.currentPartTag}
+                    currentTurn={game.currentTurn}
                 />
                 <GridTopicProgress />
             </div>

@@ -3,6 +3,7 @@ import RouterApp from "@/common/router/router.constant";
 import { MtUiButton } from "@/components/button";
 import { appInfoState } from "@/redux/features/appInfo";
 import { endTest } from "@/redux/features/game";
+import { selectListQuestion } from "@/redux/features/game.reselect";
 import { shouldOpenSubmitTest, testState } from "@/redux/features/tests";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishCustomTestThunk from "@/redux/repository/game/finish/finishCustomTest";
@@ -12,7 +13,7 @@ import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTe
 import { revertPathName } from "@/utils/pathName";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 const Sheet = dynamic(() => import("@/components/sheet"), {
     ssr: false,
 });
@@ -32,12 +33,31 @@ const actionMap = {
 const BottomConfirmTest = () => {
     const { openSubmit } = useAppSelector(testState);
     const dispatch = useAppDispatch();
-    const setOpenConfirm = () => dispatch(shouldOpenSubmitTest(false));
     const { appInfo } = useAppSelector(appInfoState);
     const pathname = usePathname();
-
+    const listQuestions = useAppSelector(selectListQuestion);
     const router = useRouter();
     const type = useSearchParams().get("type");
+    const [info, setInfo] = useState({
+        answer: 0,
+        total: 0,
+    });
+
+    const setOpenConfirm = useCallback(
+        () => dispatch(shouldOpenSubmitTest(false)),
+        [dispatch]
+    );
+
+    useEffect(() => {
+        if (listQuestions) {
+            setInfo({
+                answer: listQuestions.filter(
+                    (item) => item.selectedAnswer?.correct
+                ).length,
+                total: listQuestions.length,
+            });
+        }
+    }, [listQuestions]);
 
     const handleConfirm = useCallback(() => {
         console.log("Start handleConfirm:", new Date().toISOString());
@@ -81,11 +101,14 @@ const BottomConfirmTest = () => {
             >
                 <div className="w-full  px-20 py-6 bg-[#F9F7EE] flex items-center justify-between">
                     <div>
-                        <p className="text-2xl font-medium">
-                            Do you really want to exit?
-                        </p>
+                        {info.answer !== info.total && (
+                            <p className="text-2xl font-medium">
+                                You answered {info.answer} out of {info.total}{" "}
+                                questions on this test.
+                            </p>
+                        )}
                         <p className="text-[#21212185] text-base font-normal">
-                            Or submit to explore your strong/weak topics.
+                            Are you sure you want to submit the test?
                         </p>
                     </div>
                     <div className="flex gap-6 items-center">

@@ -9,7 +9,6 @@ import { calculatorAverageLevel } from "@/utils/math";
 const PassingProbability = () => {
     const [passingValue, setPassingValue] = useState(0);
     const [averageLevel, setAverageLevel] = useState(0);
-    console.log("🚀 ~ PassingProbability ~ averageLevel:", averageLevel);
     const { idTopic, currentGame } = useAppSelector(gameState);
 
     useEffect(() => {

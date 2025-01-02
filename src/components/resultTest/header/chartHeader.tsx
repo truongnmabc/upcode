@@ -4,6 +4,22 @@ import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
+
+const options = {
+    responsive: true,
+    plugins: {
+        legend: {
+            display: false,
+        },
+        tooltip: {
+            enabled: true,
+        },
+    },
+    rotation: 270,
+    circumference: 180,
+    aspectRatio: 2,
+};
+
 const DashboardCard = ({
     info,
 }: {
@@ -13,10 +29,6 @@ const DashboardCard = ({
         percent: number;
     };
 }) => {
-    const handleClickImprove = () => {
-        console.log("handleClickImprove");
-    };
-
     const data = {
         labels: ["correct", "incorrect"],
         datasets: [
@@ -30,20 +42,7 @@ const DashboardCard = ({
             },
         ],
     };
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                display: false,
-            },
-            tooltip: {
-                enabled: true,
-            },
-        },
-        rotation: 270,
-        circumference: 180,
-        aspectRatio: 2,
-    };
+
     return (
         <div className="relative mx-auto min-w-[320px] h-[340px] z-0 flex flex-col items-center">
             <div className=" absolute top-0 z-10 w-full left-0">
@@ -105,16 +104,6 @@ const DashboardCard = ({
                         <p className="text-sm font-medium ">
                             Passing Probability
                         </p>
-                        <div
-                            className="ml-4  text-white text-sm px-3 cursor-pointer py-1 rounded-full shadow-md "
-                            style={{
-                                background:
-                                    "linear-gradient(90deg, #E3C151 0%, #E3A651 50.09%, #F39153 100%)",
-                            }}
-                            onClick={handleClickImprove}
-                        >
-                            Improve
-                        </div>
                     </div>
 
                     <div className="relative w-full h-5 mt-1 z-10 bg-white rounded-full">
@@ -135,7 +124,7 @@ const DashboardCard = ({
     );
 };
 
-export default DashboardCard;
+export default React.memo(DashboardCard);
 
 export const Pattern = () => {
     return (

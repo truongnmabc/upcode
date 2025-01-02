@@ -1,15 +1,15 @@
 "use client";
 import MtUiSkeleton from "@/components/loading-skeleton";
-import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
 import { MyCrypto } from "@/utils/myCrypto";
 import React, { useEffect, useState } from "react";
-
 import { MathJax } from "better-react-mathjax";
 import StatusAnswer from "../statusAnswer/statusAnswer";
+import LazyLoadImage from "@/components/images";
+import { selectCurrentGame } from "@/redux/features/game.reselect";
 
 const FN = ({ showStatus = true }: { showStatus?: boolean }) => {
-    const { currentGame } = useAppSelector(gameState);
+    const currentGame = useAppSelector(selectCurrentGame);
     const [text, setText] = useState<string>("");
     const [loading, setLoading] = useState(true);
 
@@ -31,14 +31,23 @@ const FN = ({ showStatus = true }: { showStatus?: boolean }) => {
             {loading && !text ? (
                 <MtUiSkeleton className="min-h-8" />
             ) : (
-                <MathJax renderMode="post">
-                    <span
-                        dangerouslySetInnerHTML={{
-                            __html: text,
-                        }}
-                        className="text-sm font-normal sm:text-base"
-                    />
-                </MathJax>
+                <div className="w-full flex items-center justify-between">
+                    <MathJax renderMode="post">
+                        <span
+                            dangerouslySetInnerHTML={{
+                                __html: text,
+                            }}
+                            className="text-sm font-normal sm:text-base"
+                        />
+                    </MathJax>
+                    {currentGame.image && (
+                        <LazyLoadImage
+                            src=""
+                            alt={currentGame.image}
+                            classNames="w-16 sm:w-24 min-h-16 max-h-24"
+                        />
+                    )}
+                </div>
             )}
             {showStatus && <StatusAnswer />}
         </div>

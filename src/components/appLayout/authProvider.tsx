@@ -16,9 +16,9 @@ const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
 
 type IUser = {
     id?: string;
-    email: string;
-    name: string;
-    image: string;
+    email?: string | null;
+    name?: string | null;
+    image?: string | null;
 };
 const AuthProvider = () => {
     const { status, data } = useSession();
@@ -119,8 +119,6 @@ const AuthProvider = () => {
     );
 
     useEffect(() => {
-        console.log("🚀 ~ useEffect ~ data:", data?.user);
-
         if (status === "authenticated" && data && !userInfo.id) {
             if (data.user) handleCheckUserInfo(data.user);
         }

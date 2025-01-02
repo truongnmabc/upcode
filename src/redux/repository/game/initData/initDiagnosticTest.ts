@@ -76,7 +76,7 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                             ...(start ||
                                 list[Math.floor(Math.random() * list.length)]),
                             tag: subTopic.tag,
-                            image: subTopic.icon,
+                            icon: subTopic.icon,
                         };
 
                         if (randomItem && list) {
@@ -111,7 +111,7 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                                 ...randomList?.map((item) => ({
                                     ...item,
                                     tag: subTopic.tag,
-                                    image: subTopic.icon,
+                                    icon: subTopic.icon,
                                 }))
                             );
 
@@ -130,8 +130,6 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                     }
                 }
             }
-
-            console.log("🚀 ~ listQuestion:", listQuestion);
 
             setDataStoreDiagnostic({
                 listQuestion,

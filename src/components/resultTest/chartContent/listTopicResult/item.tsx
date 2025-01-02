@@ -28,15 +28,13 @@ const ItemListTopicResult: React.FC<IProps> = ({ item }) => {
     return (
         <div className="w-full p-4 rounded-xl border border-solid bg-white  gap-4 flex flex-col sm:flex-row items-center justify-between">
             <div className="flex items-center justify-between w-full sm:w-fit overflow-hidden flex-1 gap-2">
-                <div
-                    style={{
-                        backgroundColor: item.color,
-                    }}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center "
-                >
+                <div className="w-8 h-8 sm:h-12 sm:w-12 bg-primary-16 rounded-lg flex items-center justify-center ">
                     <LazyLoadImage
                         src={item.icon}
-                        classNames="w-5 bg-[#E3A65129] h-5"
+                        styles={{
+                            filter: "brightness(0) saturate(100%) invert(81%) sepia(50%) saturate(2746%) hue-rotate(336deg) brightness(100%) contrast(98%) ",
+                        }}
+                        classNames="w-6  h-6 sm:w-8 sm:h-8 "
                     />
                 </div>
                 <p className="text-base  font-medium flex-1  truncate">
