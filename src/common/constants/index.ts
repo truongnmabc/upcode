@@ -131,3 +131,6 @@ export const TypeParam = {
     customTest: "custom_test",
     practiceTest: "practice_test",
 };
+
+export const baseImageUrl =
+    "https://storage.googleapis.com/micro-enigma-235001.appspot.com/";

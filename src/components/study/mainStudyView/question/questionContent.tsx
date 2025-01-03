@@ -7,9 +7,12 @@ import { MathJax } from "better-react-mathjax";
 import StatusAnswer from "../statusAnswer/statusAnswer";
 import LazyLoadImage from "@/components/images";
 import { selectCurrentGame } from "@/redux/features/game.reselect";
+import { baseImageUrl } from "@/common/constants";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 
 const FN = ({ showStatus = true }: { showStatus?: boolean }) => {
     const currentGame = useAppSelector(selectCurrentGame);
+    const appInfo = useAppSelector(selectAppInfo);
     const [text, setText] = useState<string>("");
     const [loading, setLoading] = useState(true);
 
@@ -37,14 +40,16 @@ const FN = ({ showStatus = true }: { showStatus?: boolean }) => {
                             dangerouslySetInnerHTML={{
                                 __html: text,
                             }}
-                            className="text-sm font-normal sm:text-base"
+                            className="text-sm  font-normal sm:text-base"
                         />
                     </MathJax>
                     {currentGame.image && (
                         <LazyLoadImage
-                            src=""
+                            key={currentGame.image}
+                            isPreview
+                            src={`${baseImageUrl}${appInfo.appShortName}/images/${currentGame.image}`}
                             alt={currentGame.image}
-                            classNames="w-16 sm:w-24 min-h-16 max-h-24"
+                            classNames="w-16 sm:w-24 cursor-pointer aspect-video min-h-16 max-h-24"
                         />
                     )}
                 </div>

@@ -35,6 +35,7 @@ const initLearnQuestionThunk = createAsyncThunk(
             .equals([subTopicTag, partTag])
             .first();
         let progressData: IUserQuestionProgress[] = [];
+        console.log("🚀 ~ res:", res);
 
         const { partId, subTopicId, isReset } = rest;
 

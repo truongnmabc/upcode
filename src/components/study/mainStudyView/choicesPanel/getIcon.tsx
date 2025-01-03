@@ -3,6 +3,7 @@ import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import RadioButtonUncheckedRoundedIcon from "@mui/icons-material/RadioButtonUncheckedRounded";
 import RadioButtonCheckedRounded from "@mui/icons-material/RadioButtonCheckedRounded";
 import React from "react";
+const _sx = { width: "20px", height: "20px" };
 
 const FN = ({
     statusChoice,
@@ -17,7 +18,6 @@ const FN = ({
     answerCorrect?: boolean;
     statusChoice?: "miss" | "pass" | "other";
 }) => {
-    const _sx = { width: "20px", height: "20px" };
     if (isActions) {
         if (isSelect) {
             return <RadioButtonCheckedRounded htmlColor="#AEAEB2" sx={_sx} />;

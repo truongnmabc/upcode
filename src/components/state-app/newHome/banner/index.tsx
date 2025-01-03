@@ -130,7 +130,7 @@ const BannerHome = ({
                                 className="flex gap-2 w-full  items-center"
                             >
                                 <div className="w-6 h-6">{item.icon}</div>
-                                <span className="text-xs whitespace-nowrap flex-1 sm:text-base font-medium">
+                                <span className="text-xs whitespace-nowrap truncate flex-1 sm:text-base font-medium">
                                     {item.name}
                                 </span>
                             </div>

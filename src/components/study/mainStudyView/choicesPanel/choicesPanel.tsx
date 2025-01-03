@@ -1,23 +1,31 @@
 "use client";
+import RouterApp from "@/common/router/router.constant";
 import { IAnswer } from "@/models/question/questions";
-import { gameState, viewTest } from "@/redux/features/game";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
+import { viewTest } from "@/redux/features/game";
+import {
+    selectCurrentGame,
+    selectFeedBack,
+    selectIdTopic,
+    selectIndexCurrentQuestion,
+    selectListQuestion,
+    selectSubTopicProgressId,
+} from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { useCallback, useEffect, useState } from "react";
-import AnswerButton from "../../../answer";
+import finishDiagnosticThunk from "@/redux/repository/game/finish/finishDiagnostic";
+import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTest";
+import finishQuestionThunk from "@/redux/repository/game/finish/finishQuestion";
+import nextQuestionThunk from "@/redux/repository/game/nextQuestion/nextQuestion";
+import nextQuestionDiagnosticThunk from "@/redux/repository/game/nextQuestion/nextQuestionDiagnosticTest";
+import { revertPathName } from "@/utils/pathName";
 import {
     useParams,
     usePathname,
     useRouter,
     useSearchParams,
 } from "next/navigation";
-import { revertPathName } from "@/utils/pathName";
-import { appInfoState } from "@/redux/features/appInfo";
-import finishQuestionThunk from "@/redux/repository/game/finish/finishQuestion";
-import RouterApp from "@/common/router/router.constant";
-import nextQuestionThunk from "@/redux/repository/game/nextQuestion/nextQuestion";
-import nextQuestionDiagnosticThunk from "@/redux/repository/game/nextQuestion/nextQuestionDiagnosticTest";
-import finishDiagnosticThunk from "@/redux/repository/game/finish/finishDiagnostic";
-import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTest";
+import { useCallback, useEffect, useState } from "react";
+import AnswerButton from "../../../answer";
 
 const TEMP_LIST_ANSWER: IAnswer[] = [
     {
@@ -74,17 +82,15 @@ const ChoicesPanel: React.FC<IProps> = ({
     const router = useRouter();
     const params = useParams();
     const pathname = usePathname();
-    const {
-        currentGame,
-        idTopic,
-        listQuestion,
-        subTopicProgressId,
-        indexCurrentQuestion,
-        feedBack,
-    } = useAppSelector(gameState);
-
-    const { appInfo } = useAppSelector(appInfoState);
+    const idTopic = useAppSelector(selectIdTopic);
+    const currentGame = useAppSelector(selectCurrentGame);
+    const listQuestion = useAppSelector(selectListQuestion);
+    const feedBack = useAppSelector(selectFeedBack);
+    const subTopicProgressId = useAppSelector(selectSubTopicProgressId);
+    const indexCurrentQuestion = useAppSelector(selectIndexCurrentQuestion);
+    const appInfo = useAppSelector(selectAppInfo);
     const type = useSearchParams().get("type");
+
     const [listRandomQuestion, setListRandomQuestion] =
         useState(TEMP_LIST_ANSWER);
 
@@ -190,9 +196,9 @@ const ChoicesPanel: React.FC<IProps> = ({
             dispatch(nextQuestionThunk());
         }
     }, [feedBack, indexCurrentQuestion, dispatch]);
+
     useEffect(() => {
         const handleEnterEvent = (event: globalThis.KeyboardEvent) => {
-            console.log("🚀 ~ handleEnterEvent ~ event:", event);
             if (currentGame?.answers && !currentGame.selectedAnswer) {
                 const key = event.key;
                 const index = parseInt(key, 10);
@@ -241,6 +247,7 @@ const ChoicesPanel: React.FC<IProps> = ({
                     index={index}
                     key={choice?.id}
                     isActions={isActions}
+                    currentGame={currentGame}
                 />
             ))}
         </div>

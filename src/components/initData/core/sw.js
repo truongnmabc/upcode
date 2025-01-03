@@ -231,7 +231,9 @@ const initDataTest = async (tests, db, apiPath) => {
                         turn: 0,
                         topicIds: test.topicIds,
                         groupExamData: test.groupExamData,
-                       
+                        paragraph:{
+                            ...test.paragraph,
+                        }
                     });
                     await  testQuestionsTx.done;
                 }

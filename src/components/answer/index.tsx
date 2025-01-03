@@ -1,25 +1,26 @@
 "use client";
 import MtUiSkeleton from "@/components/loading-skeleton";
+import { ICurrentGame } from "@/models/game/game";
 import { IAnswer } from "@/models/question/questions";
-import { gameState } from "@/redux/features/game";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
+import choiceAnswer from "@/redux/repository/game/choiceAnswer/choiceAnswer";
+import BtnTets from "@/tests/btn";
 import ctx from "@/utils/mergeClass";
 import { MathJax } from "better-react-mathjax";
 import React from "react";
 import GetIconPrefix from "../study/mainStudyView/choicesPanel/getIcon";
-import choiceAnswer from "@/redux/repository/game/choiceAnswer/choiceAnswer";
-import BtnTets from "@/tests/btn";
 const AnswerButton = ({
     choice,
     index,
     isActions,
+    currentGame,
 }: {
     choice: IAnswer;
     index: number;
     isActions?: boolean;
+    currentGame: ICurrentGame;
 }) => {
     const dispatch = useAppDispatch();
-    const { currentGame } = useAppSelector(gameState);
 
     const statusChoice =
         currentGame?.selectedAnswer &&
