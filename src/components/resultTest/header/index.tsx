@@ -18,6 +18,8 @@ import { revertPathName } from "@/utils/pathName";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { Fragment, useCallback } from "react";
 import DashboardCard from "./chartHeader";
+import { TitleMiss, TitlePass } from "./titleResultTest";
+import HeaderResultDiagnostic from "./headerResultDiagnostic";
 
 type IProps = {
     pass: number;
@@ -97,11 +99,16 @@ const HeaderResultTest: React.FC<IProps> = (info) => {
         }
     }, [dispatch, router, appInfo.appShortName]);
 
+    const back = useCallback(() => router.back(), []);
+
+    if (type === TypeParam.diagnosticTest) {
+        return <HeaderResultDiagnostic />;
+    }
     return (
         <MyContainer className="py-8 flex flex-col sm:flex-row gap-8">
             <div
                 className="w-10 h-10 rounded-full cursor-pointer bg-white flex items-center justify-center"
-                onClick={() => router.back()}
+                onClick={back}
             >
                 <CloseIcon />
             </div>
@@ -138,17 +145,6 @@ const HeaderResultTest: React.FC<IProps> = (info) => {
                                 Next Test
                             </MtUiButton>
                         )}
-                        {type === TypeParam.diagnosticTest && (
-                            <MtUiButton
-                                className="sm:py-4 sm:max-h-14 text-lg font-medium rounded-2xl "
-                                block
-                                type="primary"
-                                size="large"
-                                onClick={handleStartLearning}
-                            >
-                                Start Learning
-                            </MtUiButton>
-                        )}
                     </div>
                 </div>
                 <DashboardCard
@@ -164,32 +160,3 @@ const HeaderResultTest: React.FC<IProps> = (info) => {
 };
 
 export default HeaderResultTest;
-
-const TitlePass = () => {
-    return (
-        <Fragment>
-            <p className="text-[#15CB9F] sm:text-[42px] text-2xl text-center sm:text-start sm:leading-[62px] font-semibold">
-                Excellent performance!
-            </p>
-            <p className="text-sm text-center sm:text-start sm:text-base mt-3 font-normal text-[#21212185]">
-                That was a tough one, but every wrong answer is a stepping stone
-                to the right one. Keep at it, and you&apos;ll be a knowledge
-                ninja soon!
-            </p>
-        </Fragment>
-    );
-};
-
-const TitleMiss = () => {
-    return (
-        <Fragment>
-            <p className="text-[#EF4444] sm:text-[42px] text-2xl text-center sm:text-start sm:leading-[62px] font-semibold">
-                Not enough to pass!
-            </p>
-            <p className="text-sm text-center sm:text-start sm:text-base mt-3 font-normal text-[#21212185]">
-                Do not rest on your laurels, friend. Time to leaf through the
-                rest of these tests and make them tremble with your intellect!
-            </p>
-        </Fragment>
-    );
-};

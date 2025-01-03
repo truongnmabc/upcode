@@ -19,6 +19,8 @@ export interface ILazyLoadImages {
     isPreview?: boolean;
 }
 
+const image = `/images/logo/logo60.png`;
+
 const LazyLoadImage: React.FC<ILazyLoadImages> = ({
     src,
     alt,
@@ -35,7 +37,6 @@ const LazyLoadImage: React.FC<ILazyLoadImages> = ({
     const imgAlt = alt || appInfo?.appShortName;
     const [currentSrc, setCurrentSrc] = useState(src);
     const [open, setOpen] = useState(false);
-    const image = `/images/logo/logo60.png`;
 
     const handleOpen = useCallback(() => {
         if (isPreview) setOpen(true);
@@ -64,6 +65,7 @@ const LazyLoadImage: React.FC<ILazyLoadImages> = ({
                     "object-contain transition-all h-full",
                     imgClassNames
                 )}
+                draggable={false}
                 loading={priority ? "eager" : "lazy"}
                 style={imgStyles}
                 {...rest}

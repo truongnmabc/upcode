@@ -45,3 +45,13 @@ export const selectType = createSelector(
     [gameState],
     (reducer) => reducer.type
 );
+
+export const selectFeedBack = createSelector(
+    [gameState],
+    (reducer) => reducer.feedBack
+);
+
+export const selectSubTopicProgressId = createSelector(
+    [gameState],
+    (reducer) => reducer.subTopicProgressId
+);
