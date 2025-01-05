@@ -1,17 +1,17 @@
 "use client";
 
 import { IAppInfo } from "@/models/app/appInfo";
-import React, { useEffect, useState } from "react";
-import ListState from "./listState";
 import { revertPathName } from "@/utils/pathName";
 import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import ListState from "./listState";
 
 const BtnGotoState = ({ appInfo }: { appInfo: IAppInfo }) => {
     const [currentState, setCurrentState] = useState("");
     const [openListState, setOpenListState] = useState(false);
 
     useEffect(() => {
-        if (appInfo.appShortName) {
+        if (appInfo.appNameId) {
             const _state = localStorage.getItem(
                 "select-state-" + appInfo.appNameId
             );

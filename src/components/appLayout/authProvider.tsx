@@ -1,17 +1,17 @@
 "use client";
-import React, { useCallback, useEffect, useLayoutEffect } from "react";
-import { signIn, useSession } from "next-auth/react";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
     loginHybrid,
     logoutHybrid,
     shouldOpenModalLogin,
 } from "@/redux/features/user";
-import ModalLogin from "../login";
 import {
     selectOpenModalLogin,
     selectUserInfo,
 } from "@/redux/features/user.reselect";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { signIn, useSession } from "next-auth/react";
+import React, { useCallback, useEffect } from "react";
+import ModalLogin from "../login";
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_ID;
 
 type IUser = {
@@ -20,12 +20,41 @@ type IUser = {
     name?: string | null;
     image?: string | null;
 };
+
+interface AppleIDSignInSuccessEvent extends Event {
+    detail: {
+        authorization: {
+            code: string; // Mã ủy quyền
+            id_token: string; // ID token (JWT)
+            state?: string; // Giá trị state nếu được gửi kèm
+        };
+        user?: {
+            email?: string;
+            name?: {
+                firstName: string;
+                lastName: string;
+            };
+        };
+    };
+}
+interface AppleIDSignInFailureEvent extends Event {
+    detail: {
+        error: string; // Mô tả lỗi, ví dụ: "popup_closed_by_user"
+    };
+}
+declare global {
+    interface DocumentEventMap {
+        AppleIDSignInOnSuccess: AppleIDSignInSuccessEvent;
+        AppleIDSignInOnFailure: AppleIDSignInFailureEvent;
+    }
+}
 const AuthProvider = () => {
     const { status, data } = useSession();
     const openModal = useAppSelector(selectOpenModalLogin);
     const userInfo = useAppSelector(selectUserInfo);
     const dispatch = useAppDispatch();
     const [isMount, setIsMount] = React.useState(false);
+
     const handleClose = useCallback(() => {
         dispatch(shouldOpenModalLogin(false));
     }, [dispatch]);
@@ -43,47 +72,22 @@ const AuthProvider = () => {
         [handleClose]
     );
 
-    const handleLoginInSuccess = async (event: any) => {
+    const handleLoginInSuccess = async (event: AppleIDSignInSuccessEvent) => {
         if (event?.detail?.authorization?.id_token) {
-            // let decode: any = jwt.decode(event.detail.authorization.id_token, {
-            //     verify_signature: false,
-            // });
-            // if (decode.email) {
-            //     if (sendEmail) {
-            //         await sendEmail(decode.email);
-            //     }
-            //     if (submitSuccessFc) {
-            //         submitSuccessFc();
-            //     }
-            //     ga.event({
-            //         action: "login_by_apple_success",
-            //         params: {
-            //             email: decode.email,
-            //         },
-            //     });
-            //     dispatch(
-            //         loginSuccess({
-            //             userInfo: new UserInfo({
-            //                 email: decode.email,
-            //                 id: decode.email,
-            //             }),
-            //         })
-            //     );
-            //     // dispatch(
-            //     //     syncUserDataAction({
-            //     //         syncUserData: SYNC_USER_DATA_STATUS.STATUS_SYNCING,
-            //     //     })
-            //     // );
-            // }
+            signIn("token", {
+                redirect: false,
+                token: event.detail.authorization.id_token,
+            });
+            handleClose();
         }
     };
-    const handleLoginFailed = async (event: any) => {
+    const handleLoginFailed = async (event: AppleIDSignInFailureEvent) => {
         try {
             if (event?.detail?.error != "popup_closed_by_user") {
                 // await sendErrorToDiscord(event?.detail?.error, "Login Apple Error");
             }
         } catch (error) {
-            console.log("error handle");
+            console.log("error handle", error);
         }
     };
 
@@ -126,7 +130,7 @@ const AuthProvider = () => {
         if (status === "unauthenticated" && !data && userInfo.id) {
             dispatch(logoutHybrid());
         }
-    }, [status, data, userInfo, handleCheckUserInfo]);
+    }, [status, data, userInfo, handleCheckUserInfo, dispatch]);
 
     useEffect(() => {
         try {
@@ -161,7 +165,7 @@ const AuthProvider = () => {
         } catch (error) {
             console.log("🚀 ~ useLayoutEffect ~ error", error);
         }
-    }, []);
+    }, [handleCredentialResponse, handleLoginInSuccess, handleLoginFailed]);
 
     return <ModalLogin open={openModal} setOpen={handleClose} />;
 };

@@ -7,7 +7,7 @@ import "@/styles/slick.min.css";
 import "@/styles/slick-theme.min.css";
 import feedback from "@/data/feedback.json";
 import "./SliderWidgetV0.scss";
-import MyContainer from "@/components/container/myContainer";
+import MyContainer from "@/components/container";
 import { DotsSVG } from "@/asset/icon/dots";
 const SliderFeedBack = () => {
     const settings = {

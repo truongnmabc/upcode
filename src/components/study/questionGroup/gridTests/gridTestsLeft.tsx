@@ -23,7 +23,7 @@ const FN = () => {
 
     const handleClick = useCallback(() => {
         setOpen(!open);
-    }, []);
+    }, [open]);
 
     const handleGetData = useCallback(async () => {
         const listData = await db?.testQuestions

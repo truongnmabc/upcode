@@ -6,7 +6,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import choiceAnswer, {
     processChoiceAnswer,
 } from "../repository/game/choiceAnswer/choiceAnswer";
-import choiceStartCustomTestThunk from "../repository/game/customTest/choiceStartTest";
+import choiceStartCustomTestThunk from "../repository/game/choiceAnswer/choiceStartTest";
 import initCustomTestThunk from "../repository/game/initData/initCustomTest";
 import initDiagnosticTestQuestionThunk from "../repository/game/initData/initDiagnosticTest";
 import initFinalTestThunk from "../repository/game/initData/initFinalTest";
@@ -39,6 +39,7 @@ const initGameReducer: IGameReducer = {
     idTopic: -1,
     listWrongAnswers: [],
     isFirst: true,
+    isFinishGame: false,
     indexSubTopic: 1,
     subTopicProgressId: -1,
     turn: 1,

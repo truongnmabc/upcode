@@ -3,8 +3,8 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
 import { appConfigState } from "@/redux/features/appConfig";
 import { appInfoState } from "@/redux/features/appInfo";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { sendEmailApi, verifiedCodeApi } from "@/services/home.service";
+import { useAppSelector } from "@/redux/hooks";
+import { sendEmailApi } from "@/services/home.service";
 import AppleIcon from "@mui/icons-material/Apple";
 import Divider from "@mui/material/Divider";
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
@@ -22,8 +22,6 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
     const [email, setEmail] = useState("");
     const [code, setCode] = useState("");
     const btnRef = useRef<HTMLDivElement | null>(null);
-
-    const dispatch = useAppDispatch();
 
     const { appInfo } = useAppSelector(appInfoState);
     const { appConfig } = useAppSelector(appConfigState);

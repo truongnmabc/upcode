@@ -1,4 +1,4 @@
-import { TypeParam } from "@/common/constants";
+import { TypeParam } from "@/constants";
 import IconGridTest from "@/components/icon/iconGridTest";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";

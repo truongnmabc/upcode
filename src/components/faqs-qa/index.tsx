@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { IAppInfo } from "../../models/AppInfo";
 import FaqsAndQaContent, { TYPE_TAB } from "./content";
 import "./index.scss";
 import SearchQuestion from "./search-question";
-import MyContainer from "../container/myContainer";
+import MyContainer from "../container";
+import { IAppInfo } from "@/models/app/appInfo";
 
 const FaqsAndQaComponent = ({
     appInfo,

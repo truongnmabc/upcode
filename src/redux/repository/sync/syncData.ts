@@ -1,16 +1,7 @@
-import Config from "@/config";
-import {
-    IPaymentInfo,
-    InAppSubscription,
-    PaymentInfo,
-    isSubscriptionId,
-} from "@/models/PaymentInfo";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 import { syncDataToWebAfterLoginAPI } from "@/services/user";
 import { IAppInfo } from "@/models/app/appInfo";
-import { IUserInfo } from "@/models/user/userInfo";
-import { IPaymentInfos } from "@/models/payment/payment";
 
 /** lấy dữ liệu payment (web), inAppSubscription (mobile) và update vào redux, gọi mỗi khi vào trang */
 
@@ -25,7 +16,6 @@ type IRes = {
     InAppSubscriptions: [];
     DailyGoal: [];
 };
-const nd = (d: string) => parseInt(d);
 
 interface IUserDeviceLogin {
     id: number;
@@ -72,11 +62,12 @@ const getUserDeviceLogin = createAsyncThunk(
     "getUserDeviceLogin",
     async ({ appInfo, email }: IPayload, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
-        const { paymentInfos } = state.paymentReducer;
+        const { paymentInfo } = state.paymentReducer;
+        console.log("🚀 ~ paymentInfos:", paymentInfo);
 
         try {
             const syncData = (await syncDataToWebAfterLoginAPI({
-                email: "stevencayo9@icloud.com",
+                email: email,
                 appId: appInfo.appId,
                 lastUpdate: -1,
             })) as IRes;
@@ -120,17 +111,21 @@ const getUserDeviceLogin = createAsyncThunk(
                 // });
             }
             if (userDeviceLogin.length) {
-                let data = handleUserDevicesLogin(
-                    userDeviceLogin,
-                    appInfo,
-                    paymentInfos
-                );
+                // let data = handleUserDevicesLogin(
+                //     userDeviceLogin,
+                //     appInfo,
+                //     paymentInfos
+                // );
             }
 
             // return { paymentInfo, paymentInfos, inAppSubs };
         } catch (error) {
             console.log("getUserData ", error);
         }
+        return {
+            paymentInfo: null,
+            inAppSubs: [],
+        };
     }
 );
 
@@ -216,91 +211,91 @@ const getUserDeviceLogin = createAsyncThunk(
 //     }
 // };
 
-const handleUserDevicesLogin = (
-    userDeviceLogins: IUserDeviceLogin[],
-    appInfo: IAppInfo,
-    paymentInfos: PaymentInfo[]
-): { paymentInfos: PaymentInfo[]; paymentInfo: PaymentInfo | null } => {
-    try {
-        const paymentInfosSave: PaymentInfo[] = [];
-        let paymentInfo: PaymentInfo | null = null;
+// const handleUserDevicesLogin = (
+//     userDeviceLogins: IUserDeviceLogin[],
+//     appInfo: IAppInfo,
+//     paymentInfos: PaymentInfo[]
+// ): { paymentInfos: PaymentInfo[]; paymentInfo: PaymentInfo | null } => {
+//     try {
+//         const paymentInfosSave: PaymentInfo[] = [];
+//         let paymentInfo: PaymentInfo | null = null;
 
-        userDeviceLogins.forEach((userDeviceLogin) => {
-            if (!userDeviceLogin) return;
+//         userDeviceLogins.forEach((userDeviceLogin) => {
+//             if (!userDeviceLogin) return;
 
-            // Check for existing paymentInfo
-            let paymentInfoExist = paymentInfos.find(
-                (info) => info.appId === userDeviceLogin.appId
-            );
+//             // Check for existing paymentInfo
+//             let paymentInfoExist = paymentInfos.find(
+//                 (info) => info.appId === userDeviceLogin.appId
+//             );
 
-            if (!paymentInfoExist) {
-                // Create new PaymentInfo
-                paymentInfoExist = new PaymentInfo({
-                    id: userDeviceLogin.id,
-                    createdDate: userDeviceLogin.createdDate,
-                    amount: userDeviceLogin.amount,
-                    emailAddress: userDeviceLogin.emailAddress,
-                    userId: userDeviceLogin.userId,
-                    appId: userDeviceLogin.appId,
-                    paymentStatus:
-                        userDeviceLogin.inAppPurchared === 1
-                            ? Config.PAYMENT_SUCCESS
-                            : Config.PAYMENT_INIT,
-                    appShortName: userDeviceLogin.appShortName,
-                    expiredDate: userDeviceLogin.expiredDate ?? -1,
-                    PURCHASED:
-                        userDeviceLogin.inAppPurchared === 1
-                            ? Config.PURCHASED
-                            : Config.PURCHASE,
-                });
-            } else {
-                // Update existing PaymentInfo
-                if (userDeviceLogin.amount > 0) {
-                    paymentInfoExist.amount = userDeviceLogin.amount;
-                }
-                // if (userDeviceLogin.inAppPurchared === 1) {
-                //     paymentInfoExist.PURCHASED = Config.PURCHASED;
-                // }
-            }
+//             if (!paymentInfoExist) {
+//                 // Create new PaymentInfo
+//                 paymentInfoExist = new PaymentInfo({
+//                     id: userDeviceLogin.id,
+//                     createdDate: userDeviceLogin.createdDate,
+//                     amount: userDeviceLogin.amount,
+//                     emailAddress: userDeviceLogin.emailAddress,
+//                     userId: userDeviceLogin.userId,
+//                     appId: userDeviceLogin.appId,
+//                     paymentStatus:
+//                         userDeviceLogin.inAppPurchared === 1
+//                             ? Config.PAYMENT_SUCCESS
+//                             : Config.PAYMENT_INIT,
+//                     appShortName: userDeviceLogin.appShortName,
+//                     expiredDate: userDeviceLogin.expiredDate ?? -1,
+//                     PURCHASED:
+//                         userDeviceLogin.inAppPurchared === 1
+//                             ? Config.PURCHASED
+//                             : Config.PURCHASE,
+//                 });
+//             } else {
+//                 // Update existing PaymentInfo
+//                 if (userDeviceLogin.amount > 0) {
+//                     paymentInfoExist.amount = userDeviceLogin.amount;
+//                 }
+//                 // if (userDeviceLogin.inAppPurchared === 1) {
+//                 //     paymentInfoExist.PURCHASED = Config.PURCHASED;
+//                 // }
+//             }
 
-            // Update additional fields
-            Object.assign(paymentInfoExist, {
-                orderId: userDeviceLogin.orderId,
-                type: userDeviceLogin.type ?? 0,
-                orderIds: userDeviceLogin.orderIds ?? [],
-                expiredDate: userDeviceLogin.expiredDate ?? -1,
-            });
+//             // Update additional fields
+//             Object.assign(paymentInfoExist, {
+//                 orderId: userDeviceLogin.orderId,
+//                 type: userDeviceLogin.type ?? 0,
+//                 orderIds: userDeviceLogin.orderIds ?? [],
+//                 expiredDate: userDeviceLogin.expiredDate ?? -1,
+//             });
 
-            // Handle Pro purchase logic
-            if (
-                userDeviceLogin.buyPro === Config.PURCHASED ||
-                userDeviceLogin.inAppPurchared === Config.PURCHASED
-            ) {
-                paymentInfoExist.buyPro = Config.PURCHASED;
-                // paymentInfoExist.PURCHASED = Config.PURCHASED;
-            }
+//             // Handle Pro purchase logic
+//             if (
+//                 userDeviceLogin.buyPro === Config.PURCHASED ||
+//                 userDeviceLogin.inAppPurchared === Config.PURCHASED
+//             ) {
+//                 paymentInfoExist.buyPro = Config.PURCHASED;
+//                 // paymentInfoExist.PURCHASED = Config.PURCHASED;
+//             }
 
-            // Subscription check
-            if (isSubscriptionId(paymentInfoExist.orderId)) {
-                localStorage.setItem(
-                    "isSubcriptionPro",
-                    Config.PAYMENT_PAY_SUBSCRIPTION
-                );
-            }
+//             // Subscription check
+//             if (isSubscriptionId(paymentInfoExist.orderId)) {
+//                 localStorage.setItem(
+//                     "isSubcriptionPro",
+//                     Config.PAYMENT_PAY_SUBSCRIPTION
+//                 );
+//             }
 
-            // Save current app's paymentInfo
-            if (paymentInfoExist.appId === appInfo.appId) {
-                paymentInfo = paymentInfoExist;
-            }
+//             // Save current app's paymentInfo
+//             if (paymentInfoExist.appId === appInfo.appId) {
+//                 paymentInfo = paymentInfoExist;
+//             }
 
-            paymentInfosSave.push(paymentInfoExist);
-        });
+//             paymentInfosSave.push(paymentInfoExist);
+//         });
 
-        return { paymentInfos: paymentInfosSave, paymentInfo };
-    } catch (error) {
-        console.error("handleUserDevicesLogin error:", error);
-        return { paymentInfos: [], paymentInfo: null };
-    }
-};
+//         return { paymentInfos: paymentInfosSave, paymentInfo };
+//     } catch (error) {
+//         console.error("handleUserDevicesLogin error:", error);
+//         return { paymentInfos: [], paymentInfo: null };
+//     }
+// };
 
 export { getUserDeviceLogin };

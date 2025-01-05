@@ -7,7 +7,7 @@ import { MathJax } from "better-react-mathjax";
 import StatusAnswer from "../statusAnswer/statusAnswer";
 import LazyLoadImage from "@/components/images";
 import { selectCurrentGame } from "@/redux/features/game.reselect";
-import { baseImageUrl } from "@/common/constants";
+import { baseImageUrl } from "@/constants";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 
 const FN = ({ showStatus = true }: { showStatus?: boolean }) => {

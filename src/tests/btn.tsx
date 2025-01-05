@@ -1,5 +1,5 @@
 "use client";
-import Config from "@/common/config";
+import Config from "@/config";
 import { getSession } from "@/utils/session";
 import React from "react";
 

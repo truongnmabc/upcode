@@ -1,6 +1,6 @@
 "use client";
 import LazyLoadImage from "@/components/images";
-import MyContainer from "@/components/container/myContainer";
+import MyContainer from "@/components/container";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { IAppInfo } from "@/models/app/appInfo";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";

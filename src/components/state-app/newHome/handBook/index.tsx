@@ -1,5 +1,5 @@
 import LazyLoadImage from "@/components/images";
-import MyContainer from "@/components/container/myContainer";
+import MyContainer from "@/components/container";
 import { IAppInfo } from "@/models/app/appInfo";
 import React from "react";
 

@@ -3,7 +3,7 @@
 import { IAppInfo } from "@/models/app/appInfo";
 import "./AppsSectionV0.scss";
 import { useEffect, useRef, useState } from "react";
-import MyContainer from "@/components/container/myContainer";
+import MyContainer from "@/components/container";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import categoriesPassemall from "@/data/categoriesPassemall.json";
 import { useRouter } from "next/navigation";

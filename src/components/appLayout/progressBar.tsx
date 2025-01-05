@@ -74,7 +74,7 @@ export function useProgress() {
                 value.jump(0);
             }
 
-            let current = value.get();
+            const current = value.get();
 
             let diff;
             if (current === 0) {
@@ -89,10 +89,10 @@ export function useProgress() {
         },
         state === "in-progress" ? 750 : null
     );
-    let isMounted = false;
+    const isMounted = useRef(false);
 
     useEffect(() => {
-        isMounted = true;
+        isMounted.current = true;
         if (state === "initial") {
             value.jump(0);
         } else if (state === "completing") {
@@ -100,13 +100,13 @@ export function useProgress() {
         }
 
         const unsubscribe = value.on("change", (latest) => {
-            if (latest === 100 && isMounted) {
+            if (latest === 100 && isMounted.current) {
                 setState("complete");
             }
         });
 
         return () => {
-            isMounted = false;
+            isMounted.current = false;
             unsubscribe();
         };
     }, [value, state]);
@@ -116,7 +116,7 @@ export function useProgress() {
     }
 
     function start() {
-        if (isMounted) setState("in-progress");
+        if (isMounted.current) setState("in-progress");
     }
 
     function done() {
@@ -149,7 +149,7 @@ function useInterval(callback: () => void, delay: number | null) {
         if (delay !== null) {
             tick();
 
-            let id = setInterval(tick, delay);
+            const id = setInterval(tick, delay);
             return () => clearInterval(id);
         }
     }, [delay]);

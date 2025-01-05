@@ -2,13 +2,15 @@ import FooterApp from "@/components/footer/FooterLandingV4";
 import HeaderApp from "@/components/header";
 import React from "react";
 import { ToastContainer } from "react-toastify";
-import AdsProvider from "../ads/adsProvider";
+import AdsSense from "../ads/adsSense";
 import SheetApp from "../sheetApp";
 import { NavigationEvents } from "./navigationEvents";
 import { ProgressBar } from "./progressBar";
 import AuthProvider from "./authProvider";
 import WrapperScroll from "./wrapperScroll";
 import SyncData from "../sync";
+import AdsBlockerDetect from "../ads/detectAdsBlocker";
+import PopupSubscription from "../checkSubscription";
 const FN = ({ children }: { children: React.ReactNode }) => {
     return (
         <WrapperScroll>
@@ -23,8 +25,10 @@ const FN = ({ children }: { children: React.ReactNode }) => {
             <ToastContainer autoClose={2000} />
             <SheetApp />
             <AuthProvider />
-            <AdsProvider />
             <SyncData />
+            <PopupSubscription />
+            <AdsSense />
+            <AdsBlockerDetect />
         </WrapperScroll>
     );
 };

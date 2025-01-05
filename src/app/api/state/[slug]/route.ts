@@ -1,4 +1,4 @@
-import { timeCaching } from "@/common/constants";
+import { timeCaching } from "@/constants";
 import { requestGetData } from "@/services/request";
 import cache from "memory-cache";
 import { NextRequest } from "next/server";

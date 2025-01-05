@@ -31,7 +31,3 @@ export async function GET(
         return Response.json({ error: "Failed to read appInfos.json" });
     }
 }
-
-5676496995745792;
-
-5984778887102464;

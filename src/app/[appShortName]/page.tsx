@@ -1,13 +1,13 @@
-import axiosInstance from "@/common/config/axios";
-import { API_PATH } from "@/common/constants/api.constants";
-import MyContainer from "@/components/container/myContainer";
+import axiosInstance from "@/config/axios";
+import { API_PATH } from "@/constants/api.constants";
+import MyContainer from "@/components/container";
 import GridTest from "@/components/home/gridTests/gridTestHome";
 import GridTopics from "@/components/home/gridTopic/gridTopics";
 import TitleHomeApp from "@/components/home/title";
 import SeoContent from "@/components/seoContent/seoContent";
 import HomeSingleApp from "@/components/state-app";
 import { ITopic } from "@/models/topics/topics";
-import { getAppType } from "@/utils/config_web";
+import { getAppType } from "@/utils/web";
 import { fetchAppData } from "@/utils/getAppInfos";
 import dynamic from "next/dynamic";
 const BannerHome = dynamic(

@@ -1,12 +1,10 @@
 "use client";
 import { IAppInfo } from "@/models/app/appInfo";
-import React from "react";
-import {
-    appConfigState,
-    IAppConfigData,
-    setAppConfig,
-} from "./features/appConfig";
-import { appInfoState, setAppInfo } from "./features/appInfo";
+import { memo } from "react";
+import { IAppConfigData, setAppConfig } from "./features/appConfig";
+import { selectAppConfig } from "./features/appConfig.reselect";
+import { setAppInfo } from "./features/appInfo";
+import { selectAppInfo } from "./features/appInfo.reselect";
 import { useAppDispatch, useAppSelector } from "./hooks";
 
 const InitDataStore = ({
@@ -17,8 +15,8 @@ const InitDataStore = ({
     appConfig: IAppConfigData;
 }) => {
     const dispatch = useAppDispatch();
-    const { appInfo: currentAppInfo } = useAppSelector(appInfoState);
-    const { appConfig: currentAppConfig } = useAppSelector(appConfigState);
+    const currentAppInfo = useAppSelector(selectAppInfo);
+    const currentAppConfig = useAppSelector(selectAppConfig);
 
     if (appInfo.appId !== currentAppInfo.appId) {
         dispatch(setAppInfo(appInfo));
@@ -29,4 +27,4 @@ const InitDataStore = ({
     return <></>;
 };
 
-export default React.memo(InitDataStore);
+export default memo(InitDataStore);

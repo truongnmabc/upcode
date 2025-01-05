@@ -1,6 +1,6 @@
 import { IAnswer, IQuestion } from "@/models/question/questions";
 import { IStatusAnswer } from "@/components/study/mainStudyView/statusAnswer/statusAnswer";
-import { IFeedBack } from "@/components/customTest/modalSetting";
+import { IFeedBack } from "@/app/[appShortName]/[state]/custom_test/customTest/modalSetting";
 
 export interface ICurrentGame
     extends Omit<
@@ -42,4 +42,5 @@ export interface IGameReducer {
     aboveFifty: Record<string, ICurrentGame[]>;
     feedBack?: IFeedBack;
     passing?: number;
+    isFinishGame?: boolean;
 }

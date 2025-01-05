@@ -1,0 +1,40 @@
+.store-archievement-container {
+  max-width: 1300px;
+  width: calc(100% - 32px);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.store-archievement-container .platform-wrapper {
+  min-height: 48px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+.store-archievement-container .platform-wrapper .img-wrapper {
+  justify-content: center;
+  display: flex;
+  height: 24px;
+}
+.store-archievement-container .platform-wrapper .img-wrapper img {
+  height: 24px;
+}
+@media screen and (min-width: 769px) {
+  .store-archievement-container {
+    width: calc(100% - 140px);
+  }
+  .store-archievement-container .platform-wrapper .img-wrapper {
+    height: 48px;
+  }
+  .store-archievement-container .platform-wrapper .img-wrapper img {
+    height: 48px;
+  }
+}
+@media screen and (min-width: 1201px) {
+  .store-archievement-container .platform-wrapper {
+    gap: 12px;
+    flex-direction: row;
+  }
+}/*# sourceMappingURL=StoreArchievement.css.map */

@@ -1,5 +1,5 @@
-import ReviewView from "@/components/review";
-import MyContainer from "@/components/container/myContainer";
+import ReviewView from "@/app/[appShortName]/[state]/review/_components";
+import MyContainer from "@/components/container";
 
 export default async function Page() {
     return (

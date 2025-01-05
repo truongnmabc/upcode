@@ -1,7 +1,8 @@
 "use client";
 import CrownIcon from "@/components/icon/iconCrown";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { gameState } from "@/redux/features/game";
+import { selectCurrentGame } from "@/redux/features/game.reselect";
+import { selectUserInfo } from "@/redux/features/user.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { trackingEventGa4 } from "@/services/googleEvent";
 import ctx from "@/utils/mergeClass";
@@ -16,10 +17,9 @@ type IProps = {
 
 const FN: React.FC<IProps> = ({ unLock = false }) => {
     const isMobile = useIsMobile();
-    const isProUser = false;
-
+    const userInfo = useAppSelector(selectUserInfo);
     const [text, setText] = useState<string>("");
-    const { currentGame } = useAppSelector(gameState);
+    const currentGame = useAppSelector(selectCurrentGame);
 
     useEffect(() => {
         if (currentGame?.text && currentGame?.id) {
@@ -35,7 +35,7 @@ const FN: React.FC<IProps> = ({ unLock = false }) => {
         <Collapse in={currentGame?.selectedAnswer ? true : false} timeout={200}>
             <div className="flex text-[#004fc2] text-sm sm:text-base gap-2 items-center">
                 Detailed Explanation
-                {!isProUser && !unLock && (
+                {!userInfo.isPro && !unLock && (
                     <div className="flex items-center gap-1">
                         {!isMobile ? "(Get" : ""}
                         <div className="flex gap-1 px-2 text-white text-xs py-1 rounded-2xl bg-black items-center">
@@ -48,10 +48,10 @@ const FN: React.FC<IProps> = ({ unLock = false }) => {
             </div>
             <div
                 className={ctx("mt-2 ", {
-                    "blur-content": !isProUser && !unLock,
+                    "blur-content": !userInfo.isPro && !unLock,
                 })}
                 onClick={() => {
-                    if (!isProUser) {
+                    if (!userInfo.isPro) {
                         trackingEventGa4({
                             eventName: "click_pro_explain",
                             value: {},

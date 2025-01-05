@@ -1,0 +1,8 @@
+.client-header-v4-frame {
+  height: 57px;
+}
+@media screen and (min-width: 769px) {
+  .client-header-v4-frame {
+    height: 77px;
+  }
+}/*# sourceMappingURL=AppHeaderV0.css.map */

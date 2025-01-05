@@ -15,16 +15,16 @@ import YoutubeIcon from "../icon/YoutubeIcon";
 import "./FooterLandingV4.scss";
 import { DmcaIcon } from "./info/iconDmca";
 import { appConfigState } from "@/redux/features/appConfig";
-import RouterApp from "@/common/router/router.constant";
+import RouterApp from "@/router/router.constant";
 import ForwardedLinkBlank from "../nextLink/forwardedLinkBlank";
 import { useRouter } from "next/navigation";
 
 const FooterLandingV4 = () => {
     const router = useRouter();
     const isMobile = useMediaQuery("(max-width:768px)");
-    let emailSupport = "support@abc-elearning.org";
+    const emailSupport = "support@abc-elearning.org";
     const getSrcLogo = () => {
-        let logo = `/${appInfo.appShortName}/logo/logo-dark.png`;
+        const logo = `/${appInfo.appShortName}/logo/logo-dark.png`;
         return logo;
     };
     const { appInfo } = useAppSelector(appInfoState);
@@ -101,42 +101,30 @@ const FooterLandingV4 = () => {
                 </div>
                 <div className="item-footer cluster-legal">
                     <div className="title">Legal</div>
-                    <Link
+
+                    <ForwardedLinkBlank
                         href={`/${appInfo.appShortName}/${RouterApp.Edit_policy}`}
-                        prefetch={false}
-                        passHref
-                        legacyBehavior
                     >
-                        <ForwardedLinkBlank>
-                            Editorial Policy
-                        </ForwardedLinkBlank>
-                    </Link>
-                    <Link
+                        Editorial Policy
+                    </ForwardedLinkBlank>
+
+                    <ForwardedLinkBlank
                         href={`/${appInfo.appShortName}/${RouterApp.Privacy}`}
-                        prefetch={false}
-                        passHref
-                        legacyBehavior
                     >
-                        <ForwardedLinkBlank>Privacy Policy</ForwardedLinkBlank>
-                    </Link>
-                    <Link
+                        Privacy Policy
+                    </ForwardedLinkBlank>
+
+                    <ForwardedLinkBlank
                         href={`/${appInfo.appShortName}/${RouterApp.Teams_of_service}`}
-                        prefetch={false}
-                        passHref
-                        legacyBehavior
                     >
-                        <ForwardedLinkBlank>
-                            Terms & Conditions
-                        </ForwardedLinkBlank>
-                    </Link>
-                    <Link
+                        Terms & Conditions
+                    </ForwardedLinkBlank>
+
+                    <ForwardedLinkBlank
                         href={`/${appInfo.appShortName}/${RouterApp.Refund_policy}`}
-                        prefetch={false}
-                        passHref
-                        legacyBehavior
                     >
-                        <ForwardedLinkBlank>Refund Policy</ForwardedLinkBlank>
-                    </Link>
+                        Refund Policy
+                    </ForwardedLinkBlank>
                 </div>
             </>
         );
@@ -212,7 +200,7 @@ const FooterLandingV4 = () => {
                                 ref={_email}
                                 type="email"
                                 placeholder="Enter your email"
-                                onChange={(e) => {
+                                onChange={() => {
                                     if (
                                         error_email.current &&
                                         !!error_email.current.innerHTML
@@ -227,7 +215,7 @@ const FooterLandingV4 = () => {
                                 ref={_message}
                                 type="text"
                                 placeholder="Enter your message"
-                                onChange={(e) => {
+                                onChange={() => {
                                     if (
                                         error_message.current &&
                                         !!error_message.current.innerHTML

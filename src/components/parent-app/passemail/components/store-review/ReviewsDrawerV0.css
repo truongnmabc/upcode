@@ -1,0 +1,212 @@
+.get-pro-drawer-container {
+  width: 454px;
+  background: #ffffff;
+  padding: 0 40px;
+  box-sizing: border-box;
+  position: relative;
+  overflow-y: auto;
+}
+@media screen and (max-width: 768px) {
+  .get-pro-drawer-container {
+    width: 100% !important;
+    box-sizing: border-box;
+    height: auto;
+    position: relative;
+    overflow-y: auto;
+  }
+}
+.get-pro-drawer-container .drawer-header {
+  width: 100%;
+  padding: 16px 0;
+  border-bottom: 1px solid #c4c4c4;
+  display: flex;
+  box-sizing: border-box;
+}
+.get-pro-drawer-container .drawer-header .drawer_close_icon-container {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.get-pro-drawer-container .drawer-header .close_icon {
+  height: 20px;
+  width: 20px;
+}
+.get-pro-drawer-container .drawer-header .drawer-app-icon-container {
+  width: auto;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.get-pro-drawer-container .drawer-header .drawer-feedback-text {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+  text-align: center;
+  color: #212121;
+  margin-left: 16px;
+}
+.get-pro-drawer-container .drawer-result-vote {
+  width: 100%;
+  background: #f5f6fa;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 24px;
+  margin-top: 24px;
+  display: flex;
+}
+.get-pro-drawer-container .drawer-result-vote .drawer-vote-count {
+  display: flex;
+  flex: 3;
+  flex-direction: column;
+}
+.get-pro-drawer-container .drawer-result-vote .drawer-vote-count .num-of_vote {
+  width: 100%;
+  display: flex;
+}
+.get-pro-drawer-container .drawer-result-vote .drawer-vote-count .num-of_vote .vote-number {
+  width: 10%;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  margin-top: 4px;
+}
+.get-pro-drawer-container .drawer-result-vote .drawer-vote-count .num-of_vote .get-pro-linear-progress-container {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  padding-top: 2px;
+}
+.get-pro-drawer-container .drawer-result-vote .drawer-vote-count .num-of_vote .get-pro-linear-progress-container .get-pro-linear-progress {
+  width: 100%;
+}
+.get-pro-drawer-container .drawer-result-vote .drawer-vote-count .num-of_vote .get-pro-linear-progress-container .get-pro-linear-progress .css-eglki6-MuiLinearProgress-root {
+  height: 17px !important;
+  background: transparent !important;
+}
+.get-pro-drawer-container .drawer-result-vote .drawer-vote-count .num-of_vote .get-pro-linear-progress-container .get-pro-linear-progress .css-7p5u54 {
+  height: 17px !important;
+  background-color: transparent !important;
+}
+.get-pro-drawer-container .drawer-result-vote .drawer-vote-count .num-of_vote .get-pro-linear-progress-container .get-pro-linear-progress .css-5xe99f-MuiLinearProgress-bar1 {
+  background: #ffb400 !important;
+  border-radius: 0px 2px 2px 0px !important;
+}
+.get-pro-drawer-container .drawer-result-vote .drawer-vote-count .num-of_vote .get-pro-linear-progress-container .get-pro-linear-progress .css-t752vm {
+  background-color: #ffb400 !important;
+  border-radius: 0px 2px 2px 0px !important;
+}
+.get-pro-drawer-container .drawer-result-vote .drawer-vote-result {
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+  align-items: center;
+}
+.get-pro-drawer-container .drawer-result-vote .drawer-vote-result .vote-result {
+  font-weight: 500;
+  font-size: 72px;
+  line-height: 86px;
+  color: #212121;
+}
+@media screen and (max-width: 768px) {
+  .get-pro-drawer-container .drawer-result-vote .drawer-vote-result .vote-result {
+    font-size: 55px !important;
+    line-height: 69px !important;
+  }
+}
+.get-pro-drawer-container .drawer-result-vote .drawer-vote-result .total-vote {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #8b8b8b;
+}
+@media screen and (max-width: 768px) {
+  .get-pro-drawer-container .drawer-result-vote .drawer-vote-result .total-vote {
+    font-size: 14px !important;
+    line-height: 16px !important;
+  }
+}
+.get-pro-drawer-container .get-pro-review-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+}
+
+.review-item-drawer {
+  display: flex;
+  justify-content: center;
+  outline: none;
+  max-width: 380px;
+}
+.review-item-drawer .review-panel-drawer {
+  width: 100%;
+  position: relative;
+  align-self: center;
+  padding: 24px 0;
+}
+.review-item-drawer .review-panel-drawer .user-info-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid rgba(45, 46, 51, 0.2);
+  padding-bottom: 12px;
+}
+.review-item-drawer .review-panel-drawer .user-info-container .avatar {
+  height: 30px;
+  width: 30px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.review-item-drawer .review-panel-drawer .user-info-container .get-pro-info-container {
+  max-width: 150px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.review-item-drawer .review-panel-drawer .user-info-container .get-pro-info-container .author-name {
+  font-size: 15px;
+  line-height: 21px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.review-item-drawer .review-panel-drawer .user-info-container .get-pro-info-container .last-update-text {
+  font-size: 12px;
+  color: #8b8b8b;
+  margin-top: 1px;
+  font-weight: 400;
+}
+.review-item-drawer .review-panel-drawer .user-info-container .rating-container {
+  position: absolute;
+  top: 30px;
+  right: 24px;
+}
+.review-item-drawer .review-panel-drawer .user-info-container .rating-container span {
+  color: #faaf00;
+}
+.review-item-drawer .review-panel-drawer .get-pro-comment {
+  width: 100%;
+  padding-top: 10px;
+  font-size: 14px;
+  line-height: 21px;
+  color: #656566;
+}
+.review-item-drawer .review-panel-drawer .get-pro-see-more-text {
+  font-size: 15px;
+  font-weight: 500;
+  color: #3a95dc;
+  margin-top: 5px;
+}/*# sourceMappingURL=ReviewsDrawerV0.css.map */

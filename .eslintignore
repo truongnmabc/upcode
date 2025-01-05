@@ -1,4 +1,6 @@
 src/scripts/
 src/components/sheet
 src/components/ripple
-src/pagessss
+src/components/parent-app
+src/components/initData/core/idb.js
+src/components/ads/check.tsx

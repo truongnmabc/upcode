@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import cache from "memory-cache";
-import { timeCaching } from "@/common/constants";
+import { timeCaching } from "@/constants";
 
 export async function GET(
     request: Request,

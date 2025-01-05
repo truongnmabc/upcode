@@ -1,6 +1,6 @@
 "use client";
 
-import RouterApp from "@/common/router/router.constant";
+import RouterApp from "@/router/router.constant";
 import NextLink from "@/components/nextLink";
 import { appConfigState } from "@/redux/features/appConfig";
 import { useAppSelector } from "@/redux/hooks";

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { API_PATH } from "@/common/constants/api.constants";
+import { API_PATH } from "@/constants/api.constants";
 import { IAppInfo } from "@/models/app/appInfo";
 
 const ServiceWorkerInit = ({ appInfo }: { appInfo: IAppInfo }) => {

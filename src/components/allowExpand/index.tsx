@@ -1,5 +1,5 @@
 "use client";
-import RouterApp from "@/common/router/router.constant";
+import RouterApp from "@/router/router.constant";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { ITopic } from "@/models/topics/topics";
 import { useAppSelector } from "@/redux/hooks";

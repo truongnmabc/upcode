@@ -1,7 +1,7 @@
 "use client";
-import axiosInstance from "@/common/config/axios";
-import { API_PATH } from "@/common/constants/api.constants";
-import MyContainer from "@/components/container/myContainer";
+import axiosInstance from "@/config/axios";
+import { API_PATH } from "@/constants/api.constants";
+import MyContainer from "@/components/container";
 import { IAppInfo } from "@/models/app/appInfo";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";

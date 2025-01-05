@@ -1,5 +1,5 @@
 "use client";
-import RouterApp from "@/common/router/router.constant";
+import RouterApp from "@/router/router.constant";
 import LazyLoadImage from "@/components/images";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { shouldOpenModalLogin } from "@/redux/features/user";
@@ -38,7 +38,7 @@ const FN = ({ classNames }: { classNames?: string }) => {
         signOut({
             redirect: false,
         });
-    }, [dispatch]);
+    }, []);
 
     const handleClose = useCallback(() => setAnchorEl(null), []);
 
@@ -50,7 +50,7 @@ const FN = ({ classNames }: { classNames?: string }) => {
 
     const handleOpenModalLogin = useCallback(() => {
         dispatch(shouldOpenModalLogin(true));
-    }, []);
+    }, [dispatch]);
 
     if (!userInfo.id) {
         return (

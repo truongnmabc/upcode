@@ -1,6 +1,6 @@
 import "./ClientHeader.scss";
 import React, { useState } from "react";
-import MyContainer from "@/components/container/myContainer";
+import MyContainer from "@/components/container";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@/components/icon/MenuIcon";
 import dynamic from "next/dynamic";

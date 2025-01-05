@@ -1,7 +1,8 @@
 const replaceYear = (year: string) => {
     try {
         let text = "";
-        const currentYear = "2024";
+        const yearNumber = new Date().getFullYear();
+        const currentYear = yearNumber.toString();
         if (year) {
             year = year.replace(/\/2021\//g, "year21");
             text = year.replace(/2020/g, currentYear);

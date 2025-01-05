@@ -6,14 +6,14 @@ import TitleTopic from "@/components/home/gridTopic/item/titleTopic";
 import { db } from "@/db/db.model";
 import Topic, { ITopic } from "@/models/topics/topics";
 import { appInfoState } from "@/redux/features/appInfo";
-import { studyState } from "@/redux/features/study";
 import { useAppSelector } from "@/redux/hooks";
-import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-
-import React, { Fragment, useCallback, useEffect, useState } from "react";
+import Collapse from "@mui/material/Collapse";
+import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useSearchParams } from "next/navigation";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
+
 export const generateMockTopics = (size: number): ITopic[] => {
     return Array.from({ length: size }, (_, index) => {
         const initData = new Topic({
@@ -28,7 +28,7 @@ export const mockData: ITopic[] = generateMockTopics(10);
 
 const FN = () => {
     const { appInfo } = useAppSelector(appInfoState);
-    const { selectedTopics } = useAppSelector(studyState);
+    const selectedTopics = useAppSelector(selectTopicsId);
     const [listMainTopics, setListMainTopics] = useState<ITopic[]>(mockData);
     const type = useSearchParams().get("type");
 
@@ -37,16 +37,11 @@ const FN = () => {
     const handleClick = () => setOpen(!open);
 
     const handleGetData = useCallback(async () => {
-        const listData = await db?.topics.toArray();
-        if (listData) {
-            setListMainTopics(
-                listData
-                // .sort((a, b) => {
-                //     if (a.id === selectedTopics) return -1;
-                //     if (b.id === selectedTopics) return 1;
-                //     return 0;
-                // })
-            );
+        if (selectedTopics !== -1) {
+            const listData = await db?.topics.toArray();
+            if (listData) {
+                setListMainTopics(listData);
+            }
         }
     }, [selectedTopics]);
 

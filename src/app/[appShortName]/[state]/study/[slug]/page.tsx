@@ -1,7 +1,7 @@
-import axiosInstance from "@/common/config/axios";
-import { API_PATH } from "@/common/constants/api.constants";
+import axiosInstance from "@/config/axios";
+import { API_PATH } from "@/constants/api.constants";
 import BannerDownloadApp from "@/components/bannerDownload/bannerDownloadApp";
-import MyContainer from "@/components/container/myContainer";
+import MyContainer from "@/components/container";
 import SeoContent from "@/components/seoContent/seoContent";
 import MainStudyView from "@/components/study/mainStudyView";
 import HeaderMobile from "@/components/study/headerMobile";

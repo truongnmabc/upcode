@@ -1,31 +1,26 @@
 "use client";
-import RouterApp from "@/common/router/router.constant";
+import RouterApp from "@/router/router.constant";
 import LazyLoadImage from "@/components/images";
 import MtUiRipple, { useRipple } from "@/components/ripple";
 import { db } from "@/db/db.model";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { IPartProgress } from "@/models/progress/subTopicProgress";
 import { ITopic } from "@/models/topics/topics";
-import { appInfoState } from "@/redux/features/appInfo";
-import {
-    selectSubTopics,
-    selectTopics,
-    studyState,
-} from "@/redux/features/study";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
+import { setIndexSubTopic } from "@/redux/features/game";
+import { selectSubTopics, selectTopics } from "@/redux/features/study";
+import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
+import { AppDispatch } from "@/redux/store";
 import { trackingEventGa4 } from "@/services/googleEvent";
 import ctx from "@/utils/mergeClass";
 import { convertPathName, revertPathName } from "@/utils/pathName";
+import clsx from "clsx";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Priority from "./priority";
-import { setIndexSubTopic } from "@/redux/features/game";
-import { AppDispatch } from "@/redux/store";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import clsx from "clsx";
-import { selectAppInfo } from "@/redux/features/appInfo.reselect";
-import { selectTopicsId } from "@/redux/features/study.reselect";
 
 export const handleGetNextPart = async ({
     parentId,

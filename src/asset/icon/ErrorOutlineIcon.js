@@ -4,7 +4,6 @@ const ErrorOutlineIcon = ({ color = "#fff", width = 22, height = 22 }) => {
             width={`${width}`}
             height={`${height}`}
             focusable="false"
-            aria-hidden="true"
             viewBox="0 0 24 24"
             data-testid="ErrorOutlineIcon"
             fill={color}

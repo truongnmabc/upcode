@@ -1,0 +1,152 @@
+.cta-platform {
+  width: 100%;
+  border-radius: 60px;
+  box-sizing: border-box;
+  margin-top: 40px;
+  margin-bottom: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.cta-platform .choose-platform {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  align-self: center;
+}
+.cta-platform .choose-platform h2 {
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 64px;
+  text-align: center;
+  color: var(--font-color);
+  margin: 0;
+  font-weight: 600;
+}
+.cta-platform .choose-platform .get-app-from-email-or-qr button {
+  max-width: 140px;
+  width: 100%;
+}
+.cta-platform .choose-platform .platform {
+  margin-top: 32px;
+  display: flex;
+}
+.cta-platform .choose-platform .platform a {
+  cursor: pointer;
+}
+.cta-platform .choose-platform .platform img {
+  width: 100%;
+  max-width: 215px;
+  min-width: 150px;
+  margin: 4px;
+  transition: all 0.3s ease;
+}
+.cta-platform .choose-platform .platform img:focus {
+  outline: none;
+}
+.cta-platform .choose-platform .platform img:hover {
+  transform: translate3d(0, -3px, 0);
+}
+@media screen and (max-width: 768px) {
+  .cta-platform .choose-platform h2 {
+    font-size: 36px;
+    line-height: 48px;
+  }
+  .cta-platform .choose-platform .platform {
+    align-items: center;
+    flex-direction: column;
+    margin-top: 0;
+  }
+  .cta-platform .choose-platform .platform a img {
+    margin-top: 16px;
+  }
+}
+.cta-platform .ip-img {
+  display: flex;
+  width: 295px;
+  height: 295px;
+  flex: none;
+  justify-content: center;
+  align-items: flex-end;
+}
+.cta-platform .ip-img img {
+  max-width: 200px;
+  max-height: 295px;
+}
+@media screen and (max-width: 768px) {
+  .cta-platform {
+    border-radius: 40px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding: 36px 16px;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+  .cta-platform .ip-img {
+    display: none;
+  }
+}
+
+.get-app-from-email-or-qr {
+  width: 215px;
+  margin: 32px auto;
+  text-align: center;
+}
+.get-app-from-email-or-qr .qr-code-frame {
+  width: 128px;
+  height: 128px;
+}
+@media screen and (min-width: 769px) {
+  .get-app-from-email-or-qr {
+    padding: 0 44px;
+  }
+}
+.get-app-from-email-or-qr div {
+  width: 215px;
+  margin-top: 5px;
+}
+.get-app-from-email-or-qr div input[type=email] {
+  width: 180px;
+  height: 45px;
+  border: 1.5px solid rgba(33, 33, 33, 0.32);
+  border-radius: 10px;
+  padding: 0 16px;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: var(--font-color);
+}
+.get-app-from-email-or-qr div input[type=email]:focus {
+  outline: none;
+}
+.get-app-from-email-or-qr div input[type=email]::-moz-placeholder {
+  color: var(--font-color-052);
+}
+.get-app-from-email-or-qr div input[type=email]::placeholder {
+  color: var(--font-color-052);
+}
+.get-app-from-email-or-qr div input[type=email]:-ms-input-placeholder {
+  color: var(--font-color-052);
+}
+.get-app-from-email-or-qr div input[type=email]::-ms-input-placeholder {
+  color: var(--font-color-052);
+}
+.get-app-from-email-or-qr div button {
+  width: 120px;
+  height: 32px;
+  margin-top: 16px;
+  border-radius: 6px;
+  background-color: var(--main-color);
+  border: none;
+  color: white;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+.get-app-from-email-or-qr div button:hover {
+  transform: translate3d(0, -3px, 0);
+}
+.get-app-from-email-or-qr .get-app-text {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--font-color-052);
+}/*# sourceMappingURL=BannerDownloadAppV0.css.map */

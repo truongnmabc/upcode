@@ -1,12 +1,10 @@
 "use client";
 import LazyLoadImage from "@/components/images";
 import ForwardedLinkBlank from "@/components/nextLink/forwardedLinkBlank";
-import MyContainer from "@/components/container/myContainer";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { IAppInfo } from "@/models/app/appInfo";
-import Link from "next/link";
-import React from "react";
 import ctx from "@/utils/mergeClass";
+import React from "react";
 const BannerHome = ({
     appInfo,
     _state,
@@ -91,30 +89,25 @@ const BannerHome = ({
                         to practice anytime, anywhere!
                     </p>
                     <div className="flex justify-center sm:hidden gap-4 mt-4 items-center ">
-                        <Link
+                        <ForwardedLinkBlank
                             href={appInfo.linkIos || ""}
-                            legacyBehavior
-                            passHref
+                            classNames=" cursor-pointer hover:scale-105 transition-all"
                         >
-                            <ForwardedLinkBlank classNames=" cursor-pointer hover:scale-105 transition-all">
-                                <LazyLoadImage
-                                    src={"/images/download_ios.webp"}
-                                    classNames="w-[104] h-[32px]"
-                                />
-                            </ForwardedLinkBlank>
-                        </Link>
-                        <Link
+                            <LazyLoadImage
+                                src={"/images/download_ios.webp"}
+                                classNames="w-[104] h-[32px]"
+                            />
+                        </ForwardedLinkBlank>
+
+                        <ForwardedLinkBlank
                             href={appInfo.linkAndroid || ""}
-                            legacyBehavior
-                            passHref
+                            classNames=" cursor-pointer hover:scale-105 transition-all"
                         >
-                            <ForwardedLinkBlank classNames=" cursor-pointer hover:scale-105 transition-all">
-                                <LazyLoadImage
-                                    src={"/images/download_android.webp"}
-                                    classNames="w-[104] h-[32px]"
-                                />
-                            </ForwardedLinkBlank>
-                        </Link>
+                            <LazyLoadImage
+                                src={"/images/download_android.webp"}
+                                classNames="w-[104] h-[32px]"
+                            />
+                        </ForwardedLinkBlank>
                     </div>
                     <div
                         className="grid sm:max-w-[800px] rounded-lg sm:mt-6 mt-3 sm:w-full w-fit p-4 sm:p-0 grid-cols-1 gap-4 sm:grid-cols-3"
@@ -138,30 +131,25 @@ const BannerHome = ({
                     </div>
 
                     <div className="hidden sm:flex gap-6 mt-8 items-center ">
-                        <Link
+                        <ForwardedLinkBlank
                             href={appInfo.linkIos || ""}
-                            legacyBehavior
-                            passHref
+                            classNames=" cursor-pointer hover:scale-105 transition-all"
                         >
-                            <ForwardedLinkBlank classNames=" cursor-pointer hover:scale-105 transition-all">
-                                <LazyLoadImage
-                                    src={"/images/download_ios.webp"}
-                                    classNames="w-[180px] h-14"
-                                />
-                            </ForwardedLinkBlank>
-                        </Link>
-                        <Link
+                            <LazyLoadImage
+                                src={"/images/download_ios.webp"}
+                                classNames="w-[180px] h-14"
+                            />
+                        </ForwardedLinkBlank>
+
+                        <ForwardedLinkBlank
                             href={appInfo.linkAndroid || ""}
-                            legacyBehavior
-                            passHref
+                            classNames=" cursor-pointer hover:scale-105 transition-all"
                         >
-                            <ForwardedLinkBlank classNames=" cursor-pointer hover:scale-105 transition-all">
-                                <LazyLoadImage
-                                    src={"/images/download_android.webp"}
-                                    classNames="w-[180px] h-14"
-                                />
-                            </ForwardedLinkBlank>
-                        </Link>
+                            <LazyLoadImage
+                                src={"/images/download_android.webp"}
+                                classNames="w-[180px] h-14"
+                            />
+                        </ForwardedLinkBlank>
                     </div>
                 </div>
                 <div className="sm:h-[325px] hidden sm:block sm:w-[400px] relative">

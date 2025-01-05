@@ -1,7 +1,7 @@
 "use client";
 // import axiosInstance from "@/common/config/axios";
 // import { API_PATH } from "@/common/constants/api.constants";
-import { initializeDB } from "@/db/db.model";
+// import { initializeDB } from "@/db/db.model";
 // import { IAppInfo } from "@/models/app/appInfo";
 // import { IQuestion } from "@/models/question/questions";
 // import { ITest } from "@/models/tests/tests";

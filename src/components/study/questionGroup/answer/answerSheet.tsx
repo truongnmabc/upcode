@@ -1,41 +1,23 @@
 "use client";
-import { ICurrentGame } from "@/models/game/game";
-import { gameState, viewTest } from "@/redux/features/game";
+import { viewTest } from "@/redux/features/game";
 import {
     selectCurrentGame,
     selectListQuestion,
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
+import clsx from "clsx";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-
-const createTempData = (size: number): ICurrentGame[] => {
-    return Array.from({ length: size }, (_, index) => ({
-        id: index,
-        parentId: index,
-        explanation: "",
-        text: "",
-        hasChild: false,
-        image: "",
-        answers: [],
-        localStatus: "new",
-        selectedAnswer: null,
-        appId: 0,
-        hint: "",
-        index,
-        level: 0,
-        status: 0,
-        syncStatus: 0,
-    }));
-};
-
-const defaultData: ICurrentGame[] = createTempData(10);
+import React from "react";
 
 type IProps = {
     isActions?: boolean;
+    isCenter?: boolean;
 };
-const AnswerSheet: React.FC<IProps> = ({ isActions = false }) => {
+const AnswerSheet: React.FC<IProps> = ({
+    isActions = false,
+    isCenter = false,
+}) => {
     const listQuestion = useAppSelector(selectListQuestion);
     const currentGame = useAppSelector(selectCurrentGame);
     const type = useSearchParams().get("type");
@@ -58,7 +40,11 @@ const AnswerSheet: React.FC<IProps> = ({ isActions = false }) => {
             <h3 className="font-semibold text-center text-xl truncate font-poppins">
                 Questions
             </h3>
-            <div className="flex gap-2  flex-wrap ">
+            <div
+                className={clsx("flex gap-2  flex-wrap ", {
+                    "justify-center": isCenter,
+                })}
+            >
                 {sortedListQuestion?.map((q, index) => {
                     return (
                         <div
