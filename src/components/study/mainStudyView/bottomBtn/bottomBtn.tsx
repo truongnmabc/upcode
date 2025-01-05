@@ -1,8 +1,8 @@
 import React from "react";
 import BtnNextQuestion from "./btnNextQuestion";
 import BtnSubmit from "./btnSubmit";
-import Keyboard from "./keyboard";
-import SubAction from "./subAction";
+import Keyboard from "../../../keyboard";
+import SubAction from "../../../reaction";
 type IProps = {
     isShow?: boolean;
 };

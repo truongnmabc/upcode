@@ -1,4 +1,4 @@
-import MyContainer from "@/components/container/myContainer";
+import MyContainer from "@/components/container";
 import "./CookieWidget.scss";
 import Link from "next/link";
 const CookieWidget = ({

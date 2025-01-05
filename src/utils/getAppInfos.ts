@@ -1,12 +1,12 @@
-import { timeCaching } from "@/common/constants";
+import { timeCaching } from "@/constants";
 
 import path from "path";
 import fs from "fs";
 import cache from "memory-cache";
 import { IAppInfo } from "@/models/app/appInfo";
 import { IAppConfigData } from "@/redux/features/appConfig";
-import axiosInstance from "@/common/config/axios";
-import { API_PATH } from "@/common/constants/api.constants";
+import axiosInstance from "@/config/axios";
+import { API_PATH } from "@/constants/api.constants";
 
 export const getAppInfoParentApp = () => {
     const cachedAppInfos = cache.get("appInfos");

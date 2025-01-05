@@ -1,8 +1,7 @@
-import APIConfig from "@/config/api_config";
-import Routes from "@/config/routes";
 import { IAppInfo } from "@/models/app/appInfo";
 import Config from "../config";
 import { requestGetData, requestPostData } from "./request";
+import RouterApp from "@/router/router.constant";
 
 export const sendEmailApi = async ({
     email,
@@ -12,7 +11,7 @@ export const sendEmailApi = async ({
     appName: string;
 }) => {
     return await requestGetData({
-        url: `/api/auth?type=send-email&email=${email}&appName=${appName}`,
+        url: `/api/auth?type=send-email`,
         params: { email, appName },
         config: {
             baseURL: "https://test-dot-micro-enigma-235001.appspot.com",
@@ -47,20 +46,6 @@ export const END_POINT_WORD_PRESS =
         ? process.env.NEXT_PUBLIC_WORDPRESS_API_URL
         : null;
 export const API_SEND_EMAIL = "https://webpush.passemall.com/api/send-contact";
-
-export const getHomeSeoContentApi = async (postUrl: string) => {
-    if (!END_POINT_WORD_PRESS?.length) {
-        return "";
-    }
-    const url =
-        END_POINT_WORD_PRESS +
-        Config.PREFIX_URL +
-        APIConfig.GET_HOME_SEO_CONTENT +
-        "?posturl=" +
-        postUrl; //cdl cũ
-    const content = await requestGetData({ url });
-    return content;
-};
 
 export const sendEmailSubscribe = async ({
     email,
@@ -98,7 +83,7 @@ export const getAppReviewApi = async (appId: string) => {
 };
 
 export const genLinkPro = (appInfo: IAppInfo, hasParams = false) => {
-    let url = Routes.UPGRADE_PRO;
+    let url = RouterApp.Get_pro;
     if (appInfo?.appNameId && !!hasParams) {
         url += "?appNameId" + "=" + appInfo.appNameId;
     }

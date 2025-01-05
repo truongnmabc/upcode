@@ -1,4 +1,4 @@
-import Diagnostic_test from "@/components/diagnosticTest";
+import Diagnostic_test from "@/app/[appShortName]/[state]/diagnostic_test/_components";
 
 export default async function DiagnosticPage() {
     return (

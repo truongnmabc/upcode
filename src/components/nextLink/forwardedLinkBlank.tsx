@@ -1,9 +1,10 @@
+import Link from "next/link";
 import React from "react";
 
 // Define the props type for LinkBlank
-interface LinkBlankProps {
+interface LinkBlankProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     onClick?: React.MouseEventHandler<HTMLAnchorElement>;
-    href?: string;
+    href: string;
     children: React.ReactNode;
     classNames?: string;
 }
@@ -14,16 +15,18 @@ const LinkBlank: React.ForwardRefRenderFunction<
     LinkBlankProps
 > = ({ onClick, href, children, classNames }, ref) => {
     return (
-        <a
-            className={classNames}
-            href={href}
-            onClick={onClick}
-            target="_blank"
-            ref={ref}
-            rel="noopener noreferrer"
-        >
-            {children}
-        </a>
+        <Link passHref legacyBehavior href={href}>
+            <a
+                className={classNames}
+                href={href}
+                onClick={onClick}
+                target="_blank"
+                ref={ref}
+                rel="noopener noreferrer"
+            >
+                {children}
+            </a>
+        </Link>
     );
 };
 

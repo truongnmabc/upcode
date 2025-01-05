@@ -1,11 +1,11 @@
-import MyContainer from "@/components/container/myContainer";
+import MyContainer from "@/components/container";
 import { Fragment } from "react";
 import { Grid2 } from "@mui/material";
 import HeaderMobile from "@/components/study/headerMobile";
-import LeftLayout from "@/components/customTest/leftLayout";
 import BannerDownloadApp from "@/components/bannerDownload/bannerDownloadApp";
-import ContentCustomTest from "@/components/customTest/contentCustomTest";
 import SeoContent from "@/components/seoContent/seoContent";
+import LeftLayout from "./_components/leftLayout";
+import ContentCustomTest from "./_components/contentCustomTest";
 
 export default async function CustomPage() {
     const contentSeo = "";

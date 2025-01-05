@@ -1,8 +1,8 @@
 import React from "react";
 
-import { API_PATH } from "@/common/constants/api.constants";
-import FinalTestLayout from "@/components/finalTest";
-import axiosInstance from "@/common/config/axios";
+import { API_PATH } from "@/constants/api.constants";
+import axiosInstance from "@/config/axios";
+import FinalTestLayout from "./_components";
 
 type Params = {
     params: Promise<{ appShortName: string; slug: string }>;

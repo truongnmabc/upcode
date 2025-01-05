@@ -1,19 +1,19 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import { MtUiButton } from "@/components/button";
+import { continueGame, gameState, startOverGame } from "@/redux/features/game";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
+import pauseTestThunk from "@/redux/repository/game/pauseAndResumed/pauseTest";
+import resumedTestThunk from "@/redux/repository/game/pauseAndResumed/resumedTest";
 import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { MtUiButton } from "@/components/button";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { continueGame, gameState, startOverGame } from "@/redux/features/game";
-import { db } from "@/db/db.model";
-import pauseTestThunk from "@/redux/repository/game/pauseAndResumed/pauseTest";
-import resumedTestThunk from "@/redux/repository/game/pauseAndResumed/resumedTest";
 import { usePathname, useSearchParams } from "next/navigation";
-import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
+import React, { useCallback, useEffect } from "react";
+
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
-        children: React.ReactElement<any, any>;
+        children: React.ReactElement;
     },
     ref: React.Ref<unknown>
 ) {
@@ -46,7 +46,7 @@ const ModalConfirm = () => {
 
         dispatch(startOverGame());
         setOpen(false);
-    }, [idTopic, typeParam, pathname]);
+    }, [typeParam, pathname, dispatch]);
 
     const handleContinue = useCallback(() => {
         dispatch(continueGame());
@@ -57,7 +57,7 @@ const ModalConfirm = () => {
         return () => {
             setOpen(false);
         };
-    });
+    }, []);
 
     useEffect(() => {
         return () => {
@@ -69,7 +69,7 @@ const ModalConfirm = () => {
                 );
             }
         };
-    }, [idTopic, type]);
+    }, [idTopic, type, dispatch]);
 
     useEffect(() => {
         if (isPaused && idTopic) {

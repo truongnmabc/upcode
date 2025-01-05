@@ -1,14 +1,11 @@
-
-
 self.importScripts("./idb.js");
 
-
 self.addEventListener("install", (event) => {
-    console.log("Service Worker installed.");
+    console.log("Service Worker installed.", event);
 });
 
 self.addEventListener("activate", (event) => {
-    console.log("Service Worker activated.");
+    console.log("Service Worker activated.", event);
 });
 
 self.addEventListener("message", async (event) => {
@@ -38,19 +35,20 @@ async function handleInitData(appShortName, apiPath) {
         const data = await response.json();
         const { topic, tests } = data.data;
         await initDataTopics(topic, db);
-        await initDataTest(tests,db,  apiPath);
-        await fetchAndProcessTopicsRecursive(topic, db,apiPath);
+        await initDataTest(tests, db, apiPath);
+        await fetchAndProcessTopicsRecursive(topic, db, apiPath);
     } catch (error) {
         console.error("Failed to fetch and initialize data:", error);
     }
 }
 
-const fetchAndProcessTopicsRecursive = async (topics, db,apiPath) => {
+const fetchAndProcessTopicsRecursive = async (topics, db, apiPath) => {
     if (!topics || topics.length === 0) return;
 
     const [currentTopic, ...remainingTopics] = topics;
     const id = currentTopic.id;
-
+    const icon = currentTopic.icon;
+    const tag = currentTopic.tag;
     const topicStatusTx = db.transaction("topicStatus", "readwrite");
     const topicStatusStore = topicStatusTx.objectStore("topicStatus");
 
@@ -58,54 +56,54 @@ const fetchAndProcessTopicsRecursive = async (topics, db,apiPath) => {
 
     if (!exists) {
         try {
-           await topicStatusStore.add({
+            await topicStatusStore.add({
                 id,
             });
-            await  topicStatusStore.done
-            const response = await fetch(
-                `${apiPath.GET_DATA_TOPICS}/${id}`
-            );
+            await topicStatusStore.done;
+            const response = await fetch(`${apiPath.GET_DATA_TOPICS}/${id}`);
             const result = await response.json();
-            const {data} = result
-            processQuestionsData(data, db)
+            const { data } = result;
+            processQuestionsData(data, db, icon, tag);
         } catch (err) {
             console.error("🚀 ~ fetchAndProcessTopicsRecursive ~ err:", err);
         }
     }
 
-    await fetchAndProcessTopicsRecursive(remainingTopics, db,apiPath);
+    await fetchAndProcessTopicsRecursive(remainingTopics, db, apiPath);
 };
 
-const processQuestionsData = async (topics, db) => {
+const processQuestionsData = async (topics, db, icon, tag) => {
     for (const topic of topics) {
         const subTopicTag = topic.tag;
         for (const part of topic?.topics) {
-            const topicQuestionTx = db.transaction("topicQuestion", "readwrite");
-            const topicQuestionStore = topicQuestionTx.objectStore("topicQuestion");
-            await  topicQuestionStore.add({
+            const topicQuestionTx = db.transaction(
+                "topicQuestion",
+                "readwrite"
+            );
+            const topicQuestionStore =
+                topicQuestionTx.objectStore("topicQuestion");
+            await topicQuestionStore.add({
                 ...part,
                 questions: part?.questions.map((item) => ({
                     ...item,
                     parentId: part.id,
+                    icon: icon,
+                    tag: tag,
                 })),
                 subTopicTag,
                 status: 0,
-            })
-            await  topicQuestionStore.done
-            
+            });
+            await topicQuestionStore.done;
         }
-        await calculatePassing(
-            topic,
-            db,
-       );
+        await calculatePassing(topic, db);
         await initDataSubTopicProgress(topic, db);
     }
 };
 
 const initDataSubTopicProgress = async (topic, db) => {
-
     const subTopicProgressTx = db.transaction("subTopicProgress", "readwrite");
-    const subTopicProgressStore = subTopicProgressTx.objectStore("subTopicProgress");
+    const subTopicProgressStore =
+        subTopicProgressTx.objectStore("subTopicProgress");
 
     await subTopicProgressStore.add({
         id: topic?.id || 0,
@@ -121,14 +119,14 @@ const initDataSubTopicProgress = async (topic, db) => {
         subTopicTag: topic?.tag || "",
         pass: false,
     });
-    await subTopicProgressStore.done
+    await subTopicProgressStore.done;
 };
 
-const calculatePassing = async ( topic, db ) => {
+const calculatePassing = async (topic, db) => {
     const passingTx = db.transaction("passing", "readwrite");
     const passingStore = passingTx.objectStore("passing");
     const exists = await passingStore.get(topic.id);
-    await passingStore.done
+    await passingStore.done;
     if (!exists) {
         let listSubTopic = [];
 
@@ -166,22 +164,21 @@ const calculatePassing = async ( topic, db ) => {
             totalQuestion: topic.totalQuestion,
             topics: listSubTopic,
             passing: 0,
-        })
-        await passingStore.done
+        });
+        await passingStore.done;
     }
 };
 
 const addIfNotExistsIDB = async (storeName, id, data) => {
     const getRequest = await storeName.get(id);
     if (!getRequest) {
-     await   storeName.add(data);
-     await storeName.done
+        await storeName.add(data);
+        await storeName.done;
     }
 };
 
 const initDataTopics = async (topics, db) => {
     for (const topic of topics) {
-
         const topicTx = db.transaction("topics", "readwrite");
         const topicStore = topicTx.objectStore("topics");
         const topicData = {
@@ -205,10 +202,14 @@ const initDataTest = async (tests, db, apiPath) => {
         } else {
             const list = tests[name];
             for (const test of list) {
-                const testQuestionsTx = db.transaction("testQuestions", "readwrite");
-                const testQuestionsStore = testQuestionsTx.objectStore("testQuestions");
+                const testQuestionsTx = db.transaction(
+                    "testQuestions",
+                    "readwrite"
+                );
+                const testQuestionsStore =
+                    testQuestionsTx.objectStore("testQuestions");
                 const exists = await testQuestionsStore.get(test.id);
-                await  testQuestionsTx.done;
+                await testQuestionsTx.done;
 
                 if (!exists) {
                     const response = await fetch(
@@ -216,8 +217,12 @@ const initDataTest = async (tests, db, apiPath) => {
                     );
                     const data = await response.json();
                     const listQuestion = data.data;
-                    const testQuestionsTx = db.transaction("testQuestions", "readwrite");
-                    const testQuestionsStore = testQuestionsTx.objectStore("testQuestions");
+                    const testQuestionsTx = db.transaction(
+                        "testQuestions",
+                        "readwrite"
+                    );
+                    const testQuestionsStore =
+                        testQuestionsTx.objectStore("testQuestions");
                     await testQuestionsStore.add({
                         id: test.id,
                         parentId: test.id,
@@ -231,11 +236,11 @@ const initDataTest = async (tests, db, apiPath) => {
                         turn: 0,
                         topicIds: test.topicIds,
                         groupExamData: test.groupExamData,
-                        paragraph:{
+                        paragraph: {
                             ...test.paragraph,
-                        }
+                        },
                     });
-                    await  testQuestionsTx.done;
+                    await testQuestionsTx.done;
                 }
             }
         }

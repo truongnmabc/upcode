@@ -1,5 +1,5 @@
 "use client";
-import RouterApp from "@/common/router/router.constant";
+import RouterApp from "@/router/router.constant";
 import { IAnswer } from "@/models/question/questions";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { viewTest } from "@/redux/features/game";

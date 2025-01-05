@@ -1,4 +1,4 @@
-import Config from "@/common/config";
+import Config from "@/config";
 import Axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 export const request = async <T>(config: AxiosRequestConfig): Promise<T> => {

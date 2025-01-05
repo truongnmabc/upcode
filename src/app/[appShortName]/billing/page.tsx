@@ -1,8 +1,6 @@
-import BillingPage from "@/components/billing";
+import BillingPage from "@/app/[appShortName]/billing/_components";
 import React from "react";
 
-const BillingApp = () => {
-    return <BillingPage />;
-};
+const BillingApp = () => <BillingPage />;
 
 export default BillingApp;

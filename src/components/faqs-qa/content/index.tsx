@@ -18,8 +18,7 @@ import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
 // import HotQuestions from "../hot-questions";
 // import QasContent from "../qas";
 import "./index.scss";
-import V4CircleProgress from "../../container/V4CircleProgress";
-import MyContainer from "../../container/myContainer";
+import MyContainer from "@/container";
 // import { useMediaQuery } from "@mui/material";
 
 export const TYPE_TAB = {
@@ -67,11 +66,11 @@ const FaqsAndQaContent = ({
     //     localStorage.setItem("selectedTab", tab);
     // }, [tab]);
 
-    useEffect(() => {
-        if (isSingleQa) {
-            setTab(TYPE_TAB.Qa);
-        }
-    }, [isSingleQa]);
+    // useEffect(() => {
+    //     if (isSingleQa) {
+    //         setTab(TYPE_TAB.Qa);
+    //     }
+    // }, [isSingleQa]);
 
     // const handleChange = (event, value) => {
     //     let offset = value - 1;
@@ -91,11 +90,11 @@ const FaqsAndQaContent = ({
     //     scrollToElementByClassName(".faqs-and-qa-content");
     // };
 
-    const setTabFunction = (tab: string) => {
-        setTab(tab);
-        // setCurrentpage(1);
-        // dispatch(updateLengthAction(0));
-    };
+    // const setTabFunction = (tab: string) => {
+    //     setTab(tab);
+    //     setCurrentpage(1);
+    //     dispatch(updateLengthAction(0));
+    // };
     // const dispatchAction = () => {
     //     if (tab == TYPE_TAB.Faq) {
     //         dispatch(

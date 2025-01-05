@@ -4,7 +4,7 @@ import Blur from "./blur";
 import { useAppSelector } from "@/redux/hooks";
 import { appInfoState } from "@/redux/features/appInfo";
 import { setSession } from "@/utils/session";
-import Config from "@/common/config";
+import Config from "@/config";
 
 const FN = () => {
     const { appInfo } = useAppSelector(appInfoState);

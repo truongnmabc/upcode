@@ -1,11 +1,13 @@
 import { IAppInfo } from "@/models/app/appInfo";
 import React, { Fragment } from "react";
-import MyContainer from "../container/myContainer";
+import MyContainer from "../container";
 import dynamic from "next/dynamic";
 
 // import DownloadApp from "../home/downloadApp/downloadApp";
 import BtnGotoState from "./listState";
-const BannerHome = dynamic(() => import("@/components/state-app/newHome/banner/index"));
+const BannerHome = dynamic(
+    () => import("@/components/state-app/newHome/banner/index")
+);
 const HomeSingleApp = ({ appInfo }: { appInfo: IAppInfo }) => (
     <Fragment>
         <div className="w-full  bg-[#e6ded7] bg-[url('/images/state-background.png')] bg-no-repeat bg-center bg-cover   ">

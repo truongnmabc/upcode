@@ -55,3 +55,8 @@ export const selectSubTopicProgressId = createSelector(
     [gameState],
     (reducer) => reducer.subTopicProgressId
 );
+
+export const selectIsFinish = createSelector(
+    [gameState],
+    (reducer) => reducer.isFinishGame
+);

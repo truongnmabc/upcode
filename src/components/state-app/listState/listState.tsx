@@ -1,7 +1,7 @@
 "use client";
 
 import { MtUiButton } from "@/components/button";
-import MyContainer from "@/components/container/myContainer";
+import MyContainer from "@/components/container";
 import statesData from "@/data/statesName.json";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { IAppInfo } from "@/models/app/appInfo";

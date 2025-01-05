@@ -1,4 +1,4 @@
-import { IMember, Member } from "@/models/member-contact/member";
+import { IMember, Member } from "@/models/memberContact/member";
 import { requestGetData } from "./request";
 
 export const getMemberApi = async (baseURL: string): Promise<IMember[]> => {

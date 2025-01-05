@@ -1,4 +1,4 @@
-import MyContainer from "@/components/container/myContainer";
+import MyContainer from "@/components/container";
 import { IAppInfo } from "@/models/app/appInfo";
 import { ITestInfo } from "@/models/tests/tests";
 import { ITopicResState } from "@/models/topics/topics";

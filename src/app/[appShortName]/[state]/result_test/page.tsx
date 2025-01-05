@@ -1,4 +1,4 @@
-import ResultTestLayout from "@/components/resultTest";
+import ResultTestLayout from "./_components";
 
 export default async function Page() {
     return <ResultTestLayout />;

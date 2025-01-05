@@ -1,5 +1,5 @@
-import { TypeParam } from "@/common/constants";
-import RouterApp from "@/common/router/router.constant";
+import { TypeParam } from "@/constants";
+import RouterApp from "@/router/router.constant";
 import MtUiRipple, { useRipple } from "@/components/ripple";
 import { db } from "@/db/db.model";
 import { resetState } from "@/redux/features/game";
@@ -75,7 +75,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item, appInfo }) => {
                 await router.push(_href);
             }
         }
-    }, [dispatch, item.name, appInfo.appShortName, router]);
+    }, [dispatch, appInfo.appShortName, router]);
 
     const handleClick: React.MouseEventHandler<HTMLDivElement> = useCallback(
         (e) => {
@@ -100,6 +100,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item, appInfo }) => {
         },
         [
             item.id,
+            dispatch,
             handleCustomTest,
             handleFinalTest,
             handleDiagnosticTest,

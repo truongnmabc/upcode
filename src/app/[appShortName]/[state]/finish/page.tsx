@@ -1,4 +1,4 @@
-import FinishLayout from "@/components/finish";
+import FinishLayout from "./_components";
 
 const FinishPage = () => <FinishLayout />;
 

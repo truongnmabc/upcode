@@ -1,4 +1,4 @@
-import MyContainer from "@/components/container/myContainer";
+import MyContainer from "@/components/container";
 import "./FeedbackV0.scss";
 import SliderFeedBack from "./SliderWidgetV0";
 const FeedbackV0 = () => {

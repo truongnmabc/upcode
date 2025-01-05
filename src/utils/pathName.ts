@@ -1,4 +1,4 @@
-import RouterApp from "@/common/router/router.constant";
+import RouterApp from "@/router/router.constant";
 
 export const convertPathName = (pathName: string): string => {
     const isSingleApp = process.env.IS_SINGLE_APP === "true";

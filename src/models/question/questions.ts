@@ -32,4 +32,5 @@ export interface IQuestion {
     selectedAnswer?: IAnswer | null;
     turn?: number;
     tag?: string;
+    icon?: string;
 }

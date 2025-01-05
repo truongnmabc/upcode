@@ -1,5 +1,5 @@
 "use client";
-import RouterApp from "@/common/router/router.constant";
+import RouterApp from "@/router/router.constant";
 import LazyLoadImage from "@/components/images";
 import { useTheme } from "@/hooks/useTheme";
 import { appInfoState } from "@/redux/features/appInfo";

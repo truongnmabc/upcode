@@ -15,7 +15,6 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { appShortName } = await params;
-
     if (!appShortName) {
         return {
             title: "Not Found",

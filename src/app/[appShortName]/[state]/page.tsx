@@ -1,6 +1,6 @@
-import axiosInstance from "@/common/config/axios";
-import { listAppState } from "@/common/constants";
-import { API_PATH } from "@/common/constants/api.constants";
+import axiosInstance from "@/config/axios";
+import { listAppState } from "@/constants";
+import { API_PATH } from "@/constants/api.constants";
 import NewHome from "@/components/state-app/newHome";
 import { ITestInfo } from "@/models/tests/tests";
 import { ITopicResState } from "@/models/topics/topics";

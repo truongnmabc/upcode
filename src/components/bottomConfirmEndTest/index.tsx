@@ -1,5 +1,5 @@
 "use client";
-import RouterApp from "@/common/router/router.constant";
+import RouterApp from "@/router/router.constant";
 import { MtUiButton } from "@/components/button";
 import { appInfoState } from "@/redux/features/appInfo";
 import { endTest } from "@/redux/features/game";
@@ -51,17 +51,14 @@ const BottomConfirmTest = () => {
     useEffect(() => {
         if (listQuestions) {
             setInfo({
-                answer: listQuestions.filter(
-                    (item) => item.selectedAnswer?.correct
-                ).length,
+                answer: listQuestions.filter((item) => item.selectedAnswer)
+                    .length,
                 total: listQuestions.length,
             });
         }
     }, [listQuestions]);
 
     const handleConfirm = useCallback(() => {
-        console.log("Start handleConfirm:", new Date().toISOString());
-
         const testType = Object.values(TestType).find((key) =>
             pathname?.includes(key)
         );
@@ -82,8 +79,6 @@ const BottomConfirmTest = () => {
 
         dispatch(shouldOpenSubmitTest(false));
         dispatch(endTest());
-
-        console.log("End handleConfirm:", new Date().toISOString());
 
         router.replace(_href);
     }, [dispatch, appInfo.appShortName, router, pathname, type]);

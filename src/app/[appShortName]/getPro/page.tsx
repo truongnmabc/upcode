@@ -1,9 +1,9 @@
-import ProPackage from "@/components/getPro/proPackage/listProPackage";
-import StoreLogoV4 from "@/components/getPro/storeLogo/StoreLogo";
-import TitleGetPro from "@/components/getPro/titleGetPro";
-import TotalQuestion from "@/components/getPro/totalQuestion";
-import WrapperProPage from "@/components/getPro/wrapperProPage";
 import LazyLoadImage from "@/components/images";
+import WrapperProPage from "./_components/wrapperProPage";
+import TitleGetPro from "./_components/titleGetPro";
+import TotalQuestion from "./_components/totalQuestion";
+import StoreLogoV4 from "./_components/storeLogo/storeLogoUpPro";
+import ProPackage from "./_components/proPackage";
 
 const Page = () => {
     return (

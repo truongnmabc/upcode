@@ -33,6 +33,13 @@ export const userSlice = createSlice({
         shouldOpenModalLogin: (state, action) => {
             state.shouldOpenLogin = action.payload;
         },
+        shouldIsPro: (state) => {
+            const user = state.userInfo;
+            state.userInfo = {
+                ...user,
+                isPro: true,
+            };
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(useActionsThunk.fulfilled, (state, action) => {
@@ -66,7 +73,8 @@ export const userSlice = createSlice({
 
 const { actions, reducer: userReducer } = userSlice;
 
-export const { logoutHybrid, loginHybrid, shouldOpenModalLogin } = actions;
+export const { logoutHybrid, loginHybrid, shouldOpenModalLogin, shouldIsPro } =
+    actions;
 
 export const userState = (state: RootState) => state.userReducer;
 
