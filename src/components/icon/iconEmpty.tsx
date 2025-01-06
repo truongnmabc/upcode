@@ -1,6 +1,6 @@
 import React from "react";
 
-const IconEmpty = ({ size = 24 }: { size?: number }) => {
+const IconEmpty = ({ size = 48 }: { size?: number }) => {
     return (
         <svg
             width={size}

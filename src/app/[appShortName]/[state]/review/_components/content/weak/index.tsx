@@ -1,10 +1,8 @@
 import IconEmpty from "@/components/icon/iconEmpty";
 import QuestionResult from "@/components/questionReview";
-// import { CustomTabPanel } from "@/components/tabs";
 import { db } from "@/db/db.model";
 import { ICurrentGame } from "@/models/game/game";
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
-import { startRandomReview } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
 import { MathJaxContext } from "better-react-mathjax";
 import React, { useEffect } from "react";
@@ -18,20 +16,44 @@ const WeakQuestions = () => {
     );
     useEffect(() => {
         const handleGetData = async () => {
-            const data = await db?.userProgress.toArray();
-            if (data) {
-                const incorrect = data.filter(
-                    (item) => !item.selectedAnswer?.correct
+            const [data, topics] = await Promise.all([
+                db?.userProgress.toArray(),
+                db?.topics.toArray(),
+            ]);
+
+            if (data?.length && topics?.length) {
+                const listSub = topics
+                    ?.flatMap((mainTopic) =>
+                        mainTopic.topics?.flatMap((subTopic) =>
+                            subTopic.topics?.map((topic) => ({
+                                ...topic,
+                                mainIcon: mainTopic.icon,
+                                mainTag: mainTopic.tag,
+                            }))
+                        )
+                    )
+                    .filter(Boolean);
+
+                const list = data
+                    .filter((item) =>
+                        listSub?.some((topic) => topic?.id === item.parentId)
+                    )
+                    .map((item) => {
+                        const matchingTopic = listSub.find(
+                            (topic) => topic?.id === item.parentId
+                        );
+                        return {
+                            ...item,
+                            icon: matchingTopic?.mainIcon,
+                            tag: matchingTopic?.mainTag,
+                        };
+                    });
+
+                const incorrect = list.filter((item) =>
+                    item.selectedAnswers?.find((item) => !item.correct)
                 );
 
                 setListTopic(incorrect);
-                console.log("🚀 ~ handleGetData ~ incorrect:", incorrect);
-
-                dispatch(
-                    startRandomReview({
-                        listQuestion: incorrect,
-                    })
-                );
             }
         };
         handleGetData();

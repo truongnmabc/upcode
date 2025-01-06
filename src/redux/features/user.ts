@@ -1,4 +1,4 @@
-import { IUserActions } from "@/models/user/useAction";
+import { IUserActions } from "@/models/user/userReactions";
 import { IUserInfo, UserInfo } from "@/models/user/userInfo";
 import { createSlice } from "@reduxjs/toolkit";
 import useActionsThunk from "../repository/user/actions";
@@ -40,6 +40,9 @@ export const userSlice = createSlice({
                 isPro: true,
             };
         },
+        setListReactions: (state, action) => {
+            state.listActions = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(useActionsThunk.fulfilled, (state, action) => {
@@ -73,8 +76,13 @@ export const userSlice = createSlice({
 
 const { actions, reducer: userReducer } = userSlice;
 
-export const { logoutHybrid, loginHybrid, shouldOpenModalLogin, shouldIsPro } =
-    actions;
+export const {
+    logoutHybrid,
+    loginHybrid,
+    shouldOpenModalLogin,
+    shouldIsPro,
+    setListReactions,
+} = actions;
 
 export const userState = (state: RootState) => state.userReducer;
 

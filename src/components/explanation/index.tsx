@@ -20,7 +20,6 @@ const FN: React.FC<IProps> = ({ unLock = false }) => {
     const userInfo = useAppSelector(selectUserInfo);
     const [text, setText] = useState<string>("");
     const currentGame = useAppSelector(selectCurrentGame);
-
     useEffect(() => {
         if (currentGame?.text && currentGame?.id) {
             try {

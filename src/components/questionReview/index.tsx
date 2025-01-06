@@ -3,7 +3,7 @@
 import { baseImageUrl } from "@/constants";
 import LazyLoadImage from "@/components/images";
 import Reaction from "@/components/reaction";
-import GetIconPrefix from "@/components/study/mainStudyView/choicesPanel/getIcon";
+import GetIconPrefix from "@/components/choicesPanel/getIcon";
 import { ICurrentGame } from "@/models/game/game";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppSelector } from "@/redux/hooks";
@@ -31,10 +31,10 @@ const QuestionResult = ({ item }: { item: ICurrentGame }) => {
                     </div>
 
                     <p className="text-base flex-1  font-medium capitalize ">
-                        {item.tag?.replaceAll("-", " ")}
+                        {item?.tag?.replaceAll("-", " ")}
                     </p>
                 </div>
-                <Reaction />
+                <Reaction item={item} />
             </div>
             <ContentAnswer item={item} />
         </div>

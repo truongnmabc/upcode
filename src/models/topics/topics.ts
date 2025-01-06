@@ -8,14 +8,11 @@ export interface ITopic {
     contentType: number;
     orderIndex: number;
     // NOTE: api khong tra ve
-    topics?: ITopic[];
+    topics: ITopic[];
     description?: string;
     status?: number;
     slug?: string;
     totalQuestion?: number;
-
-    // Optional
-    color?: string;
 }
 export default class Topic implements ITopic {
     icon: string;
@@ -30,7 +27,7 @@ export default class Topic implements ITopic {
     tag: string;
     slug: string;
     totalQuestion: number;
-    topics?: ITopic[];
+    topics: ITopic[];
 
     constructor(object: Partial<ITopic> = {}) {
         this.description = object.description ?? "";

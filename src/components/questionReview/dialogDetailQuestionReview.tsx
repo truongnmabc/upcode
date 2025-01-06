@@ -6,7 +6,7 @@ import LazyLoadImage from "../images";
 import { baseImageUrl } from "@/constants";
 import ctx from "@/utils/mergeClass";
 import { MyCrypto } from "@/utils/myCrypto";
-import GetIconPrefix from "../study/mainStudyView/choicesPanel/getIcon";
+import GetIconPrefix from "../choicesPanel/getIcon";
 
 export const DialogDetailQuestionReview = ({
     open,

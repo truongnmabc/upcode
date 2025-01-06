@@ -130,6 +130,7 @@ export const TypeParam = {
     finalTest: "final_test",
     customTest: "custom_test",
     practiceTest: "practice_test",
+    review: "review",
 };
 
 export const baseImageUrl =

@@ -37,15 +37,6 @@ const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
                 remainTime: dataStore?.remainTime || dataStore.duration * 60,
             };
         }
-    } else {
-        // *NOTE: doi check
-        //     listQuestion = await fetchQuestions(diagnostic.id);
-        //     setDataStore(
-        //         diagnostic.id,
-        //         listQuestion,
-        //         diagnostic.duration,
-        //         diagnostic.duration * 60
-        //     );
     }
 });
 

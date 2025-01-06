@@ -60,3 +60,8 @@ export const selectIsFinish = createSelector(
     [gameState],
     (reducer) => reducer.isFinishGame
 );
+
+export const selectPassing = createSelector(
+    [gameState],
+    (reducer) => reducer.passing
+);

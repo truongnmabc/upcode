@@ -2,7 +2,7 @@
 
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useTheme } from "@/hooks/useTheme";
-import { appInfoState } from "@/redux/features/appInfo";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ import Sheet from "../sheet";
 
 const SheetApp = () => {
     const [sheetVisible, setSheetVisible] = useState(false);
-    const { appInfo } = useAppSelector(appInfoState);
+    const appInfo = useAppSelector(selectAppInfo);
     const isMobile = useIsMobile();
 
     useEffect(() => {

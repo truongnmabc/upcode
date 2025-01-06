@@ -16,15 +16,45 @@ const AllQuestions = () => {
 
     useEffect(() => {
         const handleGetData = async () => {
-            const data = await db?.userProgress.toArray();
-            if (data) {
+            const [data, topics] = await Promise.all([
+                db?.userProgress.toArray(),
+                db?.topics.toArray(),
+            ]);
+            if (data?.length && topics?.length) {
+                const listSub = topics
+                    ?.flatMap((mainTopic) =>
+                        mainTopic.topics?.flatMap((subTopic) =>
+                            subTopic.topics?.map((topic) => ({
+                                ...topic,
+                                mainIcon: mainTopic.icon,
+                                mainTag: mainTopic.tag,
+                            }))
+                        )
+                    )
+                    .filter(Boolean);
+
+                const list = data
+                    .filter((item) =>
+                        listSub?.some((topic) => topic?.id === item.parentId)
+                    )
+                    .map((item) => {
+                        const matchingTopic = listSub.find(
+                            (topic) => topic?.id === item.parentId
+                        );
+                        return {
+                            ...item,
+                            icon: matchingTopic?.mainIcon,
+                            tag: matchingTopic?.mainTag,
+                        };
+                    });
+
                 setTabletData({
-                    all: data,
-                    incorrect: data.filter(
-                        (item) => !item.selectedAnswer?.correct
+                    all: list,
+                    incorrect: list.filter((item) =>
+                        item.selectedAnswers?.find((item) => !item?.correct)
                     ),
-                    correct: data.filter(
-                        (item) => item.selectedAnswer?.correct
+                    correct: list.filter((item) =>
+                        item.selectedAnswers?.find((item) => item?.correct)
                     ),
                 });
             }
@@ -33,13 +63,15 @@ const AllQuestions = () => {
     }, []);
 
     return (
-        <ReviewAnswerResult
-            all={tableData.all}
-            correct={tableData.correct}
-            incorrect={tableData.incorrect}
-            showFilter={false}
-            title=""
-        />
+        <div className="min-h-screen flex flex-col h-full">
+            <ReviewAnswerResult
+                all={tableData.all}
+                correct={tableData.correct}
+                incorrect={tableData.incorrect}
+                showFilter={false}
+                title=""
+            />
+        </div>
     );
 };
 

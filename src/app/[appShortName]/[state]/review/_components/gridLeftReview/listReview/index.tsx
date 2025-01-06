@@ -3,7 +3,7 @@ import React, { useCallback, useContext } from "react";
 import clsx from "clsx";
 import { useAppDispatch } from "@/redux/hooks";
 import { resetState } from "@/redux/features/game";
-import { ISelectReview, ReviewContext } from "../../context/reviewContext";
+import { ISelectReview, ReviewContext } from "../../context";
 
 const ListReview = () => {
     return (
