@@ -1,11 +1,11 @@
 self.importScripts("./idb.js");
 
 self.addEventListener("install", (event) => {
-    console.log("Service Worker installed.");
+    console.log("Service Worker installed.", event);
 });
 
 self.addEventListener("activate", (event) => {
-    console.log("Service Worker activated.");
+    console.log("Service Worker activated.", event);
 });
 
 self.addEventListener("message", async (event) => {
@@ -75,6 +75,8 @@ const fetchAndProcessTopicsRecursive = async (topics, db, apiPath) => {
 const processQuestionsData = async (topics, db, icon, tag) => {
     for (const topic of topics) {
         const subTopicTag = topic.tag;
+
+      
         for (const part of topic?.topics) {
             const topicQuestionTx = db.transaction(
                 "topicQuestion",
@@ -82,14 +84,19 @@ const processQuestionsData = async (topics, db, icon, tag) => {
             );
             const topicQuestionStore =
                 topicQuestionTx.objectStore("topicQuestion");
-            await topicQuestionStore.add({
-                ...part,
-                questions: part?.questions.map((item) => ({
+
+              
+                const  questions =  part?.questions.map((item) => ({
                     ...item,
                     parentId: part.id,
                     icon: icon,
                     tag: tag,
-                })),
+                }));
+
+               
+            await topicQuestionStore.add({
+                ...part,
+                questions: questions,
                 subTopicTag,
                 status: 0,
             });
@@ -217,6 +224,9 @@ const initDataTest = async (tests, db, apiPath) => {
                     );
                     const data = await response.json();
                     const listQuestion = data.data;
+
+
+
                     const testQuestionsTx = db.transaction(
                         "testQuestions",
                         "readwrite"
@@ -236,9 +246,7 @@ const initDataTest = async (tests, db, apiPath) => {
                         turn: 0,
                         topicIds: test.topicIds,
                         groupExamData: test.groupExamData,
-                        paragraph: {
-                            ...test.paragraph,
-                        },
+                        
                     });
                     await testQuestionsTx.done;
                 }

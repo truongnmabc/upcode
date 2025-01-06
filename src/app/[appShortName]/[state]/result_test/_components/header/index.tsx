@@ -7,7 +7,11 @@ import MyContainer from "@/components/container";
 import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic";
 import { db } from "@/db/db.model";
 import { appInfoState } from "@/redux/features/appInfo";
-import { gameState, startOverGame } from "@/redux/features/game";
+import {
+    gameState,
+    startOverGame,
+    startTryAgainDiagnostic,
+} from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
@@ -35,7 +39,7 @@ const HeaderResultTest: React.FC<IProps> = (info) => {
 
     const handleTryAgain = useCallback(async () => {
         if (type === TypeParam.diagnosticTest) {
-            dispatch(startOverGame());
+            dispatch(startTryAgainDiagnostic());
             const _href = revertPathName({
                 appName: appInfo.appShortName,
                 href: RouterApp.Diagnostic_test,

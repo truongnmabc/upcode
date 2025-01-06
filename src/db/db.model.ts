@@ -6,7 +6,7 @@ import { IUserQuestionProgress } from "../models/progress/userQuestionProgress";
 import { ITopicQuestion } from "../models/question/topicQuestion";
 import { ITopicStatus } from "../models/question/topicStatus";
 import { ITopic } from "../models/topics/topics";
-import { IUserActions } from "../models/user/useAction";
+import { IUserActions } from "../models/user/userReactions";
 import { IPassingModel } from "@/models/passing/passingModel";
 import { IPaymentInfos } from "@/models/payment/payment";
 

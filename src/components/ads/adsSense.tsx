@@ -17,13 +17,12 @@ const AdsSense = () => {
         const checkConditions = async () => {
             const adClient = getAdClientId();
             const result = (await getCountryAPI()) as IRes;
-            if (adClient && result.country !== "VN" && !userInfo.isPro) {
+            if (adClient && result.country !== "VN") {
                 clientId.current = adClient;
                 setShouldShowAds(true);
             }
         };
-
-        checkConditions();
+        if (!userInfo.isPro) checkConditions();
     }, [userInfo]);
 
     if (!shouldShowAds) {

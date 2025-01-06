@@ -11,13 +11,20 @@ import ChartContentResultPage from "./chartContent";
 import HeaderResultTest from "./header";
 import MyContainer from "@/components/container";
 import ReviewAnswerResult from "@/components/reviewAnswers";
+import {
+    selectIdTopic,
+    selectListQuestion,
+    selectPassing,
+} from "@/redux/features/game.reselect";
 
 export interface ITopicEndTest extends ITopic {
     totalQuestion: number;
     correct: number;
 }
 const ResultTestLayout = () => {
-    const { idTopic, passing, listQuestion } = useAppSelector(gameState);
+    const listQuestion = useAppSelector(selectListQuestion);
+    const idTopic = useAppSelector(selectIdTopic);
+    const passing = useAppSelector(selectPassing);
     const type = useSearchParams().get("type");
 
     const [result, setResult] = useState<{
@@ -66,6 +73,12 @@ const ResultTestLayout = () => {
                 questions?.groupExamData?.flatMap((item) => item.examData) ||
                 [];
 
+            if (type === TypeParam.review) {
+                console.log("🚀 ~ ResultTestLayout ~ type:", type);
+                console.log("first", listQuestion);
+                console.log("idTopic", idTopic);
+            }
+
             if (type === TypeParam.diagnosticTest) {
                 if (topics) {
                     listTopic = topics.map((t) => ({
@@ -76,7 +89,9 @@ const ResultTestLayout = () => {
                         ).length,
                     }));
                 }
-            } else if (
+            }
+
+            if (
                 type === TypeParam.practiceTest ||
                 type === TypeParam.finalTest
             ) {
@@ -100,7 +115,9 @@ const ResultTestLayout = () => {
                             };
                         });
                 }
-            } else if (type === TypeParam.customTest) {
+            }
+
+            if (type === TypeParam.customTest) {
                 if (topics && questions) {
                     const totalCount = questions?.count || 0;
                     const subjectCount = questions?.subject?.length || 1;
@@ -199,13 +216,15 @@ const ResultTestLayout = () => {
             </div>
             <MyContainer>
                 <ChartContentResultPage listTopic={result.listTopic} />
-                <ReviewAnswerResult
-                    all={tableData.all}
-                    correct={tableData.correct}
-                    incorrect={tableData.incorrect}
-                    setTabletData={setTabletData}
-                    result={result}
-                />
+                <div className="w-full flex flex-col  min-h-[720px]">
+                    <ReviewAnswerResult
+                        all={tableData.all}
+                        correct={tableData.correct}
+                        incorrect={tableData.incorrect}
+                        setTabletData={setTabletData}
+                        result={result}
+                    />
+                </div>
             </MyContainer>
         </div>
     );

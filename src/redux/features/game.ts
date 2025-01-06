@@ -1,5 +1,5 @@
 "use client";
-import { IStatusAnswer } from "@/components/study/mainStudyView/statusAnswer/statusAnswer";
+import { IStatusAnswer } from "@/components/statusAnswer";
 import { ICurrentGame, IGameReducer } from "@/models/game/game";
 import UserQuestionProgress from "@/models/progress/userQuestionProgress";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -93,6 +93,21 @@ export const gameSlice = createSlice({
             state.listQuestion = list;
             state.indexCurrentQuestion = 0;
             state.turn = 1;
+            state.isPaused = false;
+            state.remainTime = state.time * 60;
+        },
+        startTryAgainDiagnostic: (state) => {
+            const list = [...state.listQuestion]?.map((item) => ({
+                ...item,
+                localStatus: "new" as const,
+                selectedAnswer: null,
+            }));
+
+            state.currentGame = list[0];
+            state.listQuestion = list;
+            state.indexCurrentQuestion = 0;
+            const turn = state.turn;
+            state.turn = turn + 1;
             state.isPaused = false;
             state.remainTime = state.time * 60;
         },
@@ -260,6 +275,7 @@ export const {
     setIndexSubTopic,
     viewTest,
     startRandomReview,
+    startTryAgainDiagnostic,
 } = actions;
 
 export const gameState = (state: RootState) => state.gameReducer;

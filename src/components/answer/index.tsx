@@ -8,7 +8,7 @@ import BtnTets from "@/tests/btn";
 import ctx from "@/utils/mergeClass";
 import { MathJax } from "better-react-mathjax";
 import React from "react";
-import GetIconPrefix from "../study/mainStudyView/choicesPanel/getIcon";
+import GetIconPrefix from "../choicesPanel/getIcon";
 const AnswerButton = ({
     choice,
     index,

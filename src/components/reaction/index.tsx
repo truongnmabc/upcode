@@ -4,17 +4,18 @@ import IconDislike from "@/components/icon/iconDislike";
 import IconLike from "@/components/icon/iconLike";
 import Sheet from "@/components/sheet";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { gameState } from "@/redux/features/game";
-import { userState } from "@/redux/features/user";
+import { selectCurrentGame } from "@/redux/features/game.reselect";
+import { selectListActions } from "@/redux/features/user.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import userActionsThunk from "@/redux/repository/user/actions";
 import { Dialog } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import ReportMistake from "../reportMistake";
-const Reaction = () => {
-    const { currentGame } = useAppSelector(gameState);
-    const { listActions } = useAppSelector(userState);
+import { ICurrentGame } from "@/models/game/game";
+const Reaction = ({ item }: { item?: ICurrentGame }) => {
+    const currentGame = useAppSelector(selectCurrentGame);
+    const listActions = useAppSelector(selectListActions);
     const [openModal, setOpenModal] = useState(false);
     const isMobile = useIsMobile();
     const dispatch = useAppDispatch();
@@ -25,9 +26,10 @@ const Reaction = () => {
     });
 
     useEffect(() => {
-        if (currentGame?.id) {
+        if (item?.id || currentGame?.id) {
             const question = listActions.find(
-                (item) => item.questionId === currentGame.id
+                (a) =>
+                    a.questionId === item?.id || a.questionId === currentGame.id
             );
             if (question) {
                 setStatus({
@@ -43,9 +45,9 @@ const Reaction = () => {
                 });
             }
         }
-    }, [currentGame, listActions]);
+    }, [item, currentGame, listActions]);
 
-    const saveAction = () => {
+    const saveAction = useCallback(() => {
         if (!status.save) {
             toast.success(" Added To Saved List!");
         } else {
@@ -54,24 +56,24 @@ const Reaction = () => {
         dispatch(
             userActionsThunk({
                 status: "save",
-                questionId: currentGame.id,
-                partId: currentGame.parentId,
+                questionId: item?.id || currentGame.id,
+                partId: item?.parentId || currentGame.parentId,
             })
         );
-    };
+    }, [dispatch, currentGame.id, currentGame.parentId, item]);
 
-    const likeAction = () => {
+    const likeAction = useCallback(() => {
         if (!status.like) {
             toast.success("You find this question useful!");
         }
         dispatch(
             userActionsThunk({
                 status: "like",
-                questionId: currentGame.id,
-                partId: currentGame.parentId,
+                questionId: item?.id || currentGame.id,
+                partId: item?.parentId || currentGame.parentId,
             })
         );
-    };
+    }, [dispatch, currentGame.id, currentGame.parentId, item]);
 
     const dislikeAction = () => setOpenModal(true);
 

@@ -2,9 +2,9 @@
 import MtUiSkeleton from "@/components/loading-skeleton";
 import { useAppSelector } from "@/redux/hooks";
 import { MyCrypto } from "@/utils/myCrypto";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { MathJax } from "better-react-mathjax";
-import StatusAnswer from "../statusAnswer/statusAnswer";
+import StatusAnswer from "../statusAnswer";
 import LazyLoadImage from "@/components/images";
 import { selectCurrentGame } from "@/redux/features/game.reselect";
 import { baseImageUrl } from "@/constants";
@@ -34,25 +34,32 @@ const FN = ({ showStatus = true }: { showStatus?: boolean }) => {
             {loading && !text ? (
                 <MtUiSkeleton className="min-h-8" />
             ) : (
-                <div className="w-full flex items-center justify-between">
-                    <MathJax renderMode="post">
-                        <span
-                            dangerouslySetInnerHTML={{
-                                __html: text,
-                            }}
-                            className="text-sm  font-normal sm:text-base"
-                        />
-                    </MathJax>
-                    {currentGame.image && (
-                        <LazyLoadImage
-                            key={currentGame.image}
-                            isPreview
-                            src={`${baseImageUrl}${appInfo.appShortName}/images/${currentGame.image}`}
-                            alt={currentGame.image}
-                            classNames="w-16 sm:w-24 cursor-pointer aspect-video min-h-16 max-h-24"
-                        />
+                <Fragment>
+                    <div className="w-full flex items-center justify-between">
+                        <MathJax renderMode="post">
+                            <span
+                                dangerouslySetInnerHTML={{
+                                    __html: text,
+                                }}
+                                className="text-sm  font-normal sm:text-base"
+                            />
+                        </MathJax>
+                        {currentGame.image && (
+                            <LazyLoadImage
+                                key={currentGame.image}
+                                isPreview
+                                src={`${baseImageUrl}${appInfo.appShortName}/images/${currentGame.image}`}
+                                alt={currentGame.image}
+                                classNames="w-16 sm:w-24 cursor-pointer aspect-video min-h-16 max-h-24"
+                            />
+                        )}
+                    </div>
+                    {currentGame.parentId !== -1 && (
+                        <p className="text-sm  font-normal sm:text-base">
+                            {currentGame.paragraph?.text}
+                        </p>
                     )}
-                </div>
+                </Fragment>
             )}
             {showStatus && <StatusAnswer />}
         </div>

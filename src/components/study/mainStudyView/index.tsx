@@ -4,12 +4,12 @@ import { MathJaxContext } from "better-react-mathjax";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 import BottomBtn from "./bottomBtn/bottomBtn";
-import ChoicesPanel from "./choicesPanel/choicesPanel";
 import CountTimeRemainPracticeTest from "./countTimeTest";
-import ExplanationDetail from "./explanation/explanationDetail";
 import ProgressQuestion from "./progress/progressQuestion";
-import QuestionContent from "./question/questionContent";
 import TitleQuestion from "./title/titleQuestion";
+import QuestionContent from "@/components/question";
+import ExplanationDetail from "@/components/explanation";
+import ChoicesPanel from "@/components/choicesPanel";
 
 const FN = () => {
     const type = useSearchParams().get("type");
@@ -28,7 +28,6 @@ const FN = () => {
                             </div>
                         </div>
                     )}
-
                     <QuestionContent />
                     <ChoicesPanel />
                     <ExplanationDetail />

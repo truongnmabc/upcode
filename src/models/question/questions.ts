@@ -1,4 +1,4 @@
-import { IStatusAnswer } from "@/components/study/mainStudyView/statusAnswer/statusAnswer";
+import { IStatusAnswer } from "@/components/statusAnswer";
 
 export interface IAnswer {
     correct: boolean;
@@ -8,7 +8,18 @@ export interface IAnswer {
     text: string;
     turn?: number;
 }
-
+export interface IParagraph {
+    id: number;
+    lastUpdate: number;
+    createDate: number;
+    text: string;
+    status: number;
+    databaseId: number;
+    rootTopicId: number;
+    oldId: number;
+    contentType: number;
+    syncStatus: number;
+}
 export interface IQuestion {
     answers: IAnswer[];
     contentType?: number;
@@ -27,10 +38,11 @@ export interface IQuestion {
     status: number;
     syncStatus: number;
     text: string;
-
     localStatus?: IStatusAnswer;
     selectedAnswer?: IAnswer | null;
     turn?: number;
     tag?: string;
     icon?: string;
+
+    paragraph?: IParagraph;
 }

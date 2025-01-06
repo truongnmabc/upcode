@@ -2,7 +2,7 @@ import { selectListQuestion } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
 import { useContext } from "react";
-import { ReviewContext } from "../../../_components/context/reviewContext";
+import { ReviewContext } from "../../context";
 
 const AnswerReview = ({ isActions = false }) => {
     const listQuestion = useAppSelector(selectListQuestion);
@@ -14,7 +14,7 @@ const AnswerReview = ({ isActions = false }) => {
                 <h3 className="font-semibold text-center text-xl truncate font-poppins">
                     Questions
                 </h3>
-                <div className="flex gap-2  flex-wrap ">
+                <div className="flex gap-2 justify-center  flex-wrap ">
                     {listQuestion?.map((q, index) => {
                         return (
                             <div
@@ -24,8 +24,7 @@ const AnswerReview = ({ isActions = false }) => {
                                     {
                                         "border-red-500":
                                             q.localStatus === "skip",
-                                        // "border-[#5497FF] pointer-events-auto cursor-pointer":
-                                        //     currentGame?.id === q.id,
+
                                         "border-[#07C58C] text-white bg-[#07C58C]":
                                             q.localStatus === "correct" &&
                                             !isActions,
@@ -34,19 +33,11 @@ const AnswerReview = ({ isActions = false }) => {
                                             !isActions,
                                         "opacity-90": q.localStatus === "new",
                                         "cursor-pointer": isActions,
-                                        // "cursor-not-allowed":
-                                        //     type === "test" &&
-                                        //     q.localStatus === "new" &&
-                                        //     !isActions,
                                         "border-[#5497FF] text-white bg-[#5497FF]":
                                             isActions &&
                                             q.localStatus !== "new",
                                     }
                                 )}
-                                // onClick={() => {
-                                //     if (isActions && currentGame?.id !== q.id)
-                                //         dispatch(viewTest(index));
-                                // }}
                             >
                                 {index + 1}
                             </div>
@@ -57,7 +48,7 @@ const AnswerReview = ({ isActions = false }) => {
         );
     }
 
-    return <></>;
+    return <div className="w-full py-1"></div>;
 };
 
 export default AnswerReview;

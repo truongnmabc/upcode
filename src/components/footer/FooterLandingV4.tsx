@@ -17,7 +17,7 @@ import { DmcaIcon } from "./info/iconDmca";
 import { appConfigState } from "@/redux/features/appConfig";
 import RouterApp from "@/router/router.constant";
 import ForwardedLinkBlank from "../nextLink/forwardedLinkBlank";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const FooterLandingV4 = () => {
     const router = useRouter();
@@ -27,12 +27,16 @@ const FooterLandingV4 = () => {
         const logo = `/${appInfo.appShortName}/logo/logo-dark.png`;
         return logo;
     };
+
+    const pathname = usePathname();
+
     const { appInfo } = useAppSelector(appInfoState);
     const _email = useRef<HTMLInputElement>(null);
     const _message = useRef<HTMLInputElement>(null);
     const error_email = useRef<HTMLParagraphElement>(null);
     const error_message = useRef<HTMLParagraphElement>(null);
     const btn = useRef<HTMLButtonElement>(null);
+
     const handleSubmit = async () => {
         let result;
         if (
@@ -81,6 +85,7 @@ const FooterLandingV4 = () => {
             }
         }
     };
+
     const groupCompanyLegal = () => {
         return (
             <>
@@ -129,6 +134,11 @@ const FooterLandingV4 = () => {
             </>
         );
     };
+
+    if (pathname.includes("test")) {
+        return <div className="w-full h-[124px]"></div>;
+    }
+
     return (
         <div className="v4-footer-landing-0">
             <div className="v4-footer-landing-container-0 max-w-component-desktop">

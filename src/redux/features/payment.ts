@@ -1,9 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getUserDeviceLogin } from "../repository/sync/syncData";
-import { IUserActions } from "@/models/user/useAction";
 
 import { RootState } from "../store";
 import { InAppSubscription, IPaymentInfos } from "@/models/payment/payment";
+import { IUserActions } from "../repository/user/actions";
 
 export interface IUserReducer {
     paymentInfo: IPaymentInfos | null; // thông tin mua hàng của app đang được xét, được tải về khi vào trang

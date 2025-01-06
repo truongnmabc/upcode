@@ -25,7 +25,7 @@ import {
     useSearchParams,
 } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import AnswerButton from "../../../answer";
+import AnswerButton from "../answer";
 
 const TEMP_LIST_ANSWER: IAnswer[] = [
     {

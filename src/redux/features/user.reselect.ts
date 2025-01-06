@@ -10,3 +10,8 @@ export const selectOpenModalLogin = createSelector(
     [userState],
     (userReducer) => userReducer.shouldOpenLogin
 );
+
+export const selectListActions = createSelector(
+    [userState],
+    (userReducer) => userReducer.listActions
+);

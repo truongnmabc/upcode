@@ -6,6 +6,7 @@ import FilterIcon from "./filterAnswers";
 import { AntTab, AntTabs } from "@/components/tabs";
 import TabPanelReview from "@/app/[appShortName]/[state]/result_test/_components/tabPanelReview";
 import { ITopicEndTest } from "@/app/[appShortName]/[state]/result_test/_components";
+import IconEmpty from "../icon/iconEmpty";
 
 type IProps = {
     all: ICurrentGame[];
@@ -47,67 +48,62 @@ const ReviewAnswerResult: React.FC<IProps> = ({
     return (
         <Fragment>
             {title && <p className="text-2xl mt-6 font-semibold">{title}</p>}
-            <div className="my-4 h-full w-full">
-                <div className="flex pb-4 justify-between items-center gap-4 w-full">
-                    <AntTabs
-                        value={value}
-                        onChange={handleChange}
-                        aria-label="basic tabs example"
-                    >
-                        <AntTab
-                            label={
-                                <LabelReviewAnswerResult
-                                    title="All"
-                                    count={all.length}
-                                />
-                            }
-                        />
-                        <AntTab
-                            label={
-                                <LabelReviewAnswerResult
-                                    title="Correct"
-                                    count={correct.length}
-                                />
-                            }
-                        />
-                        <AntTab
-                            label={
-                                <LabelReviewAnswerResult
-                                    title="Incorrect"
-                                    count={incorrect.length}
-                                />
-                            }
-                        />
-                    </AntTabs>
-                    {showFilter && (
-                        <FilterIcon
-                            setTabletData={setTabletData}
-                            result={result}
-                        />
-                    )}
-                </div>
-                {all?.length > 0 && (
-                    <div className="w-full h-full min-h-screen">
-                        <MathJaxContext>
-                            <TabPanelReview
-                                value={value}
-                                index={0}
-                                data={all}
+            <div className="flex pb-2 justify-between items-center gap-4 w-full">
+                <AntTabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="basic tabs example"
+                >
+                    <AntTab
+                        label={
+                            <LabelReviewAnswerResult
+                                title="All"
+                                count={all.length}
                             />
-                            <TabPanelReview
-                                value={value}
-                                index={1}
-                                data={correct}
+                        }
+                    />
+                    <AntTab
+                        label={
+                            <LabelReviewAnswerResult
+                                title="Correct"
+                                count={correct.length}
                             />
-                            <TabPanelReview
-                                value={value}
-                                index={2}
-                                data={incorrect}
+                        }
+                    />
+                    <AntTab
+                        label={
+                            <LabelReviewAnswerResult
+                                title="Incorrect"
+                                count={incorrect.length}
                             />
-                        </MathJaxContext>
-                    </div>
+                        }
+                    />
+                </AntTabs>
+                {showFilter && (
+                    <FilterIcon setTabletData={setTabletData} result={result} />
                 )}
             </div>
+            {all?.length > 0 ? (
+                <div className="w-full flex-1 transition-all">
+                    <MathJaxContext>
+                        <TabPanelReview value={value} index={0} data={all} />
+                        <TabPanelReview
+                            value={value}
+                            index={1}
+                            data={correct}
+                        />
+                        <TabPanelReview
+                            value={value}
+                            index={2}
+                            data={incorrect}
+                        />
+                    </MathJaxContext>
+                </div>
+            ) : (
+                <div className="w-full  flex-1 flex items-center justify-center">
+                    <IconEmpty size={72} />
+                </div>
+            )}
         </Fragment>
     );
 };

@@ -2,10 +2,10 @@
 import BtnSubmit from "@/components/study/mainStudyView/bottomBtn/btnSubmit";
 import Keyboard from "@/components/keyboard";
 import SubAction from "@/components/reaction";
-import ChoicesPanel from "@/components/study/mainStudyView/choicesPanel/choicesPanel";
-import ExplanationDetail from "@/components/study/mainStudyView/explanation/explanationDetail";
+import ChoicesPanel from "@/components/choicesPanel";
+import ExplanationDetail from "@/components/explanation";
 import ProgressQuestion from "@/components/study/mainStudyView/progress/progressQuestion";
-import QuestionContent from "@/components/study/mainStudyView/question/questionContent";
+import QuestionContent from "@/components/question";
 import TitleQuestion from "@/components/study/mainStudyView/title/titleQuestion";
 import { MathJaxContext } from "better-react-mathjax";
 import React from "react";
