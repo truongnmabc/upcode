@@ -2,6 +2,7 @@ import { db } from "@/db/db.model";
 import { ICurrentGame } from "@/models/game/game";
 import React, { useEffect, useState } from "react";
 import ReviewAnswerResult from "@/components/reviewAnswers";
+import clsx from "clsx";
 
 const AllQuestions = () => {
     const [tableData, setTabletData] = useState<{
@@ -63,7 +64,11 @@ const AllQuestions = () => {
     }, []);
 
     return (
-        <div className="min-h-screen flex flex-col h-full">
+        <div
+            className={clsx("w-full flex-1 flex flex-col transition-all ", {
+                "h-full min-h-full": tableData.all.length > 0,
+            })}
+        >
             <ReviewAnswerResult
                 all={tableData.all}
                 correct={tableData.correct}

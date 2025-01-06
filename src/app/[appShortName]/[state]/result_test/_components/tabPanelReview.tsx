@@ -6,6 +6,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import { Fragment } from "react";
 import QuestionResult from "@/components/questionReview";
 import IconEmpty from "@/components/icon/iconEmpty";
+import Empty from "@/components/empty";
 interface TabPanelProps {
     index: number;
     value: number;
@@ -45,9 +46,7 @@ function TabPanelReview(props: TabPanelProps) {
                             )}
                         </AutoSizer>
                     ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                            <IconEmpty size={72} />
-                        </div>
+                        <Empty />
                     )}
                 </Fragment>
             )}

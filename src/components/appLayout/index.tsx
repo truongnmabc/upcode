@@ -1,4 +1,4 @@
-import FooterApp from "@/components/footer/FooterLandingV4";
+import FooterApp from "@/components/footer";
 import HeaderApp from "@/components/header";
 import React from "react";
 import { ToastContainer } from "react-toastify";

@@ -1,24 +1,6 @@
 "use client";
 import React from "react";
-import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
-
-const options = {
-    responsive: true,
-    plugins: {
-        legend: {
-            display: false,
-        },
-        tooltip: {
-            enabled: true,
-        },
-    },
-    rotation: 270,
-    circumference: 180,
-    aspectRatio: 2,
-};
+import CircleProgress from "@/components/circleProgress";
 
 const DashboardCard = ({
     info,
@@ -29,47 +11,21 @@ const DashboardCard = ({
         percent: number;
     };
 }) => {
-    const data = {
-        labels: ["correct", "incorrect"],
-        datasets: [
-            {
-                data: [info.percent, 100 - info.percent],
-                backgroundColor: ["#12E1AF", "transparent"],
-                borderColor: "transparent",
-                cutout: "90%",
-                borderRadius: 16,
-                spacing: 2,
-            },
-        ],
-    };
-
     return (
         <div className="relative mx-auto min-w-[320px] h-[340px] z-0 flex flex-col items-center">
             <div className=" absolute top-0 z-10 w-full left-0">
-                <svg className="w-[320px]  h-[320px]">
-                    <circle
-                        cx="160"
-                        cy="160"
-                        r="140"
-                        stroke="#F87171"
-                        strokeWidth="16"
-                        fill="none"
-                        strokeDasharray="440"
-                        strokeDashoffset="440"
-                        strokeLinecap="round"
-                    ></circle>
-                </svg>
-                <div className="w-[320px]  h-[320px] z-10  absolute top-0 pt-[10px] left-0 flex justify-center">
-                    <div className="w-[300px]   h-[160px]   ">
-                        <Doughnut data={data} options={options} />
-                    </div>
-                </div>
-
-                <div className="absolute z-10 inset-0 flex pt-[126px] justify-center">
-                    <span className="text-5xl font-bold text-[#F87171]">
-                        {info.percent} %
-                    </span>
-                </div>
+                <CircleProgress
+                    percentage={info.percent}
+                    color="#12E1AF"
+                    size={320}
+                    bgColor="#F87171"
+                    strokeWidth={16}
+                    halfCircle
+                    textClassName="text-5xl font-bold"
+                    textAttributes={{
+                        fill: "#F87171",
+                    }}
+                />
             </div>
 
             <div className=" absolute  bottom-0 left-0 w-full z-20">

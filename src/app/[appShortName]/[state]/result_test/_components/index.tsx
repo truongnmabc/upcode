@@ -16,6 +16,7 @@ import {
     selectListQuestion,
     selectPassing,
 } from "@/redux/features/game.reselect";
+import clsx from "clsx";
 
 export interface ITopicEndTest extends ITopic {
     totalQuestion: number;
@@ -216,7 +217,11 @@ const ResultTestLayout = () => {
             </div>
             <MyContainer>
                 <ChartContentResultPage listTopic={result.listTopic} />
-                <div className="w-full flex flex-col  min-h-[720px]">
+                <div
+                    className={clsx("w-full flex flex-col pt-6  ", {
+                        "min-h-[720px]": tableData.all.length > 0,
+                    })}
+                >
                     <ReviewAnswerResult
                         all={tableData.all}
                         correct={tableData.correct}

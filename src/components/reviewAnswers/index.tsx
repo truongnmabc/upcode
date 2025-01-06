@@ -6,7 +6,7 @@ import FilterIcon from "./filterAnswers";
 import { AntTab, AntTabs } from "@/components/tabs";
 import TabPanelReview from "@/app/[appShortName]/[state]/result_test/_components/tabPanelReview";
 import { ITopicEndTest } from "@/app/[appShortName]/[state]/result_test/_components";
-import IconEmpty from "../icon/iconEmpty";
+import Empty from "../empty";
 
 type IProps = {
     all: ICurrentGame[];
@@ -84,7 +84,7 @@ const ReviewAnswerResult: React.FC<IProps> = ({
                 )}
             </div>
             {all?.length > 0 ? (
-                <div className="w-full flex-1 transition-all">
+                <div className="w-full flex-1 h-full transition-all">
                     <MathJaxContext>
                         <TabPanelReview value={value} index={0} data={all} />
                         <TabPanelReview
@@ -100,9 +100,7 @@ const ReviewAnswerResult: React.FC<IProps> = ({
                     </MathJaxContext>
                 </div>
             ) : (
-                <div className="w-full  flex-1 flex items-center justify-center">
-                    <IconEmpty size={72} />
-                </div>
+                <Empty />
             )}
         </Fragment>
     );
