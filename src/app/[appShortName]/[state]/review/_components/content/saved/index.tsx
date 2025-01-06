@@ -1,3 +1,4 @@
+import Empty from "@/components/empty";
 import IconEmpty from "@/components/icon/iconEmpty";
 import QuestionResult from "@/components/questionReview";
 import { db } from "@/db/db.model";
@@ -83,10 +84,10 @@ const SavedQuestions = () => {
     }, [dispatch]);
 
     return (
-        <div className="w-full flex-1 transition-all">
-            <MathJaxContext>
-                {data.length > 0 ? (
-                    <div className="w-full flex-1 min-h-screen">
+        <div className="w-full flex-1 h-full transition-all">
+            {data.length > 0 ? (
+                <MathJaxContext>
+                    <div className="w-full flex-1 ">
                         <AutoSizer>
                             {({ height, width }) => (
                                 <List
@@ -102,12 +103,10 @@ const SavedQuestions = () => {
                             )}
                         </AutoSizer>
                     </div>
-                ) : (
-                    <div className="w-full  flex-1 flex items-center justify-center">
-                        <IconEmpty size={72} />
-                    </div>
-                )}
-            </MathJaxContext>
+                </MathJaxContext>
+            ) : (
+                <Empty />
+            )}
         </div>
     );
 };

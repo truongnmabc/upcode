@@ -42,7 +42,7 @@ const ReviewView = ({ contentSeo }: { contentSeo: string }) => {
                             xs: 12,
                         }}
                     >
-                        <div className="w-full flex flex-col gap-4 sm:gap-6  p-4 sm:p-0 ">
+                        <div className="w-full h-full flex flex-col gap-4 sm:gap-6  p-4 sm:p-0 ">
                             <TitleReview />
                             <ReviewContentGroup />
                             <BannerDownloadApp />

@@ -38,7 +38,7 @@ const ListReview = () => {
             />{" "}
             <ItemCard
                 icon={<IconAnsweredQuestion />}
-                title="Answered Questions"
+                title="All Answered Questions"
                 des="Revisit all questions you have previously attempted."
                 bg="#DEEBFF"
                 type="all"

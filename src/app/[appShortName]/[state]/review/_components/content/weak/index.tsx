@@ -1,3 +1,4 @@
+import Empty from "@/components/empty";
 import IconEmpty from "@/components/icon/iconEmpty";
 import QuestionResult from "@/components/questionReview";
 import { db } from "@/db/db.model";
@@ -49,9 +50,21 @@ const WeakQuestions = () => {
                         };
                     });
 
-                const incorrect = list.filter((item) =>
-                    item.selectedAnswers?.find((item) => !item.correct)
-                );
+                const incorrect = list.filter((item) => {
+                    const lastThreeAnswers =
+                        item.selectedAnswers?.slice(-3) || [];
+
+                    const totalAnswers = lastThreeAnswers.length;
+                    const incorrectAnswers = lastThreeAnswers.filter(
+                        (answer) => !answer.correct
+                    ).length;
+
+                    const incorrectPercentage =
+                        (incorrectAnswers / totalAnswers) * 100;
+
+                    return incorrectPercentage >= 50;
+                });
+                console.log("🚀 ~ handleGetData ~ incorrect:", incorrect);
 
                 setListTopic(incorrect);
             }
@@ -59,7 +72,7 @@ const WeakQuestions = () => {
         handleGetData();
     }, [dispatch]);
     return (
-        <div className="flex-1 min-h-[720px] w-full">
+        <div className="flex-1 h-full w-full">
             {listTopic?.length > 0 ? (
                 <MathJaxContext>
                     <AutoSizer>
@@ -78,9 +91,7 @@ const WeakQuestions = () => {
                     </AutoSizer>
                 </MathJaxContext>
             ) : (
-                <div className="flex justify-center items-center h-48">
-                    <IconEmpty size={72} />
-                </div>
+                <Empty />
             )}
         </div>
     );

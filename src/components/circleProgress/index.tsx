@@ -15,7 +15,9 @@ type IProps = {
     customText?: React.ReactNode;
     showText?: boolean;
     wrapperClassName?: string;
+    halfCircle?: boolean;
 };
+
 const CircleProgress = (props: IProps) => {
     const {
         customText,
@@ -25,28 +27,37 @@ const CircleProgress = (props: IProps) => {
         size,
         bgColor,
         showText = true,
+        halfCircle = false,
         ...res
     } = props;
+
     const pct = cleanPercentage(percentage);
+
     return (
         <div
-            className={ctx("relative z-0 w-fit h-fit", props.wrapperClassName)}
+            className={ctx("relative z-0 w-fit h-fit ", props.wrapperClassName)}
         >
             <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-                <g transform={`rotate(-90 ${size / 2} ${size / 2})`}>
+                <g
+                    transform={`rotate(${halfCircle ? -180 : -90} ${size / 2} ${
+                        size / 2
+                    })`}
+                >
                     <Circle
                         {...res}
                         color={bgColor}
                         percentage={100}
                         size={size}
                         strokeWidth={strokeWidth}
+                        halfCircle={halfCircle}
                     />
                     <Circle
                         {...res}
-                        percentage={pct}
+                        percentage={halfCircle ? pct : pct}
                         size={size}
                         color={color}
                         strokeWidth={strokeWidth}
+                        halfCircle={halfCircle}
                     />
                 </g>
                 {showText && !customText && <Text percentage={pct} {...res} />}
@@ -64,6 +75,7 @@ const Circle = ({
     size,
     circleClassName,
     circleStyles,
+    halfCircle = false,
 }: {
     color: string;
     percentage: number;
@@ -72,19 +84,26 @@ const Circle = ({
     circleStyles?: React.CSSProperties;
     strokeWidth: number;
     size: number;
+    halfCircle?: boolean;
 }) => {
     const r = size / 2 - strokeWidth;
     const circ = 2 * Math.PI * r;
-    const strokePct = ((100 - percentage) * circ) / 100; // where stroke will start, e.g. from 15% to 100%.
+    const halfCirc = circ / 2;
+
+    const strokePct =
+        ((100 - percentage) *
+            (halfCircle && percentage !== 0 ? halfCirc : circ)) /
+        100;
+
     return (
         <circle
             r={r}
             cx={size / 2}
             cy={size / 2}
             fill="transparent"
-            stroke={strokePct !== circ ? color : ""} // remove colour as 0% sets full circumference
+            stroke={strokePct !== circ ? color : ""}
             strokeWidth={strokeWidth}
-            strokeDasharray={circ}
+            strokeDasharray={halfCircle ? `${halfCirc} ${circ}` : circ}
             strokeDashoffset={percentage ? strokePct : 0}
             strokeLinecap="round"
             className={circleClassName}
@@ -111,11 +130,14 @@ const Text = ({
         <text
             x="50%"
             y="50%"
-            dominantBaseline="central"
+            // dominantBaseline="central"
             textAnchor="middle"
             fontSize={"1.5em"}
             className={textClassName}
-            style={textStyles}
+            style={{
+                ...textStyles,
+                fill: "textColor",
+            }}
             {...textAttributes}
         >
             {percentage.toFixed(0)}%
@@ -124,7 +146,7 @@ const Text = ({
 };
 
 const cleanPercentage = (percentage: number) => {
-    const isNegativeOrNaN = !Number.isFinite(+percentage) || percentage < 0; // we can set non-numbers to 0 here
+    const isNegativeOrNaN = !Number.isFinite(+percentage) || percentage < 0;
     const isTooHigh = percentage > 100;
     return isNegativeOrNaN ? 0 : isTooHigh ? 100 : +percentage;
 };
