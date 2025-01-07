@@ -6,6 +6,8 @@ import { startRandomReview } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
 import React, { useCallback } from "react";
 import ChoiceQuestionBeforeStart from "./choiceQuestionBeforeStart";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import SheetSelectQuestions from "../../sheet";
 
 /* 
     value: số câu cần lấy ra
@@ -98,7 +100,7 @@ export const genRandomQuestion = async ({
     return listQuestion;
 };
 
-const RandomQuestions = () => {
+const RandomQuestions = ({ isMobile }: { isMobile: boolean }) => {
     const dispatch = useAppDispatch();
 
     const handleStartTest = useCallback(
@@ -116,6 +118,9 @@ const RandomQuestions = () => {
         },
         [dispatch]
     );
+
+    if (isMobile) return <></>;
+
     return (
         <div
             className="w-full rounded-lg bg-white "

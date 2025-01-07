@@ -1,5 +1,6 @@
 "use client";
-import React, { ReactNode } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import React, { ReactNode, useEffect } from "react";
 
 export type ISelectReview = "random" | "weak" | "hard" | "saved" | "all";
 export interface IContextReview {
@@ -7,18 +8,28 @@ export interface IContextReview {
     setSelectType: (e: ISelectReview) => void;
     isStart: boolean;
     setIsStart: (e: boolean) => void;
+    isOpenSheet: boolean;
+    setIsOpenSheet: (e: boolean) => void;
+    isShowList: boolean;
+    setIsShowList: (e: boolean) => void;
 }
 
 export const ReviewContext = React.createContext<IContextReview>({
-    selectType: "random" as ISelectReview,
+    selectType: "random",
     setSelectType: () => {},
     isStart: false,
     setIsStart: () => {},
+    isOpenSheet: false,
+    setIsOpenSheet: () => {},
+    isShowList: false,
+    setIsShowList: () => {},
 });
 
 const ReviewProvider = ({ children }: { children: ReactNode }) => {
     const [selectType, setSelectType] = React.useState<ISelectReview>("random");
     const [isStart, setIsStart] = React.useState<boolean>(false);
+    const [isOpenSheet, setIsOpenSheet] = React.useState<boolean>(false);
+    const [isShowList, setIsShowList] = React.useState<boolean>(true);
 
     return (
         <ReviewContext.Provider
@@ -27,6 +38,10 @@ const ReviewProvider = ({ children }: { children: ReactNode }) => {
                 setSelectType,
                 isStart,
                 setIsStart,
+                isOpenSheet,
+                setIsOpenSheet,
+                isShowList,
+                setIsShowList,
             }}
         >
             {children}

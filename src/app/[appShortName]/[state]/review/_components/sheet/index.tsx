@@ -1,16 +1,33 @@
 import { MtUiButton } from "@/components/button";
-import Sheet from "@/components/sheet";
 import clsx from "clsx";
-import React, { useCallback, useState } from "react";
-
+import React, { useCallback, useContext, useState } from "react";
+import { ReviewContext } from "../context";
+import dynamic from "next/dynamic";
+const Sheet = dynamic(() => import("@/components/sheet"), {
+    ssr: false,
+});
 const list = [10, 20, 30, 40, 50, 60];
 const SheetSelectQuestions = () => {
     const [value, setValue] = useState(40);
+    const { isOpenSheet, setIsOpenSheet, setIsStart, setIsShowList } =
+        useContext(ReviewContext);
+
     const handleSelect = useCallback((value: number) => {
         setValue(value);
     }, []);
+
+    const handleCancel = useCallback(() => {
+        setIsOpenSheet(false);
+    }, [setIsOpenSheet]);
+
+    const handleStart = useCallback(async () => {
+        setIsOpenSheet(false);
+        setIsStart(true);
+        setIsShowList(false);
+    }, [setIsOpenSheet, setIsStart, setIsShowList]);
+
     return (
-        <Sheet visible autoHeight>
+        <Sheet visible={isOpenSheet} onClose={handleCancel} autoHeight>
             <div className="px-6 pb-6 flex flex-col gap-6">
                 <p className="text-center text-xl px-6 font-semibold">
                     How many questions do you want?
@@ -33,10 +50,15 @@ const SheetSelectQuestions = () => {
                     ))}
                 </div>
                 <div className="w-full flex items-center gap-4">
-                    <MtUiButton size="large" block>
+                    <MtUiButton size="large" block onClick={handleCancel}>
                         Cancel
                     </MtUiButton>
-                    <MtUiButton size="large" block type="primary">
+                    <MtUiButton
+                        size="large"
+                        block
+                        type="primary"
+                        onClick={handleStart}
+                    >
                         Start
                     </MtUiButton>
                 </div>

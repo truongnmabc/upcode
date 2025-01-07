@@ -1,50 +1,94 @@
-import React, { useCallback, useContext } from "react";
+"use client";
 
-import clsx from "clsx";
-import { useAppDispatch } from "@/redux/hooks";
 import { resetState } from "@/redux/features/game";
+import { useAppDispatch } from "@/redux/hooks";
+import clsx from "clsx";
+import React, { Fragment, useCallback, useContext } from "react";
 import { ISelectReview, ReviewContext } from "../../context";
-import { useIsMobile } from "@/hooks/useIsMobile";
 
-const ListReview = () => {
+const ListReview = ({ isMobile }: { isMobile: boolean }) => {
+    const {
+        setSelectType,
+        selectType,
+        setIsStart,
+        setIsOpenSheet,
+        setIsShowList,
+        isShowList,
+    } = useContext(ReviewContext);
+    const dispatch = useAppDispatch();
+    const handleSelectType = useCallback(
+        (type: ISelectReview) => {
+            setSelectType(type);
+            dispatch(resetState());
+            if (isMobile && (type === "random" || type === "hard")) {
+                setIsOpenSheet(true);
+            }
+
+            if (
+                isMobile &&
+                (type === "all" || type === "weak" || type === "saved")
+            ) {
+                setIsShowList(false);
+            }
+
+            setIsStart(false);
+        },
+        [dispatch, setSelectType, isMobile, setIsShowList]
+    );
+    if (!isShowList) return <></>;
     return (
-        <div className="flex flex-col gap-3">
-            <ItemCard
-                icon={<IconRandomQuestion />}
-                title="Random Questions"
-                des="Select questions randomly from the question bank."
-                bg="#BAE8DB"
-                type="random"
-            />{" "}
-            <ItemCard
-                icon={<IconWeakQuestion />}
-                title="Weak Questions"
-                des="Retake missed questions to improve your score."
-                bg="#FFC7C7"
-                type="weak"
-            />{" "}
-            <ItemCard
-                icon={<IconHardQuestion />}
-                title="Hard Questions"
-                des="Practice commonly answered incorrectly questions."
-                bg="#D3F7FF"
-                type="hard"
-            />{" "}
-            <ItemCard
-                icon={<IconSavedQuestion />}
-                title="Saved Questions"
-                des="Practice saved questions from lessons."
-                bg="#FEEDD5"
-                type="saved"
-            />{" "}
-            <ItemCard
-                icon={<IconAnsweredQuestion />}
-                title="All Answered Questions"
-                des="Revisit all questions you have previously attempted."
-                bg="#DEEBFF"
-                type="all"
-            />
-        </div>
+        <Fragment>
+            <p className="text-xl text-center sm:text-start font-semibold">
+                Review
+            </p>
+            <div className="flex flex-col gap-3">
+                <ItemCard
+                    icon={<IconRandomQuestion />}
+                    title="Random Questions"
+                    des="Select questions randomly from the question bank."
+                    bg="#BAE8DB"
+                    type="random"
+                    selectType={selectType}
+                    handleSelectType={handleSelectType}
+                />{" "}
+                <ItemCard
+                    icon={<IconWeakQuestion />}
+                    title="Weak Questions"
+                    des="Retake missed questions to improve your score."
+                    bg="#FFC7C7"
+                    handleSelectType={handleSelectType}
+                    selectType={selectType}
+                    type="weak"
+                />{" "}
+                <ItemCard
+                    icon={<IconHardQuestion />}
+                    title="Hard Questions"
+                    des="Practice commonly answered incorrectly questions."
+                    handleSelectType={handleSelectType}
+                    bg="#D3F7FF"
+                    selectType={selectType}
+                    type="hard"
+                />{" "}
+                <ItemCard
+                    icon={<IconSavedQuestion />}
+                    title="Saved Questions"
+                    des="Practice saved questions from lessons."
+                    bg="#FEEDD5"
+                    handleSelectType={handleSelectType}
+                    selectType={selectType}
+                    type="saved"
+                />{" "}
+                <ItemCard
+                    icon={<IconAnsweredQuestion />}
+                    title="All Answered Questions"
+                    des="Revisit all questions you have previously attempted."
+                    bg="#DEEBFF"
+                    handleSelectType={handleSelectType}
+                    type="all"
+                    selectType={selectType}
+                />
+            </div>
+        </Fragment>
     );
 };
 
@@ -56,20 +100,18 @@ type IItemCard = {
     des: string;
     bg: string;
     type: ISelectReview;
+    handleSelectType: (e: ISelectReview) => void;
+    selectType: ISelectReview;
 };
-const ItemCard: React.FC<IItemCard> = ({ icon, title, des, bg, type }) => {
-    const { setSelectType, selectType, setIsStart } = useContext(ReviewContext);
-    const dispatch = useAppDispatch();
-    const isMobile = useIsMobile();
-    const handleSelectType = useCallback(() => {
-        if (isMobile) {
-            return;
-        }
-        setSelectType(type);
-        setIsStart(false);
-        dispatch(resetState());
-    }, [type, dispatch, setSelectType, isMobile]);
-
+const ItemCard: React.FC<IItemCard> = ({
+    handleSelectType,
+    icon,
+    title,
+    des,
+    bg,
+    type,
+    selectType,
+}) => {
     return (
         <div
             className={clsx(
@@ -81,7 +123,7 @@ const ItemCard: React.FC<IItemCard> = ({ icon, title, des, bg, type }) => {
             style={{
                 boxShadow: "0px 2px 4px 0px #2121211F",
             }}
-            onClick={handleSelectType}
+            onClick={() => handleSelectType(type)}
         >
             <div
                 className="rounded-2xl p-3 flex items-center justify-center"
