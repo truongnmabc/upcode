@@ -12,7 +12,7 @@ const MyContainer = ({
     return (
         <div
             className={ctx(
-                "w-full block box-border mx-auto  flex-1 max-w-page ",
+                "w-full block box-border mx-auto  max-w-page ",
                 className
             )}
             style={style}

@@ -7,7 +7,6 @@ import { selectListQuestion } from "@/redux/features/game.reselect";
 const TitleReview = () => {
     const { selectType, isStart } = useContext(ReviewContext);
     const list = useAppSelector(selectListQuestion);
-
     const titles: Record<string, string> = {
         random: "How many questions do you want?",
         hard: "How many questions do you want?",

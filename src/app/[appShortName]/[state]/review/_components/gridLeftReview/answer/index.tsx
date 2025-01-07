@@ -3,11 +3,11 @@ import { useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
 import { useContext } from "react";
 import { ReviewContext } from "../../context";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const AnswerReview = ({ isActions = false }) => {
     const listQuestion = useAppSelector(selectListQuestion);
     const { selectType, isStart } = useContext(ReviewContext);
-
     if (selectType && listQuestion.length > 0 && isStart) {
         return (
             <div className="bg-white flex flex-col gap-3 dark:bg-black p-4 rounded-md">

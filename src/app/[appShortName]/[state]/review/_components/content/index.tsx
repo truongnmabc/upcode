@@ -9,10 +9,10 @@ import BottomLestTest from "../bottom";
 import RandomGameContent from "./random/randomGameContent";
 import SheetSelectQuestions from "../sheet";
 
-const ReviewContentGroup = () => {
+const ReviewContentGroup = ({ isMobile }: { isMobile: boolean }) => {
     const { selectType, isStart } = useContext(ReviewContext);
     const componentMapping = {
-        random: <RandomQuestions />,
+        random: <RandomQuestions isMobile={isMobile} />,
         weak: <WeakQuestions />,
         hard: <HardQuestions />,
         saved: <SavedQuestions />,
@@ -28,7 +28,7 @@ const ReviewContentGroup = () => {
                 <Fragment>{componentMapping[selectType]}</Fragment>
             )}
             <BottomLestTest />
-            {/* <SheetSelectQuestions /> */}
+            {isMobile && <SheetSelectQuestions />}
         </Fragment>
     );
 };

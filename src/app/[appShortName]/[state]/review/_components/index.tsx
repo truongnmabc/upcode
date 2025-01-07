@@ -11,7 +11,13 @@ import { useEffect } from "react";
 import { useAppDispatch } from "@/redux/hooks";
 import { resetState } from "@/redux/features/game";
 
-const ReviewView = ({ contentSeo }: { contentSeo: string }) => {
+const ReviewView = ({
+    contentSeo,
+    isMobile,
+}: {
+    contentSeo: string;
+    isMobile: boolean;
+}) => {
     const dispatch = useAppDispatch();
     useEffect(() => {
         dispatch(resetState());
@@ -32,11 +38,8 @@ const ReviewView = ({ contentSeo }: { contentSeo: string }) => {
                         }}
                     >
                         <div className="flex flex-col gap-3">
-                            <AnswerReview />
-                            <p className="text-xl text-center sm:text-start font-semibold">
-                                Review
-                            </p>
-                            <ListReview />
+                            {!isMobile && <AnswerReview />}
+                            <ListReview isMobile={isMobile} />
                         </div>
                     </Grid2>
                     <Grid2
@@ -45,9 +48,10 @@ const ReviewView = ({ contentSeo }: { contentSeo: string }) => {
                             xs: 12,
                         }}
                     >
-                        <div className="w-full h-full flex flex-col gap-4 sm:gap-6  p-4 sm:p-0 ">
-                            <TitleReview />
-                            <ReviewContentGroup />
+                        <div className="w-full h-full flex flex-col gap-4 sm:gap-6 ">
+                            {!isMobile && <TitleReview />}
+
+                            <ReviewContentGroup isMobile={isMobile} />
                             <BannerDownloadApp />
                             {contentSeo && (
                                 <div className="p-4 mb-28 sm:mb-0 sm:p-6 rounded-md  overflow-hidden bg-white dark:bg-black">
