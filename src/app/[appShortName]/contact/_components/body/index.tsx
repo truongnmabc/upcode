@@ -5,21 +5,19 @@ import FaqAsvab from "../asvab/faqAsvab";
 import FaqCDL from "../cdl/faqCDL";
 export interface IFAQData {
     question: string;
-    answer: string | any;
+    answer: string | React.ReactNode;
 }
 
 const BodyComponent = ({ appInfo }: { appInfo: IAppInfo }) => {
-
     const returnFaq = () => {
-
         switch (appInfo.appName.toLocaleLowerCase()) {
             case "cdl":
-                return <FaqCDL />
+                return <FaqCDL />;
 
             case "asvab":
-                return <FaqAsvab />
+                return <FaqAsvab />;
         }
-    }
+    };
     return (
         <div className="contact-body-component max-w-component-desktop">
             <div className="contact-body-container">
@@ -29,7 +27,5 @@ const BodyComponent = ({ appInfo }: { appInfo: IAppInfo }) => {
         </div>
     );
 };
-
-
 
 export default BodyComponent;

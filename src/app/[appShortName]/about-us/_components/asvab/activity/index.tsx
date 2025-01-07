@@ -2,6 +2,7 @@ import React from "react";
 import "./index.scss";
 import { useMediaQuery } from "@mui/material";
 import Image from "next/image";
+import LazyLoadImage from "@/components/images";
 
 const ActivityComponent = () => {
     const notIsMobile = useMediaQuery("(min-width: 600px)");
@@ -11,25 +12,29 @@ const ActivityComponent = () => {
             colorCircle: "blue",
             icon: "eye",
             content: "Vision",
-            subContent: "To become a trusted, high-quality ASVAB exam preparation platform with a high pass rate.",
+            subContent:
+                "To become a trusted, high-quality ASVAB exam preparation platform with a high pass rate.",
         },
         {
             colorCircle: "red",
             icon: "mount",
             content: "Mission",
-            subContent: "Empower aspiring Americans to enlist in the U.S. Armed Forces successfully.",
+            subContent:
+                "Empower aspiring Americans to enlist in the U.S. Armed Forces successfully.",
         },
         {
             colorCircle: "green",
             icon: "hand",
             content: "Brand Essence",
-            subContent: "Keep the customer at the forefront and deliver exceptional learning experiences.",
+            subContent:
+                "Keep the customer at the forefront and deliver exceptional learning experiences.",
         },
         {
             colorCircle: "orange",
             icon: "heart",
             content: "Core Value",
-            subContent: "Premium-quality products, great prices, and superior after-sales service.",
+            subContent:
+                "Premium-quality products, great prices, and superior after-sales service.",
         },
     ];
 
@@ -48,11 +53,10 @@ const ActivityComponent = () => {
                 {listData.map((data, index) => (
                     <div key={index} className={"activity-box " + data.icon}>
                         <div className={"circle-icon " + data.colorCircle}>
-                            <img
-                                className={data.icon}
+                            <LazyLoadImage
+                                classNames={data.icon}
                                 src={`/images/about/mobile/${data.icon}.png`}
                                 alt={data.icon}
-                                draggable="false"
                             />
                         </div>
                         <div className="content">{data.content}</div>

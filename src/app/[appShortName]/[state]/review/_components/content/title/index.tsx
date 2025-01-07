@@ -5,33 +5,31 @@ import { useAppSelector } from "@/redux/hooks";
 import { selectListQuestion } from "@/redux/features/game.reselect";
 
 const TitleReview = () => {
-    const { selectType } = useContext(ReviewContext);
+    const { selectType, isStart } = useContext(ReviewContext);
     const list = useAppSelector(selectListQuestion);
+
+    const titles: Record<string, string> = {
+        random: "How many questions do you want?",
+        hard: "How many questions do you want?",
+        weak: "Weak Questions",
+        saved: "Saved Questions",
+        all: "All Answered Questions",
+    };
+
+    const shouldShowTitle =
+        (selectType === "random" || selectType === "hard") && list.length === 0
+            ? true
+            : !isStart && ["weak", "saved", "all"].includes(selectType);
+
     return (
         <Fragment>
-            {(selectType === "random" || selectType === "hard") &&
-                list.length === 0 && (
-                    <h2 className="text-2xl  text-center font-semibold">
-                        How many questions do you want?
-                    </h2>
-                )}
-            {selectType === "weak" && (
-                <h2 className="text-2xl  text-center font-semibold">
-                    Weak Questions
-                </h2>
-            )}
-            {selectType === "saved" && (
-                <h2 className="text-2xl  text-center font-semibold">
-                    Saved Questions
-                </h2>
-            )}
-            {selectType === "all" && (
-                <h2 className="text-2xl  text-center font-semibold">
-                    All Answered Questions
+            {shouldShowTitle && (
+                <h2 className="text-2xl text-center font-semibold">
+                    {titles[selectType]}
                 </h2>
             )}
         </Fragment>
     );
 };
 
-export default TitleReview;
+export default React.memo(TitleReview);

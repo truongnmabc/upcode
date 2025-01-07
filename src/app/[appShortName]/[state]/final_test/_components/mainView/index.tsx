@@ -1,15 +1,12 @@
 "use client";
-import ClockIcon from "@/components/icon/ClockIcon";
-import BtnSubmit from "@/components/study/mainStudyView/bottomBtn/btnSubmit";
-import Keyboard from "@/components/keyboard";
-import SubAction from "@/components/reaction";
+import BottomActions from "@/components/bottomActions";
 import ChoicesPanel from "@/components/choicesPanel";
-import ProgressQuestion from "@/components/study/mainStudyView/progress/progressQuestion";
+import ClockIcon from "@/components/icon/ClockIcon";
 import QuestionContent from "@/components/question";
-import TitleQuestion from "@/components/study/mainStudyView/title/titleQuestion";
 import { MathJaxContext } from "better-react-mathjax";
 import CountTimeFinalTest from "../countTimeFinal";
-import NextQuestionFinalPage from "../nextQuestionFinal";
+import ProgressQuestion from "@/components/progressQuestion";
+import TitleQuestion from "@/components/titleQuestion";
 
 const MainViewFinalTest = () => {
     return (
@@ -28,16 +25,7 @@ const MainViewFinalTest = () => {
                     <ChoicesPanel isActions />
                 </div>
 
-                <div className="flex fixed sm:static shadow-bottom sm:shadow-none  bottom-0 left-0 right-0 z-50 bg-theme-dark sm:px-4 sm:bg-[#7C6F5B0F] flex-col sm:flex-row pb-8 pt-3 sm:py-3 justify-between gap-2 sm:gap-4 items-center ">
-                    <div className="flex  gap-2 sm:gap-8 items-center">
-                        <Keyboard />
-                        <SubAction />
-                    </div>
-                    <div className="px-4 w-full flex items-center gap-2 sm:p-4 sm:w-fit">
-                        <BtnSubmit isShow={true} />
-                        <NextQuestionFinalPage />
-                    </div>
-                </div>
+                <BottomActions isShow={true} type="final" />
             </div>
         </MathJaxContext>
     );

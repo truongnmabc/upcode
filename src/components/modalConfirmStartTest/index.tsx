@@ -1,6 +1,6 @@
 "use client";
 import { MtUiButton } from "@/components/button";
-import { continueGame, gameState, startOverGame } from "@/redux/features/game";
+import { continueGame, startOverGame } from "@/redux/features/game";
 import {
     selectIdTopic,
     selectIsPaused,

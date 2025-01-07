@@ -2,8 +2,14 @@
 import { db } from "@/db/db.model";
 import { IPartProgress } from "@/models/progress/subTopicProgress";
 import { ITopic } from "@/models/topics/topics";
-import { appInfoState } from "@/redux/features/appInfo";
-import { gameState, setIndexSubTopic } from "@/redux/features/game";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
+import { setIndexSubTopic, setTurtGame } from "@/redux/features/game";
+import {
+    selectCurrentGame,
+    selectIdTopic,
+    selectListQuestion,
+    selectTurn,
+} from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 import { revertPathName } from "@/utils/pathName";
@@ -29,9 +35,12 @@ const IconProgress = ({
     subTopic,
     isPass,
 }: IProps) => {
-    const { appInfo } = useAppSelector(appInfoState);
-    const { currentGame, listQuestion, turn, idTopic } =
-        useAppSelector(gameState);
+    const appInfo = useAppSelector(selectAppInfo);
+    const currentGame = useAppSelector(selectCurrentGame);
+    const listQuestion = useAppSelector(selectListQuestion);
+    const turn = useAppSelector(selectTurn);
+    const idTopic = useAppSelector(selectIdTopic);
+
     const { mainTopicTag } =
         useContext<IContextAllowExpand>(AllowExpandContext);
 
@@ -56,25 +65,6 @@ const IconProgress = ({
 
         setProgress(Math.floor((pass.length / listQuestion.length) * 100));
     }, [part.id, listQuestion, turn]);
-
-    useEffect(() => {
-        if (
-            (!isPass || (isPass && idTopic === part.id)) &&
-            isCurrentPlaying &&
-            idTopic &&
-            part.id &&
-            idTopic === part.id
-        ) {
-            handleListenerChange();
-        }
-    }, [
-        isCurrentPlaying,
-        idTopic,
-        part.id,
-        listQuestion,
-        isPass,
-        handleListenerChange,
-    ]);
 
     const handleClick = useCallback(async () => {
         if (
@@ -109,6 +99,11 @@ const IconProgress = ({
                     subTopicTag,
                 })
             );
+            dispatch(
+                setTurtGame({
+                    turn: 1,
+                })
+            );
             if (pathname.includes("/study")) {
                 return router.replace(_href);
             }
@@ -128,6 +123,25 @@ const IconProgress = ({
         subTopicTag,
         tag,
         index,
+    ]);
+
+    useEffect(() => {
+        if (
+            (!isPass || (isPass && idTopic === part.id)) &&
+            isCurrentPlaying &&
+            idTopic &&
+            part.id &&
+            idTopic === part.id
+        ) {
+            handleListenerChange();
+        }
+    }, [
+        isCurrentPlaying,
+        idTopic,
+        part.id,
+        listQuestion,
+        isPass,
+        handleListenerChange,
     ]);
 
     return (

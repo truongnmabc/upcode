@@ -4,8 +4,8 @@ import { db } from "@/db/db.model";
 import Dialog from "@mui/material/Dialog";
 import { MtUiButton } from "@/components/button";
 import { ICurrentGame } from "@/models/game/game";
-import { ITopicEndTest } from "../../resultTest";
 import CardTopic from "@/app/[appShortName]/[state]/custom_test/_components/modalSetting/cardTopic";
+import { ITopicEndTest } from "@/app/[appShortName]/[state]/result_test/_components";
 type IProps = {
     result?: {
         listTopic: ITopicEndTest[];

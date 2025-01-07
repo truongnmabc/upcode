@@ -1,13 +1,13 @@
 "use client";
 import { selectPaymentInfo } from "@/redux/features/payment.reselect";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppSelector } from "@/redux/hooks";
 // import { checkPaypalStatusAPI } from "@/services/paypal.service";
 // import { isSubscriptionId } from "@/utils/paypal";
 import Dialog from "@mui/material/Dialog";
 import React, { useEffect, useState } from "react";
 
 const PopupSubscription = () => {
-    const [option, setOption] = useState({
+    const [option] = useState({
         showPopup: false,
         message: "",
         cancelled: false,
@@ -25,26 +25,26 @@ const PopupSubscription = () => {
         // }, 500);
     };
 
-    const handleSetCookieToken = async (next_billing_time: string) => {
-        // let token = await jwt.sign(
-        //     {
-        //         timeExpired: next_billing_time,
-        //         appId: appInfo.appId,
-        //     },
-        //     process.env.NEXT_PUBLIC_SECRET_KEY
-        // );
-        // setCookieDate(PAYPAL_SUBSCRIPTION_KEY, token, new Date(next_billing_time));
-        // if (new Date(next_billing_time).getTime() !== paymentInfo.expiredDate) {
-        //     // chỗ này chỉ update lại expiredDate nên nếu khác nhau thì mới làm
-        //     let object = {
-        //         ...paymentInfo,
-        //         forceUpdate: true,
-        //         expiredDate: new Date(next_billing_time).getTime(),
-        //     };
-        //     await uploadPaymentInfoAPI(object);
-        //     dispatch(paymentSuccessAction(object));
-        // }
-    };
+    // const handleSetCookieToken = async (next_billing_time: string) => {
+    //     let token = await jwt.sign(
+    //         {
+    //             timeExpired: next_billing_time,
+    //             appId: appInfo.appId,
+    //         },
+    //         process.env.NEXT_PUBLIC_SECRET_KEY
+    //     );
+    //     setCookieDate(PAYPAL_SUBSCRIPTION_KEY, token, new Date(next_billing_time));
+    //     if (new Date(next_billing_time).getTime() !== paymentInfo.expiredDate) {
+    //         // chỗ này chỉ update lại expiredDate nên nếu khác nhau thì mới làm
+    //         let object = {
+    //             ...paymentInfo,
+    //             forceUpdate: true,
+    //             expiredDate: new Date(next_billing_time).getTime(),
+    //         };
+    //         await uploadPaymentInfoAPI(object);
+    //         dispatch(paymentSuccessAction(object));
+    //     }
+    // };
 
     // async function checkPaymentInfoFC() {
     //     let cookieValue = getCookie(PAYPAL_SUBSCRIPTION_KEY);

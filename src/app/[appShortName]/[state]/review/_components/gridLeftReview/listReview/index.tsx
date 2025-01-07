@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useAppDispatch } from "@/redux/hooks";
 import { resetState } from "@/redux/features/game";
 import { ISelectReview, ReviewContext } from "../../context";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const ListReview = () => {
     return (
@@ -57,13 +58,17 @@ type IItemCard = {
     type: ISelectReview;
 };
 const ItemCard: React.FC<IItemCard> = ({ icon, title, des, bg, type }) => {
-    const { setSelectType, selectType } = useContext(ReviewContext);
+    const { setSelectType, selectType, setIsStart } = useContext(ReviewContext);
     const dispatch = useAppDispatch();
-
+    const isMobile = useIsMobile();
     const handleSelectType = useCallback(() => {
+        if (isMobile) {
+            return;
+        }
         setSelectType(type);
+        setIsStart(false);
         dispatch(resetState());
-    }, [type, dispatch, setSelectType]);
+    }, [type, dispatch, setSelectType, isMobile]);
 
     return (
         <div

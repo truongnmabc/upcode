@@ -1,6 +1,7 @@
 import { MtUiButton } from "@/components/button";
 import Slider from "@mui/material/Slider";
-import React, { Fragment, useCallback, useState } from "react";
+import React, { Fragment, useCallback, useContext, useState } from "react";
+import { ReviewContext } from "../../context";
 
 const ChoiceQuestionBeforeStart = ({
     handleStartTest,
@@ -8,6 +9,7 @@ const ChoiceQuestionBeforeStart = ({
     handleStartTest: (e: number) => void;
 }) => {
     const [value, setValue] = useState(0);
+    const { setIsStart } = useContext(ReviewContext);
 
     const handleSliderChange = useCallback(
         (event: Event, newValue: number | number[]) => {
@@ -75,6 +77,7 @@ const ChoiceQuestionBeforeStart = ({
                     disabled={!value}
                     onClick={() => {
                         handleStartTest(value);
+                        setIsStart(true);
                     }}
                 >
                     Start

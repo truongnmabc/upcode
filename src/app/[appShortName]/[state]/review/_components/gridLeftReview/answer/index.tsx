@@ -6,9 +6,9 @@ import { ReviewContext } from "../../context";
 
 const AnswerReview = ({ isActions = false }) => {
     const listQuestion = useAppSelector(selectListQuestion);
-    const { selectType } = useContext(ReviewContext);
+    const { selectType, isStart } = useContext(ReviewContext);
 
-    if (selectType && listQuestion.length > 0) {
+    if (selectType && listQuestion.length > 0 && isStart) {
         return (
             <div className="bg-white flex flex-col gap-3 dark:bg-black p-4 rounded-md">
                 <h3 className="font-semibold text-center text-xl truncate font-poppins">

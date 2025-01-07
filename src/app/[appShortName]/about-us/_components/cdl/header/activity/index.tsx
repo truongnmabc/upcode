@@ -1,11 +1,12 @@
 "use client";
 
-import React from 'react'
-import CoreValueIcon from '@/components/icon/about/CoreValueIcon';
-import MissionIcon from '@/components/icon/about/MissionIcon'
-import VisionIcon from '@/components/icon/about/VisionIcon';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import React from "react";
+import CoreValueIcon from "@/components/icon/about/CoreValueIcon";
+import MissionIcon from "@/components/icon/about/MissionIcon";
+import VisionIcon from "@/components/icon/about/VisionIcon";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import "./style.scss";
+import LazyLoadImage from "@/components/images";
 const introAboutUs = [
     {
         title: "Mission",
@@ -34,7 +35,7 @@ const AboutActivityCdl = () => {
             {/* <img src="/images/about/back-line-component.png" alt="" /> */}
             <div className="item-intro intro-1">
                 {!isMobileResize && (
-                    <img src="/images/about/line-1.png" alt="" />
+                    <LazyLoadImage src="/images/about/line-1.png" alt="" />
                 )}
                 <MissionIcon />
                 <div
@@ -54,7 +55,7 @@ const AboutActivityCdl = () => {
             </div>
             <div className="item-intro intro-2">
                 {!isMobileResize && (
-                    <img src="/images/about/line-2.png" alt="" />
+                    <LazyLoadImage src="/images/about/line-2.png" alt="" />
                 )}
                 <VisionIcon />
                 <div
@@ -74,7 +75,7 @@ const AboutActivityCdl = () => {
             </div>
             <div className="item-intro intro-3">
                 {!isMobileResize && (
-                    <img src="/images/about/line-3.png" alt="" />
+                    <LazyLoadImage src="/images/about/line-3.png" alt="" />
                 )}
                 <CoreValueIcon />
                 <div
@@ -93,7 +94,7 @@ const AboutActivityCdl = () => {
                 />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default AboutActivityCdl
+export default AboutActivityCdl;

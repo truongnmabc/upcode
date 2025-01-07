@@ -1,4 +1,5 @@
 "use client";
+import { resetState } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
@@ -66,6 +67,18 @@ const EventListener = () => {
             window.removeEventListener("beforeunload", handleBeforeUnload);
         };
     }, [handleBeforeUnload]);
+
+    const handleBackPage = useCallback(() => {
+        dispatch(resetState());
+    }, [dispatch]);
+
+    useEffect(() => {
+        window.addEventListener("popstate", handleBackPage);
+
+        return () => {
+            window.removeEventListener("popstate", handleBackPage);
+        };
+    }, [handleBackPage]);
 
     return <></>;
 };

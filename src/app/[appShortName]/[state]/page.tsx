@@ -47,6 +47,7 @@ export default async function StatePage({ params }: Params) {
         if (!data || !appInfo) {
             redirect(`/${appShortName}`);
         }
+
         return (
             <NewHome
                 listTopics={data.topics}

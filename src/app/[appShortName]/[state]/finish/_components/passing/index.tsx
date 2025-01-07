@@ -54,7 +54,7 @@ const PassingFinishPage = ({
                 href: `study/${topicName}?type=learn&subTopic=${subTopicTag}&tag=${partTag}`,
                 appName: appShortName,
             });
-            router.push(_href);
+            router.replace(_href);
         },
         [dispatch, router]
     );
@@ -203,7 +203,7 @@ const PassingFinishPage = ({
                 href: `study/${topicName}?type=learn&subTopic=${nextPart.subTopicTag}&tag=${currentPartTag}`,
                 appName: appInfo.appShortName,
             });
-            router.push(_href);
+            router.replace(_href);
         }
     }, [
         currentPartTag,
@@ -228,7 +228,7 @@ const PassingFinishPage = ({
                 <div className="bg-white rounded-lg h-9 p-2 flex-1"></div>
             </div>
 
-            <div className="flex fixed sm:static bottom-0 left-0 z-20 bg-theme-white   sm:bg-transparent pb-8 px-4 pt-6 gap-4 max-w-[480px] w-full items-center">
+            <div className="flex fixed sm:static bottom-0 left-0 z-20 bg-theme-white   sm:bg-transparent pb-8 sm:pb-2 px-4 pt-6 gap-4 max-w-[480px] w-full items-center">
                 <MtUiButton
                     className="text-primary border-primary"
                     block

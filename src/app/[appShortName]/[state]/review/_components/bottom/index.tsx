@@ -1,26 +1,45 @@
 "use client";
 import { MtUiButton } from "@/components/button";
-import dynamic from "next/dynamic";
-import { useCallback, useContext, useState } from "react";
-import { ReviewContext } from "../context";
 import { Dialog } from "@mui/material";
+import { useCallback, useContext, useState } from "react";
 import ChoiceQuestionBeforeStart from "../content/random/choiceQuestionBeforeStart";
-const Sheet = dynamic(() => import("@/components/sheet"), {
-    ssr: false,
-});
+import { ReviewContext } from "../context";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { selectListQuestion } from "@/redux/features/game.reselect";
+import { startRandomReview } from "@/redux/features/game";
+import { genRandomQuestion } from "../content/random";
 
 const BottomLestTest = () => {
-    const { selectType } = useContext(ReviewContext);
+    const { selectType, isStart } = useContext(ReviewContext);
     const [open, setOpen] = useState(false);
-
+    const listQuestions = useAppSelector(selectListQuestion);
     const handleOpen = useCallback(() => setOpen(true), []);
 
     const handleClose = useCallback(() => setOpen(false), []);
 
-    const handleStartTest = useCallback(() => {
-        handleClose();
-    }, [handleClose]);
+    const dispatch = useAppDispatch();
 
+    const handleStartTest = useCallback(
+        async (e: number) => {
+            const listQuestionLength = listQuestions.length;
+
+            if (e > listQuestionLength) {
+                const remainLength = e - listQuestionLength;
+                const listQuestion = await genRandomQuestion({
+                    value: remainLength,
+                    excludeListID: listQuestions?.map((item) => item.id),
+                });
+                dispatch(
+                    startRandomReview({
+                        listQuestion: listQuestion,
+                    })
+                );
+            }
+            handleClose();
+        },
+        [handleClose, selectType, listQuestions, dispatch]
+    );
+    if (isStart) return <></>;
     if (
         selectType === "saved" ||
         selectType === "weak" ||
@@ -35,7 +54,7 @@ const BottomLestTest = () => {
                         size="large"
                         onClick={handleOpen}
                     >
-                        Let's Review
+                        Let&apos;s Review
                     </MtUiButton>
                 </div>
                 <Dialog

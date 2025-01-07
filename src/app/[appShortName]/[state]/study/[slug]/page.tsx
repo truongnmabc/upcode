@@ -3,9 +3,9 @@ import { API_PATH } from "@/constants/api.constants";
 import BannerDownloadApp from "@/components/bannerDownload/bannerDownloadApp";
 import MyContainer from "@/components/container";
 import SeoContent from "@/components/seoContent/seoContent";
-import MainStudyView from "@/components/study/mainStudyView";
-import HeaderMobile from "@/components/study/headerMobile";
-import QuestionGroup from "@/components/study/questionGroup";
+import MainStudyView from "./_components/mainStudyView";
+import HeaderMobile from "@/components/headerMobile";
+import QuestionGroup from "./_components/questionGroup";
 import Grid2 from "@mui/material/Grid2";
 import React, { Fragment } from "react";
 

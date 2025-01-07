@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useEffect } from "react";
-import "./index.scss";
 import DescriptionComponent from "./description";
+import "./index.scss";
 // import MyContainer from "../../v4-material/MyContainer";
-import Link from "next/link";
-import Image from "next/image";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { IAppInfo } from "@/models/app/appInfo";
+import Image from "next/image";
+import Link from "next/link";
 
 const HeaderComponent = ({ appInfo }: { appInfo: IAppInfo }) => {
     const isMobile = useIsMobile();

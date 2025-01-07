@@ -14,6 +14,8 @@ import { revertPathName } from "@/utils/pathName";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { Dialog } from "@mui/material";
 const Sheet = dynamic(() => import("@/components/sheet"), {
     ssr: false,
 });
@@ -33,6 +35,7 @@ const actionMap = {
 const BottomConfirmTest = () => {
     const { openSubmit } = useAppSelector(testState);
     const dispatch = useAppDispatch();
+    const isMobile = useIsMobile();
     const { appInfo } = useAppSelector(appInfoState);
     const pathname = usePathname();
     const listQuestions = useAppSelector(selectListQuestion);
@@ -83,6 +86,17 @@ const BottomConfirmTest = () => {
         router.replace(_href);
     }, [dispatch, appInfo.appShortName, router, pathname, type]);
 
+    if (isMobile) {
+        return (
+            <Dialog open={openSubmit} onClose={setOpenConfirm}>
+                <Content
+                    handleConfirm={handleConfirm}
+                    setOpenConfirm={setOpenConfirm}
+                    info={info}
+                />
+            </Dialog>
+        );
+    }
     return (
         <div className="zaui-sheet-content-border-none">
             <Sheet
@@ -94,37 +108,58 @@ const BottomConfirmTest = () => {
                 unmountOnClose
                 handler={false}
             >
-                <div className="w-full  px-20 py-6 bg-[#F9F7EE] flex items-center justify-between">
-                    <div>
-                        {info.answer !== info.total && (
-                            <p className="text-2xl font-medium">
-                                You answered {info.answer} out of {info.total}{" "}
-                                questions on this test.
-                            </p>
-                        )}
-                        <p className="text-[#21212185] text-base font-normal">
-                            Are you sure you want to submit the test?
-                        </p>
-                    </div>
-                    <div className="flex gap-6 items-center">
-                        <MtUiButton
-                            className="text-base px-10"
-                            onClick={setOpenConfirm}
-                        >
-                            Cancel
-                        </MtUiButton>
-                        <MtUiButton
-                            type="primary"
-                            className="text-base px-10"
-                            onClick={handleConfirm}
-                        >
-                            Submit
-                        </MtUiButton>
-                    </div>
-                </div>
+                <Content
+                    handleConfirm={handleConfirm}
+                    setOpenConfirm={setOpenConfirm}
+                    info={info}
+                />
             </Sheet>
         </div>
     );
 };
 
 export default React.memo(BottomConfirmTest);
+
+const Content = ({
+    info,
+    setOpenConfirm,
+    handleConfirm,
+}: {
+    setOpenConfirm: () => void;
+    handleConfirm: () => void;
+    info: {
+        answer: number;
+        total: number;
+    };
+}) => {
+    return (
+        <div className="w-full p-3 gap-2 sm:p-0  sm:px-20 sm:py-6 bg-[#F9F7EE] flex items-center flex-col sm:flex-row justify-between">
+            <div className="w-full">
+                {info.answer !== info.total && (
+                    <p className="text-base text-center sm:text-start sm:text-2xl font-medium">
+                        You answered {info.answer} out of {info.total} questions
+                        on this test.
+                    </p>
+                )}
+                <p className="text-sm text-[#21212185] sm:text-base font-normal">
+                    Are you sure you want to submit the test?
+                </p>
+            </div>
+            <div className="flex gap-6 items-center">
+                <MtUiButton
+                    className="text-base px-10"
+                    onClick={setOpenConfirm}
+                >
+                    Cancel
+                </MtUiButton>
+                <MtUiButton
+                    type="primary"
+                    className="text-base px-10"
+                    onClick={handleConfirm}
+                >
+                    Submit
+                </MtUiButton>
+            </div>
+        </div>
+    );
+};

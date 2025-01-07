@@ -91,7 +91,7 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
                     <TopContactCdl
                         emailSupport={emailSupport}
                         appInfo={appInfo}
-                        valueSendMail={validateEmail}
+                        valueSendMail={valueSendMail}
                         onChangeEmail={onChangeEmail}
                         checkEmailExist={checkEmailExist}
                         onChangeMessage={onChangeMessage}
@@ -105,7 +105,7 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
                     <TopContactAsvab
                         emailSupport={emailSupport}
                         appInfo={appInfo}
-                        valueSendMail={validateEmail}
+                        valueSendMail={valueSendMail}
                         onChangeEmail={onChangeEmail}
                         checkEmailExist={checkEmailExist}
                         onChangeMessage={onChangeMessage}

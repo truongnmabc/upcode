@@ -137,11 +137,6 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                 aboveFifty,
                 parentId,
             });
-            console.log("🚀 ~ listQuestion:", listQuestion);
-            console.log(
-                "not ",
-                listQuestion.filter((item) => !item.icon)
-            );
 
             return {
                 listQuestion,

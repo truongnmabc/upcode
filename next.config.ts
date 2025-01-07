@@ -10,7 +10,7 @@ const nextConfig: NextConfig = withPlugins([[withBundleAnalyzer()]], {
 
     // Bỏ qua lỗi khi build
 
-    reactStrictMode: true,
+    reactStrictMode: false,
     eslint: {
         ignoreDuringBuilds: false,
     },

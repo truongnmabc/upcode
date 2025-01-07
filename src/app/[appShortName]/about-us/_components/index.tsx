@@ -11,6 +11,7 @@ import AboutActivityCdl from "./cdl/header/activity";
 import AboutHeaderCdl from "./cdl/header";
 import HeaderComponent from "./asvab/header";
 import ActivityComponent from "./asvab/activity";
+import LazyLoadImage from "@/components/images";
 
 const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
     const [listMember, setListMember] = useState<IMember[]>([]);
@@ -70,7 +71,10 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
                                             );
                                         }}
                                     >
-                                        <img src={item.avatar} alt="" />
+                                        <LazyLoadImage
+                                            src={item.avatar}
+                                            alt=""
+                                        />
                                     </div>
                                     <div
                                         className="name"

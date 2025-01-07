@@ -35,7 +35,8 @@ const FN = ({
             return <CheckCircleRoundedIcon htmlColor="#00c17c" sx={_sx} />; // chọn đúng hoặc đáp án đúng
         } else {
             return (
-                <RadioButtonUncheckedRoundedIcon htmlColor="#AEAEB2" sx={_sx} />
+                // <RadioButtonUncheckedRoundedIcon htmlColor="#AEAEB2" sx={_sx} />
+                <CancelRoundedIcon htmlColor="#fb7072" sx={_sx} /> // chọn sai
             );
         }
     }

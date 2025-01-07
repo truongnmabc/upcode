@@ -72,24 +72,30 @@ const AuthProvider = () => {
         [handleClose]
     );
 
-    const handleLoginInSuccess = async (event: AppleIDSignInSuccessEvent) => {
-        if (event?.detail?.authorization?.id_token) {
-            signIn("token", {
-                redirect: false,
-                token: event.detail.authorization.id_token,
-            });
-            handleClose();
-        }
-    };
-    const handleLoginFailed = async (event: AppleIDSignInFailureEvent) => {
-        try {
-            if (event?.detail?.error != "popup_closed_by_user") {
-                // await sendErrorToDiscord(event?.detail?.error, "Login Apple Error");
+    const handleLoginInSuccess = useCallback(
+        async (event: AppleIDSignInSuccessEvent) => {
+            if (event?.detail?.authorization?.id_token) {
+                signIn("token", {
+                    redirect: false,
+                    token: event.detail.authorization.id_token,
+                });
+                handleClose();
             }
-        } catch (error) {
-            console.log("error handle", error);
-        }
-    };
+        },
+        [handleClose]
+    );
+    const handleLoginFailed = useCallback(
+        async (event: AppleIDSignInFailureEvent) => {
+            try {
+                if (event?.detail?.error != "popup_closed_by_user") {
+                    // await sendErrorToDiscord(event?.detail?.error, "Login Apple Error");
+                }
+            } catch (error) {
+                console.log("error handle", error);
+            }
+        },
+        []
+    );
 
     useEffect(() => {
         if (
