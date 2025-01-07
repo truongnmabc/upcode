@@ -109,8 +109,7 @@ export const handleNavigateStudy = async ({
         appName: appShortName,
     });
     dispatch(selectTopics(topic.id));
-    console.log("🚀 ~ subTopicTag:", subTopicTag);
-    console.log("🚀 ~ tag:", tag);
+
     if (tag && subTopicTag) {
         dispatch(
             initQuestionThunk({
@@ -143,7 +142,6 @@ const TitleTopic = ({
     const router = useRouter();
     const pathname = usePathname();
     const [currentPathname, setCurrentPathname] = useState(pathname);
-
     const isMobile = useIsMobile();
     const selectedTopics = useAppSelector(selectTopicsId);
     const dispatch = useAppDispatch();

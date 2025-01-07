@@ -1,5 +1,5 @@
-import BtnNextQuestion from "@/components/study/mainStudyView/bottomBtn/btnNextQuestion";
-import BtnSubmit from "@/components/study/mainStudyView/bottomBtn/btnSubmit";
+import BtnNextQuestion from "@/components/bottomActions/next/learn";
+import BtnSubmit from "@/components/bottomActions/btnSubmit";
 import Keyboard from "@/components/keyboard";
 import SubAction from "@/components/reaction";
 import React from "react";

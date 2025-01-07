@@ -18,6 +18,7 @@ import { appConfigState } from "@/redux/features/appConfig";
 import RouterApp from "@/router/router.constant";
 import ForwardedLinkBlank from "../nextLink/forwardedLinkBlank";
 import { usePathname, useRouter } from "next/navigation";
+import LazyLoadImage from "../images";
 
 const FooterLandingV4 = () => {
     const router = useRouter();
@@ -64,12 +65,12 @@ const FooterLandingV4 = () => {
                     _email.current.value = "";
                     _message.current.value = "";
                 } else {
-                    (error_email.current.innerHTML = isValidEmail
+                    error_email.current.innerHTML = isValidEmail
                         ? ""
-                        : "Please provide a valid email address!"),
-                        (error_message.current.innerHTML = isValidMessage
-                            ? ""
-                            : "Type your message please!");
+                        : "Please provide a valid email address!";
+                    error_message.current.innerHTML = isValidMessage
+                        ? ""
+                        : "Type your message please!";
                 }
             } catch (error) {
                 console.log("footer send mail error", error);
@@ -135,9 +136,9 @@ const FooterLandingV4 = () => {
         );
     };
 
-    if (pathname.includes("test")) {
-        return <div className="w-full h-[124px]"></div>;
-    }
+    // if (pathname.includes("test")) {
+    //     return <div className="w-full h-[124px]"></div>;
+    // }
 
     return (
         <div className="v4-footer-landing-0">
@@ -146,11 +147,10 @@ const FooterLandingV4 = () => {
                     <div className="cluster-logo-protected">
                         <Link href="/">
                             <div className={"logo-footer-v4"}>
-                                <img
-                                    className="img-logo-footer"
+                                <LazyLoadImage
+                                    classNames="img-logo-footer w-[162px]"
                                     src={getSrcLogo()}
                                     alt={"logo-" + appInfo.appShortName}
-                                    width={162}
                                 />
                             </div>
                         </Link>
@@ -186,7 +186,10 @@ const FooterLandingV4 = () => {
                                     router.push(`mailto:${emailSupport}`);
                                 }}
                             >
-                                <img src="/images/contacts/sms.png" alt="" />
+                                <LazyLoadImage
+                                    src="/images/contacts/sms.png"
+                                    alt=""
+                                />
 
                                 <div className="text-info">{emailSupport}</div>
                             </div>
@@ -197,7 +200,10 @@ const FooterLandingV4 = () => {
                                 router.push("/");
                             }}
                         >
-                            <img src="/images/contacts/location.png" alt="" />
+                            <LazyLoadImage
+                                src="/images/contacts/location.png"
+                                alt=""
+                            />
                             <div className="text-info">
                                 209 S Rosemont Ave, Dallas, TX 75208
                             </div>

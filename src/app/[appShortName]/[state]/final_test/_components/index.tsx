@@ -2,10 +2,10 @@ import SeoContent from "@/components/seoContent/seoContent";
 import { Grid2 } from "@mui/material";
 import MainViewFinalTest from "./mainView";
 import { Fragment } from "react";
-import HeaderMobile from "@/components/study/headerMobile";
 import MyContainer from "@/components/container";
-import AnswerSheet from "@/components/study/questionGroup/answer/answerSheet";
 import BannerDownloadApp from "@/components/bannerDownload/bannerDownloadApp";
+import HeaderMobile from "@/components/headerMobile";
+import AnswerSheet from "@/components/listLeftQuestions";
 
 const FinalTestLayout = ({ contentSeo }: { contentSeo: string }) => {
     return (

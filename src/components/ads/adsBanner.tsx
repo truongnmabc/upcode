@@ -1,8 +1,8 @@
 import ctx from "@/utils/mergeClass";
 import React, { useEffect } from "react";
-import BtnRemove from "./btnRemove";
 import Config from "@/config";
 import "./index.css";
+import BtnRemove from "./BtnRemove";
 
 const countClickAds = () => {
     const clickAds = localStorage.getItem(Config.KEY_CLICK_ADS);

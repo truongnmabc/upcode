@@ -34,7 +34,7 @@ const plateHolder = {
 const initGameReducer: IGameReducer = {
     currentGame: plateHolder,
     listQuestion: [],
-    passing: 10,
+    passing: 80,
     indexCurrentQuestion: 0,
     idTopic: -1,
     listWrongAnswers: [],

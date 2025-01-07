@@ -2,9 +2,10 @@
 import { IAppInfo } from "@/models/app/appInfo";
 import { useMediaQuery } from "@mui/material";
 import { useRouter } from "next/navigation";
-import React, { Fragment } from "react";
+import React, { Fragment, RefObject } from "react";
 import { SocialsIcon } from "..";
 import "./style.scss";
+import LazyLoadImage from "@/components/images";
 const TopContactCdl = ({
     emailSupport,
     appInfo,
@@ -16,15 +17,18 @@ const TopContactCdl = ({
     handleSubmit,
     btn,
 }: {
-    emailSupport: any;
+    emailSupport: string;
     appInfo: IAppInfo;
-    valueSendMail: any;
-    onChangeEmail: any;
-    checkEmailExist: any;
-    onChangeMessage: any;
-    checkMessageExist: any;
-    handleSubmit: any;
-    btn: any;
+    valueSendMail: {
+        email: string;
+        message: string;
+    };
+    onChangeEmail: React.ChangeEventHandler<HTMLInputElement>;
+    checkEmailExist: boolean;
+    onChangeMessage: React.ChangeEventHandler<HTMLTextAreaElement>;
+    checkMessageExist: boolean;
+    handleSubmit: () => void;
+    btn: RefObject<HTMLButtonElement>;
 }) => {
     const isMobile = useMediaQuery("(max-width:768px)");
     const router = useRouter();
@@ -81,7 +85,7 @@ const TopContactCdl = ({
                         Send
                     </button>
                     {!isMobile ? (
-                        <img
+                        <LazyLoadImage
                             src="/images/contacts/cdl/form-contact-send-mail.png"
                             alt=""
                         />
@@ -100,7 +104,7 @@ const TopContactCdl = ({
                                         router.push(`mailto:${emailSupport}`);
                                     }}
                                 >
-                                    <img
+                                    <LazyLoadImage
                                         src="/images/contacts/sms.png"
                                         alt=""
                                     />
@@ -123,8 +127,8 @@ const TopContactCdl = ({
             {!isMobile && (
                 <div className="in-form-cdl max-w-component-desktop">
                     <div className="left-form">
-                        <img
-                            className="img-back"
+                        <LazyLoadImage
+                            classNames="img-back"
                             src="/images/contacts/cdl/truck-contact-page.png"
                             alt=""
                         />
@@ -140,7 +144,7 @@ const TopContactCdl = ({
                                         router.push(`mailto:${emailSupport}`);
                                     }}
                                 >
-                                    <img
+                                    <LazyLoadImage
                                         src="/images/contacts/sms.png"
                                         alt=""
                                     />
@@ -156,7 +160,7 @@ const TopContactCdl = ({
                                     router.push("/");
                                 }}
                             >
-                                <img
+                                <LazyLoadImage
                                     src="/images/contacts/location.png"
                                     alt=""
                                 />

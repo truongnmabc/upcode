@@ -22,6 +22,7 @@ export interface ICurrentGame
     passing?: number;
     image?: string;
     icon?: string;
+    type?: "test" | "learn";
 }
 
 export interface IGameReducer {

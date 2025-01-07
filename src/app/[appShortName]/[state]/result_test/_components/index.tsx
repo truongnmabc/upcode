@@ -3,7 +3,6 @@ import { TypeParam } from "@/constants";
 import { db } from "@/db/db.model";
 import { ICurrentGame } from "@/models/game/game";
 import { ITopic } from "@/models/topics/topics";
-import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -17,11 +16,175 @@ import {
     selectPassing,
 } from "@/redux/features/game.reselect";
 import clsx from "clsx";
+import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
+import { IExamData } from "@/models/tests/tests";
+import { ITestQuestion } from "@/models/tests/testQuestions";
 
 export interface ITopicEndTest extends ITopic {
     totalQuestion: number;
     correct: number;
 }
+
+const fetchData = async (idTopic: number) => {
+    const [user, topics, questions] = await Promise.all([
+        db?.userProgress.where("parentId").equals(idTopic).toArray(),
+        db?.topics.toArray(),
+        db?.testQuestions?.where("parentId").equals(idTopic).first(),
+    ]);
+
+    return { user, topics, questions };
+};
+
+const calculatePassList = (user: IUserQuestionProgress[]) => {
+    return user?.filter((item) =>
+        item.selectedAnswers?.find((ans) => ans.correct)
+    );
+};
+
+const getUniqueTags = (listQuestion: ICurrentGame[]) => {
+    return listQuestion.reduce<string[]>((acc, question) => {
+        if (question.tag && !acc.includes(question.tag)) {
+            acc.push(question.tag);
+        }
+        return acc;
+    }, []);
+};
+
+const getReviewTopics = (
+    uniqueTags: string[],
+    listQuestion: ICurrentGame[],
+    topics: ITopic[]
+): ITopicEndTest[] => {
+    return uniqueTags
+        .map((tag) => {
+            const topic = topics?.find((t) => t.tag === tag);
+            if (!topic) return null;
+
+            const topicQuestions = listQuestion.filter((q) => q.tag === tag);
+            const correctCount = topicQuestions.filter(
+                (q) => q.selectedAnswer?.correct
+            ).length;
+
+            return {
+                ...topic,
+                totalQuestion: topicQuestions.length,
+                correct: correctCount,
+            };
+        })
+        .filter((item): item is ITopicEndTest => item !== null);
+};
+
+const calculateTopics = (
+    type: string | null,
+    topics: ITopic[] | undefined,
+    questions: ITestQuestion | undefined,
+    listExam: IExamData[],
+    listQuestion: ICurrentGame[]
+): ITopicEndTest[] => {
+    let listTopic: ITopicEndTest[] = [];
+
+    if (type === TypeParam.diagnosticTest) {
+        if (topics) {
+            listTopic = topics.map((t) => ({
+                ...t,
+                totalQuestion: 3,
+                correct: listQuestion.filter(
+                    (q) => q.selectedAnswer?.correct && q.tag === t.tag
+                ).length,
+            }));
+        }
+    }
+
+    if (type === TypeParam.practiceTest || type === TypeParam.finalTest) {
+        if (questions && topics && listExam) {
+            listTopic = topics
+                ?.filter((t) => questions?.topicIds?.includes(t.id))
+                ?.map((t) => {
+                    const exam = listExam.find((e) => e.topicId === t.id);
+                    const correctList = listQuestion?.filter(
+                        (q) =>
+                            exam?.questionIds?.includes(q.id) &&
+                            q.selectedAnswer?.correct
+                    );
+
+                    return {
+                        ...t,
+                        totalQuestion: exam?.totalQuestion || 1,
+                        correct: correctList?.length || 0,
+                    };
+                });
+        }
+    }
+
+    if (type === TypeParam.customTest) {
+        if (topics && questions) {
+            const totalCount = questions?.count || 0;
+            const subjectCount = questions?.subject?.length || 1;
+
+            const baseQuestionCount = Math.floor(totalCount / subjectCount);
+            const remainder = totalCount % subjectCount;
+
+            listTopic = topics
+                ?.filter((t) => questions?.subject?.includes(t.id))
+                ?.map((t, index, array) => {
+                    const isLast = index === array.length - 1;
+                    const topicQuestions = listQuestion.filter(
+                        (q) => q.parentId === t.id
+                    );
+
+                    const correctCount = topicQuestions.filter(
+                        (q) => q.selectedAnswer?.correct
+                    ).length;
+
+                    return {
+                        ...t,
+                        totalQuestion:
+                            baseQuestionCount + (isLast ? remainder : 0),
+                        correct: correctCount,
+                    };
+                });
+        }
+    }
+
+    return listTopic;
+};
+
+const processAllQuestions = (
+    type: string | null,
+    listExam: IExamData[],
+    listQuestion: ICurrentGame[],
+    topics: ITopic[] | undefined
+): ICurrentGame[] => {
+    return type === TypeParam.diagnosticTest ||
+        type === TypeParam.customTest ||
+        type === TypeParam.review
+        ? listQuestion
+        : listQuestion.map((item) => {
+              const matchingExam = listExam?.find((exam) =>
+                  exam.questionIds?.includes(item.id)
+              );
+              const matchingTopic = topics?.find(
+                  (topic) => topic.id === matchingExam?.topicId
+              );
+
+              return {
+                  ...item,
+                  icon: matchingTopic?.icon || "",
+                  tag: matchingTopic?.tag || "",
+                  parentId: matchingTopic?.id || -1,
+              };
+          });
+};
+
+const calculatePercentage = (
+    listPass: IUserQuestionProgress[],
+    listQuestion: ICurrentGame[]
+) => {
+    return listPass && listQuestion?.length
+        ? Math.floor((listPass.length / listQuestion.length) * 100)
+        : 0;
+};
+
 const ResultTestLayout = () => {
     const listQuestion = useAppSelector(selectListQuestion);
     const idTopic = useAppSelector(selectIdTopic);
@@ -58,124 +221,46 @@ const ResultTestLayout = () => {
 
     const handleGetData = useCallback(async () => {
         if (idTopic && passing) {
-            const [user, topics, questions] = await Promise.all([
-                db?.userProgress.where("parentId").equals(idTopic).toArray(),
-                db?.topics.toArray(),
-                db?.testQuestions?.where("parentId").equals(idTopic).first(),
-            ]);
+            const { user, topics, questions } = await fetchData(idTopic);
 
-            const listPass = user?.filter((item) =>
-                item.selectedAnswers?.find((ans) => ans.correct)
-            );
-
-            let listTopic: ITopicEndTest[] = [];
+            const listPass =
+                type === TypeParam.review
+                    ? listQuestion.filter(
+                          (item) => item.localStatus === "correct"
+                      )
+                    : calculatePassList(user || []);
 
             const listExam =
                 questions?.groupExamData?.flatMap((item) => item.examData) ||
                 [];
 
+            let listTopic: ITopicEndTest[] = [];
+
             if (type === TypeParam.review) {
-                console.log("🚀 ~ ResultTestLayout ~ type:", type);
-                console.log("first", listQuestion);
-                console.log("idTopic", idTopic);
+                const uniqueTags = getUniqueTags(listQuestion);
+                listTopic = getReviewTopics(
+                    uniqueTags,
+                    listQuestion,
+                    topics || []
+                );
+            } else {
+                listTopic = calculateTopics(
+                    type,
+                    topics,
+                    questions,
+                    listExam,
+                    listQuestion
+                );
             }
 
-            if (type === TypeParam.diagnosticTest) {
-                if (topics) {
-                    listTopic = topics.map((t) => ({
-                        ...t,
-                        totalQuestion: 3,
-                        correct: listQuestion.filter(
-                            (q) => q.selectedAnswer?.correct && q.tag === t.tag
-                        ).length,
-                    }));
-                }
-            }
+            const percent = calculatePercentage(listPass, listQuestion);
 
-            if (
-                type === TypeParam.practiceTest ||
-                type === TypeParam.finalTest
-            ) {
-                if (questions && topics && listExam) {
-                    listTopic = topics
-                        ?.filter((t) => questions?.topicIds?.includes(t.id))
-                        ?.map((t) => {
-                            const exam = listExam.find(
-                                (e) => e.topicId === t.id
-                            );
-                            const correctList = listQuestion?.filter(
-                                (q) =>
-                                    exam?.questionIds?.includes(q.id) &&
-                                    q.selectedAnswer?.correct
-                            );
-
-                            return {
-                                ...t,
-                                totalQuestion: exam?.totalQuestion || 1,
-                                correct: correctList?.length || 0,
-                            };
-                        });
-                }
-            }
-
-            if (type === TypeParam.customTest) {
-                if (topics && questions) {
-                    const totalCount = questions?.count || 0;
-                    const subjectCount = questions?.subject?.length || 1;
-
-                    const baseQuestionCount = Math.floor(
-                        totalCount / subjectCount
-                    );
-
-                    const remainder = totalCount % subjectCount;
-
-                    listTopic = topics
-                        ?.filter((t) => questions?.subject?.includes(t.id))
-                        ?.map((t, index, array) => {
-                            const isLast = index === array.length - 1;
-                            const topicQuestions = listQuestion.filter(
-                                (q) => q.parentId === t.id
-                            );
-
-                            const correctCount = topicQuestions.filter(
-                                (q) => q.selectedAnswer?.correct
-                            ).length;
-
-                            return {
-                                ...t,
-                                totalQuestion:
-                                    baseQuestionCount +
-                                    (isLast ? remainder : 0),
-                                correct: correctCount,
-                            };
-                        });
-                }
-            }
-
-            const percent =
-                listPass && listQuestion?.length
-                    ? Math.floor((listPass.length / listQuestion.length) * 100)
-                    : 0;
-
-            const allQuestions =
-                type === TypeParam.diagnosticTest ||
-                type === TypeParam.customTest
-                    ? listQuestion
-                    : listQuestion.map((item) => {
-                          const matchingExam = listExam?.find((exam) =>
-                              exam.questionIds?.includes(item.id)
-                          );
-                          const matchingTopic = topics?.find(
-                              (topic) => topic.id === matchingExam?.topicId
-                          );
-
-                          return {
-                              ...item,
-                              icon: matchingTopic?.icon || "",
-                              tag: matchingTopic?.tag || "",
-                              parentId: matchingTopic?.id || -1,
-                          };
-                      });
+            const allQuestions = processAllQuestions(
+                type,
+                listExam,
+                listQuestion,
+                topics
+            );
 
             setResult({
                 pass: listPass?.length || 0,
@@ -190,6 +275,7 @@ const ResultTestLayout = () => {
                     (item) => item.selectedAnswer?.correct
                 ),
             });
+
             setTabletData({
                 all: allQuestions,
                 incorrect: allQuestions.filter(
@@ -215,7 +301,7 @@ const ResultTestLayout = () => {
                     percent={result.percent}
                 />
             </div>
-            <MyContainer>
+            <MyContainer className="sm:pb-6 pb-4">
                 <ChartContentResultPage listTopic={result.listTopic} />
                 <div
                     className={clsx("w-full flex flex-col pt-6  ", {

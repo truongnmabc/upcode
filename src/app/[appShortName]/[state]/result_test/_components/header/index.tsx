@@ -38,30 +38,45 @@ const HeaderResultTest: React.FC<IProps> = (info) => {
     const dispatch = useAppDispatch();
 
     const handleTryAgain = useCallback(async () => {
-        if (type === TypeParam.diagnosticTest) {
-            dispatch(startTryAgainDiagnostic());
-            const _href = revertPathName({
-                appName: appInfo.appShortName,
-                href: RouterApp.Diagnostic_test,
-            });
-            return router.replace(_href);
-        }
-        if (type === TypeParam.finalTest) {
-            dispatch(initFinalTestThunk());
-            const _href = revertPathName({
-                appName: appInfo.appShortName,
-                href: RouterApp.Final_test,
-            });
-            return router.replace(_href);
+        let _href = "";
+        switch (type) {
+            case TypeParam.diagnosticTest:
+                dispatch(startTryAgainDiagnostic());
+                _href = revertPathName({
+                    appName: appInfo.appShortName,
+                    href: RouterApp.Diagnostic_test,
+                });
+                break;
+
+            case TypeParam.finalTest:
+                dispatch(initFinalTestThunk());
+                _href = revertPathName({
+                    appName: appInfo.appShortName,
+                    href: RouterApp.Final_test,
+                });
+                break;
+
+            case TypeParam.practiceTest:
+                dispatch(startOverGame());
+                _href = revertPathName({
+                    appName: appInfo.appShortName,
+                    href: `study/${TypeParam.practiceTest}?type=test&testId=${idTopic}`,
+                });
+                break;
+
+            case TypeParam.review:
+                _href = revertPathName({
+                    appName: appInfo.appShortName,
+                    href: RouterApp.Review,
+                });
+                break;
+
+            default:
+                return;
         }
 
-        if (type === TypeParam.practiceTest) {
-            dispatch(startOverGame());
-            const _href = revertPathName({
-                appName: appInfo.appShortName,
-                href: `study/${TypeParam.practiceTest}?type=test&testId=${idTopic}`,
-            });
-            return router.replace(_href);
+        if (_href) {
+            router.replace(_href);
         }
     }, [router, appInfo, idTopic, dispatch, type]);
 
@@ -169,4 +184,4 @@ const HeaderResultTest: React.FC<IProps> = (info) => {
     );
 };
 
-export default HeaderResultTest;
+export default React.memo(HeaderResultTest);

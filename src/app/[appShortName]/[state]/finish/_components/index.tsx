@@ -3,7 +3,7 @@ import { db } from "@/db/db.model";
 import { IAnswer } from "@/models/question/questions";
 import { useAppSelector } from "@/redux/hooks";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import GridTopicProgress from "./gridTopic";
 import PassingFinishPage from "./passing";
 import ProgressFinishPage from "./progress";
@@ -14,7 +14,6 @@ import MyContainer from "@/components/container";
 const FinishLayout = () => {
     const subTopicProgressId = useSearchParams().get("subTopicProgressId");
     const partId = useSearchParams().get("partId");
-
     const turn = useAppSelector(selectTurn);
 
     const [game, setGame] = useState<{
@@ -37,56 +36,57 @@ const FinishLayout = () => {
         currentTurn: 0,
     });
 
-    useEffect(() => {
-        const handleGetData = async () => {
-            if (subTopicProgressId && turn && partId) {
-                const data = await db?.subTopicProgress
-                    .where("id")
-                    .equals(Number(subTopicProgressId))
-                    .first();
+    const handleGetData = useCallback(async () => {
+        if (subTopicProgressId && turn && partId) {
+            const data = await db?.subTopicProgress
+                .where("id")
+                .equals(Number(subTopicProgressId))
+                .first();
 
-                const partIndex =
-                    data?.part.findIndex((item) => item.status === 1) || 0;
+            const partIndex =
+                data?.part.findIndex((item) => item.status === 1) || 0;
 
-                const useProgress =
-                    (await db?.userProgress
-                        .where("parentId")
-                        .equals(Number(partId))
-                        .sortBy("index")) || [];
+            const useProgress =
+                (await db?.userProgress
+                    .where("parentId")
+                    .equals(Number(partId))
+                    .sortBy("index")) || [];
 
-                const maxTurn = useProgress.reduce((max, item) => {
-                    const turns = item.selectedAnswers
-                        ?.map((s) => s.turn)
-                        .filter((item) => item !== undefined);
-                    return Math.max(max, ...(turns || []));
-                }, 0);
+            const maxTurn = useProgress.reduce((max, item) => {
+                const turns = item.selectedAnswers
+                    ?.map((s) => s.turn)
+                    .filter((item) => item !== undefined);
+                return Math.max(max, ...(turns || []));
+            }, 0);
 
-                const filteredAnswers = useProgress
-                    .flatMap((item) =>
-                        item.selectedAnswers?.find((s) => s.turn === turn)
-                    )
-                    .filter((item): item is IAnswer => item !== undefined);
+            const filteredAnswers = useProgress
+                .flatMap((item) =>
+                    item.selectedAnswers?.find((s) => s.turn === turn)
+                )
+                .filter((item): item is IAnswer => item !== undefined);
 
-                const nextPart = data?.part?.find((p) => p.status === 0);
+            const nextPart = data?.part?.find((p) => p.status === 0);
 
-                if (filteredAnswers && filteredAnswers.length && data?.id) {
-                    setGame({
-                        currentPart: partIndex + 1,
-                        listAnswer: filteredAnswers,
-                        nextPart: {
-                            subTopicTag: data.subTopicTag,
-                            tag: nextPart?.tag || "",
-                        },
-                        currentPartTag:
-                            data.part.find((item) => item.id === Number(partId))
-                                ?.tag || "",
-                        currentTurn: maxTurn,
-                    });
-                }
+            if (filteredAnswers && filteredAnswers.length && data?.id) {
+                setGame({
+                    currentPart: partIndex + 1,
+                    listAnswer: filteredAnswers,
+                    nextPart: {
+                        subTopicTag: data.subTopicTag,
+                        tag: nextPart?.tag || "",
+                    },
+                    currentPartTag:
+                        data.part.find((item) => item.id === Number(partId))
+                            ?.tag || "",
+                    currentTurn: maxTurn,
+                });
             }
-        };
-        handleGetData();
+        }
     }, [subTopicProgressId, partId, turn]);
+
+    useEffect(() => {
+        handleGetData();
+    }, [handleGetData]);
 
     return (
         <MyContainer>

@@ -1,5 +1,4 @@
 "use client";
-import { gameState } from "@/redux/features/game";
 import { selectIdTopic } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import getListActionThunk from "@/redux/repository/user/getActions";

@@ -6,9 +6,11 @@ import HardQuestions from "./hard";
 import SavedQuestions from "./saved";
 import AllQuestions from "./all";
 import BottomLestTest from "../bottom";
+import RandomGameContent from "./random/randomGameContent";
+import SheetSelectQuestions from "../sheet";
 
 const ReviewContentGroup = () => {
-    const { selectType } = useContext(ReviewContext);
+    const { selectType, isStart } = useContext(ReviewContext);
     const componentMapping = {
         random: <RandomQuestions />,
         weak: <WeakQuestions />,
@@ -18,8 +20,15 @@ const ReviewContentGroup = () => {
     };
     return (
         <Fragment>
-            {componentMapping[selectType]}
+            {isStart ? (
+                <Fragment>
+                    <RandomGameContent />
+                </Fragment>
+            ) : (
+                <Fragment>{componentMapping[selectType]}</Fragment>
+            )}
             <BottomLestTest />
+            {/* <SheetSelectQuestions /> */}
         </Fragment>
     );
 };

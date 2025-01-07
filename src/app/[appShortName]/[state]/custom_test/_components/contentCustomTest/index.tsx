@@ -1,18 +1,15 @@
 "use client";
-import ClockIcon from "@/components/icon/ClockIcon";
-import BtnSubmit from "@/components/study/mainStudyView/bottomBtn/btnSubmit";
-import Keyboard from "@/components/keyboard";
-import SubAction from "@/components/reaction";
+import BottomActions from "@/components/bottomActions";
 import ChoicesPanel from "@/components/choicesPanel";
 import ExplanationDetail from "@/components/explanation";
-import ProgressQuestion from "@/components/study/mainStudyView/progress/progressQuestion";
+import ClockIcon from "@/components/icon/ClockIcon";
 import QuestionContent from "@/components/question";
 import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
 import { MathJaxContext } from "better-react-mathjax";
 import React, { Fragment } from "react";
 import CountTimeCustomTest from "../countTimeCustomTest";
-import NextQuestionCustomTest from "../nextQuestionCustomTest";
+import ProgressQuestion from "@/components/progressQuestion";
 
 const ContentCustomTest = () => {
     const { feedBack, indexSubTopic } = useAppSelector(gameState);
@@ -40,16 +37,8 @@ const ContentCustomTest = () => {
                             <ExplanationDetail unLock={feedBack === "newbie"} />
                         )}
                     </div>
-                    <div className="flex fixed sm:static shadow-bottom sm:shadow-none  bottom-0 left-0 right-0 z-50 bg-theme-dark sm:px-4 sm:bg-[#7C6F5B0F] flex-col sm:flex-row pb-8 pt-3 sm:py-3 justify-between gap-2 sm:gap-4 items-center ">
-                        <div className="flex  gap-2 sm:gap-8 items-center">
-                            <Keyboard />
-                            <SubAction />
-                        </div>
-                        <div className="px-4 w-full flex items-center gap-2 sm:p-4 sm:w-fit">
-                            <BtnSubmit isShow={true} />
-                            <NextQuestionCustomTest />
-                        </div>
-                    </div>
+
+                    <BottomActions isShow={true} type="custom" />
                 </Fragment>
             </div>
         </MathJaxContext>

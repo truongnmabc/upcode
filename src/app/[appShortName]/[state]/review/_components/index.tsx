@@ -15,9 +15,10 @@ const ReviewView = ({ contentSeo }: { contentSeo: string }) => {
     const dispatch = useAppDispatch();
     useEffect(() => {
         dispatch(resetState());
-    }, []);
+    }, [dispatch]);
+
     return (
-        <div className="sm:py-4" id="v4-study-main-view-0">
+        <div className="sm:py-4 pb-4 " id="v4-study-main-view-0">
             <ReviewProvider>
                 <Grid2
                     container
@@ -27,12 +28,14 @@ const ReviewView = ({ contentSeo }: { contentSeo: string }) => {
                     <Grid2
                         size={{
                             sm: 3,
-                            xs: 0,
+                            xs: 12,
                         }}
                     >
-                        <div className="hidden sm:flex  flex-col gap-3">
+                        <div className="flex flex-col gap-3">
                             <AnswerReview />
-                            <p className="text-xl font-semibold">Review</p>
+                            <p className="text-xl text-center sm:text-start font-semibold">
+                                Review
+                            </p>
                             <ListReview />
                         </div>
                     </Grid2>

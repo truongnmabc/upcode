@@ -2,7 +2,7 @@
 import { selectUserInfo } from "@/redux/features/user.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import Dialog from "@mui/material/Dialog";
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState, memo, useCallback } from "react";
 // import FuckAdBlock from "fuckadblock";
 
 const AdsBlockerDetect = () => {
@@ -10,12 +10,12 @@ const AdsBlockerDetect = () => {
     const [showPopUpDetectAdsBlock, setShowPopUpDetectAdsBlock] =
         useState(false);
 
-    // const handleAdBlockDetected = () => {
-    //     console.log("AdBlock detected!");
-    //     if (!userInfo.isPro) {
-    //         setShowPopUpDetectAdsBlock(true);
-    //     }
-    // };
+    const handleAdBlockDetected = useCallback(() => {
+        console.log("AdBlock detected!");
+        if (!userInfo.isPro) {
+            setShowPopUpDetectAdsBlock(true);
+        }
+    }, [userInfo.isPro]);
 
     // const handleAdBlockNotDetected = () => {
     //     console.log("AdBlock not detected!");
@@ -33,7 +33,8 @@ const AdsBlockerDetect = () => {
         // return () => {
         //     fab.clearEventListeners();
         // };
-    }, [userInfo]);
+        if (false) handleAdBlockDetected();
+    }, [userInfo, handleAdBlockDetected]);
 
     return (
         <Dialog

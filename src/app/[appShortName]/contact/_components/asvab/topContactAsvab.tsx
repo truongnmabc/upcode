@@ -2,9 +2,10 @@
 import { IAppInfo } from "@/models/app/appInfo";
 import { useMediaQuery } from "@mui/material";
 import { useRouter } from "next/navigation";
-import React, { Fragment } from "react";
+import React, { Fragment, RefObject } from "react";
 import { SocialsIcon } from "..";
 import "./style.scss";
+import LazyLoadImage from "@/components/images";
 
 const TopContactAsvab = ({
     emailSupport,
@@ -17,15 +18,18 @@ const TopContactAsvab = ({
     handleSubmit,
     btn,
 }: {
-    emailSupport: any;
+    emailSupport: string;
     appInfo: IAppInfo;
-    valueSendMail: any;
-    onChangeEmail: any;
-    checkEmailExist: any;
-    onChangeMessage: any;
-    checkMessageExist: any;
-    handleSubmit: any;
-    btn: any;
+    valueSendMail: {
+        email: string;
+        message: string;
+    };
+    onChangeEmail: React.ChangeEventHandler<HTMLInputElement>;
+    checkEmailExist: boolean;
+    onChangeMessage: React.ChangeEventHandler<HTMLTextAreaElement>;
+    checkMessageExist: boolean;
+    handleSubmit: () => void;
+    btn: RefObject<HTMLButtonElement>;
 }) => {
     const isMobile = useMediaQuery("(max-width:768px)");
     const router = useRouter();
@@ -96,7 +100,7 @@ const TopContactAsvab = ({
                                         router.push(`mailto:${emailSupport}`);
                                     }}
                                 >
-                                    <img
+                                    <LazyLoadImage
                                         src="/images/contacts/sms.png"
                                         alt=""
                                     />
@@ -118,8 +122,8 @@ const TopContactAsvab = ({
             {!isMobile && (
                 <div className="in-form-asvab max-w-component-desktop">
                     <div className="left-form">
-                        <img
-                            className="img-back"
+                        <LazyLoadImage
+                            classNames="img-back"
                             src="/images/contacts/asvab/background-soldier.png"
                             alt=""
                         />
@@ -135,7 +139,7 @@ const TopContactAsvab = ({
                                         router.push(`mailto:${emailSupport}`);
                                     }}
                                 >
-                                    <img
+                                    <LazyLoadImage
                                         src="/images/contacts/sms.png"
                                         alt=""
                                     />
@@ -151,7 +155,7 @@ const TopContactAsvab = ({
                                     router.push("/");
                                 }}
                             >
-                                <img
+                                <LazyLoadImage
                                     src="/images/contacts/location.png"
                                     alt=""
                                 />

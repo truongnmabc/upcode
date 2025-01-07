@@ -31,8 +31,8 @@ export const DialogDetailQuestionReview = ({
                 },
             }}
         >
-            <div className="rounded-b-lg  bg-white min-w-[1024px] flex flex-1 overflow-hidden  flex-col gap-2 p-6">
-                <div className="w-full flex justify-between gap-2 ">
+            <div className="rounded-b-lg  bg-white sm:min-w-[1024px] flex flex-1 overflow-hidden  flex-col gap-2 p-3 sm:p-6">
+                <div className="w-full flex flex-col sm:flex-row justify-between gap-2 ">
                     {item?.text && (
                         <MathJax>
                             <span
@@ -44,13 +44,15 @@ export const DialogDetailQuestionReview = ({
                         </MathJax>
                     )}
                     {item?.image && (
-                        <LazyLoadImage
-                            key={item.image}
-                            isPreview
-                            src={`${baseImageUrl}${appInfo.appShortName}/images/${item.image}`}
-                            alt={item.image}
-                            classNames="w-16 sm:w-24 cursor-pointer aspect-video min-h-16 max-h-24"
-                        />
+                        <div className="w-full flex justify-center sm:w-fit">
+                            <LazyLoadImage
+                                key={item.image}
+                                isPreview
+                                src={`${baseImageUrl}${appInfo.appShortName}/images/${item.image}`}
+                                alt={item.image}
+                                classNames="w-32 sm:w-24 cursor-pointer aspect-video min-h-16 max-h-24"
+                            />
+                        </div>
                     )}
                 </div>
                 <div className={"grid gap-2 grid-cols-1 sm:grid-cols-2"}>

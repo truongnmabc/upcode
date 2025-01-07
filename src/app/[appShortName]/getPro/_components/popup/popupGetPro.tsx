@@ -73,7 +73,6 @@ const PopupGetProPayment = ({
 
                 {appConfig?.subscription ? (
                     <SubScriptionButton
-                        appConfig={appConfig}
                         paymentSuccess={onPaymentSuccess}
                         valueButton={valueButton}
                         appInfo={appInfo}

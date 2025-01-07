@@ -17,8 +17,10 @@ body {
 }
 
 ::-webkit-scrollbar {
-    width: 8px !important;
-    display: block !important;
+    /* width: 8px !important; */
+    /* display: block !important; */
+    width: 0px !important;
+    display: none !important;
 }
 
 /* Track */
@@ -37,29 +39,27 @@ body {
     background: #adadad;
 }
 
-
 @media screen and (max-width: 600px) {
     ::-webkit-scrollbar {
         width: 0px !important;
         display: none !important;
     }
-    
+
     /* Track */
     ::-webkit-scrollbar-track {
         background: #fff;
     }
-    
+
     /* Handle */
     ::-webkit-scrollbar-thumb {
         background: #c9c9c9;
         border-radius: 8px;
     }
-    
+
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
         background: #adadad;
     }
-    
 }
 
 main {

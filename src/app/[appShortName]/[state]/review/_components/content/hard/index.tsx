@@ -1,7 +1,7 @@
-import BottomBtn from "@/components/study/mainStudyView/bottomBtn/bottomBtn";
+import BottomActions from "@/components/bottomActions";
 import ChoicesPanel from "@/components/choicesPanel";
 import ExplanationDetail from "@/components/explanation";
-import ProgressQuestion from "@/components/study/mainStudyView/progress/progressQuestion";
+import ProgressQuestion from "@/components/progressQuestion";
 import QuestionContent from "@/components/question";
 import { db } from "@/db/db.model";
 import { ICurrentGame } from "@/models/game/game";
@@ -124,7 +124,7 @@ const HardQuestions = () => {
                             <ExplanationDetail />
                         </div>
 
-                        <BottomBtn isShow />
+                        <BottomActions type="learn" isShow />
                     </div>
                 </MathJaxContext>
             ) : (
