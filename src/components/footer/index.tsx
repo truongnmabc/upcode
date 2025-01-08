@@ -1,24 +1,24 @@
 "use client";
 
-import { appInfoState } from "@/redux/features/appInfo";
+import { appConfigState } from "@/redux/features/appConfig";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppSelector } from "@/redux/hooks";
+import RouterApp from "@/router/router.constant";
 import { sendEmailSubscribeApiV4 } from "@/services/home.service";
 import { validateEmail } from "@/utils";
 import { getContactApp } from "@/utils/getContact";
 import { useMediaQuery } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { memo, useRef } from "react";
 import { IAppInfo } from "../../models/app/appInfo";
 import FacebookIcon from "../icon/FacebookIcon";
 import TwitterIcon from "../icon/TwitterIcon";
 import YoutubeIcon from "../icon/YoutubeIcon";
+import LazyLoadImage from "../images";
+import ForwardedLinkBlank from "../nextLink/forwardedLinkBlank";
 import "./FooterLandingV4.scss";
 import { DmcaIcon } from "./info/iconDmca";
-import { appConfigState } from "@/redux/features/appConfig";
-import RouterApp from "@/router/router.constant";
-import ForwardedLinkBlank from "../nextLink/forwardedLinkBlank";
-import { usePathname, useRouter } from "next/navigation";
-import LazyLoadImage from "../images";
 
 const FooterLandingV4 = () => {
     const router = useRouter();
@@ -29,9 +29,7 @@ const FooterLandingV4 = () => {
         return logo;
     };
 
-    const pathname = usePathname();
-
-    const { appInfo } = useAppSelector(appInfoState);
+    const appInfo = useAppSelector(selectAppInfo);
     const _email = useRef<HTMLInputElement>(null);
     const _message = useRef<HTMLInputElement>(null);
     const error_email = useRef<HTMLParagraphElement>(null);
@@ -189,9 +187,12 @@ const FooterLandingV4 = () => {
                                 <LazyLoadImage
                                     src="/images/contacts/sms.png"
                                     alt=""
+                                    classNames="w-6 h-6"
                                 />
 
-                                <div className="text-info">{emailSupport}</div>
+                                <div className="text-info flex-1">
+                                    {emailSupport}
+                                </div>
                             </div>
                         )}
                         <div
@@ -203,8 +204,9 @@ const FooterLandingV4 = () => {
                             <LazyLoadImage
                                 src="/images/contacts/location.png"
                                 alt=""
+                                classNames="w-6 h-6"
                             />
-                            <div className="text-info">
+                            <div className="text-info flex-1">
                                 209 S Rosemont Ave, Dallas, TX 75208
                             </div>
                         </div>

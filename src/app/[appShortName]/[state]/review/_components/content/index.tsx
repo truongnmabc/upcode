@@ -14,7 +14,7 @@ const ReviewContentGroup = ({ isMobile }: { isMobile: boolean }) => {
     const componentMapping = {
         random: <RandomQuestions isMobile={isMobile} />,
         weak: <WeakQuestions />,
-        hard: <HardQuestions />,
+        hard: <HardQuestions isMobile={isMobile} />,
         saved: <SavedQuestions />,
         all: <AllQuestions />,
     };

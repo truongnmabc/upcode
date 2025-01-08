@@ -21,7 +21,7 @@ const QuestionResult = ({ item }: { item: ICurrentGame }) => {
                 boxShadow: " 0px 2px 8px 0px #21212129",
             }}
         >
-            <div className="w-full rounded-t-lg bg-[#FFFBE1] overflow-hidden flex items-center justify-between p-4">
+            <div className="w-full rounded-t-lg bg-[#FFFBE1] overflow-hidden flex items-center justify-between px-3 py-2 sm:p-4">
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-red-500 flex items-center justify-center rounded-md">
                         <LazyLoadImage
@@ -114,16 +114,19 @@ const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
                     </div>
                 ))}
             </div>
-            {item?.explanation && (
-                <MathJax className="">
-                    <span
-                        dangerouslySetInnerHTML={{
-                            __html: MyCrypto.decrypt(item?.explanation),
-                        }}
-                        className="text-sm font-normal line-clamp-2 h-full  sm:text-base"
-                    />
-                </MathJax>
-            )}
+            <div className=" hidden sm:block">
+                {item?.explanation && (
+                    <MathJax className="">
+                        <span
+                            dangerouslySetInnerHTML={{
+                                __html: MyCrypto.decrypt(item?.explanation),
+                            }}
+                            className="text-sm font-normal  line-clamp-2 h-full  sm:text-base"
+                        />
+                    </MathJax>
+                )}
+            </div>
+
             <p
                 className="text-[#6BA6FF] text-sm font-medium cursor-pointer"
                 onClick={handleClickOpen}

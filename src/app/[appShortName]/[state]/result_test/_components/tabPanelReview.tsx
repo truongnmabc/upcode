@@ -14,7 +14,7 @@ function TabPanelReview(props: TabPanelProps) {
     const isMobile = useIsMobile();
 
     const getItemSize = (index: number) =>
-        data[index]?.image ? (isMobile ? 500 : 400) : isMobile ? 460 : 330;
+        data[index]?.image ? (isMobile ? 460 : 400) : isMobile ? 420 : 330;
 
     return (
         <Fragment>

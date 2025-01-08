@@ -9,6 +9,7 @@ import ModalSettingCustomTest from "../modalSetting";
 import { IconDelete, IconEdit, IconPlus } from "@/components/icon/iconGridLeft";
 import ModalDelete from "../modalDelete";
 import { selectListQuestion } from "@/redux/features/game.reselect";
+import { resetState } from "@/redux/features/game";
 const GridLeftCustomTest = () => {
     const [listTest, setListTest] = useState<ITestQuestion[]>([]);
     const [openModalSetting, setOpenModalSetting] = React.useState(false);
@@ -32,16 +33,12 @@ const GridLeftCustomTest = () => {
             }
         };
         if (listQuestion?.length) handleGetData();
-
-        return () => {
-            setOpenModalSetting(false);
-        };
-    }, [listQuestion?.length]);
-
-    useEffect(() => {
         if (listQuestion?.length === 0) {
             setOpenModalSetting(true);
         }
+        return () => {
+            setOpenModalSetting(false);
+        };
     }, [listQuestion?.length]);
 
     const onClose = useCallback(() => {
@@ -75,16 +72,30 @@ const GridLeftCustomTest = () => {
                 .filter((item) => item.type === "test")
                 .delete();
 
-            setListTest((prev) =>
-                prev.filter((item) => item.parentId !== itemSelect.parentId)
-            );
+            setListTest((prev) => {
+                const updatedList = prev.filter(
+                    (item) => item.parentId !== itemSelect.parentId
+                );
+                if (updatedList.length === 0) {
+                    setItemSelect(null);
+                    dispatch(resetState());
+                }
+                return updatedList;
+            });
             setOpenDelete(false);
         }
-    }, [itemSelect]);
+    }, [itemSelect, dispatch]);
 
     const handleClickChoiceTest = useCallback(
-        (item: ITestQuestion) => {
-            dispatch(choiceStartCustomTestThunk({ item }));
+        (item: ITestQuestion, index: number) => {
+            dispatch(
+                choiceStartCustomTestThunk({
+                    item: {
+                        ...item,
+                        indexSubTopic: index,
+                    },
+                })
+            );
         },
         [dispatch]
     );
@@ -116,7 +127,10 @@ const GridLeftCustomTest = () => {
                                     <p
                                         className="text-sm cursor-pointer font-medium"
                                         onClick={() => {
-                                            handleClickChoiceTest(item);
+                                            handleClickChoiceTest(
+                                                item,
+                                                index + 1
+                                            );
                                         }}
                                     >
                                         Custom Test {index + 1}
@@ -152,7 +166,7 @@ const GridLeftCustomTest = () => {
                     handleDelete={handleDelete}
                 />
             )}
-            {openModalSetting && (
+            {openModalSetting ? (
                 <ModalSettingCustomTest
                     item={itemSelect}
                     isShowBtnCancel={
@@ -161,6 +175,8 @@ const GridLeftCustomTest = () => {
                     open={openModalSetting}
                     onClose={onClose}
                 />
+            ) : (
+                <></>
             )}
         </Fragment>
     );

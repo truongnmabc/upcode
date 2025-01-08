@@ -6,8 +6,6 @@ import { startRandomReview } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
 import React, { useCallback } from "react";
 import ChoiceQuestionBeforeStart from "./choiceQuestionBeforeStart";
-import { useIsMobile } from "@/hooks/useIsMobile";
-import SheetSelectQuestions from "../../sheet";
 
 /* 
     value: số câu cần lấy ra

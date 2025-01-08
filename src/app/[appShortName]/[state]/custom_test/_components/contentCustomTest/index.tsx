@@ -3,16 +3,20 @@ import BottomActions from "@/components/bottomActions";
 import ChoicesPanel from "@/components/choicesPanel";
 import ExplanationDetail from "@/components/explanation";
 import ClockIcon from "@/components/icon/ClockIcon";
+import ProgressQuestion from "@/components/progressQuestion";
 import QuestionContent from "@/components/question";
-import { gameState } from "@/redux/features/game";
+import {
+    selectFeedBack,
+    selectIndexSubTopic,
+} from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { MathJaxContext } from "better-react-mathjax";
 import React, { Fragment } from "react";
 import CountTimeCustomTest from "../countTimeCustomTest";
-import ProgressQuestion from "@/components/progressQuestion";
 
 const ContentCustomTest = () => {
-    const { feedBack, indexSubTopic } = useAppSelector(gameState);
+    const feedBack = useAppSelector(selectFeedBack);
+    const indexSubTopic = useAppSelector(selectIndexSubTopic);
 
     return (
         <MathJaxContext>

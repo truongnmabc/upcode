@@ -8,9 +8,12 @@ import {
     mapQuestionsWithProgress,
 } from "../initData/initPracticeTest";
 
+interface IProps extends ITestQuestion {
+    indexSubTopic: number;
+}
 const choiceStartCustomTestThunk = createAsyncThunk(
     "startCustomTest",
-    async ({ item }: { item: ITestQuestion }) => {
+    async ({ item }: { item: IProps }) => {
         const listQuestion = item?.question;
         const progressData = await getLocalUserProgress(
             item.parentId,
@@ -30,6 +33,7 @@ const choiceStartCustomTestThunk = createAsyncThunk(
                 duration: item.duration,
                 isPaused: item?.isPaused || false,
                 remainTime: item?.remainTime || item.duration * 60,
+                indexSubTopic: item.indexSubTopic,
             };
         }
     }

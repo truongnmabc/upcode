@@ -63,6 +63,7 @@ const getUserDeviceLogin = createAsyncThunk(
     async ({ appInfo, email }: IPayload, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
         const { paymentInfo } = state.paymentReducer;
+        console.log("🚀 ~ paymentInfo:", paymentInfo);
 
         try {
             const syncData = (await syncDataToWebAfterLoginAPI({

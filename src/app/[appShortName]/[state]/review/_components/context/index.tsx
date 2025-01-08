@@ -1,6 +1,5 @@
 "use client";
-import { useIsMobile } from "@/hooks/useIsMobile";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 
 export type ISelectReview = "random" | "weak" | "hard" | "saved" | "all";
 export interface IContextReview {

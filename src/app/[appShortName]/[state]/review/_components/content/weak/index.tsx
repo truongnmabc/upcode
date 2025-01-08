@@ -1,14 +1,13 @@
 import Empty from "@/components/empty";
+import VariableSizeList from "@/components/infinite";
 import QuestionResult from "@/components/questionReview";
 import { db } from "@/db/db.model";
-import { ICurrentGame } from "@/models/game/game";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
 import { setListQuestionGames } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
 import { MathJaxContext } from "better-react-mathjax";
 import React, { useCallback, useEffect } from "react";
-import AutoSizer from "react-virtualized-auto-sizer";
-import { FixedSizeList as List } from "react-window";
 
 const WeakQuestions = () => {
     const [listTopic, setListTopic] = React.useState<IUserQuestionProgress[]>(
@@ -72,25 +71,20 @@ const WeakQuestions = () => {
     useEffect(() => {
         handleGetData();
     }, [handleGetData]);
+    const isMobile = useIsMobile();
+
+    const getItemSize = (index: number) =>
+        listTopic[index]?.image ? (isMobile ? 460 : 400) : isMobile ? 420 : 330;
 
     return (
         <div className="flex-1 h-full w-full">
             {listTopic?.length > 0 ? (
                 <MathJaxContext>
-                    <AutoSizer>
-                        {({ height, width }) => (
-                            <List
-                                height={height}
-                                itemCount={listTopic.length}
-                                itemSize={340}
-                                width={width}
-                                itemData={listTopic}
-                                className="scrollbar-none"
-                            >
-                                {Row}
-                            </List>
-                        )}
-                    </AutoSizer>
+                    <VariableSizeList
+                        data={listTopic}
+                        getItemSize={getItemSize}
+                        item={(item) => <QuestionResult item={item} />}
+                    />
                 </MathJaxContext>
             ) : (
                 <Empty />
@@ -100,19 +94,3 @@ const WeakQuestions = () => {
 };
 
 export default WeakQuestions;
-
-const Row = ({
-    index,
-    style,
-    data,
-}: {
-    index: number;
-    style: React.CSSProperties;
-    data: ICurrentGame[];
-}) => {
-    return (
-        <div style={style} className="w-full py-2  h-full">
-            <QuestionResult key={index} item={data[index]} />
-        </div>
-    );
-};

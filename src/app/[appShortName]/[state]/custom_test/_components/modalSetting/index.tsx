@@ -69,6 +69,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
             );
         }
     }, [item]);
+
     const resetState = () => {
         setCount(0);
         setDuration(0);
@@ -170,7 +171,6 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                     }
                 }
                 const parentId = generateRandomNegativeId();
-                console.log("🚀 ~ onStart ~ listQuestion:", listQuestion);
 
                 await db?.testQuestions.add({
                     duration: duration,
@@ -185,7 +185,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                     feedBack: selectFeedback,
                     subject: selectListTopic?.map((item) => item.id),
                     status: 0,
-                    turn: 0,
+                    turn: 1,
                 });
 
                 dispatch(
@@ -193,6 +193,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                         listQuestion,
                         time: duration * 60,
                         parentId: parentId,
+                        passing: passing,
                         feedBack: selectFeedback,
                     })
                 );

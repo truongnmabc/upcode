@@ -88,7 +88,15 @@ const BottomConfirmTest = () => {
 
     if (isMobile) {
         return (
-            <Dialog open={openSubmit} onClose={setOpenConfirm}>
+            <Dialog
+                open={openSubmit}
+                onClose={setOpenConfirm}
+                sx={{
+                    "& .MuiDialog-paper": {
+                        borderRadius: "12px",
+                    },
+                }}
+            >
                 <Content
                     handleConfirm={handleConfirm}
                     setOpenConfirm={setOpenConfirm}
@@ -133,19 +141,19 @@ const Content = ({
     };
 }) => {
     return (
-        <div className="w-full p-3 gap-2 sm:p-0  sm:px-20 sm:py-6 bg-[#F9F7EE] flex items-center flex-col sm:flex-row justify-between">
+        <div className="w-full p-4 gap-4 sm:p-0  sm:px-20 sm:py-6 bg-[#F9F7EE] flex items-center flex-col sm:flex-row justify-between">
             <div className="w-full">
                 {info.answer !== info.total && (
-                    <p className="text-base text-center sm:text-start sm:text-2xl font-medium">
+                    <p className="text-base px-1 pb-2 sm:pb-0 sm:px-0 text-center sm:text-start sm:text-2xl font-medium">
                         You answered {info.answer} out of {info.total} questions
                         on this test.
                     </p>
                 )}
-                <p className="text-sm text-[#21212185] sm:text-base font-normal">
+                <p className="text-sm text-[#21212185] sm:text-base text-center sm:text-start  font-normal">
                     Are you sure you want to submit the test?
                 </p>
             </div>
-            <div className="flex gap-6 items-center">
+            <div className="flex gap-3 sm:gap-6 items-center">
                 <MtUiButton
                     className="text-base px-10"
                     onClick={setOpenConfirm}
