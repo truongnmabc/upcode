@@ -1,10 +1,8 @@
 import ReviewView from "@/app/[appShortName]/[state]/review/_components";
 import MyContainer from "@/components/container";
-import { userAgent } from "next/server";
+import { detectAgent } from "@/utils/detectDevice";
 import { headers } from "next/headers";
-export const detectAgent = (userAgent: string): boolean => {
-    return /android.+mobile|ip(hone|[oa]d)/i.test(userAgent);
-};
+
 export default async function Page() {
     const headersList = await headers();
     const userAgent = headersList.get("user-agent");

@@ -3,6 +3,9 @@ import clsx from "clsx";
 import React, { useCallback, useContext, useState } from "react";
 import { ReviewContext } from "../context";
 import dynamic from "next/dynamic";
+import { genRandomQuestion } from "../content/random";
+import { useAppDispatch } from "@/redux/hooks";
+import { startRandomReview } from "@/redux/features/game";
 const Sheet = dynamic(() => import("@/components/sheet"), {
     ssr: false,
 });
@@ -11,6 +14,7 @@ const SheetSelectQuestions = () => {
     const [value, setValue] = useState(40);
     const { isOpenSheet, setIsOpenSheet, setIsStart, setIsShowList } =
         useContext(ReviewContext);
+    const dispatch = useAppDispatch();
 
     const handleSelect = useCallback((value: number) => {
         setValue(value);
@@ -21,10 +25,21 @@ const SheetSelectQuestions = () => {
     }, [setIsOpenSheet]);
 
     const handleStart = useCallback(async () => {
+        const list = await genRandomQuestion({
+            value: value,
+            excludeListID: [],
+        });
+
+        dispatch(
+            startRandomReview({
+                listQuestion: list,
+            })
+        );
         setIsOpenSheet(false);
+
         setIsStart(true);
         setIsShowList(false);
-    }, [setIsOpenSheet, setIsStart, setIsShowList]);
+    }, [value, setIsOpenSheet, setIsStart, setIsShowList, dispatch]);
 
     return (
         <Sheet visible={isOpenSheet} onClose={handleCancel} autoHeight>

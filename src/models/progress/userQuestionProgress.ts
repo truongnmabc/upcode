@@ -7,7 +7,6 @@ export interface IUserQuestionProgress
         | "databaseId"
         | "hasChild"
         | "hint"
-        | "image"
         | "lastUpdate"
         | "oldId"
         | "paragraphId"
@@ -26,6 +25,7 @@ export default class UserQuestionProgress implements IUserQuestionProgress {
     level: number = 0;
     parentId: number = 0;
     selectedAnswers?: IAnswer[];
+    image: string;
     status: number = 0;
     syncStatus: number = 0;
     text: string = "";
@@ -42,5 +42,6 @@ export default class UserQuestionProgress implements IUserQuestionProgress {
         this.syncStatus = obt.syncStatus ?? this.syncStatus;
         this.text = obt.text ?? this.text;
         this.type = obt.type ?? "learn";
+        this.image = obt.image ?? "";
     }
 }

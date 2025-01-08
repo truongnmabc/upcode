@@ -1,11 +1,10 @@
 import { ICurrentGame } from "@/models/game/game";
-import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
 import { RootState } from "@/redux/store";
 
 export const handleInitTestQuestion = (
     state: RootState["gameReducer"],
     payload: {
-        progressData: IUserQuestionProgress[];
+        progressData: ICurrentGame[];
         questions: ICurrentGame[];
         type: "test" | "learn";
         idTopic: number;

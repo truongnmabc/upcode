@@ -1,19 +1,28 @@
 "use client";
 import { MtUiButton } from "@/components/button";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { startRandomReview } from "@/redux/features/game";
+import { selectListQuestion } from "@/redux/features/game.reselect";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Dialog } from "@mui/material";
 import { useCallback, useContext, useState } from "react";
+import { genRandomQuestion } from "../content/random";
 import ChoiceQuestionBeforeStart from "../content/random/choiceQuestionBeforeStart";
 import { ReviewContext } from "../context";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { selectListQuestion } from "@/redux/features/game.reselect";
-import { startRandomReview } from "@/redux/features/game";
-import { genRandomQuestion } from "../content/random";
 
 const BottomLestTest = () => {
-    const { selectType, isStart } = useContext(ReviewContext);
+    const { selectType, isStart, setIsOpenSheet } = useContext(ReviewContext);
     const [open, setOpen] = useState(false);
     const listQuestions = useAppSelector(selectListQuestion);
-    const handleOpen = useCallback(() => setOpen(true), []);
+
+    const isMobile = useIsMobile();
+    const handleOpen = useCallback(() => {
+        if (isMobile) {
+            setIsOpenSheet(true);
+        } else {
+            setOpen(true);
+        }
+    }, [isMobile, setIsOpenSheet]);
 
     const handleClose = useCallback(() => setOpen(false), []);
 
@@ -37,7 +46,7 @@ const BottomLestTest = () => {
             }
             handleClose();
         },
-        [handleClose, selectType, listQuestions, dispatch]
+        [handleClose, listQuestions, dispatch]
     );
     if (isStart) return <></>;
     if (
@@ -57,6 +66,7 @@ const BottomLestTest = () => {
                         Let&apos;s Review
                     </MtUiButton>
                 </div>
+
                 <Dialog
                     open={open}
                     onClose={handleClose}

@@ -33,7 +33,14 @@ const ListReview = ({ isMobile }: { isMobile: boolean }) => {
 
             setIsStart(false);
         },
-        [dispatch, setSelectType, isMobile, setIsShowList]
+        [
+            dispatch,
+            setSelectType,
+            isMobile,
+            setIsShowList,
+            setIsOpenSheet,
+            setIsStart,
+        ]
     );
     if (!isShowList) return <></>;
     return (

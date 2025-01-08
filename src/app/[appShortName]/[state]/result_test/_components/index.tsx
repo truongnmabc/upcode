@@ -177,7 +177,7 @@ const processAllQuestions = (
 };
 
 const calculatePercentage = (
-    listPass: IUserQuestionProgress[],
+    listPass: ICurrentGame[],
     listQuestion: ICurrentGame[]
 ) => {
     return listPass && listQuestion?.length
@@ -220,9 +220,8 @@ const ResultTestLayout = () => {
     });
 
     const handleGetData = useCallback(async () => {
-        if (idTopic && passing) {
+        if (idTopic) {
             const { user, topics, questions } = await fetchData(idTopic);
-
             const listPass =
                 type === TypeParam.review
                     ? listQuestion.filter(
@@ -265,7 +264,7 @@ const ResultTestLayout = () => {
             setResult({
                 pass: listPass?.length || 0,
                 percent,
-                isPass: percent >= passing,
+                isPass: percent >= (passing || 0),
                 listTopic,
                 all: allQuestions,
                 incorrect: allQuestions.filter(

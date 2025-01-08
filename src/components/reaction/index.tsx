@@ -78,7 +78,7 @@ const Reaction = ({ item }: { item?: ICurrentGame }) => {
     const dislikeAction = () => setOpenModal(true);
 
     return (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
             <div className="cursor-pointer" onClick={likeAction}>
                 <IconLike
                     color={status.like ? "var(--color-primary)" : "#7C6F5B"}

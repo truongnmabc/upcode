@@ -142,9 +142,10 @@ const TopContactAsvab = ({
                                     <LazyLoadImage
                                         src="/images/contacts/sms.png"
                                         alt=""
+                                        classNames="w-6 h-6"
                                     />
 
-                                    <div className="text-info">
+                                    <div className="text-info flex-1">
                                         {emailSupport}
                                     </div>
                                 </div>
@@ -158,8 +159,9 @@ const TopContactAsvab = ({
                                 <LazyLoadImage
                                     src="/images/contacts/location.png"
                                     alt=""
+                                    classNames="w-6 h-6"
                                 />
-                                <div className="text-info">
+                                <div className="text-info flex-1">
                                     209 S Rosemont Ave, Dallas, TX 75208
                                 </div>
                             </div>

@@ -71,7 +71,7 @@ const AllQuestions = () => {
     return (
         <div
             className={clsx("w-full flex-1 flex flex-col transition-all ", {
-                "h-full min-h-full": tableData.all.length > 0,
+                // "min-h-full": tableData.all.length > 0,
             })}
         >
             <ReviewAnswerResult

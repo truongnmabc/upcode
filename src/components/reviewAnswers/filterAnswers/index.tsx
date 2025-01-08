@@ -87,7 +87,7 @@ const FilterIcon: React.FC<IProps> = ({ setTabletData, result }) => {
                     />
                 </svg>
 
-                <span className="text-[#5497FF] text-base font-medium">
+                <span className="text-[#5497FF] hidden sm:block text-base font-medium">
                     Filter
                 </span>
             </div>

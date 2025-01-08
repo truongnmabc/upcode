@@ -44,12 +44,12 @@ const FN = ({ showStatus = true }: { showStatus?: boolean }) => {
                                 className="text-sm  font-normal sm:text-base"
                             />
                         </MathJax>
-                        {currentGame.image && (
+                        {currentGame?.image && (
                             <LazyLoadImage
-                                key={currentGame.image}
+                                key={currentGame?.image}
                                 isPreview
-                                src={`${baseImageUrl}${appInfo.appShortName}/images/${currentGame.image}`}
-                                alt={currentGame.image}
+                                src={`${baseImageUrl}${appInfo.appShortName}/images/${currentGame?.image}`}
+                                alt={currentGame?.image}
                                 classNames="w-16 sm:w-24 cursor-pointer aspect-video min-h-16 max-h-24"
                             />
                         )}

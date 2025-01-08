@@ -3,7 +3,6 @@ import { useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
 import { useContext } from "react";
 import { ReviewContext } from "../../context";
-import { useIsMobile } from "@/hooks/useIsMobile";
 
 const AnswerReview = ({ isActions = false }) => {
     const listQuestion = useAppSelector(selectListQuestion);

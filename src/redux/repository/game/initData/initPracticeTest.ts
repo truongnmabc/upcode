@@ -28,7 +28,7 @@ const setDataStore = async (
         remainTime: remainTime,
         type: "practiceTests",
         status: 0,
-        turn: 0,
+        turn: 1,
     });
 };
 
@@ -50,7 +50,12 @@ export const getLocalUserProgress = async (
         db?.userProgress
             .where("parentId")
             .equals(parentId)
-            .filter((item) => item.type === type && item.turn === turn)
+            .filter((item) =>
+                item.type === type &&
+                item.selectedAnswers?.filter((i) => i.turn === turn).length
+                    ? true
+                    : false
+            )
             .toArray() ?? null
     );
 };

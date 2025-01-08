@@ -39,6 +39,7 @@ const choiceAnswer = createAsyncThunk(
             level: question.level,
             explanation: question.explanation,
             index: indexCurrentQuestion,
+            image: "",
         };
 
         if (isEx) {

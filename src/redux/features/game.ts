@@ -121,7 +121,8 @@ export const gameSlice = createSlice({
             state.remainTime = -1;
         },
         startCustomTest: (state, action) => {
-            const { listQuestion, time, parentId, feedBack } = action.payload;
+            const { listQuestion, time, parentId, feedBack, passing } =
+                action.payload;
             state.listQuestion = listQuestion;
             state.currentGame = listQuestion[0];
             state.idTopic = parentId;
@@ -130,6 +131,7 @@ export const gameSlice = createSlice({
             state.turn = 1;
             state.isFirst = true;
             state.feedBack = feedBack;
+            state.passing = passing;
         },
         resetState: () => {
             return initGameReducer;
@@ -212,23 +214,23 @@ export const gameSlice = createSlice({
             choiceStartCustomTestThunk.fulfilled,
             (state, action) => {
                 state.type = "test";
-
                 if (action.payload) {
+                    state.indexSubTopic = action.payload.indexSubTopic;
                     handleInitTestQuestion(state, action.payload);
                 }
             }
         );
         builder.addCase(initCustomTestThunk.fulfilled, (state, action) => {
             if (action.payload) {
-                const { question, isPaused, remainTime } = action.payload;
-                state.listQuestion = question;
-                state.currentGame = question[0];
-                state.remainTime = remainTime;
-                state.isPaused = isPaused;
+                handleInitTestQuestion(state, action.payload);
+                const { passing, turn } = action.payload;
+                state.passing = passing;
+                state.turn = turn;
             } else {
                 state.listQuestion = [];
                 state.currentGame = plateHolder;
                 state.isPaused = false;
+                state.type = "test";
             }
         });
 
