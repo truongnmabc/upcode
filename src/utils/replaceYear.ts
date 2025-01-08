@@ -9,6 +9,7 @@ const replaceYear = (year: string) => {
             text = year.replace(/2021/g, currentYear);
             text = year.replace(/2022/g, currentYear);
             text = year.replace(/2023/g, currentYear);
+            text = year.replace(/2024/g, currentYear);
             text = text.replace(/year21/g, "/2021/");
         }
         return text;

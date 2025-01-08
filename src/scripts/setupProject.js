@@ -14,6 +14,7 @@ import {
   saveJSONFile,
   copyFolder,
 } from "./setup/utils.js";
+import { createAndCheckoutBranch } from "./createAndCheckoutBranch.js";
 
 const DATA_PATH = process.cwd();
 const listAppState = ["cdl", "dmv", "real-estate"];
@@ -56,49 +57,52 @@ const runProcess = async () => {
 runProcess();
 
 const setupSingleApp = async () => {
-  const listApps = await getListApps();
+  // const listApps = await getListApps();
 
-  const app = await select({
-    message: "Lựa chọn ứng dụng (Enter để lựa chọn)",
-    options: listApps,
-  });
 
-  const appInfo = await getDataSingleApp(app);
-  const isAppIncludesState = listAppState.includes(app);
+    const newBranch = `setup-${new Date().getTime()}`
+    createAndCheckoutBranch(newBranch)
+  // const app = await select({
+  //   message: "Lựa chọn ứng dụng (Enter để lựa chọn)",
+  //   options: listApps,
+  // });
 
-  const studyData = await getDataTopics({
-    bucket: isAppIncludesState ? BUCKET : BUCKET2,
-    state: isAppIncludesState ? "/" : "",
-    appInfoBucket: appInfo[0].bucket,
-  });
+  // const appInfo = await getDataSingleApp(app);
+  // const isAppIncludesState = listAppState.includes(app);
 
-  const topics = studyData?.topics?.map((study) => ({
-    ...study,
-    url: _genStudyLink(appInfo[0].appShortName, study.tag, false),
-  }));
+  // const studyData = await getDataTopics({
+  //   bucket: isAppIncludesState ? BUCKET : BUCKET2,
+  //   state: isAppIncludesState ? "/" : "",
+  //   appInfoBucket: appInfo[0].bucket,
+  // });
 
-  const data = {
-    appId: appInfo[0].appId,
-    topics: topics,
-    tests: listTests,
-  };
+  // const topics = studyData?.topics?.map((study) => ({
+  //   ...study,
+  //   url: _genStudyLink(appInfo[0].appShortName, study.tag, false),
+  // }));
 
-  saveJSONFile(
-    path.join(DATA_PATH, "/src/common/data/dynamic/studyData.json"),
-    data
-  );
+  // const data = {
+  //   appId: appInfo[0].appId,
+  //   topics: topics,
+  //   tests: listTests,
+  // };
 
-  copyFolder(
-    path.join(DATA_PATH, "/src/app_root/pages"),
-    path.join(DATA_PATH, "/src/app")
-  );
+  // saveJSONFile(
+  //   path.join(DATA_PATH, "/src/common/data/dynamic/studyData.json"),
+  //   data
+  // );
 
-  copyFolder(
-    path.join(DATA_PATH, "/src/app_root/api"),
-    path.join(DATA_PATH, "/src/app/api")
-  );
+  // copyFolder(
+  //   path.join(DATA_PATH, "/src/app_root/pages"),
+  //   path.join(DATA_PATH, "/src/app")
+  // );
 
-  resetEnvFile(data?.appId);
+  // copyFolder(
+  //   path.join(DATA_PATH, "/src/app_root/api"),
+  //   path.join(DATA_PATH, "/src/app/api")
+  // );
+
+  // resetEnvFile(data?.appId);
 
   console.log("Setup completed successfully.");
 };
@@ -113,24 +117,24 @@ const resetEnvFile = (appId) => {
 };
 
 const setupDynamicApp = async () => {
-  const listApp = await getDataAllApp();
-  console.log("🚀 ~ setupDynamicApp ~ listApp:", listApp);
+  // const listApp = await getDataAllApp();
+  // console.log("🚀 ~ setupDynamicApp ~ listApp:", listApp);
 
-  saveJSONFile(
-    path.join(DATA_PATH, "/src/common/data/dynamic/appInfos.json"),
-    listApp
-  );
-  const appPath = path.join(DATA_PATH, "/src/app");
-  if (fs.existsSync(appPath)) {
-    fs.rmdirSync(appPath, { recursive: true });
-  }
-  copyFolder(
-    path.join(DATA_PATH, "/src/app_root/pages"),
-    path.join(DATA_PATH, "/src/app/[appId]")
-  );
+  // saveJSONFile(
+  //   path.join(DATA_PATH, "/src/common/data/dynamic/appInfos.json"),
+  //   listApp
+  // );
+  // const appPath = path.join(DATA_PATH, "/src/app");
+  // if (fs.existsSync(appPath)) {
+  //   fs.rmdirSync(appPath, { recursive: true });
+  // }
+  // copyFolder(
+  //   path.join(DATA_PATH, "/src/app_root/pages"),
+  //   path.join(DATA_PATH, "/src/app/[appId]")
+  // );
 
-  copyFolder(
-    path.join(DATA_PATH, "/src/app_root/api"),
-    path.join(DATA_PATH, "/src/app/api")
-  );
+  // copyFolder(
+  //   path.join(DATA_PATH, "/src/app_root/api"),
+  //   path.join(DATA_PATH, "/src/app/api")
+  // );
 };
