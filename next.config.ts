@@ -84,14 +84,14 @@ const nextConfig: NextConfig = withPlugins([[withBundleAnalyzer()]], {
     //   ];
     // },
 
-    // async rewrites() {
-    //     return [
-    //         {
-    //             source: "/:appShortName",
-    //             destination: "/",
-    //         },
-    //     ];
-    // },
+    async rewrites() {
+        return [
+            {
+                source: "/:study",
+                destination: "/",
+            },
+        ];
+    },
 });
 
 export default nextConfig;
