@@ -26,7 +26,9 @@ async function initializeDBIdb(appShortName) {
 }
 
 async function handleInitData(appShortName, apiPath) {
+    console.log("🚀 ~ handleInitData ~ appShortName:", appShortName);
     const db = await initializeDBIdb(appShortName);
+    console.log("🚀 ~ handleInitData ~ db:", db);
 
     try {
         const response = await fetch(
@@ -76,7 +78,6 @@ const processQuestionsData = async (topics, db, icon, tag) => {
     for (const topic of topics) {
         const subTopicTag = topic.tag;
 
-      
         for (const part of topic?.topics) {
             const topicQuestionTx = db.transaction(
                 "topicQuestion",
@@ -85,15 +86,13 @@ const processQuestionsData = async (topics, db, icon, tag) => {
             const topicQuestionStore =
                 topicQuestionTx.objectStore("topicQuestion");
 
-              
-                const  questions =  part?.questions.map((item) => ({
-                    ...item,
-                    parentId: part.id,
-                    icon: icon,
-                    tag: tag,
-                }));
+            const questions = part?.questions.map((item) => ({
+                ...item,
+                parentId: part.id,
+                icon: icon,
+                tag: tag,
+            }));
 
-               
             await topicQuestionStore.add({
                 ...part,
                 questions: questions,
@@ -225,8 +224,6 @@ const initDataTest = async (tests, db, apiPath) => {
                     const data = await response.json();
                     const listQuestion = data.data;
 
-
-
                     const testQuestionsTx = db.transaction(
                         "testQuestions",
                         "readwrite"
@@ -246,7 +243,6 @@ const initDataTest = async (tests, db, apiPath) => {
                         turn: 0,
                         topicIds: test.topicIds,
                         groupExamData: test.groupExamData,
-                        
                     });
                     await testQuestionsTx.done;
                 }

@@ -5,6 +5,7 @@
         "clsx",
         "Dexie",
         "embla",
+        "indexeddb",
         "mathjax",
         "mtui",
         "passemail",
