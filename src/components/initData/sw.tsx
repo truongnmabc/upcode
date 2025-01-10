@@ -47,7 +47,7 @@ const ServiceWorkerInit = ({ appInfo }: { appInfo: IAppInfo }) => {
 
             messageChannel.port1.onmessage = (event) => {
                 if (event.data.status === "success") {
-                    console.log(event.data.message);
+                    console.log("Message:", event.data.message);
                 } else {
                     console.error("Failed to initialize DB.");
                 }

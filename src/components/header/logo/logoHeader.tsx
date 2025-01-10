@@ -25,11 +25,13 @@ const FN = () => {
                     })
                 );
             }}
+            data-testid="logoHeader"
         >
             <LazyLoadImage
                 src={`/${appInfo.appShortName}/logo/${
                     theme == "dark" ? "logo-dark" : "logo-light"
                 }.png`}
+                alt="logoHeader"
                 classNames=" w-full max-w-[128px] max-h-14 min-h-[40px] sm:max-w-[160px]"
             />
         </div>

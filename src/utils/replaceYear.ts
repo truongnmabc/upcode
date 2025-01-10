@@ -1,20 +1,16 @@
 const replaceYear = (year: string) => {
     try {
-        let text = "";
-        const yearNumber = new Date().getFullYear();
-        const currentYear = yearNumber.toString();
-        if (year) {
-            year = year.replace(/\/2021\//g, "year21");
-            text = year.replace(/2020/g, currentYear);
-            text = year.replace(/2021/g, currentYear);
-            text = year.replace(/2022/g, currentYear);
-            text = year.replace(/2023/g, currentYear);
-            text = year.replace(/2024/g, currentYear);
-            text = text.replace(/year21/g, "/2021/");
-        }
-        return text;
+        const currentYear = new Date().getFullYear().toString();
+        if (!year) return year;
+
+        return year.replace(/\b(19|20)\d{2}\b/g, (matchedYear) => {
+            if (parseInt(matchedYear, 10) < parseInt(currentYear, 10)) {
+                return currentYear;
+            }
+            return matchedYear;
+        });
     } catch (e) {
-        console.log(e);
+        console.error("Error replacing year:", e);
         return year;
     }
 };
