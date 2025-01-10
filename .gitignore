@@ -54,3 +54,8 @@ src/styles/config.css
 ssh_keys/id_rsa
 deploy_.sh
 build-easyprep.zip
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
