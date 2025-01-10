@@ -15,7 +15,7 @@ const ParentAppPage = async () => {
     //         />
     //     );
     // }
-    return <></>;
+    return <>ParentAppPage</>;
 };
 
 export default ParentAppPage;

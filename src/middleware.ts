@@ -8,11 +8,12 @@ export function middleware(request: NextRequest) {
     const slug = pathSegments[0];
     const subPath = pathSegments.slice(1).join("/");
 
-    if (pathname === "/" && process.env.IS_SINGLE_APP === "true") {
-        const redirectUrl = request.nextUrl.clone();
-        redirectUrl.pathname = process.env.APP_SHORT_NAME;
-        return NextResponse.redirect(redirectUrl);
-    }
+    // if (pathname === "/" && process.env.IS_SINGLE_APP === "true") {
+    //     const redirectUrl = request.nextUrl.clone();
+    //     redirectUrl.pathname = process.env.APP_SHORT_NAME;
+    //     console.log("🚀 ~ middleware ~ redirectUrl:", redirectUrl);
+    //     return NextResponse.redirect(redirectUrl);
+    // }
 
     if (pathname === "/blog") {
         const redirectUrl = `https://${process.env.APP_SHORT_NAME}.com/blog`;

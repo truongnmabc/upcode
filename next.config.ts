@@ -1,15 +1,8 @@
 import type { NextConfig } from "next";
-import { hostname } from "os";
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-    enabled: false,
-});
-const withPlugins = require("next-compose-plugins");
+// import withBundleAnalyzer from "@next/bundle-analyzer";
+// import withPlugins from "next-compose-plugins";
 
-const nextConfig: NextConfig = withPlugins([[withBundleAnalyzer()]], {
-    /* config options here */
-
-    // Bỏ qua lỗi khi build
-
+const nextConfig: NextConfig = {
     reactStrictMode: false,
     eslint: {
         ignoreDuringBuilds: false,
@@ -53,7 +46,7 @@ const nextConfig: NextConfig = withPlugins([[withBundleAnalyzer()]], {
         },
         optimizePackageImports: ["@mui/icons-material", "@mui/material"],
     },
-    webpack: (config: any) => {
+    webpack: (config: unknown) => {
         // config.module.rules.push({
         //     test: /\.(sa|sc|c)ss$/,
         //     use: [
@@ -74,24 +67,48 @@ const nextConfig: NextConfig = withPlugins([[withBundleAnalyzer()]], {
         // });
         return config;
     },
-    // async redirects() {
-    //   return [
-    //     {
-    //       source: "/",
-    //       destination: "/4878338973761536",
-    //       permanent: true,
-    //     },
-    //   ];
-    // },
 
     async rewrites() {
-        return [
+        const pageStatic = ["about-us", "contact", "getPro"];
+        const pageDynamic1 = [
+            "review",
+            "result_test",
+            "finish",
+            "final_test",
+            "diagnostic_test",
+            "custom_test",
+        ];
+        const pageDynamic = ["study"];
+
+        const result = [
             {
-                source: "/:study",
-                destination: "/",
+                source: "/",
+                destination: process.env.IS_SINGLE_APP
+                    ? "/parent"
+                    : `/${process.env.APP_SHORT_NAME}`,
             },
         ];
+        pageStatic.forEach((e) => {
+            result.push({
+                source: "/" + e,
+                destination: `/${process.env.APP_SHORT_NAME}/` + e,
+            });
+        });
+        pageDynamic1.forEach((e) => {
+            result.push({
+                source: "/" + e,
+                destination: `/${process.env.APP_SHORT_NAME}/all/` + e,
+            });
+        });
+        pageDynamic.forEach((e) => {
+            result.push({
+                source: "/" + e + "/:path",
+                destination:
+                    `/${process.env.APP_SHORT_NAME}/all/` + e + "/:path",
+            });
+        });
+        return result;
     },
-});
+};
 
 export default nextConfig;
