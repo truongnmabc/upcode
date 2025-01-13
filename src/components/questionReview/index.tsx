@@ -12,6 +12,8 @@ import { MyCrypto } from "@/utils/myCrypto";
 import { MathJax } from "better-react-mathjax";
 import React, { useCallback } from "react";
 import { DialogDetailQuestionReview } from "./dialogDetailQuestionReview";
+import { selectUserInfo } from "@/redux/features/user.reselect";
+import clsx from "clsx";
 
 const QuestionResult = ({ item }: { item: ICurrentGame }) => {
     return (
@@ -44,7 +46,7 @@ const QuestionResult = ({ item }: { item: ICurrentGame }) => {
 const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
     const appInfo = useAppSelector(selectAppInfo);
     const [open, setOpen] = React.useState(false);
-
+    const userInfos = useAppSelector(selectUserInfo);
     const handleClickOpen = useCallback(() => {
         setOpen(true);
     }, []);
@@ -121,7 +123,12 @@ const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
                             dangerouslySetInnerHTML={{
                                 __html: MyCrypto.decrypt(item?.explanation),
                             }}
-                            className="text-sm font-normal  line-clamp-2 h-full  sm:text-base"
+                            className={clsx(
+                                "text-sm font-normal  line-clamp-2 h-full  sm:text-base",
+                                {
+                                    "blur-content": !userInfos.isPro,
+                                }
+                            )}
                         />
                     </MathJax>
                 )}
@@ -138,6 +145,7 @@ const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
                 appInfo={appInfo}
                 open={open}
                 onClose={handleClickClose}
+                isPro={userInfos.isPro}
             />
         </div>
     );

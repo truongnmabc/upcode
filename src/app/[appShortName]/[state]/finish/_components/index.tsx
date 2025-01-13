@@ -1,13 +1,17 @@
 "use client";
 import MyContainer from "@/components/container";
 import { db } from "@/db/db.model";
-import { IPassingModel } from "@/models/passing/passingModel";
-import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
 import { IAnswer } from "@/models/question/questions";
 import { selectTurn } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import {
+    saveDataPassing,
+    totalPassingApp,
+    totalPassingPart,
+    totalQuestionApp,
+} from "./calculate";
 import GridTopicProgress from "./gridTopic";
 import PassingFinishPage from "./passing";
 import ProgressFinishPage from "./progress";
@@ -62,35 +66,53 @@ const FinishLayout = () => {
                 .where("id")
                 .equals(Number(subTopicProgressId))
                 .first();
-            console.log("🚀 ~ handleGetData ~ passingDb:", passingDb);
 
             const currentPassing = passingDb?.topics?.find(
                 (item) => item.id === Number(partId)
             );
             let passingApp = 0;
             let extraPoint = 0;
-
-            const listPass = await db?.passing.toArray();
-
-            const currentPass = listPass?.filter(
-                (item) => item.parentId === Number(partId)
-            );
-            console.log("🚀 ~ handleGetData ~ currentPass:", currentPass);
-            console.log("🚀 ~ handleGetData ~ listPass:", listPass);
             if (passingDb && currentPassing) {
-                const passing = handleCalculate(
+                const totalPassing = await totalPassingPart(
                     useProgress,
                     currentPassing?.averageLevel
                 );
 
-                console.log("🚀 ~ handleGetData ~ passing:", passing);
+                const listPass = await db?.passing.toArray();
+                if (listPass) {
+                    const totalQuestion = totalQuestionApp(listPass);
+                    const totalQuestionTopic = listPass
+                        .filter((item) => item.parentId === passingDb.parentId)
+                        ?.reduce((acc, cur) => acc + cur.totalQuestion, 0);
 
-                extraPoint = await handleAddData(
-                    passingDb,
-                    passing,
-                    Number(partId)
-                );
-                passingApp = await handlePassingApp();
+                    extraPoint = totalPassing / totalQuestionTopic;
+
+                    const prev = await totalPassingApp(listPass);
+
+                    passingApp = (prev + totalPassing) / totalQuestion;
+
+                    const listNew = passingDb.topics?.map((item) =>
+                        item.id === Number(partId)
+                            ? {
+                                  ...item,
+                                  passing: totalPassing,
+                              }
+                            : item
+                    );
+
+                    saveDataPassing({
+                        id: Number(subTopicProgressId),
+                        data: {
+                            ...passingDb,
+                            passing:
+                                listNew?.reduce(
+                                    (acc, cur) => acc + cur.passing,
+                                    0
+                                ) || 0,
+                            topics: listNew,
+                        },
+                    });
+                }
             }
 
             const maxTurn = useProgress.reduce((max, item) => {
@@ -150,64 +172,3 @@ const FinishLayout = () => {
 };
 
 export default FinishLayout;
-
-const handleCalculate = (
-    userProgress: IUserQuestionProgress[],
-    averageLevel: number
-) => {
-    const passing = userProgress.reduce((acc, cur) => {
-        if (cur?.selectedAnswers?.length) {
-            const lastThreeElements = cur?.selectedAnswers.slice(-3);
-
-            const passAnswerCount = lastThreeElements.filter(
-                (item) => item.correct
-            ).length;
-
-            const passingProbability = passAnswerCount / 3;
-
-            const level =
-                ((cur.level === -1 ? 50 : cur.level) / averageLevel) * 100;
-
-            const passing = passingProbability * level;
-
-            return acc + passing;
-        } else {
-            return acc + 0;
-        }
-    }, 0);
-
-    return passing / userProgress.length;
-};
-
-const handleAddData = async (
-    passingDb: IPassingModel,
-    calculatedPassing: number,
-    partId: number
-) => {
-    if (passingDb) {
-        const totalPassing =
-            passingDb.topics?.reduce(
-                (sum, topic) =>
-                    sum +
-                    (topic.id === partId ? calculatedPassing : topic.passing),
-                0
-            ) || 0;
-        const passing = totalPassing / passingDb.totalQuestion;
-        console.log("🚀 ~ totalPassing:", totalPassing);
-        await db?.passing.update(passingDb.id, {
-            passing: passing,
-            topics: passingDb.topics?.map((topic) => ({
-                ...topic,
-                passing:
-                    topic.id === partId ? calculatedPassing : topic.passing,
-            })),
-        });
-
-        return passing;
-    }
-    return 0;
-};
-
-const handlePassingApp = async () => {
-    return 0;
-};

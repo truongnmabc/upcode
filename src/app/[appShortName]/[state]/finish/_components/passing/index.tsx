@@ -216,7 +216,7 @@ const PassingFinishPage = ({
                         Passing Probability{" "}
                     </p>
                     <span className="text-2xl text-white">
-                        {passing.toFixed(2)} %
+                        {passing.toFixed(4)} %
                     </span>
                 </div>
 
