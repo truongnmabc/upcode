@@ -1,27 +1,25 @@
 "use client";
-import RouterApp from "@/router/router.constant";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { ITopic } from "@/models/topics/topics";
+import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useAppSelector } from "@/redux/hooks";
+import RouterApp from "@/router/router.constant";
 import ctx from "@/utils/mergeClass";
-import { convertPathName } from "@/utils/pathName";
 import { Collapse } from "@mui/material";
 import { usePathname } from "next/navigation";
 import React, { useContext } from "react";
 import { AllowExpandContext, IContextAllowExpand } from "./provider";
 import TitleCollapse from "./titleCollapse";
-import { selectTopicsId } from "@/redux/features/study.reselect";
 
 const AllowExpand = () => {
     const pathname = usePathname();
     const { mainTopic } = useContext<IContextAllowExpand>(AllowExpandContext);
-    const currentPathname = convertPathName(pathname);
     const selectedTopics = useAppSelector(selectTopicsId);
     const isAllowExpand = selectedTopics === mainTopic?.id;
     const isMobile = useIsMobile();
 
     const open =
-        !isMobile && currentPathname === RouterApp.Home
+        !isMobile && pathname === RouterApp.Home
             ? false
             : selectedTopics === mainTopic?.id;
     return (
@@ -29,8 +27,8 @@ const AllowExpand = () => {
             <div
                 className={ctx("bg-white transition-all ", {
                     "border p-2 border-t-0 border-primary rounded-bl-md rounded-br-md border-solid":
-                        isAllowExpand && currentPathname === RouterApp.Home,
-                    " rounded-md": currentPathname !== RouterApp.Home,
+                        isAllowExpand && pathname === RouterApp.Home,
+                    " rounded-md": pathname !== RouterApp.Home,
                 })}
             >
                 <div className="flex gap-2 flex-col ">

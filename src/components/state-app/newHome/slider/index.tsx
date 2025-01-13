@@ -18,7 +18,7 @@ const ListBlock = ({
     const params = useParams();
     useEffect(() => {
         const handleGetData = async () => {
-            if (params.state) {
+            if (params?.["state"]) {
                 // *NOTE: để tạm do các bang khác chưa có data
 
                 const res = await axiosInstance.get(
@@ -75,9 +75,7 @@ const ListBlock = ({
                     </p>
                     {listBlock?.length && listBlock?.length > 0 ? (
                         <SwiperBlock listBlock={listBlock} />
-                    ) : (
-                        <></>
-                    )}
+                    ) : null}
                 </div>
             </MyContainer>
         </div>

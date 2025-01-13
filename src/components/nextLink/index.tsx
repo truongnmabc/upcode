@@ -1,35 +1,35 @@
-"use client";
-import { appInfoState } from "@/redux/features/appInfo";
-import { useAppSelector } from "@/redux/hooks";
-import { revertPathName } from "@/utils/pathName";
-import Link, { LinkProps } from "next/link";
-import React, { Fragment, useEffect, useState } from "react";
+import Link from "next/link";
+import React from "react";
 
-interface IProps extends LinkProps {
-    children: React.ReactNode;
+// Define the props type for LinkBlank
+interface LinkBlankProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+    onClick?: React.MouseEventHandler<HTMLAnchorElement>;
     href: string;
+    children: React.ReactNode;
+    classNames?: string;
 }
 
-const FN: React.FC<IProps> = ({ children, href, ...rest }) => {
-    const { appInfo } = useAppSelector(appInfoState);
-    const [link, setLink] = useState("");
-    useEffect(() => {
-        if (appInfo.appShortName) {
-            const _href = revertPathName({
-                href,
-                appName: appInfo.appShortName,
-            });
-            setLink(_href);
-        }
-    }, [appInfo.appShortName, href]);
-
-    if (!link) return <Fragment>{children}</Fragment>;
-
+// Use React.ForwardRefRenderFunction to properly type the forwarded ref
+const LinkBlank: React.ForwardRefRenderFunction<
+    HTMLAnchorElement,
+    LinkBlankProps
+> = ({ onClick, href, children, classNames }, ref) => {
     return (
-        <Link href={link} scroll={false} {...rest}>
-            {children}
+        <Link passHref legacyBehavior href={href}>
+            <a
+                className={classNames}
+                href={href}
+                onClick={onClick}
+                target="_blank"
+                ref={ref}
+                rel="noopener noreferrer"
+            >
+                {children}
+            </a>
         </Link>
     );
 };
-const NextLink = React.memo(FN);
-export default NextLink;
+
+// Use React.forwardRef to wrap the component
+const ForwardedLinkBlank = React.forwardRef(LinkBlank);
+export default ForwardedLinkBlank;

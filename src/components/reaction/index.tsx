@@ -13,6 +13,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import ReportMistake from "../reportMistake";
 import { ICurrentGame } from "@/models/game/game";
+import clsx from "clsx";
 const Reaction = ({ item }: { item?: ICurrentGame }) => {
     const currentGame = useAppSelector(selectCurrentGame);
     const listActions = useAppSelector(selectListActions);
@@ -79,14 +80,36 @@ const Reaction = ({ item }: { item?: ICurrentGame }) => {
 
     return (
         <div className="flex items-center gap-2 sm:gap-4">
-            <div className="cursor-pointer" onClick={likeAction}>
+            <div
+                className={clsx("cursor-pointer", {
+                    "pointer-events-none opacity-80": status.dislike,
+                })}
+                onClick={likeAction}
+            >
                 <IconLike
-                    color={status.like ? "var(--color-primary)" : "#7C6F5B"}
+                    color={
+                        status.like
+                            ? "var(--color-primary)"
+                            : status.dislike
+                            ? "rgba(124, 111, 91, 0.5)"
+                            : "#7C6F5B"
+                    }
                 />
             </div>
-            <div className="cursor-pointer" onClick={dislikeAction}>
+            <div
+                className={clsx("cursor-pointer", {
+                    "pointer-events-none opacity-80": status.like,
+                })}
+                onClick={dislikeAction}
+            >
                 <IconDislike
-                    color={status.dislike ? "var(--color-primary)" : "#7C6F5B"}
+                    color={
+                        status.dislike
+                            ? "var(--color-primary)"
+                            : status.like
+                            ? "rgba(124, 111, 91, 0.5)"
+                            : "#7C6F5B"
+                    }
                 />
             </div>
             <div className="cursor-pointer" onClick={saveAction}>

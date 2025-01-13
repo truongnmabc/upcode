@@ -1,17 +1,17 @@
 "use client";
 
 import RouterApp from "@/router/router.constant";
-import NextLink from "@/components/nextLink";
 import { appConfigState } from "@/redux/features/appConfig";
 import { useAppSelector } from "@/redux/hooks";
 import clsx from "clsx";
 import React from "react";
+import Link from "next/link";
 
 const FN = () => {
     const { appConfig } = useAppSelector(appConfigState);
     const color = appConfig.mainColor;
     return (
-        <NextLink href={RouterApp.Get_pro}>
+        <Link href={RouterApp.Get_pro}>
             <div className="hidden sm:flex item-center  capitalize gap-3">
                 <div className="w-fit cursor-pointer h-fit">
                     <svg
@@ -53,7 +53,7 @@ const FN = () => {
                     Get pro
                 </div>
             </div>
-        </NextLink>
+        </Link>
     );
 };
 const IconGetPro = React.memo(FN);

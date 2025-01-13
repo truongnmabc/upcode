@@ -26,10 +26,7 @@ async function initializeDBIdb(appShortName) {
 }
 
 async function handleInitData(appShortName, apiPath) {
-    console.log("🚀 ~ handleInitData ~ appShortName:", appShortName);
     const db = await initializeDBIdb(appShortName);
-    console.log("🚀 ~ handleInitData ~ db:", db);
-
     try {
         const response = await fetch(
             `${apiPath.GET_DATA_STUDY}/${appShortName}`
@@ -79,27 +76,29 @@ const processQuestionsData = async (topics, db, icon, tag) => {
         const subTopicTag = topic.tag;
 
         for (const part of topic?.topics) {
-            const topicQuestionTx = db.transaction(
-                "topicQuestion",
-                "readwrite"
-            );
-            const topicQuestionStore =
-                topicQuestionTx.objectStore("topicQuestion");
+            if (part.contentType === 0) {
+                const topicQuestionTx = db.transaction(
+                    "topicQuestion",
+                    "readwrite"
+                );
+                const topicQuestionStore =
+                    topicQuestionTx.objectStore("topicQuestion");
 
-            const questions = part?.questions.map((item) => ({
-                ...item,
-                parentId: part.id,
-                icon: icon,
-                tag: tag,
-            }));
+                const questions = part?.questions.map((item) => ({
+                    ...item,
+                    parentId: part.id,
+                    icon: icon,
+                    tag: tag,
+                }));
 
-            await topicQuestionStore.add({
-                ...part,
-                questions: questions,
-                subTopicTag,
-                status: 0,
-            });
-            await topicQuestionStore.done;
+                await topicQuestionStore.add({
+                    ...part,
+                    questions: questions,
+                    subTopicTag,
+                    status: 0,
+                });
+                await topicQuestionStore.done;
+            }
         }
         await calculatePassing(topic, db);
         await initDataSubTopicProgress(topic, db);
@@ -114,14 +113,16 @@ const initDataSubTopicProgress = async (topic, db) => {
     await subTopicProgressStore.add({
         id: topic?.id || 0,
         parentId: topic.parentId,
-        part: topic?.topics?.map((item) => ({
-            id: item.id,
-            parentId: item.parentId,
-            status: 0,
-            totalQuestion: item.totalQuestion,
-            tag: item.tag,
-            turn: 1,
-        })),
+        part: topic?.topics
+            ?.filter((item) => item.contentType === 0)
+            .map((item) => ({
+                id: item.id,
+                parentId: item.parentId,
+                status: 0,
+                totalQuestion: item.totalQuestion,
+                tag: item.tag,
+                turn: 1,
+            })),
         subTopicTag: topic?.tag || "",
         pass: false,
     });
@@ -135,29 +136,32 @@ const calculatePassing = async (topic, db) => {
     await passingStore.done;
     if (!exists) {
         let listSubTopic = [];
-
+        let total = 0;
         for (const part of topic.topics) {
             const totalLevel = part.questions.reduce(
                 (sum, question) =>
                     sum + (question.level === -1 ? 50 : question.level),
                 0
             );
+            total += totalLevel;
+
             const totalQuestions = part.questions.length;
+
             const averageLevelPart =
                 totalQuestions > 0 ? totalLevel / totalQuestions : 0;
-
-            listSubTopic.push({
-                id: part.id,
-                parentId: part.parentId,
-                averageLevel: averageLevelPart,
-                totalQuestion: part.totalQuestion,
-                topics: [],
-                passing: 0,
-            });
+            if (part?.contentType === 0) {
+                listSubTopic.push({
+                    id: part.id,
+                    parentId: part.parentId,
+                    averageLevel: averageLevelPart,
+                    totalQuestion: part.totalQuestion,
+                    topics: [],
+                    passing: 0,
+                });
+            }
         }
-
-        const totalAverageLevel = listSubTopic.reduce(
-            (sum, subTopic) => sum + subTopic.averageLevel,
+        const totalQuestion = listSubTopic.reduce(
+            (acc, cur) => acc + cur.totalQuestion,
             0
         );
 
@@ -166,8 +170,8 @@ const calculatePassing = async (topic, db) => {
         await passingStore.add({
             parentId: topic.parentId,
             id: topic.id,
-            averageLevel: totalAverageLevel,
-            totalQuestion: topic.totalQuestion,
+            averageLevel: total / topic.totalQuestion,
+            totalQuestion: totalQuestion,
             topics: listSubTopic,
             passing: 0,
         });
@@ -193,6 +197,7 @@ const initDataTopics = async (topics, db) => {
             topics: topic.topics?.map((item) => ({
                 ...item,
                 slug: `${item.tag}-practice-test`,
+                topics: item.topics?.filter((item) => item.contentType === 0),
             })),
             slug: `${topic.tag}-practice-test`,
         };

@@ -1,29 +1,22 @@
 "use client";
-import RouterApp from "@/router/router.constant";
 import LazyLoadImage from "@/components/images";
 import { useTheme } from "@/hooks/useTheme";
-import { appInfoState } from "@/redux/features/appInfo";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppSelector } from "@/redux/hooks";
-import { convertPathName, revertPathName } from "@/utils/pathName";
+import RouterApp from "@/router/router.constant";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 const FN = () => {
     const { push } = useRouter();
     const pathname = usePathname() || "";
-    const currentPath = convertPathName(pathname);
     const { theme } = useTheme();
-    const { appInfo } = useAppSelector(appInfoState);
+    const appInfo = useAppSelector(selectAppInfo);
     return (
         <div
             className="h-full max-h-10 w-full flex items-center cursor-pointer"
             onClick={() => {
-                if (currentPath === RouterApp.Home) return;
-                push(
-                    revertPathName({
-                        href: RouterApp.Home,
-                        appName: appInfo.appShortName,
-                    })
-                );
+                if (pathname === RouterApp.Home) return;
+                push(RouterApp.Home);
             }}
             data-testid="logoHeader"
         >

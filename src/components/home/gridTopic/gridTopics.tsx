@@ -15,10 +15,10 @@ const GridTopics = ({
 }) => {
     return (
         <div className="w-full  pt-6 sm:pt-14">
-            <h3 className="sm:text-[32px] sm:leading-[48px] font-poppins text-center text-lg font-bold">
+            <h3 className="sm:text-[40px] sm:leading-[60px] font-poppins text-center text-2xl font-bold">
                 Practice {appInfo.appName} Test By Topics
             </h3>
-            <h3 className="text-xs sm:text-base my-2 sm:my-8 text-[#212121CC] sm:text-[#212121] text-center">
+            <h3 className="text-sm sm:text-base my-2 sm:my-8 text-[#212121CC] sm:text-[#212121] text-center">
                 Our {appInfo?.appName} practice questions feature all 9 {""}
                 {appInfo?.appName} test subjects. We recommend practicing
                 questions from all subjects to guarantee your success at your

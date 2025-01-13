@@ -1,6 +1,6 @@
 "use client";
 import LazyLoadImage from "@/components/images";
-import ForwardedLinkBlank from "@/components/nextLink/forwardedLinkBlank";
+import ForwardedLinkBlank from "@/components/nextLink";
 import { useTheme } from "@/hooks/useTheme";
 import { appInfoState } from "@/redux/features/appInfo";
 import { useAppSelector } from "@/redux/hooks";

@@ -1,8 +1,8 @@
 "use client";
-import React, { Fragment, useContext } from "react";
-import { ReviewContext } from "../../context";
-import { useAppSelector } from "@/redux/hooks";
 import { selectListQuestion } from "@/redux/features/game.reselect";
+import { useAppSelector } from "@/redux/hooks";
+import React, { useContext } from "react";
+import { ReviewContext } from "../../context";
 
 const TitleReview = () => {
     const { selectType, isStart } = useContext(ReviewContext);
@@ -20,15 +20,13 @@ const TitleReview = () => {
             ? true
             : !isStart && ["weak", "saved", "all"].includes(selectType);
 
-    return (
-        <Fragment>
-            {shouldShowTitle && (
-                <h2 className="text-2xl text-center font-semibold">
-                    {titles[selectType]}
-                </h2>
-            )}
-        </Fragment>
-    );
+    if (shouldShowTitle)
+        return (
+            <h2 className="text-2xl text-center font-semibold">
+                {titles[selectType]}
+            </h2>
+        );
+    return null;
 };
 
 export default React.memo(TitleReview);

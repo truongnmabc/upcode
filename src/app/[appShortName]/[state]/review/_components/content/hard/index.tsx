@@ -8,7 +8,7 @@ import { ICurrentGame } from "@/models/game/game";
 import { startRandomReview } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
 import { MathJaxContext } from "better-react-mathjax";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import ChoiceQuestionBeforeStart from "../random/choiceQuestionBeforeStart";
 
 const HardQuestions = ({ isMobile }: { isMobile: boolean }) => {
@@ -109,7 +109,7 @@ const HardQuestions = ({ isMobile }: { isMobile: boolean }) => {
                 boxShadow: "0px 2px 4px 0px #2121211F",
             }}
         >
-            {isStart ? (
+            {isStart && (
                 <MathJaxContext>
                     <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
                         <div className="sm:p-4 flex flex-col gap-3">
@@ -127,14 +127,9 @@ const HardQuestions = ({ isMobile }: { isMobile: boolean }) => {
                         <BottomActions type="learn" isShow />
                     </div>
                 </MathJaxContext>
-            ) : (
-                <Fragment>
-                    {!isMobile && (
-                        <ChoiceQuestionBeforeStart
-                            handleStartTest={handleStartTest}
-                        />
-                    )}
-                </Fragment>
+            )}
+            {!isMobile && !isStart && (
+                <ChoiceQuestionBeforeStart handleStartTest={handleStartTest} />
             )}
         </div>
     );

@@ -11,7 +11,7 @@ import {
 } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { MathJaxContext } from "better-react-mathjax";
-import React, { Fragment } from "react";
+import React from "react";
 import CountTimeCustomTest from "../countTimeCustomTest";
 
 const ContentCustomTest = () => {
@@ -21,29 +21,27 @@ const ContentCustomTest = () => {
     return (
         <MathJaxContext>
             <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
-                <Fragment>
-                    <div className="sm:p-4 flex flex-col gap-3">
-                        <div className="w-full hidden sm:block text-center capitalize text-xl font-semibold">
-                            Custom Test {indexSubTopic}
-                        </div>
-                        <ProgressQuestion />
-                        <div className="w-full flex items-center justify-center">
-                            <div className="flex items-center justify-center w-fit gap-2">
-                                <ClockIcon />
-                                <CountTimeCustomTest />
-                            </div>
-                        </div>
-                        <QuestionContent
-                            showStatus={feedBack !== "exam" ? true : false}
-                        />
-                        <ChoicesPanel />
-                        {feedBack !== "exam" && (
-                            <ExplanationDetail unLock={feedBack === "newbie"} />
-                        )}
+                <div className="sm:p-4 flex flex-col gap-3">
+                    <div className="w-full hidden sm:block text-center capitalize text-xl font-semibold">
+                        Custom Test {indexSubTopic}
                     </div>
+                    <ProgressQuestion />
+                    <div className="w-full flex items-center justify-center">
+                        <div className="flex items-center justify-center w-fit gap-2">
+                            <ClockIcon />
+                            <CountTimeCustomTest />
+                        </div>
+                    </div>
+                    <QuestionContent
+                        showStatus={feedBack !== "exam" ? true : false}
+                    />
+                    <ChoicesPanel />
+                    {feedBack !== "exam" && (
+                        <ExplanationDetail unLock={feedBack === "newbie"} />
+                    )}
+                </div>
 
-                    <BottomActions isShow={true} type="custom" />
-                </Fragment>
+                <BottomActions isShow={true} type="custom" />
             </div>
         </MathJaxContext>
     );

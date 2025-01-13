@@ -80,6 +80,8 @@ const nextQuestionDiagnosticThunk = createAsyncThunk(
                 indexCurrentQuestion: indexCurrentQuestion + 1,
             };
         }
+
+        return undefined;
     }
 );
 

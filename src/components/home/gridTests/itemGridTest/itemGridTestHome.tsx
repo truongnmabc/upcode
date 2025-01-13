@@ -11,10 +11,12 @@ import initTestQuestionThunk from "@/redux/repository/game/initData/initPractice
 import { revertPathName } from "@/utils/pathName";
 import { Grid2 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import React, { useCallback } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { IPropsItemTest } from "../type";
 
 const ItemGridTest: React.FC<IPropsItemTest> = ({ item, appInfo }) => {
+    const [open, setOpen] = React.useState(false);
+    const isMobile = useIsMobile();
     const router = useRouter();
     const {
         ripples,
@@ -92,6 +94,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item, appInfo }) => {
                     handleDiagnosticTest();
                     break;
                 case "PT":
+                    if (isMobile) return setOpen(!open);
                     handlePracticeTest();
                     break;
                 default:
@@ -106,32 +109,82 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item, appInfo }) => {
             handleDiagnosticTest,
             handlePracticeTest,
             onRippleClickHandler,
+            isMobile,
+            open,
         ]
     );
 
     return (
-        <Grid2
-            size={{
-                xs: 12,
-                sm: 6,
-                md: 6,
-                lg: 3,
-            }}
-        >
-            <div
-                className="flex border p-2 relative hover:border-primary overflow-hidden bg-white cursor-pointer w-full h-[52px] sm:h-[72px] rounded-md"
-                onClick={handleClick}
+        <Fragment>
+            <Grid2
+                size={{
+                    xs: 12,
+                    sm: 6,
+                    md: 6,
+                    lg: 3,
+                }}
             >
-                <div className="h-full aspect-square bg-primary-16   rounded-md flex  items-center justify-center rounded-tl-md">
-                    <div className="w-5 h-5 sm:w-8 sm:h-8">{item.icon}</div>
+                <div
+                    className="flex border p-2 relative hover:border-primary overflow-hidden bg-white cursor-pointer w-full h-[52px] sm:h-[72px] rounded-md"
+                    onClick={handleClick}
+                >
+                    <div
+                        className="h-full aspect-square    rounded-md flex  items-center justify-center rounded-tl-md"
+                        style={{
+                            backgroundColor: item.color,
+                        }}
+                    >
+                        <div className="w-5 h-5 sm:w-8 sm:h-8">{item.icon}</div>
+                    </div>
+                    <h3 className="pl-4 flex-1 text-base sm:text-lg  flex items-center justify-start font-medium ">
+                        {item.name}
+                    </h3>
+                    <MtUiRipple ripples={ripples} onClear={onClearRipple} />
                 </div>
-                <h3 className="pl-4 flex-1 text-xs sm:text-lg  flex items-center justify-start font-medium ">
-                    {item.name}
-                </h3>
-                <MtUiRipple ripples={ripples} onClear={onClearRipple} />
-            </div>
-        </Grid2>
+            </Grid2>
+            {item.id === "PT" && <ListPracticeTest open={open} />}
+        </Fragment>
     );
 };
 
 export default ItemGridTest;
+
+import Collapse from "@mui/material/Collapse";
+import ItemTestLeft from "@/components/gridTests/itemTest";
+import { useIsMobile } from "@/hooks/useIsMobile";
+
+type IListTest = {
+    parentId: number;
+    duration: number;
+};
+
+const ListPracticeTest = ({ open }: { open: boolean }) => {
+    const [listPracticeTests, setListPracticeTests] = useState<IListTest[]>([]);
+
+    const handleGetData = useCallback(async () => {
+        const listData = await db?.testQuestions
+            .filter((test) => test.type === "practiceTests")
+            .toArray();
+        if (listData) {
+            setListPracticeTests(
+                listData?.map((item) => ({
+                    duration: item.duration,
+                    parentId: item.parentId,
+                }))
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        handleGetData();
+    }, [handleGetData]);
+    return (
+        <Collapse in={open} timeout="auto" unmountOnExit className="w-full">
+            <div className="w-full flex  flex-col gap-2">
+                {listPracticeTests?.map((test, index) => (
+                    <ItemTestLeft key={index} index={index} test={test} />
+                ))}
+            </div>
+        </Collapse>
+    );
+};

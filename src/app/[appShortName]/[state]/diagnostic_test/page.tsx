@@ -38,8 +38,8 @@ export default async function DiagnosticPage() {
                         }}
                     >
                         <div className="hidden sm:block w-full">
-                            <div className="flex flex-col gap-4">
-                                <AnswerSheet />
+                            <div className="flex p-3 bg-white rounded-xl flex-col gap-4">
+                                <AnswerSheet wrapperClassName="bg-[#2121210A]" />
                                 <GridTestsLeft />
                                 <div className="w-full h-[1px] bg-[#21212129]"></div>
                                 <GridTopicLeft />

@@ -4,8 +4,13 @@ import React, { useEffect, useState } from "react";
 type IProps = {
     onEndTime: () => void;
     duration: number;
+    isPause?: boolean;
 };
-const CountTime: React.FC<IProps> = ({ onEndTime, duration }) => {
+const CountTime: React.FC<IProps> = ({
+    onEndTime,
+    duration,
+    isPause = false,
+}) => {
     const [time, setTime] = useState(-1);
 
     useEffect(() => {
@@ -15,7 +20,7 @@ const CountTime: React.FC<IProps> = ({ onEndTime, duration }) => {
     }, [duration]);
 
     useEffect(() => {
-        if (time > 0) {
+        if (time > 0 && !isPause) {
             const timeId = setTimeout(() => {
                 setTime((prev) => prev - 1);
             }, 1000);
@@ -24,7 +29,8 @@ const CountTime: React.FC<IProps> = ({ onEndTime, duration }) => {
             setTime(-1);
             onEndTime();
         }
-    }, [time, onEndTime]);
+        return undefined;
+    }, [time, isPause, onEndTime]);
 
     return <div>{formatTime(time * 1000)}</div>;
 };
@@ -49,7 +55,6 @@ const formatTime = (time: number) => {
                 {minutes.toString().padStart(2, "0")}
             </div>
             <span>:</span>
-
             <div className="text-lg font-medium">
                 {seconds.toString().padStart(2, "0")}
             </div>

@@ -6,7 +6,7 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import CssBaseline from "@mui/material/CssBaseline";
 import React, { useLayoutEffect } from "react";
-
+// import mediaQuery from "css-mediaquery";
 export type ThemeMode = "light" | "dark" | "system";
 
 const AppThemeProvider = ({ children }: { children: React.ReactNode }) => {
@@ -16,7 +16,12 @@ const AppThemeProvider = ({ children }: { children: React.ReactNode }) => {
             (localStorage?.getItem("theme") as ThemeMode)) ||
         "light";
 
-    // setup màu mui ở đây, các thuộc tính màu sẽ thay đổi theo app
+    // const ssrMatchMedia = (query: string) => ({
+    //     matches: mediaQuery.match(query, {
+    //         // The estimated CSS width of the browser.
+    //         width: 768,
+    //     }),
+    // });
 
     const muiTheme = createTheme({
         palette: {
@@ -25,6 +30,16 @@ const AppThemeProvider = ({ children }: { children: React.ReactNode }) => {
             },
             mode: "light",
         },
+        // components: {
+        //     MuiUseMediaQuery: {
+        //         // defaultProps: {
+        //         //     ssrMatchMedia,
+        //         // },
+        //         defaultProps: {
+        //             noSsr: true,
+        //         },
+        //     },
+        // },
     });
 
     useLayoutEffect(() => {
@@ -86,6 +101,7 @@ const AppThemeProvider = ({ children }: { children: React.ReactNode }) => {
             mediaQuery.addEventListener("change", handleChange);
             return () => mediaQuery.removeEventListener("change", handleChange);
         }
+        return undefined;
     }, [theme]);
 
     return (

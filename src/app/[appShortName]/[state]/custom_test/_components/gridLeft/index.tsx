@@ -175,9 +175,7 @@ const GridLeftCustomTest = () => {
                     open={openModalSetting}
                     onClose={onClose}
                 />
-            ) : (
-                <></>
-            )}
+            ) : null}
         </Fragment>
     );
 };

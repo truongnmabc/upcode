@@ -6,7 +6,7 @@ import { selectTopics } from "@/redux/features/study";
 import { useAppDispatch } from "@/redux/hooks";
 import clsx from "clsx";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const GridTopicProgress = () => {
     const [listSubTopics, setListSubTopics] = useState<ITopic | null>();
@@ -26,21 +26,21 @@ const GridTopicProgress = () => {
     useEffect(() => {
         handleGetData();
     }, [slug, handleGetData]);
-    return (
-        <Fragment>
-            {listSubTopics && (
-                <div
-                    className={clsx("w-full h-full rounded-md  bg-white", {
-                        "p-3": pathname.includes("/finish"),
-                    })}
-                >
-                    <AllowExpandProvider topic={listSubTopics}>
-                        <AllowExpand />
-                    </AllowExpandProvider>
-                </div>
-            )}
-        </Fragment>
-    );
+
+    if (listSubTopics) {
+        return (
+            <div
+                className={clsx("w-full h-full rounded-md  bg-white", {
+                    "p-3": pathname.includes("/finish"),
+                })}
+            >
+                <AllowExpandProvider topic={listSubTopics}>
+                    <AllowExpand />
+                </AllowExpandProvider>
+            </div>
+        );
+    }
+    return null;
 };
 
 export default GridTopicProgress;

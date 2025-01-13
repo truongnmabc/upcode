@@ -6,17 +6,9 @@ export function middleware(request: NextRequest) {
 
     const pathSegments = pathname.split("/").filter(Boolean);
     const slug = pathSegments[0];
-    const subPath = pathSegments.slice(1).join("/");
-
-    // if (pathname === "/" && process.env.IS_SINGLE_APP === "true") {
-    //     const redirectUrl = request.nextUrl.clone();
-    //     redirectUrl.pathname = process.env.APP_SHORT_NAME;
-    //     console.log("🚀 ~ middleware ~ redirectUrl:", redirectUrl);
-    //     return NextResponse.redirect(redirectUrl);
-    // }
 
     if (pathname === "/blog") {
-        const redirectUrl = `https://${process.env.APP_SHORT_NAME}.com/blog`;
+        const redirectUrl = `https://${process.env.NEXT_PUBLIC_APP_SHORT_NAME}.com/blog`;
         return NextResponse.redirect(redirectUrl);
     }
 
@@ -26,11 +18,15 @@ export function middleware(request: NextRequest) {
         "terms-of-service",
         "privacy",
         "editorial-policy",
+        "study-guide",
         "blog",
     ];
 
-    if (redirectPaths.includes(subPath)) {
-        const redirectUrl = `https://${slug}-prep.com/${subPath}`;
+    if (redirectPaths.includes(slug)) {
+        const redirectUrl = `https://${
+            process.env.NEXT_PUBLIC_APP_SHORT_NAME
+        }-prep.com/${process.env.NEXT_PUBLIC_APP_SHORT_NAME + "-" + slug}`;
+        console.log("🚀 ~ middleware ~ redirectUrl:", redirectUrl);
         return NextResponse.redirect(redirectUrl);
     }
 
@@ -38,6 +34,15 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    // matcher: ["/", "/:slug/:path*", "/blog"],
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+    matcher: [
+        /*
+         * Match all request paths except for the ones starting with:
+         * - api (API routes)
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - /image (image optimization files)
+         * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+         */
+        "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|images).*)",
+    ],
 };

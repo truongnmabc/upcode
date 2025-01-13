@@ -33,7 +33,7 @@ const FN: React.FC<IProps> = ({ unLock = false }) => {
     return (
         <Collapse in={currentGame?.selectedAnswer ? true : false} timeout={200}>
             <div className="flex text-[#004fc2] text-sm sm:text-base gap-2 items-center">
-                Detailed Explanation
+                Explanation
                 {!userInfo.isPro && !unLock && (
                     <div className="flex items-center gap-1">
                         {!isMobile ? "(Get" : ""}

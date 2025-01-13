@@ -1,17 +1,17 @@
 "use client";
-import { Fragment, useEffect, useState } from "react";
+import LazyLoadImage from "@/components/images";
+import { IAppInfo } from "@/models/app/appInfo";
+import { IMember } from "@/models/memberContact/member";
 import { getMemberApi } from "@/services/contact.service";
 import "@/styles/slick-theme.min.css";
 import "@/styles/slick.css";
 import "@/styles/slick.min.css";
-import "./index.scss";
-import { IMember } from "@/models/memberContact/member";
-import { IAppInfo } from "@/models/app/appInfo";
-import AboutActivityCdl from "./cdl/header/activity";
-import AboutHeaderCdl from "./cdl/header";
-import HeaderComponent from "./asvab/header";
+import { useEffect, useState } from "react";
 import ActivityComponent from "./asvab/activity";
-import LazyLoadImage from "@/components/images";
+import HeaderComponent from "./asvab/header";
+import AboutHeaderCdl from "./cdl/header";
+import AboutActivityCdl from "./cdl/header/activity";
+import "./index.scss";
 
 const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
     const [listMember, setListMember] = useState<IMember[]>([]);
@@ -49,51 +49,45 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
                 return <AboutActivityCdl />;
             case "asvab":
                 return <ActivityComponent />;
+
+            default:
+                return null;
         }
     };
     return (
-        <Fragment>
-            <div className="about-us-container">
-                {renderHeaderAbout()}
+        <div className="about-us-container">
+            {renderHeaderAbout()}
 
-                <div className="about-us-bottom">
-                    {renderActivityAbout()}
-                    <div className="meet-the-team max-w-component-desktop">
-                        <div className="title-meet-the-team">Meet The Team</div>
-                        <div className="members">
-                            {listMember.map((item, index) => (
-                                <div className="info-member" key={index}>
-                                    <div
-                                        className="avatar"
-                                        onClick={() => {
-                                            showProfileMember(
-                                                item.user_nicename
-                                            );
-                                        }}
-                                    >
-                                        <LazyLoadImage
-                                            src={item.avatar}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div
-                                        className="name"
-                                        onClick={() => {
-                                            showProfileMember(
-                                                item.user_nicename
-                                            );
-                                        }}
-                                    >
-                                        {item.name}
-                                    </div>
-                                    <div className="position">{item.role}</div>
+            <div className="about-us-bottom">
+                {renderActivityAbout()}
+                <div className="meet-the-team max-w-component-desktop">
+                    <div className="title-meet-the-team">Meet The Team</div>
+                    <div className="members">
+                        {listMember.map((item, index) => (
+                            <div className="info-member" key={index}>
+                                <div
+                                    className="avatar"
+                                    onClick={() => {
+                                        showProfileMember(item.user_nicename);
+                                    }}
+                                >
+                                    <LazyLoadImage src={item.avatar} alt="" />
                                 </div>
-                            ))}
-                        </div>
+                                <div
+                                    className="name"
+                                    onClick={() => {
+                                        showProfileMember(item.user_nicename);
+                                    }}
+                                >
+                                    {item.name}
+                                </div>
+                                <div className="position">{item.role}</div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
-        </Fragment>
+        </div>
     );
 };
 

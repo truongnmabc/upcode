@@ -40,10 +40,10 @@ const GridTest = () => {
 
     return (
         <div className="w-full mt-6 sm:mt-12">
-            <h3 className="sm:text-[32px] sm:leading-[48px] text-center text-lg font-bold">
+            <h3 className="sm:text-[40px] sm:leading-[60px] text-center text-2xl font-bold">
                 Take Full {appInfo.appName} Practice Test
             </h3>
-            <h4 className="text-xs my-2 sm:mt-8 sm:text-base text-[#212121CC] sm:text-[#212121] font-normal  text-center">
+            <h4 className="text-sm my-2 sm:mt-8 sm:text-base text-[#212121CC] sm:text-[#212121] font-normal  text-center">
                 Ace your exam with our comprehensive practice tests! Get started
                 with a Diagnostic Test to identify your strengths and
                 weaknesses. Then, master the content with our Practice Tests.

@@ -8,7 +8,7 @@ const RouterApp = {
     Refund_policy: "refund-policy",
     Blog: "blog",
     Teams_of_service: "terms-of-service",
-    Study_Guides: "study-guides",
+    Study_Guides: "study-guide",
     Score_Calculator: "score-calculator",
     Test: "test",
     Review: "review",

@@ -45,7 +45,7 @@ const EmotionComponent = () => {
             </div>
         );
     }
-    return <></>;
+    return null;
 };
 
 // /** fake dữ liệu */

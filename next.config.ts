@@ -85,26 +85,29 @@ const nextConfig: NextConfig = {
                 source: "/",
                 destination: process.env.IS_SINGLE_APP
                     ? "/parent"
-                    : `/${process.env.APP_SHORT_NAME}`,
+                    : `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}`,
             },
         ];
         pageStatic.forEach((e) => {
             result.push({
                 source: "/" + e,
-                destination: `/${process.env.APP_SHORT_NAME}/` + e,
+                destination: `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/` + e,
             });
         });
         pageDynamic1.forEach((e) => {
             result.push({
                 source: "/" + e,
-                destination: `/${process.env.APP_SHORT_NAME}/all/` + e,
+                destination:
+                    `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/all/` + e,
             });
         });
         pageDynamic.forEach((e) => {
             result.push({
                 source: "/" + e + "/:path",
                 destination:
-                    `/${process.env.APP_SHORT_NAME}/all/` + e + "/:path",
+                    `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/all/` +
+                    e +
+                    "/:path",
             });
         });
         return result;

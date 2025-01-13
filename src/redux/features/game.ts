@@ -109,7 +109,7 @@ export const gameSlice = createSlice({
             const turn = state.turn;
             state.turn = turn + 1;
             state.isPaused = false;
-            state.remainTime = state.time * 60;
+            state.remainTime = state.time * 80;
         },
         continueGame: (state) => {
             state.isPaused = false;
@@ -156,7 +156,7 @@ export const gameSlice = createSlice({
                     state.listQuestion = listQuestion;
                     state.currentGame = nextLever;
                     state.indexCurrentQuestion = indexCurrentQuestion;
-                    state.remainTime = 60;
+                    state.remainTime = 80;
                 }
             }
         );
@@ -253,7 +253,7 @@ export const gameSlice = createSlice({
                         idTopic,
                         duration: 1,
                         isPaused,
-                        remainTime: 60,
+                        remainTime: 80,
                     });
                     if (belowFifty) state.belowFifty = belowFifty;
                     if (aboveFifty) state.aboveFifty = aboveFifty;

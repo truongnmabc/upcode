@@ -1,16 +1,16 @@
-import { useIsMobile } from "@/hooks/useIsMobile";
-import { ITestQuestion } from "@/models/tests/testQuestions";
-import { ITopic } from "@/models/topics/topics";
-import { useAppDispatch } from "@/redux/hooks";
-import Dialog from "@mui/material/Dialog";
-import React, { Fragment, useEffect, useState } from "react";
-import ContentSetting from "./contentSetting";
 import Sheet from "@/components/sheet";
 import { db } from "@/db/db.model";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { ICurrentGame } from "@/models/game/game";
-import { generateRandomNegativeId } from "@/utils/math";
 import { IQuestion } from "@/models/question/questions";
+import { ITestQuestion } from "@/models/tests/testQuestions";
+import { ITopic } from "@/models/topics/topics";
 import { startCustomTest } from "@/redux/features/game";
+import { useAppDispatch } from "@/redux/hooks";
+import { generateRandomNegativeId } from "@/utils/math";
+import Dialog from "@mui/material/Dialog";
+import React, { useEffect, useState } from "react";
+import ContentSetting from "./contentSetting";
 
 export type IFeedBack = "newbie" | "expert" | "exam";
 
@@ -214,76 +214,74 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
     const handleSelectAll = () => {
         setSelectListTopic(listTopic);
     };
-
+    if (isMobile) {
+        return (
+            <Sheet
+                visible={open}
+                height={600}
+                mask
+                handler
+                // autoHeight
+                swipeToClose={false}
+                // snapPoints={[100]}
+                // defaultSnapPoint={600}
+                className="custom-sheet-handler"
+            >
+                <ContentSetting
+                    count={count}
+                    duration={duration}
+                    handleSelectAll={handleSelectAll}
+                    isShowBtnCancel={isShowBtnCancel}
+                    listTopic={listTopic}
+                    loading={loading}
+                    onCancel={onCancel}
+                    onStart={onStart}
+                    passing={passing}
+                    selectFeedback={selectFeedback}
+                    selectListTopic={selectListTopic}
+                    setCount={setCount}
+                    setDuration={setDuration}
+                    setPassing={setPassing}
+                    setSelectFeedback={setSelectFeedback}
+                    setSelectListTopic={setSelectListTopic}
+                />
+            </Sheet>
+        );
+    }
     return (
-        <Fragment>
-            {isMobile ? (
-                <Sheet
-                    visible={open}
-                    height={600}
-                    mask
-                    handler
-                    // autoHeight
-                    swipeToClose={false}
-                    // snapPoints={[100]}
-                    // defaultSnapPoint={600}
-                    className="custom-sheet-handler"
-                >
-                    <ContentSetting
-                        count={count}
-                        duration={duration}
-                        handleSelectAll={handleSelectAll}
-                        isShowBtnCancel={isShowBtnCancel}
-                        listTopic={listTopic}
-                        loading={loading}
-                        onCancel={onCancel}
-                        onStart={onStart}
-                        passing={passing}
-                        selectFeedback={selectFeedback}
-                        selectListTopic={selectListTopic}
-                        setCount={setCount}
-                        setDuration={setDuration}
-                        setPassing={setPassing}
-                        setSelectFeedback={setSelectFeedback}
-                        setSelectListTopic={setSelectListTopic}
-                    />
-                </Sheet>
-            ) : (
-                <Dialog
-                    open={open}
-                    onClose={() => {
-                        if (isShowBtnCancel) onClose();
-                    }}
-                    sx={{
-                        "& .MuiDialog-paper": {
-                            width: "100%",
-                            maxWidth: "900px",
-                            maxHeight: "780px",
-                            height: "100%",
-                        },
-                    }}
-                >
-                    <ContentSetting
-                        count={count}
-                        duration={duration}
-                        handleSelectAll={handleSelectAll}
-                        isShowBtnCancel={isShowBtnCancel}
-                        listTopic={listTopic}
-                        loading={loading}
-                        onCancel={onCancel}
-                        onStart={onStart}
-                        passing={passing}
-                        selectFeedback={selectFeedback}
-                        selectListTopic={selectListTopic}
-                        setCount={setCount}
-                        setDuration={setDuration}
-                        setPassing={setPassing}
-                        setSelectFeedback={setSelectFeedback}
-                        setSelectListTopic={setSelectListTopic}
-                    />
-                </Dialog>
-            )}
-        </Fragment>
+        <Dialog
+            open={open}
+            onClose={() => {
+                if (isShowBtnCancel) onClose();
+            }}
+            sx={{
+                "& .MuiDialog-paper": {
+                    width: "100%",
+                    maxWidth: "900px",
+                    maxHeight: "780px",
+                    height: "100%",
+                },
+            }}
+        >
+            <ContentSetting
+                count={count}
+                duration={duration}
+                handleSelectAll={handleSelectAll}
+                isShowBtnCancel={isShowBtnCancel}
+                listTopic={listTopic}
+                loading={loading}
+                onCancel={onCancel}
+                onStart={onStart}
+                passing={passing}
+                selectFeedback={selectFeedback}
+                selectListTopic={selectListTopic}
+                setCount={setCount}
+                setDuration={setDuration}
+                setPassing={setPassing}
+                setSelectFeedback={setSelectFeedback}
+                setSelectListTopic={setSelectListTopic}
+            />
+        </Dialog>
     );
 };
 

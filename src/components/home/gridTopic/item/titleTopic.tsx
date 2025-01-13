@@ -1,5 +1,4 @@
 "use client";
-import RouterApp from "@/router/router.constant";
 import LazyLoadImage from "@/components/images";
 import MtUiRipple, { useRipple } from "@/components/ripple";
 import { db } from "@/db/db.model";
@@ -13,9 +12,10 @@ import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 import { AppDispatch } from "@/redux/store";
+import RouterApp from "@/router/router.constant";
 import { trackingEventGa4 } from "@/services/googleEvent";
 import ctx from "@/utils/mergeClass";
-import { convertPathName, revertPathName } from "@/utils/pathName";
+import { convertPathName } from "@/utils/pathName";
 import clsx from "clsx";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { usePathname, useRouter } from "next/navigation";
@@ -76,6 +76,7 @@ export const handleGetNextPart = async ({
     );
 
     const nextPart = incompleteProgress?.part?.find((p) => p.status === 0);
+
     const index = incompleteProgress?.part?.findIndex((p) => p === nextPart);
     return {
         tag: nextPart?.tag,
@@ -96,7 +97,6 @@ export const handleNavigateStudy = async ({
     topic,
     dispatch,
     router,
-    appShortName,
     isReplace = false,
 }: IPropsHandleNavigateStudy) => {
     const { tag, subTopicTag, partId, subTopicId, index } =
@@ -104,10 +104,7 @@ export const handleNavigateStudy = async ({
             parentId: topic.id,
             topic,
         });
-    const _href = revertPathName({
-        href: `study/${topic.tag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${tag}`,
-        appName: appShortName,
-    });
+    const _href = `study/${topic.tag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${tag}`;
     dispatch(selectTopics(topic.id));
 
     if (tag && subTopicTag) {
