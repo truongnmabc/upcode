@@ -7,17 +7,20 @@ import { baseImageUrl } from "@/constants";
 import ctx from "@/utils/mergeClass";
 import { MyCrypto } from "@/utils/myCrypto";
 import GetIconPrefix from "../choicesPanel/getIcon";
+import clsx from "clsx";
 
 export const DialogDetailQuestionReview = ({
     open,
     onClose,
     item,
     appInfo,
+    isPro,
 }: {
     open: boolean;
     onClose: () => void;
     item: ICurrentGame;
     appInfo: IAppInfo;
+    isPro: boolean;
 }) => {
     return (
         <Dialog
@@ -101,7 +104,12 @@ export const DialogDetailQuestionReview = ({
                             dangerouslySetInnerHTML={{
                                 __html: MyCrypto.decrypt(item?.explanation),
                             }}
-                            className="text-sm font-normal h-full  sm:text-base"
+                            className={clsx(
+                                "text-sm font-normal h-full  sm:text-base",
+                                {
+                                    "blur-content": !isPro,
+                                }
+                            )}
                         />
                     </MathJax>
                 )}
