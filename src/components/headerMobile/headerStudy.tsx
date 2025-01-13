@@ -23,10 +23,10 @@ const HeaderStudy = () => {
     const pathname = usePathname();
     const router = useRouter();
     const defaultTitle =
-        getKeyTest(param?.slug) || getLastPathSegment(pathname);
+        getKeyTest(param?.["slug"]) || getLastPathSegment(pathname);
     return (
         <Fragment>
-            <div className="flex sm:hidden items-center mt-2 px-2 justify-between w-full">
+            <div className="flex sm:hidden items-center p-2 justify-between">
                 <div
                     onClick={() => {
                         if (type === "test") {

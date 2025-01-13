@@ -11,11 +11,7 @@ type IProps = {
     handleTryAgain: () => void;
     percentage: number;
 };
-const HeaderResultDiagnostic = ({
-    handleStartLearning,
-    handleTryAgain,
-    percentage,
-}: IProps) => {
+const HeaderResultDiagnostic = ({ handleTryAgain, percentage }: IProps) => {
     const router = useRouter();
     const back = useCallback(() => router.back(), [router]);
     return (
@@ -66,19 +62,11 @@ const HeaderResultDiagnostic = ({
                             <MtUiButton
                                 className="sm:py-4 sm:max-h-14 text-lg font-medium rounded-2xl text-primary border-primary"
                                 block
+                                type="primary"
                                 size="large"
                                 onClick={handleTryAgain}
                             >
                                 Try Again
-                            </MtUiButton>
-                            <MtUiButton
-                                className="sm:py-4 sm:max-h-14 text-lg font-medium rounded-2xl "
-                                block
-                                type="primary"
-                                size="large"
-                                onClick={handleStartLearning}
-                            >
-                                Start Learning
                             </MtUiButton>
                         </div>
                     </div>

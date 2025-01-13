@@ -48,7 +48,7 @@ const BottomLestTest = () => {
         },
         [handleClose, listQuestions, dispatch]
     );
-    if (isStart) return <></>;
+    if (isStart) return null;
     if (
         selectType === "saved" ||
         selectType === "weak" ||
@@ -93,7 +93,7 @@ const BottomLestTest = () => {
             </div>
         );
     }
-    return <></>;
+    return null;
 };
 
 export default BottomLestTest;

@@ -20,13 +20,7 @@ const ReviewContentGroup = ({ isMobile }: { isMobile: boolean }) => {
     };
     return (
         <Fragment>
-            {isStart ? (
-                <Fragment>
-                    <RandomGameContent />
-                </Fragment>
-            ) : (
-                <Fragment>{componentMapping[selectType]}</Fragment>
-            )}
+            {isStart ? <RandomGameContent /> : componentMapping[selectType]}
             <BottomLestTest />
             {isMobile && <SheetSelectQuestions />}
         </Fragment>

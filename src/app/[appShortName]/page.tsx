@@ -41,11 +41,22 @@ export default async function Home({ params }: Params) {
 
         const contentSeo = dataSeo.data?.content;
 
+        const newTopics = topics.map((topic) => ({
+            ...topic,
+            id: Number(topic.id),
+            topics: topic.topics?.map((item) => ({
+                ...item,
+                slug: `${item.tag}-practice-test`,
+                topics: item.topics?.filter((item) => item.contentType === 0),
+            })),
+            slug: `${topic.tag}-practice-test`,
+        }));
+
         if (appType === "default") {
             return (
                 <MyContainer>
                     <TitleHomeApp appInfo={appInfo} />
-                    <GridTopics topics={topics} appInfo={appInfo} />
+                    <GridTopics topics={newTopics} appInfo={appInfo} />
                     <GridTest />
                     <div className="sm:my-[48px] sm:mb-[120px] my-[24px] mb-[48px]">
                         <BannerHome appInfo={appInfo} isHomePage={true} />

@@ -1,6 +1,6 @@
 import RouterApp from "@/router/router.constant";
 import { revertPathName } from "@/utils/pathName";
-import ForwardedLinkBlank from "../nextLink/forwardedLinkBlank";
+import ForwardedLinkBlank from "../nextLink";
 import "./index.css";
 import { useAppSelector } from "@/redux/hooks";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";

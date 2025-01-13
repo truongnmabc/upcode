@@ -42,7 +42,7 @@ const ListReview = ({ isMobile }: { isMobile: boolean }) => {
             setIsStart,
         ]
     );
-    if (!isShowList) return <></>;
+    if (!isShowList) return null;
     return (
         <Fragment>
             <p className="text-xl text-center sm:text-start font-semibold">

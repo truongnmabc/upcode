@@ -12,7 +12,6 @@ const BtnTets = ({ correct }: { correct: boolean }) => {
                 <span>★</span>
             </div>
         );
-    return <></>;
+    return null;
 };
-
 export default BtnTets;

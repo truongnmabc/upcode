@@ -16,7 +16,7 @@ import FacebookIcon from "../icon/FacebookIcon";
 import TwitterIcon from "../icon/TwitterIcon";
 import YoutubeIcon from "../icon/YoutubeIcon";
 import LazyLoadImage from "../images";
-import ForwardedLinkBlank from "../nextLink/forwardedLinkBlank";
+import ForwardedLinkBlank from "../nextLink";
 import "./FooterLandingV4.scss";
 import { DmcaIcon } from "./info/iconDmca";
 

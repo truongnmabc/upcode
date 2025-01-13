@@ -1,11 +1,9 @@
 "use client";
-import RouterApp from "@/router/router.constant";
 import CountTime from "@/components/countTime";
-import { appInfoState } from "@/redux/features/appInfo";
 import { gameState } from "@/redux/features/game";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishCustomTestThunk from "@/redux/repository/game/finish/finishCustomTest";
-import { revertPathName } from "@/utils/pathName";
+import RouterApp from "@/router/router.constant";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 const CountTimeCustomTest = () => {
@@ -13,19 +11,14 @@ const CountTimeCustomTest = () => {
 
     const { remainTime } = useAppSelector(gameState);
     const router = useRouter();
-    const { appInfo } = useAppSelector(appInfoState);
 
     const handleEndTime = useCallback(() => {
         dispatch(finishCustomTestThunk());
-        const _href = revertPathName({
-            href: RouterApp.ResultTest,
-            appName: appInfo.appShortName,
-        });
 
-        router.replace(_href, {
+        router.replace(RouterApp.ResultTest, {
             scroll: true,
         });
-    }, [appInfo.appShortName, dispatch, router]);
+    }, [dispatch, router]);
 
     return <CountTime duration={remainTime} onEndTime={handleEndTime} />;
 };

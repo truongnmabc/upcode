@@ -145,36 +145,34 @@ const IconProgress = ({
     ]);
 
     return (
-        <>
-            <div
-                className={clsx(
-                    "w-14 z-10  flex flex-col  items-center justify-center",
-                    {
-                        "cursor-pointer": isPass || isCurrentPlaying,
-                        "cursor-not-allowed": !isCurrentPlaying,
-                    }
-                )}
-                key={index}
-                onClick={handleClick}
-            >
-                <IconSubTopic
-                    lock={part.id !== isCurrentPlaying?.id}
-                    activeAnim={currentGame.parentId === part?.id}
-                    isFinishThisLevel={isPass}
-                    currentLevelScore={
-                        isPass && currentGame.parentId !== part?.id
-                            ? progress
-                            : currentGame.parentId !== part?.id && isPass
-                            ? 100
-                            : progress
-                    }
-                />
+        <div
+            className={clsx(
+                "w-14 z-10  flex flex-col  items-center justify-center",
+                {
+                    "cursor-pointer": isPass || isCurrentPlaying,
+                    "cursor-not-allowed": !isCurrentPlaying,
+                }
+            )}
+            key={index}
+            onClick={handleClick}
+        >
+            <IconSubTopic
+                lock={part.id !== isCurrentPlaying?.id}
+                activeAnim={currentGame.parentId === part?.id}
+                isFinishThisLevel={isPass}
+                currentLevelScore={
+                    isPass && currentGame.parentId !== part?.id
+                        ? progress
+                        : currentGame.parentId !== part?.id && isPass
+                        ? 100
+                        : progress
+                }
+            />
 
-                <div className="max-w-14 text-center pt-1 text-[10px] text-[#212121] truncate">
-                    Core {index}
-                </div>
+            <div className="max-w-14 text-center pt-1 text-[10px] text-[#212121] truncate">
+                Core {index}
             </div>
-        </>
+        </div>
     );
 };
 

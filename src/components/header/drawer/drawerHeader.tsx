@@ -1,11 +1,10 @@
 "use client";
 import CloseIcon from "@/asset/icon/CloseIcon";
-import RouterApp from "@/router/router.constant";
 import IconLinkStoreApp from "@/components/iconLinkStoreApp";
-import { appInfoState } from "@/redux/features/appInfo";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppSelector } from "@/redux/hooks";
+import RouterApp from "@/router/router.constant";
 import { trackingEventGa4 } from "@/services/googleEvent";
-import { revertPathName } from "@/utils/pathName";
 import { Drawer } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -24,8 +23,7 @@ const FN = ({
     openMenuDrawer: boolean;
     setOpenMenuDrawer: (e: boolean) => void;
 }) => {
-    // const {} = useAppSelector(userState);
-    const { appInfo } = useAppSelector(appInfoState);
+    const appInfo = useAppSelector(selectAppInfo);
     const router = useRouter();
 
     const list: IList[] = [
@@ -33,48 +31,28 @@ const FN = ({
             name: "Score Calculator",
             handleClick: () => {
                 setOpenMenuDrawer(false);
-                router.push(
-                    revertPathName({
-                        href: RouterApp.Score_Calculator,
-                        appName: appInfo.appShortName,
-                    })
-                );
+                router.push(RouterApp.Score_Calculator);
             },
         },
         {
             name: "Study Guides",
             handleClick: () => {
                 setOpenMenuDrawer(false);
-                router.push(
-                    revertPathName({
-                        href: RouterApp.Study_Guides,
-                        appName: appInfo.appShortName,
-                    })
-                );
+                router.push(RouterApp.Study_Guides);
             },
         },
         {
             name: "Blog",
             handleClick: () => {
                 setOpenMenuDrawer(false);
-                router.push(
-                    revertPathName({
-                        href: RouterApp.Blog,
-                        appName: appInfo.appShortName,
-                    })
-                );
+                router.push(RouterApp.Blog);
             },
         },
         {
             name: "Contact",
             handleClick: () => {
                 setOpenMenuDrawer(false);
-                router.push(
-                    revertPathName({
-                        href: RouterApp.Contacts,
-                        appName: appInfo.appShortName,
-                    })
-                );
+                router.push(RouterApp.Contacts);
             },
         },
     ];
@@ -110,10 +88,7 @@ const FN = ({
                         setOpenMenuDrawer(false);
 
                         router.push(
-                            revertPathName({
-                                href: `/final_test/full-length-${appInfo?.appShortName}-practice-test`,
-                                appName: appInfo.appShortName,
-                            })
+                            `/final_test?full-length-${appInfo?.appShortName}-practice-test`
                         );
                     }}
                 />

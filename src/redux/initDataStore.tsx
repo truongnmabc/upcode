@@ -24,7 +24,7 @@ const InitDataStore = ({
     if (appConfig.appId !== currentAppConfig.appId) {
         dispatch(setAppConfig(appConfig));
     }
-    return <></>;
+    return null;
 };
 
 export default memo(InitDataStore);

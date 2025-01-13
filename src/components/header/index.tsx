@@ -1,13 +1,13 @@
 "use client";
-import React, { Fragment } from "react";
-import LogoHeader from "./logo/logoHeader";
-import MenuHeader from "./menu/menuHeader";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { convertPathName } from "@/utils/pathName";
 import { Grid2 } from "@mui/material";
-import DownLoadApp from "./download/downloadApp";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import { convertPathName } from "@/utils/pathName";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import React from "react";
+import DownLoadApp from "./download/downloadApp";
+import LogoHeader from "./logo/logoHeader";
+import MenuHeader from "./menu/menuHeader";
 
 export const listPageNotHeader = [
     "/study",
@@ -26,44 +26,40 @@ const HeaderApp = () => {
     const isMobile = useIsMobile();
 
     return (
-        <Fragment>
-            <div className="w-full">
-                <DownLoadApp />
-                {isMobile && isPathInList(path, listPageNotHeader) ? (
-                    <></>
-                ) : (
-                    <div
-                        className={clsx(
-                            " h-fit w-full flex bg-white dark:bg-black border-b  border-[#e4e4e4] border-solid  justify-center "
-                        )}
-                        id="headerRootLayout"
-                    >
-                        <div className="py-2 w-full z-0 h-full max-w-page">
-                            <Grid2 container>
-                                <Grid2
-                                    size={{
-                                        xs: 8,
-                                        sm: 4,
-                                        md: 4,
-                                    }}
-                                >
-                                    <LogoHeader />
-                                </Grid2>
-                                <Grid2
-                                    size={{
-                                        xs: 4,
-                                        sm: 8,
-                                        md: 8,
-                                    }}
-                                >
-                                    <MenuHeader />
-                                </Grid2>
+        <div className="w-full">
+            <DownLoadApp />
+            {isMobile && isPathInList(path, listPageNotHeader) ? null : (
+                <div
+                    className={clsx(
+                        " h-fit w-full flex bg-white dark:bg-black border-b  border-[#e4e4e4] border-solid  justify-center "
+                    )}
+                    id="headerRootLayout"
+                >
+                    <div className="py-2 w-full z-0 h-full max-w-page">
+                        <Grid2 container>
+                            <Grid2
+                                size={{
+                                    xs: 8,
+                                    sm: 4,
+                                    md: 4,
+                                }}
+                            >
+                                <LogoHeader />
                             </Grid2>
-                        </div>
+                            <Grid2
+                                size={{
+                                    xs: 4,
+                                    sm: 8,
+                                    md: 8,
+                                }}
+                            >
+                                <MenuHeader />
+                            </Grid2>
+                        </Grid2>
                     </div>
-                )}
-            </div>
-        </Fragment>
+                </div>
+            )}
+        </div>
     );
 };
 

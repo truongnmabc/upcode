@@ -1,7 +1,7 @@
 "use client";
 
 import { MtUiButton } from "@/components/button";
-import { appInfoState } from "@/redux/features/appInfo";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import { revertPathName } from "@/utils/pathName";
@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const FN = () => {
-    const { appInfo } = useAppSelector(appInfoState);
+    const appInfo = useAppSelector(selectAppInfo);
     const dispatch = useAppDispatch();
 
     const path = revertPathName({

@@ -56,7 +56,7 @@ const BtnNextQuestion = () => {
     };
 
     if (indexCurrentQuestion + 1 === listQuestion?.length && type === "test") {
-        return <></>;
+        return null;
     }
     return (
         <MtUiButton

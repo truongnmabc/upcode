@@ -2,7 +2,7 @@
 import ClockIcon from "@/components/icon/ClockIcon";
 import { MathJaxContext } from "better-react-mathjax";
 import { useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import CountTimeRemainPracticeTest from "./countTimeTest";
 import ProgressQuestion from "@/components/progressQuestion";
 import QuestionContent from "@/components/question";
@@ -10,8 +10,11 @@ import ExplanationDetail from "@/components/explanation";
 import ChoicesPanel from "@/components/choicesPanel";
 import BottomActions from "@/components/bottomActions";
 import TitleQuestion from "@/components/titleQuestion";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { selectIdTopic } from "@/redux/features/game.reselect";
+import initLearnQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 
-const FN = () => {
+const MainStudyView = () => {
     const type = useSearchParams().get("type");
 
     return (
@@ -35,8 +38,27 @@ const FN = () => {
 
                 <BottomActions type="learn" />
             </div>
+            <LoadData />
         </MathJaxContext>
     );
 };
-const MainStudyView = React.memo(FN);
-export default MainStudyView;
+export default React.memo(MainStudyView);
+
+const LoadData = () => {
+    const dispatch = useAppDispatch();
+    const id = useAppSelector(selectIdTopic);
+    const type = useSearchParams().get("type");
+    const tag = useSearchParams().get("tag");
+    const subTopic = useSearchParams().get("subTopic");
+    useEffect(() => {
+        if ((!id || id === -1) && subTopic && tag && type === "learn") {
+            dispatch(
+                initLearnQuestionThunk({
+                    partTag: tag,
+                    subTopicTag: subTopic,
+                })
+            );
+        }
+    }, [id, dispatch, type, tag, subTopic]);
+    return null;
+};

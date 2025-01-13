@@ -10,7 +10,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { sendEmailSubscribeApiV4 } from "@/services/home.service";
 import { validateEmail } from "@/utils";
 import { getContactApp } from "@/utils/getContact";
-import { Fragment, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import TopContactAsvab from "./asvab/topContactAsvab";
 import BodyComponent from "./body";
 import TopContactCdl from "./cdl/topContactCdl";
@@ -118,14 +118,12 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
     };
 
     return (
-        <Fragment>
-            <div className="contact-page">
-                <div className="cluster-infor-title">{renderTopContact()}</div>
-                <div className="cluster-faqs">
-                    <BodyComponent appInfo={appInfo} />
-                </div>
+        <div className="contact-page">
+            <div className="cluster-infor-title">{renderTopContact()}</div>
+            <div className="cluster-faqs">
+                <BodyComponent appInfo={appInfo} />
             </div>
-        </Fragment>
+        </div>
     );
 };
 

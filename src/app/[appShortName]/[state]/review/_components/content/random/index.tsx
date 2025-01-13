@@ -117,7 +117,7 @@ const RandomQuestions = ({ isMobile }: { isMobile: boolean }) => {
         [dispatch]
     );
 
-    if (isMobile) return <></>;
+    if (isMobile) return null;
 
     return (
         <div

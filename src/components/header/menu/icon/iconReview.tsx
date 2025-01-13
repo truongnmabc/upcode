@@ -1,16 +1,16 @@
 "use client";
 import RouterApp from "@/router/router.constant";
 import IconReview from "@/components/icon/iconReview";
-import NextLink from "@/components/nextLink";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import React from "react";
+import Link from "next/link";
 
 const IconReviewHeader = () => {
     const pathname = usePathname();
-    if (pathname.includes("/study")) {
+    if (pathname.includes("/study") || pathname.includes("_test")) {
         return (
-            <NextLink href={RouterApp.Review}>
+            <Link href={RouterApp.Review}>
                 <div className="hidden sm:flex item-center hover:text-primary  capitalize gap-3">
                     <IconReview />
                     <div
@@ -21,10 +21,10 @@ const IconReviewHeader = () => {
                         Review
                     </div>
                 </div>
-            </NextLink>
+            </Link>
         );
     }
-    return <></>;
+    return null;
 };
 
 export default IconReviewHeader;

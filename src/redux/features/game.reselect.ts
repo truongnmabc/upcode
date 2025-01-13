@@ -65,3 +65,7 @@ export const selectPassing = createSelector(
     [gameState],
     (reducer) => reducer.passing
 );
+export const selectRemainTime = createSelector(
+    [gameState],
+    (reducer) => reducer.remainTime
+);

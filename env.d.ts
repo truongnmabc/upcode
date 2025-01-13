@@ -14,6 +14,6 @@ declare namespace NodeJS {
         readonly NEXT_PUBLIC_GTM_ID: string;
         readonly DEV_BASE_API: string;
         readonly NEXT_PUBLIC_API_URL: string;
-        readonly APP_SHORT_NAME: string;
+        readonly NEXT_PUBLIC_APP_SHORT_NAME: string;
     }
 }

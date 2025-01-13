@@ -102,7 +102,7 @@ const SheetApp = () => {
         );
     }
 
-    return <></>;
+    return null;
 };
 
 export default React.memo(SheetApp);

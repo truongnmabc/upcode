@@ -27,7 +27,6 @@ async function initializeDBIdb(appShortName) {
 
 async function handleInitData(appShortName, apiPath) {
     const db = await initializeDBIdb(appShortName);
-
     try {
         const response = await fetch(
             `${apiPath.GET_DATA_STUDY}/${appShortName}`
@@ -76,31 +75,30 @@ const processQuestionsData = async (topics, db, icon, tag) => {
     for (const topic of topics) {
         const subTopicTag = topic.tag;
 
-      
         for (const part of topic?.topics) {
-            const topicQuestionTx = db.transaction(
-                "topicQuestion",
-                "readwrite"
-            );
-            const topicQuestionStore =
-                topicQuestionTx.objectStore("topicQuestion");
+            if (part.contentType === 0) {
+                const topicQuestionTx = db.transaction(
+                    "topicQuestion",
+                    "readwrite"
+                );
+                const topicQuestionStore =
+                    topicQuestionTx.objectStore("topicQuestion");
 
-              
-                const  questions =  part?.questions.map((item) => ({
+                const questions = part?.questions.map((item) => ({
                     ...item,
                     parentId: part.id,
                     icon: icon,
                     tag: tag,
                 }));
 
-               
-            await topicQuestionStore.add({
-                ...part,
-                questions: questions,
-                subTopicTag,
-                status: 0,
-            });
-            await topicQuestionStore.done;
+                await topicQuestionStore.add({
+                    ...part,
+                    questions: questions,
+                    subTopicTag,
+                    status: 0,
+                });
+                await topicQuestionStore.done;
+            }
         }
         await calculatePassing(topic, db);
         await initDataSubTopicProgress(topic, db);
@@ -115,14 +113,16 @@ const initDataSubTopicProgress = async (topic, db) => {
     await subTopicProgressStore.add({
         id: topic?.id || 0,
         parentId: topic.parentId,
-        part: topic?.topics?.map((item) => ({
-            id: item.id,
-            parentId: item.parentId,
-            status: 0,
-            totalQuestion: item.totalQuestion,
-            tag: item.tag,
-            turn: 1,
-        })),
+        part: topic?.topics
+            ?.filter((item) => item.contentType === 0)
+            .map((item) => ({
+                id: item.id,
+                parentId: item.parentId,
+                status: 0,
+                totalQuestion: item.totalQuestion,
+                tag: item.tag,
+                turn: 1,
+            })),
         subTopicTag: topic?.tag || "",
         pass: false,
     });
@@ -194,6 +194,7 @@ const initDataTopics = async (topics, db) => {
             topics: topic.topics?.map((item) => ({
                 ...item,
                 slug: `${item.tag}-practice-test`,
+                topics: item.topics?.filter((item) => item.contentType === 0),
             })),
             slug: `${topic.tag}-practice-test`,
         };
@@ -225,8 +226,6 @@ const initDataTest = async (tests, db, apiPath) => {
                     const data = await response.json();
                     const listQuestion = data.data;
 
-
-
                     const testQuestionsTx = db.transaction(
                         "testQuestions",
                         "readwrite"
@@ -246,7 +245,6 @@ const initDataTest = async (tests, db, apiPath) => {
                         turn: 0,
                         topicIds: test.topicIds,
                         groupExamData: test.groupExamData,
-                        
                     });
                     await testQuestionsTx.done;
                 }

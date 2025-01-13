@@ -4,7 +4,7 @@ import "./styles.scss";
 import React from "react";
 const FN = ({ appInfo }: { appInfo: IAppInfo }) => {
     return (
-        <div className="pt-6 sm:pt-24">
+        <div className="pt-6 sm:pt-12">
             <h1 className="text-[32px] leading-[40px] sm:text-[48px] sm:leading-[60px] font-normal text-center capitalize    font-vampiro">
                 {appInfo?.appName} Practice Test
             </h1>

@@ -1,6 +1,5 @@
 "use client";
 import Rating from "@mui/material/Rating";
-import { Fragment } from "react";
 import { IReview } from "../wrapperProPage";
 
 type ReviewCardProps = {
@@ -8,17 +7,15 @@ type ReviewCardProps = {
 };
 
 const ReviewPanelV2 = ({ currentReviews }: { currentReviews: IReview[] }) => {
-    return (
-        <Fragment>
-            {currentReviews.length > 0 && (
-                <div className="max-w-page bg-white mt-6 sm:mt-8 w-full px-4  mx-auto columns-1 sm:columns-3 gap-8">
-                    {currentReviews?.map((item, index) => (
-                        <RVColumn review={item} key={index} />
-                    ))}
-                </div>
-            )}
-        </Fragment>
-    );
+    if (currentReviews.length > 0)
+        return (
+            <div className="max-w-page bg-white mt-6 sm:mt-8 w-full px-4  mx-auto columns-1 sm:columns-3 gap-8">
+                {currentReviews?.map((item, index) => (
+                    <RVColumn review={item} key={index} />
+                ))}
+            </div>
+        );
+    return null;
 };
 
 const RVColumn = ({ review }: ReviewCardProps) => {

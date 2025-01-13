@@ -35,7 +35,7 @@ const TitleQuestion = () => {
     const pathname = usePathname();
 
     const defaultTitle =
-        getKeyTest(param?.slug) || getLastPathSegment(pathname);
+        getKeyTest(param?.["slug"]) || getLastPathSegment(pathname);
 
     let tempCount = 0;
 

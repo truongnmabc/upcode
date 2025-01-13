@@ -45,13 +45,11 @@ const Priority = ({ priority, name }: { priority: number; name: string }) => {
             )}
             {priority == 3 && (
                 <h3
-                    className={clsx(
-                        "text-xs pl-3  pr-2 flex-1 truncate font-medium",
-                        {
-                            "sm:text-lg text-base":
-                                currentPathname === RouterApp.Home,
-                        }
-                    )}
+                    className={clsx(" pl-3  pr-2 flex-1 truncate font-medium", {
+                        "sm:text-lg text-base":
+                            currentPathname === RouterApp.Home,
+                        "text-xs": currentPathname !== RouterApp.Home,
+                    })}
                 >
                     {name ? name : <MtUiSkeleton className="min-h-6 " />}
                 </h3>
