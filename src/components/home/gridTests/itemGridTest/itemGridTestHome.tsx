@@ -1,20 +1,21 @@
-import { TypeParam } from "@/constants";
-import RouterApp from "@/router/router.constant";
 import MtUiRipple, { useRipple } from "@/components/ripple";
+import { TypeParam } from "@/constants";
 import { db } from "@/db/db.model";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { resetState } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
-import { revertPathName } from "@/utils/pathName";
+import RouterApp from "@/router/router.constant";
 import { Grid2 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import React, { Fragment, useCallback, useEffect, useState } from "react";
+import React, { Fragment, useCallback } from "react";
 import { IPropsItemTest } from "../type";
+import ListPracticeTest from "./listPracticeTest";
 
-const ItemGridTest: React.FC<IPropsItemTest> = ({ item, appInfo }) => {
+const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     const [open, setOpen] = React.useState(false);
     const isMobile = useIsMobile();
     const router = useRouter();
@@ -25,34 +26,43 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item, appInfo }) => {
     } = useRipple();
 
     const dispatch = useAppDispatch();
-    const handleCustomTest = useCallback(async () => {
+    const handleCustomTest = useCallback(() => {
         dispatch(initCustomTestThunk());
-
-        const _href = revertPathName({
-            href: "custom_test",
-            appName: appInfo.appShortName,
-        });
-        await router.push(_href);
-    }, [dispatch, appInfo.appShortName, router]);
+        router.push(RouterApp.Custom_test);
+    }, [dispatch, router]);
 
     const handleFinalTest = useCallback(async () => {
-        dispatch(initFinalTestThunk());
+        const data = await db?.testQuestions
+            .where("type")
+            .equals("finalTests")
+            .first();
 
-        const _href = revertPathName({
-            href: RouterApp.Final_test,
-            appName: appInfo.appShortName,
-        });
-        await router.push(_href);
-    }, [dispatch, appInfo.appShortName, router]);
+        const isSuccess = data?.status === 1;
+        if (!isSuccess) {
+            dispatch(initFinalTestThunk());
+            router.push(RouterApp.Final_test);
+        } else {
+            const _href = `${RouterApp.ResultTest}?type=${TypeParam.finalTest}&testId=${data.parentId}`;
+            router.push(_href);
+        }
+    }, [dispatch, router]);
 
     const handleDiagnosticTest = useCallback(async () => {
-        dispatch(initDiagnosticTestQuestionThunk());
-        const _href = revertPathName({
-            href: RouterApp.Diagnostic_test,
-            appName: appInfo.appShortName,
-        });
-        await router.push(_href);
-    }, [dispatch, appInfo.appShortName, router]);
+        const diagnostic = await db?.testQuestions
+            .where("type")
+            .equals("diagnosticTest")
+            .first();
+
+        const isSuccess = diagnostic?.status === 1;
+
+        if (!isSuccess) {
+            dispatch(initDiagnosticTestQuestionThunk());
+            router.push(RouterApp.Diagnostic_test);
+        } else {
+            const _href = `${RouterApp.ResultTest}?type=${TypeParam.practiceTest}&testId=${diagnostic.parentId}`;
+            router.push(_href);
+        }
+    }, [dispatch, router]);
 
     const handlePracticeTest = useCallback(async () => {
         const res = await db?.testQuestions
@@ -70,14 +80,14 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item, appInfo }) => {
                     })
                 );
 
-                const _href = revertPathName({
-                    href: `/study/${TypeParam.practiceTest}?type=test&testId=${id}`,
-                    appName: appInfo.appShortName,
-                });
-                await router.push(_href);
+                const _href = `/study/${TypeParam.practiceTest}?type=test&testId=${id}`;
+                router.push(_href);
+            } else {
+                const _href = `${RouterApp.ResultTest}?type=${TypeParam.practiceTest}&testId=${res[0].id}`;
+                router.push(_href);
             }
         }
-    }, [dispatch, appInfo.appShortName, router]);
+    }, [dispatch, router]);
 
     const handleClick: React.MouseEventHandler<HTMLDivElement> = useCallback(
         (e) => {
@@ -148,43 +158,3 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item, appInfo }) => {
 };
 
 export default ItemGridTest;
-
-import Collapse from "@mui/material/Collapse";
-import ItemTestLeft from "@/components/gridTests/itemTest";
-import { useIsMobile } from "@/hooks/useIsMobile";
-
-type IListTest = {
-    parentId: number;
-    duration: number;
-};
-
-const ListPracticeTest = ({ open }: { open: boolean }) => {
-    const [listPracticeTests, setListPracticeTests] = useState<IListTest[]>([]);
-
-    const handleGetData = useCallback(async () => {
-        const listData = await db?.testQuestions
-            .filter((test) => test.type === "practiceTests")
-            .toArray();
-        if (listData) {
-            setListPracticeTests(
-                listData?.map((item) => ({
-                    duration: item.duration,
-                    parentId: item.parentId,
-                }))
-            );
-        }
-    }, []);
-
-    useEffect(() => {
-        handleGetData();
-    }, [handleGetData]);
-    return (
-        <Collapse in={open} timeout="auto" unmountOnExit className="w-full">
-            <div className="w-full flex  flex-col gap-2">
-                {listPracticeTests?.map((test, index) => (
-                    <ItemTestLeft key={index} index={index} test={test} />
-                ))}
-            </div>
-        </Collapse>
-    );
-};

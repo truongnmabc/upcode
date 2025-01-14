@@ -1,3 +1,4 @@
+"use client";
 import BannerDownloadApp from "@/components/bannerDownload/bannerDownloadApp";
 import MyContainer from "@/components/container";
 import HeaderMobile from "@/components/headerMobile";

@@ -2,13 +2,12 @@
 import { handleGetNextPart } from "@/components/home/gridTopic/item/titleTopic";
 import { db } from "@/db/db.model";
 import { ITopic } from "@/models/topics/topics";
-import { appInfoState } from "@/redux/features/appInfo";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { selectSubTopics, selectTopics } from "@/redux/features/study";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 import { trackingEventGa4 } from "@/services/googleEvent";
 import ctx from "@/utils/mergeClass";
-import { revertPathName } from "@/utils/pathName";
 import { ExpandMore } from "@mui/icons-material";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
@@ -19,7 +18,7 @@ const ListStudyDrawer = ({
 }: {
     setOpenMenuDrawer: (e: boolean) => void;
 }) => {
-    const { appInfo } = useAppSelector(appInfoState);
+    const appInfo = useAppSelector(selectAppInfo);
     const [isExpand, setIsExpand] = useState(false);
 
     const [list, setList] = useState<ITopic[]>([]);
@@ -48,10 +47,7 @@ const ListStudyDrawer = ({
                 await handleGetNextPart({
                     parentId: topic.id,
                 });
-            const _href = revertPathName({
-                href: `study/${topic.tag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${tag}`,
-                appName: appInfo.appShortName,
-            });
+            const _href = `/study/${topic.tag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${tag}`;
             dispatch(selectTopics(topic.id));
             if (subTopicId) dispatch(selectSubTopics(subTopicId));
 
@@ -68,7 +64,7 @@ const ListStudyDrawer = ({
             setOpenMenuDrawer(false);
             router.push(_href);
         },
-        [router, appInfo.appShortName, dispatch, setOpenMenuDrawer]
+        [router, dispatch, setOpenMenuDrawer]
     );
 
     return (

@@ -2,7 +2,6 @@
 import { db } from "@/db/db.model";
 import { IPartProgress } from "@/models/progress/subTopicProgress";
 import { ITopic } from "@/models/topics/topics";
-import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { setIndexSubTopic, setTurtGame } from "@/redux/features/game";
 import {
     selectCurrentGame,
@@ -12,7 +11,6 @@ import {
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
-import { revertPathName } from "@/utils/pathName";
 import clsx from "clsx";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useContext, useEffect, useState } from "react";
@@ -35,7 +33,6 @@ const IconProgress = ({
     subTopic,
     isPass,
 }: IProps) => {
-    const appInfo = useAppSelector(selectAppInfo);
     const currentGame = useAppSelector(selectCurrentGame);
     const listQuestion = useAppSelector(selectListQuestion);
     const turn = useAppSelector(selectTurn);
@@ -77,10 +74,7 @@ const IconProgress = ({
         dispatch(setIndexSubTopic(index));
 
         if (isPass) {
-            const _href = revertPathName({
-                href: `/finish?subTopicProgressId=${subTopic.id}&topic=${mainTopicTag}-practice-test&partId=${part.id}`,
-                appName: appInfo.appShortName,
-            });
+            const _href = `/finish?subTopicProgressId=${subTopic.id}&topic=${mainTopicTag}-practice-test&partId=${part.id}`;
             return router.push(_href);
         }
         if (part.id === isCurrentPlaying?.id) {
@@ -88,10 +82,7 @@ const IconProgress = ({
 
             // })
 
-            const _href = revertPathName({
-                href: `study/${mainTopicTag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${part?.tag}`,
-                appName: appInfo.appShortName,
-            });
+            const _href = `/study/${mainTopicTag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${part?.tag}`;
 
             dispatch(
                 initQuestionThunk({
@@ -114,7 +105,6 @@ const IconProgress = ({
         part,
         isCurrentPlaying,
         isPass,
-        appInfo.appShortName,
         dispatch,
         mainTopicTag,
         pathname,

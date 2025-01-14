@@ -34,7 +34,14 @@ async function handleInitData(appShortName, apiPath) {
         const data = await response.json();
         const { topic, tests } = data.data;
         await initDataTopics(topic, db);
-        await initDataTest(tests, db, apiPath);
+        const listTest = {
+            ...tests,
+            finalTests: tests.finalTests?.slice(0, 1),
+        };
+
+        console.log("🚀 ~ handleInitData ~ listTest:", listTest);
+
+        await initDataTest(listTest, db, apiPath);
         await fetchAndProcessTopicsRecursive(topic, db, apiPath);
     } catch (error) {
         console.error("Failed to fetch and initialize data:", error);
@@ -245,7 +252,7 @@ const initDataTest = async (tests, db, apiPath) => {
                         remainTime: test.duration * 60,
                         type: name,
                         status: 0,
-                        turn: 0,
+                        turn: 1,
                         topicIds: test.topicIds,
                         groupExamData: test.groupExamData,
                     });

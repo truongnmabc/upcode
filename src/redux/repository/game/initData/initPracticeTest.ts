@@ -13,6 +13,13 @@ type IInitQuestion = {
     duration?: number;
 };
 
+/**
+ * Lấy danh sách câu hỏi từ API dựa trên Test ID.
+ *
+ * @param {string | number} testId - ID của bài test cần lấy câu hỏi.
+ * @return {Promise<IQuestion[]>} - Danh sách câu hỏi từ API.
+ */
+
 const setDataStore = async (
     parentId: number,
     question: IQuestion[],
@@ -41,6 +48,15 @@ export const fetchQuestions = async (
     return response?.data?.data;
 };
 
+/**
+ * Lấy tiến trình người dùng từ local database (IndexedDB).
+ *
+ * @param {number} parentId - ID của bài test.
+ * @param {"test"} type - Loại tiến trình ("test").
+ * @param {number} turn - Số lần thực hiện bài test.
+ * @return {Promise<IUserQuestionProgress[] | null>} - Danh sách tiến trình người dùng hoặc null nếu không có.
+ */
+
 export const getLocalUserProgress = async (
     parentId: number,
     type: "test",
@@ -59,6 +75,14 @@ export const getLocalUserProgress = async (
             .toArray() ?? null
     );
 };
+
+/**
+ * Kết hợp dữ liệu câu hỏi với tiến trình người dùng.
+ *
+ * @param {ICurrentGame[]} questions - Danh sách câu hỏi.
+ * @param {IUserQuestionProgress[]} progressData - Dữ liệu tiến trình người dùng.
+ * @return {ICurrentGame[]} - Danh sách câu hỏi đã được cập nhật trạng thái từ tiến trình.
+ */
 
 export const mapQuestionsWithProgress = (
     questions: ICurrentGame[],
@@ -80,6 +104,21 @@ export const mapQuestionsWithProgress = (
         } as ICurrentGame;
     });
 };
+
+/**
+ * Khởi tạo và xử lý dữ liệu bài kiểm tra (Practice Test).
+ *
+ * @param {IInitQuestion} params - Thông tin bài kiểm tra bao gồm testId và thời gian làm bài.
+ * @return {Promise<{
+ *   questions: ICurrentGame[],
+ *   progressData: IUserQuestionProgress[],
+ *   idTopic: number,
+ *   type: "test",
+ *   duration: number,
+ *   isPaused: boolean,
+ *   remainTime: number
+ * } | null>} - Dữ liệu bài kiểm tra đã khởi tạo hoặc null nếu không có.
+ */
 
 const initPracticeThunk = createAsyncThunk(
     "initPracticeThunk",
@@ -119,6 +158,7 @@ const initPracticeThunk = createAsyncThunk(
             "test",
             currentTest?.turn || 0
         );
+
         if (progressData) {
             const questions = mapQuestionsWithProgress(
                 listQuestion,

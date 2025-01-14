@@ -43,12 +43,7 @@ const choiceAnswer = createAsyncThunk(
         };
 
         if (isEx) {
-            await db?.userProgress
-                .update(question.id, data)
-                .then((res) => console.log("update", res))
-                .catch((err) => {
-                    console.log("🚀 db.userProgress.update ~ err:", err);
-                });
+            await db?.userProgress.update(question.id, data);
         } else {
             await db?.userProgress.add(data);
         }

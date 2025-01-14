@@ -17,14 +17,14 @@ export async function GET(
     const slug = (await params).slug;
 
     const state = type && type === "final_test" ? search : `${slug}-${search}`;
-    // if (process.env.NODE_ENV === "development") {
-    //   return Response.json({
-    //     data: "",
-    //     code: 404,
-    //     message: "data not founds",
-    //     status: 0,
-    //   });
-    // }
+    if (process.env.NODE_ENV === "development") {
+        return Response.json({
+            data: "",
+            code: 404,
+            message: "data not founds",
+            status: 0,
+        });
+    }
     try {
         const cachingValue = cache.get(state);
         if (cachingValue) {

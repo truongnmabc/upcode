@@ -1,5 +1,6 @@
 import { ITopic } from "@/models/topics/topics";
-import { selectSubTopics, studyState } from "@/redux/features/study";
+import { selectSubTopics } from "@/redux/features/study";
+import { selectSubTopicsId } from "@/redux/features/study.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
 import { ExpandMore } from "@mui/icons-material";
@@ -9,7 +10,7 @@ import React from "react";
 import LazyLoadImage from "../images";
 import TopicLevelProgress from "./topicLevelProgress";
 const FN = ({ subTopic }: { subTopic: ITopic }) => {
-    const { selectedSubTopics } = useAppSelector(studyState);
+    const selectedSubTopics = useAppSelector(selectSubTopicsId);
     const isExpand = selectedSubTopics === subTopic.id;
     const dispatch = useAppDispatch();
 

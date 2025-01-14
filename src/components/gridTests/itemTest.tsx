@@ -1,9 +1,7 @@
-import { TypeParam } from "@/constants";
 import IconGridTest from "@/components/icon/iconGridTest";
-import { selectAppInfo } from "@/redux/features/appInfo.reselect";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { TypeParam } from "@/constants";
+import { useAppDispatch } from "@/redux/hooks";
 import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
-import { revertPathName } from "@/utils/pathName";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
@@ -13,7 +11,6 @@ type IListTest = {
 };
 const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
     const router = useRouter();
-    const appInfo = useAppSelector(selectAppInfo);
     const dispatch = useAppDispatch();
     const testId = useSearchParams().get("testId");
 
@@ -24,13 +21,11 @@ const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
                 duration: test.duration,
             })
         );
-        const _href = revertPathName({
-            href: `study/${TypeParam.practiceTest}?type=test&testId=${test.parentId}`,
-            appName: appInfo.appShortName,
-        });
 
-        router.replace(_href);
-    }, [test.parentId, test.duration, dispatch, appInfo.appShortName, router]);
+        router.replace(
+            `${TypeParam.practiceTest}?type=test&testId=${test.parentId}`
+        );
+    }, [test.parentId, test.duration, dispatch, router]);
 
     return (
         <div

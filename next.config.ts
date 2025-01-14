@@ -110,6 +110,7 @@ const nextConfig: NextConfig = {
                     "/:path",
             });
         });
+
         return result;
     },
 };

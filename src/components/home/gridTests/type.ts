@@ -1,5 +1,3 @@
-import { IAppInfo } from "@/models/app/appInfo";
-
 export interface IItemTest {
     id: string;
     name: string;
@@ -9,5 +7,4 @@ export interface IItemTest {
 
 export interface IPropsItemTest {
     item: IItemTest;
-    appInfo: IAppInfo;
 }

@@ -1,180 +1,3 @@
-// "use client";
-
-// import { db } from "@/db/db.model";
-// import { ICurrentGame } from "@/models/game/game";
-// import { IQuestion } from "@/models/question/questions";
-// import { generateRandomNegativeId } from "@/utils/math";
-// import { createAsyncThunk } from "@reduxjs/toolkit";
-// import {
-//     getLocalUserProgress,
-//     mapQuestionsWithProgress,
-// } from "./initPracticeTest";
-
-// const setDataStoreDiagnostic = async ({
-//     listQuestion,
-//     belowFifty,
-//     aboveFifty,
-//     parentId,
-// }: {
-//     listQuestion: ICurrentGame[];
-//     parentId: number;
-//     aboveFifty: Record<string, ICurrentGame[]>;
-//     belowFifty: Record<string, ICurrentGame[]>;
-// }) => {
-//     await db?.testQuestions.add({
-//         parentId: parentId,
-//         question: listQuestion as IQuestion[],
-//         duration: 1,
-//         aboveFifty,
-//         belowFifty,
-//         isPaused: false,
-//         startTime: new Date().getTime(),
-//         remainTime: 80,
-//         type: "diagnosticTest",
-//         status: 0,
-//         turn: 0,
-//     });
-// };
-
-// const initDiagnosticTestQuestionThunk = createAsyncThunk(
-//     "initDiagnosticTest",
-//     async () => {
-//         const diagnostic = await db?.testQuestions
-//             .where("type")
-//             .equals("diagnosticTest")
-//             .filter((item) => item.status === 0)
-//             .first();
-//         if (!diagnostic) {
-//             const parentId = generateRandomNegativeId();
-//             const listQuestion: ICurrentGame[] = [];
-//             const belowFifty: Record<string, ICurrentGame[]> = {};
-//             const aboveFifty: Record<string, ICurrentGame[]> = {};
-//             const topic = await db?.topics.toArray();
-
-//             if (topic) {
-//                 for (const subTopic of topic) {
-//                     const idTopic = subTopic?.topics?.[0].id;
-
-//                     if (idTopic) {
-//                         const ques = await db?.topicQuestion
-//                             .where("parentId")
-//                             .equals(idTopic)
-//                             .toArray();
-
-//                         const list = ques?.flatMap(
-//                             (item) => item?.questions
-//                         ) as IQuestion[];
-
-//                         const listLevel2 = list?.filter(
-//                             (item) => item.level === -1 || item.level === 50
-//                         );
-//                         const start =
-//                             listLevel2?.[
-//                                 Math.floor(Math.random() * listLevel2.length)
-//                             ];
-//                         const randomItem = {
-//                             ...(start ||
-//                                 list[Math.floor(Math.random() * list.length)]),
-//                             tag: subTopic.tag,
-//                             icon: subTopic.icon,
-//                         };
-
-//                         if (randomItem && list) {
-//                             const belowFiftyQuestions = list.filter(
-//                                 (item) =>
-//                                     (item?.level || 0) < 50 &&
-//                                     item.id !== randomItem?.id
-//                             );
-//                             const randomBelowFifty = belowFiftyQuestions
-//                                 .sort(() => 0.5 - Math.random())
-//                                 .slice(0, 2);
-
-//                             // level : 3
-
-//                             const aboveFiftyQuestions = list.filter(
-//                                 (item) =>
-//                                     item?.level > 50 &&
-//                                     item.id !== randomItem?.id
-//                             );
-
-//                             const randomAboveFifty = aboveFiftyQuestions
-//                                 .sort(() => 0.5 - Math.random())
-//                                 .slice(0, 2);
-
-//                             const randomList =
-//                                 randomBelowFifty.length > 0
-//                                     ? randomBelowFifty
-//                                     : randomAboveFifty;
-
-//                             listQuestion.push(
-//                                 randomItem,
-//                                 ...randomList?.map((item) => ({
-//                                     ...item,
-//                                     tag: subTopic.tag,
-//                                     icon: subTopic.icon,
-//                                 }))
-//                             );
-
-//                             belowFifty[subTopic.tag] = [
-//                                 ...(randomBelowFifty.length > 0
-//                                     ? randomBelowFifty
-//                                     : randomAboveFifty),
-//                             ];
-
-//                             aboveFifty[subTopic.tag] = [
-//                                 ...(randomAboveFifty.length > 0
-//                                     ? randomAboveFifty
-//                                     : randomBelowFifty),
-//                             ];
-//                         }
-//                     }
-//                 }
-//             }
-
-//             setDataStoreDiagnostic({
-//                 listQuestion,
-//                 belowFifty,
-//                 aboveFifty,
-//                 parentId,
-//             });
-
-//             return {
-//                 listQuestion,
-//                 belowFifty,
-//                 aboveFifty,
-//                 isPaused: false,
-//                 idTopic: parentId,
-//                 progressData: [],
-//             };
-//         } else {
-//             const progressData = await getLocalUserProgress(
-//                 diagnostic.parentId,
-//                 "test",
-//                 diagnostic.turn
-//             );
-
-//             if (progressData) {
-//                 const questions = mapQuestionsWithProgress(
-//                     diagnostic.question,
-//                     progressData
-//                 );
-
-//                 return {
-//                     progressData: progressData,
-//                     listQuestion: questions,
-//                     belowFifty: diagnostic.belowFifty,
-//                     aboveFifty: diagnostic.aboveFifty,
-//                     isPaused: true,
-//                     idTopic: diagnostic.parentId,
-//                 };
-//             }
-//         }
-//         return undefined;
-//     }
-// );
-
-// export default initDiagnosticTestQuestionThunk;
-
 "use client";
 
 import { db } from "@/db/db.model";
@@ -187,6 +10,16 @@ import {
     mapQuestionsWithProgress,
 } from "./initPracticeTest";
 
+/**
+ * Lưu trữ dữ liệu bài kiểm tra chuẩn đoán vào local database (IndexedDB).
+ *
+ * @param {object} params - Tham số truyền vào.
+ * @param {ICurrentGame[]} params.listQuestion - Danh sách câu hỏi trong bài test.
+ * @param {Record<string, ICurrentGame[]>} params.belowFifty - Các câu hỏi có level dưới 50, nhóm theo tag.
+ * @param {Record<string, ICurrentGame[]>} params.aboveFifty - Các câu hỏi có level trên 50, nhóm theo tag.
+ * @param {number} params.parentId - ID của bài test chuẩn đoán.
+ * @return {Promise<void>} - Không trả về giá trị.
+ */
 const setDataStoreDiagnostic = async ({
     listQuestion,
     belowFifty,
@@ -209,31 +42,31 @@ const setDataStoreDiagnostic = async ({
         remainTime: 80,
         type: "diagnosticTest",
         status: 0,
-        turn: 0,
+        turn: 1,
     });
 };
 
 /**
-@return:
-    - listQuestion: danh sách câu hỏi trong bài test
-    - isPaused: trạng thái bài test: làmm mới hay làm lại
-    - idTopic: id của bài test
-    - progressData: tiến trình làm bài
-    - belowFifty,aboveFifty: dựa vào kết quả trả lời của người dùng để lấy ra câu tiếp theo trong list này.
+ * Khởi tạo bài kiểm tra chuẩn đoán (Diagnostic Test).
+ *
+ * - Nếu bài kiểm tra đã tồn tại, tải dữ liệu bài kiểm tra từ local database.
+ * - Nếu không, tạo mới bài kiểm tra bằng cách lấy ngẫu nhiên một số câu hỏi từ các subtopic.
+ *
+ * @return {Promise<object | undefined>} - Dữ liệu bài kiểm tra hoặc undefined nếu không có.
  */
 
 const initDiagnosticTestQuestionThunk = createAsyncThunk(
     "initDiagnosticTest",
     async () => {
-        //  kiểm tra bài test có trong cơ sở dữ liệu chưa
+        // Tìm bài kiểm tra chuẩn đoán hiện tại trong database
         const diagnostic = await db?.testQuestions
             .where("type")
             .equals("diagnosticTest")
             .filter((item) => item.status === 0)
             .first();
+
         if (!diagnostic) {
-            //  tạo mới bài test, lọc qua list topics => subtopic
-            //  lấy ra mỗi subtopic 1 câu.
+            // Tạo bài kiểm tra mới
             const parentId = generateRandomNegativeId();
             const listQuestion: ICurrentGame[] = [];
             const belowFifty: Record<string, ICurrentGame[]> = {};
@@ -246,6 +79,7 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                         const idTopic = subtopic.id;
 
                         if (idTopic) {
+                            // Lấy danh sách câu hỏi theo subtopic
                             const ques = await db?.topicQuestion
                                 .where("parentId")
                                 .equals(idTopic)
@@ -257,6 +91,7 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                                     (item) => item?.questions
                                 ) as IQuestion[];
 
+                            // Lấy câu hỏi có level -1 hoặc 50
                             const listLevel2 = list?.filter(
                                 (item) => item.level === -1 || item.level === 50
                             );
@@ -266,6 +101,7 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                                         Math.random() * listLevel2.length
                                     )
                                 ];
+
                             const randomItem = {
                                 ...(start ||
                                     list[
@@ -285,8 +121,6 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                                     .sort(() => 0.5 - Math.random())
                                     .slice(0, 2);
 
-                                // level : 3
-
                                 const aboveFiftyQuestions = list.filter(
                                     (item) =>
                                         item?.level > 50 &&
@@ -297,19 +131,7 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                                     .sort(() => 0.5 - Math.random())
                                     .slice(0, 2);
 
-                                // const randomList =
-                                //     randomBelowFifty.length > 0
-                                //         ? randomBelowFifty
-                                //         : randomAboveFifty;
-
-                                listQuestion.push(
-                                    randomItem
-                                    // ...randomList?.map((item) => ({
-                                    //     ...item,
-                                    //     tag: topic.tag,
-                                    //     icon: topic.icon,
-                                    // }))
-                                );
+                                listQuestion.push(randomItem);
 
                                 belowFifty[topic.tag] = [
                                     ...(randomBelowFifty.length > 0
@@ -328,6 +150,7 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                 }
             }
 
+            // Lưu bài kiểm tra mới vào database
             setDataStoreDiagnostic({
                 listQuestion,
                 belowFifty,
@@ -344,6 +167,7 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                 progressData: [],
             };
         } else {
+            // Lấy tiến trình bài kiểm tra đã tồn tại
             const progressData = await getLocalUserProgress(
                 diagnostic.parentId,
                 "test",
@@ -366,6 +190,7 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
                 };
             }
         }
+
         return undefined;
     }
 );
