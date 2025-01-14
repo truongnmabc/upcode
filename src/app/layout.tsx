@@ -33,7 +33,7 @@ export async function generateMetadata() {
         if (appInfo) {
             const image = `/infos/${appInfo?.appShortName}/logo60.png`;
             return {
-                metadataBase: new URL("http://localhost:3030/"),
+                metadataBase: new URL("http://localhost:3000/"),
                 title: replaceYear(appInfo.title),
                 description: appInfo.descriptionSEO,
                 keywords: appInfo.keywordSEO,
@@ -46,6 +46,7 @@ export async function generateMetadata() {
             };
         }
     }
+    return null;
 }
 
 export default function ParentAppLayout({

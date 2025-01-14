@@ -60,11 +60,16 @@ const ModalConfirm = () => {
         setOpen(false);
     }, [dispatch]);
 
+    const handleBackPage = useCallback(() => {
+        setOpen(false);
+    }, [setOpen]);
+
     useEffect(() => {
+        window.addEventListener("popstate", handleBackPage);
         return () => {
-            setOpen(false);
+            window.removeEventListener("popstate", handleBackPage);
         };
-    }, []);
+    }, [handleBackPage]);
 
     useEffect(() => {
         return () => {

@@ -135,6 +135,7 @@ const initPracticeThunk = createAsyncThunk(
                 remainTime: remainTime,
             };
         }
+        return null;
     }
 );
 

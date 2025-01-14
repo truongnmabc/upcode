@@ -46,6 +46,7 @@ const initGameReducer: IGameReducer = {
     time: -1,
     type: "learn",
     isPaused: false,
+    isEndTimeTest: false,
     remainTime: -1,
     belowFifty: {},
     aboveFifty: {},
@@ -113,6 +114,9 @@ export const gameSlice = createSlice({
         },
         continueGame: (state) => {
             state.isPaused = false;
+        },
+        shouldEndTimeTest: (state, action) => {
+            state.isEndTimeTest = action.payload;
         },
         endTest: (state) => {
             state.indexCurrentQuestion = 0;
@@ -278,6 +282,7 @@ export const {
     viewTest,
     startRandomReview,
     startTryAgainDiagnostic,
+    shouldEndTimeTest,
 } = actions;
 
 export const gameState = (state: RootState) => state.gameReducer;

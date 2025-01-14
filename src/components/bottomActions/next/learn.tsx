@@ -1,27 +1,34 @@
 "use client";
 import { MtUiButton } from "@/components/button";
-import { appInfoState } from "@/redux/features/appInfo";
-import { gameState } from "@/redux/features/game";
+import {
+    selectCurrentGame,
+    selectIndexCurrentQuestion,
+    selectIsEndTimeTest,
+    selectListQuestion,
+    selectSubTopicProgressId,
+    selectType,
+} from "@/redux/features/game.reselect";
+import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishQuestionThunk from "@/redux/repository/game/finish/finishQuestion";
 import nextQuestionThunk from "@/redux/repository/game/nextQuestion/nextQuestion";
-import { revertPathName } from "@/utils/pathName";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 const BtnNextQuestion = () => {
     const [isFinish, setIsFinish] = useState(false);
-    const {
-        currentGame,
-        subTopicProgressId,
-        idTopic,
-        listQuestion,
-        type,
-        indexCurrentQuestion,
-    } = useAppSelector(gameState);
 
     const params = useParams();
+    const router = useRouter();
+    const dispatch = useAppDispatch();
 
-    const { appInfo } = useAppSelector(appInfoState);
+    const currentGame = useAppSelector(selectCurrentGame);
+    const subTopicProgressId = useAppSelector(selectSubTopicProgressId);
+    const idTopic = useAppSelector(selectTopicsId);
+    const listQuestion = useAppSelector(selectListQuestion);
+    const type = useAppSelector(selectType);
+    const indexCurrentQuestion = useAppSelector(selectIndexCurrentQuestion);
+    const isEndTimeTest = useAppSelector(selectIsEndTimeTest);
+
     useEffect(() => {
         const isFinal = listQuestion.every(
             (item) => item.localStatus === "correct"
@@ -29,8 +36,6 @@ const BtnNextQuestion = () => {
 
         setIsFinish(isFinal);
     }, [listQuestion]);
-    const router = useRouter();
-    const dispatch = useAppDispatch();
 
     const handleFinish = () => {
         if (isFinish) {
@@ -41,14 +46,12 @@ const BtnNextQuestion = () => {
                 })
             );
 
-            const _href = revertPathName({
-                href: `/finish?subTopicProgressId=${subTopicProgressId}&topic=${params?.slug}&partId=${idTopic}`,
-                appName: appInfo.appShortName,
-            });
-
-            router.replace(_href, {
-                scroll: true,
-            });
+            router.replace(
+                `/finish?subTopicProgressId=${subTopicProgressId}&topic=${params?.["slug"]}&partId=${idTopic}`,
+                {
+                    scroll: true,
+                }
+            );
 
             return;
         }
@@ -63,7 +66,10 @@ const BtnNextQuestion = () => {
             animated
             block
             onClick={handleFinish}
-            disabled={!currentGame?.selectedAnswer}
+            disabled={
+                !currentGame?.selectedAnswer ||
+                (type === "test" && isEndTimeTest)
+            }
             type="primary"
             className="py-3 px-8"
         >
