@@ -190,6 +190,7 @@ const ResultTestLayout = () => {
     const idTopic = useAppSelector(selectIdTopic);
     const passing = useAppSelector(selectPassing);
     const type = useSearchParams().get("type");
+    const testId = useSearchParams().get("testId");
 
     const [result, setResult] = useState<{
         listTopic: ITopicEndTest[];
@@ -220,8 +221,13 @@ const ResultTestLayout = () => {
     });
 
     const handleGetData = useCallback(async () => {
-        if (idTopic) {
-            const { user, topics, questions } = await fetchData(idTopic);
+        if (idTopic || testId) {
+            const id = idTopic !== -1 ? idTopic : Number(testId);
+            console.log("🚀 ~ handleGetData ~ id:", id);
+            const { user, topics, questions } = await fetchData(id);
+            console.log("🚀 ~ handleGetData ~ user:", user);
+            console.log("🚀 ~ handleGetData ~ topics:", topics);
+            console.log("🚀 ~ handleGetData ~ questions:", questions);
             const listPass =
                 type === TypeParam.review
                     ? listQuestion.filter(
@@ -285,7 +291,7 @@ const ResultTestLayout = () => {
                 ),
             });
         }
-    }, [idTopic, passing, listQuestion, type]);
+    }, [idTopic, passing, listQuestion, type, testId]);
 
     useEffect(() => {
         handleGetData();

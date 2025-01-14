@@ -1,21 +1,22 @@
 "use client";
-import RouterApp from "@/router/router.constant";
 import { MtUiButton } from "@/components/button";
-import { appInfoState } from "@/redux/features/appInfo";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { endTest } from "@/redux/features/game";
-import { selectListQuestion } from "@/redux/features/game.reselect";
+import {
+    selectIdTopic,
+    selectListQuestion,
+} from "@/redux/features/game.reselect";
 import { shouldOpenSubmitTest, testState } from "@/redux/features/tests";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishCustomTestThunk from "@/redux/repository/game/finish/finishCustomTest";
 import finishDiagnosticThunk from "@/redux/repository/game/finish/finishDiagnostic";
 import finishFinalThunk from "@/redux/repository/game/finish/finishFinal";
 import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTest";
-import { revertPathName } from "@/utils/pathName";
+import RouterApp from "@/router/router.constant";
+import { Dialog } from "@mui/material";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
-import { useIsMobile } from "@/hooks/useIsMobile";
-import { Dialog } from "@mui/material";
 const Sheet = dynamic(() => import("@/components/sheet"), {
     ssr: false,
 });
@@ -36,11 +37,12 @@ const BottomConfirmTest = () => {
     const { openSubmit } = useAppSelector(testState);
     const dispatch = useAppDispatch();
     const isMobile = useIsMobile();
-    const { appInfo } = useAppSelector(appInfoState);
     const pathname = usePathname();
     const listQuestions = useAppSelector(selectListQuestion);
     const router = useRouter();
     const type = useSearchParams().get("type");
+    const testId = useSearchParams().get("testId");
+    const id = useAppSelector(selectIdTopic);
     const [info, setInfo] = useState({
         answer: 0,
         total: 0,
@@ -75,16 +77,15 @@ const BottomConfirmTest = () => {
         const segments = pathname.split("/").filter(Boolean);
 
         const lastSegment = segments[segments.length - 1];
-        const _href = revertPathName({
-            href: `${RouterApp.ResultTest}?type=${lastSegment}`,
-            appName: appInfo.appShortName,
-        });
+        const _href = `${RouterApp.ResultTest}?type=${lastSegment}&testId=${
+            testId || id
+        }`;
 
         dispatch(shouldOpenSubmitTest(false));
         dispatch(endTest());
 
         router.replace(_href);
-    }, [dispatch, appInfo.appShortName, router, pathname, type]);
+    }, [dispatch, router, pathname, type, testId, id]);
 
     if (isMobile) {
         return (

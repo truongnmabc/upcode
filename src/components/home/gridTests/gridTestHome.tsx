@@ -53,11 +53,7 @@ const GridTest = () => {
             <div className="w-full mt-6 sm:mt-10 ">
                 <Grid2 container spacing={2}>
                     {mockGirdTests.map((test) => (
-                        <ItemGridTest
-                            appInfo={appInfo}
-                            key={test.id}
-                            item={test}
-                        />
+                        <ItemGridTest key={test.id} item={test} />
                     ))}
                 </Grid2>
             </div>

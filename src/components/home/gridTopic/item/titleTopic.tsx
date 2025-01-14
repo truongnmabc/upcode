@@ -15,11 +15,9 @@ import { AppDispatch } from "@/redux/store";
 import RouterApp from "@/router/router.constant";
 import { trackingEventGa4 } from "@/services/googleEvent";
 import ctx from "@/utils/mergeClass";
-import { convertPathName } from "@/utils/pathName";
 import clsx from "clsx";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import Priority from "./priority";
 
 export const handleGetNextPart = async ({
@@ -104,7 +102,7 @@ export const handleNavigateStudy = async ({
             parentId: topic.id,
             topic,
         });
-    const _href = `study/${topic.tag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${tag}`;
+    const _href = `/study/${topic.tag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${tag}`;
     dispatch(selectTopics(topic.id));
 
     if (tag && subTopicTag) {
@@ -137,18 +135,12 @@ const TitleTopic = ({
 }) => {
     const appInfo = useAppSelector(selectAppInfo);
     const router = useRouter();
-    const pathname = usePathname();
-    const [currentPathname, setCurrentPathname] = useState(pathname);
+    const currentPathname = usePathname();
     const isMobile = useIsMobile();
     const selectedTopics = useAppSelector(selectTopicsId);
     const dispatch = useAppDispatch();
 
     const isAllowExpand = selectedTopics === topic?.id;
-
-    useEffect(() => {
-        const path = convertPathName(pathname);
-        setCurrentPathname(path);
-    }, [pathname]);
 
     const handleClick: React.MouseEventHandler<HTMLDivElement> = async (e) => {
         onRippleClickHandler(e);
@@ -192,7 +184,7 @@ const TitleTopic = ({
         >
             <div
                 className={ctx(
-                    "  rounded-md border-solid bg-primary-16 border-primary transition-all flex items-center rounded-tl-md  justify-center",
+                    "rounded-md border-solid bg-primary-16 border-primary transition-all flex items-center rounded-tl-md  justify-center",
                     imgClassNames
                 )}
             >

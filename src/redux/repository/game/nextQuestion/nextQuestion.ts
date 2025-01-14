@@ -43,6 +43,7 @@ const nextQuestionThunk = createAsyncThunk(
                 isFirst: false,
             };
         }
+        return undefined;
     }
 );
 

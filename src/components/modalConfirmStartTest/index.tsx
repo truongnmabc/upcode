@@ -74,6 +74,8 @@ const ModalConfirm = () => {
     useEffect(() => {
         return () => {
             if (idTopic && idTopic !== -1 && type === "test") {
+                console.log("🚀 ~ page unmount:", idTopic);
+
                 dispatch(
                     pauseTestThunk({
                         testId: idTopic,

@@ -1,22 +1,26 @@
 "use client";
 import CloseIcon from "@/asset/icon/CloseIcon";
-import { TypeParam } from "@/constants";
-import RouterApp from "@/router/router.constant";
 import { MtUiButton } from "@/components/button";
 import MyContainer from "@/components/container";
 import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic";
+import { TypeParam } from "@/constants";
 import { db } from "@/db/db.model";
-import { appInfoState } from "@/redux/features/appInfo";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import {
-    gameState,
+    setTurtGame,
     startOverGame,
     startTryAgainDiagnostic,
 } from "@/redux/features/game";
+import {
+    selectIdTopic,
+    selectListQuestion,
+    selectTurn,
+} from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
-import { revertPathName } from "@/utils/pathName";
+import RouterApp from "@/router/router.constant";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback } from "react";
 import { IconFailResultTest } from "../icon/iconFailResultTest";
@@ -32,8 +36,10 @@ type IProps = {
 };
 const HeaderResultTest: React.FC<IProps> = (info) => {
     const router = useRouter();
-    const { idTopic, listQuestion } = useAppSelector(gameState);
-    const { appInfo } = useAppSelector(appInfoState);
+    const idTopic = useAppSelector(selectIdTopic);
+    const listQuestion = useAppSelector(selectListQuestion);
+    const appInfo = useAppSelector(selectAppInfo);
+    const turn = useAppSelector(selectTurn);
     const type = useSearchParams().get("type");
     const dispatch = useAppDispatch();
 
@@ -42,33 +48,26 @@ const HeaderResultTest: React.FC<IProps> = (info) => {
         switch (type) {
             case TypeParam.diagnosticTest:
                 dispatch(startTryAgainDiagnostic());
-                _href = revertPathName({
-                    appName: appInfo.appShortName,
-                    href: RouterApp.Diagnostic_test,
-                });
+                _href = RouterApp.Diagnostic_test;
                 break;
 
             case TypeParam.finalTest:
                 dispatch(initFinalTestThunk());
-                _href = revertPathName({
-                    appName: appInfo.appShortName,
-                    href: RouterApp.Final_test,
-                });
+                _href = RouterApp.Final_test;
                 break;
 
             case TypeParam.practiceTest:
                 dispatch(startOverGame());
-                _href = revertPathName({
-                    appName: appInfo.appShortName,
-                    href: `study/${TypeParam.practiceTest}?type=test&testId=${idTopic}`,
-                });
+                dispatch(
+                    setTurtGame({
+                        turn: turn + 1,
+                    })
+                );
+                _href = `/study/${TypeParam.practiceTest}?type=test&testId=${idTopic}`;
                 break;
 
             case TypeParam.review:
-                _href = revertPathName({
-                    appName: appInfo.appShortName,
-                    href: RouterApp.Review,
-                });
+                _href = RouterApp.Review;
                 break;
 
             default:
@@ -78,7 +77,7 @@ const HeaderResultTest: React.FC<IProps> = (info) => {
         if (_href) {
             router.replace(_href);
         }
-    }, [router, appInfo, idTopic, dispatch, type]);
+    }, [router, idTopic, dispatch, type, turn]);
 
     const handleNextTets = useCallback(async () => {
         if (type === TypeParam.practiceTest) {
@@ -89,21 +88,15 @@ const HeaderResultTest: React.FC<IProps> = (info) => {
                 .first();
 
             dispatch(initPracticeThunk({}));
-            const _href = revertPathName({
-                appName: appInfo.appShortName,
-                href: `study/${TypeParam.practiceTest}?type=test&testId=${currentTest?.parentId}`,
-            });
+            const _href = `/study/${TypeParam.practiceTest}?type=test&testId=${currentTest?.parentId}`;
             return router.replace(_href);
         }
         if (type === TypeParam.customTest) {
             dispatch(initCustomTestThunk());
-            const _href = revertPathName({
-                appName: appInfo.appShortName,
-                href: RouterApp.Custom_test,
-            });
-            return router.push(_href);
+
+            return router.push(RouterApp.Custom_test);
         }
-    }, [router, appInfo, type, dispatch]);
+    }, [router, type, dispatch]);
 
     const handleStartLearning = useCallback(async () => {
         const listTopic = await db?.topics.toArray();
