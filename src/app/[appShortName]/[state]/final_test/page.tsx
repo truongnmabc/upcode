@@ -10,12 +10,6 @@ type Params = {
 export default async function FinalTestPage({ params }: Params) {
     const { appShortName, slug } = await params;
 
-    // const { appInfo } = await fetchAppData(appShortName);
-
-    // if (!appInfo) {
-    //     throw new Error("App info not found");
-    // }
-
     const seoData = await axiosInstance.get(
         `${API_PATH.GET_SEO}/${appShortName}?search=${slug}&type=final_test`
     );

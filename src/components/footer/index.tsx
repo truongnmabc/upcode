@@ -9,7 +9,7 @@ import { validateEmail } from "@/utils";
 import { getContactApp } from "@/utils/getContact";
 import { useMediaQuery } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { memo, useRef } from "react";
 import { IAppInfo } from "../../models/app/appInfo";
 import FacebookIcon from "../icon/FacebookIcon";
@@ -28,7 +28,7 @@ const FooterLandingV4 = () => {
         const logo = `/${appInfo.appShortName}/logo/logo-dark.png`;
         return logo;
     };
-
+    const pathname = usePathname();
     const appInfo = useAppSelector(selectAppInfo);
     const _email = useRef<HTMLInputElement>(null);
     const _message = useRef<HTMLInputElement>(null);
@@ -134,9 +134,9 @@ const FooterLandingV4 = () => {
         );
     };
 
-    // if (pathname.includes("test")) {
-    //     return <div className="w-full h-[124px]"></div>;
-    // }
+    if (pathname.includes("test") || pathname.includes("study")) {
+        return <div className="w-full h-[124px]"></div>;
+    }
 
     return (
         <div className="v4-footer-landing-0">

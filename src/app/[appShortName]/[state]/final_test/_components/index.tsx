@@ -1,11 +1,14 @@
-import SeoContent from "@/components/seoContent/seoContent";
-import { Grid2 } from "@mui/material";
-import MainViewFinalTest from "./mainView";
-import { Fragment } from "react";
-import MyContainer from "@/components/container";
 import BannerDownloadApp from "@/components/bannerDownload/bannerDownloadApp";
+import MyContainer from "@/components/container";
 import HeaderMobile from "@/components/headerMobile";
 import AnswerSheet from "@/components/listLeftQuestions";
+import SeoContent from "@/components/seoContent/seoContent";
+import { selectIdTopic } from "@/redux/features/game.reselect";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
+import { Grid2 } from "@mui/material";
+import { Fragment, useEffect } from "react";
+import MainViewFinalTest from "./mainView";
 
 const FinalTestLayout = ({ contentSeo }: { contentSeo: string }) => {
     return (
@@ -55,8 +58,21 @@ const FinalTestLayout = ({ contentSeo }: { contentSeo: string }) => {
                     </Grid2>
                 </Grid2>
             </MyContainer>
+            <LoadData />
         </Fragment>
     );
 };
 
 export default FinalTestLayout;
+
+const LoadData = () => {
+    const idTopics = useAppSelector(selectIdTopic);
+    const dispatch = useAppDispatch();
+    useEffect(() => {
+        if (!idTopics || idTopics === -1) {
+            dispatch(initFinalTestThunk());
+        }
+    }, [idTopics, dispatch]);
+
+    return null;
+};

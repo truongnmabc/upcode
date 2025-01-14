@@ -44,4 +44,5 @@ export interface IGameReducer {
     feedBack?: IFeedBack;
     passing?: number;
     isFinishGame?: boolean;
+    isEndTimeTest?: boolean;
 }

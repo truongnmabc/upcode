@@ -13,6 +13,7 @@ import TitleQuestion from "@/components/titleQuestion";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { selectIdTopic } from "@/redux/features/game.reselect";
 import initLearnQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
+import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
 
 const MainStudyView = () => {
     const type = useSearchParams().get("type");
@@ -49,6 +50,7 @@ const LoadData = () => {
     const id = useAppSelector(selectIdTopic);
     const type = useSearchParams().get("type");
     const tag = useSearchParams().get("tag");
+    const testId = useSearchParams().get("testId");
     const subTopic = useSearchParams().get("subTopic");
     useEffect(() => {
         if ((!id || id === -1) && subTopic && tag && type === "learn") {
@@ -59,6 +61,10 @@ const LoadData = () => {
                 })
             );
         }
-    }, [id, dispatch, type, tag, subTopic]);
+
+        if ((!id || id === -1) && type === "test" && testId) {
+            dispatch(initPracticeThunk({ testId: Number(testId) }));
+        }
+    }, [id, dispatch, type, tag, subTopic, testId]);
     return null;
 };
