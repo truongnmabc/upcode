@@ -114,6 +114,9 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
                         btn={btn}
                     />
                 );
+
+            default:
+                return null;
         }
     };
 
@@ -129,10 +132,8 @@ const ContactsScreen = ({ appInfo }: { appInfo: IAppInfo }) => {
 
 export const SocialsIcon = ({ appName }: { appName: string }) => {
     const { appConfig } = useAppSelector(appConfigState);
-    const facebook = getContactApp(appName).facebook;
-    const twitter = getContactApp(appName).twitter;
-    const youtube = getContactApp(appName).youtube;
-    const linkedin = getContactApp(appName).linkedin;
+    const { facebook, twitter, youtube, linkedin } = getContactApp(appName);
+
     return (
         <div className="socials-icon">
             {facebook && (

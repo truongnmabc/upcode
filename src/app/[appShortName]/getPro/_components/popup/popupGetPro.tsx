@@ -1,14 +1,12 @@
-import Dialog from "@mui/material/Dialog";
-import React from "react";
-import "./popupGetPro.scss";
-import { IAppInfo } from "@/models/app/appInfo";
 import ProPlanSvg from "@/components/icon/ProPlanSvg";
-import SubScriptionButton from "../paypalButton/subScriptionBtnPayment";
-import { getConfigAppPro, IPriceConfig } from "@/utils/paypal";
-import { useRouter } from "next/navigation";
-import { revertPathName } from "@/utils/pathName";
+import { IAppInfo } from "@/models/app/appInfo";
 import RouterApp from "@/router/router.constant";
+import { getConfigAppPro, IPriceConfig } from "@/utils/paypal";
+import Dialog from "@mui/material/Dialog";
+import { useRouter } from "next/navigation";
 import PayPalBtn from "../paypalButton/payPalBtn";
+import SubScriptionButton from "../paypalButton/subScriptionBtnPayment";
+import "./popupGetPro.scss";
 
 export interface IButtonPropsV4 {
     price: string;
@@ -33,11 +31,7 @@ const PopupGetProPayment = ({
     const appConfig = getConfigAppPro(appInfo.appShortName);
     const router = useRouter();
     const onPaymentSuccess = () => {
-        const _href = revertPathName({
-            appName: appInfo.appShortName,
-            href: RouterApp.Billing,
-        });
-        router.push(_href);
+        router.push(RouterApp.Billing);
         onClose();
     };
 

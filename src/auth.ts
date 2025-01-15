@@ -74,14 +74,14 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             if (user) {
                 token.email = user.email;
                 token.name = user.name;
-                token.id = user.id;
+                token["id"] = user.id;
             }
             return token;
         },
         async session({ session, token }) {
             session.user = {
                 ...session.user,
-                id: (token.id as string) || "",
+                id: (token["id"] as string) || "",
             };
             return session;
         },
@@ -93,5 +93,5 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         strategy: "jwt",
         maxAge: 60 * 60 * 48,
     },
-    secret: process.env.AUTH_SECRET,
+    secret: process.env["AUTH_SECRET"],
 });

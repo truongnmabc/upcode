@@ -1,5 +1,5 @@
 import InfoIcon from "@/components/icon/InfoIcon";
-import { gameState } from "@/redux/features/game";
+import { selectCurrentGame } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import {
     CancelRounded,
@@ -17,7 +17,7 @@ export type IStatusAnswer =
     | "skip";
 
 const StatusAnswer = () => {
-    const { currentGame } = useAppSelector(gameState);
+    const currentGame = useAppSelector(selectCurrentGame);
     if (currentGame?.localStatus === "incorrect") {
         return (
             <div className="flex text-sm sm:text-base transition-all gap-2">
@@ -92,6 +92,7 @@ const StatusAnswer = () => {
                 </span>
             </div>
         );
+    return null;
 };
 
 export default React.memo(StatusAnswer);

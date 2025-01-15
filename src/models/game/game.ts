@@ -45,4 +45,5 @@ export interface IGameReducer {
     passing?: number;
     isFinishGame?: boolean;
     isEndTimeTest?: boolean;
+    shouldListenEventKeyboard?: boolean;
 }

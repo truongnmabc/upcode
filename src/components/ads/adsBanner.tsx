@@ -39,7 +39,7 @@ const AdsBanner = ({
 }) => {
     useEffect(() => {
         try {
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
+            (window["adsbygoogle"] = window["adsbygoogle"] || []).push({});
         } catch (err) {
             console.log(err);
         }

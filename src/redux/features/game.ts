@@ -51,6 +51,7 @@ const initGameReducer: IGameReducer = {
     belowFifty: {},
     aboveFifty: {},
     feedBack: "newbie",
+    shouldListenEventKeyboard: true,
 };
 
 export const gameSlice = createSlice({
@@ -61,10 +62,12 @@ export const gameSlice = createSlice({
             state.currentGame = action.payload;
         },
         viewTest: (state, action) => {
-            const index = action.payload;
-            state.indexCurrentQuestion =
-                index + 1 === state.listQuestion?.length ? 0 : index;
-            state.currentGame = state.listQuestion[state.indexCurrentQuestion];
+            const payload = action.payload;
+
+            const index = payload === state.listQuestion?.length ? 0 : payload;
+
+            state.indexCurrentQuestion = index;
+            state.currentGame = state.listQuestion[index];
         },
         setIndexSubTopic: (state, action) => {
             state.indexSubTopic = action.payload;
@@ -82,6 +85,9 @@ export const gameSlice = createSlice({
             }>
         ) => {
             state.turn = action.payload.turn;
+        },
+        setShouldListenKeyboard: (state, action) => {
+            state.shouldListenEventKeyboard = action.payload;
         },
         startOverGame: (state) => {
             const list = [...state.listQuestion]?.map((item) => ({
@@ -272,6 +278,7 @@ const { reducer: gameReducer, actions } = gameSlice;
 export const {
     setCurrentGame,
     setListQuestionGames,
+    setShouldListenKeyboard,
     setTurtGame,
     startOverGame,
     continueGame,

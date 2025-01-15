@@ -4,18 +4,12 @@ import { MtUiButton } from "@/components/button";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
-import { revertPathName } from "@/utils/pathName";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const FN = () => {
+const FinalTestBtn = () => {
     const appInfo = useAppSelector(selectAppInfo);
     const dispatch = useAppDispatch();
-
-    const path = revertPathName({
-        href: `/final_test`,
-        appName: appInfo.appShortName,
-    });
 
     const router = useRouter();
 
@@ -26,7 +20,7 @@ const FN = () => {
             onClick={() => {
                 dispatch(initFinalTestThunk());
 
-                router.replace(path);
+                router.replace("/final_test");
             }}
         >
             <p className="text-base capitalize font-semibold text-white">
@@ -38,5 +32,4 @@ const FN = () => {
         </MtUiButton>
     );
 };
-const FinalTestBtn = React.memo(FN);
-export default FinalTestBtn;
+export default React.memo(FinalTestBtn);

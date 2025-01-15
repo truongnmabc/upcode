@@ -16,6 +16,9 @@ const BodyComponent = ({ appInfo }: { appInfo: IAppInfo }) => {
 
             case "asvab":
                 return <FaqAsvab />;
+
+            default:
+                return null;
         }
     };
     return (

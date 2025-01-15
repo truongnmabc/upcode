@@ -1,7 +1,9 @@
 import IconGridTest from "@/components/icon/iconGridTest";
 import { TypeParam } from "@/constants";
+import { db } from "@/db/db.model";
 import { useAppDispatch } from "@/redux/hooks";
 import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
+import RouterApp from "@/router/router.constant";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
@@ -14,17 +16,27 @@ const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
     const dispatch = useAppDispatch();
     const testId = useSearchParams().get("testId");
 
-    const handleCLick = useCallback(() => {
-        dispatch(
-            initTestQuestionThunk({
-                testId: test.parentId,
-                duration: test.duration,
-            })
-        );
+    const handleCLick = useCallback(async () => {
+        const data = await db?.testQuestions
+            .where("id")
+            .equals(test.parentId)
+            .first();
+        if (data?.status === 0) {
+            dispatch(
+                initTestQuestionThunk({
+                    testId: test.parentId,
+                    duration: test.duration,
+                })
+            );
 
-        router.replace(
-            `${TypeParam.practiceTest}?type=test&testId=${test.parentId}`
-        );
+            router.replace(
+                `/study/${TypeParam.practiceTest}?type=test&testId=${test.parentId}`
+            );
+        } else {
+            const _href = `${RouterApp.ResultTest}?type=${TypeParam.practiceTest}&testId=${test.parentId}`;
+            router.replace(_href);
+        }
+        return;
     }, [test.parentId, test.duration, dispatch, router]);
 
     return (

@@ -7,6 +7,7 @@ import {
     getLocalUserProgress,
     mapQuestionsWithProgress,
 } from "./initPracticeTest";
+import { requestGetData } from "@/services/request";
 
 const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
     const dataStore = await db?.testQuestions
@@ -20,13 +21,15 @@ const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
         const progressData = await getLocalUserProgress(
             dataStore.parentId,
             "test",
-            dataStore.turn + 1
+            dataStore.turn
         );
+
         if (progressData) {
             const questions = mapQuestionsWithProgress(
                 listQuestion as ICurrentGame[],
                 progressData
             );
+
             return {
                 questions,
                 progressData,
@@ -37,6 +40,25 @@ const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
                 remainTime: dataStore?.remainTime || dataStore.duration * 60,
             };
         }
+        return undefined;
+    } else {
+        const data = await requestGetData({
+            url: `asvab/web-data/exam-4886547081986048.json`,
+            config: {
+                baseURL:
+                    "https://storage.googleapis.com/micro-enigma-235001.appspot.com/",
+            },
+        });
+
+        return {
+            questions: data as ICurrentGame[],
+            progressData: [],
+            idTopic: 4886547081986048,
+            type: "test" as const,
+            duration: 150,
+            isPaused: false,
+            remainTime: 150 * 60,
+        };
     }
 });
 

@@ -1,5 +1,8 @@
 import CountTime from "@/components/countTime";
-import { selectRemainTime } from "@/redux/features/game.reselect";
+import {
+    selectIsPaused,
+    selectRemainTime,
+} from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishFinalThunk from "@/redux/repository/game/finish/finishFinal";
 import RouterApp from "@/router/router.constant";
@@ -10,6 +13,7 @@ const CountTimeFinalTest = () => {
     const dispatch = useAppDispatch();
 
     const remainTime = useAppSelector(selectRemainTime);
+    const isPause = useAppSelector(selectIsPaused);
     const router = useRouter();
 
     const handleEndTime = useCallback(() => {
@@ -20,7 +24,13 @@ const CountTimeFinalTest = () => {
         });
     }, [dispatch, router]);
 
-    return <CountTime duration={remainTime} onEndTime={handleEndTime} />;
+    return (
+        <CountTime
+            isPause={isPause}
+            duration={remainTime}
+            onEndTime={handleEndTime}
+        />
+    );
 };
 
 export default CountTimeFinalTest;

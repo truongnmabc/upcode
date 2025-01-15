@@ -2,43 +2,44 @@ import path from "path";
 import fs from "fs";
 
 const DATA_PATH = process.cwd();
-const envFilePath = path.join(DATA_PATH, ".env");
+const envFilePath = path.join(DATA_PATH, ".env.local");
 const fileConfigCss = path.join(DATA_PATH, "/src/css/config.css");
 const fileConfigApp = path.join(DATA_PATH, "/src/config_app.js");
 
 export const appendToEnvFile = (key, value) => {
-  fs.appendFileSync(envFilePath, `${key}=${value}\n`);
+    fs.appendFileSync(envFilePath, `${key}=${value}\n`);
 };
 
 export const _genStudyLink = (appShortName, tag, fullTest, _state = "") => {
-  // trong đường dẫn có cả thành phần state
-  let url = "";
-  if (!fullTest) {
-    url = tag;
-    if (!tag?.includes(appShortName)) url = appShortName + "-" + url;
-    if (!tag?.includes("practice")) url = url + "-" + "practice-test";
-    if (_state) url = url.replace(appShortName, _state + "-" + appShortName);
-  } else {
-    if (!!tag)
-      url = `full-length-${
-        _state ? _state + "-" + appShortName : appShortName
-      }-${tag}-practice-test`;
-    // trường hợp full-length test
-    else
-      url = `full-length-${
-        _state ? _state + "-" + appShortName : appShortName
-      }-practice-test`; // trường hợp full-length test
-  }
-  // trường hợp branch
+    // trong đường dẫn có cả thành phần state
+    let url = "";
+    if (!fullTest) {
+        url = tag;
+        if (!tag?.includes(appShortName)) url = appShortName + "-" + url;
+        if (!tag?.includes("practice")) url = url + "-" + "practice-test";
+        if (_state)
+            url = url.replace(appShortName, _state + "-" + appShortName);
+    } else {
+        if (!!tag)
+            url = `full-length-${
+                _state ? _state + "-" + appShortName : appShortName
+            }-${tag}-practice-test`;
+        // trường hợp full-length test
+        else
+            url = `full-length-${
+                _state ? _state + "-" + appShortName : appShortName
+            }-practice-test`; // trường hợp full-length test
+    }
+    // trường hợp branch
 
-  url = url //update 23/4
-    .split("-")
-    .filter((_) => !!_ && !!_.trim())
-    .join("-");
+    url = url //update 23/4
+        .split("-")
+        .filter((_) => !!_ && !!_.trim())
+        .join("-");
 
-  if (appShortName !== "asvab") url = url.replaceAll(appShortName, "");
-  url = "/" + url;
-  return url;
+    if (appShortName !== "asvab") url = url.replaceAll(appShortName, "");
+    url = "/" + url;
+    return url;
 };
 
 // function genConfigApp({
@@ -78,53 +79,53 @@ export const _genStudyLink = (appShortName, tag, fullTest, _state = "") => {
 // }
 
 export function genConfigCssApp({
-  mainCss,
-  mainBackgroundColor,
-  mainCssBold,
-  cookie,
-  bgColorStartTest,
-  bgColorCloseCookie,
-  mainColorUpgradePro,
-  colorClockDiscount,
+    mainCss,
+    mainBackgroundColor,
+    mainCssBold,
+    cookie,
+    bgColorStartTest,
+    bgColorCloseCookie,
+    mainColorUpgradePro,
+    colorClockDiscount,
 }) {
-  const cssContent = `
+    const cssContent = `
   :root {
     --main-color: ${mainCss.replace(/[^a-zA-Z0-9#]/g, "")};
     --main-color-bold: ${mainCssBold.replace(/[^a-zA-Z0-9#]/g, "")};
     --main-background-color: ${mainBackgroundColor.replace(
-      /[^a-zA-Z0-9#]/g,
-      ""
+        /[^a-zA-Z0-9#]/g,
+        ""
     )};
     --cookie: ${cookie.replace(/[^a-zA-Z0-9#]/g, "")};
     --bg-color-start-test: ${bgColorStartTest.replace(/[^a-zA-Z0-9#]/g, "")};
     --bg-color-close-cookie: ${bgColorCloseCookie.replace(
-      /[^a-zA-Z0-9#]/g,
-      ""
+        /[^a-zA-Z0-9#]/g,
+        ""
     )};
     --main-color-upgrade-pro: ${mainColorUpgradePro.replace(
-      /[^a-zA-Z0-9#]/g,
-      ""
+        /[^a-zA-Z0-9#]/g,
+        ""
     )};
     --color-clock-discount: ${colorClockDiscount.replace(/[^a-zA-Z0-9#]/g, "")};
     --font-family: 'Poppins', sans-serif; /* Trong file build.sh */
   }
   `;
 
-  fs.writeFileSync(fileConfigCss, cssContent.trim());
+    fs.writeFileSync(fileConfigCss, cssContent.trim());
 }
 
 export const saveJSONFile = (filePath, data) => {
-  fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 };
 
 export const copyFolder = (source, destination) => {
-  if (fs.existsSync(destination)) {
-    fs.rmdirSync(destination, { recursive: true });
-    console.log(`Deleted existing folder: ${destination}`);
-  }
-  fs.mkdirSync(destination, { recursive: true });
-  fs.promises.cp(source, destination, { recursive: true }).then(() => {
-    console.log(`Copied content from ${source} to ${destination}`);
-  });
+    if (fs.existsSync(destination)) {
+        fs.rmdirSync(destination, { recursive: true });
+        console.log(`Deleted existing folder: ${destination}`);
+    }
+    fs.mkdirSync(destination, { recursive: true });
+    fs.promises.cp(source, destination, { recursive: true }).then(() => {
+        console.log(`Copied content from ${source} to ${destination}`);
+    });
 };

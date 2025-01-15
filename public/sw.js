@@ -39,8 +39,6 @@ async function handleInitData(appShortName, apiPath) {
             finalTests: tests.finalTests?.slice(0, 1),
         };
 
-        console.log("🚀 ~ handleInitData ~ listTest:", listTest);
-
         await initDataTest(listTest, db, apiPath);
         await fetchAndProcessTopicsRecursive(topic, db, apiPath);
     } catch (error) {

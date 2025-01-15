@@ -1,13 +1,11 @@
 "use client";
-import RouterApp from "@/router/router.constant";
-import { IAnswer } from "@/models/question/questions";
-import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { viewTest } from "@/redux/features/game";
 import {
     selectCurrentGame,
     selectFeedBack,
     selectIdTopic,
     selectIndexCurrentQuestion,
+    selectListenEventKeyboard,
     selectListQuestion,
     selectSubTopicProgressId,
 } from "@/redux/features/game.reselect";
@@ -17,7 +15,7 @@ import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTe
 import finishQuestionThunk from "@/redux/repository/game/finish/finishQuestion";
 import nextQuestionThunk from "@/redux/repository/game/nextQuestion/nextQuestion";
 import nextQuestionDiagnosticThunk from "@/redux/repository/game/nextQuestion/nextQuestionDiagnosticTest";
-import { revertPathName } from "@/utils/pathName";
+import RouterApp from "@/router/router.constant";
 import {
     useParams,
     usePathname,
@@ -26,37 +24,8 @@ import {
 } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import AnswerButton from "../answer";
-
-const TEMP_LIST_ANSWER: IAnswer[] = [
-    {
-        id: -1,
-        text: "",
-        index: 0,
-        correct: false,
-        explanation: "",
-    },
-    {
-        id: -2,
-        text: "",
-        index: 0,
-        correct: false,
-        explanation: "",
-    },
-    {
-        id: -3,
-        text: "",
-        index: 0,
-        correct: false,
-        explanation: "",
-    },
-    {
-        id: -4,
-        text: "",
-        index: 0,
-        correct: false,
-        explanation: "",
-    },
-];
+import { MOCK_TEMP_LIST_ANSWER } from "./mock";
+import { shouldOpenSubmitTest } from "@/redux/features/tests";
 
 function shuffleArray<T>(array: T[]): T[] {
     if (array && array.length) {
@@ -88,11 +57,16 @@ const ChoicesPanel: React.FC<IProps> = ({
     const feedBack = useAppSelector(selectFeedBack);
     const subTopicProgressId = useAppSelector(selectSubTopicProgressId);
     const indexCurrentQuestion = useAppSelector(selectIndexCurrentQuestion);
-    const appInfo = useAppSelector(selectAppInfo);
+    const isListen = useAppSelector(selectListenEventKeyboard);
     const type = useSearchParams().get("type");
+    const [listLength, setListLength] = useState(0);
 
-    const [listRandomQuestion, setListRandomQuestion] =
-        useState(TEMP_LIST_ANSWER);
+    useEffect(() => {
+        if (listQuestion.length) setListLength(listQuestion.length);
+    }, [listQuestion.length]);
+    const [listRandomQuestion, setListRandomQuestion] = useState(
+        MOCK_TEMP_LIST_ANSWER
+    );
 
     useEffect(() => {
         if (currentGame?.answers) {
@@ -114,10 +88,7 @@ const ChoicesPanel: React.FC<IProps> = ({
                 })
             );
 
-            const _href = revertPathName({
-                href: `/finish?subTopicProgressId=${subTopicProgressId}&topic=${params?.slug}&partId=${idTopic}`,
-                appName: appInfo.appShortName,
-            });
+            const _href = `/finish?subTopicProgressId=${subTopicProgressId}&topic=${params?.["slug"]}&partId=${idTopic}`;
 
             router.replace(_href, {
                 scroll: true,
@@ -125,65 +96,39 @@ const ChoicesPanel: React.FC<IProps> = ({
             return;
         }
         dispatch(nextQuestionThunk());
-    }, [
-        dispatch,
-        subTopicProgressId,
-        params?.slug,
-        listQuestion,
-        appInfo.appShortName,
-        router,
-        idTopic,
-    ]);
+    }, [dispatch, subTopicProgressId, params, listQuestion, router, idTopic]);
 
     const handleEnterPractice = useCallback(async () => {
-        if (indexCurrentQuestion + 1 === listQuestion?.length) {
+        if (indexCurrentQuestion + 1 === listLength) {
             dispatch(finishPracticeThunk());
 
-            const _href = revertPathName({
-                href: RouterApp.ResultTest,
-                appName: appInfo.appShortName,
-            });
-
-            router.replace(_href, {
+            router.replace(RouterApp.ResultTest, {
                 scroll: true,
             });
-            return;
+        } else {
+            dispatch(nextQuestionThunk());
         }
-        dispatch(nextQuestionThunk());
-    }, [
-        dispatch,
-        indexCurrentQuestion,
-        appInfo.appShortName,
-        listQuestion,
-        router,
-    ]);
+    }, [dispatch, indexCurrentQuestion, listLength, router]);
 
     const handleEnterDiagnostic = useCallback(async () => {
-        if (indexCurrentQuestion + 1 === listQuestion?.length) {
+        if (indexCurrentQuestion + 1 === listLength) {
             dispatch(finishDiagnosticThunk());
 
-            const _href = revertPathName({
-                href: RouterApp.ResultTest,
-                appName: appInfo.appShortName,
-            });
-
-            router.replace(_href, {
+            router.replace(RouterApp.ResultTest, {
                 scroll: true,
             });
-            return;
+        } else {
+            dispatch(nextQuestionDiagnosticThunk());
         }
-        dispatch(nextQuestionDiagnosticThunk());
-    }, [
-        dispatch,
-        indexCurrentQuestion,
-        appInfo.appShortName,
-        listQuestion,
-        router,
-    ]);
+    }, [dispatch, indexCurrentQuestion, listLength, router]);
 
-    const handleEnterFinalTest = useCallback(async () => {
-        dispatch(viewTest(indexCurrentQuestion + 1));
-    }, [dispatch, indexCurrentQuestion]);
+    const handleEnterFinalTest = useCallback(() => {
+        if (indexCurrentQuestion + 1 < listLength) {
+            dispatch(viewTest(indexCurrentQuestion + 1));
+        } else {
+            dispatch(shouldOpenSubmitTest(true));
+        }
+    }, [dispatch, indexCurrentQuestion, listLength]);
 
     const handleEnterCustomTest = useCallback(async () => {
         if (feedBack === "newbie") {
@@ -197,8 +142,8 @@ const ChoicesPanel: React.FC<IProps> = ({
         }
     }, [feedBack, indexCurrentQuestion, dispatch]);
 
-    useEffect(() => {
-        const handleEnterEvent = (event: globalThis.KeyboardEvent) => {
+    const handleEnterEvent = useCallback(
+        (event: globalThis.KeyboardEvent) => {
             if (currentGame?.answers && !currentGame.selectedAnswer) {
                 const key = event.key;
                 const index = parseInt(key, 10);
@@ -219,25 +164,28 @@ const ChoicesPanel: React.FC<IProps> = ({
                 if (pathname?.includes("final_test")) handleEnterFinalTest();
                 if (pathname?.includes("custom_test")) handleEnterCustomTest();
             }
-        };
-        if (!isBlockEnter)
+        },
+        [
+            handleEnterLearning,
+            handleEnterDiagnostic,
+            handleEnterFinalTest,
+            handleEnterCustomTest,
+            handleEnterPractice,
+            currentGame?.answers,
+            currentGame?.selectedAnswer,
+            type,
+            pathname,
+        ]
+    );
+
+    useEffect(() => {
+        if (!isBlockEnter && isListen)
             document.addEventListener("keydown", handleEnterEvent, true);
 
         return () => {
             document.removeEventListener("keydown", handleEnterEvent, true);
         };
-    }, [
-        handleEnterLearning,
-        handleEnterDiagnostic,
-        handleEnterFinalTest,
-        handleEnterCustomTest,
-        handleEnterPractice,
-        currentGame?.answers,
-        currentGame?.selectedAnswer,
-        type,
-        pathname,
-        isBlockEnter,
-    ]);
+    }, [handleEnterEvent, isBlockEnter, isListen]);
 
     return (
         <div className={"grid gap-2 grid-cols-1 sm:grid-cols-2"}>

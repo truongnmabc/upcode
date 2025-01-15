@@ -8,7 +8,7 @@ import ProgressQuestion from "@/components/progressQuestion";
 import QuestionContent from "@/components/question";
 import ExplanationDetail from "@/components/explanation";
 import ChoicesPanel from "@/components/choicesPanel";
-import BottomActions from "@/components/bottomActions";
+import BottomActions, { IPropsType } from "@/components/bottomActions";
 import TitleQuestion from "@/components/titleQuestion";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { selectIdTopic } from "@/redux/features/game.reselect";
@@ -16,13 +16,13 @@ import initLearnQuestionThunk from "@/redux/repository/game/initData/initLearnin
 import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
 
 const MainStudyView = () => {
-    const type = useSearchParams().get("type");
+    const type = useSearchParams().get("type") as IPropsType;
 
     return (
         <MathJaxContext>
             <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
                 <div className="sm:p-4 flex flex-col gap-3">
-                    {type && <TitleQuestion />}
+                    {type && <TitleQuestion type={type} />}
                     <ProgressQuestion />
                     {type === "test" && (
                         <div className="w-full flex items-center justify-center">
@@ -32,12 +32,12 @@ const MainStudyView = () => {
                             </div>
                         </div>
                     )}
-                    <QuestionContent />
+                    <QuestionContent showStatus={type === "learn"} />
                     <ChoicesPanel />
                     <ExplanationDetail />
                 </div>
 
-                <BottomActions type="learn" />
+                <BottomActions type={type} />
             </div>
             <LoadData />
         </MathJaxContext>

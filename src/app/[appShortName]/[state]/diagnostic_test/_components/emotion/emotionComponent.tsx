@@ -33,7 +33,7 @@ const EmotionComponent = () => {
                     />
                 )}
 
-                <p className="font-medium text-lg text-[#587CDA]">
+                <p className="font-medium text-xs sm:text-lg text-[#587CDA]">
                     {!currentGame.selectedAnswer?.correct
                         ? "Oops! You are one of " +
                           percentUser +
