@@ -77,6 +77,7 @@ export default async function Home({ params }: Params) {
                 </section>
             );
         }
+        return null;
     } catch (error) {
         console.log("🚀 ~ Home ~ error:", error);
         return (

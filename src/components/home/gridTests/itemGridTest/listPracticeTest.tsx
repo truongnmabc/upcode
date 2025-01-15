@@ -15,6 +15,7 @@ const ListPracticeTest = ({ open }: { open: boolean }) => {
         const listData = await db?.testQuestions
             .filter((test) => test.type === "practiceTests")
             .toArray();
+
         if (listData) {
             setListPracticeTests(
                 listData?.map((item) => ({

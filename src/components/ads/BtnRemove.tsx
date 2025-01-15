@@ -1,22 +1,12 @@
 import RouterApp from "@/router/router.constant";
-import { revertPathName } from "@/utils/pathName";
+import LazyLoadImage from "../images";
 import ForwardedLinkBlank from "../nextLink";
 import "./index.css";
-import { useAppSelector } from "@/redux/hooks";
-import { selectAppInfo } from "@/redux/features/appInfo.reselect";
-import LazyLoadImage from "../images";
 
 const BtnRemove = () => {
-    const appInfo = useAppSelector(selectAppInfo);
-
     return (
         <div className="btn-remove">
-            <ForwardedLinkBlank
-                href={revertPathName({
-                    appName: appInfo.appShortName,
-                    href: RouterApp.Get_pro,
-                })}
-            >
+            <ForwardedLinkBlank href={RouterApp.Get_pro}>
                 <span>Remove ads</span>
                 <div className="icon-remove">
                     <LazyLoadImage

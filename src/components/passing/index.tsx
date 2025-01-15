@@ -11,11 +11,20 @@ const PassingProbability = () => {
     const [passingValue, setPassingValue] = useState(0);
 
     const handleGetData = useCallback(async () => {
-        const data = await db?.passing.toArray();
-        if (data?.length) {
-            const passing = totalPassingApp(data);
-            const total = totalQuestionApp(data);
-            setPassingValue(passing / total);
+        try {
+            const data = await db?.passing.toArray();
+
+            if (data?.length) {
+                const passing = totalPassingApp(data);
+                const total = totalQuestionApp(data);
+
+                setPassingValue(total > 0 ? (passing / total) * 100 : 0);
+            } else {
+                setPassingValue(0);
+            }
+        } catch (error) {
+            console.error("Error in handleGetData:", error);
+            setPassingValue(0);
         }
     }, []);
 

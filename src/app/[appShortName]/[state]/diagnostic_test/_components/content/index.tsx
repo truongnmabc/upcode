@@ -12,17 +12,41 @@ import TitleQuestion from "@/components/titleQuestion";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { selectIdTopic } from "@/redux/features/game.reselect";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import CountTimeDiagnostic from "../countTimeRemain";
+import ClockIcon from "@/components/icon/ClockIcon";
 
 const ContentTestView = () => {
+    const isMobile = useIsMobile();
+
     return (
         <MathJaxContext>
             <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
                 <div className="sm:p-4  flex flex-col gap-3">
                     <TitleQuestion />
                     <ProgressQuestion />
-                    <TimeTestGetLever />
-                    <QuestionContent showStatus={false} />
-                    <EmotionComponent />
+                    {isMobile && (
+                        <div className="flex items-center justify-center w-full gap-2">
+                            <ClockIcon />
+                            <CountTimeDiagnostic />
+                        </div>
+                    )}
+                    <div
+                        className="bg-white flex flex-col rounded-lg p-3"
+                        style={{
+                            boxShadow: isMobile
+                                ? "0px 4px 20px 0px #2121211A"
+                                : "none",
+                        }}
+                    >
+                        <TimeTestGetLever />
+
+                        <QuestionContent
+                            showStatus={false}
+                            showShadow={false}
+                        />
+                        <EmotionComponent />
+                    </div>
                     <ChoicesPanel />
                     <ExplanationDetail unLock={true} />
                 </div>

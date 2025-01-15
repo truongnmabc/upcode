@@ -1,5 +1,7 @@
 "use client";
 import Config from "@/config";
+import { selectIndexSubTopic } from "@/redux/features/game.reselect";
+import { useAppSelector } from "@/redux/hooks";
 import { setSession } from "@/utils/session";
 import clsx from "clsx";
 import { useParams, usePathname } from "next/navigation";
@@ -30,12 +32,14 @@ export const getLastPathSegment = (pathname: string): string | null => {
     return lastSegment;
 };
 
-const TitleQuestion = () => {
+const TitleQuestion = ({ type }: { type?: string }) => {
     const param = useParams();
     const pathname = usePathname();
 
     const defaultTitle =
         getKeyTest(param?.["slug"]) || getLastPathSegment(pathname);
+
+    const index = useAppSelector(selectIndexSubTopic);
 
     let tempCount = 0;
 
@@ -59,7 +63,7 @@ const TitleQuestion = () => {
             )}
             onClick={setIsTester}
         >
-            {defaultTitle}
+            {defaultTitle} {type === "learn" ? `- Core ${index}` : ""}
         </div>
     );
 };

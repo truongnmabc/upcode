@@ -4,7 +4,6 @@ import { MtUiButton } from "@/components/button";
 import Config from "@/config";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { getConfigProV2, IPriceConfig } from "@/utils/paypal";
-import { revertPathName } from "@/utils/pathName";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import PopupGetProPayment from "../popup/popupGetPro";
@@ -60,13 +59,9 @@ const ProPackage = () => {
             return;
         }
 
-        const _href = revertPathName({
-            appName: appInfo.appShortName,
-            href: RouterApp.Billing,
-        });
         if (type === ONETIME) {
             if (paymentInfo?.buyPro === Config.PURCHASED) {
-                router.push(_href);
+                router.push(RouterApp.Billing);
                 return;
             }
         }
@@ -81,7 +76,7 @@ const ProPackage = () => {
         //     return;
         // }
         setOpenModalUpgrade(true);
-    }, [userInfo, paymentInfo, dispatch, appInfo.appShortName, router, type]);
+    }, [userInfo, paymentInfo, dispatch, router, type]);
 
     const handleClose = useCallback(() => setOpenModalUpgrade(false), []);
 

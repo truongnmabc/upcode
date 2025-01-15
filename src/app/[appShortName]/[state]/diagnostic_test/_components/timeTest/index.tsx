@@ -1,6 +1,5 @@
 import ClockIcon from "@/components/icon/ClockIcon";
 import LazyLoadImage from "@/components/images";
-import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
 import React, { Fragment } from "react";
 import CountTimeDiagnostic from "../countTimeRemain";
@@ -8,6 +7,11 @@ import Rating from "@mui/material/Rating";
 
 import { styled } from "@mui/material/styles";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import {
+    selectCurrentGame,
+    selectIndexCurrentQuestion,
+    selectListQuestion,
+} from "@/redux/features/game.reselect";
 
 const CustomRating = styled(Rating)(({ theme }) => ({
     "& .MuiRating-iconEmpty svg": {
@@ -22,25 +26,29 @@ const CustomRating = styled(Rating)(({ theme }) => ({
 }));
 
 const TimeTestGetLever = () => {
-    const { currentGame } = useAppSelector(gameState);
+    const currentGame = useAppSelector(selectCurrentGame);
+    const index = useAppSelector(selectIndexCurrentQuestion);
+    const list = useAppSelector(selectListQuestion);
     const isMobile = useIsMobile();
     return (
         <Fragment>
-            {isMobile && (
-                <div className="flex items-center justify-center w-full gap-2">
-                    <ClockIcon />
-                    <CountTimeDiagnostic />
-                </div>
-            )}
             <div className="w-full bg-[#F0F4F9] px-3 py-[14px] rounded-lg flex items-center justify-between">
-                <div className="flex items-center gap-1">
-                    <LazyLoadImage
-                        classNames="w-6 h-6"
-                        src="/images/notebook-dynamic-color.png"
-                    />
-                    <p className=" capitalize text-sm font-medium">
-                        {currentGame?.tag?.replaceAll("-", " ")}
-                    </p>
+                <div>
+                    <div className="flex gap-1 mb-1 sm:hidden text-xs font-normal">
+                        Question {index + 1} / {list.length}
+                    </div>
+                    <div className="flex items-center gap-1">
+                        {!isMobile && (
+                            <LazyLoadImage
+                                classNames="w-6 h-6"
+                                src="/images/notebook-dynamic-color.png"
+                            />
+                        )}
+
+                        <p className=" capitalize line-clamp-1 text-sm font-medium">
+                            {currentGame?.tag?.replaceAll("-", " ")}
+                        </p>
+                    </div>
                 </div>
                 {!isMobile && (
                     <div className="flex items-center justify-center w-fit gap-2">
@@ -65,6 +73,7 @@ const TimeTestGetLever = () => {
                         }
                         max={3}
                         readOnly
+                        size={isMobile ? "small" : "medium"}
                     />
                 </div>
             </div>

@@ -75,3 +75,8 @@ export const selectIsEndTimeTest = createSelector(
     [gameState],
     (reducer) => reducer.isEndTimeTest
 );
+
+export const selectListenEventKeyboard = createSelector(
+    [gameState],
+    (reducer) => reducer.shouldListenEventKeyboard
+);

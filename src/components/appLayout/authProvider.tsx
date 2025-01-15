@@ -119,6 +119,7 @@ const AuthProvider = () => {
                 clearTimeout(timeOut);
             };
         }
+        return undefined;
     }, [status, isMount]);
 
     const handleCheckUserInfo = useCallback(
@@ -151,9 +152,13 @@ const AuthProvider = () => {
                     cancel_on_tap_outside: false,
                 });
             }
-            if (typeof window !== "undefined" && window?.AppleID) {
+            if (
+                typeof window !== "undefined" &&
+                window?.AppleID &&
+                process.env["NEXT_PUBLIC_APPLE_ID"]
+            ) {
                 window.AppleID?.auth?.init({
-                    clientId: process.env.NEXT_PUBLIC_APPLE_ID,
+                    clientId: process.env["NEXT_PUBLIC_APPLE_ID"],
                     scope: "email",
                     redirectURI: window.location.origin,
                     usePopup: true,

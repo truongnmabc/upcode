@@ -1,5 +1,6 @@
 "use client";
 import { MtUiButton } from "@/components/button";
+import { setShouldListenKeyboard } from "@/redux/features/game";
 import {
     selectCurrentGame,
     selectIdTopic,
@@ -13,7 +14,7 @@ import {
     FormGroup,
     TextField,
 } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 const listReport = [
     { label: "Incorrect Answer", value: "1" },
@@ -39,6 +40,13 @@ const ReportMistake = ({ onClose }: { onClose: () => void }) => {
                 : [...prev, value]
         );
     }, []);
+
+    useEffect(() => {
+        dispatch(setShouldListenKeyboard(false));
+        return () => {
+            dispatch(setShouldListenKeyboard(true));
+        };
+    }, [dispatch]);
 
     const handleSubmit = useCallback(
         async (e: React.FormEvent<HTMLFormElement>) => {

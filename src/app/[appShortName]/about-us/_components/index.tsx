@@ -41,6 +41,8 @@ const AboutUsContainer = ({ appInfo }: { appInfo: IAppInfo }) => {
                 return <AboutHeaderCdl />;
             case "asvab":
                 return <HeaderComponent appInfo={appInfo} />;
+            default:
+                return null;
         }
     };
     const renderActivityAbout = () => {
