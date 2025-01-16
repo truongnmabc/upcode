@@ -3,7 +3,7 @@ import LazyLoadImage from "@/components/images";
 import { useTheme } from "@/hooks/useTheme";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppSelector } from "@/redux/hooks";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 const FN = () => {

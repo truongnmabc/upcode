@@ -9,36 +9,24 @@ import {
     getLocalUserProgress,
     mapQuestionsWithProgress,
 } from "./initPracticeTest";
+import { ITestQuestion } from "@/models/tests/testQuestions";
 
 /**
  * Lưu trữ dữ liệu bài kiểm tra chuẩn đoán vào local database (IndexedDB).
- *
- * @param {object} params - Tham số truyền vào.
- * @param {ICurrentGame[]} params.listQuestion - Danh sách câu hỏi trong bài test.
- * @param {Record<string, ICurrentGame[]>} params.belowFifty - Các câu hỏi có level dưới 50, nhóm theo tag.
- * @param {Record<string, ICurrentGame[]>} params.aboveFifty - Các câu hỏi có level trên 50, nhóm theo tag.
- * @param {number} params.parentId - ID của bài test chuẩn đoán.
- * @return {Promise<void>} - Không trả về giá trị.
  */
-const setDataStoreDiagnostic = async ({
+export const setDataStoreDiagnostic = async ({
     listQuestion,
-    belowFifty,
-    aboveFifty,
     parentId,
 }: {
     listQuestion: ICurrentGame[];
     parentId: number;
-    aboveFifty: Record<string, ICurrentGame[]>;
-    belowFifty: Record<string, ICurrentGame[]>;
 }) => {
     await db?.testQuestions.add({
-        parentId: parentId,
+        parentId,
         question: listQuestion as IQuestion[],
         duration: 1,
-        aboveFifty,
-        belowFifty,
         isPaused: false,
-        startTime: new Date().getTime(),
+        startTime: Date.now(),
         remainTime: 80,
         type: "diagnosticTest",
         status: 0,
@@ -47,151 +35,125 @@ const setDataStoreDiagnostic = async ({
 };
 
 /**
- * Khởi tạo bài kiểm tra chuẩn đoán (Diagnostic Test).
- *
- * - Nếu bài kiểm tra đã tồn tại, tải dữ liệu bài kiểm tra từ local database.
- * - Nếu không, tạo mới bài kiểm tra bằng cách lấy ngẫu nhiên một số câu hỏi từ các subtopic.
- *
- * @return {Promise<object | undefined>} - Dữ liệu bài kiểm tra hoặc undefined nếu không có.
+ * Lấy danh sách tất cả các topic từ database.
  */
+const getTopics = async () => {
+    return await db?.topics.toArray();
+};
 
+/**
+ * Lấy danh sách câu hỏi của một subtopic từ database.
+ */
+export const getQuestionsBySubtopic = async (subtopicId: number) => {
+    const ques = await db?.topicQuestion
+        .where("parentId")
+        .equals(subtopicId)
+        .toArray();
+
+    return ques
+        ?.filter((item) => item.contentType === 0)
+        ?.flatMap((item) => item?.questions) as IQuestion[];
+};
+
+/**
+ * Chọn câu hỏi ngẫu nhiên từ danh sách câu hỏi.
+ */
+export const getRandomQuestion = (questions: IQuestion[]) => {
+    const priorityQuestions = questions?.filter(
+        (item) => item.level === -1 || item.level === 50
+    );
+
+    return (
+        priorityQuestions?.[
+            Math.floor(Math.random() * priorityQuestions.length)
+        ] || questions[Math.floor(Math.random() * questions.length)]
+    );
+};
+
+/**
+ * Xử lý logic khởi tạo bài kiểm tra mới.
+ */
+export const createNewDiagnosticTest = async () => {
+    const parentId = generateRandomNegativeId();
+    const listQuestion: ICurrentGame[] = [];
+    const topics = await getTopics();
+
+    if (topics) {
+        for (const topic of topics) {
+            for (const subtopic of topic.topics) {
+                const idTopic = subtopic.id;
+                if (!idTopic) continue;
+
+                const questions = await getQuestionsBySubtopic(idTopic);
+
+                if (!questions.length) continue;
+
+                const randomItem = getRandomQuestion(questions);
+
+                listQuestion.push({
+                    ...randomItem,
+                    tag: topic.tag,
+                    icon: topic.icon,
+                });
+            }
+        }
+    }
+
+    setDataStoreDiagnostic({
+        listQuestion,
+        parentId,
+    });
+
+    return {
+        listQuestion,
+        isPaused: false,
+        idTopic: parentId,
+        progressData: [],
+    };
+};
+
+/**
+ * Lấy dữ liệu bài kiểm tra đã tồn tại từ database.
+ */
+export const getExistingDiagnosticTest = async (diagnostic: ITestQuestion) => {
+    const progressData = await getLocalUserProgress(
+        diagnostic.parentId,
+        "test",
+        diagnostic.turn
+    );
+
+    if (progressData) {
+        const questions = mapQuestionsWithProgress(
+            diagnostic.question,
+            progressData
+        );
+
+        return {
+            progressData,
+            listQuestion: questions,
+            isPaused: true,
+            idTopic: diagnostic.parentId,
+        };
+    }
+
+    return undefined;
+};
+
+/**
+ * Khởi tạo bài kiểm tra chuẩn đoán (Diagnostic Test).
+ */
 const initDiagnosticTestQuestionThunk = createAsyncThunk(
     "initDiagnosticTest",
     async () => {
-        // Tìm bài kiểm tra chuẩn đoán hiện tại trong database
         const diagnostic = await db?.testQuestions
             .where("type")
             .equals("diagnosticTest")
             .filter((item) => item.status === 0)
             .first();
 
-        if (!diagnostic) {
-            // Tạo bài kiểm tra mới
-            const parentId = generateRandomNegativeId();
-            const listQuestion: ICurrentGame[] = [];
-            const belowFifty: Record<string, ICurrentGame[]> = {};
-            const aboveFifty: Record<string, ICurrentGame[]> = {};
-            const topics = await db?.topics.toArray();
-
-            if (topics) {
-                for (const topic of topics) {
-                    for (const subtopic of topic.topics) {
-                        const idTopic = subtopic.id;
-
-                        if (idTopic) {
-                            // Lấy danh sách câu hỏi theo subtopic
-                            const ques = await db?.topicQuestion
-                                .where("parentId")
-                                .equals(idTopic)
-                                .toArray();
-
-                            const list = ques
-                                ?.filter((item) => item.contentType === 0)
-                                ?.flatMap(
-                                    (item) => item?.questions
-                                ) as IQuestion[];
-
-                            // Lấy câu hỏi có level -1 hoặc 50
-                            const listLevel2 = list?.filter(
-                                (item) => item.level === -1 || item.level === 50
-                            );
-                            const start =
-                                listLevel2?.[
-                                    Math.floor(
-                                        Math.random() * listLevel2.length
-                                    )
-                                ];
-
-                            const randomItem = {
-                                ...(start ||
-                                    list[
-                                        Math.floor(Math.random() * list.length)
-                                    ]),
-                                tag: topic.tag,
-                                icon: topic.icon,
-                            };
-
-                            if (randomItem && list) {
-                                const belowFiftyQuestions = list.filter(
-                                    (item) =>
-                                        (item?.level || 0) < 50 &&
-                                        item.id !== randomItem?.id
-                                );
-                                const randomBelowFifty = belowFiftyQuestions
-                                    .sort(() => 0.5 - Math.random())
-                                    .slice(0, 2);
-
-                                const aboveFiftyQuestions = list.filter(
-                                    (item) =>
-                                        item?.level > 50 &&
-                                        item.id !== randomItem?.id
-                                );
-
-                                const randomAboveFifty = aboveFiftyQuestions
-                                    .sort(() => 0.5 - Math.random())
-                                    .slice(0, 2);
-
-                                listQuestion.push(randomItem);
-
-                                belowFifty[topic.tag] = [
-                                    ...(randomBelowFifty.length > 0
-                                        ? randomBelowFifty
-                                        : randomAboveFifty),
-                                ];
-
-                                aboveFifty[topic.tag] = [
-                                    ...(randomAboveFifty.length > 0
-                                        ? randomAboveFifty
-                                        : randomBelowFifty),
-                                ];
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Lưu bài kiểm tra mới vào database
-            setDataStoreDiagnostic({
-                listQuestion,
-                belowFifty,
-                aboveFifty,
-                parentId,
-            });
-
-            return {
-                listQuestion,
-                belowFifty,
-                aboveFifty,
-                isPaused: false,
-                idTopic: parentId,
-                progressData: [],
-            };
-        } else {
-            // Lấy tiến trình bài kiểm tra đã tồn tại
-            const progressData = await getLocalUserProgress(
-                diagnostic.parentId,
-                "test",
-                diagnostic.turn
-            );
-
-            if (progressData) {
-                const questions = mapQuestionsWithProgress(
-                    diagnostic.question,
-                    progressData
-                );
-
-                return {
-                    progressData: progressData,
-                    listQuestion: questions,
-                    belowFifty: diagnostic.belowFifty,
-                    aboveFifty: diagnostic.aboveFifty,
-                    isPaused: true,
-                    idTopic: diagnostic.parentId,
-                };
-            }
-        }
-
-        return undefined;
+        return diagnostic
+            ? await getExistingDiagnosticTest(diagnostic)
+            : await createNewDiagnosticTest();
     }
 );
 

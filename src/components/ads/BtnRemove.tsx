@@ -1,4 +1,4 @@
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import LazyLoadImage from "../images";
 import ForwardedLinkBlank from "../nextLink";
 import "./index.css";

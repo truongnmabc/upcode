@@ -11,7 +11,7 @@ const config: Config = {
     coverageProvider: "v8",
     testEnvironment: "jsdom",
     testMatch: ["**/*.test.ts"],
-    setupFiles: ["fake-indexeddb/auto"],
+    setupFiles: ["<rootDir>/src/db/db.mock.ts"],
     // Add more setup options before each test is run
     // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 };

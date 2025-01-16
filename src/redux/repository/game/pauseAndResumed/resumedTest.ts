@@ -56,3 +56,17 @@ const resumedTestThunk = createAsyncThunk(
 );
 
 export default resumedTestThunk;
+
+export const updateTimeTest = createAsyncThunk(
+    "updateTimeTest",
+    async ({}, thunkAPI) => {
+        const state = thunkAPI.getState() as RootState;
+        const { idTopic } = state.gameReducer;
+        await db?.testQuestions
+            .where("parentId")
+            .equals(idTopic)
+            .modify((item) => {
+                item.startTime = new Date().getTime();
+            });
+    }
+);

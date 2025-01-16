@@ -2,13 +2,13 @@ import React from "react";
 import HeaderStudy from "./headerStudy";
 import LevelGameProgress from "./levelGameProgress";
 
-const FN = () => {
+const FN = ({ isActions }: { isActions?: boolean }) => {
     return (
         <div className="block sm:hidden w-full">
             <div className="w-full pb-1 sm:px-4 sm:py-2">
                 <HeaderStudy />
             </div>
-            <LevelGameProgress />
+            <LevelGameProgress isActions={isActions} />
         </div>
     );
 };

@@ -12,7 +12,7 @@ import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 import { AppDispatch } from "@/redux/store";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import { trackingEventGa4 } from "@/services/googleEvent";
 import ctx from "@/utils/mergeClass";
 import clsx from "clsx";

@@ -130,7 +130,7 @@ const Text = ({
         <text
             x="50%"
             y="50%"
-            // dominantBaseline="central"
+            dominantBaseline="central"
             textAnchor="middle"
             fontSize={"1.5em"}
             className={textClassName}

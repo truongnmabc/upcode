@@ -1,20 +1,10 @@
 [
   {
-    "appId": -1,
-    "appName": "Passemall",
-    "appNameId": "",
-    "appShortName": "passemall",
-    "bucket": "passemall",
-    "categoryId": "",
+    "rank_math_title": "%title%",
     "descriptionSEO": "Because your success is our last goal, we have tried our best to bring you all free, friendly, and interesting test prep solutions.",
-    "hasState": false,
     "keywordSEO": "Practice test",
-    "linkAndroid": "",
-    "linkIos": "",
-    "title": "Happier Study, Easier Pass With Our Free Practice Tests",
-    "totalQuestion": "",
-    "usingMathJax": true,
-    "icon": ""
+    "title": "Fun Study, Easy Pass With Our Free Practice Tests",
+    "description": "<!-- wp:paragraph -->\r\n<p>We are here for your success because your success is our last goal! That's why we have tried our best to bring you all free, friendly, and funny test prep solutions.</p>\r\n<!-- /wp:paragraph -->"
   },
   {
     "appId": "4896549496684544",
@@ -50,7 +40,7 @@
     "link": "https://passemall.com/cdl-web/",
     "descriptionSEO": "",
     "keywordSEO": "",
-    "title": "CDL Practice Test - Ace The CDL On The First Try",
+    "title": "CDL WEB",
     "description": ""
   },
   {

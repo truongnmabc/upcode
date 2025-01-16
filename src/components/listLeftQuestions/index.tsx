@@ -38,19 +38,20 @@ const AnswerSheet: React.FC<IProps> = ({
 
     const getClassNames = (q: ICurrentGame, index: number) =>
         ctx(
-            "w-[30px] h-[30px] text-xs rounded transition-all flex items-center justify-center border border-solid",
+            "w-[30px] h-[30px] text-xs rounded transition-all bg-white flex items-center justify-center border border-solid",
             {
                 "border-red-500": q.localStatus === "skip",
                 "border-[#07C58C] text-white bg-[#07C58C]":
                     q.localStatus === "correct" && !isActions,
                 "border-[#FF746D] text-white bg-[#FF746D]":
                     q.localStatus === "incorrect" && !isActions,
-                "opacity-90": q.localStatus === "new",
+                "opacity-90 bg-white": q.localStatus === "new",
                 "cursor-pointer": isActions,
                 "cursor-not-allowed": !isActions,
                 "border-[#5497FF] text-white bg-[#5497FF]":
                     isActions && q.localStatus !== "new",
-                "border-[#5497FF]": isActions && index === indexCurrentGame,
+                "border-[#5497FF] bg-white text-[#5497FF]":
+                    isActions && index === indexCurrentGame,
             }
         );
 
