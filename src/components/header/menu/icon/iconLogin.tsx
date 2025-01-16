@@ -1,5 +1,5 @@
 "use client";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import LazyLoadImage from "@/components/images";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { shouldOpenModalLogin } from "@/redux/features/user";

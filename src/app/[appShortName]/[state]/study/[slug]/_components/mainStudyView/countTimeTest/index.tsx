@@ -1,9 +1,12 @@
 import CountTime from "@/components/countTime";
 import { shouldEndTimeTest } from "@/redux/features/game";
-import { selectRemainTime } from "@/redux/features/game.reselect";
+import {
+    selectIsPaused,
+    selectRemainTime,
+} from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTest";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
 
@@ -12,7 +15,7 @@ const CountTimeRemainPracticeTest = () => {
 
     const remainTime = useAppSelector(selectRemainTime);
     const router = useRouter();
-
+    const isPause = useAppSelector(selectIsPaused);
     const handleEndTime = useCallback(() => {
         dispatch(finishPracticeThunk());
         dispatch(shouldEndTimeTest(true));
@@ -22,7 +25,13 @@ const CountTimeRemainPracticeTest = () => {
         });
     }, [dispatch, router]);
 
-    return <CountTime duration={remainTime} onEndTime={handleEndTime} />;
+    return (
+        <CountTime
+            duration={remainTime}
+            isPause={isPause}
+            onEndTime={handleEndTime}
+        />
+    );
 };
 
 export default React.memo(CountTimeRemainPracticeTest);

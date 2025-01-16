@@ -20,7 +20,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback } from "react";
 import { IconFailResultTest } from "../icon/iconFailResultTest";

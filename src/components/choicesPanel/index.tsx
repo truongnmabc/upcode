@@ -15,7 +15,7 @@ import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTe
 import finishQuestionThunk from "@/redux/repository/game/finish/finishQuestion";
 import nextQuestionThunk from "@/redux/repository/game/nextQuestion/nextQuestion";
 import nextQuestionDiagnosticThunk from "@/redux/repository/game/nextQuestion/nextQuestionDiagnosticTest";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import {
     useParams,
     usePathname,
@@ -64,6 +64,7 @@ const ChoicesPanel: React.FC<IProps> = ({
     useEffect(() => {
         if (listQuestion.length) setListLength(listQuestion.length);
     }, [listQuestion.length]);
+
     const [listRandomQuestion, setListRandomQuestion] = useState(
         MOCK_TEMP_LIST_ANSWER
     );

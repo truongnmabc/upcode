@@ -12,15 +12,21 @@ const pauseTestThunk = createAsyncThunk(
         const state = thunkAPI.getState() as RootState;
         const { idTopic } = state.gameReducer;
         const id = testId || idTopic;
+
         await db?.testQuestions
             .where("parentId")
             .equals(id)
             .modify((item) => {
+                const currentTime = Date.now();
+                const elapsedTimeInSeconds =
+                    (currentTime - item.startTime) / 1000;
+                const remainingTime = item.remainTime - elapsedTimeInSeconds;
+
                 item.isPaused = true;
-                item.remainTime =
-                    item.remainTime -
-                    (new Date().getTime() - item.startTime) / 1000;
-                item.startTime = new Date().getTime();
+                item.remainTime = Math.max(remainingTime, 0);
+                item.elapsedTime =
+                    (item.elapsedTime || 0) + elapsedTimeInSeconds;
+                item.startTime = currentTime;
             });
     }
 );

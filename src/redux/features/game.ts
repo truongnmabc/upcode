@@ -36,7 +36,7 @@ const initGameReducer: IGameReducer = {
     listQuestion: [],
     passing: 80,
     indexCurrentQuestion: 0,
-    idTopic: -1,
+    idTopic: -1, // id current game được, sử dụng để truy vấn, đặt tên hỏi lú tý, sau dùng nhiều ngại sửa
     listWrongAnswers: [],
     isFirst: true,
     isFinishGame: false,
@@ -48,8 +48,6 @@ const initGameReducer: IGameReducer = {
     isPaused: false,
     isEndTimeTest: false,
     remainTime: -1,
-    belowFifty: {},
-    aboveFifty: {},
     feedBack: "newbie",
     shouldListenEventKeyboard: true,
 };
@@ -248,14 +246,8 @@ export const gameSlice = createSlice({
             initDiagnosticTestQuestionThunk.fulfilled,
             (state, action) => {
                 if (action.payload) {
-                    const {
-                        listQuestion,
-                        belowFifty,
-                        aboveFifty,
-                        isPaused,
-                        idTopic,
-                        progressData,
-                    } = action.payload;
+                    const { listQuestion, isPaused, idTopic, progressData } =
+                        action.payload;
                     handleInitTestQuestion(state, {
                         type: "test",
                         progressData,
@@ -265,8 +257,6 @@ export const gameSlice = createSlice({
                         isPaused,
                         remainTime: 80,
                     });
-                    if (belowFifty) state.belowFifty = belowFifty;
-                    if (aboveFifty) state.aboveFifty = aboveFifty;
                 }
             }
         );

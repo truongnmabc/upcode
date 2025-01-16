@@ -1,0 +1,2386 @@
+    [
+        {
+            "id": 4643957105491968,
+            "parentId": 5676496995745792,
+            "name": "Mechanical Comprehension",
+            "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/mechanical-comprehension.svg",
+            "tag": "mechanical-comprehension",
+            "type": 1,
+            "contentType": 0,
+            "orderIndex": 7,
+            "topics": [
+                {
+                    "id": 5666897542512640,
+                    "parentId": 4643957105491968,
+                    "name": "Machines",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/machines.svg",
+                    "tag": "machines",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4596897775878144,
+                            "parentId": 5666897542512640,
+                            "name": "Machines Extended 3",
+                            "icon": "",
+                            "tag": "machines-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 5,
+                            "topics": []
+                        },
+                        {
+                            "id": 5080679536656384,
+                            "parentId": 5666897542512640,
+                            "name": "Machines 2",
+                            "icon": "",
+                            "tag": "machines-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5643629490077696,
+                            "parentId": 5666897542512640,
+                            "name": "Machines 1",
+                            "icon": "",
+                            "tag": "machines-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 6070407060783104,
+                            "parentId": 5666897542512640,
+                            "name": "Machines Extended 2",
+                            "icon": "",
+                            "tag": "machines-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 6206579443499008,
+                            "parentId": 5666897542512640,
+                            "name": "Machines 3",
+                            "icon": "",
+                            "tag": "machines-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 6686581456896000,
+                            "parentId": 5666897542512640,
+                            "name": "Machines Extended 1",
+                            "icon": "",
+                            "tag": "machines-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5746080767541248,
+                    "parentId": 4643957105491968,
+                    "name": "Fundamentals of Mechanics",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/fundamentals-of-mechanics.svg",
+                    "tag": "fundamentals-of-mechanics",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4799204559945728,
+                            "parentId": 5746080767541248,
+                            "name": "Fundamentals of Mechanics 1",
+                            "icon": "",
+                            "tag": "fundamentals-of-mechanics-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 5362154513367040,
+                            "parentId": 5746080767541248,
+                            "name": "Fundamentals of Mechanics 3",
+                            "icon": "",
+                            "tag": "fundamentals-of-mechanics-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 5668232136491008,
+                            "parentId": 5746080767541248,
+                            "name": "Fundamentals of Mechanics Extended 1",
+                            "icon": "",
+                            "tag": "fundamentals-of-mechanics-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 5925104466788352,
+                            "parentId": 5746080767541248,
+                            "name": "Fundamentals of Mechanics 2",
+                            "icon": "",
+                            "tag": "fundamentals-of-mechanics-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6488054420209664,
+                            "parentId": 5746080767541248,
+                            "name": "Fundamentals of Mechanics 4",
+                            "icon": "",
+                            "tag": "fundamentals-of-mechanics-4",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 3,
+                            "topics": []
+                        }
+                    ]
+                }
+            ],
+            "totalQuestion": null
+        },
+        {
+            "id": 4830925621821440,
+            "parentId": 5676496995745792,
+            "name": "Assembling Objects",
+            "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/assembling-objects.svg",
+            "tag": "assembling-objects",
+            "type": 1,
+            "contentType": 0,
+            "orderIndex": 2,
+            "topics": [
+                {
+                    "id": 5141998918959104,
+                    "parentId": 4830925621821440,
+                    "name": "Connection Items",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/connection-items.svg",
+                    "tag": "connection-items",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 5155304660533248,
+                            "parentId": 5141998918959104,
+                            "name": "Connection Items 2",
+                            "icon": "",
+                            "tag": "connection-items-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5718254613954560,
+                            "parentId": 5141998918959104,
+                            "name": "Connection Items 1",
+                            "icon": "",
+                            "tag": "connection-items-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 6281204567375872,
+                            "parentId": 5141998918959104,
+                            "name": "Connection Items 3",
+                            "icon": "",
+                            "tag": "connection-items-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5144478012669952,
+                    "parentId": 4830925621821440,
+                    "name": "Puzzle Items",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/puzzle-items.svg",
+                    "tag": "puzzle-items",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4873829683822592,
+                            "parentId": 5144478012669952,
+                            "name": "Puzzle Items 1",
+                            "icon": "",
+                            "tag": "puzzle-items-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 5999729590665216,
+                            "parentId": 5144478012669952,
+                            "name": "Puzzle Items 2",
+                            "icon": "",
+                            "tag": "puzzle-items-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        }
+                    ]
+                }
+            ],
+            "totalQuestion": null
+        },
+        {
+            "id": 5533861310103552,
+            "parentId": 5676496995745792,
+            "name": "General Science",
+            "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/general-science.svg",
+            "tag": "general-science",
+            "type": 1,
+            "contentType": 0,
+            "orderIndex": 5,
+            "topics": [
+                {
+                    "id": 5749048187289600,
+                    "parentId": 5533861310103552,
+                    "name": "Earth Science",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/earth-science.svg",
+                    "tag": "earth-science",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4583197996220416,
+                            "parentId": 5749048187289600,
+                            "name": "Earth Science Extended 2",
+                            "icon": "",
+                            "tag": "earth-science-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 4678659726114816,
+                            "parentId": 5749048187289600,
+                            "name": "Earth Science 1",
+                            "icon": "",
+                            "tag": "earth-science-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 5804559632957440,
+                            "parentId": 5749048187289600,
+                            "name": "Earth Science 2",
+                            "icon": "",
+                            "tag": "earth-science-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5946170165690368,
+                            "parentId": 5749048187289600,
+                            "name": "Earth Science Extended 1",
+                            "icon": "",
+                            "tag": "earth-science-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 6483823432826880,
+                            "parentId": 5749048187289600,
+                            "name": "Earth Science Extended 3",
+                            "icon": "",
+                            "tag": "earth-science-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5913375045320704,
+                    "parentId": 5533861310103552,
+                    "name": "Ecology",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/ecology.svg",
+                    "tag": "ecology",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 5964665075007488,
+                            "parentId": 5913375045320704,
+                            "name": "Ecology Extended 3",
+                            "icon": "",
+                            "tag": "ecology-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 6117465406832640,
+                            "parentId": 5913375045320704,
+                            "name": "Ecology Extended 1",
+                            "icon": "",
+                            "tag": "ecology-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6367509586378752,
+                            "parentId": 5913375045320704,
+                            "name": "Ecology 1",
+                            "icon": "",
+                            "tag": "ecology-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 6558426519830528,
+                            "parentId": 5913375045320704,
+                            "name": "Ecology Extended 2",
+                            "icon": "",
+                            "tag": "ecology-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5978274081538048,
+                    "parentId": 5533861310103552,
+                    "name": "Nutrition & Health",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/nutrition--health.svg",
+                    "tag": "nutrition--health",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4972937287303168,
+                            "parentId": 5978274081538048,
+                            "name": "Nutrition & Health Extended 3",
+                            "icon": "",
+                            "tag": "nutrition--health-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 5023671991140352,
+                            "parentId": 5978274081538048,
+                            "name": "Nutrition & Health 1",
+                            "icon": "",
+                            "tag": "nutrition--health-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 5461107028262912,
+                            "parentId": 5978274081538048,
+                            "name": "Nutrition & Health Extended 1",
+                            "icon": "",
+                            "tag": "nutrition--health-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6413265819140096,
+                            "parentId": 5978274081538048,
+                            "name": "Nutrition & Health Extended 2",
+                            "icon": "",
+                            "tag": "nutrition--health-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5998439892516864,
+                    "parentId": 5533861310103552,
+                    "name": "Cellular Biology",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/cellular-biology.svg",
+                    "tag": "cellular-biology",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 5618955666325504,
+                            "parentId": 5998439892516864,
+                            "name": "Cellular Biology Extended 1",
+                            "icon": "",
+                            "tag": "cellular-biology-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6316508795895808,
+                            "parentId": 5998439892516864,
+                            "name": "Cellular Biology Extended 2",
+                            "icon": "",
+                            "tag": "cellular-biology-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 6350790444711936,
+                            "parentId": 5998439892516864,
+                            "name": "Cellular Biology Extended 3",
+                            "icon": "",
+                            "tag": "cellular-biology-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 6508247074734080,
+                            "parentId": 5998439892516864,
+                            "name": "Cellular Biology 1",
+                            "icon": "",
+                            "tag": "cellular-biology-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 6195848736145408,
+                    "parentId": 5533861310103552,
+                    "name": "Human Body Systems",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/human-body-systems.svg",
+                    "tag": "human-body-systems",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 5160459317542912,
+                            "parentId": 6195848736145408,
+                            "name": "Human Body Systems Extended 3",
+                            "icon": "",
+                            "tag": "human-body-systems-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 5241609679536128,
+                            "parentId": 6195848736145408,
+                            "name": "Human Body Systems 1",
+                            "icon": "",
+                            "tag": "human-body-systems-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 5603096768020480,
+                            "parentId": 6195848736145408,
+                            "name": "Human Body Systems Extended 1",
+                            "icon": "",
+                            "tag": "human-body-systems-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6588707205283840,
+                            "parentId": 6195848736145408,
+                            "name": "Human Body Systems Extended 2",
+                            "icon": "",
+                            "tag": "human-body-systems-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 6321939983368192,
+                    "parentId": 5533861310103552,
+                    "name": "Physical Science",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/physical-science.svg",
+                    "tag": "physical-science",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4819397214470144,
+                            "parentId": 6321939983368192,
+                            "name": "Physical Science 1",
+                            "icon": "",
+                            "tag": "physical-science-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 5382347167891456,
+                            "parentId": 6321939983368192,
+                            "name": "Physical Science 3",
+                            "icon": "",
+                            "tag": "physical-science-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 5639004573663232,
+                            "parentId": 6321939983368192,
+                            "name": "Physical Science Extended 2",
+                            "icon": "",
+                            "tag": "physical-science-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 5945297121312768,
+                            "parentId": 6321939983368192,
+                            "name": "Physical Science 2",
+                            "icon": "",
+                            "tag": "physical-science-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6572076420825088,
+                            "parentId": 6321939983368192,
+                            "name": "Physical Science Extended 1",
+                            "icon": "",
+                            "tag": "physical-science-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        }
+                    ]
+                }
+            ],
+            "totalQuestion": null
+        },
+        {
+            "id": 5549399260266496,
+            "parentId": 5676496995745792,
+            "name": "Electronics Information",
+            "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/electronics-information.svg",
+            "tag": "electronics-information",
+            "type": 1,
+            "contentType": 0,
+            "orderIndex": 4,
+            "topics": [
+                {
+                    "id": 5710226380554240,
+                    "parentId": 5549399260266496,
+                    "name": "Electricity",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/electricity.svg",
+                    "tag": "electricity",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4784910975893504,
+                            "parentId": 5710226380554240,
+                            "name": "Electricity 4",
+                            "icon": "",
+                            "tag": "electricity-4",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 5488598417670144,
+                            "parentId": 5710226380554240,
+                            "name": "Electricity 2",
+                            "icon": "",
+                            "tag": "electricity-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5910810882736128,
+                            "parentId": 5710226380554240,
+                            "name": "Electricity 5",
+                            "icon": "",
+                            "tag": "electricity-5",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 6051548371091456,
+                            "parentId": 5710226380554240,
+                            "name": "Electricity 1",
+                            "icon": "",
+                            "tag": "electricity-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 6614498324512768,
+                            "parentId": 5710226380554240,
+                            "name": "Electricity 3",
+                            "icon": "",
+                            "tag": "electricity-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 6638202945273856,
+                            "parentId": 5710226380554240,
+                            "name": "Electricity Extended 1",
+                            "icon": "",
+                            "tag": "electricity-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 5,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5737078717415424,
+                    "parentId": 5549399260266496,
+                    "name": "Electrical Systems",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/electrical-systems.svg",
+                    "tag": "electrical-systems",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4925648464248832,
+                            "parentId": 5737078717415424,
+                            "name": "Electrical Systems 4",
+                            "icon": "",
+                            "tag": "electrical-systems-4",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 5207123440959488,
+                            "parentId": 5737078717415424,
+                            "name": "Electrical Systems 2",
+                            "icon": "",
+                            "tag": "electrical-systems-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5518281632907264,
+                            "parentId": 5737078717415424,
+                            "name": "Electrical Systems Extended 1",
+                            "icon": "",
+                            "tag": "electrical-systems-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 5770073394380800,
+                            "parentId": 5737078717415424,
+                            "name": "Electrical Systems 1",
+                            "icon": "",
+                            "tag": "electrical-systems-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 6333023347802112,
+                            "parentId": 5737078717415424,
+                            "name": "Electrical Systems 3",
+                            "icon": "",
+                            "tag": "electrical-systems-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        }
+                    ]
+                }
+            ],
+            "totalQuestion": null
+        },
+        {
+            "id": 5861375517655040,
+            "parentId": 5676496995745792,
+            "name": "Auto and Shop Information",
+            "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/auto-and-shop-information.svg",
+            "tag": "auto-and-shop-information",
+            "type": 1,
+            "contentType": 0,
+            "orderIndex": 3,
+            "topics": [
+                {
+                    "id": 5100952218501120,
+                    "parentId": 5861375517655040,
+                    "name": "Mechanical Systems",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/mechanical-systems.svg",
+                    "tag": "mechanical-systems",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4690630965985280,
+                            "parentId": 5100952218501120,
+                            "name": "Mechanical Systems Extended 3",
+                            "icon": "",
+                            "tag": "mechanical-systems-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 4698664433876992,
+                            "parentId": 5100952218501120,
+                            "name": "Mechanical Systems Extended 1",
+                            "icon": "",
+                            "tag": "mechanical-systems-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5582728330215424,
+                            "parentId": 5100952218501120,
+                            "name": "Mechanical Systems Extended 2",
+                            "icon": "",
+                            "tag": "mechanical-systems-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 6226772098023424,
+                            "parentId": 5100952218501120,
+                            "name": "Mechanical Systems 1",
+                            "icon": "",
+                            "tag": "mechanical-systems-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5734393758875648,
+                    "parentId": 5861375517655040,
+                    "name": "Metal Shop",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/metal-shop.svg",
+                    "tag": "metal-shop",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4888261377916928,
+                            "parentId": 5734393758875648,
+                            "name": "Metal Shop Extended 2",
+                            "icon": "",
+                            "tag": "metal-shop-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 5100872191180800,
+                            "parentId": 5734393758875648,
+                            "name": "Metal Shop 1",
+                            "icon": "",
+                            "tag": "metal-shop-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 5463924526809088,
+                            "parentId": 5734393758875648,
+                            "name": "Metal Shop Extended 1",
+                            "icon": "",
+                            "tag": "metal-shop-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6380715671289856,
+                            "parentId": 5734393758875648,
+                            "name": "Metal Shop Extended 3",
+                            "icon": "",
+                            "tag": "metal-shop-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5749266223988736,
+                    "parentId": 5861375517655040,
+                    "name": "Woodworking",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/woodworking.svg",
+                    "tag": "woodworking",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4537922237759488,
+                            "parentId": 5749266223988736,
+                            "name": "Woodworking 1",
+                            "icon": "",
+                            "tag": "woodworking-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 4766215679508480,
+                            "parentId": 5749266223988736,
+                            "name": "Woodworking Extended 2",
+                            "icon": "",
+                            "tag": "woodworking-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 5026661288378368,
+                            "parentId": 5749266223988736,
+                            "name": "Woodworking Extended 1",
+                            "icon": "",
+                            "tag": "woodworking-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 5663822144602112,
+                            "parentId": 5749266223988736,
+                            "name": "Woodworking 2",
+                            "icon": "",
+                            "tag": "woodworking-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5691986191319040,
+                            "parentId": 5749266223988736,
+                            "name": "Woodworking Extended 3",
+                            "icon": "",
+                            "tag": "woodworking-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 6018553694126080,
+                    "parentId": 5861375517655040,
+                    "name": "Automotive Knowledge",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/automotive-knowledge.svg",
+                    "tag": "automotive-knowledge",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 5048095633047552,
+                            "parentId": 6018553694126080,
+                            "name": "Automotive Knowledge 3",
+                            "icon": "",
+                            "tag": "automotive-knowledge-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 5216035095445504,
+                            "parentId": 6018553694126080,
+                            "name": "Automotive Knowledge Extended 1",
+                            "icon": "",
+                            "tag": "automotive-knowledge-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 6,
+                            "topics": []
+                        },
+                        {
+                            "id": 5329570609758208,
+                            "parentId": 6018553694126080,
+                            "name": "Automotive Knowledge 1",
+                            "icon": "",
+                            "tag": "automotive-knowledge-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 5611045586468864,
+                            "parentId": 6018553694126080,
+                            "name": "Automotive Knowledge 5",
+                            "icon": "",
+                            "tag": "automotive-knowledge-5",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 6173995539890176,
+                            "parentId": 6018553694126080,
+                            "name": "Automotive Knowledge 4",
+                            "icon": "",
+                            "tag": "automotive-knowledge-4",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 6455470516600832,
+                            "parentId": 6018553694126080,
+                            "name": "Automotive Knowledge 2",
+                            "icon": "",
+                            "tag": "automotive-knowledge-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6736945493311488,
+                            "parentId": 6018553694126080,
+                            "name": "Automotive Knowledge 6",
+                            "icon": "",
+                            "tag": "automotive-knowledge-6",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 5,
+                            "topics": []
+                        }
+                    ]
+                }
+            ],
+            "totalQuestion": null
+        },
+        {
+            "id": 5878262490202112,
+            "parentId": 5676496995745792,
+            "name": "Arithmetic Reasoning",
+            "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/arithmetic-reasoning.svg",
+            "tag": "arithmetic-reasoning",
+            "type": 1,
+            "contentType": 0,
+            "orderIndex": 1,
+            "topics": [
+                {
+                    "id": 5078480647618560,
+                    "parentId": 5878262490202112,
+                    "name": "Fraction",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/fraction.svg",
+                    "tag": "fraction",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4726139650048000,
+                            "parentId": 5078480647618560,
+                            "name": "Fraction Extended 3",
+                            "icon": "",
+                            "tag": "fraction-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 5119311651799040,
+                            "parentId": 5078480647618560,
+                            "name": "Fraction Extended 2",
+                            "icon": "",
+                            "tag": "fraction-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 5486345732489216,
+                            "parentId": 5078480647618560,
+                            "name": "Fraction Extended 1",
+                            "icon": "",
+                            "tag": "fraction-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 5542332753510400,
+                            "parentId": 5078480647618560,
+                            "name": "Fraction 1",
+                            "icon": "",
+                            "tag": "fraction-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 6668232660353024,
+                            "parentId": 5078480647618560,
+                            "name": "Fraction 2",
+                            "icon": "",
+                            "tag": "fraction-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5093201379590144,
+                    "parentId": 5878262490202112,
+                    "name": "Statistics",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/statistics.svg",
+                    "tag": "statistics",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4872818244190208,
+                            "parentId": 5093201379590144,
+                            "name": "Statistics Extended 2",
+                            "icon": "",
+                            "tag": "statistics-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 4966711639932928,
+                            "parentId": 5093201379590144,
+                            "name": "Statistics Extended 3",
+                            "icon": "",
+                            "tag": "statistics-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 4979382800089088,
+                            "parentId": 5093201379590144,
+                            "name": "Statistics 1",
+                            "icon": "",
+                            "tag": "statistics-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 6083847531790336,
+                            "parentId": 5093201379590144,
+                            "name": "Statistics Extended 1",
+                            "icon": "",
+                            "tag": "statistics-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 6105282706931712,
+                            "parentId": 5093201379590144,
+                            "name": "Statistics 2",
+                            "icon": "",
+                            "tag": "statistics-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5366063965405184,
+                    "parentId": 5878262490202112,
+                    "name": "Distance, Rate, & Time",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/distance-rate--time.svg",
+                    "tag": "distance-rate--time",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4627539079200768,
+                            "parentId": 5366063965405184,
+                            "name": "Distance, Rate, & Time 1",
+                            "icon": "",
+                            "tag": "distance,-rate,-&-time-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 5165552922263552,
+                            "parentId": 5366063965405184,
+                            "name": "Distance, Rate, & Time Extended 1",
+                            "icon": "",
+                            "tag": "distance-rate--time-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 5595905113718784,
+                            "parentId": 5366063965405184,
+                            "name": "Distance, Rate, & Time Extended 3",
+                            "icon": "",
+                            "tag": "distance-rate--time-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 5753438986043392,
+                            "parentId": 5366063965405184,
+                            "name": "Distance, Rate, & Time 2",
+                            "icon": "",
+                            "tag": "distance,-rate,-&-time-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6515234273492992,
+                            "parentId": 5366063965405184,
+                            "name": "Distance, Rate, & Time Extended 2",
+                            "icon": "",
+                            "tag": "distance-rate--time-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5646081379532800,
+                    "parentId": 5878262490202112,
+                    "name": "Math Operations",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/math-operations.svg",
+                    "tag": "math-operations",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4768276567556096,
+                            "parentId": 5646081379532800,
+                            "name": "Math Operations 7",
+                            "icon": "",
+                            "tag": "math-operations-7",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 6,
+                            "topics": []
+                        },
+                        {
+                            "id": 4909014055911424,
+                            "parentId": 5646081379532800,
+                            "name": "Math Operations 3",
+                            "icon": "",
+                            "tag": "math-operations-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 5190489032622080,
+                            "parentId": 5646081379532800,
+                            "name": "Math Operations 1",
+                            "icon": "",
+                            "tag": "math-operations-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 5471964009332736,
+                            "parentId": 5646081379532800,
+                            "name": "Math Operations 5",
+                            "icon": "",
+                            "tag": "math-operations-5",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 6034913962754048,
+                            "parentId": 5646081379532800,
+                            "name": "Math Operations 4",
+                            "icon": "",
+                            "tag": "math-operations-4",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 6316388939464704,
+                            "parentId": 5646081379532800,
+                            "name": "Math Operations 2",
+                            "icon": "",
+                            "tag": "math-operations-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6451628357976064,
+                            "parentId": 5646081379532800,
+                            "name": "Math Operations Extended 1",
+                            "icon": "",
+                            "tag": "math-operations-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 7,
+                            "topics": []
+                        },
+                        {
+                            "id": 6597863916175360,
+                            "parentId": 5646081379532800,
+                            "name": "Math Operations 6",
+                            "icon": "",
+                            "tag": "math-operations-6",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 5,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5656151333011456,
+                    "parentId": 5878262490202112,
+                    "name": "Percentage",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/percentage.svg",
+                    "tag": "percentage",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4697907823378432,
+                            "parentId": 5656151333011456,
+                            "name": "Percentage 3",
+                            "icon": "",
+                            "tag": "percentage-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 5260857776799744,
+                            "parentId": 5656151333011456,
+                            "name": "Percentage 5",
+                            "icon": "",
+                            "tag": "percentage-5",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 5401595265155072,
+                            "parentId": 5656151333011456,
+                            "name": "Percentage 1",
+                            "icon": "",
+                            "tag": "percentage-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 5460007424360448,
+                            "parentId": 5656151333011456,
+                            "name": "Percentage Extended 1",
+                            "icon": "",
+                            "tag": "percentage-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 6,
+                            "topics": []
+                        },
+                        {
+                            "id": 5823807730221056,
+                            "parentId": 5656151333011456,
+                            "name": "Percentage 4",
+                            "icon": "",
+                            "tag": "percentage-4",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 6386757683642368,
+                            "parentId": 5656151333011456,
+                            "name": "Percentage 6",
+                            "icon": "",
+                            "tag": "percentage-6",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 5,
+                            "topics": []
+                        },
+                        {
+                            "id": 6527495171997696,
+                            "parentId": 5656151333011456,
+                            "name": "Percentage 2",
+                            "icon": "",
+                            "tag": "percentage-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5656998582419456,
+                    "parentId": 5878262490202112,
+                    "name": "Ratio & Proportion",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/ratio--proportion.svg",
+                    "tag": "ratio--proportion",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4838645311733760,
+                            "parentId": 5656998582419456,
+                            "name": "Ratio & Proportion 2",
+                            "icon": "",
+                            "tag": "ratio-&-proportion-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5184035106062336,
+                            "parentId": 5656998582419456,
+                            "name": "Ratio & Proportion Extended 2",
+                            "icon": "",
+                            "tag": "ratio--proportion-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 5964545218576384,
+                            "parentId": 5656998582419456,
+                            "name": "Ratio & Proportion 3",
+                            "icon": "",
+                            "tag": "ratio-&-proportion-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 6007742816845824,
+                            "parentId": 5656998582419456,
+                            "name": "Ratio & Proportion Extended 1",
+                            "icon": "",
+                            "tag": "ratio--proportion-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 6246020195287040,
+                            "parentId": 5656998582419456,
+                            "name": "Ratio & Proportion 1",
+                            "icon": "",
+                            "tag": "ratio-&-proportion-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5701466861862912,
+                    "parentId": 5878262490202112,
+                    "name": "Geometry",
+                    "icon": "https://storage.googleapis.com/app-data-center/asvab/icons/geometry.svg",
+                    "tag": "geometry",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4761575906869248,
+                            "parentId": 5701466861862912,
+                            "name": "Geometry Extended 1",
+                            "icon": "",
+                            "tag": "geometry-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 5125704442183680,
+                            "parentId": 5701466861862912,
+                            "name": "Geometry Extended 3",
+                            "icon": "",
+                            "tag": "geometry-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 5577517125599232,
+                            "parentId": 5701466861862912,
+                            "name": "Geometry 2",
+                            "icon": "",
+                            "tag": "geometry-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6140467079020544,
+                            "parentId": 5701466861862912,
+                            "name": "Geometry 1",
+                            "icon": "",
+                            "tag": "geometry-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 6394770909822976,
+                            "parentId": 5701466861862912,
+                            "name": "Geometry Extended 2",
+                            "icon": "",
+                            "tag": "geometry-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5767001150586880,
+                    "parentId": 5878262490202112,
+                    "name": "Unit Conversion ",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/unit-conversion.svg",
+                    "tag": "unit-conversion",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4557170335023104,
+                            "parentId": 5767001150586880,
+                            "name": "Unit Conversion  2",
+                            "icon": "",
+                            "tag": "unit-conversion-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 4849791984992256,
+                            "parentId": 5767001150586880,
+                            "name": "Unit Conversion  Extended 1",
+                            "icon": "",
+                            "tag": "unit-conversion--extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 5120120288444416,
+                            "parentId": 5767001150586880,
+                            "name": "Unit Conversion  4",
+                            "icon": "",
+                            "tag": "unit-conversion-4",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 5683070241865728,
+                            "parentId": 5767001150586880,
+                            "name": "Unit Conversion  3",
+                            "icon": "",
+                            "tag": "unit-conversion-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 6703417032441856,
+                            "parentId": 5767001150586880,
+                            "name": "Unit Conversion  1",
+                            "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/unit-conversion-1.svg",
+                            "tag": "unit-conversion-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5823429974425600,
+                    "parentId": 5878262490202112,
+                    "name": "Number Properties",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/number-properties.svg",
+                    "tag": "number-properties",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 5161978528006144,
+                            "parentId": 5823429974425600,
+                            "name": "Number Properties Extended 1",
+                            "icon": "",
+                            "tag": "number-properties-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5325854750015488,
+                            "parentId": 5823429974425600,
+                            "name": "Number Properties Extended 3",
+                            "icon": "",
+                            "tag": "number-properties-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 6457126427820032,
+                            "parentId": 5823429974425600,
+                            "name": "Number Properties 1",
+                            "icon": "",
+                            "tag": "number-properties-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 6666387997065216,
+                            "parentId": 5823429974425600,
+                            "name": "Number Properties Extended 2",
+                            "icon": "",
+                            "tag": "number-properties-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 6604121750634496,
+                    "parentId": 5878262490202112,
+                    "name": "Equations",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/equations.svg",
+                    "tag": "equations",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 5331226520977408,
+                            "parentId": 6604121750634496,
+                            "name": "Equations 2",
+                            "icon": "",
+                            "tag": "equations-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5894176474398720,
+                            "parentId": 6604121750634496,
+                            "name": "Equations 1",
+                            "icon": "",
+                            "tag": "equations-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 6155878117933056,
+                            "parentId": 6604121750634496,
+                            "name": "Equations Extended 2",
+                            "icon": "",
+                            "tag": "equations-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 6401807945302016,
+                            "parentId": 6604121750634496,
+                            "name": "Equations Extended 1",
+                            "icon": "",
+                            "tag": "equations-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 6486168484970496,
+                            "parentId": 6604121750634496,
+                            "name": "Equations Extended 3",
+                            "icon": "",
+                            "tag": "equations-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        }
+                    ]
+                }
+            ],
+            "totalQuestion": null
+        },
+        {
+            "id": 5945201837211648,
+            "parentId": 5676496995745792,
+            "name": "Mathematics Knowledge",
+            "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/mathematics-knowledge.svg",
+            "tag": "mathematics-knowledge",
+            "type": 1,
+            "contentType": 0,
+            "orderIndex": 6,
+            "topics": [
+                {
+                    "id": 5200229548687360,
+                    "parentId": 5945201837211648,
+                    "name": "Algebra",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/algebra.svg",
+                    "tag": "algebra",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4676710951813120,
+                            "parentId": 5200229548687360,
+                            "name": "Algebra 4",
+                            "icon": "",
+                            "tag": "algebra-4",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 5380398393589760,
+                            "parentId": 5200229548687360,
+                            "name": "Algebra 2",
+                            "icon": "",
+                            "tag": "algebra-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5705996265586688,
+                            "parentId": 5200229548687360,
+                            "name": "Algebra Extended 1",
+                            "icon": "",
+                            "tag": "algebra-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 5,
+                            "topics": []
+                        },
+                        {
+                            "id": 5802610858655744,
+                            "parentId": 5200229548687360,
+                            "name": "Algebra 5",
+                            "icon": "",
+                            "tag": "algebra-5",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 5943348347011072,
+                            "parentId": 5200229548687360,
+                            "name": "Algebra 1",
+                            "icon": "",
+                            "tag": "algebra-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 6506298300432384,
+                            "parentId": 5200229548687360,
+                            "name": "Algebra 3",
+                            "icon": "",
+                            "tag": "algebra-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 6588795092729856,
+                    "parentId": 5945201837211648,
+                    "name": "Geometry",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/geometry.svg",
+                    "tag": "geometry",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4817448440168448,
+                            "parentId": 6588795092729856,
+                            "name": "Geometry 4",
+                            "icon": "",
+                            "tag": "geometry-4",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 5098923416879104,
+                            "parentId": 6588795092729856,
+                            "name": "Geometry 2",
+                            "icon": "",
+                            "tag": "geometry-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5661873370300416,
+                            "parentId": 6588795092729856,
+                            "name": "Geometry 1",
+                            "icon": "",
+                            "tag": "geometry-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 5712882842992640,
+                            "parentId": 6588795092729856,
+                            "name": "Geometry Extended 1",
+                            "icon": "",
+                            "tag": "geometry-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 6224823323721728,
+                            "parentId": 6588795092729856,
+                            "name": "Geometry 3",
+                            "icon": "",
+                            "tag": "geometry-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        }
+                    ]
+                }
+            ],
+            "totalQuestion": null
+        },
+        {
+            "id": 5984778887102464,
+            "parentId": 5676496995745792,
+            "name": "Paragraph Comprehension",
+            "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/paragraph-comprehension.svg",
+            "tag": "paragraph-comprehension",
+            "type": 1,
+            "contentType": 0,
+            "orderIndex": 8,
+            "topics": [
+                {
+                    "id": 4862919997128704,
+                    "parentId": 5984778887102464,
+                    "name": "Main Idea",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/main-idea.svg",
+                    "tag": "main-idea",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 5544674919972864,
+                            "parentId": 4862919997128704,
+                            "name": "Main Idea Extended 1",
+                            "icon": "",
+                            "tag": "main-idea-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5679428805853184,
+                            "parentId": 4862919997128704,
+                            "name": "Main Idea Extended 3",
+                            "icon": "",
+                            "tag": "main-idea-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 6503143135248384,
+                            "parentId": 4862919997128704,
+                            "name": "Main Idea Extended 2",
+                            "icon": "",
+                            "tag": "main-idea-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 6639201768439808,
+                            "parentId": 4862919997128704,
+                            "name": "Main Idea 1",
+                            "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/main-idea-1.svg",
+                            "tag": "main-idea-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5383754038116352,
+                    "parentId": 5984778887102464,
+                    "name": "Wider Implications",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/wider-implications.svg",
+                    "tag": "wider-implications",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4598508187287552,
+                            "parentId": 5383754038116352,
+                            "name": "Wider Implications 1",
+                            "icon": "",
+                            "tag": "wider-implications-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 4815248745824256,
+                            "parentId": 5383754038116352,
+                            "name": "Wider Implications Extended 1",
+                            "icon": "",
+                            "tag": "wider-implications-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 5161458140708864,
+                            "parentId": 5383754038116352,
+                            "name": "Wider Implications 3",
+                            "icon": "",
+                            "tag": "wider-implications-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 5724408094130176,
+                            "parentId": 5383754038116352,
+                            "name": "Wider Implications 2",
+                            "icon": "",
+                            "tag": "wider-implications-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6287358047551488,
+                            "parentId": 5383754038116352,
+                            "name": "Wider Implications 4",
+                            "icon": "",
+                            "tag": "wider-implications-4",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 3,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5946703991537664,
+                    "parentId": 5984778887102464,
+                    "name": "Word Meaning in Context",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/word-meaning-in-context.svg",
+                    "tag": "word-meaning-in-context",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 5040172584402944,
+                            "parentId": 5946703991537664,
+                            "name": "Word Meaning in Context Extended 3",
+                            "icon": "",
+                            "tag": "word-meaning-in-context-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 6427577656803328,
+                            "parentId": 5946703991537664,
+                            "name": "Word Meaning in Context Extended 1",
+                            "icon": "",
+                            "tag": "word-meaning-in-context-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6447547467956224,
+                            "parentId": 5946703991537664,
+                            "name": "Word Meaning in Context Extended 2",
+                            "icon": "",
+                            "tag": "word-meaning-in-context-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 6550008383930368,
+                            "parentId": 5946703991537664,
+                            "name": "Word Meaning in Context 1",
+                            "icon": "",
+                            "tag": "word-meaning-in-context-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 6462653715185664,
+                    "parentId": 5984778887102464,
+                    "name": "Finding Information",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/finding-information.svg",
+                    "tag": "finding-information",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4912312079089664,
+                            "parentId": 6462653715185664,
+                            "name": "Finding Information Extended 2",
+                            "icon": "",
+                            "tag": "finding-information-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 5513301861597184,
+                            "parentId": 6462653715185664,
+                            "name": "Finding Information 2",
+                            "icon": "",
+                            "tag": "finding-information-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 5654559737249792,
+                            "parentId": 6462653715185664,
+                            "name": "Finding Information Extended 3",
+                            "icon": "",
+                            "tag": "finding-information-extended-3",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 6037264542990336,
+                            "parentId": 6462653715185664,
+                            "name": "Finding Information Extended 1",
+                            "icon": "",
+                            "tag": "finding-information-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 6076251815018496,
+                            "parentId": 6462653715185664,
+                            "name": "Finding Information 1",
+                            "icon": "",
+                            "tag": "finding-information-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        }
+                    ]
+                }
+            ],
+            "totalQuestion": null
+        },
+        {
+            "id": 6473544454111232,
+            "parentId": 5676496995745792,
+            "name": "Word Knowledge",
+            "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/word-knowledge.svg",
+            "tag": "word-knowledge",
+            "type": 1,
+            "contentType": 0,
+            "orderIndex": 9,
+            "topics": [
+                {
+                    "id": 5068150714400768,
+                    "parentId": 6473544454111232,
+                    "name": "Contextualised Questions",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/contextualised-questions.svg",
+                    "tag": "contextualised-questions",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4673555786629120,
+                            "parentId": 5068150714400768,
+                            "name": "Contextualised Questions Extended 1",
+                            "icon": "",
+                            "tag": "contextualised-questions-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 7,
+                            "topics": []
+                        },
+                        {
+                            "id": 4739245675642880,
+                            "parentId": 5068150714400768,
+                            "name": "Contextualised Questions 5",
+                            "icon": "",
+                            "tag": "contextualised-questions-5",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 4,
+                            "topics": []
+                        },
+                        {
+                            "id": 4879983163998208,
+                            "parentId": 5068150714400768,
+                            "name": "Contextualised Questions 1",
+                            "icon": "",
+                            "tag": "contextualised-questions-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 5302195629064192,
+                            "parentId": 5068150714400768,
+                            "name": "Contextualised Questions 7",
+                            "icon": "",
+                            "tag": "contextualised-questions-7",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 6,
+                            "topics": []
+                        },
+                        {
+                            "id": 5442933117419520,
+                            "parentId": 5068150714400768,
+                            "name": "Contextualised Questions 3",
+                            "icon": "",
+                            "tag": "contextualised-questions-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 5865145582485504,
+                            "parentId": 5068150714400768,
+                            "name": "Contextualised Questions 6",
+                            "icon": "",
+                            "tag": "contextualised-questions-6",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 5,
+                            "topics": []
+                        },
+                        {
+                            "id": 6005883070840832,
+                            "parentId": 5068150714400768,
+                            "name": "Contextualised Questions 2",
+                            "icon": "",
+                            "tag": "contextualised-questions-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6568833024262144,
+                            "parentId": 5068150714400768,
+                            "name": "Contextualised Questions 4",
+                            "icon": "",
+                            "tag": "contextualised-questions-4",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 3,
+                            "topics": []
+                        }
+                    ]
+                },
+                {
+                    "id": 5720040716369920,
+                    "parentId": 6473544454111232,
+                    "name": "Synonym-based Questions",
+                    "icon": "https://storage.googleapis.com/micro-enigma-235001.appspot.com/asvab/icons/synonymbased-questions.svg",
+                    "tag": "synonymbased-questions",
+                    "type": 2,
+                    "contentType": 0,
+                    "orderIndex": -1,
+                    "topics": [
+                        {
+                            "id": 4524639741018112,
+                            "parentId": 5720040716369920,
+                            "name": "Synonym-based Questions Extended 1",
+                            "icon": "",
+                            "tag": "synonymbased-questions-extended-1",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 3,
+                            "topics": []
+                        },
+                        {
+                            "id": 5020720652353536,
+                            "parentId": 5720040716369920,
+                            "name": "Synonym-based Questions 2",
+                            "icon": "",
+                            "tag": "synonym-based-questions-2",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 1,
+                            "topics": []
+                        },
+                        {
+                            "id": 6146620559196160,
+                            "parentId": 5720040716369920,
+                            "name": "Synonym-based Questions 3",
+                            "icon": "",
+                            "tag": "synonym-based-questions-3",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 2,
+                            "topics": []
+                        },
+                        {
+                            "id": 6428095535906816,
+                            "parentId": 5720040716369920,
+                            "name": "Synonym-based Questions 1",
+                            "icon": "",
+                            "tag": "synonym-based-questions-1",
+                            "type": 3,
+                            "contentType": 0,
+                            "orderIndex": 0,
+                            "topics": []
+                        },
+                        {
+                            "id": 6731324547137536,
+                            "parentId": 5720040716369920,
+                            "name": "Synonym-based Questions Extended 2",
+                            "icon": "",
+                            "tag": "synonymbased-questions-extended-2",
+                            "type": 3,
+                            "contentType": 1,
+                            "orderIndex": 4,
+                            "topics": []
+                        }
+                    ]
+                }
+            ],
+            "totalQuestion": null
+        }
+    ]

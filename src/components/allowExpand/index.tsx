@@ -3,7 +3,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import { ITopic } from "@/models/topics/topics";
 import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useAppSelector } from "@/redux/hooks";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import ctx from "@/utils/mergeClass";
 import { Collapse } from "@mui/material";
 import { usePathname } from "next/navigation";

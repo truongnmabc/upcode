@@ -3,7 +3,7 @@ import CloseIcon from "@/asset/icon/CloseIcon";
 import IconLinkStoreApp from "@/components/iconLinkStoreApp";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppSelector } from "@/redux/hooks";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import { trackingEventGa4 } from "@/services/googleEvent";
 import { Drawer } from "@mui/material";
 import { useRouter } from "next/navigation";

@@ -1,5 +1,6 @@
 import { IQuestion } from "@/models/question/questions";
 import { ITopic } from "@/models/topics/topics";
+import { v4 as uuidv4 } from "uuid";
 
 export const groupTopics = (
     listTopic: ITopic[],
@@ -27,10 +28,18 @@ export const calculatorAverageLevel = (questions: IQuestion[]): number => {
     return totalLevel / listLevel.length;
 };
 
+/**
+ * Generates a random unique negative ID using UUID v4.
+ *
+ * @param {number} exclude - The ID to exclude from the result.
+ * @return {number} A unique negative ID that is not equal to the excluded value.
+ */
+
 export function generateRandomNegativeId(exclude: number = -1): number {
     let randomId: number;
     do {
-        randomId = -Math.floor(Math.random() * 1000);
+        // Generate a UUID, hash it, and convert it to a negative number
+        randomId = -parseInt(uuidv4().replace(/-/g, "").slice(0, 6), 16);
     } while (randomId === exclude);
     return randomId;
 }

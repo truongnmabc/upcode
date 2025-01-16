@@ -1,5 +1,5 @@
 "use client";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import { MtUiButton } from "@/components/button";
 import Config from "@/config";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";

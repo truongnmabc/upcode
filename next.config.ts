@@ -69,49 +69,58 @@ const nextConfig: NextConfig = {
     },
 
     async rewrites() {
-        const pageStatic = ["about-us", "contact", "getPro"];
-        const pageDynamic1 = [
-            "review",
-            "result_test",
-            "finish",
-            "final_test",
-            "diagnostic_test",
-            "custom_test",
-        ];
-        const pageDynamic = ["study"];
+        const isSingleApp = process.env["NEXT_PUBLIC_APP_SHORT_NAME"];
+        console.log("🚀 ~ rewrites ~ isSingleApp:", isSingleApp);
+        if (isSingleApp) {
+            const pageStatic = ["about-us", "contact", "getPro"];
+            const pageDynamic1 = [
+                "review",
+                "result_test",
+                "finish",
+                "final_test",
+                "diagnostic_test",
+                "custom_test",
+            ];
+            const pageDynamic = ["study"];
 
-        const result = [
+            const result = [
+                {
+                    source: "/",
+                    destination: `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}`,
+                },
+            ];
+            pageStatic.forEach((e) => {
+                result.push({
+                    source: "/" + e,
+                    destination:
+                        `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/` + e,
+                });
+            });
+            pageDynamic1.forEach((e) => {
+                result.push({
+                    source: "/" + e,
+                    destination:
+                        `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/all/` + e,
+                });
+            });
+            pageDynamic.forEach((e) => {
+                result.push({
+                    source: "/" + e + "/:path",
+                    destination:
+                        `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/all/` +
+                        e +
+                        "/:path",
+                });
+            });
+
+            return result;
+        }
+        return [
             {
                 source: "/",
-                destination: process.env.IS_SINGLE_APP
-                    ? "/parent"
-                    : `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}`,
+                destination: "/parent",
             },
         ];
-        pageStatic.forEach((e) => {
-            result.push({
-                source: "/" + e,
-                destination: `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/` + e,
-            });
-        });
-        pageDynamic1.forEach((e) => {
-            result.push({
-                source: "/" + e,
-                destination:
-                    `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/all/` + e,
-            });
-        });
-        pageDynamic.forEach((e) => {
-            result.push({
-                source: "/" + e + "/:path",
-                destination:
-                    `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/all/` +
-                    e +
-                    "/:path",
-            });
-        });
-
-        return result;
     },
 };
 

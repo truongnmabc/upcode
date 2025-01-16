@@ -5,7 +5,7 @@ import {
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishFinalThunk from "@/redux/repository/game/finish/finishFinal";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
