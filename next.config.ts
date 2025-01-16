@@ -69,7 +69,7 @@ const nextConfig: NextConfig = {
     },
 
     async rewrites() {
-        const pageStatic = ["about-us", "contact", "getPro"];
+        const pageStatic = ["about-us", "contact", "getPro", "billing"];
         const pageDynamic1 = [
             "review",
             "result_test",
