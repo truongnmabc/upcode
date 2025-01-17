@@ -4,6 +4,7 @@ import { MtUiButton } from "@/components/button";
 import MyContainer from "@/components/container";
 import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic";
 import { TypeParam } from "@/constants";
+import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import {
@@ -11,37 +12,55 @@ import {
     startOverGame,
     startTryAgainDiagnostic,
 } from "@/redux/features/game";
-import {
-    selectIdTopic,
-    selectListQuestion,
-    selectTurn,
-} from "@/redux/features/game.reselect";
+import { selectIdTopic, selectTurn } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
-import RouterApp from "@/constants/router.constant";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { IconFailResultTest } from "../icon/iconFailResultTest";
 import { IconPassResultTest } from "../icon/iconPassResultTest";
 import DashboardCard from "./chartHeader";
 import HeaderResultDiagnostic from "./headerResultDiagnostic";
 import { TitleMiss, TitlePass } from "./titleResultTest";
 
-type IProps = {
-    pass: number;
-    percent: number;
+const HeaderResultTest: React.FC<{
+    correct: number;
+    total: number;
     isPass: boolean;
-};
-const HeaderResultTest: React.FC<IProps> = (info) => {
+    passing: number;
+}> = ({ correct, total, isPass, passing }) => {
     const router = useRouter();
     const idTopic = useAppSelector(selectIdTopic);
-    const listQuestion = useAppSelector(selectListQuestion);
     const appInfo = useAppSelector(selectAppInfo);
     const turn = useAppSelector(selectTurn);
     const type = useSearchParams().get("type");
     const dispatch = useAppDispatch();
+
+    /**
+     *
+     * Với practice test thì bài cuối (trong db sẽ không còn bài nào chưa làm status = 0) sẽ không hiển thị button next
+     *
+     */
+    const [isLast, setIsLast] = useState(true);
+
+    useEffect(() => {
+        if (type === TypeParam.practiceTest) {
+            const checkIsLast = async () => {
+                const isLast = await db?.testQuestions
+                    .where("type")
+                    .equals("practiceTests")
+                    .filter((item) => item.status === 0)
+                    .first();
+                if (!isLast) setIsLast(true);
+                else setIsLast(false);
+            };
+            checkIsLast();
+        } else {
+            setIsLast(false);
+        }
+    }, [type]);
 
     const handleTryAgain = useCallback(async () => {
         let _href = "";
@@ -118,31 +137,27 @@ const HeaderResultTest: React.FC<IProps> = (info) => {
             <HeaderResultDiagnostic
                 handleStartLearning={handleStartLearning}
                 handleTryAgain={handleTryAgain}
-                percentage={info.percent}
+                percentage={(correct / total) * 100}
             />
         );
     }
     return (
-        <MyContainer className="py-8 flex flex-col sm:flex-row gap-8">
+        <MyContainer className="py-4 sm:py-8 flex flex-col sm:flex-row sm:gap-8">
             <div
-                className="w-10 h-10 rounded-full cursor-pointer bg-white flex items-center justify-center"
+                className="w-10 h-10 rounded-full cursor-pointer bg-[#21212114] sm:bg-white flex items-center justify-center"
                 onClick={back}
             >
                 <CloseIcon />
             </div>
             <div className="flex-1 flex flex-col sm:flex-row gap-3 sm:gap-10 items-end">
                 <div className="w-full flex justify-center sm:w-[234px] sm:h-[232px]">
-                    {info.isPass ? (
-                        <IconPassResultTest />
-                    ) : (
-                        <IconFailResultTest />
-                    )}
+                    {isPass ? <IconPassResultTest /> : <IconFailResultTest />}
                 </div>
                 <div className="flex-1 flex flex-col gap-6 overflow-hidden justify-between h-full sm:pt-16">
                     <div className="flex-1">
-                        {info.isPass ? <TitlePass /> : <TitleMiss />}
+                        {isPass ? <TitlePass /> : <TitleMiss />}
                     </div>
-                    <div className="flex gap-6 items-center">
+                    <div className="fixed bottom-0 py-4 px-2 left-0 right-0 z-50 bg-theme-dark sm:bg-transparent sm:static sm:flex gap-6 items-center">
                         <MtUiButton
                             className="sm:py-4 sm:max-h-14 text-lg font-medium rounded-2xl text-primary border-primary"
                             block
@@ -151,7 +166,7 @@ const HeaderResultTest: React.FC<IProps> = (info) => {
                         >
                             Try Again
                         </MtUiButton>
-                        {(type === TypeParam.practiceTest ||
+                        {((type === TypeParam.practiceTest && !isLast) ||
                             type === TypeParam.customTest) && (
                             <MtUiButton
                                 className="sm:py-4 sm:max-h-14 text-lg font-medium rounded-2xl "
@@ -166,11 +181,10 @@ const HeaderResultTest: React.FC<IProps> = (info) => {
                     </div>
                 </div>
                 <DashboardCard
-                    info={{
-                        pass: info.pass,
-                        total: listQuestion.length,
-                        percent: info.percent,
-                    }}
+                    correct={correct}
+                    total={total}
+                    percent={(correct / total) * 100}
+                    passing={passing}
                 />
             </div>
         </MyContainer>

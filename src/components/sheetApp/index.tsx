@@ -7,8 +7,10 @@ import { useAppSelector } from "@/redux/hooks";
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import LazyLoadImage from "../images";
-import Sheet from "../sheet";
-
+import dynamic from "next/dynamic";
+const Sheet = dynamic(() => import("@/components/sheet"), {
+    ssr: false,
+});
 const SheetApp = () => {
     const [sheetVisible, setSheetVisible] = useState(false);
     const appInfo = useAppSelector(selectAppInfo);

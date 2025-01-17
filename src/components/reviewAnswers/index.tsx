@@ -15,9 +15,6 @@ type IProps = {
     showFilter?: boolean;
     result?: {
         listTopic: ITopicEndTest[];
-        pass: number;
-        percent: number;
-        isPass: boolean;
         all: ICurrentGame[];
         correct: ICurrentGame[];
         incorrect: ICurrentGame[];

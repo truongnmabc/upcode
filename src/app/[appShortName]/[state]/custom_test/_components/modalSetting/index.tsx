@@ -1,4 +1,3 @@
-import Sheet from "@/components/sheet";
 import { db } from "@/db/db.model";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { ICurrentGame } from "@/models/game/game";
@@ -11,7 +10,10 @@ import { generateRandomNegativeId } from "@/utils/math";
 import Dialog from "@mui/material/Dialog";
 import React, { useEffect, useState } from "react";
 import ContentSetting from "./contentSetting";
-
+import dynamic from "next/dynamic";
+const Sheet = dynamic(() => import("@/components/sheet"), {
+    ssr: false,
+});
 export type IFeedBack = "newbie" | "expert" | "exam";
 
 type IProps = {
@@ -186,6 +188,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                     subject: selectListTopic?.map((item) => item.id),
                     status: 0,
                     turn: 1,
+                    elapsedTime: 0,
                 });
 
                 dispatch(

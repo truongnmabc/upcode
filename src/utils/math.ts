@@ -1,4 +1,4 @@
-import { IQuestion } from "@/models/question/questions";
+import { ICurrentGame } from "@/models/game/game";
 import { ITopic } from "@/models/topics/topics";
 import { v4 as uuidv4 } from "uuid";
 
@@ -18,7 +18,7 @@ export const groupTopics = (
     return arr;
 };
 
-export const calculatorAverageLevel = (questions: IQuestion[]): number => {
+export const calculatorAverageLevel = (questions: ICurrentGame[]): number => {
     const listLevel = questions.map((ques) =>
         ques.level < 0 ? 50 : ques.level
     );
