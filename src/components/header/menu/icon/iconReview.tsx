@@ -1,5 +1,5 @@
 "use client";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import IconReview from "@/components/icon/iconReview";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";

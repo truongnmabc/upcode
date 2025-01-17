@@ -12,7 +12,7 @@ import finishCustomTestThunk from "@/redux/repository/game/finish/finishCustomTe
 import finishDiagnosticThunk from "@/redux/repository/game/finish/finishDiagnostic";
 import finishFinalThunk from "@/redux/repository/game/finish/finishFinal";
 import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTest";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import { Dialog } from "@mui/material";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";

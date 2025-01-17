@@ -9,7 +9,9 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
 import pauseTestThunk from "@/redux/repository/game/pauseAndResumed/pauseTest";
-import resumedTestThunk from "@/redux/repository/game/pauseAndResumed/resumedTest";
+import resumedTestThunk, {
+    updateTimeTest,
+} from "@/redux/repository/game/pauseAndResumed/resumedTest";
 import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
@@ -57,25 +59,24 @@ const ModalConfirm = () => {
 
     const handleContinue = useCallback(() => {
         dispatch(continueGame());
+        dispatch(updateTimeTest());
         setOpen(false);
     }, [dispatch]);
 
-    const handleBackPage = useCallback(() => {
-        setOpen(false);
-    }, [setOpen]);
-
     useEffect(() => {
-        window.addEventListener("popstate", handleBackPage);
+        window.addEventListener("popstate", () => {
+            setOpen(false);
+        });
         return () => {
-            window.removeEventListener("popstate", handleBackPage);
+            window.removeEventListener("popstate", () => {
+                setOpen(false);
+            });
         };
-    }, [handleBackPage]);
+    }, [setOpen]);
 
     useEffect(() => {
         return () => {
             if (idTopic && idTopic !== -1 && type === "test") {
-                console.log("🚀 ~ page unmount:", idTopic);
-
                 dispatch(
                     pauseTestThunk({
                         testId: idTopic,

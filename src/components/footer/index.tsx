@@ -3,7 +3,7 @@
 import { appConfigState } from "@/redux/features/appConfig";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useAppSelector } from "@/redux/hooks";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import { sendEmailSubscribeApiV4 } from "@/services/home.service";
 import { validateEmail } from "@/utils";
 import { getContactApp } from "@/utils/getContact";

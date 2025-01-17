@@ -22,7 +22,7 @@ const FinalTestLayout = ({ contentSeo }: { contentSeo: string }) => {
                         xs: 12,
                     }}
                 >
-                    <HeaderMobile />
+                    <HeaderMobile isActions />
                 </Grid2>
             </Grid2>
             <MyContainer className="py-4">

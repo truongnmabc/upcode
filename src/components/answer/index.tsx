@@ -7,7 +7,7 @@ import choiceAnswer from "@/redux/repository/game/choiceAnswer/choiceAnswer";
 import BtnTets from "@/tests/btn";
 import ctx from "@/utils/mergeClass";
 import { MathJax } from "better-react-mathjax";
-import React from "react";
+import React, { useCallback } from "react";
 import GetIconPrefix from "../choicesPanel/getIcon";
 const AnswerButton = ({
     choice,
@@ -31,22 +31,24 @@ const AnswerButton = ({
             ? "miss"
             : "other";
 
+    const handleClick = useCallback(() => {
+        if (
+            currentGame?.selectedAnswer === null ||
+            !currentGame?.selectedAnswer ||
+            isActions
+        ) {
+            dispatch(
+                choiceAnswer({
+                    question: currentGame,
+                    choice: choice,
+                })
+            );
+        }
+    }, [dispatch, isActions, currentGame, choice]);
+
     return (
         <div
-            onClick={() => {
-                if (
-                    currentGame?.selectedAnswer === null ||
-                    !currentGame?.selectedAnswer ||
-                    isActions
-                ) {
-                    dispatch(
-                        choiceAnswer({
-                            question: currentGame,
-                            choice: choice,
-                        })
-                    );
-                }
-            }}
+            onClick={handleClick}
             className={ctx(
                 "flex gap-2 w-full h-full bg-white sm:bg-transparent items-center rounded-md border border-solid px-4 py-3 hover:bg-[#2121210a]",
                 {

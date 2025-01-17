@@ -3,14 +3,12 @@
 import { selectListQuestion } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
-import { useSearchParams } from "next/navigation";
 import React from "react";
 type IProps = {
     isActions?: boolean;
 };
 const LevelGameProgress: React.FC<IProps> = ({ isActions = false }) => {
     const listQuestion = useAppSelector(selectListQuestion);
-    const type = useSearchParams().get("type");
     const sortedListQuestion = [...listQuestion].sort((a, b) => {
         if (a.localStatus === "correct" && b.localStatus !== "correct")
             return -1;
@@ -29,19 +27,11 @@ const LevelGameProgress: React.FC<IProps> = ({ isActions = false }) => {
                 <div
                     key={index}
                     className={ctx("h-full w-full", {
-                        "border-red-500": q.localStatus === "skip",
-                        // "border-[#5497FF] pointer-events-auto cursor-pointer":
-                        //     currentGame?.id === q.id,
                         "border-[#07C58C] text-white bg-[#07C58C]":
                             q.localStatus === "correct" && !isActions,
                         "border-[#FF746D] text-white bg-[#FF746D]":
                             q.localStatus === "incorrect" && !isActions,
                         "opacity-90": q.localStatus === "new",
-                        "cursor-pointer": isActions,
-                        "cursor-not-allowed":
-                            type === "test" &&
-                            q.localStatus === "new" &&
-                            !isActions,
                         "border-[#5497FF] text-white bg-[#5497FF]":
                             isActions && q.localStatus !== "new",
                     })}

@@ -10,7 +10,6 @@ import { ICurrentGame } from "@/models/game/game";
 
 type IInitQuestion = {
     testId?: number | null;
-    duration?: number;
 };
 
 /**
@@ -34,6 +33,7 @@ const setDataStore = async (
         startTime: new Date().getTime(),
         remainTime: remainTime,
         type: "practiceTests",
+        elapsedTime: 0,
         status: 0,
         turn: 1,
     });
@@ -122,41 +122,42 @@ export const mapQuestionsWithProgress = (
 
 const initPracticeThunk = createAsyncThunk(
     "initPracticeThunk",
-    async ({ testId, duration }: IInitQuestion) => {
-        let time = duration;
-        const id = testId;
+    async ({ testId }: IInitQuestion) => {
         let currentTest;
+        let id = testId || 0;
         if (!testId) {
             const res = await db?.testQuestions
+                .where("type")
+                .equals("practiceTests")
                 .filter((item) => item.status === 0)
                 .first();
-            if (res) {
+
+            if (res && res.id) {
                 currentTest = res;
+                id = res.id;
             }
         } else {
             currentTest = await db?.testQuestions
                 .where("parentId")
-                .equals(Number(id))
+                .equals(Number(testId))
                 .first();
         }
 
-        if (!id) throw new Error("Test ID not found");
-
         let listQuestion = currentTest?.question;
 
-        time = currentTest?.duration || 60;
+        const time = currentTest?.duration || 60;
 
-        const remainTime = currentTest?.remainTime || time * 60;
+        const remainTime = time * 60 - (currentTest?.elapsedTime || 0);
 
         if (!listQuestion) {
             listQuestion = await fetchQuestions(id);
-            setDataStore(Number(id), listQuestion, time, remainTime);
+            await setDataStore(id, listQuestion, time, remainTime);
         }
 
         const progressData = await getLocalUserProgress(
-            Number(id),
+            id,
             "test",
-            currentTest?.turn || 0
+            currentTest?.turn || 1
         );
 
         if (progressData) {
@@ -168,7 +169,7 @@ const initPracticeThunk = createAsyncThunk(
             return {
                 questions,
                 progressData,
-                idTopic: Number(id),
+                idTopic: id,
                 type: "test" as const,
                 duration: time,
                 isPaused: currentTest?.isPaused || false,

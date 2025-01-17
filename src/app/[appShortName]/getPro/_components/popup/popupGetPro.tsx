@@ -1,6 +1,6 @@
 import ProPlanSvg from "@/components/icon/ProPlanSvg";
 import { IAppInfo } from "@/models/app/appInfo";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import { getConfigAppPro, IPriceConfig } from "@/utils/paypal";
 import Dialog from "@mui/material/Dialog";
 import { useRouter } from "next/navigation";

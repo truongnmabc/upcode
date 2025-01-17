@@ -3,7 +3,7 @@ import { TypeParam } from "@/constants";
 import { db } from "@/db/db.model";
 import { useAppDispatch } from "@/redux/hooks";
 import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
