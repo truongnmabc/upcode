@@ -28,7 +28,7 @@ const BottomActions: React.FC<IPropsBottomAction> = ({
 
             <div className="px-4 w-full flex items-center gap-2 sm:p-4 sm:w-fit">
                 {!isMobile && <BtnSubmit isShow={isShow} />}
-                {type === "learn" ? (
+                {type === "learn" || type === "test" ? (
                     <BtnNextQuestion />
                 ) : isMobile ? (
                     <BtnMobile />

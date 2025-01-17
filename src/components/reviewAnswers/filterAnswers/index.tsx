@@ -1,17 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { ITopic } from "@/models/topics/topics";
 import { db } from "@/db/db.model";
-import Dialog from "@mui/material/Dialog";
 import { MtUiButton } from "@/components/button";
 import { ICurrentGame } from "@/models/game/game";
-import CardTopic from "@/app/[appShortName]/[state]/custom_test/_components/modalSetting/cardTopic";
+import CardTopic, {
+    IconCheck,
+} from "@/app/[appShortName]/[state]/custom_test/_components/modalSetting/cardTopic";
 import { ITopicEndTest } from "@/app/[appShortName]/[state]/result_test/_components";
+import DialogResponsive from "@/components/dialogResponsive";
+import ctx from "@/utils/mergeClass";
 type IProps = {
     result?: {
         listTopic: ITopicEndTest[];
-        pass: number;
-        percent: number;
-        isPass: boolean;
+
         all: ICurrentGame[];
         correct: ICurrentGame[];
         incorrect: ICurrentGame[];
@@ -24,7 +25,6 @@ type IProps = {
 };
 const FilterIcon: React.FC<IProps> = ({ setTabletData, result }) => {
     const [open, setOpen] = React.useState(false);
-
     const [listTopic, setListTopic] = useState<ITopic[]>([]);
     const [selectListTopic, setSelectListTopic] = useState<ITopic[]>([]);
 
@@ -32,8 +32,15 @@ const FilterIcon: React.FC<IProps> = ({ setTabletData, result }) => {
     const handleOpen = useCallback(() => setOpen(true), []);
 
     const handleSelectAll = useCallback(() => {
-        if (result) setSelectListTopic?.(result?.listTopic);
-    }, [result]);
+        if (
+            result?.listTopic.length &&
+            selectListTopic.length !== result?.listTopic.length
+        )
+            setSelectListTopic?.(result?.listTopic);
+
+        if (selectListTopic.length === result?.listTopic.length)
+            setSelectListTopic?.([]);
+    }, [result?.listTopic, selectListTopic]);
 
     const handleApply = useCallback(() => {
         if (!result?.all) return;
@@ -91,50 +98,100 @@ const FilterIcon: React.FC<IProps> = ({ setTabletData, result }) => {
                     Filter
                 </span>
             </div>
-            <Dialog
+            <DialogResponsive
                 open={open}
-                onClose={handleClose}
-                sx={{
-                    "& .MuiDialog-paper": {
-                        width: "100%",
-                        maxWidth: "1100px",
-                        maxHeight: "360px",
-                        boxShadow: "4px 8px 23.8px 0px #2121213D",
-                        borderRadius: "16px",
+                close={handleClose}
+                dialogRest={{
+                    sx: {
+                        "& .MuiDialog-paper": {
+                            width: "100%",
+                            maxWidth: "1100px",
+                            maxHeight: "360px",
+                            boxShadow: "4px 8px 23.8px 0px #2121213D",
+                            borderRadius: "16px",
+                        },
                     },
                 }}
+                sheetRest={{
+                    height: 600,
+                }}
             >
-                <div className="p-6 h-full w-full">
-                    <div className="w-full flex items-center justify-between">
-                        <div className="flex items-center gap-3 ">
-                            <p className="text-lg font-semibold">Subjects</p>
-                            <span
-                                className=" underline cursor-pointer text-sm font-normal"
-                                onClick={handleSelectAll}
-                            >
+                <div className="p-6 h-full flex flex-col gap-2  w-full ">
+                    <div className="flex-1 overflow-y-auto">
+                        <div className="w-full flex items-center justify-center  sm:justify-between">
+                            <div className="flex items-center justify-start flex-1 gap-3 ">
+                                <p className="text-lg text-center sm:text-start w-full sm:w-fit font-semibold">
+                                    Subjects
+                                </p>
+                                <span
+                                    className="hidden sm:block underline cursor-pointer text-sm font-normal"
+                                    onClick={handleSelectAll}
+                                >
+                                    Select All
+                                </span>
+                            </div>
+                            <div className="hidden sm:flex">
+                                <MtUiButton
+                                    type="primary"
+                                    size="large"
+                                    onClick={handleApply}
+                                    disabled={
+                                        selectListTopic.length > 0
+                                            ? false
+                                            : true
+                                    }
+                                >
+                                    Apply Filter
+                                </MtUiButton>
+                            </div>
+                        </div>
+                        <div
+                            className="flex items-center justify-between sm:hidden"
+                            onClick={handleSelectAll}
+                        >
+                            <span className=" underline cursor-pointer text-sm font-normal">
                                 Select All
                             </span>
+                            <div
+                                className={ctx(
+                                    "w-5 h-5 rounded-md border border-solid flex items-center overflow-hidden  justify-center ",
+                                    {
+                                        "border-primary bg-primary ":
+                                            selectListTopic.length ===
+                                            result?.listTopic.length,
+                                        "border-[#21212152] ":
+                                            selectListTopic.length !==
+                                            result?.listTopic.length,
+                                    }
+                                )}
+                            >
+                                <IconCheck />
+                            </div>
                         </div>
+                        <div className="grid mt-4 gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-3">
+                            {listTopic?.map((item) => (
+                                <CardTopic
+                                    item={item}
+                                    key={item.id}
+                                    selectListTopic={selectListTopic}
+                                    setSelectListTopic={setSelectListTopic}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <div className="flex mb-6 w-full sm:hidden">
                         <MtUiButton
                             type="primary"
                             size="large"
+                            block
                             onClick={handleApply}
+                            disabled={selectListTopic.length > 0 ? false : true}
                         >
                             Apply Filter
                         </MtUiButton>
                     </div>
-                    <div className="grid mt-4 gap-4 grid-cols-1 sm:grid-cols-3">
-                        {listTopic?.map((item) => (
-                            <CardTopic
-                                item={item}
-                                key={item.id}
-                                selectListTopic={selectListTopic}
-                                setSelectListTopic={setSelectListTopic}
-                            />
-                        ))}
-                    </div>
                 </div>
-            </Dialog>
+            </DialogResponsive>
         </div>
     );
 };

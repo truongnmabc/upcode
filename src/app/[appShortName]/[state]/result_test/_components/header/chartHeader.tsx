@@ -1,32 +1,34 @@
 "use client";
 import React from "react";
 import CircleProgress from "@/components/circleProgress";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const DashboardCard = ({
-    info,
+    correct,
+    passing,
+    percent,
+    total,
 }: {
-    info: {
-        total: number;
-        pass: number;
-        percent: number;
-    };
+    total: number;
+    correct: number;
+    percent: number;
+    passing: number;
 }) => {
+    const isMobile = useIsMobile();
     return (
-        <div className="relative mx-auto min-w-[320px] h-[340px] z-0 flex flex-col items-center">
-            <div className=" absolute top-0 z-10 w-full left-0">
-                <CircleProgress
-                    percentage={info.percent}
-                    color="#12E1AF"
-                    size={320}
-                    bgColor="#F87171"
-                    strokeWidth={16}
-                    halfCircle
-                    textClassName="text-5xl font-bold"
-                    textAttributes={{
-                        fill: "#F87171",
-                    }}
-                />
-            </div>
+        <div className="relative mx-auto min-w-[320px] w-full sm:w-fit  h-[340px] z-0 flex flex-col items-center">
+            <CircleProgress
+                percentage={percent}
+                color="#12E1AF"
+                size={isMobile ? 300 : 320}
+                bgColor="#F87171"
+                strokeWidth={16}
+                halfCircle
+                textClassName="text-5xl font-bold"
+                textAttributes={{
+                    fill: "#F87171",
+                }}
+            />
 
             <div className=" absolute  bottom-0 left-0 w-full z-20">
                 <div className="mt-4 flex justify-between w-full ">
@@ -37,7 +39,7 @@ const DashboardCard = ({
                                 Correct
                             </p>
                             <p className="text-[#0C1827] text-lg font-semibold">
-                                {info.pass} questions
+                                {correct} questions
                             </p>
                         </div>
                     </div>
@@ -49,7 +51,7 @@ const DashboardCard = ({
                                 Incorrect
                             </p>
                             <p className="text-[#0C1827] text-lg font-semibold">
-                                {info.total} questions
+                                {total - correct} questions
                             </p>
                         </div>
                     </div>
@@ -62,12 +64,13 @@ const DashboardCard = ({
                         </p>
                     </div>
 
-                    <div className="relative w-full h-5 mt-1 z-10 bg-white rounded-full">
+                    <div className="relative custom-progress w-full h-5 mt-1 z-10 bg-white rounded-full">
                         <div
-                            className="absolute w-1/2 top-0 left-0 h-5 bg-yellow-500 rounded-full"
+                            className="absolute w-1/2 top-0 left-0 h-5 bg-yellow-500 rounded"
                             style={{
                                 background:
                                     "linear-gradient(90deg, #E3C151 0%, #E3A651 50%, #F39153 100%)",
+                                width: `${passing}%`,
                             }}
                         ></div>
                     </div>

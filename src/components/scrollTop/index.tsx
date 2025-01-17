@@ -13,7 +13,7 @@ const ScrollToTopArrow: React.FC<ScrollToTopArrowProps> = ({ scrollRef }) => {
 
     return (
         <div
-            className="fixed z-50 bottom-8 right-8 flex items-center justify-center w-12 h-12 rounded-full bg-white text-center shadow-md cursor-pointer hover:h-14 transition-all duration-200 ease-in-out sm:bottom-12"
+            className="fixed z-50 bottom-24 right-8 flex items-center justify-center w-12 h-12 rounded-full bg-white text-center shadow-md cursor-pointer hover:h-14 transition-all duration-200 ease-in-out sm:bottom-12"
             onClick={scrollToTop}
         >
             <div className="relative -top-px flex transition-transform duration-300 ease-in-out">
