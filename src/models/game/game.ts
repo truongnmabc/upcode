@@ -39,8 +39,6 @@ export interface IGameReducer {
     isPaused: boolean;
     indexSubTopic: number;
     remainTime: number;
-    belowFifty: Record<string, ICurrentGame[]>;
-    aboveFifty: Record<string, ICurrentGame[]>;
     feedBack?: IFeedBack;
     passing?: number;
     isFinishGame?: boolean;

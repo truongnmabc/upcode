@@ -8,7 +8,7 @@ import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import { Grid2 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { Fragment, useCallback } from "react";
@@ -59,7 +59,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
             dispatch(initDiagnosticTestQuestionThunk());
             router.push(RouterApp.Diagnostic_test);
         } else {
-            const _href = `${RouterApp.ResultTest}?type=${TypeParam.practiceTest}&testId=${diagnostic.parentId}`;
+            const _href = `${RouterApp.ResultTest}?type=${TypeParam.diagnosticTest}&testId=${diagnostic.parentId}`;
             router.push(_href);
         }
     }, [dispatch, router]);

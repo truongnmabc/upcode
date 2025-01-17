@@ -1,5 +1,5 @@
 "use client";
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import MtUiSkeleton from "@/components/loading-skeleton";
 import { convertPathName } from "@/utils/pathName";
 import clsx from "clsx";

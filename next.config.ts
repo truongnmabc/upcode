@@ -69,6 +69,9 @@ const nextConfig: NextConfig = {
     },
 
     async rewrites() {
+        const isSingleApp = process.env["NEXT_PUBLIC_APP_SHORT_NAME"];
+        if (isSingleApp) {
+
         const pageStatic = ["about-us", "contact", "getPro", "billing"];
         const pageDynamic1 = [
             "review",
@@ -80,38 +83,44 @@ const nextConfig: NextConfig = {
         ];
         const pageDynamic = ["study"];
 
-        const result = [
+            const result = [
+                {
+                    source: "/",
+                    destination: `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}`,
+                },
+            ];
+            pageStatic.forEach((e) => {
+                result.push({
+                    source: "/" + e,
+                    destination:
+                        `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/` + e,
+                });
+            });
+            pageDynamic1.forEach((e) => {
+                result.push({
+                    source: "/" + e,
+                    destination:
+                        `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/all/` + e,
+                });
+            });
+            pageDynamic.forEach((e) => {
+                result.push({
+                    source: "/" + e + "/:path",
+                    destination:
+                        `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/all/` +
+                        e +
+                        "/:path",
+                });
+            });
+
+            return result;
+        }
+        return [
             {
                 source: "/",
-                destination: process.env.IS_SINGLE_APP
-                    ? "/parent"
-                    : `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}`,
+                destination: "/parent",
             },
         ];
-        pageStatic.forEach((e) => {
-            result.push({
-                source: "/" + e,
-                destination: `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/` + e,
-            });
-        });
-        pageDynamic1.forEach((e) => {
-            result.push({
-                source: "/" + e,
-                destination:
-                    `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/all/` + e,
-            });
-        });
-        pageDynamic.forEach((e) => {
-            result.push({
-                source: "/" + e + "/:path",
-                destination:
-                    `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/all/` +
-                    e +
-                    "/:path",
-            });
-        });
-
-        return result;
     },
 };
 

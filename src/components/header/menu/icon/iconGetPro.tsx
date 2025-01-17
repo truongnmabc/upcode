@@ -1,6 +1,6 @@
 "use client";
 
-import RouterApp from "@/router/router.constant";
+import RouterApp from "@/constants/router.constant";
 import clsx from "clsx";
 import Link from "next/link";
 import React from "react";

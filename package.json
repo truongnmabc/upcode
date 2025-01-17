@@ -4,15 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack -p 3000",
+    "dev": "yarn &&  next dev --turbopack -p 3000",
     "build": "next build",
     "start": "next start -p 3000",
     "lint": "next lint",
     "test": "yarn test:unit && yarn test:e2e",
-    "test:unit": "jest",
+    "test:unit": "jest --runInBand",
     "test:e2e": "playwright test",
     "prepare": "husky",
-    "setup": "node src/scripts/setupProject.js"
+    "setup": "node  scripts/setupProject.js"
   },
   "dependencies": {
     "@emotion/react": "^11.13.5",
@@ -54,7 +54,8 @@
     "react-window": "^1.8.11",
     "reselect": "^5.1.1",
     "resize-observer-polyfill": "^1.5.1",
-    "throttle-debounce": "^5.0.2"
+    "throttle-debounce": "^5.0.2",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@clack/prompts": "^0.8.2",
@@ -78,6 +79,7 @@
     "@types/throttle-debounce": "^5.0.2",
     "autoprefixer": "^10.4.20",
     "clsx": "^2.1.1",
+    "core-js": "^3.40.0",
     "css-loader": "^7.1.2",
     "eslint": "^9.8.0",
     "eslint-config-next": "15.0.3",
