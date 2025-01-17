@@ -70,18 +70,18 @@ const nextConfig: NextConfig = {
 
     async rewrites() {
         const isSingleApp = process.env["NEXT_PUBLIC_APP_SHORT_NAME"];
-        console.log("🚀 ~ rewrites ~ isSingleApp:", isSingleApp);
         if (isSingleApp) {
-            const pageStatic = ["about-us", "contact", "getPro"];
-            const pageDynamic1 = [
-                "review",
-                "result_test",
-                "finish",
-                "final_test",
-                "diagnostic_test",
-                "custom_test",
-            ];
-            const pageDynamic = ["study"];
+
+        const pageStatic = ["about-us", "contact", "getPro", "billing"];
+        const pageDynamic1 = [
+            "review",
+            "result_test",
+            "finish",
+            "final_test",
+            "diagnostic_test",
+            "custom_test",
+        ];
+        const pageDynamic = ["study"];
 
             const result = [
                 {
