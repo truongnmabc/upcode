@@ -15,7 +15,6 @@ import clsx from "clsx";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import HeaderResultTest from "./header";
-
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
 import { calculatorAverageLevel } from "@/utils/math";
 import { totalPassingPart } from "../../finish/_components/calculate";
@@ -28,6 +27,7 @@ import {
 } from "./utils";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { MtUiButton } from "@/components/button";
+import DrawerAnswers from "./drawer";
 
 export interface ITopicEndTest extends ITopic {
     totalQuestion: number;
@@ -58,6 +58,8 @@ const ResultTestLayout = () => {
     const type = useSearchParams().get("type");
     const testId = useSearchParams().get("testId");
     const isMobile = useIsMobile();
+    const [openDrawer, setOpenDrawer] = useState(false);
+
     const [result, setResult] = useState<IPropsState>({
         listTopic: [],
         all: [],
@@ -150,6 +152,9 @@ const ResultTestLayout = () => {
         handleGetData();
     }, [handleGetData]);
 
+    const handleOpenDrawer = () => setOpenDrawer(true);
+    const handleCloseDrawer = () => setOpenDrawer(false);
+
     return (
         <div className="w-full flex-1">
             <div className="bg-white sm:bg-[#FFE1E1] ">
@@ -164,12 +169,13 @@ const ResultTestLayout = () => {
                 />
             </div>
             <MyContainer className="sm:pb-6 pb-4">
-                {isMobile && (
+                {isMobile && type !== TypeParam.diagnosticTest && (
                     <div className="pt-4 ">
                         <MtUiButton
                             block
                             size="large"
                             className="bg-white text-primary border-primary"
+                            onClick={handleOpenDrawer}
                         >
                             Review your answers
                         </MtUiButton>
@@ -185,6 +191,13 @@ const ResultTestLayout = () => {
                         ))}
                     </div>
                 </div>
+                <DrawerAnswers
+                    openDrawer={openDrawer}
+                    handleCloseDrawer={handleCloseDrawer}
+                    tableData={tableData}
+                    result={result}
+                    setTabletData={setTabletData}
+                />
                 {type !== TypeParam.diagnosticTest && !isMobile && (
                     <div
                         className={clsx("w-full flex flex-col pt-6  ", {

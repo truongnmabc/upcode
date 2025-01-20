@@ -16,11 +16,11 @@ const DashboardCard = ({
 }) => {
     const isMobile = useIsMobile();
     return (
-        <div className="relative mx-auto min-w-[320px] w-full sm:w-fit  h-[340px] z-0 flex flex-col items-center">
+        <div className="relative mx-auto min-w-[320px] w-full sm:w-fit h-[300px] sm:h-[340px] z-0 flex flex-col items-center">
             <CircleProgress
                 percentage={percent}
                 color="#12E1AF"
-                size={isMobile ? 300 : 320}
+                size={isMobile ? 240 : 320}
                 bgColor="#F87171"
                 strokeWidth={16}
                 halfCircle
@@ -70,7 +70,7 @@ const DashboardCard = ({
                             style={{
                                 background:
                                     "linear-gradient(90deg, #E3C151 0%, #E3A651 50%, #F39153 100%)",
-                                width: `${passing}%`,
+                                width: `${passing < 3 ? 3 : passing}%`,
                             }}
                         ></div>
                     </div>

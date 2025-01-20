@@ -29,7 +29,7 @@ const ItemListTopicResult: React.FC<IProps> = ({ item }) => {
     }, [router, appInfo.appShortName, dispatch, item]);
 
     return (
-        <div className="w-full p-4 rounded-xl border border-solid bg-white  gap-4 flex flex-col sm:flex-row items-center justify-between">
+        <div className="w-full p-4 rounded-xl border border-solid bg-white gap-2 sm:gap-4 flex flex-col sm:flex-row items-center justify-between">
             <div className="flex items-center justify-between w-full sm:w-fit overflow-hidden flex-1 gap-2">
                 <div className="w-8 h-8 sm:h-12 sm:w-12 bg-primary-16 rounded-lg flex items-center justify-center ">
                     <LazyLoadImage

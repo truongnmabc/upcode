@@ -20,6 +20,8 @@ import resumedTestThunk from "../repository/game/pauseAndResumed/resumedTest";
 import { handleInitTestQuestion } from "../repository/game/utils";
 import { reloadStateThunk } from "../repository/utils/reload";
 import { RootState } from "../store";
+import tryAgainDiagnosticThunk from "../repository/game/tryAgain/tryAgainDiagnostic";
+import tryAgainPracticesThunk from "../repository/game/tryAgain/tryAgainPractices";
 
 const init = new UserQuestionProgress();
 
@@ -102,19 +104,7 @@ export const gameSlice = createSlice({
             state.remainTime = state.time * 60;
         },
         startTryAgainDiagnostic: (state) => {
-            const list = [...state.listQuestion]?.map((item) => ({
-                ...item,
-                localStatus: "new" as const,
-                selectedAnswer: null,
-            }));
-
-            state.currentGame = list[0];
-            state.listQuestion = list;
-            state.indexCurrentQuestion = 0;
-            const turn = state.turn;
-            state.turn = turn + 1;
-            state.isPaused = false;
-            state.remainTime = state.time * 80;
+            console.log("🚀 ~ state:", state);
         },
         continueGame: (state) => {
             state.isPaused = false;
@@ -240,6 +230,25 @@ export const gameSlice = createSlice({
                 state.isPaused = false;
                 state.type = "test";
             }
+        });
+
+        builder.addCase(tryAgainDiagnosticThunk.fulfilled, (state, action) => {
+            const { listQuestion, turn } = action.payload;
+            state.currentGame = listQuestion[0];
+            state.listQuestion = listQuestion;
+            state.indexCurrentQuestion = 0;
+            state.turn = turn + 1;
+            state.isPaused = false;
+            state.remainTime = state.time * 80;
+        });
+        builder.addCase(tryAgainPracticesThunk.fulfilled, (state, action) => {
+            const { listQuestion, turn, time } = action.payload;
+            state.currentGame = listQuestion[0];
+            state.listQuestion = listQuestion;
+            state.indexCurrentQuestion = 0;
+            state.turn = turn + 1;
+            state.isPaused = false;
+            state.remainTime = time * 60;
         });
 
         builder.addCase(

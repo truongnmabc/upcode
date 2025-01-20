@@ -25,6 +25,7 @@ type IProps = {
         incorrect: ICurrentGame[];
     }) => void;
     title?: string;
+    type?: "default" | "custom";
 };
 
 const ReviewAnswerResult: React.FC<IProps> = ({
@@ -35,6 +36,7 @@ const ReviewAnswerResult: React.FC<IProps> = ({
     result,
     showFilter = true,
     title,
+    type,
 }) => {
     const [value, setValue] = React.useState(0);
 
@@ -83,15 +85,22 @@ const ReviewAnswerResult: React.FC<IProps> = ({
             {all?.length > 0 ? (
                 <div className="w-full flex-1 h-full transition-all">
                     <MathJaxContext>
-                        <TabPanelReview value={value} index={0} data={all} />
+                        <TabPanelReview
+                            value={value}
+                            index={0}
+                            data={all}
+                            type={type}
+                        />
                         <TabPanelReview
                             value={value}
                             index={1}
                             data={correct}
+                            type={type}
                         />
                         <TabPanelReview
                             value={value}
                             index={2}
+                            type={type}
                             data={incorrect}
                         />
                     </MathJaxContext>

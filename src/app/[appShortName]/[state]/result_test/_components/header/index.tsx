@@ -7,16 +7,13 @@ import { TypeParam } from "@/constants";
 import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
-import {
-    setTurtGame,
-    startOverGame,
-    startTryAgainDiagnostic,
-} from "@/redux/features/game";
-import { selectIdTopic, selectTurn } from "@/redux/features/game.reselect";
+import { selectIdTopic } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
+import tryAgainDiagnosticThunk from "@/redux/repository/game/tryAgain/tryAgainDiagnostic";
+import tryAgainPracticesThunk from "@/redux/repository/game/tryAgain/tryAgainPractices";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { IconFailResultTest } from "../icon/iconFailResultTest";
@@ -34,9 +31,9 @@ const HeaderResultTest: React.FC<{
     const router = useRouter();
     const idTopic = useAppSelector(selectIdTopic);
     const appInfo = useAppSelector(selectAppInfo);
-    const turn = useAppSelector(selectTurn);
     const type = useSearchParams().get("type");
     const dispatch = useAppDispatch();
+    const testId = useSearchParams().get("testId");
 
     /**
      *
@@ -64,9 +61,11 @@ const HeaderResultTest: React.FC<{
 
     const handleTryAgain = useCallback(async () => {
         let _href = "";
+
+        const id = idTopic !== -1 ? idTopic : Number(testId) || -1;
         switch (type) {
             case TypeParam.diagnosticTest:
-                dispatch(startTryAgainDiagnostic());
+                dispatch(tryAgainDiagnosticThunk({ testId: id }));
                 _href = RouterApp.Diagnostic_test;
                 break;
 
@@ -76,13 +75,8 @@ const HeaderResultTest: React.FC<{
                 break;
 
             case TypeParam.practiceTest:
-                dispatch(startOverGame());
-                dispatch(
-                    setTurtGame({
-                        turn: turn + 1,
-                    })
-                );
-                _href = `/study/${TypeParam.practiceTest}?type=test&testId=${idTopic}`;
+                dispatch(tryAgainPracticesThunk({ testId: id }));
+                _href = `/study/${TypeParam.practiceTest}?type=test&testId=${id}`;
                 break;
 
             case TypeParam.review:
@@ -94,9 +88,9 @@ const HeaderResultTest: React.FC<{
         }
 
         if (_href) {
-            router.replace(_href);
+            router.push(_href);
         }
-    }, [router, idTopic, dispatch, type, turn]);
+    }, [router, idTopic, dispatch, type, testId]);
 
     const handleNextTets = useCallback(async () => {
         if (type === TypeParam.practiceTest) {
@@ -112,7 +106,6 @@ const HeaderResultTest: React.FC<{
         }
         if (type === TypeParam.customTest) {
             dispatch(initCustomTestThunk());
-
             return router.push(RouterApp.Custom_test);
         }
     }, [router, type, dispatch]);
@@ -141,6 +134,7 @@ const HeaderResultTest: React.FC<{
             />
         );
     }
+
     return (
         <MyContainer className="py-4 sm:py-8 flex flex-col sm:flex-row sm:gap-8">
             <div
@@ -149,6 +143,7 @@ const HeaderResultTest: React.FC<{
             >
                 <CloseIcon />
             </div>
+
             <div className="flex-1 flex flex-col sm:flex-row gap-3 sm:gap-10 items-end">
                 <div className="w-full flex justify-center sm:w-[234px] sm:h-[232px]">
                     {isPass ? <IconPassResultTest /> : <IconFailResultTest />}
@@ -157,9 +152,9 @@ const HeaderResultTest: React.FC<{
                     <div className="flex-1">
                         {isPass ? <TitlePass /> : <TitleMiss />}
                     </div>
-                    <div className="fixed bottom-0 py-4 px-2 left-0 right-0 z-50 bg-theme-dark sm:bg-transparent sm:static sm:flex gap-6 items-center">
+                    <div className="fixed bottom-0 py-4 px-4 left-0 right-0 z-50 bg-theme-dark sm:bg-transparent sm:static flex gap-4 sm:gap-6 items-center">
                         <MtUiButton
-                            className="sm:py-4 sm:max-h-14 text-lg font-medium rounded-2xl text-primary border-primary"
+                            className="sm:py-4 sm:max-h-14 text-lg bg-white font-medium rounded-2xl text-primary border-primary"
                             block
                             size="large"
                             onClick={handleTryAgain}
