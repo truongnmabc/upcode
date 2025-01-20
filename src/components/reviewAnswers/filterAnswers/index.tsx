@@ -179,7 +179,7 @@ const FilterIcon: React.FC<IProps> = ({ setTabletData, result }) => {
                             ))}
                         </div>
                     </div>
-                    <div className="flex mb-6 w-full sm:hidden">
+                    <div className="flex mb-2 w-full sm:hidden">
                         <MtUiButton
                             type="primary"
                             size="large"

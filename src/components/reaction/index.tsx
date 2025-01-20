@@ -64,7 +64,7 @@ const Reaction = ({ item }: { item?: ICurrentGame }) => {
                 partId: item?.parentId || currentGame.parentId,
             })
         );
-    }, [dispatch, currentGame.id, currentGame.parentId, item, status.save]);
+    }, [dispatch, currentGame?.id, currentGame?.parentId, item, status.save]);
 
     const likeAction = useCallback(() => {
         if (!status.like) {
@@ -77,7 +77,7 @@ const Reaction = ({ item }: { item?: ICurrentGame }) => {
                 partId: item?.parentId || currentGame.parentId,
             })
         );
-    }, [dispatch, currentGame.id, currentGame.parentId, item, status.like]);
+    }, [dispatch, currentGame?.id, currentGame?.parentId, item, status.like]);
 
     const dislikeAction = () => setOpenModal(true);
 

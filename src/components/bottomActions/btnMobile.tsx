@@ -31,10 +31,10 @@ const BtnMobile = () => {
     }, [dispatch, indexCurrentQuestion, listLength]);
 
     return (
-        <div className="px-4 w-full flex items-center gap-2 sm:p-4 sm:w-fit">
+        <div className=" w-full flex items-center gap-4 sm:p-4 sm:w-fit">
             <MtUiButton
                 animated
-                className="py-3 px-8 border-primary text-primary"
+                className="py-3 px-8 border-primary bg-white text-primary"
                 block
                 onClick={handlePrev}
                 disabled={indexCurrentQuestion - 1 < 0}
