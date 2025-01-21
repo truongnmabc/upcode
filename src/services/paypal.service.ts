@@ -160,6 +160,7 @@ export const cancelSubscriptionAPI = async (orderId: string) => {
         return data;
     } catch (error) {
         console.log("error", error);
+        return undefined;
     }
 };
 
@@ -208,5 +209,6 @@ export const sendEmailSubscribeSuccessAPI = async ({
         return data;
     } catch (error) {
         console.log("error", error);
+        return undefined;
     }
 };

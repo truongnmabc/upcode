@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
     },
 
     images: {
+        minimumCacheTTL: 60,
         remotePatterns: [
             {
                 protocol: "http",
@@ -28,6 +29,10 @@ const nextConfig: NextConfig = {
             {
                 protocol: "https",
                 hostname: "lh3.googleusercontent.com",
+            },
+            {
+                protocol: "https",
+                hostname: "images.dmca.com",
             },
         ],
     },
@@ -71,17 +76,16 @@ const nextConfig: NextConfig = {
     async rewrites() {
         const isSingleApp = process.env["NEXT_PUBLIC_APP_SHORT_NAME"];
         if (isSingleApp) {
-
-        const pageStatic = ["about-us", "contact", "getPro", "billing"];
-        const pageDynamic1 = [
-            "review",
-            "result_test",
-            "finish",
-            "final_test",
-            "diagnostic_test",
-            "custom_test",
-        ];
-        const pageDynamic = ["study"];
+            const pageStatic = ["about-us", "contact", "getPro", "billing"];
+            const pageDynamic1 = [
+                "review",
+                "result_test",
+                "finish",
+                "final_test",
+                "diagnostic_test",
+                "custom_test",
+            ];
+            const pageDynamic = ["study"];
 
             const result = [
                 {

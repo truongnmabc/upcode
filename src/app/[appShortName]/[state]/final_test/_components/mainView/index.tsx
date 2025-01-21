@@ -21,7 +21,7 @@ const MainViewFinalTest = () => {
                             <CountTimeFinalTest />
                         </div>
                     </div>
-                    <QuestionContent showStatus={false} />
+                    <QuestionContent showStatus={false} showQuestionsCount />
                     <ChoicesPanel isActions />
                 </div>
 

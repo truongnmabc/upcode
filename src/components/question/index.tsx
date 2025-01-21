@@ -19,10 +19,12 @@ import clsx from "clsx";
 
 const QuestionContent = ({
     showStatus = true,
+    showQuestionsCount = false,
     showShadow,
 }: {
     showStatus?: boolean;
     showShadow?: boolean;
+    showQuestionsCount?: boolean;
 }) => {
     const currentGame = useAppSelector(selectCurrentGame);
     const appInfo = useAppSelector(selectAppInfo);
@@ -61,7 +63,7 @@ const QuestionContent = ({
                 <MtUiSkeleton className="min-h-8" />
             ) : (
                 <Fragment>
-                    {type === "test" && (
+                    {(type === "test" || showQuestionsCount) && (
                         <div className="flex sm:hidden text-sm font-semibold">
                             Question {indexGame + 1} / {list.length}
                         </div>

@@ -8,8 +8,12 @@ import React, { Fragment, useCallback, useEffect, useState } from "react";
 import ModalSettingCustomTest from "../modalSetting";
 import { IconDelete, IconEdit, IconPlus } from "@/components/icon/iconGridLeft";
 import ModalDelete from "../modalDelete";
-import { selectListQuestion } from "@/redux/features/game.reselect";
-import { resetState } from "@/redux/features/game";
+import {
+    selectIndexSubTopic,
+    selectListQuestion,
+} from "@/redux/features/game.reselect";
+import { resetState, startCustomTest } from "@/redux/features/game";
+import clsx from "clsx";
 const GridLeftCustomTest = () => {
     const [listTest, setListTest] = useState<ITestQuestion[]>([]);
     const [openModalSetting, setOpenModalSetting] = React.useState(false);
@@ -17,6 +21,7 @@ const GridLeftCustomTest = () => {
     const [itemSelect, setItemSelect] = useState<ITestQuestion | null>(null);
     const listQuestion = useAppSelector(selectListQuestion);
     const dispatch = useAppDispatch();
+    const indexSubTopic = useAppSelector(selectIndexSubTopic);
 
     useEffect(() => {
         const handleGetData = async () => {
@@ -72,6 +77,12 @@ const GridLeftCustomTest = () => {
                 .filter((item) => item.type === "test")
                 .delete();
 
+            const startTest = await db?.testQuestions
+                .where("type")
+                .equals("customTets")
+                .filter((item) => item.status === 0)
+                .first();
+
             setListTest((prev) => {
                 const updatedList = prev.filter(
                     (item) => item.parentId !== itemSelect.parentId
@@ -82,6 +93,17 @@ const GridLeftCustomTest = () => {
                 }
                 return updatedList;
             });
+            if (startTest)
+                dispatch(
+                    startCustomTest({
+                        listQuestion: startTest?.question,
+                        time: startTest?.duration * 60,
+                        parentId: startTest.parentId,
+                        passing: startTest.passing,
+                        feedBack: startTest.feedBack,
+                        indexSubTopic: 1,
+                    })
+                );
             setOpenDelete(false);
         }
     }, [itemSelect, dispatch]);
@@ -122,7 +144,13 @@ const GridLeftCustomTest = () => {
                             {listTest?.map((item, index) => (
                                 <div
                                     key={index}
-                                    className="flex bg-[#2121210A] rounded-lg px-3 py-[10px] gap-2 justify-between items-center"
+                                    className={clsx(
+                                        "flex bg-[#2121210A]  hover:border-primary border border-solid rounded-lg px-3 py-[10px] gap-2 justify-between items-center",
+                                        {
+                                            "border-primary":
+                                                indexSubTopic - 1 === index,
+                                        }
+                                    )}
                                 >
                                     <p
                                         className="text-sm cursor-pointer font-medium"
@@ -174,6 +202,7 @@ const GridLeftCustomTest = () => {
                     }
                     open={openModalSetting}
                     onClose={onClose}
+                    listTestLength={listTest?.length}
                 />
             ) : null}
         </Fragment>

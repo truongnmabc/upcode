@@ -41,9 +41,9 @@ export const verifiedCodeApi = async ({
 // *NOTE: can check lai
 
 export const END_POINT_WORD_PRESS =
-    process.env.NEXT_PUBLIC_WORDPRESS_API_URL?.length &&
-    process.env.NEXT_PUBLIC_WORDPRESS_API_URL != "null"
-        ? process.env.NEXT_PUBLIC_WORDPRESS_API_URL
+    process.env["NEXT_PUBLIC_WORDPRESS_API_URL"]?.length &&
+    process.env["NEXT_PUBLIC_WORDPRESS_API_URL"] != "null"
+        ? process.env["NEXT_PUBLIC_WORDPRESS_API_URL"]
         : null;
 export const API_SEND_EMAIL = "https://webpush.passemall.com/api/send-contact";
 

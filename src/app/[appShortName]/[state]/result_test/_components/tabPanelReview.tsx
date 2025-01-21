@@ -6,10 +6,11 @@ interface TabPanelProps {
     index: number;
     value: number;
     data: ICurrentGame[];
+    type?: "default" | "custom";
 }
 
 function TabPanelReview(props: TabPanelProps) {
-    const { value, index, data } = props;
+    const { value, index, data, type } = props;
     const isMobile = useIsMobile();
 
     const getItemSize = (index: number) =>
@@ -20,7 +21,7 @@ function TabPanelReview(props: TabPanelProps) {
             <VariableSizeList
                 data={data}
                 getItemSize={getItemSize}
-                item={(item) => <QuestionResult item={item} />}
+                item={(item) => <QuestionResult item={item} type={type} />}
             />
         );
     }

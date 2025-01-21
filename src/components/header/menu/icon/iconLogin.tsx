@@ -1,12 +1,10 @@
 "use client";
-import RouterApp from "@/constants/router.constant";
 import LazyLoadImage from "@/components/images";
-import { selectAppInfo } from "@/redux/features/appInfo.reselect";
+import RouterApp from "@/constants/router.constant";
 import { shouldOpenModalLogin } from "@/redux/features/user";
 import { selectUserInfo } from "@/redux/features/user.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
-import { revertPathName } from "@/utils/pathName";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -20,18 +18,13 @@ const FN = ({ classNames }: { classNames?: string }) => {
     const dispatch = useAppDispatch();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const appInfo = useAppSelector(selectAppInfo);
     const userInfo = useAppSelector(selectUserInfo);
 
     const handleNavigate = useCallback(() => {
         setAnchorEl(null);
 
-        const _href = revertPathName({
-            appName: appInfo.appShortName,
-            href: RouterApp.Billing,
-        });
-        router.push(_href);
-    }, [appInfo, router]);
+        router.push(RouterApp.Billing);
+    }, [router]);
 
     const handleLogout = useCallback(() => {
         setAnchorEl(null);

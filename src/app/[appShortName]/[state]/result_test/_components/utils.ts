@@ -6,9 +6,10 @@ import { ITopic } from "@/models/topics/topics";
 import { ITopicEndTest } from ".";
 import { TypeParam } from "@/constants";
 
-export const calculatePassList = (user: IUserQuestionProgress[]) => {
-    return user?.filter((item) =>
-        item.selectedAnswers?.find((ans) => ans.correct)
+export const filterCorrectList = (user: IUserQuestionProgress[]) => {
+    return user?.filter(
+        (item) =>
+            item.selectedAnswers?.[item.selectedAnswers?.length - 1].correct
     );
 };
 
@@ -36,13 +37,20 @@ export const getReviewTopics = (
         .filter((item): item is ITopicEndTest => item !== null);
 };
 
-export const calculateTopics = (
-    type: string | null,
-    topics: ITopic[] | undefined,
-    questions: ITestQuestion | undefined,
-    listExam: IExamData[],
-    listQuestion: ICurrentGame[]
-): ITopicEndTest[] => {
+type ITopics = {
+    type: string | null;
+    topics: ITopic[] | undefined;
+    questions: ITestQuestion | undefined;
+    listExam: IExamData[];
+    listQuestion: ICurrentGame[];
+};
+export const calculateTopics = ({
+    listExam,
+    listQuestion,
+    questions,
+    topics,
+    type,
+}: ITopics): ITopicEndTest[] => {
     let listTopic: ITopicEndTest[] = [];
 
     if (type === TypeParam.diagnosticTest) {
@@ -111,12 +119,18 @@ export const calculateTopics = (
     return listTopic;
 };
 
-export const processAllQuestions = (
-    type: string | null,
-    listExam: IExamData[],
-    listQuestion: ICurrentGame[],
-    topics: ITopic[] | undefined
-): ICurrentGame[] => {
+type IAll = {
+    type: string | null;
+    listExam: IExamData[];
+    listQuestion: ICurrentGame[];
+    topics: ITopic[] | undefined;
+};
+export const processAllQuestions = ({
+    listExam,
+    listQuestion,
+    topics,
+    type,
+}: IAll): ICurrentGame[] => {
     return type === TypeParam.diagnosticTest ||
         type === TypeParam.customTest ||
         type === TypeParam.review

@@ -1,11 +1,12 @@
 import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic";
 import LazyLoadImage from "@/components/images";
-import { appInfoState } from "@/redux/features/appInfo";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
 import { ITopicEndTest } from "..";
 import CircleProgress from "@/components/circleProgress";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 type IProps = {
     item: ITopicEndTest;
@@ -14,7 +15,8 @@ type IProps = {
 const ItemListTopicResult: React.FC<IProps> = ({ item }) => {
     const progress = Math.floor((item.correct / item.totalQuestion) * 100);
     const router = useRouter();
-    const { appInfo } = useAppSelector(appInfoState);
+    const appInfo = useAppSelector(selectAppInfo);
+    const isMobile = useIsMobile();
     const dispatch = useAppDispatch();
     const handleImprove = useCallback(() => {
         handleNavigateStudy({
@@ -27,7 +29,7 @@ const ItemListTopicResult: React.FC<IProps> = ({ item }) => {
     }, [router, appInfo.appShortName, dispatch, item]);
 
     return (
-        <div className="w-full p-4 rounded-xl border border-solid bg-white  gap-4 flex flex-col sm:flex-row items-center justify-between">
+        <div className="w-full p-4 rounded-xl border border-solid bg-white gap-2 sm:gap-4 flex flex-col sm:flex-row items-center justify-between">
             <div className="flex items-center justify-between w-full sm:w-fit overflow-hidden flex-1 gap-2">
                 <div className="w-8 h-8 sm:h-12 sm:w-12 bg-primary-16 rounded-lg flex items-center justify-center ">
                     <LazyLoadImage
@@ -48,14 +50,26 @@ const ItemListTopicResult: React.FC<IProps> = ({ item }) => {
                     Improve
                 </div>
             </div>
-            <CircleProgress
-                percentage={progress}
-                color="var(--text-color-primary)"
-                size={52}
-                bgColor="#E3A65129"
-                strokeWidth={4}
-                textClassName="text-xs"
-            />
+            {isMobile ? (
+                <div className=" flex items-center w-full   gap-1">
+                    <div className="custom-header-progress flex-1">
+                        <progress className="" value={progress} max={100} />
+                    </div>
+                    <div className="text-sm  text-center font-medium w-12">
+                        {progress} %
+                    </div>
+                </div>
+            ) : (
+                <CircleProgress
+                    percentage={progress}
+                    color="var(--text-color-primary)"
+                    size={52}
+                    bgColor="#E3A65129"
+                    strokeWidth={4}
+                    textClassName="text-xs"
+                />
+            )}
+
             <div
                 onClick={handleImprove}
                 className=" rounded-[30px] hidden sm:block cursor-pointer px-4 py-2 bg-[#E3A65129] font-medium text-base text-[#E3A651] "

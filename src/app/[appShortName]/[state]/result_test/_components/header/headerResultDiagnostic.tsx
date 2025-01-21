@@ -3,6 +3,8 @@ import { MtUiButton } from "@/components/button";
 import CircleProgress from "@/components/circleProgress";
 import MyContainer from "@/components/container";
 import LazyLoadImage from "@/components/images";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
 
@@ -14,8 +16,9 @@ type IProps = {
 const HeaderResultDiagnostic = ({ handleTryAgain, percentage }: IProps) => {
     const router = useRouter();
     const back = useCallback(() => router.back(), [router]);
+    const isMobile = useIsMobile();
     return (
-        <MyContainer className="py-8  flex flex-col sm:flex-row gap-8 ">
+        <MyContainer className="sm:py-8  flex flex-col sm:flex-row gap-8 ">
             <div className="bg-white rounded-xl w-full p-4 sm:p-6 flex flex-col sm:flex-row  justify-between">
                 <div
                     className="w-10 h-10 rounded-full cursor-pointer bg-[#21212114] flex items-center justify-center"
@@ -23,34 +26,42 @@ const HeaderResultDiagnostic = ({ handleTryAgain, percentage }: IProps) => {
                 >
                     <CloseIcon />
                 </div>
-                <div className=" flex w-full flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
-                    <CircleProgress
-                        percentage={percentage}
-                        color="red"
-                        size={260}
-                        bgColor="#7C6F5B3D"
-                        strokeWidth={16}
-                        customText={
-                            <div className=" absolute inset-0 z-10 flex items-center flex-col gap-2 justify-center">
-                                <LazyLoadImage
-                                    src="/end/endTest.png"
-                                    alt="icon_pass_result_test"
-                                    classNames="w-10 h-fit"
-                                />
-                                <p className="text-[#7C6F5B] text-sm font-normal">
-                                    Your result is
-                                </p>
-                                <p className="text-[#7C6F5B] text-3xl font-semibold">
-                                    {percentage} %
-                                </p>
-                            </div>
-                        }
-                    />
+                <div className=" flex w-full flex-col-reverse sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+                    <div>
+                        <CircleProgress
+                            percentage={percentage}
+                            color="red"
+                            size={isMobile ? 220 : 260}
+                            bgColor="#7C6F5B3D"
+                            strokeWidth={16}
+                            customText={
+                                <div className=" absolute inset-0 z-10 flex items-center flex-col gap-2 justify-center">
+                                    <LazyLoadImage
+                                        src="/end/endTest.png"
+                                        alt="icon_pass_result_test"
+                                        classNames="w-10 h-fit"
+                                    />
+                                    <p className="text-[#7C6F5B] text-xs sm:text-sm font-normal">
+                                        Your result is
+                                    </p>
+                                    <p className="text-[#7C6F5B] text-base sm:text-3xl font-semibold">
+                                        {percentage.toFixed(1)} %
+                                    </p>
+                                </div>
+                            }
+                        />
+                    </div>
                     <div className="sm:p-3 text-center sm:text-start h-full flex flex-col gap-2 ">
-                        <p className="text-lg font-normal">Date Of Test :</p>
-                        <p className="text-2xl font-semibold">{formatDate()}</p>
-                        <p className="text-lg font-normal">Your Level :</p>
-                        <p className="text-2xl font-semibold capitalize text-primary">
+                        <p className="text-sm sm:text-lg font-normal">
+                            Date Of Test :
+                        </p>
+                        <p className=" text-base sm:text-2xl font-semibold">
+                            {formatDate()}
+                        </p>
+                        <p className="text-sm sm:text-lg font-normal">
+                            Your Level :
+                        </p>
+                        <p className="text-base sm:text-2xl font-semibold capitalize text-primary">
                             {percentage < 30
                                 ? "beginner"
                                 : percentage > 60
@@ -58,7 +69,12 @@ const HeaderResultDiagnostic = ({ handleTryAgain, percentage }: IProps) => {
                                 : "Intermediate"}
                         </p>
 
-                        <div className="w-full flex items-center gap-2 sm:gap-4">
+                        <div
+                            className={clsx("w-full flex items-center ", {
+                                "fixed bottom-0 left-0 right-0 bg-theme-white pb-4 pt-2 h-fit px-4 z-50":
+                                    isMobile,
+                            })}
+                        >
                             <MtUiButton
                                 className="sm:py-4 sm:max-h-14 text-lg font-medium rounded-2xl text-primary border-primary"
                                 block
