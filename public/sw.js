@@ -11,8 +11,11 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("message", async (event) => {
     if (event.data.type === "INIT_DB") {
         const { appShortName, apiPath } = event.data.payload;
+        console.log("start sw", new Date().toISOString());
 
         await handleInitData(appShortName, apiPath);
+
+        console.log("end sw", new Date().toISOString());
 
         event.ports[0].postMessage({
             status: "success",
@@ -31,16 +34,20 @@ async function handleInitData(appShortName, apiPath) {
         const response = await fetch(
             `${apiPath.GET_DATA_STUDY}/${appShortName}`
         );
-        const data = await response.json();
-        const { topic, tests } = data.data;
-        await initDataTopics(topic, db);
+        const {
+            data: { topic, tests },
+        } = await response.json();
+
         const listTest = {
             ...tests,
             finalTests: tests.finalTests?.slice(0, 1),
         };
 
-        await initDataTest(listTest, db, apiPath);
-        await fetchAndProcessTopicsRecursive(topic, db, apiPath);
+        await Promise.all([
+            initDataTopics(topic, db),
+            initDataTest(listTest, db, apiPath),
+            fetchAndProcessTopicsRecursive(topic, db, apiPath),
+        ]);
     } catch (error) {
         console.error("Failed to fetch and initialize data:", error);
     }
@@ -105,8 +112,11 @@ const processQuestionsData = async (topics, db, icon, tag) => {
                 await topicQuestionStore.done;
             }
         }
-        await calculatePassing(topic, db);
-        await initDataSubTopicProgress(topic, db);
+
+        await Promise.all([
+            calculatePassing(topic, db),
+            initDataSubTopicProgress(topic, db),
+        ]);
     }
 };
 
@@ -159,7 +169,7 @@ const calculatePassing = async (topic, db) => {
                     id: part.id,
                     parentId: part.parentId,
                     averageLevel: averageLevelPart,
-                    totalQuestion: part.totalQuestion,
+                    totalQuestion: totalQuestions,
                     topics: [],
                     passing: 0,
                 });
@@ -175,7 +185,7 @@ const calculatePassing = async (topic, db) => {
         await passingStore.add({
             parentId: topic.parentId,
             id: topic.id,
-            averageLevel: total / topic.totalQuestion,
+            averageLevel: total / totalQuestion,
             totalQuestion: totalQuestion,
             topics: listSubTopic,
             passing: 0,

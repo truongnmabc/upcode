@@ -45,32 +45,21 @@ const FinishLayout = () => {
         passing: 0,
         extraPoint: 0,
     });
-    console.log("🚀 ~ FinishLayout ~ game:", game);
 
     const handleGetData = useCallback(async () => {
-        console.log("🚀 ~ handleGetData ~ partId:", partId);
-        console.log("🚀 ~ handleGetData ~ turn:", turn);
-        console.log(
-            "🚀 ~ handleGetData ~ subTopicProgressId:",
-            subTopicProgressId
-        );
         if (subTopicProgressId && turn && partId) {
             const data = await db?.subTopicProgress
                 .where("id")
                 .equals(Number(subTopicProgressId))
                 .first();
-            console.log("🚀 ~ handleGetData ~ data:", data);
 
             const partIndex =
                 data?.part.findIndex((item) => item.status === 1) || 0;
 
             const useProgress =
                 (await db?.userProgress
-                    .where("parentId")
-                    .equals(Number(partId))
+                    .filter((item) => item.parentIds.includes(Number(partId)))
                     .sortBy("index")) || [];
-
-            console.log("🚀 ~ handleGetData ~ useProgress:", useProgress);
 
             const passingDb = await db?.passing
                 .where("id")
@@ -99,7 +88,7 @@ const FinishLayout = () => {
 
                     const prev = await totalPassingApp(listPass);
 
-                    passingApp = (prev + totalPassing) / totalQuestion;
+                    passingApp = (prev + totalPassing) / (totalQuestion || 1);
 
                     const listNew = passingDb.topics?.map((item) =>
                         item.id === Number(partId)
@@ -137,10 +126,6 @@ const FinishLayout = () => {
                     item.selectedAnswers?.find((s) => s.turn === turn)
                 )
                 .filter((item): item is IAnswer => item !== undefined);
-            console.log(
-                "🚀 ~ handleGetData ~ filteredAnswers:",
-                filteredAnswers
-            );
 
             const nextPart = data?.part?.find((p) => p.status === 0);
 
