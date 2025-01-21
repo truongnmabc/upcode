@@ -11,72 +11,72 @@ export const selectListQuestion = createSelector(
     (reducer) => reducer.listQuestion
 );
 
-export const selectIdTopic = createSelector(
+export const selectCurrentTopicId = createSelector(
     [gameState],
-    (reducer) => reducer.idTopic
+    (reducer) => reducer.currentTopicId
 );
 
-export const selectTurn = createSelector(
+export const selectAttemptNumber = createSelector(
     [gameState],
-    (reducer) => reducer.turn
+    (reducer) => reducer.attemptNumber
 );
 
-export const selectIndexCurrentQuestion = createSelector(
+export const selectCurrentQuestionIndex = createSelector(
     [gameState],
-    (reducer) => reducer.indexCurrentQuestion
+    (reducer) => reducer.currentQuestionIndex
 );
 
-export const selectIndexSubTopic = createSelector(
+export const selectCurrentSubTopicIndex = createSelector(
     [gameState],
-    (reducer) => reducer.indexSubTopic
+    (reducer) => reducer.currentSubTopicIndex
 );
 
-export const selectTimeCurrentGame = createSelector(
+export const selectTotalDuration = createSelector(
     [gameState],
-    (reducer) => reducer.time
+    (reducer) => reducer.totalDuration
 );
 
-export const selectIsPaused = createSelector(
+export const selectIsGamePaused = createSelector(
     [gameState],
-    (reducer) => reducer.isPaused
+    (reducer) => reducer.isGamePaused
 );
 
-export const selectType = createSelector(
+export const selectGameMode = createSelector(
     [gameState],
-    (reducer) => reducer.type
+    (reducer) => reducer.gameMode
 );
 
-export const selectFeedBack = createSelector(
+export const selectGameDifficultyLevel = createSelector(
     [gameState],
-    (reducer) => reducer.feedBack
+    (reducer) => reducer.gameDifficultyLevel
 );
 
-export const selectSubTopicProgressId = createSelector(
+export const selectCurrentSubTopicProgressId = createSelector(
     [gameState],
-    (reducer) => reducer.subTopicProgressId
+    (reducer) => reducer.currentSubTopicProgressId
 );
 
-export const selectIsFinish = createSelector(
+export const selectIsGameCompleted = createSelector(
     [gameState],
-    (reducer) => reducer.isFinishGame
+    (reducer) => reducer.isGameCompleted
 );
 
-export const selectPassing = createSelector(
+export const selectPassingThreshold = createSelector(
     [gameState],
-    (reducer) => reducer.passing
+    (reducer) => reducer.passingThreshold
 );
 
-export const selectRemainTime = createSelector(
+export const selectRemainingTime = createSelector(
     [gameState],
-    (reducer) => reducer.remainTime
+    (reducer) => reducer.remainingTime
 );
 
-export const selectIsEndTimeTest = createSelector(
+export const selectIsTimeUp = createSelector(
     [gameState],
-    (reducer) => reducer.isEndTimeTest
+    (reducer) => reducer.isTimeUp
 );
 
-export const selectListenEventKeyboard = createSelector(
+export const selectEnableKeyboardShortcuts = createSelector(
     [gameState],
-    (reducer) => reducer.shouldListenEventKeyboard
+    (reducer) => reducer.enableKeyboardShortcuts
 );

@@ -3,8 +3,8 @@ import { MtUiButton } from "@/components/button";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { endTest } from "@/redux/features/game";
 import {
-    selectIdTopic,
     selectListQuestion,
+    selectCurrentTopicId,
 } from "@/redux/features/game.reselect";
 import { shouldOpenSubmitTest, testState } from "@/redux/features/tests";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -42,7 +42,7 @@ const BottomConfirmTest = () => {
     const router = useRouter();
     const type = useSearchParams().get("type");
     const testId = useSearchParams().get("testId");
-    const id = useAppSelector(selectIdTopic);
+    const id = useAppSelector(selectCurrentTopicId);
     const [info, setInfo] = useState({
         answer: 0,
         total: 0,

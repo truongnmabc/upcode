@@ -11,9 +11,15 @@ const choiceAnswer = createAsyncThunk(
         thunkAPI
     ) => {
         const state = thunkAPI.getState() as RootState;
-        const { type, turn, indexCurrentQuestion, idTopic } = state.gameReducer;
+        const {
+            gameMode,
+            attemptNumber,
+            currentQuestionIndex,
+            currentTopicId,
+        } = state.gameReducer;
 
-        const parentId = type === "learn" ? question.parentId : idTopic;
+        const parentId =
+            gameMode === "learn" ? question.parentId : currentTopicId;
         const isEx = await db?.userProgress.get(question.id);
 
         const updatedParentIds = isEx?.parentIds
@@ -25,7 +31,7 @@ const choiceAnswer = createAsyncThunk(
                   ...(isEx?.selectedAnswers || []),
                   {
                       ...choice,
-                      turn: turn,
+                      turn: attemptNumber,
                       parentId,
                   },
               ]
@@ -41,14 +47,14 @@ const choiceAnswer = createAsyncThunk(
             parentIds: updatedParentIds,
             selectedAnswers: updatedSelectedAnswers,
             answers: question.answers,
-            type: type,
+            type: gameMode,
             text: question.text,
             syncStatus: question.syncStatus,
             status: 1,
             id: question.id,
             level: question.level,
             explanation: question.explanation,
-            index: indexCurrentQuestion,
+            index: currentQuestionIndex,
             image: "",
         };
 
@@ -77,12 +83,12 @@ export const processChoiceAnswer = (
     state.currentGame.localStatus = choice.correct ? "correct" : "incorrect";
 
     if (!choice.correct) {
-        const newArr = [...state.listWrongAnswers];
-        if (newArr.length === 1 && !state.isFirst) {
+        const newArr = [...state.incorrectQuestionIds];
+        if (newArr.length === 1 && !state.isFirstAttempt) {
             const indexRandom = Math.floor(
                 Math.random() * state.listQuestion.length
             );
-            state.indexCurrentQuestion = indexRandom;
+            state.currentQuestionIndex = indexRandom;
             state.listQuestion[indexRandom] = {
                 ...state.listQuestion[indexRandom],
                 selectedAnswer: null,
@@ -98,9 +104,9 @@ export const processChoiceAnswer = (
             }
         }
 
-        state.listWrongAnswers = newArr;
+        state.incorrectQuestionIds = newArr;
     } else {
-        state.listWrongAnswers = state.listWrongAnswers.filter(
+        state.incorrectQuestionIds = state.incorrectQuestionIds.filter(
             (id) => id !== question.id
         );
     }

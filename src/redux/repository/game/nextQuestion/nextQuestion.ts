@@ -13,21 +13,21 @@ const nextQuestionThunk = createAsyncThunk(
         const state = thunkAPI.getState() as RootState;
         const {
             listQuestion,
-            listWrongAnswers,
-            isFirst,
-            indexCurrentQuestion,
+            incorrectQuestionIds,
+            isFirstAttempt,
+            currentQuestionIndex,
         } = state.gameReducer;
 
-        if (isFirst && indexCurrentQuestion + 1 < listQuestion.length) {
+        if (isFirstAttempt && currentQuestionIndex + 1 < listQuestion.length) {
             return {
-                nextLever: indexCurrentQuestion + 1,
-                nextQuestion: listQuestion[indexCurrentQuestion + 1],
+                nextLever: currentQuestionIndex + 1,
+                nextQuestion: listQuestion[currentQuestionIndex + 1],
                 isFirst: true,
             };
         }
 
-        if (listWrongAnswers.length > 0) {
-            const idQuestionInCorrect = listWrongAnswers[0];
+        if (incorrectQuestionIds.length > 0) {
+            const idQuestionInCorrect = incorrectQuestionIds[0];
 
             const indexQuestion = listQuestion.findIndex(
                 (item) => item.id === idQuestionInCorrect

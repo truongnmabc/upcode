@@ -1,3 +1,58 @@
+// import { ICurrentGame } from "@/models/game/game";
+// import { RootState } from "@/redux/store";
+
+// interface IProgressData extends Omit<ICurrentGame, "parentId"> {
+//     dummyField?: string;
+// }
+
+// export const handleInitTestQuestion = (
+//     state: RootState["gameReducer"],
+//     payload: {
+//         progressData: IProgressData[];
+//         questions: ICurrentGame[];
+//         gameMode: "test" | "learn";
+//         idTopic: number;
+//         duration: number;
+//         isPaused: boolean;
+//         remainTime: number;
+//     }
+// ) => {
+//     const {
+//         progressData,
+//         questions,
+//         gameMode,
+//         idTopic,
+//         duration,
+//         isPaused,
+//         remainTime,
+//     } = payload;
+
+//     state.time = duration;
+//     state.gameMode = gameMode;
+//     state.idTopic = idTopic ?? -1;
+//     state.listQuestion = questions;
+//     state.isFirst = true;
+//     state.isPaused = isPaused;
+//     state.remainTime = remainTime;
+//     if (!progressData || progressData.length === 0) {
+//         state.indexCurrentQuestion = 0;
+//         state.currentGame = questions[0];
+//     } else {
+//         const firstUnansweredIndex = questions.findIndex(
+//             (question) =>
+//                 !progressData.some((answer) => answer?.id === question?.id)
+//         );
+//         state.indexCurrentQuestion =
+//             firstUnansweredIndex > 0 ? firstUnansweredIndex : 0;
+
+//         state.currentGame = {
+//             ...questions[firstUnansweredIndex],
+//             localStatus: "new",
+//             selectedAnswer: null,
+//         };
+//     }
+// };
+
 import { ICurrentGame } from "@/models/game/game";
 import { RootState } from "@/redux/store";
 
@@ -10,39 +65,49 @@ export const handleInitTestQuestion = (
     payload: {
         progressData: IProgressData[];
         questions: ICurrentGame[];
-        type: "test" | "learn";
-        idTopic: number;
-        duration: number;
-        isPaused: boolean;
-        remainTime: number;
+        gameMode: "test" | "learn";
+        currentTopicId: number;
+        totalDuration: number;
+        isGamePaused: boolean;
+        remainingTime: number;
     }
 ) => {
     const {
         progressData,
         questions,
-        type,
-        idTopic,
-        duration,
-        isPaused,
-        remainTime,
+        gameMode,
+        currentTopicId,
+        totalDuration,
+        isGamePaused,
+        remainingTime,
     } = payload;
 
-    state.time = duration;
-    state.type = type;
-    state.idTopic = idTopic ?? -1;
+    // state.time = duration;
+    state.totalDuration = totalDuration;
+    state.gameMode = gameMode;
+    // state.idTopic = idTopic ?? -1;
+    state.currentTopicId = currentTopicId ?? -1;
     state.listQuestion = questions;
-    state.isFirst = true;
-    state.isPaused = isPaused;
-    state.remainTime = remainTime;
+    // state.isFirst = true;
+    state.isFirstAttempt = true;
+    // state.isPaused = isPaused;
+    state.isGamePaused = isGamePaused;
+    // state.remainTime = remainTime;
+    state.remainingTime = remainingTime;
+
     if (!progressData || progressData.length === 0) {
-        state.indexCurrentQuestion = 0;
+        // state.indexCurrentQuestion = 0;
+        state.currentQuestionIndex = 0;
         state.currentGame = questions[0];
     } else {
         const firstUnansweredIndex = questions.findIndex(
             (question) =>
                 !progressData.some((answer) => answer?.id === question?.id)
         );
-        state.indexCurrentQuestion =
+
+        // state.indexCurrentQuestion =
+        //    firstUnansweredIndex > 0 ? firstUnansweredIndex : 0;
+        state.currentQuestionIndex =
             firstUnansweredIndex > 0 ? firstUnansweredIndex : 0;
 
         state.currentGame = {

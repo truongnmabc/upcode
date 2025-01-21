@@ -5,18 +5,18 @@ export interface ITestQuestion {
     parentId: number;
     id?: number;
     question: IQuestion[];
-    duration: number;
-    isPaused: boolean;
+    totalDuration: number;
+    isGamePaused: boolean;
     startTime: number;
-    remainTime: number;
+    remainingTime: number;
     elapsedTime: number;
-    type: "finalTests" | "practiceTests" | "diagnosticTest" | "customTets";
-    feedBack?: "newbie" | "expert" | "exam";
-    passing?: number;
+    gameMode: "finalTests" | "practiceTests" | "diagnosticTest" | "customTets";
+    gameDifficultyLevel?: "newbie" | "expert" | "exam";
+    passingThreshold?: number;
     count?: number;
     subject?: number[];
     status?: number;
-    turn: number;
+    attemptNumber: number;
     topicIds?: number[];
     groupExamData?: IGroupExam[];
 }

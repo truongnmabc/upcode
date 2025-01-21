@@ -18,19 +18,19 @@ const initCustomTestThunk = createAsyncThunk(
                 const progressData = await getLocalUserProgress(
                     currentTest.parentId,
                     "test",
-                    currentTest.turn
+                    currentTest.attemptNumber
                 );
 
                 return {
                     progressData: progressData || [],
                     questions: currentTest.question,
-                    idTopic: currentTest.parentId,
-                    type: "test" as "test" | "learn",
-                    duration: currentTest.duration,
-                    isPaused: currentTest.isPaused,
-                    remainTime: currentTest.remainTime,
-                    passing: currentTest.passing,
-                    turn: currentTest.turn,
+                    currentTopicId: currentTest.parentId,
+                    gameMode: "test" as "test" | "learn",
+                    totalDuration: currentTest.totalDuration,
+                    isGamePaused: currentTest.isGamePaused,
+                    remainingTime: currentTest.remainingTime,
+                    passingThreshold: currentTest.passingThreshold,
+                    attemptNumber: currentTest.attemptNumber,
                 };
             }
             return null;
