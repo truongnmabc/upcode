@@ -72,9 +72,11 @@ const GridLeftCustomTest = () => {
                 .equals(itemSelect?.parentId)
                 .delete();
             await db?.userProgress
-                .where("parentId")
-                .equals(itemSelect?.parentId)
-                .filter((item) => item.type === "test")
+                .filter(
+                    (item) =>
+                        item.parentIds.includes(itemSelect?.parentId) &&
+                        item.type === "test"
+                )
                 .delete();
 
             const startTest = await db?.testQuestions

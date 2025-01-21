@@ -7,6 +7,7 @@ export interface IAnswer {
     index: number;
     text: string;
     turn?: number;
+    parentId?: number;
 }
 export interface IParagraph {
     id: number;

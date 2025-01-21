@@ -38,11 +38,11 @@ const AllQuestions = () => {
 
             const list = data
                 .filter((item) =>
-                    listSub?.some((topic) => topic?.id === item.parentId)
+                    listSub?.some((topic) => item.parentIds.includes(topic?.id))
                 )
                 .map((item) => {
-                    const matchingTopic = listSub.find(
-                        (topic) => topic?.id === item.parentId
+                    const matchingTopic = listSub.find((topic) =>
+                        item.parentIds.includes(topic?.id)
                     );
                     return {
                         ...item,
@@ -51,16 +51,20 @@ const AllQuestions = () => {
                     };
                 });
 
+            const mathType = list?.map((item) => ({
+                ...item,
+                parentId: -1,
+            }));
             setTabletData({
-                all: list,
-                incorrect: list.filter((item) =>
+                all: mathType,
+                incorrect: mathType.filter((item) =>
                     item.selectedAnswers?.find((item) => !item?.correct)
                 ),
-                correct: list.filter((item) =>
+                correct: mathType.filter((item) =>
                     item.selectedAnswers?.find((item) => item?.correct)
                 ),
             });
-            dispatch(setListQuestionGames(list));
+            dispatch(setListQuestionGames(mathType));
         }
     }, [dispatch]);
 

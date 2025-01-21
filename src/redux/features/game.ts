@@ -17,11 +17,11 @@ import initPracticeThunk from "../repository/game/initData/initPracticeTest";
 import nextQuestionThunk from "../repository/game/nextQuestion/nextQuestion";
 import nextQuestionDiagnosticThunk from "../repository/game/nextQuestion/nextQuestionDiagnosticTest";
 import resumedTestThunk from "../repository/game/pauseAndResumed/resumedTest";
+import tryAgainDiagnosticThunk from "../repository/game/tryAgain/tryAgainDiagnostic";
+import tryAgainPracticesThunk from "../repository/game/tryAgain/tryAgainPractices";
 import { handleInitTestQuestion } from "../repository/game/utils";
 import { reloadStateThunk } from "../repository/utils/reload";
 import { RootState } from "../store";
-import tryAgainDiagnosticThunk from "../repository/game/tryAgain/tryAgainDiagnostic";
-import tryAgainPracticesThunk from "../repository/game/tryAgain/tryAgainPractices";
 
 const init = new UserQuestionProgress();
 
