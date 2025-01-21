@@ -12,9 +12,11 @@ export interface IUserQuestionProgress
         | "paragraphId"
         | "index"
         | "appId"
+        | "parentId"
     > {
     selectedAnswers?: IAnswer[];
     type?: "test" | "learn";
+    parentIds: number[];
 }
 
 export default class UserQuestionProgress implements IUserQuestionProgress {
@@ -30,18 +32,20 @@ export default class UserQuestionProgress implements IUserQuestionProgress {
     syncStatus: number = 0;
     text: string = "";
     type: "test" | "learn";
+    parentIds: number[];
     constructor(obt: Partial<IUserQuestionProgress> = {}) {
         this.answers = obt.answers ?? this.answers;
         this.contentType = obt.contentType ?? this.contentType;
         this.explanation = obt.explanation ?? this.explanation;
         this.id = obt.id ?? this.id;
         this.level = obt.level ?? this.level;
-        this.parentId = obt.parentId ?? this.parentId;
+        // this.parentId = obt.parentId ?? this.parentId;
         this.selectedAnswers = obt.selectedAnswers;
         this.status = obt.status ?? this.status;
         this.syncStatus = obt.syncStatus ?? this.syncStatus;
         this.text = obt.text ?? this.text;
         this.type = obt.type ?? "learn";
         this.image = obt.image ?? "";
+        this.parentIds = obt.parentIds ?? [];
     }
 }

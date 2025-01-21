@@ -1,10 +1,14 @@
 import { ICurrentGame } from "@/models/game/game";
 import { RootState } from "@/redux/store";
 
+interface IProgressData extends Omit<ICurrentGame, "parentId"> {
+    dummyField?: string;
+}
+
 export const handleInitTestQuestion = (
     state: RootState["gameReducer"],
     payload: {
-        progressData: ICurrentGame[];
+        progressData: IProgressData[];
         questions: ICurrentGame[];
         type: "test" | "learn";
         idTopic: number;
