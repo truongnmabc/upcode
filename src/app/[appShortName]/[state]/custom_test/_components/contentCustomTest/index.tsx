@@ -5,8 +5,8 @@ import ExplanationDetail from "@/components/explanation";
 import ProgressQuestion from "@/components/progressQuestion";
 import QuestionContent from "@/components/question";
 import {
-    selectFeedBack,
-    selectIndexSubTopic,
+    selectCurrentSubTopicIndex,
+    selectGameDifficultyLevel,
 } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { MathJaxContext } from "better-react-mathjax";
@@ -14,8 +14,8 @@ import React from "react";
 import CountTimeCustomTest from "../countTimeCustomTest";
 
 const ContentCustomTest = () => {
-    const feedBack = useAppSelector(selectFeedBack);
-    const indexSubTopic = useAppSelector(selectIndexSubTopic);
+    const feedBack = useAppSelector(selectGameDifficultyLevel);
+    const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
 
     return (
         <MathJaxContext>

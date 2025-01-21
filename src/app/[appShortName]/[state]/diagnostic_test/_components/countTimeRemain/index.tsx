@@ -1,9 +1,9 @@
 import CountTime from "@/components/countTime";
 import {
     selectCurrentGame,
-    selectIndexCurrentQuestion,
+    selectCurrentQuestionIndex,
     selectListQuestion,
-    selectRemainTime,
+    selectRemainingTime,
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import choiceAnswer from "@/redux/repository/game/choiceAnswer/choiceAnswer";
@@ -15,9 +15,9 @@ import React, { useCallback } from "react";
 const CountTimeDiagnostic = () => {
     const dispatch = useAppDispatch();
     const currentGame = useAppSelector(selectCurrentGame);
-    const remainTime = useAppSelector(selectRemainTime);
+    const remainTime = useAppSelector(selectRemainingTime);
     const listQuestion = useAppSelector(selectListQuestion);
-    const indexCurrentQuestion = useAppSelector(selectIndexCurrentQuestion);
+    const indexCurrentQuestion = useAppSelector(selectCurrentQuestionIndex);
     const listLength = listQuestion?.length || 0;
     const router = useRouter();
 

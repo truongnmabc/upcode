@@ -1,6 +1,6 @@
 "use client";
 import Config from "@/config";
-import { selectIndexSubTopic } from "@/redux/features/game.reselect";
+import { selectCurrentSubTopicIndex } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { setSession } from "@/utils/session";
 import clsx from "clsx";
@@ -39,7 +39,7 @@ const TitleQuestion = ({ type }: { type?: string }) => {
     const defaultTitle =
         getKeyTest(param?.["slug"]) || getLastPathSegment(pathname);
 
-    const index = useAppSelector(selectIndexSubTopic);
+    const index = useAppSelector(selectCurrentSubTopicIndex);
 
     let tempCount = 0;
 

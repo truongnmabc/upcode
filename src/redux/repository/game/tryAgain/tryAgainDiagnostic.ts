@@ -11,21 +11,22 @@ const tryAgainDiagnosticThunk = createAsyncThunk(
     "tryAgainDiagnosticThunk",
     async ({ testId }: IRes, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
-        const { listQuestion, idTopic, turn } = state.gameReducer;
+        const { listQuestion, currentTopicId, attemptNumber } =
+            state.gameReducer;
         let questions: ICurrentGame[] = [];
         let currentTurn = 1;
-        const id = idTopic !== -1 ? idTopic : testId || -1;
+        const id = currentTopicId !== -1 ? currentTopicId : testId || -1;
 
         if (listQuestion.length) {
             questions = listQuestion;
-            currentTurn = turn;
+            currentTurn = attemptNumber;
         } else {
             const list = await db?.testQuestions
                 .where("parentId")
                 .equals(id)
                 .first();
             if (list) {
-                currentTurn = list.turn;
+                currentTurn = list.attemptNumber;
                 questions = list?.question;
             }
         }
@@ -36,7 +37,7 @@ const tryAgainDiagnosticThunk = createAsyncThunk(
                 localStatus: "new" as const,
                 selectedAnswer: null,
             })),
-            turn: currentTurn,
+            attemptNumber: currentTurn,
         };
     }
 );

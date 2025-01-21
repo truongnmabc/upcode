@@ -8,7 +8,7 @@ import StatusAnswer from "../statusAnswer";
 import LazyLoadImage from "@/components/images";
 import {
     selectCurrentGame,
-    selectIndexCurrentQuestion,
+    selectCurrentQuestionIndex,
     selectListQuestion,
 } from "@/redux/features/game.reselect";
 import { baseImageUrl } from "@/constants";
@@ -28,7 +28,7 @@ const QuestionContent = ({
 }) => {
     const currentGame = useAppSelector(selectCurrentGame);
     const appInfo = useAppSelector(selectAppInfo);
-    const indexGame = useAppSelector(selectIndexCurrentQuestion);
+    const indexGame = useAppSelector(selectCurrentQuestionIndex);
     const list = useAppSelector(selectListQuestion);
     const [text, setText] = useState<string>("");
     const [loading, setLoading] = useState(true);

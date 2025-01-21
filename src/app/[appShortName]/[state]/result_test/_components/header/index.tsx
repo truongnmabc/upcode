@@ -7,7 +7,7 @@ import { TypeParam } from "@/constants";
 import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
-import { selectIdTopic } from "@/redux/features/game.reselect";
+import { selectCurrentTopicId } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
@@ -29,7 +29,7 @@ const HeaderResultTest: React.FC<{
     passing: number;
 }> = ({ correct, total, isPass, passing }) => {
     const router = useRouter();
-    const idTopic = useAppSelector(selectIdTopic);
+    const idTopic = useAppSelector(selectCurrentTopicId);
     const appInfo = useAppSelector(selectAppInfo);
     const type = useSearchParams().get("type");
     const dispatch = useAppDispatch();

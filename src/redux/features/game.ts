@@ -1,7 +1,5 @@
 "use client";
-import { IStatusAnswer } from "@/components/statusAnswer";
-import { ICurrentGame, IGameReducer } from "@/models/game/game";
-import UserQuestionProgress from "@/models/progress/userQuestionProgress";
+import { ICurrentGame } from "@/models/game/game";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import choiceAnswer, {
     processChoiceAnswer,
@@ -22,37 +20,7 @@ import tryAgainPracticesThunk from "../repository/game/tryAgain/tryAgainPractice
 import { handleInitTestQuestion } from "../repository/game/utils";
 import { reloadStateThunk } from "../repository/utils/reload";
 import { RootState } from "../store";
-
-const init = new UserQuestionProgress();
-
-const plateHolder = {
-    ...init,
-    localStatus: "new" as IStatusAnswer,
-    selectedAnswer: null,
-    text: "",
-    turn: 1,
-};
-
-const initGameReducer: IGameReducer = {
-    currentGame: plateHolder,
-    listQuestion: [],
-    passing: 80,
-    indexCurrentQuestion: 0,
-    idTopic: -1, // id current game được, sử dụng để truy vấn, đặt tên hỏi lú tý, sau dùng nhiều ngại sửa
-    listWrongAnswers: [],
-    isFirst: true,
-    isFinishGame: false,
-    indexSubTopic: 1,
-    subTopicProgressId: -1,
-    turn: 1,
-    time: -1,
-    type: "learn",
-    isPaused: false,
-    isEndTimeTest: false,
-    remainTime: -1,
-    feedBack: "newbie",
-    shouldListenEventKeyboard: true,
-};
+import { initGameReducer, plateHolderCurrentGame } from "./game.placeholder";
 
 export const gameSlice = createSlice({
     name: "game",
@@ -63,14 +31,15 @@ export const gameSlice = createSlice({
         },
         viewTest: (state, action) => {
             const payload = action.payload;
-
             const index = payload === state.listQuestion?.length ? 0 : payload;
 
-            state.indexCurrentQuestion = index;
+            // state.indexCurrentQuestion = index;
+            state.currentQuestionIndex = index;
             state.currentGame = state.listQuestion[index];
         },
         setIndexSubTopic: (state, action) => {
-            state.indexSubTopic = action.payload;
+            // state.indexSubTopic = action.payload;
+            state.currentSubTopicIndex = action.payload;
         },
         setListQuestionGames: (
             state,
@@ -84,10 +53,12 @@ export const gameSlice = createSlice({
                 turn: number;
             }>
         ) => {
-            state.turn = action.payload.turn;
+            // state.turn = action.payload.turn;
+            state.attemptNumber = action.payload.turn;
         },
         setShouldListenKeyboard: (state, action) => {
-            state.shouldListenEventKeyboard = action.payload;
+            // state.enableKeyboardShortcuts = action.payload;
+            state.enableKeyboardShortcuts = action.payload;
         },
         startOverGame: (state) => {
             const list = [...state.listQuestion]?.map((item) => ({
@@ -98,45 +69,55 @@ export const gameSlice = createSlice({
 
             state.currentGame = list[0];
             state.listQuestion = list;
-            state.indexCurrentQuestion = 0;
-            state.turn = 1;
-            state.isPaused = false;
-            state.remainTime = state.time * 60;
+            // state.indexCurrentQuestion = 0;
+            state.currentQuestionIndex = 0;
+            // state.turn = 1;
+            state.attemptNumber = 1;
+            // state.isPaused = false;
+            state.isGamePaused = false;
+            // state.remainTime = state.time * 60;
+            state.remainingTime = state.totalDuration * 60;
         },
         startTryAgainDiagnostic: (state) => {
             console.log("🚀 ~ state:", state);
         },
         continueGame: (state) => {
-            state.isPaused = false;
+            // state.isPaused = false;
+            state.isGamePaused = false;
         },
         shouldEndTimeTest: (state, action) => {
-            state.isEndTimeTest = action.payload;
+            // state.isEndTimeTest = action.payload;
+            state.isTimeUp = action.payload;
         },
         endTest: (state) => {
-            state.indexCurrentQuestion = 0;
-            state.turn = 1;
-            state.isPaused = false;
-            state.remainTime = -1;
+            // state.indexCurrentQuestion = 0;
+            state.currentQuestionIndex = 0;
+            // state.turn = 1;
+            state.attemptNumber = 1;
+            // state.isPaused = false;
+            state.isGamePaused = false;
+            // state.remainTime = -1;
+            state.remainingTime = -1;
         },
         startCustomTest: (state, action) => {
             const {
                 listQuestion,
-                time,
+                remainingTime,
                 parentId,
-                feedBack,
-                passing,
-                indexSubTopic,
+                gameDifficultyLevel,
+                passingThreshold,
+                currentSubTopicIndex,
             } = action.payload;
             state.listQuestion = listQuestion;
             state.currentGame = listQuestion[0];
-            state.idTopic = parentId;
-            state.remainTime = time;
-            state.indexCurrentQuestion = 0;
-            state.turn = 1;
-            state.isFirst = true;
-            state.feedBack = feedBack;
-            state.passing = passing;
-            state.indexSubTopic = indexSubTopic;
+            state.currentTopicId = parentId;
+            state.remainingTime = remainingTime;
+            state.currentQuestionIndex = 0;
+            state.attemptNumber = 1;
+            state.isFirstAttempt = true;
+            state.gameDifficultyLevel = gameDifficultyLevel;
+            state.passingThreshold = passingThreshold;
+            state.currentSubTopicIndex = currentSubTopicIndex;
         },
 
         resetState: () => {
@@ -146,9 +127,12 @@ export const gameSlice = createSlice({
             const { listQuestion } = action.payload;
             state.listQuestion = listQuestion;
             state.currentGame = listQuestion[0];
-            state.indexCurrentQuestion = 0;
-            state.turn = 1;
-            state.isFirst = true;
+            // state.indexCurrentQuestion = 0;
+            state.currentQuestionIndex = 0;
+            // state.turn = 1;
+            state.attemptNumber = 1;
+            // state.isFirst = true;
+            state.isFirstAttempt = true;
         },
     },
     extraReducers(builder) {
@@ -161,32 +145,41 @@ export const gameSlice = createSlice({
 
                     state.listQuestion = listQuestion;
                     state.currentGame = nextLever;
-                    state.indexCurrentQuestion = indexCurrentQuestion;
-                    state.remainTime = 80;
+                    // state.indexCurrentQuestion = indexCurrentQuestion;
+                    state.currentQuestionIndex = indexCurrentQuestion;
+                    // state.remainTime = 80;
+                    state.remainingTime = 80;
                 }
             }
         );
+
         builder.addCase(reloadStateThunk.fulfilled, (state, action) => {
             const { turn } = action.payload;
-            state.turn = turn;
+            // state.turn = turn;
+            state.attemptNumber = turn;
         });
 
         builder.addCase(resumedTestThunk.fulfilled, (state, action) => {
             if (action.payload) {
                 const { remainTime, listQuestion } = action.payload;
-                state.turn = 1;
-                state.remainTime = remainTime;
+                // state.turn = 1;
+                state.attemptNumber = 1;
+                // state.remainTime = remainTime;
+                state.remainingTime = remainTime;
                 state.listQuestion = listQuestion;
                 state.currentGame = listQuestion[0];
-                state.indexCurrentQuestion = 0;
+                // state.indexCurrentQuestion = 0;
+                state.currentQuestionIndex = 0;
             }
         });
 
         builder.addCase(nextQuestionThunk.fulfilled, (state, action) => {
             const data = action.payload;
             state.currentGame = data?.nextQuestion ?? state.listQuestion[0];
-            state.isFirst = data?.isFirst ?? true;
-            state.indexCurrentQuestion = data?.nextLever ?? 0;
+            // state.isFirst = data?.isFirst ?? true;
+            state.isFirstAttempt = data?.isFirst ?? true;
+            // state.indexCurrentQuestion = data?.nextLever ?? 0;
+            state.currentQuestionIndex = data?.nextLever ?? 0;
         });
 
         builder.addCase(choiceAnswer.fulfilled, (state, action) => {
@@ -196,7 +189,7 @@ export const gameSlice = createSlice({
         });
 
         builder.addCase(initPracticeThunk.fulfilled, (state, action) => {
-            state.type = "test";
+            state.gameMode = "test";
 
             if (action.payload) {
                 handleInitTestQuestion(state, action.payload);
@@ -210,69 +203,78 @@ export const gameSlice = createSlice({
         });
 
         builder.addCase(initFinalTestThunk.fulfilled, (state, action) => {
-            state.type = "test";
+            state.gameMode = "test";
 
             if (action.payload) {
                 handleInitTestQuestion(state, action.payload);
             }
         });
+
         builder.addCase(
             choiceStartCustomTestThunk.fulfilled,
             (state, action) => {
-                state.type = "test";
+                state.gameMode = "test";
                 if (action.payload) {
-                    state.indexSubTopic = action.payload.indexSubTopic;
+                    state.currentSubTopicIndex =
+                        action.payload.currentSubTopicIndex;
                     handleInitTestQuestion(state, action.payload);
                 }
             }
         );
+
         builder.addCase(initCustomTestThunk.fulfilled, (state, action) => {
             if (action.payload) {
                 handleInitTestQuestion(state, action.payload);
-                const { passing, turn } = action.payload;
-                state.passing = passing;
-                state.turn = turn;
+                const { passingThreshold, attemptNumber } = action.payload;
+                state.passingThreshold = passingThreshold;
+                state.attemptNumber = attemptNumber;
             } else {
                 state.listQuestion = [];
-                state.currentGame = plateHolder;
-                state.isPaused = false;
-                state.type = "test";
+                state.currentGame = plateHolderCurrentGame;
+                state.isGamePaused = false;
+                state.gameMode = "test";
             }
         });
 
         builder.addCase(tryAgainDiagnosticThunk.fulfilled, (state, action) => {
-            const { listQuestion, turn } = action.payload;
+            const { listQuestion, attemptNumber } = action.payload;
             state.currentGame = listQuestion[0];
             state.listQuestion = listQuestion;
-            state.indexCurrentQuestion = 0;
-            state.turn = turn + 1;
-            state.isPaused = false;
-            state.remainTime = state.time * 80;
+            state.currentQuestionIndex = 0;
+            state.attemptNumber = attemptNumber + 1;
+            state.isGamePaused = false;
+            state.remainingTime = state.totalDuration * 80;
         });
+
         builder.addCase(tryAgainPracticesThunk.fulfilled, (state, action) => {
-            const { listQuestion, turn, time } = action.payload;
+            const { listQuestion, attemptNumber, remainingTime } =
+                action.payload;
             state.currentGame = listQuestion[0];
             state.listQuestion = listQuestion;
-            state.indexCurrentQuestion = 0;
-            state.turn = turn + 1;
-            state.isPaused = false;
-            state.remainTime = time * 60;
+            state.currentQuestionIndex = 0;
+            state.attemptNumber = attemptNumber + 1;
+            state.isGamePaused = false;
+            state.remainingTime = remainingTime * 60;
         });
 
         builder.addCase(
             initDiagnosticTestQuestionThunk.fulfilled,
             (state, action) => {
                 if (action.payload) {
-                    const { listQuestion, isPaused, idTopic, progressData } =
-                        action.payload;
+                    const {
+                        listQuestion,
+                        isGamePaused,
+                        currentTopicId,
+                        progressData,
+                    } = action.payload;
                     handleInitTestQuestion(state, {
-                        type: "test",
+                        gameMode: "test",
                         progressData,
                         questions: listQuestion,
-                        idTopic,
-                        duration: 1,
-                        isPaused,
-                        remainTime: 80,
+                        currentTopicId: currentTopicId,
+                        totalDuration: 1,
+                        isGamePaused: isGamePaused,
+                        remainingTime: 80,
                     });
                 }
             }

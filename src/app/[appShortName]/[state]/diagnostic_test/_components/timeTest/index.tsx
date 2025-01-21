@@ -9,7 +9,7 @@ import { styled } from "@mui/material/styles";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import {
     selectCurrentGame,
-    selectIndexCurrentQuestion,
+    selectCurrentQuestionIndex,
     selectListQuestion,
 } from "@/redux/features/game.reselect";
 
@@ -27,7 +27,7 @@ const CustomRating = styled(Rating)(({ theme }) => ({
 
 const TimeTestGetLever = () => {
     const currentGame = useAppSelector(selectCurrentGame);
-    const index = useAppSelector(selectIndexCurrentQuestion);
+    const index = useAppSelector(selectCurrentQuestionIndex);
     const list = useAppSelector(selectListQuestion);
     const isMobile = useIsMobile();
     return (

@@ -1,11 +1,11 @@
 import BtnNextQuestion from "@/components/bottomActions/next/learn";
-import { gameState } from "@/redux/features/game";
 import { useAppSelector } from "@/redux/hooks";
 import NextQuestionFinalPage from "./final";
+import { selectGameDifficultyLevel } from "@/redux/features/game.reselect";
 
 const NextQuestionCustomTest = () => {
-    const { feedBack } = useAppSelector(gameState);
-    if (feedBack === "exam") return <NextQuestionFinalPage />;
+    const gameDifficultyLevel = useAppSelector(selectGameDifficultyLevel);
+    if (gameDifficultyLevel === "exam") return <NextQuestionFinalPage />;
     return <BtnNextQuestion />;
 };
 

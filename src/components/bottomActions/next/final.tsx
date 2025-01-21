@@ -1,13 +1,13 @@
 import { MtUiButton } from "@/components/button";
 import { viewTest } from "@/redux/features/game";
 import {
-    selectIndexCurrentQuestion,
+    selectCurrentQuestionIndex,
     selectListQuestion,
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 const NextQuestionFinalPage = () => {
-    const indexCurrentQuestion = useAppSelector(selectIndexCurrentQuestion);
+    const indexCurrentQuestion = useAppSelector(selectCurrentQuestionIndex);
 
     const listQuestions = useAppSelector(selectListQuestion);
 

@@ -22,7 +22,7 @@ const deleteDataUser = async (parentId?: number) => {
         await db?.userProgress
             .where("parentId")
             .equals(parentId)
-            .and((item) => item.type === "test")
+            .and((item) => item.gameMode === "test")
             .delete()
             .then((res) => console.log("delete success", res));
     }
@@ -32,7 +32,7 @@ const resumedTestThunk = createAsyncThunk(
     "resumedTestThunk",
     async ({ type }: IRes, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
-        const { idTopic } = state.gameReducer;
+        const { currentTopicId } = state.gameReducer;
 
         if (type === "diagnosticTest") {
             const data = await db?.testQuestions
@@ -41,15 +41,15 @@ const resumedTestThunk = createAsyncThunk(
                 .first();
 
             if (data) {
-                deleteDataQuestion(idTopic);
-                deleteDataUser(idTopic);
+                deleteDataQuestion(currentTopicId);
+                deleteDataUser(currentTopicId);
                 return {
                     remainTime: 60,
                     listQuestion: data?.question,
                 };
             }
         } else {
-            deleteDataUser(idTopic);
+            deleteDataUser(currentTopicId);
         }
         return undefined;
     }
@@ -61,10 +61,10 @@ export const updateTimeTest = createAsyncThunk(
     "updateTimeTest",
     async ({}, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
-        const { idTopic } = state.gameReducer;
+        const { currentTopicId } = state.gameReducer;
         await db?.testQuestions
             .where("parentId")
-            .equals(idTopic)
+            .equals(currentTopicId)
             .modify((item) => {
                 item.startTime = new Date().getTime();
             });

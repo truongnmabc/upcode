@@ -5,9 +5,9 @@ import { ITopic } from "@/models/topics/topics";
 import { setIndexSubTopic, setTurtGame } from "@/redux/features/game";
 import {
     selectCurrentGame,
-    selectIdTopic,
+    selectCurrentTopicId,
     selectListQuestion,
-    selectTurn,
+    selectAttemptNumber,
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
@@ -35,8 +35,8 @@ const IconProgress = ({
 }: IProps) => {
     const currentGame = useAppSelector(selectCurrentGame);
     const listQuestion = useAppSelector(selectListQuestion);
-    const turn = useAppSelector(selectTurn);
-    const idTopic = useAppSelector(selectIdTopic);
+    const turn = useAppSelector(selectAttemptNumber);
+    const idTopic = useAppSelector(selectCurrentTopicId);
 
     const { mainTopicTag } =
         useContext<IContextAllowExpand>(AllowExpandContext);
