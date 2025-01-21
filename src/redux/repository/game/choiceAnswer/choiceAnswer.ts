@@ -10,6 +10,8 @@ const choiceAnswer = createAsyncThunk(
         { question, choice }: { question: ICurrentGame; choice: IAnswer },
         thunkAPI
     ) => {
+        console.log("🚀 ~ choice:", choice);
+        console.log("🚀 ~ question:", question);
         const state = thunkAPI.getState() as RootState;
         const { type, turn, indexCurrentQuestion, idTopic } = state.gameReducer;
 

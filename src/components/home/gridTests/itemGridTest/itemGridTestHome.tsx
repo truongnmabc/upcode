@@ -76,7 +76,6 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
                 dispatch(
                     initTestQuestionThunk({
                         testId: id,
-                        duration: currentTest?.duration,
                     })
                 );
 

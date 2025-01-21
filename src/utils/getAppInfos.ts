@@ -13,7 +13,7 @@ export const getAppInfoParentApp = () => {
     if (cachedAppInfos) {
         const appInfo = cachedAppInfos?.find(
             (item: IAppInfo) =>
-                item?.appShortName === process.env.APP_SHORT_NAME
+                item?.appShortName === process.env["APP_SHORT_NAME"]
         );
         return {
             listApp: cachedAppInfos,
@@ -33,7 +33,7 @@ export const getAppInfoParentApp = () => {
     cache.put("appInfos", listAppInfo, timeCaching);
 
     const appInfo = listAppInfo?.find(
-        (item: IAppInfo) => item?.appShortName === process.env.APP_SHORT_NAME
+        (item: IAppInfo) => item?.appShortName === process.env["APP_SHORT_NAME"]
     );
     return {
         listApp: listAppInfo,

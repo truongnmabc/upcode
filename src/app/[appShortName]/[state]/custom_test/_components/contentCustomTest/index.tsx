@@ -2,7 +2,6 @@
 import BottomActions from "@/components/bottomActions";
 import ChoicesPanel from "@/components/choicesPanel";
 import ExplanationDetail from "@/components/explanation";
-import ClockIcon from "@/components/icon/ClockIcon";
 import ProgressQuestion from "@/components/progressQuestion";
 import QuestionContent from "@/components/question";
 import {
@@ -26,12 +25,7 @@ const ContentCustomTest = () => {
                         Custom Test {indexSubTopic}
                     </div>
                     <ProgressQuestion />
-                    <div className="w-full flex items-center justify-center">
-                        <div className="flex items-center justify-center w-fit gap-2">
-                            <ClockIcon />
-                            <CountTimeCustomTest />
-                        </div>
-                    </div>
+                    <CountTimeCustomTest />
                     <QuestionContent
                         showStatus={feedBack !== "exam" ? true : false}
                     />
