@@ -2,7 +2,7 @@
 import CountTime from "@/components/countTime";
 import ClockIcon from "@/components/icon/ClockIcon";
 import RouterApp from "@/constants/router.constant";
-import { selectRemainTime } from "@/redux/features/game.reselect";
+import { selectRemainingTime } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishCustomTestThunk from "@/redux/repository/game/finish/finishCustomTest";
 import { useRouter } from "next/navigation";
@@ -10,7 +10,7 @@ import { useCallback } from "react";
 const CountTimeCustomTest = () => {
     const dispatch = useAppDispatch();
 
-    const remainTime = useAppSelector(selectRemainTime);
+    const remainTime = useAppSelector(selectRemainingTime);
     const router = useRouter();
 
     const handleEndTime = useCallback(() => {

@@ -10,8 +10,8 @@ const pauseTestThunk = createAsyncThunk(
     "pauseTestThunk",
     async ({ testId }: IRes, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
-        const { idTopic } = state.gameReducer;
-        const id = testId || idTopic;
+        const { currentTopicId } = state.gameReducer;
+        const id = testId || currentTopicId;
 
         await db?.testQuestions
             .where("parentId")
@@ -20,10 +20,10 @@ const pauseTestThunk = createAsyncThunk(
                 const currentTime = Date.now();
                 const elapsedTimeInSeconds =
                     (currentTime - item.startTime) / 1000;
-                const remainingTime = item.remainTime - elapsedTimeInSeconds;
+                const remainingTime = item.remainingTime - elapsedTimeInSeconds;
 
-                item.isPaused = true;
-                item.remainTime = Math.max(remainingTime, 0);
+                item.isGamePaused = true;
+                item.remainingTime = Math.max(remainingTime, 0);
                 item.elapsedTime =
                     (item.elapsedTime || 0) + elapsedTimeInSeconds;
                 item.startTime = currentTime;

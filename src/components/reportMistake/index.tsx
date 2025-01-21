@@ -3,7 +3,7 @@ import { MtUiButton } from "@/components/button";
 import { setShouldListenKeyboard } from "@/redux/features/game";
 import {
     selectCurrentGame,
-    selectIdTopic,
+    selectCurrentTopicId,
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import userActionsThunk from "@/redux/repository/user/actions";
@@ -31,7 +31,7 @@ const ReportMistake = ({ onClose }: { onClose: () => void }) => {
     const [otherReason, setOtherReason] = useState<string>("");
     const dispatch = useAppDispatch();
     const currentGame = useAppSelector(selectCurrentGame);
-    const idTopic = useAppSelector(selectIdTopic);
+    const idTopic = useAppSelector(selectCurrentTopicId);
 
     const handleCheckboxChange = useCallback((value: string) => {
         setSelectedValues((prev) =>

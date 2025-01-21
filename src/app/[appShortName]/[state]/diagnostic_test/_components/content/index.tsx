@@ -10,7 +10,7 @@ import TimeTestGetLever from "../timeTest";
 import ProgressQuestion from "@/components/progressQuestion";
 import TitleQuestion from "@/components/titleQuestion";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { selectIdTopic } from "@/redux/features/game.reselect";
+import { selectCurrentTopicId } from "@/redux/features/game.reselect";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import CountTimeDiagnostic from "../countTimeRemain";
@@ -61,7 +61,7 @@ const ContentTestView = () => {
 export default ContentTestView;
 
 const LoadData = () => {
-    const idTopics = useAppSelector(selectIdTopic);
+    const idTopics = useAppSelector(selectCurrentTopicId);
     const dispatch = useAppDispatch();
     useEffect(() => {
         if (!idTopics || idTopics === -1) {

@@ -1,6 +1,6 @@
 import { viewTest } from "@/redux/features/game";
 import {
-    selectIndexCurrentQuestion,
+    selectCurrentQuestionIndex,
     selectListQuestion,
 } from "@/redux/features/game.reselect";
 import { shouldOpenSubmitTest } from "@/redux/features/tests";
@@ -9,7 +9,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { MtUiButton } from "../button";
 const BtnMobile = () => {
     const dispatch = useAppDispatch();
-    const indexCurrentQuestion = useAppSelector(selectIndexCurrentQuestion);
+    const indexCurrentQuestion = useAppSelector(selectCurrentQuestionIndex);
     const listQuestion = useAppSelector(selectListQuestion);
 
     const [listLength, setListLength] = useState(0);

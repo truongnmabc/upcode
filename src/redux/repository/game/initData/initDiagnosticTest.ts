@@ -24,13 +24,13 @@ export const setDataStoreDiagnostic = async ({
     await db?.testQuestions.add({
         parentId,
         question: listQuestion as IQuestion[],
-        duration: 1,
-        isPaused: false,
+        totalDuration: 1,
+        isGamePaused: false,
         startTime: Date.now(),
-        remainTime: 80,
-        type: "diagnosticTest",
+        remainingTime: 80,
+        gameMode: "diagnosticTest",
         status: 0,
-        turn: 1,
+        attemptNumber: 1,
         elapsedTime: 0,
     });
 };
@@ -82,10 +82,10 @@ export const createNewDiagnosticTest = async () => {
     if (topics) {
         for (const topic of topics) {
             for (const subtopic of topic.topics) {
-                const idTopic = subtopic.id;
-                if (!idTopic) continue;
+                const currentTopicId = subtopic.id;
+                if (!currentTopicId) continue;
 
-                const questions = await getQuestionsBySubtopic(idTopic);
+                const questions = await getQuestionsBySubtopic(currentTopicId);
 
                 if (!questions.length) continue;
 
@@ -107,8 +107,8 @@ export const createNewDiagnosticTest = async () => {
 
     return {
         listQuestion,
-        isPaused: false,
-        idTopic: parentId,
+        isGamePaused: false,
+        currentTopicId: parentId,
         progressData: [],
     };
 };
@@ -120,7 +120,7 @@ export const getExistingDiagnosticTest = async (diagnostic: ITestQuestion) => {
     const progressData = await getLocalUserProgress(
         diagnostic.parentId,
         "test",
-        diagnostic.turn
+        diagnostic.attemptNumber
     );
 
     if (progressData) {
@@ -132,8 +132,8 @@ export const getExistingDiagnosticTest = async (diagnostic: ITestQuestion) => {
         return {
             progressData,
             listQuestion: questions,
-            isPaused: true,
-            idTopic: diagnostic.parentId,
+            isGamePaused: true,
+            currentTopicId: diagnostic.parentId,
         };
     }
 

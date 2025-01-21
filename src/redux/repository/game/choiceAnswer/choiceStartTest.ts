@@ -18,7 +18,7 @@ const choiceStartCustomTestThunk = createAsyncThunk(
         const progressData = await getLocalUserProgress(
             item.parentId,
             "test",
-            item.turn + 1
+            item.attemptNumber + 1
         );
         if (progressData) {
             const questions = mapQuestionsWithProgress(
@@ -28,12 +28,12 @@ const choiceStartCustomTestThunk = createAsyncThunk(
             return {
                 questions,
                 progressData,
-                idTopic: item.parentId,
-                type: "test" as const,
-                duration: item.duration,
-                isPaused: item?.isPaused || false,
-                remainTime: item?.remainTime || item.duration * 60,
-                indexSubTopic: item.indexSubTopic,
+                currentTopicId: item.parentId,
+                gameMode: "test" as const,
+                totalDuration: item.totalDuration,
+                isGamePaused: item?.isGamePaused || false,
+                remainingTime: item?.remainingTime || item.totalDuration * 60,
+                currentSubTopicIndex: item.indexSubTopic,
             };
         }
         return undefined;

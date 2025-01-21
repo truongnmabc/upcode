@@ -4,7 +4,7 @@ import { ICurrentGame } from "@/models/game/game";
 import { viewTest } from "@/redux/features/game";
 import {
     selectCurrentGame,
-    selectIndexCurrentQuestion,
+    selectCurrentQuestionIndex,
     selectListQuestion,
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -33,7 +33,7 @@ const AnswerSheet: React.FC<IProps> = ({
 }) => {
     const listQuestion = useAppSelector(selectListQuestion);
     const currentGame = useAppSelector(selectCurrentGame);
-    const indexCurrentGame = useAppSelector(selectIndexCurrentQuestion);
+    const indexCurrentGame = useAppSelector(selectCurrentQuestionIndex);
     const dispatch = useAppDispatch();
 
     const getClassNames = (q: ICurrentGame, index: number) =>

@@ -5,7 +5,7 @@ import { RootState } from "@/redux/store";
 type IRes = {
     nextLever: number;
     nextQuestion: ICurrentGame;
-    isFirst: boolean;
+    isFirstAttempt: boolean;
 };
 const nextQuestionFinalThunk = createAsyncThunk(
     "nextQuestionFinalThunk",
@@ -13,21 +13,21 @@ const nextQuestionFinalThunk = createAsyncThunk(
         const state = thunkAPI.getState() as RootState;
         const {
             listQuestion,
-            listWrongAnswers,
-            isFirst,
-            indexCurrentQuestion,
+            incorrectQuestionIds,
+            isFirstAttempt,
+            currentQuestionIndex,
         } = state.gameReducer;
 
-        if (isFirst && indexCurrentQuestion + 1 < listQuestion.length) {
+        if (isFirstAttempt && currentQuestionIndex + 1 < listQuestion.length) {
             return {
-                nextLever: indexCurrentQuestion + 1,
-                nextQuestion: listQuestion[indexCurrentQuestion + 1],
-                isFirst: true,
+                nextLever: currentQuestionIndex + 1,
+                nextQuestion: listQuestion[currentQuestionIndex + 1],
+                isFirstAttempt: true,
             };
         }
 
-        if (listWrongAnswers.length > 0) {
-            const idQuestionInCorrect = listWrongAnswers[0];
+        if (incorrectQuestionIds.length > 0) {
+            const idQuestionInCorrect = incorrectQuestionIds[0];
 
             const indexQuestion = listQuestion.findIndex(
                 (item) => item.id === idQuestionInCorrect
@@ -40,7 +40,7 @@ const nextQuestionFinalThunk = createAsyncThunk(
                     selectedAnswer: null,
                     localStatus: "new",
                 },
-                isFirst: false,
+                isFirstAttempt: false,
             };
         }
         return undefined;

@@ -2,7 +2,7 @@
 import MyContainer from "@/components/container";
 import { db } from "@/db/db.model";
 import { IAnswer } from "@/models/question/questions";
-import { selectTurn } from "@/redux/features/game.reselect";
+import { selectAttemptNumber } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -20,7 +20,7 @@ import TitleFinishPage from "./title";
 const FinishLayout = () => {
     const subTopicProgressId = useSearchParams().get("subTopicProgressId");
     const partId = useSearchParams().get("partId");
-    const turn = useAppSelector(selectTurn);
+    const turn = useAppSelector(selectAttemptNumber);
 
     const [game, setGame] = useState<{
         currentPart: number;

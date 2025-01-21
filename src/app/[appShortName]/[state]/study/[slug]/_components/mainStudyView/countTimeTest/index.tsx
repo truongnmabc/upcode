@@ -1,8 +1,8 @@
 import CountTime from "@/components/countTime";
 import { shouldEndTimeTest } from "@/redux/features/game";
 import {
-    selectIsPaused,
-    selectRemainTime,
+    selectIsGamePaused,
+    selectRemainingTime,
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTest";
@@ -13,9 +13,9 @@ import React, { useCallback } from "react";
 const CountTimeRemainPracticeTest = () => {
     const dispatch = useAppDispatch();
 
-    const remainTime = useAppSelector(selectRemainTime);
+    const remainTime = useAppSelector(selectRemainingTime);
     const router = useRouter();
-    const isPause = useAppSelector(selectIsPaused);
+    const isPause = useAppSelector(selectIsGamePaused);
     const handleEndTime = useCallback(() => {
         dispatch(finishPracticeThunk());
         dispatch(shouldEndTimeTest(true));

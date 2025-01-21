@@ -1,5 +1,5 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
-import { gameState } from "@/redux/features/game";
+import { selectCurrentSubTopicIndex } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { ArrowBack } from "@mui/icons-material";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -15,7 +15,7 @@ const TitleFinishPage = () => {
     const topic = replaceName(topicName || "");
     const router = useRouter();
     const handleBack = () => router.back();
-    const { indexSubTopic } = useAppSelector(gameState);
+    const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
     return (
         <div className="w-full flex flex-col gap-4 sm:gap-6">
             <div className="text-center hidden sm:block mx-6 py-2 relative bg-white rounded-full">
