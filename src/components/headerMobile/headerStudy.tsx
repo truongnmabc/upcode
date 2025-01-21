@@ -6,14 +6,14 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { Fragment } from "react";
 import { getKeyTest, getLastPathSegment } from "../titleQuestion";
 import {
-    selectIndexSubTopic,
-    selectType,
+    selectCurrentSubTopicIndex,
+    selectGameMode,
 } from "@/redux/features/game.reselect";
 import { shouldOpenSubmitTest } from "@/redux/features/tests";
 
 const HeaderStudy = () => {
-    const indexSubTopic = useAppSelector(selectIndexSubTopic);
-    const type = useAppSelector(selectType);
+    const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
+    const type = useAppSelector(selectGameMode);
     const param = useParams();
     const pathname = usePathname();
     const router = useRouter();

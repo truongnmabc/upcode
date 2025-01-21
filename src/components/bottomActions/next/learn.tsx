@@ -2,12 +2,12 @@
 import { MtUiButton } from "@/components/button";
 import {
     selectCurrentGame,
-    selectIdTopic,
-    selectIndexCurrentQuestion,
-    selectIsEndTimeTest,
+    selectCurrentTopicId,
+    selectIsTimeUp,
     selectListQuestion,
-    selectSubTopicProgressId,
-    selectType,
+    selectCurrentSubTopicProgressId,
+    selectGameMode,
+    selectCurrentQuestionIndex,
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishQuestionThunk from "@/redux/repository/game/finish/finishQuestion";
@@ -22,12 +22,12 @@ const BtnNextQuestion = () => {
     const dispatch = useAppDispatch();
 
     const currentGame = useAppSelector(selectCurrentGame);
-    const subTopicProgressId = useAppSelector(selectSubTopicProgressId);
-    const idTopic = useAppSelector(selectIdTopic);
+    const subTopicProgressId = useAppSelector(selectCurrentSubTopicProgressId);
+    const idTopic = useAppSelector(selectCurrentTopicId);
     const listQuestion = useAppSelector(selectListQuestion);
-    const type = useAppSelector(selectType);
-    const indexCurrentQuestion = useAppSelector(selectIndexCurrentQuestion);
-    const isEndTimeTest = useAppSelector(selectIsEndTimeTest);
+    const type = useAppSelector(selectGameMode);
+    const indexCurrentQuestion = useAppSelector(selectCurrentQuestionIndex);
+    const isEndTimeTest = useAppSelector(selectIsTimeUp);
 
     useEffect(() => {
         const isFinal = listQuestion.every(

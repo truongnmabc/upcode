@@ -2,9 +2,9 @@
 import { MtUiButton } from "@/components/button";
 import { continueGame, startOverGame } from "@/redux/features/game";
 import {
-    selectIdTopic,
-    selectIsPaused,
-    selectType,
+    selectCurrentTopicId,
+    selectGameMode,
+    selectIsGamePaused,
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
@@ -32,9 +32,9 @@ const ModalConfirm = () => {
     const pathname = usePathname();
     const typeParam = useSearchParams().get("type");
     const dispatch = useAppDispatch();
-    const isPaused = useAppSelector(selectIsPaused);
-    const idTopic = useAppSelector(selectIdTopic);
-    const type = useAppSelector(selectType);
+    const isPaused = useAppSelector(selectIsGamePaused);
+    const idTopic = useAppSelector(selectCurrentTopicId);
+    const type = useAppSelector(selectGameMode);
 
     const handleStartOver = useCallback(async () => {
         await dispatch(

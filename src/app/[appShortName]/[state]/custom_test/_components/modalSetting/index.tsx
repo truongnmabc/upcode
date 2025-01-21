@@ -51,9 +51,9 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
     useEffect(() => {
         if (item) {
             setCount(item.count || 0);
-            setDuration(item.duration);
-            setPassing(item.passing ?? 0);
-            setSelectFeedback(item.feedBack ?? "newbie");
+            setDuration(item.totalDuration);
+            setPassing(item.passingThreshold ?? 0);
+            setSelectFeedback(item.gameDifficultyLevel ?? "newbie");
             setSelectListTopic(
                 item.subject
                     ? item.subject.map(
@@ -177,19 +177,19 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                 const parentId = generateRandomNegativeId();
 
                 await db?.testQuestions.add({
-                    duration: duration,
-                    passing: passing,
-                    isPaused: false,
+                    totalDuration: duration,
+                    passingThreshold: passing,
+                    isGamePaused: false,
                     parentId: parentId,
                     question: listQuestion as IQuestion[],
-                    remainTime: duration * 60,
+                    remainingTime: duration * 60,
                     startTime: new Date().getTime(),
-                    type: "customTets",
+                    gameMode: "customTets",
                     count: count,
-                    feedBack: selectFeedback,
+                    gameDifficultyLevel: selectFeedback,
                     subject: selectListTopic?.map((item) => item.id),
                     status: 0,
-                    turn: 1,
+                    attemptNumber: 1,
                     elapsedTime: 0,
                 });
 

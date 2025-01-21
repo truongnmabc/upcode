@@ -3,7 +3,7 @@ import { db } from "@/db/db.model";
 import { ITopic } from "@/models/topics/topics";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { setIndexSubTopic, setTurtGame } from "@/redux/features/game";
-import { selectIndexSubTopic } from "@/redux/features/game.reselect";
+import { selectCurrentSubTopicIndex } from "@/redux/features/game.reselect";
 import { selectSubTopics } from "@/redux/features/study";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
@@ -37,7 +37,7 @@ const PassingFinishPage = ({
     const router = useRouter();
     const topicName = useSearchParams().get("topic");
     const appInfo = useAppSelector(selectAppInfo);
-    const indexSubTopic = useAppSelector(selectIndexSubTopic);
+    const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
 
     const navigateToHref = useCallback(
         ({ topicName, subTopicTag, partTag }: NavigateToHrefParams) => {

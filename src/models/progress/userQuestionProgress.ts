@@ -15,7 +15,7 @@ export interface IUserQuestionProgress
         | "parentId"
     > {
     selectedAnswers?: IAnswer[];
-    type?: "test" | "learn";
+    gameMode?: "test" | "learn";
     parentIds: number[];
 }
 
@@ -31,7 +31,7 @@ export default class UserQuestionProgress implements IUserQuestionProgress {
     status: number = 0;
     syncStatus: number = 0;
     text: string = "";
-    type: "test" | "learn";
+    gameMode: "test" | "learn";
     parentIds: number[];
     constructor(obt: Partial<IUserQuestionProgress> = {}) {
         this.answers = obt.answers ?? this.answers;
@@ -44,7 +44,7 @@ export default class UserQuestionProgress implements IUserQuestionProgress {
         this.status = obt.status ?? this.status;
         this.syncStatus = obt.syncStatus ?? this.syncStatus;
         this.text = obt.text ?? this.text;
-        this.type = obt.type ?? "learn";
+        this.gameMode = obt.gameMode ?? "learn";
         this.image = obt.image ?? "";
         this.parentIds = obt.parentIds ?? [];
     }

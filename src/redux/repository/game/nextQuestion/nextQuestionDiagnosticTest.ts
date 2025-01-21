@@ -13,13 +13,13 @@ const nextQuestionDiagnosticThunk = createAsyncThunk(
     "nextQuestionDiagnostic",
     async (_, thunkAPI): Promise<IRes | undefined> => {
         const state = thunkAPI.getState() as RootState;
-        const { listQuestion, indexCurrentQuestion } = state.gameReducer;
+        const { listQuestion, currentQuestionIndex } = state.gameReducer;
 
-        if (indexCurrentQuestion + 1 < listQuestion.length) {
+        if (currentQuestionIndex + 1 < listQuestion.length) {
             return {
-                nextLever: listQuestion[indexCurrentQuestion + 1],
+                nextLever: listQuestion[currentQuestionIndex + 1],
                 isFirst: true,
-                indexCurrentQuestion: indexCurrentQuestion + 1,
+                indexCurrentQuestion: currentQuestionIndex + 1,
                 listQuestion: listQuestion,
             };
         } else {

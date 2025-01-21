@@ -2,12 +2,12 @@
 import { viewTest } from "@/redux/features/game";
 import {
     selectCurrentGame,
-    selectFeedBack,
-    selectIdTopic,
-    selectIndexCurrentQuestion,
-    selectListenEventKeyboard,
+    selectGameDifficultyLevel,
+    selectCurrentTopicId,
+    selectCurrentQuestionIndex,
+    selectEnableKeyboardShortcuts,
     selectListQuestion,
-    selectSubTopicProgressId,
+    selectCurrentSubTopicProgressId,
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishDiagnosticThunk from "@/redux/repository/game/finish/finishDiagnostic";
@@ -51,13 +51,13 @@ const ChoicesPanel: React.FC<IProps> = ({
     const router = useRouter();
     const params = useParams();
     const pathname = usePathname();
-    const idTopic = useAppSelector(selectIdTopic);
+    const idTopic = useAppSelector(selectCurrentTopicId);
     const currentGame = useAppSelector(selectCurrentGame);
     const listQuestion = useAppSelector(selectListQuestion);
-    const feedBack = useAppSelector(selectFeedBack);
-    const subTopicProgressId = useAppSelector(selectSubTopicProgressId);
-    const indexCurrentQuestion = useAppSelector(selectIndexCurrentQuestion);
-    const isListen = useAppSelector(selectListenEventKeyboard);
+    const feedBack = useAppSelector(selectGameDifficultyLevel);
+    const subTopicProgressId = useAppSelector(selectCurrentSubTopicProgressId);
+    const indexCurrentQuestion = useAppSelector(selectCurrentQuestionIndex);
+    const isListen = useAppSelector(selectEnableKeyboardShortcuts);
     const type = useSearchParams().get("type");
     const [listLength, setListLength] = useState(0);
 

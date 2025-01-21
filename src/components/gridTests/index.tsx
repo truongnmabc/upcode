@@ -27,12 +27,12 @@ const FN = () => {
 
     const handleGetData = useCallback(async () => {
         const listData = await db?.testQuestions
-            .filter((test) => test.type === "practiceTests")
+            .filter((test) => test.gameMode === "practiceTests")
             .toArray();
         if (listData) {
             setListPracticeTests(
                 listData?.map((item) => ({
-                    duration: item.duration,
+                    duration: item.totalDuration,
                     parentId: item.parentId,
                 }))
             );

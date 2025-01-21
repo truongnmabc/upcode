@@ -6,9 +6,9 @@ import { db } from "@/db/db.model";
 import { ICurrentGame } from "@/models/game/game";
 import { ITopic } from "@/models/topics/topics";
 import {
-    selectIdTopic,
+    selectCurrentTopicId,
     selectListQuestion,
-    selectPassing,
+    selectPassingThreshold,
 } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import clsx from "clsx";
@@ -53,8 +53,8 @@ type IPropsState = {
 };
 const ResultTestLayout = () => {
     const listQuestion = useAppSelector(selectListQuestion);
-    const idTopic = useAppSelector(selectIdTopic);
-    const passPercent = useAppSelector(selectPassing);
+    const idTopic = useAppSelector(selectCurrentTopicId);
+    const passPercent = useAppSelector(selectPassingThreshold);
     const type = useSearchParams().get("type");
     const testId = useSearchParams().get("testId");
     const isMobile = useIsMobile();

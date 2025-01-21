@@ -11,7 +11,7 @@ import ChoicesPanel from "@/components/choicesPanel";
 import BottomActions, { IPropsType } from "@/components/bottomActions";
 import TitleQuestion from "@/components/titleQuestion";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { selectIdTopic } from "@/redux/features/game.reselect";
+import { selectCurrentTopicId } from "@/redux/features/game.reselect";
 import initLearnQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
 
@@ -47,7 +47,7 @@ export default React.memo(MainStudyView);
 
 const LoadData = () => {
     const dispatch = useAppDispatch();
-    const id = useAppSelector(selectIdTopic);
+    const id = useAppSelector(selectCurrentTopicId);
     const type = useSearchParams().get("type");
     const tag = useSearchParams().get("tag");
     const testId = useSearchParams().get("testId");

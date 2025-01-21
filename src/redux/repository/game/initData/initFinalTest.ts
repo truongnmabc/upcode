@@ -13,7 +13,7 @@ const updateDB = async () => {
     db?.testQuestions
         .where("type")
         .equals("finalTests")
-        .modify((item) => (item.isPaused = false));
+        .modify((item) => (item.isGamePaused = false));
 };
 const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
     const dataStore = await db?.testQuestions
@@ -27,7 +27,7 @@ const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
         const progressData = await getLocalUserProgress(
             dataStore.parentId,
             "test",
-            dataStore.turn
+            dataStore.attemptNumber
         );
 
         if (progressData) {
@@ -39,11 +39,12 @@ const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
             return {
                 questions,
                 progressData,
-                idTopic: dataStore.parentId,
-                type: "test" as const,
-                duration: dataStore.duration,
-                isPaused: dataStore?.isPaused || false,
-                remainTime: dataStore?.remainTime || dataStore.duration * 60,
+                currentTopicId: dataStore.parentId,
+                gameMode: "test" as const,
+                totalDuration: dataStore.totalDuration,
+                isGamePaused: dataStore?.isGamePaused || false,
+                remainingTime:
+                    dataStore?.remainingTime || dataStore.totalDuration * 60,
             };
         }
         return undefined;
@@ -59,11 +60,11 @@ const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
         return {
             questions: data as ICurrentGame[],
             progressData: [],
-            idTopic: 4886547081986048,
-            type: "test" as const,
-            duration: 150,
-            isPaused: false,
-            remainTime: 150 * 60,
+            currentTopicId: 4886547081986048,
+            gameMode: "test" as const,
+            totalDuration: 150,
+            isGamePaused: false,
+            remainingTime: 150 * 60,
         };
     }
 });

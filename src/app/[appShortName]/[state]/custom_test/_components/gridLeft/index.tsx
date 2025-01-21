@@ -9,7 +9,7 @@ import ModalSettingCustomTest from "../modalSetting";
 import { IconDelete, IconEdit, IconPlus } from "@/components/icon/iconGridLeft";
 import ModalDelete from "../modalDelete";
 import {
-    selectIndexSubTopic,
+    selectCurrentSubTopicIndex,
     selectListQuestion,
 } from "@/redux/features/game.reselect";
 import { resetState, startCustomTest } from "@/redux/features/game";
@@ -21,7 +21,7 @@ const GridLeftCustomTest = () => {
     const [itemSelect, setItemSelect] = useState<ITestQuestion | null>(null);
     const listQuestion = useAppSelector(selectListQuestion);
     const dispatch = useAppDispatch();
-    const indexSubTopic = useAppSelector(selectIndexSubTopic);
+    const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
 
     useEffect(() => {
         const handleGetData = async () => {
@@ -75,7 +75,7 @@ const GridLeftCustomTest = () => {
                 .filter(
                     (item) =>
                         item.parentIds.includes(itemSelect?.parentId) &&
-                        item.type === "test"
+                        item.gameMode === "test"
                 )
                 .delete();
 
@@ -99,10 +99,10 @@ const GridLeftCustomTest = () => {
                 dispatch(
                     startCustomTest({
                         listQuestion: startTest?.question,
-                        time: startTest?.duration * 60,
+                        totalDuration: startTest?.totalDuration * 60,
                         parentId: startTest.parentId,
-                        passing: startTest.passing,
-                        feedBack: startTest.feedBack,
+                        passingThreshold: startTest.passingThreshold,
+                        gameDifficultyLevel: startTest.gameDifficultyLevel,
                         indexSubTopic: 1,
                     })
                 );
