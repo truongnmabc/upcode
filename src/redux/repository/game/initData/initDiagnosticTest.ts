@@ -31,6 +31,7 @@ export const setDataStoreDiagnostic = async ({
         type: "diagnosticTest",
         status: 0,
         turn: 1,
+        elapsedTime: 0,
     });
 };
 

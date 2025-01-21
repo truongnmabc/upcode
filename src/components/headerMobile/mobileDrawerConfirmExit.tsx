@@ -1,6 +1,9 @@
 "use client";
 import { MtUiButton } from "@/components/button";
-import Sheet from "@/components/sheet";
+import dynamic from "next/dynamic";
+const Sheet = dynamic(() => import("@/components/sheet"), {
+    ssr: false,
+});
 import { trackingEventGa4 } from "@/services/googleEvent";
 import { useRouter } from "next/navigation";
 import React from "react";

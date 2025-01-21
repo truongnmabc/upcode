@@ -2,7 +2,10 @@
 import IconBookmark from "@/components/icon/iconBookmark";
 import IconDislike from "@/components/icon/iconDislike";
 import IconLike from "@/components/icon/iconLike";
-import Sheet from "@/components/sheet";
+import dynamic from "next/dynamic";
+const Sheet = dynamic(() => import("@/components/sheet"), {
+    ssr: false,
+});
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { selectCurrentGame } from "@/redux/features/game.reselect";
 import { selectListActions } from "@/redux/features/user.reselect";
@@ -61,7 +64,7 @@ const Reaction = ({ item }: { item?: ICurrentGame }) => {
                 partId: item?.parentId || currentGame.parentId,
             })
         );
-    }, [dispatch, currentGame.id, currentGame.parentId, item, status.save]);
+    }, [dispatch, currentGame?.id, currentGame?.parentId, item, status.save]);
 
     const likeAction = useCallback(() => {
         if (!status.like) {
@@ -74,7 +77,7 @@ const Reaction = ({ item }: { item?: ICurrentGame }) => {
                 partId: item?.parentId || currentGame.parentId,
             })
         );
-    }, [dispatch, currentGame.id, currentGame.parentId, item, status.like]);
+    }, [dispatch, currentGame?.id, currentGame?.parentId, item, status.like]);
 
     const dislikeAction = () => setOpenModal(true);
 

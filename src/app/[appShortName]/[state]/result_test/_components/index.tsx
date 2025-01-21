@@ -1,30 +1,33 @@
 "use client";
+import MyContainer from "@/components/container";
+import ReviewAnswerResult from "@/components/reviewAnswers";
 import { TypeParam } from "@/constants";
 import { db } from "@/db/db.model";
 import { ICurrentGame } from "@/models/game/game";
 import { ITopic } from "@/models/topics/topics";
-import { useAppSelector } from "@/redux/hooks";
-import { useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import HeaderResultTest from "./header";
-import MyContainer from "@/components/container";
-import ReviewAnswerResult from "@/components/reviewAnswers";
 import {
     selectIdTopic,
     selectListQuestion,
     selectPassing,
 } from "@/redux/features/game.reselect";
+import { useAppSelector } from "@/redux/hooks";
 import clsx from "clsx";
-
+import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import HeaderResultTest from "./header";
+import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
+import { calculatorAverageLevel } from "@/utils/math";
+import { totalPassingPart } from "../../finish/_components/calculate";
+import ItemListTopicResult from "./listTopicResult/item";
 import {
-    calculatePassList,
-    calculatePercentage,
     calculateTopics,
     getReviewTopics,
-    processAllQuestions,
     getUniqueTags,
+    processAllQuestions,
 } from "./utils";
-import ItemListTopicResult from "./listTopicResult/item";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { MtUiButton } from "@/components/button";
+import DrawerAnswers from "./drawer";
 
 export interface ITopicEndTest extends ITopic {
     totalQuestion: number;
@@ -41,29 +44,28 @@ const fetchData = async (idTopic: number) => {
     return { user, topics, questions };
 };
 
+type IPropsState = {
+    listTopic: ITopicEndTest[];
+    all: ICurrentGame[];
+    correct: ICurrentGame[];
+    incorrect: ICurrentGame[];
+    passing: number;
+};
 const ResultTestLayout = () => {
     const listQuestion = useAppSelector(selectListQuestion);
     const idTopic = useAppSelector(selectIdTopic);
-    const passing = useAppSelector(selectPassing);
+    const passPercent = useAppSelector(selectPassing);
     const type = useSearchParams().get("type");
     const testId = useSearchParams().get("testId");
+    const isMobile = useIsMobile();
+    const [openDrawer, setOpenDrawer] = useState(false);
 
-    const [result, setResult] = useState<{
-        listTopic: ITopicEndTest[];
-        pass: number;
-        percent: number;
-        isPass: boolean;
-        all: ICurrentGame[];
-        correct: ICurrentGame[];
-        incorrect: ICurrentGame[];
-    }>({
-        pass: 0,
-        percent: 0,
-        isPass: false,
+    const [result, setResult] = useState<IPropsState>({
         listTopic: [],
         all: [],
         correct: [],
         incorrect: [],
+        passing: 0,
     });
 
     const [tableData, setTabletData] = useState<{
@@ -85,21 +87,10 @@ const ResultTestLayout = () => {
         if (idTopic || testId) {
             const id = idTopic !== -1 ? idTopic : Number(testId);
             const { user, topics, questions } = await fetchData(id);
-            console.log("🚀 ~ handleGetData ~ user:", user);
-            console.log("🚀 ~ handleGetData ~ topics:", topics);
-            console.log("🚀 ~ handleGetData ~ questions:", questions);
 
             const list = listQuestion?.length
                 ? listQuestion
                 : questions?.question || [];
-
-            const listPass =
-                type === TypeParam.review
-                    ? listQuestion.filter(
-                          (item) => item.localStatus === "correct"
-                      )
-                    : calculatePassList(user || []);
-            console.log("🚀 ~ handleGetData ~ listPass:", listPass);
 
             const listExam =
                 questions?.groupExamData?.flatMap((item) => item.examData) ||
@@ -111,28 +102,29 @@ const ResultTestLayout = () => {
                 const uniqueTags = getUniqueTags(list);
                 listTopic = getReviewTopics(uniqueTags, list, topics || []);
             } else {
-                listTopic = calculateTopics(
+                listTopic = calculateTopics({
                     type,
                     topics,
                     questions,
                     listExam,
-                    list
-                );
+                    listQuestion: list,
+                });
             }
 
-            const percent = calculatePercentage(listPass, list);
-
-            const allQuestions = processAllQuestions(
+            const allQuestions = processAllQuestions({
                 type,
+                listQuestion: list,
                 listExam,
-                list,
-                topics
+                topics,
+            });
+            const averageLevel = calculatorAverageLevel(list);
+
+            const passingProbability = totalPassingPart(
+                user as IUserQuestionProgress[],
+                averageLevel
             );
 
             setResult({
-                pass: listPass?.length || 0,
-                percent,
-                isPass: percent >= (passing || 0),
                 listTopic,
                 all: allQuestions,
                 incorrect: allQuestions.filter(
@@ -141,6 +133,7 @@ const ResultTestLayout = () => {
                 correct: allQuestions.filter(
                     (item) => item.selectedAnswer?.correct
                 ),
+                passing: passingProbability,
             });
 
             setTabletData({
@@ -153,30 +146,59 @@ const ResultTestLayout = () => {
                 ),
             });
         }
-    }, [idTopic, passing, listQuestion, type, testId]);
+    }, [idTopic, listQuestion, type, testId]);
 
     useEffect(() => {
         handleGetData();
     }, [handleGetData]);
 
+    const handleOpenDrawer = () => setOpenDrawer(true);
+    const handleCloseDrawer = () => setOpenDrawer(false);
+
     return (
         <div className="w-full flex-1">
-            <div className="bg-[#FFE1E1]">
+            <div className="bg-white sm:bg-[#FFE1E1] ">
                 <HeaderResultTest
-                    isPass={result.isPass}
-                    pass={result.pass}
-                    percent={result.percent}
+                    correct={result.correct.length}
+                    total={result.all.length}
+                    isPass={
+                        (result.correct.length / result.all.length) * 100 >
+                        (passPercent || 0)
+                    }
+                    passing={result.passing}
                 />
             </div>
             <MyContainer className="sm:pb-6 pb-4">
-                <div className="w-full flex gap-10 justify-between  mt-9">
+                {isMobile && type !== TypeParam.diagnosticTest && (
+                    <div className="pt-4 ">
+                        <MtUiButton
+                            block
+                            size="large"
+                            className="bg-white text-primary border-primary"
+                            onClick={handleOpenDrawer}
+                        >
+                            Review your answers
+                        </MtUiButton>
+                    </div>
+                )}
+                <div className="text-lg my-2 font-medium sm:hidden">
+                    Test Subjects
+                </div>
+                <div className="w-full flex gap-10 justify-between  sm:mt-9">
                     <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 ">
                         {result.listTopic.map((item) => (
                             <ItemListTopicResult item={item} key={item.id} />
                         ))}
                     </div>
                 </div>
-                {type !== TypeParam.diagnosticTest && (
+                <DrawerAnswers
+                    openDrawer={openDrawer}
+                    handleCloseDrawer={handleCloseDrawer}
+                    tableData={tableData}
+                    result={result}
+                    setTabletData={setTabletData}
+                />
+                {type !== TypeParam.diagnosticTest && !isMobile && (
                     <div
                         className={clsx("w-full flex flex-col pt-6  ", {
                             "min-h-[720px]": tableData.all.length > 0,

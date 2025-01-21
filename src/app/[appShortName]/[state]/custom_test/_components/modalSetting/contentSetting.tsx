@@ -150,11 +150,7 @@ const ContentSetting = (props: IProps) => {
                     type="primary"
                     block
                     onClick={onStart}
-                    disabled={
-                        duration === 0 ||
-                        count === 0 ||
-                        selectListTopic.length === 0
-                    }
+                    disabled={count === 0 || selectListTopic.length === 0}
                     className="sm:max-w-32"
                     loading={loading}
                 >

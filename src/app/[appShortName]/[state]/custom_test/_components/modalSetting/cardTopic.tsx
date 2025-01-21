@@ -29,7 +29,7 @@ const CardTopic = ({
         <div
             onClick={handleSelect}
             className={clsx(
-                " cursor-pointer w-full flex bg-white items-center justify-between gap-[10px] rounded-lg border border-solid p-4 ",
+                " cursor-pointer w-full flex bg-white items-center justify-between gap-[10px] rounded-lg sm:border border-solid p-0 sm:p-4 ",
                 {
                     "border-primary ": isCheck,
                     "border-[#2121211F]  ": !isCheck,
@@ -55,7 +55,7 @@ const CardTopic = ({
     );
 };
 
-const IconCheck = () => {
+export const IconCheck = () => {
     return (
         <svg
             width="11"

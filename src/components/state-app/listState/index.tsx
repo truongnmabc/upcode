@@ -1,8 +1,8 @@
 "use client";
 
 import { IAppInfo } from "@/models/app/appInfo";
-import { revertPathName } from "@/utils/pathName";
-import { useRouter } from "next/navigation";
+// import { revertPathName } from "@/utils/pathName";
+// import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ListState from "./listState";
 
@@ -22,7 +22,7 @@ const BtnGotoState = ({ appInfo }: { appInfo: IAppInfo }) => {
         }
     }, [appInfo.appNameId]);
 
-    const router = useRouter();
+    // const router = useRouter();
 
     return (
         <div className="w-full sm:pt-12 pt-6 flex justify-center flex-col items-center">
@@ -30,11 +30,12 @@ const BtnGotoState = ({ appInfo }: { appInfo: IAppInfo }) => {
                 className="bg-[#212121f5] py-3 px-8 font-semibold text-2xl text-white capitalize text-center rounded-md cursor-pointer "
                 onClick={() => {
                     if (currentState) {
-                        const _href = revertPathName({
-                            state: currentState,
-                            appName: appInfo.appShortName,
-                        });
-                        router.push(_href);
+                        // *NOTE : bo commet sau
+                        // const _href = revertPathName({
+                        //     state: currentState,
+                        //     appName: appInfo.appShortName,
+                        // });
+                        // router.push(_href);
                     } else {
                         setOpenListState(true);
                     }

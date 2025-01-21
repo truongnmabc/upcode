@@ -46,7 +46,7 @@ const CountTimeDiagnostic = () => {
 
     return (
         <CountTime
-            isPause={currentGame.selectedAnswer ? true : false}
+            isPause={currentGame?.selectedAnswer ? true : false}
             key={currentGame?.id}
             duration={remainTime}
             onEndTime={handleEndTime}

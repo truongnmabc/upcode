@@ -73,6 +73,7 @@ const FN = ({ setOpen }: { setOpen: (e: boolean) => void }) => {
                 btnRef.current = null;
             };
         }
+        return undefined;
     }, []);
 
     const handleLoginApple = useCallback(() => {

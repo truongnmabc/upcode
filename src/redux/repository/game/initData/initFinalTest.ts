@@ -9,6 +9,12 @@ import {
 } from "./initPracticeTest";
 import { requestGetData } from "@/services/request";
 
+const updateDB = async () => {
+    db?.testQuestions
+        .where("type")
+        .equals("finalTests")
+        .modify((item) => (item.isPaused = false));
+};
 const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
     const dataStore = await db?.testQuestions
         .where("type")
@@ -29,7 +35,7 @@ const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
                 listQuestion as ICurrentGame[],
                 progressData
             );
-
+            updateDB();
             return {
                 questions,
                 progressData,

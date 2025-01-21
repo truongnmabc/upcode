@@ -25,7 +25,6 @@ const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
             dispatch(
                 initTestQuestionThunk({
                     testId: test.parentId,
-                    duration: test.duration,
                 })
             );
 
@@ -37,7 +36,7 @@ const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
             router.replace(_href);
         }
         return;
-    }, [test.parentId, test.duration, dispatch, router]);
+    }, [test.parentId, dispatch, router]);
 
     return (
         <div

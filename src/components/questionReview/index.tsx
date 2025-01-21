@@ -14,8 +14,62 @@ import React, { useCallback } from "react";
 import { DialogDetailQuestionReview } from "./dialogDetailQuestionReview";
 import { selectUserInfo } from "@/redux/features/user.reselect";
 import clsx from "clsx";
+import { CancelRounded, CheckCircleRounded } from "@mui/icons-material";
+const QuestionResult = ({
+    item,
+    type = "default",
+}: {
+    item: ICurrentGame;
+    type?: "default" | "custom";
+}) => {
+    if (type === "custom") {
+        return (
+            <div className="p-1 w-full h-full">
+                <div
+                    className="rounded-lg bg-white  w-full h-full flex flex-col  flex-1"
+                    style={{
+                        boxShadow: " 0px 2px 8px 0px #21212129",
+                    }}
+                >
+                    <div className="w-full rounded-t-lg bg-[#FFFBE1] overflow-hidden flex items-center justify-between px-3 py-2 sm:p-4">
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-red-500 flex items-center justify-center rounded-md">
+                                <LazyLoadImage
+                                    classNames="w-6 h-6"
+                                    src={item?.icon || ""}
+                                />
+                            </div>
 
-const QuestionResult = ({ item }: { item: ICurrentGame }) => {
+                            <p className="text-base flex-1  font-medium capitalize ">
+                                {item?.tag?.replaceAll("-", " ")}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex px-4 pt-4 items-center justify-between">
+                        <div className="flex items-center gap-1">
+                            {item.selectedAnswer?.correct ? (
+                                <>
+                                    <CheckCircleRounded htmlColor="#00c17c" />
+                                    <div className="text-[#00c17c]">
+                                        CORRECT
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <CancelRounded htmlColor="#fb7072" />
+                                    <div className="text-[#FF746D]">
+                                        INCORRECT
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                        <Reaction item={item} />
+                    </div>
+                    <ContentAnswer item={item} />
+                </div>
+            </div>
+        );
+    }
     return (
         <div
             className="rounded-lg  w-full h-full flex flex-col flex-1"
@@ -23,7 +77,7 @@ const QuestionResult = ({ item }: { item: ICurrentGame }) => {
                 boxShadow: " 0px 2px 8px 0px #21212129",
             }}
         >
-            <div className="w-full rounded-t-lg bg-[#FFFBE1] overflow-hidden flex items-center justify-between px-3 py-2 sm:p-4">
+            <div className="w-full  rounded-t-lg bg-[#FFFBE1] overflow-hidden flex items-center justify-between px-3 py-2 sm:p-4">
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-red-500 flex items-center justify-center rounded-md">
                         <LazyLoadImage
