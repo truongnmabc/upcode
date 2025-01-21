@@ -50,8 +50,7 @@ const IconProgress = ({
     const handleListenerChange = useCallback(async () => {
         const result =
             (await db?.userProgress
-                .where("parentId")
-                .equals(part.id)
+                .filter((item) => item.parentIds.includes(part.id))
                 .toArray()) || [];
 
         const pass = result.filter((item) =>

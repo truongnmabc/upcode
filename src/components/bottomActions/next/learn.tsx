@@ -2,13 +2,13 @@
 import { MtUiButton } from "@/components/button";
 import {
     selectCurrentGame,
+    selectIdTopic,
     selectIndexCurrentQuestion,
     selectIsEndTimeTest,
     selectListQuestion,
     selectSubTopicProgressId,
     selectType,
 } from "@/redux/features/game.reselect";
-import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishQuestionThunk from "@/redux/repository/game/finish/finishQuestion";
 import nextQuestionThunk from "@/redux/repository/game/nextQuestion/nextQuestion";
@@ -23,7 +23,7 @@ const BtnNextQuestion = () => {
 
     const currentGame = useAppSelector(selectCurrentGame);
     const subTopicProgressId = useAppSelector(selectSubTopicProgressId);
-    const idTopic = useAppSelector(selectTopicsId);
+    const idTopic = useAppSelector(selectIdTopic);
     const listQuestion = useAppSelector(selectListQuestion);
     const type = useAppSelector(selectType);
     const indexCurrentQuestion = useAppSelector(selectIndexCurrentQuestion);

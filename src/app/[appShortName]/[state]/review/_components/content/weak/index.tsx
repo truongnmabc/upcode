@@ -35,11 +35,11 @@ const WeakQuestions = () => {
 
             const list = data
                 .filter((item) =>
-                    listSub?.some((topic) => topic?.id === item.parentId)
+                    listSub?.some((topic) => item.parentIds.includes(topic?.id))
                 )
                 .map((item) => {
-                    const matchingTopic = listSub.find(
-                        (topic) => topic?.id === item.parentId
+                    const matchingTopic = listSub.find((topic) =>
+                        item.parentIds.includes(topic?.id)
                     );
                     return {
                         ...item,
@@ -63,8 +63,13 @@ const WeakQuestions = () => {
             });
             console.log("🚀 ~ handleGetData ~ incorrect:", incorrect);
 
-            setListTopic(incorrect);
-            dispatch(setListQuestionGames(incorrect));
+            const mathType = incorrect.map((item) => ({
+                ...item,
+                parentId: -1,
+            }));
+
+            setListTopic(mathType);
+            dispatch(setListQuestionGames(mathType));
         }
     }, [dispatch]);
 
@@ -83,7 +88,14 @@ const WeakQuestions = () => {
                     <VariableSizeList
                         data={listTopic}
                         getItemSize={getItemSize}
-                        item={(item) => <QuestionResult item={item} />}
+                        item={(item) => (
+                            <QuestionResult
+                                item={{
+                                    ...item,
+                                    parentId: -1,
+                                }}
+                            />
+                        )}
                     />
                 </MathJaxContext>
             ) : (
