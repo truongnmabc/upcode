@@ -19,6 +19,7 @@ const eslintConfig = [
             "src/components/parentApp/**",
             "src/components/initData/core/idb.js",
             "src/components/ads/check.tsx",
+            "tests",
         ],
     },
 

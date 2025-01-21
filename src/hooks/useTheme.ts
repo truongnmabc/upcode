@@ -38,6 +38,7 @@ export const useTheme = () => {
             mediaQuery.addEventListener("change", handleChange);
             return () => mediaQuery.removeEventListener("change", handleChange);
         }
+        return undefined;
     }, [theme]);
 
     const toggleTheme = (newTheme: ThemeMode) => {

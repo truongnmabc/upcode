@@ -35,9 +35,7 @@ const finishQuestionThunk = createAsyncThunk(
                 .modify((item) => {
                     item.part = updatedPart;
                     item.pass = isUnfinished;
-                })
-                .then((res) => console.log("res", res))
-                .catch((err) => console.log("err", err));
+                });
         } catch (error) {
             console.error("Error in finishQuestionThunk:", error);
         }

@@ -119,8 +119,14 @@ export const gameSlice = createSlice({
             state.remainTime = -1;
         },
         startCustomTest: (state, action) => {
-            const { listQuestion, time, parentId, feedBack, passing } =
-                action.payload;
+            const {
+                listQuestion,
+                time,
+                parentId,
+                feedBack,
+                passing,
+                indexSubTopic,
+            } = action.payload;
             state.listQuestion = listQuestion;
             state.currentGame = listQuestion[0];
             state.idTopic = parentId;
@@ -130,7 +136,9 @@ export const gameSlice = createSlice({
             state.isFirst = true;
             state.feedBack = feedBack;
             state.passing = passing;
+            state.indexSubTopic = indexSubTopic;
         },
+
         resetState: () => {
             return initGameReducer;
         },

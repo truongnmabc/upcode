@@ -20,7 +20,6 @@ const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
         .where("type")
         .equals("finalTests")
         .first();
-    console.log("🚀 ~ initFinalTestThunk ~ dataStore:", dataStore);
 
     const listQuestion = dataStore?.question;
 

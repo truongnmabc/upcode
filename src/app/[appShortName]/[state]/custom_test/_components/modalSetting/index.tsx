@@ -21,12 +21,14 @@ type IProps = {
     onClose: () => void;
     item?: ITestQuestion | null;
     isShowBtnCancel: boolean;
+    listTestLength: number;
 };
 const ModalSettingCustomTest: React.FC<IProps> = ({
     open,
     onClose,
     item,
     isShowBtnCancel,
+    listTestLength,
 }) => {
     const [listTopic, setListTopic] = useState<ITopic[]>([]);
     const [count, setCount] = useState(0);
@@ -86,7 +88,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
     const [loading, setLoading] = useState(false);
     const dispatch = useAppDispatch();
     const onStart = async () => {
-        if (duration > 0 && count > 0 && selectListTopic.length > 0) {
+        if (count > 0 && selectListTopic.length > 0) {
             let listQuestion: ICurrentGame[] = [];
             try {
                 setLoading(true);
@@ -198,6 +200,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                         parentId: parentId,
                         passing: passing,
                         feedBack: selectFeedback,
+                        indexSubTopic: listTestLength + 1,
                     })
                 );
                 onCancel();
@@ -215,7 +218,9 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
     };
 
     const handleSelectAll = () => {
-        setSelectListTopic(listTopic);
+        if (selectListTopic.length < listTopic.length)
+            setSelectListTopic(listTopic);
+        if (selectListTopic.length === listTopic.length) setSelectListTopic([]);
     };
     if (isMobile) {
         return (

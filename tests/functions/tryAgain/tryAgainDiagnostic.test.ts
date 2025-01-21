@@ -3,15 +3,16 @@ import { db as MockDb } from "@/db/db.mock"; // Giả lập database
 import tryAgainDiagnosticThunk from "../../../src/redux/repository/game/tryAgain/tryAgainDiagnostic";
 import { RootState } from "@/redux/store";
 import testsMock from "../../data/testQuestion.json";
-
 import configureStore from "redux-mock-store";
 import { thunk } from "redux-thunk";
 import { ICurrentGame } from "@/models/game/game";
 import { AnyAction } from "@reduxjs/toolkit";
 import { ThunkDispatch } from "redux-thunk";
 type AppDispatch = ThunkDispatch<RootState, void, AnyAction>;
-const middlewares = [thunk];
-const mockStore = configureStore<RootState, AppDispatch>(middlewares);
+
+const middleware = [thunk] as any;
+
+const mockStore = configureStore<RootState, AppDispatch>(middleware);
 
 // Giả lập dữ liệu mock
 jest.mock("../../../src/db/db.model", () => ({
@@ -32,11 +33,11 @@ describe("Test tryAgainDiagnosticThunk", () => {
             },
         } as RootState);
 
-        const result = await store.dispatch(
+        const result = await store.dispatch<any>(
             tryAgainDiagnosticThunk({ testId: 123 })
         );
 
-        expect(result.payload?.listQuestion).toEqual([
+        expect(result.payload.listQuestion).toEqual([
             {
                 id: 1,
                 text: "Existing Question",
@@ -56,7 +57,7 @@ describe("Test tryAgainDiagnosticThunk", () => {
             },
         } as RootState);
 
-        const result = await store.dispatch(
+        const result = await store.dispatch<any>(
             tryAgainDiagnosticThunk({ testId: 123 })
         );
 
@@ -73,7 +74,7 @@ describe("Test tryAgainDiagnosticThunk", () => {
             },
         } as RootState);
 
-        const result = await store.dispatch(
+        const result = await store.dispatch<any>(
             tryAgainDiagnosticThunk({ testId: -2 })
         );
 

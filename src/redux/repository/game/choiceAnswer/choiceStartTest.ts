@@ -36,6 +36,7 @@ const choiceStartCustomTestThunk = createAsyncThunk(
                 indexSubTopic: item.indexSubTopic,
             };
         }
+        return undefined;
     }
 );
 
