@@ -10,7 +10,7 @@ import { useCallback, useEffect, useState } from "react";
 
 const GridTopicProgress = () => {
     const [listSubTopics, setListSubTopics] = useState<ITopic | null>();
-    const slug = useSearchParams().get("topic");
+    const slug = useSearchParams()?.get("topic");
     const dispatch = useAppDispatch();
     const pathname = usePathname();
     const handleGetData = useCallback(async () => {
@@ -31,7 +31,7 @@ const GridTopicProgress = () => {
         return (
             <div
                 className={clsx("w-full h-full rounded-md  bg-white", {
-                    "p-3": pathname.includes("/finish"),
+                    "p-3": pathname?.includes("/finish"),
                 })}
             >
                 <AllowExpandProvider topic={listSubTopics}>

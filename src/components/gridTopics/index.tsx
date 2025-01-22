@@ -30,7 +30,7 @@ const FN = () => {
     const appInfo = useAppSelector(selectAppInfo);
     const selectedTopics = useAppSelector(selectTopicsId);
     const [listMainTopics, setListMainTopics] = useState<ITopic[]>(mockData);
-    const type = useSearchParams().get("type");
+    const type = useSearchParams()?.get("type");
 
     const [open, setOpen] = React.useState(type === "learn");
 

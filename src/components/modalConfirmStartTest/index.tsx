@@ -30,7 +30,7 @@ const Transition = React.forwardRef(function Transition(
 const ModalConfirm = () => {
     const [open, setOpen] = React.useState(false);
     const pathname = usePathname();
-    const typeParam = useSearchParams().get("type");
+    const typeParam = useSearchParams()?.get("type");
     const dispatch = useAppDispatch();
     const isPaused = useAppSelector(selectIsGamePaused);
     const idTopic = useAppSelector(selectCurrentTopicId);

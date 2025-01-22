@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const IconReviewHeader = () => {
     const pathname = usePathname();
-    if (pathname.includes("/study") || pathname.includes("_test")) {
+    if (pathname?.includes("/study") || pathname?.includes("_test")) {
         return (
             <Link href={RouterApp.Review}>
                 <div className="hidden sm:flex item-center hover:text-primary  capitalize gap-3">

@@ -23,7 +23,7 @@ const FN = () => {
                 topic: topics[0],
             });
     };
-    if (pathname.includes("/review")) {
+    if (pathname?.includes("/review")) {
         return (
             <div
                 onClick={handleNavigate}

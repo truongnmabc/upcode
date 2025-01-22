@@ -70,7 +70,7 @@ describe("Test Init Data Diagnostic Test", () => {
     it("Should create a new diagnostic test", async () => {
         const test = await createNewDiagnosticTest();
         expect(test.listQuestion.length).toBeGreaterThan(0);
-        expect(test.isPaused).toBe(false);
+        expect(test.isGamePaused).toBe(false);
     });
 
     /** Kiểm tra trường hợp không có dữ liệu */

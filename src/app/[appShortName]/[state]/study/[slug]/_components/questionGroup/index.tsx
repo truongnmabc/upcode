@@ -7,7 +7,7 @@ import GridTopicLeft from "@/components/gridTopics";
 import { useSearchParams } from "next/navigation";
 
 const QuestionGroup = () => {
-    const type = useSearchParams().get("type");
+    const type = useSearchParams()?.get("type");
     return (
         <div className="hidden sm:block w-full">
             <div className="flex p-3 bg-white rounded-xl flex-col gap-4">

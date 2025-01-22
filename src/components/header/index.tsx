@@ -28,7 +28,7 @@ const HeaderApp = () => {
     return (
         <div className="w-full">
             <DownLoadApp />
-            {isMobile && isPathInList(path, listPageNotHeader) ? null : (
+            {isMobile && isPathInList(path || "", listPageNotHeader) ? null : (
                 <div
                     className={clsx(
                         " h-fit w-full flex bg-white dark:bg-black border-b  border-[#e4e4e4] border-solid  justify-center "

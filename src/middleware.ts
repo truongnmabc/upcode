@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    const pathSegments = pathname.split("/").filter(Boolean);
+    const pathSegments = pathname?.split("/").filter(Boolean);
     const slug = pathSegments[0];
 
     if (pathname === "/blog") {

@@ -11,7 +11,7 @@ const replaceName = (path?: string) => {
 };
 
 const TitleFinishPage = () => {
-    const topicName = useSearchParams().get("topic");
+    const topicName = useSearchParams()?.get("topic");
     const topic = replaceName(topicName || "");
     const router = useRouter();
     const handleBack = () => router.back();

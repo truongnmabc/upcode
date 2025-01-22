@@ -35,7 +35,7 @@ const PassingFinishPage = ({
 }) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const topicName = useSearchParams().get("topic");
+    const topicName = useSearchParams()?.get("topic");
     const appInfo = useAppSelector(selectAppInfo);
     const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
 

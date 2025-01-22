@@ -40,8 +40,8 @@ const BottomConfirmTest = () => {
     const pathname = usePathname();
     const listQuestions = useAppSelector(selectListQuestion);
     const router = useRouter();
-    const type = useSearchParams().get("type");
-    const testId = useSearchParams().get("testId");
+    const type = useSearchParams()?.get("type");
+    const testId = useSearchParams()?.get("testId");
     const id = useAppSelector(selectCurrentTopicId);
     const [info, setInfo] = useState({
         answer: 0,
@@ -74,17 +74,18 @@ const BottomConfirmTest = () => {
             dispatch(finishPracticeThunk());
         }
 
-        const segments = pathname.split("/").filter(Boolean);
+        const segments = pathname?.split("/").filter(Boolean);
+        if (segments) {
+            const lastSegment = segments[segments.length - 1];
+            const _href = `${RouterApp.ResultTest}?type=${lastSegment}&testId=${
+                testId || id
+            }`;
 
-        const lastSegment = segments[segments.length - 1];
-        const _href = `${RouterApp.ResultTest}?type=${lastSegment}&testId=${
-            testId || id
-        }`;
+            dispatch(shouldOpenSubmitTest(false));
+            dispatch(endTest());
 
-        dispatch(shouldOpenSubmitTest(false));
-        dispatch(endTest());
-
-        router.replace(_href);
+            router.replace(_href);
+        }
     }, [dispatch, router, pathname, type, testId, id]);
 
     if (isMobile) {

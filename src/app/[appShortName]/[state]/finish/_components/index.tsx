@@ -18,8 +18,8 @@ import ProgressFinishPage from "./progress";
 import TitleFinishPage from "./title";
 
 const FinishLayout = () => {
-    const subTopicProgressId = useSearchParams().get("subTopicProgressId");
-    const partId = useSearchParams().get("partId");
+    const subTopicProgressId = useSearchParams()?.get("subTopicProgressId");
+    const partId = useSearchParams()?.get("partId");
     const turn = useAppSelector(selectAttemptNumber);
 
     const [game, setGame] = useState<{
