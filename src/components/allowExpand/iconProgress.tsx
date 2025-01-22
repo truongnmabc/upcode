@@ -36,6 +36,7 @@ const IconProgress = ({
     const currentGame = useAppSelector(selectCurrentGame);
     const listQuestion = useAppSelector(selectListQuestion);
     const turn = useAppSelector(selectAttemptNumber);
+    console.log("🚀 ~ turn:", turn);
     const idTopic = useAppSelector(selectCurrentTopicId);
 
     const { mainTopicTag } =
@@ -44,7 +45,7 @@ const IconProgress = ({
     const router = useRouter();
     const dispatch = useAppDispatch();
     const pathname = usePathname();
-    const tag = useSearchParams().get("tag");
+    const tag = useSearchParams()?.get("tag");
     const [progress, setProgress] = useState(0);
 
     const handleListenerChange = useCallback(async () => {
@@ -52,6 +53,8 @@ const IconProgress = ({
             (await db?.userProgress
                 .filter((item) => item.parentIds.includes(part.id))
                 .toArray()) || [];
+        console.log("🚀 ~ handleListenerChange ~ result:", result);
+        console.log("🚀 ~ handleListenerChange ~ turn:", turn);
 
         const pass = result.filter((item) =>
             item.selectedAnswers?.find(
@@ -64,7 +67,7 @@ const IconProgress = ({
 
     const handleClick = useCallback(async () => {
         if (
-            pathname.includes(`/study/${mainTopicTag}-practice-test`) &&
+            pathname?.includes(`/study/${mainTopicTag}-practice-test`) &&
             tag === part.tag
         ) {
             return;
@@ -94,7 +97,7 @@ const IconProgress = ({
                     turn: 1,
                 })
             );
-            if (pathname.includes("/study")) {
+            if (pathname?.includes("/study")) {
                 return router.replace(_href);
             }
 
@@ -131,6 +134,7 @@ const IconProgress = ({
         listQuestion,
         isPass,
         handleListenerChange,
+        turn,
     ]);
 
     return (

@@ -193,9 +193,9 @@ const TitleTopic = ({
                         src={topic.icon}
                         alt={appInfo?.appName + topic.name + "Practice Test"}
                         classNames={clsx({
-                            "w-6  h-6  ": currentPathname.includes("/study"),
+                            "w-6  h-6  ": currentPathname?.includes("/study"),
                             "w-6  h-6 sm:w-8 sm:h-8 ":
-                                !currentPathname.includes("/study"),
+                                !currentPathname?.includes("/study"),
                         })}
                         priority={false}
                         styles={{

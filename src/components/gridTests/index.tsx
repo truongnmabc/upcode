@@ -17,7 +17,7 @@ const FN = () => {
     const appInfo = useAppSelector(selectAppInfo);
 
     const [listPracticeTests, setListPracticeTests] = useState<IListTest[]>([]);
-    const type = useSearchParams().get("type");
+    const type = useSearchParams()?.get("type");
 
     const [open, setOpen] = React.useState(type === "test");
 

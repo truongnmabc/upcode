@@ -58,7 +58,7 @@ const ChoicesPanel: React.FC<IProps> = ({
     const subTopicProgressId = useAppSelector(selectCurrentSubTopicProgressId);
     const indexCurrentQuestion = useAppSelector(selectCurrentQuestionIndex);
     const isListen = useAppSelector(selectEnableKeyboardShortcuts);
-    const type = useSearchParams().get("type");
+    const type = useSearchParams()?.get("type");
     const [listLength, setListLength] = useState(0);
 
     useEffect(() => {
