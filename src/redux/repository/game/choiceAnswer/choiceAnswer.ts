@@ -47,7 +47,7 @@ const choiceAnswer = createAsyncThunk(
             parentIds: updatedParentIds,
             selectedAnswers: updatedSelectedAnswers,
             answers: question.answers,
-            type: gameMode,
+            gameMode,
             text: question.text,
             syncStatus: question.syncStatus,
             status: 1,

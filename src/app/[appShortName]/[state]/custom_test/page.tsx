@@ -6,6 +6,7 @@ import SeoContent from "@/components/seoContent/seoContent";
 import LeftLayout from "./_components/leftLayout";
 import ContentCustomTest from "./_components/contentCustomTest";
 import HeaderMobile from "@/components/headerMobile";
+import LoadDataCustomTest from "./_components/loadDataCustomTest";
 
 export default async function CustomPage() {
     const contentSeo = "";
@@ -54,6 +55,7 @@ export default async function CustomPage() {
                     </Grid2>
                 </Grid2>
             </MyContainer>
+            <LoadDataCustomTest />
         </Fragment>
     );
 }

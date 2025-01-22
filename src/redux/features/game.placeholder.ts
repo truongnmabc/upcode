@@ -31,4 +31,5 @@ export const initGameReducer: IGameReducer = {
     remainingTime: -1, // Thời gian còn lại của bài test
     gameDifficultyLevel: "newbie", // Cấp độ bài test (newbie, expert, ...)
     enableKeyboardShortcuts: true, // Có kích hoạt phím tắt không?
+    isDataLoaded: false, // Xác định xem đã load data xong chưa
 };

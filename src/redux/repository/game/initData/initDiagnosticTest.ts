@@ -147,7 +147,7 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
     "initDiagnosticTest",
     async () => {
         const diagnostic = await db?.testQuestions
-            .where("type")
+            .where("gameMode")
             .equals("diagnosticTest")
             .filter((item) => item.status === 0)
             .first();

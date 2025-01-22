@@ -65,12 +65,17 @@ const fetchQuestions = async ({
     }
 
     if (res?.id) {
+        console.log("🚀 ~ res:", res);
         progressData =
             (await db?.userProgress
-                .where("parentId")
-                .equals(res.id)
-                .filter((item) => item.gameMode === "learn")
+                .filter(
+                    (item) =>
+                        item.gameMode === "learn" &&
+                        item.parentIds.includes(res.id)
+                )
                 .toArray()) || [];
+
+        console.log("🚀 ~ progressData:", progressData);
     }
 
     return processQuestions(res, progressData, isReset);
