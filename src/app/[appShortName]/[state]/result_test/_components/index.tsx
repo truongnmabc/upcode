@@ -55,8 +55,8 @@ const ResultTestLayout = () => {
     const listQuestion = useAppSelector(selectListQuestion);
     const idTopic = useAppSelector(selectCurrentTopicId);
     const passPercent = useAppSelector(selectPassingThreshold);
-    const type = useSearchParams().get("type");
-    const testId = useSearchParams().get("testId");
+    const type = useSearchParams()?.get("type");
+    const testId = useSearchParams()?.get("testId");
     const isMobile = useIsMobile();
     const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -84,7 +84,7 @@ const ResultTestLayout = () => {
             return;
         }
 
-        if (idTopic || testId) {
+        if ((idTopic || testId) && type) {
             const id = idTopic !== -1 ? idTopic : Number(testId);
             const { user, topics, questions } = await fetchData(id);
 

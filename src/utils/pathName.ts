@@ -1,11 +1,12 @@
 // import RouterApp from "@/router/router.constant";
 
-export const convertPathName = (pathName: string): string => {
+export const convertPathName = (pathName?: string | null): string | null => {
+    if (!pathName) return null;
     const isSingleApp = process.env.IS_SINGLE_APP === "true";
 
     if (isSingleApp) return pathName;
 
-    const pathParts = pathName.split("/").filter(Boolean);
+    const pathParts = pathName?.split("/").filter(Boolean);
 
     return pathParts.length > 1 ? `/${pathParts.slice(1).join("/")}` : "/";
 };

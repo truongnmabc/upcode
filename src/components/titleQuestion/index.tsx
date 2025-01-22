@@ -18,13 +18,13 @@ export const getKeyTest = (
     return decodeURI(pathname[pathname?.length - 1]);
 };
 
-export const getLastPathSegment = (pathname: string): string | null => {
+export const getLastPathSegment = (pathname?: string | null): string | null => {
     if (!pathname) {
         console.log("Pathname is empty");
         return null;
     }
 
-    const segments = pathname.split("/").filter(Boolean);
+    const segments = pathname?.split("/").filter(Boolean);
 
     const lastSegment =
         segments[segments.length - 1]?.replaceAll("_", " ") || null;

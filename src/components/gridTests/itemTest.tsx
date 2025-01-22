@@ -14,7 +14,7 @@ type IListTest = {
 const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const testId = useSearchParams().get("testId");
+    const testId = useSearchParams()?.get("testId");
 
     const handleCLick = useCallback(async () => {
         const data = await db?.testQuestions
