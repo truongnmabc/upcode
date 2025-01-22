@@ -16,7 +16,7 @@ const CountTimeCustomTest = () => {
     const handleEndTime = useCallback(() => {
         dispatch(finishCustomTestThunk());
 
-        router.replace(RouterApp.ResultTest, {
+        router.push(RouterApp.ResultTest, {
             scroll: true,
         });
     }, [dispatch, router]);

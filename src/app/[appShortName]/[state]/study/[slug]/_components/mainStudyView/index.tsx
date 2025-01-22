@@ -1,19 +1,16 @@
 "use client";
+import BottomActions, { IPropsType } from "@/components/bottomActions";
+import ChoicesPanel from "@/components/choicesPanel";
+import ExplanationDetail from "@/components/explanation";
 import ClockIcon from "@/components/icon/ClockIcon";
-import { MathJaxContext } from "better-react-mathjax";
-import { useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
-import CountTimeRemainPracticeTest from "./countTimeTest";
 import ProgressQuestion from "@/components/progressQuestion";
 import QuestionContent from "@/components/question";
-import ExplanationDetail from "@/components/explanation";
-import ChoicesPanel from "@/components/choicesPanel";
-import BottomActions, { IPropsType } from "@/components/bottomActions";
 import TitleQuestion from "@/components/titleQuestion";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { selectCurrentTopicId } from "@/redux/features/game.reselect";
-import initLearnQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
-import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
+import { MathJaxContext } from "better-react-mathjax";
+import { useSearchParams } from "next/navigation";
+import React from "react";
+import LoadDataStudy from "../loadData";
+import CountTimeRemainPracticeTest from "./countTimeTest";
 
 const MainStudyView = () => {
     const type = useSearchParams()?.get("type") as IPropsType;
@@ -39,32 +36,8 @@ const MainStudyView = () => {
 
                 <BottomActions type={type} />
             </div>
-            <LoadData />
+            <LoadDataStudy />
         </MathJaxContext>
     );
 };
 export default React.memo(MainStudyView);
-
-const LoadData = () => {
-    const dispatch = useAppDispatch();
-    const id = useAppSelector(selectCurrentTopicId);
-    const type = useSearchParams()?.get("type");
-    const tag = useSearchParams()?.get("tag");
-    const testId = useSearchParams()?.get("testId");
-    const subTopic = useSearchParams()?.get("subTopic");
-    useEffect(() => {
-        if ((!id || id === -1) && subTopic && tag && type === "learn") {
-            dispatch(
-                initLearnQuestionThunk({
-                    partTag: tag,
-                    subTopicTag: subTopic,
-                })
-            );
-        }
-
-        if ((!id || id === -1) && type === "test" && testId) {
-            dispatch(initPracticeThunk({ testId: Number(testId) }));
-        }
-    }, [id, dispatch, type, tag, subTopic, testId]);
-    return null;
-};

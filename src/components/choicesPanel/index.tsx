@@ -91,7 +91,7 @@ const ChoicesPanel: React.FC<IProps> = ({
 
             const _href = `/finish?subTopicProgressId=${subTopicProgressId}&topic=${params?.["slug"]}&partId=${idTopic}`;
 
-            router.replace(_href, {
+            router.push(_href, {
                 scroll: true,
             });
             return;
@@ -103,7 +103,7 @@ const ChoicesPanel: React.FC<IProps> = ({
         if (indexCurrentQuestion + 1 === listLength) {
             dispatch(finishPracticeThunk());
 
-            router.replace(RouterApp.ResultTest, {
+            router.push(RouterApp.ResultTest, {
                 scroll: true,
             });
         } else {
@@ -115,7 +115,7 @@ const ChoicesPanel: React.FC<IProps> = ({
         if (indexCurrentQuestion + 1 === listLength) {
             dispatch(finishDiagnosticThunk());
 
-            router.replace(RouterApp.ResultTest, {
+            router.push(RouterApp.ResultTest, {
                 scroll: true,
             });
         } else {

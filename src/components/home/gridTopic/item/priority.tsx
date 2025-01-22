@@ -12,7 +12,7 @@ const Priority = ({ priority, name }: { priority: number; name: string }) => {
 
     useEffect(() => {
         const path = convertPathName(pathname);
-        setCurrentPathname(path);
+        setCurrentPathname(path || "");
     }, [pathname]);
 
     return (

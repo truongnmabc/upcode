@@ -11,14 +11,14 @@ export function NavigationEvents() {
     const router = useRouter();
 
     const _push = router.push.bind(router);
-    const _replace = router.replace.bind(router);
+    const _replace = router.push.bind(router);
 
     router.push = (href, options) => {
         start();
         _push(href, options);
     };
 
-    router.replace = (href, options) => {
+    router.push = (href, options) => {
         start();
         _replace(href, options);
     };

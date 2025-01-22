@@ -135,7 +135,7 @@ const FooterLandingV4 = () => {
     };
 
     if (pathname?.includes("test") || pathname?.includes("study")) {
-        return <div className="w-full h-32 "></div>;
+        return <div className="w-full h-32 sm:h-8 "></div>;
     }
 
     return (

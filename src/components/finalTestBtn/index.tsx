@@ -20,7 +20,7 @@ const FinalTestBtn = () => {
             onClick={() => {
                 dispatch(initFinalTestThunk());
 
-                router.replace("/final_test");
+                router.push("/final_test");
             }}
         >
             <p className="text-base capitalize font-semibold text-white">

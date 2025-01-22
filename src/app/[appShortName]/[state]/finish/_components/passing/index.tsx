@@ -48,7 +48,7 @@ const PassingFinishPage = ({
                 })
             );
             const _href = `study/${topicName}?type=learn&subTopic=${subTopicTag}&tag=${partTag}`;
-            router.replace(_href);
+            router.push(_href);
         },
         [dispatch, router]
     );
@@ -195,7 +195,7 @@ const PassingFinishPage = ({
 
             const _href = `study/${topicName}?type=learn&subTopic=${nextPart.subTopicTag}&tag=${currentPartTag}`;
 
-            router.replace(_href);
+            router.push(_href);
         }
     }, [
         currentPartTag,

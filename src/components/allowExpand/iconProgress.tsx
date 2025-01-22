@@ -95,7 +95,7 @@ const IconProgress = ({
                 })
             );
             if (pathname?.includes("/study")) {
-                return router.replace(_href);
+                return router.push(_href);
             }
 
             return router.push(_href);

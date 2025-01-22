@@ -28,12 +28,12 @@ const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
                 })
             );
 
-            router.replace(
+            router.push(
                 `/study/${TypeParam.practiceTest}?type=test&testId=${test.parentId}`
             );
         } else {
             const _href = `${RouterApp.ResultTest}?type=${TypeParam.practiceTest}&testId=${test.parentId}`;
-            router.replace(_href);
+            router.push(_href);
         }
         return;
     }, [test.parentId, dispatch, router]);

@@ -19,7 +19,7 @@ const CountTimeFinalTest = () => {
     const handleEndTime = useCallback(() => {
         dispatch(finishFinalThunk());
 
-        router.replace(RouterApp.ResultTest, {
+        router.push(RouterApp.ResultTest, {
             scroll: true,
         });
     }, [dispatch, router]);

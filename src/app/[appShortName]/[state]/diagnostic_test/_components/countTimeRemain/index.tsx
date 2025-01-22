@@ -24,7 +24,7 @@ const CountTimeDiagnostic = () => {
     const handleEndTime = useCallback(() => {
         if (indexCurrentQuestion + 1 === listLength) {
             dispatch(finishDiagnosticThunk());
-            router.replace(RouterApp.ResultTest, { scroll: true });
+            router.push(RouterApp.ResultTest, { scroll: true });
         } else {
             if (!currentGame.selectedAnswer) {
                 dispatch(

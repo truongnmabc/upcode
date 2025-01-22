@@ -118,7 +118,7 @@ export const handleNavigateStudy = async ({
     if (subTopicId) dispatch(selectSubTopics(subTopicId));
     dispatch(setIndexSubTopic((index || 0) + 1));
 
-    if (isReplace) return router.replace(_href);
+    if (isReplace) return router.push(_href);
     router.push(_href);
 };
 

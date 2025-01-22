@@ -46,7 +46,7 @@ const BtnNextQuestion = () => {
                 })
             );
 
-            router.replace(
+            router.push(
                 `/finish?subTopicProgressId=${subTopicProgressId}&topic=${params?.["slug"]}&partId=${idTopic}`,
                 {
                     scroll: true,
@@ -54,8 +54,9 @@ const BtnNextQuestion = () => {
             );
 
             return;
+        } else {
+            dispatch(nextQuestionThunk());
         }
-        dispatch(nextQuestionThunk());
     };
 
     if (indexCurrentQuestion + 1 === listQuestion?.length && type === "test") {

@@ -8,7 +8,7 @@ COPY . /app/web
 WORKDIR /app/web
 COPY temp-next .next
 COPY temp-env .env
-RUN yarn install
+RUN yarn install --frozen-lockfile
 
 RUN ls -a
 EXPOSE 4050

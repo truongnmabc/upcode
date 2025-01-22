@@ -28,6 +28,7 @@ import {
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { MtUiButton } from "@/components/button";
 import DrawerAnswers from "./drawer";
+import { IQuestion } from "@/models/question/questions";
 
 export interface ITopicEndTest extends ITopic {
     totalQuestion: number;
@@ -53,6 +54,26 @@ type IPropsState = {
     incorrect: ICurrentGame[];
     passing: number;
 };
+
+const mixData = ({
+    user = [],
+    questions = [],
+    testId,
+}: {
+    user?: IUserQuestionProgress[];
+    questions?: IQuestion[];
+    testId: number;
+}) => {
+    const userMap = new Map(user.map((u) => [u.id, u]));
+
+    return questions.map((item) => ({
+        ...item,
+        selectedAnswer: userMap
+            .get(item.id)
+            ?.selectedAnswers.find((s) => s.parentId === testId),
+    }));
+};
+
 const ResultTestLayout = () => {
     const listQuestion = useAppSelector(selectListQuestion);
     const idTopic = useAppSelector(selectCurrentTopicId);
@@ -92,7 +113,11 @@ const ResultTestLayout = () => {
 
             const list = listQuestion?.length
                 ? listQuestion
-                : questions?.question || [];
+                : mixData({
+                      user,
+                      questions: questions?.question,
+                      testId: id,
+                  }) || [];
 
             const listExam =
                 questions?.groupExamData?.flatMap((item) => item.examData) ||
@@ -119,6 +144,7 @@ const ResultTestLayout = () => {
                 listExam,
                 topics,
             });
+
             const averageLevel = calculatorAverageLevel(list);
 
             const passingProbability = totalPassingPart(

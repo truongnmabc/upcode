@@ -69,14 +69,14 @@ export const getLocalUserProgress = async (
     turn: number
 ): Promise<IUserQuestionProgress[] | null> => {
     return (
-        db?.userProgress
-            .filter((item) =>
-                item.gameMode === gameMode &&
-                item.selectedAnswers?.filter((i) => i.turn === turn).length
-                    ? true
-                    : false && item.parentIds.includes(parentId)
+        (await db?.userProgress
+            .filter(
+                (item) =>
+                    item.gameMode === gameMode &&
+                    item.parentIds.includes(parentId) &&
+                    item.selectedAnswers.some((i) => i.turn === turn)
             )
-            .toArray() ?? null
+            .toArray()) ?? null
     );
 };
 

@@ -20,7 +20,7 @@ const CountTimeRemainPracticeTest = () => {
         dispatch(finishPracticeThunk());
         dispatch(shouldEndTimeTest(true));
 
-        router.replace(RouterApp.ResultTest, {
+        router.push(RouterApp.ResultTest, {
             scroll: true,
         });
     }, [dispatch, router]);

@@ -84,7 +84,7 @@ const BottomConfirmTest = () => {
             dispatch(shouldOpenSubmitTest(false));
             dispatch(endTest());
 
-            router.replace(_href);
+            router.push(_href);
         }
     }, [dispatch, router, pathname, type, testId, id]);
 
