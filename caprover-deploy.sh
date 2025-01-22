@@ -14,7 +14,8 @@ deployFile="./deploy.tar"
 yarn build
 cp -a .next $nextFile
 cp .env.local $envFile
-tar -zcvf $deployFile --exclude='node_modules' --exclude='.next' ./*
+rm -rf $nextFile/cache
+tar -zcvf $deployFile --exclude='node_modules' --exclude='.next' --exclude='yarn.lock' ./*
 if [[ $REDEPLOY =~ "true" ]]; then
     caprover deploy -t $deployFile -d
 else 
