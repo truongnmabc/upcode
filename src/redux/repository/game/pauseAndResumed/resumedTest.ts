@@ -36,7 +36,7 @@ const resumedTestThunk = createAsyncThunk(
 
         if (type === "diagnosticTest") {
             const data = await db?.testQuestions
-                ?.where("type")
+                ?.where("gameMode")
                 .equals(type)
                 .first();
 

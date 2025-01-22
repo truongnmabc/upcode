@@ -36,7 +36,9 @@ export interface ITopicEndTest extends ITopic {
 
 const fetchData = async (idTopic: number) => {
     const [user, topics, questions] = await Promise.all([
-        db?.userProgress.where("parentId").equals(idTopic).toArray(),
+        db?.userProgress
+            .filter((item) => item.parentIds.includes(idTopic))
+            .toArray(),
         db?.topics.toArray(),
         db?.testQuestions?.where("parentId").equals(idTopic).first(),
     ]);

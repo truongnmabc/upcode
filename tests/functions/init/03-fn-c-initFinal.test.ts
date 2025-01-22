@@ -113,7 +113,7 @@ describe("Test Init Data Final Test", () => {
         await store.dispatch(initFinalTestThunk() as any);
 
         const updatedData = await MockDb.table("testQuestions")
-            .where("type")
+            .where("gameMode")
             .equals("finalTests")
             .first();
 

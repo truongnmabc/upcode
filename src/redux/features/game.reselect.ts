@@ -80,3 +80,8 @@ export const selectEnableKeyboardShortcuts = createSelector(
     [gameState],
     (reducer) => reducer.enableKeyboardShortcuts
 );
+
+export const selectIsDataLoaded = createSelector(
+    [gameState],
+    (reducer) => reducer.isDataLoaded
+);
