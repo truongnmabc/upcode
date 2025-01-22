@@ -12,12 +12,12 @@ export interface ITopicQuestion {
     contentType: number;
     orderIndex?: number;
     tag?: string;
-    type: number;
+    gameMode: number;
     topics: unknown;
     questions?: IQuestion[];
     status: number;
     subTopicTag?: string;
-    turn?: number;
+    attemptNumber?: number;
     paragraph?: IParagraph;
 }
 export default class TopicQuestion implements ITopicQuestion {
@@ -29,11 +29,11 @@ export default class TopicQuestion implements ITopicQuestion {
     orderIndex: number;
     questions?: IQuestion[];
     tag: string;
-    type: number;
+    gameMode: number;
     topics: unknown;
     status: number;
     subTopicTag?: string;
-    turn?: number;
+    attemptNumber?: number;
 
     constructor(object: Partial<ITopicQuestion> = {}) {
         this.id = object.id ?? -1;
@@ -45,8 +45,8 @@ export default class TopicQuestion implements ITopicQuestion {
         this.tag = object.tag ?? "";
         this.orderIndex = object.orderIndex ?? 0;
         this.name = object.name ?? "";
-        this.type = object.type ?? 3;
+        this.gameMode = object.gameMode ?? 3;
         this.status = object.status ?? 0;
-        this.turn = object.turn ?? 1;
+        this.attemptNumber = object.attemptNumber ?? 1;
     }
 }

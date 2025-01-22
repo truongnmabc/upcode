@@ -76,7 +76,7 @@ describe("Test Init Data Diagnostic Test", () => {
     /** Kiểm tra trường hợp không có dữ liệu */
     it("No existing diagnostic test in IndexedDB", async () => {
         const data = await MockDb.testQuestions
-            .where("type")
+            .where("gameMode")
             .equals("diagnosticTest")
             .filter((item) => item.status === 0)
             .first();
@@ -92,7 +92,7 @@ describe("Test Init Data Diagnostic Test", () => {
      * **/
     it("Should initialize diagnostic test with data from topics.json", async () => {
         const diagnostic = await MockDb?.testQuestions
-            .where("type")
+            .where("gameMode")
             .equals("diagnosticTest")
             .filter((item) => item.status === 0)
             .first();
