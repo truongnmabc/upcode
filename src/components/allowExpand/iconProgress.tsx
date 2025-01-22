@@ -36,7 +36,6 @@ const IconProgress = ({
     const currentGame = useAppSelector(selectCurrentGame);
     const listQuestion = useAppSelector(selectListQuestion);
     const turn = useAppSelector(selectAttemptNumber);
-    console.log("🚀 ~ turn:", turn);
     const idTopic = useAppSelector(selectCurrentTopicId);
 
     const { mainTopicTag } =
@@ -53,8 +52,6 @@ const IconProgress = ({
             (await db?.userProgress
                 .filter((item) => item.parentIds.includes(part.id))
                 .toArray()) || [];
-        console.log("🚀 ~ handleListenerChange ~ result:", result);
-        console.log("🚀 ~ handleListenerChange ~ turn:", turn);
 
         const pass = result.filter((item) =>
             item.selectedAnswers?.find(

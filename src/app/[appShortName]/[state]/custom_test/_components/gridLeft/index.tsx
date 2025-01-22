@@ -10,6 +10,7 @@ import { IconDelete, IconEdit, IconPlus } from "@/components/icon/iconGridLeft";
 import ModalDelete from "../modalDelete";
 import {
     selectCurrentSubTopicIndex,
+    selectIsDataLoaded,
     selectListQuestion,
 } from "@/redux/features/game.reselect";
 import { resetState, startCustomTest } from "@/redux/features/game";
@@ -22,29 +23,32 @@ const GridLeftCustomTest = () => {
     const listQuestion = useAppSelector(selectListQuestion);
     const dispatch = useAppDispatch();
     const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
+    const isDataLoaded = useAppSelector(selectIsDataLoaded);
 
+    const isMobile = useIsMobile();
+    const handleGetData = useCallback(async () => {
+        const list = await db?.testQuestions
+            .where("gameMode")
+            .equals("customTets")
+            .toArray();
+
+        if (list?.length === 0) {
+            setOpenModalSetting(true);
+        }
+        if (list) {
+            setListTest(list);
+        }
+    }, []);
     useEffect(() => {
-        const handleGetData = async () => {
-            const list = await db?.testQuestions
-                .where("type")
-                .equals("customTets")
-                .toArray();
-
-            if (list?.length === 0) {
-                setOpenModalSetting(true);
-            }
-            if (list) {
-                setListTest(list);
-            }
-        };
         if (listQuestion?.length) handleGetData();
-        if (listQuestion?.length === 0) {
+
+        if (listQuestion?.length === 0 && isDataLoaded) {
             setOpenModalSetting(true);
         }
         return () => {
             setOpenModalSetting(false);
         };
-    }, [listQuestion?.length]);
+    }, [listQuestion?.length, isDataLoaded, handleGetData]);
 
     const onClose = useCallback(() => {
         setOpenModalSetting(false);
@@ -80,7 +84,7 @@ const GridLeftCustomTest = () => {
                 .delete();
 
             const startTest = await db?.testQuestions
-                .where("type")
+                .where("gameMode")
                 .equals("customTets")
                 .filter((item) => item.status === 0)
                 .first();
@@ -123,7 +127,6 @@ const GridLeftCustomTest = () => {
         },
         [dispatch]
     );
-    const isMobile = useIsMobile();
 
     return (
         <Fragment>

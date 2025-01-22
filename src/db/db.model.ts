@@ -27,7 +27,7 @@ export class DB extends Dexie {
         this.version(1).stores({
             // *NOTE: chứa câu trả lời của người dùng.
 
-            userProgress: "++id,parentId,type",
+            userProgress: "++id,parentId,gameMode",
 
             // *NOTE: Chứa tiến trình hiện tại của người dùng,  theo subTopic
 
@@ -49,7 +49,7 @@ export class DB extends Dexie {
 
             useActions: "++id,partId,questionId",
 
-            testQuestions: "++id,parentId,type",
+            testQuestions: "++id,parentId,gameMode",
 
             passing: "++id,parentId",
 

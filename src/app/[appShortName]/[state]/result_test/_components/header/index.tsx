@@ -46,7 +46,7 @@ const HeaderResultTest: React.FC<{
         if (type === TypeParam.practiceTest) {
             const checkIsLast = async () => {
                 const isLast = await db?.testQuestions
-                    .where("type")
+                    .where("gameMode")
                     .equals("practiceTests")
                     .filter((item) => item.status === 0)
                     .first();
@@ -95,7 +95,7 @@ const HeaderResultTest: React.FC<{
     const handleNextTets = useCallback(async () => {
         if (type === TypeParam.practiceTest) {
             const currentTest = await db?.testQuestions
-                .where("type")
+                .where("gameMode")
                 .equals("practiceTests")
                 .filter((item) => item.status === 0)
                 .first();

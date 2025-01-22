@@ -32,13 +32,10 @@ export const gameSlice = createSlice({
         viewTest: (state, action) => {
             const payload = action.payload;
             const index = payload === state.listQuestion?.length ? 0 : payload;
-
-            // state.indexCurrentQuestion = index;
             state.currentQuestionIndex = index;
             state.currentGame = state.listQuestion[index];
         },
         setIndexSubTopic: (state, action) => {
-            // state.indexSubTopic = action.payload;
             state.currentSubTopicIndex = action.payload;
         },
         setListQuestionGames: (
@@ -53,11 +50,9 @@ export const gameSlice = createSlice({
                 turn: number;
             }>
         ) => {
-            // state.turn = action.payload.turn;
             state.attemptNumber = action.payload.turn;
         },
         setShouldListenKeyboard: (state, action) => {
-            // state.enableKeyboardShortcuts = action.payload;
             state.enableKeyboardShortcuts = action.payload;
         },
         startOverGame: (state) => {
@@ -69,34 +64,24 @@ export const gameSlice = createSlice({
 
             state.currentGame = list[0];
             state.listQuestion = list;
-            // state.indexCurrentQuestion = 0;
             state.currentQuestionIndex = 0;
-            // state.turn = 1;
             state.attemptNumber = 1;
-            // state.isPaused = false;
             state.isGamePaused = false;
-            // state.remainTime = state.time * 60;
             state.remainingTime = state.totalDuration * 60;
         },
         startTryAgainDiagnostic: (state) => {
             console.log("🚀 ~ state:", state);
         },
         continueGame: (state) => {
-            // state.isPaused = false;
             state.isGamePaused = false;
         },
         shouldEndTimeTest: (state, action) => {
-            // state.isEndTimeTest = action.payload;
             state.isTimeUp = action.payload;
         },
         endTest: (state) => {
-            // state.indexCurrentQuestion = 0;
             state.currentQuestionIndex = 0;
-            // state.turn = 1;
             state.attemptNumber = 1;
-            // state.isPaused = false;
             state.isGamePaused = false;
-            // state.remainTime = -1;
             state.remainingTime = -1;
         },
         startCustomTest: (state, action) => {
@@ -127,11 +112,8 @@ export const gameSlice = createSlice({
             const { listQuestion } = action.payload;
             state.listQuestion = listQuestion;
             state.currentGame = listQuestion[0];
-            // state.indexCurrentQuestion = 0;
             state.currentQuestionIndex = 0;
-            // state.turn = 1;
             state.attemptNumber = 1;
-            // state.isFirst = true;
             state.isFirstAttempt = true;
         },
     },
@@ -145,30 +127,24 @@ export const gameSlice = createSlice({
 
                     state.listQuestion = listQuestion;
                     state.currentGame = nextLever;
-                    // state.indexCurrentQuestion = indexCurrentQuestion;
                     state.currentQuestionIndex = indexCurrentQuestion;
-                    // state.remainTime = 80;
                     state.remainingTime = 80;
                 }
             }
         );
 
         builder.addCase(reloadStateThunk.fulfilled, (state, action) => {
-            const { turn } = action.payload;
-            // state.turn = turn;
-            state.attemptNumber = turn;
+            const { attemptNumber } = action.payload;
+            state.attemptNumber = attemptNumber;
         });
 
         builder.addCase(resumedTestThunk.fulfilled, (state, action) => {
             if (action.payload) {
                 const { remainTime, listQuestion } = action.payload;
-                // state.turn = 1;
                 state.attemptNumber = 1;
-                // state.remainTime = remainTime;
                 state.remainingTime = remainTime;
                 state.listQuestion = listQuestion;
                 state.currentGame = listQuestion[0];
-                // state.indexCurrentQuestion = 0;
                 state.currentQuestionIndex = 0;
             }
         });
@@ -176,9 +152,7 @@ export const gameSlice = createSlice({
         builder.addCase(nextQuestionThunk.fulfilled, (state, action) => {
             const data = action.payload;
             state.currentGame = data?.nextQuestion ?? state.listQuestion[0];
-            // state.isFirst = data?.isFirst ?? true;
             state.isFirstAttempt = data?.isFirst ?? true;
-            // state.indexCurrentQuestion = data?.nextLever ?? 0;
             state.currentQuestionIndex = data?.nextLever ?? 0;
         });
 
@@ -190,7 +164,6 @@ export const gameSlice = createSlice({
 
         builder.addCase(initPracticeThunk.fulfilled, (state, action) => {
             state.gameMode = "test";
-
             if (action.payload) {
                 handleInitTestQuestion(state, action.payload);
             }
@@ -234,6 +207,7 @@ export const gameSlice = createSlice({
                 state.isGamePaused = false;
                 state.gameMode = "test";
             }
+            state.isDataLoaded = true;
         });
 
         builder.addCase(tryAgainDiagnosticThunk.fulfilled, (state, action) => {
