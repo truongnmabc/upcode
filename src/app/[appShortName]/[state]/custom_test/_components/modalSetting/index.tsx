@@ -196,11 +196,11 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                 dispatch(
                     startCustomTest({
                         listQuestion,
-                        time: duration * 60,
+                        remainingTime: duration * 60,
                         parentId: parentId,
-                        passing: passing,
-                        feedBack: selectFeedback,
-                        indexSubTopic: listTestLength + 1,
+                        passingThreshold: passing,
+                        gameDifficultyLevel: selectFeedback,
+                        currentSubTopicIndex: listTestLength + 1,
                     })
                 );
                 onCancel();

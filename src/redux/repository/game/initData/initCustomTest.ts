@@ -8,7 +8,7 @@ const initCustomTestThunk = createAsyncThunk(
     "initCustomTestThunk",
     async () => {
         const list = await db?.testQuestions
-            .where("type")
+            .where("gameMode")
             .equals("customTets")
             .toArray();
 

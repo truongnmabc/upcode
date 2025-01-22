@@ -33,7 +33,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
 
     const handleFinalTest = useCallback(async () => {
         const data = await db?.testQuestions
-            .where("type")
+            .where("gameMode")
             .equals("finalTests")
             .first();
 
@@ -49,7 +49,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
 
     const handleDiagnosticTest = useCallback(async () => {
         const diagnostic = await db?.testQuestions
-            .where("type")
+            .where("gameMode")
             .equals("diagnosticTest")
             .first();
 
@@ -66,7 +66,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
 
     const handlePracticeTest = useCallback(async () => {
         const res = await db?.testQuestions
-            .where("type")
+            .where("gameMode")
             .equals("practiceTests")
             .toArray();
         if (res) {

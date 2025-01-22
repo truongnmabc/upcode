@@ -70,6 +70,7 @@ export const handleInitTestQuestion = (
         totalDuration: number;
         isGamePaused: boolean;
         remainingTime: number;
+        attemptNumber?: number;
     }
 ) => {
     const {
@@ -80,23 +81,19 @@ export const handleInitTestQuestion = (
         totalDuration,
         isGamePaused,
         remainingTime,
+        attemptNumber,
     } = payload;
 
-    // state.time = duration;
     state.totalDuration = totalDuration;
     state.gameMode = gameMode;
-    // state.idTopic = idTopic ?? -1;
+    if (attemptNumber) state.attemptNumber = attemptNumber;
     state.currentTopicId = currentTopicId ?? -1;
     state.listQuestion = questions;
-    // state.isFirst = true;
     state.isFirstAttempt = true;
-    // state.isPaused = isPaused;
     state.isGamePaused = isGamePaused;
-    // state.remainTime = remainTime;
     state.remainingTime = remainingTime;
 
     if (!progressData || progressData.length === 0) {
-        // state.indexCurrentQuestion = 0;
         state.currentQuestionIndex = 0;
         state.currentGame = questions[0];
     } else {
@@ -105,8 +102,6 @@ export const handleInitTestQuestion = (
                 !progressData.some((answer) => answer?.id === question?.id)
         );
 
-        // state.indexCurrentQuestion =
-        //    firstUnansweredIndex > 0 ? firstUnansweredIndex : 0;
         state.currentQuestionIndex =
             firstUnansweredIndex > 0 ? firstUnansweredIndex : 0;
 
