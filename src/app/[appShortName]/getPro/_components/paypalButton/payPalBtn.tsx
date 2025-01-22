@@ -2,8 +2,8 @@ import { useCallback } from "react";
 import {
     saveToDashboardAPI,
     uploadPaymentInfoAPI,
-} from "@/services/syncDataToWeb";
-import { updateUserInfoDashboard } from "@/services/user";
+} from "@/services/sync.service";
+import { updateUserInfoDashboard } from "@/services/user.service";
 import "./PayPalButtonView.scss";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";

@@ -11,13 +11,13 @@ import { requestGetData } from "@/services/request";
 
 const updateDB = async () => {
     db?.testQuestions
-        .where("type")
+        .where("gameMode")
         .equals("finalTests")
         .modify((item) => (item.isGamePaused = false));
 };
 const initFinalTestThunk = createAsyncThunk("initFinalTestThunk", async () => {
     const dataStore = await db?.testQuestions
-        .where("type")
+        .where("gameMode")
         .equals("finalTests")
         .first();
 

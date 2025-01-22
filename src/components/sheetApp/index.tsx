@@ -56,7 +56,7 @@ const SheetApp = () => {
                             src={`/images/logo/${
                                 theme == "dark" ? "logo-dark" : "logo-light"
                             }.png`}
-                            classNames="flex justify-center items-center"
+                            classNames="flex justify-center h-6 items-center"
                         />
                     </div>
                     <div className="font-semibold text-base text-[#212121]">
