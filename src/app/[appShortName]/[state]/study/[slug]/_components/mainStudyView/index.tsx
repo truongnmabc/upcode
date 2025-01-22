@@ -16,7 +16,7 @@ import initLearnQuestionThunk from "@/redux/repository/game/initData/initLearnin
 import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
 
 const MainStudyView = () => {
-    const type = useSearchParams().get("type") as IPropsType;
+    const type = useSearchParams()?.get("type") as IPropsType;
 
     return (
         <MathJaxContext>
@@ -48,10 +48,10 @@ export default React.memo(MainStudyView);
 const LoadData = () => {
     const dispatch = useAppDispatch();
     const id = useAppSelector(selectCurrentTopicId);
-    const type = useSearchParams().get("type");
-    const tag = useSearchParams().get("tag");
-    const testId = useSearchParams().get("testId");
-    const subTopic = useSearchParams().get("subTopic");
+    const type = useSearchParams()?.get("type");
+    const tag = useSearchParams()?.get("tag");
+    const testId = useSearchParams()?.get("testId");
+    const subTopic = useSearchParams()?.get("subTopic");
     useEffect(() => {
         if ((!id || id === -1) && subTopic && tag && type === "learn") {
             dispatch(

@@ -33,7 +33,7 @@ const QuestionContent = ({
     const [text, setText] = useState<string>("");
     const [loading, setLoading] = useState(true);
     const isMobile = useIsMobile();
-    const type = useSearchParams().get("type");
+    const type = useSearchParams()?.get("type");
 
     useEffect(() => {
         if (currentGame?.text && currentGame?.id) {

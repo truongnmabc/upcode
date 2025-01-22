@@ -31,9 +31,9 @@ const HeaderResultTest: React.FC<{
     const router = useRouter();
     const idTopic = useAppSelector(selectCurrentTopicId);
     const appInfo = useAppSelector(selectAppInfo);
-    const type = useSearchParams().get("type");
+    const type = useSearchParams()?.get("type");
     const dispatch = useAppDispatch();
-    const testId = useSearchParams().get("testId");
+    const testId = useSearchParams()?.get("testId");
 
     /**
      *
