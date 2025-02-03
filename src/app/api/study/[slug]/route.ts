@@ -1,5 +1,7 @@
+import { BASE_STORE_URL } from "@/constants";
 import { requestGetData } from "@/services/request";
 
+// *NOTE : khong bo api nay
 export async function GET(
     request: Request,
     { params }: { params: Promise<{ slug: string }> }
@@ -9,10 +11,9 @@ export async function GET(
 
     try {
         const data = await requestGetData({
-            url: `/asvab/web-data/all-data.json?t=${new Date().getTime()}`,
+            url: `/${slug}/web-data/all-data.json?t=${new Date().getTime()}`,
             config: {
-                baseURL:
-                    "https://storage.googleapis.com/micro-enigma-235001.appspot.com",
+                baseURL: BASE_STORE_URL,
             },
         });
         return Response.json({

@@ -175,3 +175,6 @@ export const DASHBOARD_API = `https://dashboard-api2.abc-elearning.org/`;
 export const KEY_CLICK_ADS = "sdakcilc";
 
 export const MAX_CLICK_ADS_PER_USER = 3;
+
+export const BASE_STORE_URL =
+    "https://storage.googleapis.com/micro-enigma-235001.appspot.com";
