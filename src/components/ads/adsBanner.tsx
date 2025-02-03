@@ -1,11 +1,11 @@
 import ctx from "@/utils/mergeClass";
 import React, { useEffect } from "react";
-import Config from "@/config";
 import "./index.css";
 import BtnRemove from "./BtnRemove";
+import { KEY_CLICK_ADS, MAX_CLICK_ADS_PER_USER } from "@/constants";
 
 const countClickAds = () => {
-    const clickAds = localStorage.getItem(Config.KEY_CLICK_ADS);
+    const clickAds = localStorage.getItem(KEY_CLICK_ADS);
     let totalClick = 0;
     if (clickAds) {
         try {
@@ -15,9 +15,9 @@ const countClickAds = () => {
         }
     }
     totalClick++;
-    localStorage.setItem(Config.KEY_CLICK_ADS, totalClick + "");
+    localStorage.setItem(KEY_CLICK_ADS, totalClick + "");
 
-    if (totalClick >= Config.MAX_CLICK_ADS_PER_USER) {
+    if (totalClick >= MAX_CLICK_ADS_PER_USER) {
         window.location.reload();
     }
 };

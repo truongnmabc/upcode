@@ -1,4 +1,4 @@
-FROM node:18.20.0
+FROM node:22-alpine
 USER root
 
 RUN mkdir -p /app
@@ -8,7 +8,7 @@ COPY . /app/web
 WORKDIR /app/web
 COPY temp-next .next
 COPY temp-env .env
-RUN yarn install --frozen-lockfile
+RUN yarn install --production --frozen-lockfile
 
 RUN ls -a
 EXPOSE 4050

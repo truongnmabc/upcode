@@ -2,15 +2,26 @@
 import BottomActions, { IPropsType } from "@/components/bottomActions";
 import ChoicesPanel from "@/components/choicesPanel";
 import ExplanationDetail from "@/components/explanation";
-import ClockIcon from "@/components/icon/ClockIcon";
 import ProgressQuestion from "@/components/progressQuestion";
 import QuestionContent from "@/components/question";
-import TitleQuestion from "@/components/titleQuestion";
 import { MathJaxContext } from "better-react-mathjax";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 import LoadDataStudy from "../loadData";
-import CountTimeRemainPracticeTest from "./countTimeTest";
+
+import dynamic from "next/dynamic";
+
+const TitleQuestion = dynamic(() => import("@/components/titleQuestion"), {
+    ssr: false,
+});
+
+const CountTimeRemainPracticeTest = dynamic(() => import("./countTimeTest"), {
+    ssr: false,
+});
+
+const ClockIcon = dynamic(() => import("@/components/icon/ClockIcon"), {
+    ssr: false,
+});
 
 const MainStudyView = () => {
     const type = useSearchParams()?.get("type") as IPropsType;

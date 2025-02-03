@@ -8,7 +8,7 @@ export interface ITestQuestion {
     totalDuration: number;
     isGamePaused: boolean;
     startTime: number;
-    remainingTime: number;
+    remainingTime?: number;
     elapsedTime: number;
     gameMode: "finalTests" | "practiceTests" | "diagnosticTest" | "customTets";
     gameDifficultyLevel?: "newbie" | "expert" | "exam";

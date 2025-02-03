@@ -123,7 +123,7 @@ const HeaderResultTest: React.FC<{
         }
     }, [dispatch, router, appInfo.appShortName]);
 
-    const back = useCallback(() => router.back(), [router]);
+    const back = useCallback(() => router.push(RouterApp.Home), [router]);
 
     if (type === TypeParam.diagnosticTest) {
         return (
@@ -170,7 +170,7 @@ const HeaderResultTest: React.FC<{
                                 size="large"
                                 onClick={handleNextTets}
                             >
-                                Next Test
+                                Continue
                             </MtUiButton>
                         )}
                     </div>

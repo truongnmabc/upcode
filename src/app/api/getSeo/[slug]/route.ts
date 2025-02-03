@@ -17,6 +17,7 @@ export async function GET(
     const slug = (await params).slug;
 
     const state = type && type === "final_test" ? search : `${slug}-${search}`;
+
     if (process.env.NODE_ENV === "development") {
         return Response.json({
             data: "",

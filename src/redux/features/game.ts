@@ -197,7 +197,11 @@ export const gameSlice = createSlice({
 
         builder.addCase(initCustomTestThunk.fulfilled, (state, action) => {
             if (action.payload) {
-                handleInitTestQuestion(state, action.payload);
+                const data = {
+                    ...action.payload,
+                    remainingTime: action.payload.remainingTime || 0,
+                };
+                handleInitTestQuestion(state, data);
                 const { passingThreshold, attemptNumber } = action.payload;
                 state.passingThreshold = passingThreshold;
                 state.attemptNumber = attemptNumber;
@@ -218,6 +222,7 @@ export const gameSlice = createSlice({
             state.attemptNumber = attemptNumber + 1;
             state.isGamePaused = false;
             state.remainingTime = state.totalDuration * 80;
+            state.hasRetakenDiagnosticTest = true;
         });
 
         builder.addCase(tryAgainPracticesThunk.fulfilled, (state, action) => {

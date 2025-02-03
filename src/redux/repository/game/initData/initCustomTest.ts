@@ -3,10 +3,20 @@
 import { db } from "@/db/db.model";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getLocalUserProgress } from "./initPracticeTest";
+import { RootState } from "@/redux/store";
 
 const initCustomTestThunk = createAsyncThunk(
     "initCustomTestThunk",
-    async () => {
+    async (_, thunkAPI) => {
+        const state = thunkAPI.getState() as RootState;
+        let { isDataFetched } = state.appInfoReducer;
+
+        while (!isDataFetched) {
+            await new Promise((resolve) => setTimeout(resolve, 100)); // Đợi 100ms trước khi kiểm tra lại
+            isDataFetched = (thunkAPI.getState() as RootState).appInfoReducer
+                .isDataFetched;
+        }
+
         const list = await db?.testQuestions
             .where("gameMode")
             .equals("customTets")

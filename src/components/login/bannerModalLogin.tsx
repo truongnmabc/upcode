@@ -1,10 +1,10 @@
 "use client";
+import { TESTER_KEY } from "@/constants";
+import { appInfoState } from "@/redux/features/appInfo";
+import { useAppSelector } from "@/redux/hooks";
+import { setSession } from "@/utils/session";
 import React from "react";
 import Blur from "./blur";
-import { useAppSelector } from "@/redux/hooks";
-import { appInfoState } from "@/redux/features/appInfo";
-import { setSession } from "@/utils/session";
-import Config from "@/config";
 
 const FN = () => {
     const { appInfo } = useAppSelector(appInfoState);
@@ -19,7 +19,7 @@ const FN = () => {
             }, 5000);
         }
         if (tempCount >= 10) {
-            setSession(Config.TESTER_KEY, true);
+            setSession(TESTER_KEY, true);
             alert("You are tester!");
             location.reload();
         }

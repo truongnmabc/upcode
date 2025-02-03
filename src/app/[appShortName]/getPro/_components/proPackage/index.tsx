@@ -1,19 +1,18 @@
 "use client";
-import RouterApp from "@/constants/router.constant";
 import { MtUiButton } from "@/components/button";
-import Config from "@/config";
+import { ONETIME, PURCHASED } from "@/constants";
+import RouterApp from "@/constants/router.constant";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
+import { selectPaymentInfo } from "@/redux/features/payment.reselect";
+import { shouldOpenModalLogin } from "@/redux/features/user";
+import { selectUserInfo } from "@/redux/features/user.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { getConfigProV2, IPriceConfig } from "@/utils/paypal";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import PopupGetProPayment from "../popup/popupGetPro";
 import ItemPrice from "./itemPrice";
-import { selectAppInfo } from "@/redux/features/appInfo.reselect";
-import { selectPaymentInfo } from "@/redux/features/payment.reselect";
 import "./ProPackage.scss";
-import { selectUserInfo } from "@/redux/features/user.reselect";
-import { shouldOpenModalLogin } from "@/redux/features/user";
-import { ONETIME } from "@/constants";
 
 const ProPackage = () => {
     const appInfo = useAppSelector(selectAppInfo);
@@ -60,7 +59,7 @@ const ProPackage = () => {
         }
 
         if (type === ONETIME) {
-            if (paymentInfo?.buyPro === Config.PURCHASED) {
+            if (paymentInfo?.buyPro === PURCHASED) {
                 router.push(RouterApp.Billing);
                 return;
             }

@@ -1,5 +1,5 @@
 "use client";
-import Config from "@/config";
+import { TESTER_KEY } from "@/constants";
 import { selectCurrentSubTopicIndex } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { setSession } from "@/utils/session";
@@ -51,7 +51,7 @@ const TitleQuestion = ({ type }: { type?: string }) => {
             }, 5000);
         }
         if (tempCount >= 3) {
-            setSession(Config.TESTER_KEY, true);
+            setSession(TESTER_KEY, true);
             alert("You are tester!");
             location.reload();
         }

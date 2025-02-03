@@ -15,7 +15,7 @@ const ReviewView = ({
     contentSeo,
     isMobile,
 }: {
-    contentSeo: string;
+    contentSeo?: string;
     isMobile: boolean;
 }) => {
     const dispatch = useAppDispatch();

@@ -5,3 +5,8 @@ export const selectAppInfo = createSelector(
     [appInfoState],
     (appInfoReducer) => appInfoReducer.appInfo
 );
+
+export const selectIsDataFetched = createSelector(
+    [appInfoState],
+    (appInfoReducer) => appInfoReducer.isDataFetched
+);

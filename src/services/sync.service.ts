@@ -1,11 +1,10 @@
-import Config from "@/config";
+import { BASE_URL_DEV, isProduction } from "@/constants";
 import { requestPostData } from "./request";
-import { isProduction } from "@/constants";
 
 // const SYNC_DEV_VALUE = getSession(Config.TESTER_KEY);
 // export const SYNC_DEV_MODE = !isProduction ? true : SYNC_DEV_VALUE;
 
-const BASE_URL = isProduction ? "" : Config.BASE_URL_DEV;
+const BASE_URL = isProduction ? "" : BASE_URL_DEV;
 
 export function uploadUserStudyPlanAPI(data: Record<string, unknown>) {
     return requestPostData({

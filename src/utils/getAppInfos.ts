@@ -58,6 +58,7 @@ export async function fetchAppData(
         }
 
         let appConfig;
+
         if (fetchAll) {
             const { data: configData } = await axiosInstance.get(
                 `${API_PATH.APP_CONFIG}/${appInfo.data?.appShortName}`

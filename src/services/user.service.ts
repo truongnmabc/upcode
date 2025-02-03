@@ -1,4 +1,4 @@
-import Config from "../config";
+import { BASE_URL, DASHBOARD_API } from "@/constants";
 import { requestPostData } from "./request";
 
 export const saveUserInfoDashboard = (args: {
@@ -14,7 +14,7 @@ export const saveUserInfoDashboard = (args: {
         url: "web-login",
         data: args,
         config: {
-            baseURL: Config.DASHBOARD_API,
+            baseURL: DASHBOARD_API,
         },
     });
 };
@@ -28,7 +28,7 @@ export const updateUserInfoDashboard = (args: {
 }) => {
     return requestPostData({
         config: {
-            baseURL: Config.DASHBOARD_API,
+            baseURL: DASHBOARD_API,
         },
         url: "buy-pro",
         data: args,
@@ -41,7 +41,7 @@ export function syncDataToWebAfterLoginAPI(data?: Record<string, unknown>) {
         url: "/api/auth?type=sync-data-to-web-after-login",
         data,
         config: {
-            baseURL: Config.BASE_URL,
+            baseURL: BASE_URL,
         },
     });
 }

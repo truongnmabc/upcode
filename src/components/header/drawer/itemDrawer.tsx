@@ -8,9 +8,7 @@ const ItemDrawerFullTest = ({
     return (
         <div className="p-3 ">
             <div
-                onClick={() => {
-                    handleClick();
-                }}
+                onClick={handleClick}
                 className="cursor-pointer font-poppins text-2xl font-semibold"
             >
                 {name}

@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import ItemDrawerFullTest from "./itemDrawer";
 import ListStudyDrawer from "./listStudy";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 type IList = {
     handleClick: () => void;
@@ -25,8 +26,19 @@ const FN = ({
 }) => {
     const appInfo = useAppSelector(selectAppInfo);
     const router = useRouter();
-
+    const isMobile = useIsMobile();
     const list: IList[] = [
+        ...(isMobile
+            ? [
+                  {
+                      name: "Review",
+                      handleClick: () => {
+                          setOpenMenuDrawer(false);
+                          router.push(RouterApp.Review);
+                      },
+                  },
+              ]
+            : []),
         {
             name: "Score Calculator",
             handleClick: () => {
@@ -48,6 +60,7 @@ const FN = ({
                 router.push(RouterApp.Blog);
             },
         },
+
         {
             name: "Contact",
             handleClick: () => {

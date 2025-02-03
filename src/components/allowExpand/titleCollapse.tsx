@@ -3,7 +3,6 @@ import { selectSubTopics } from "@/redux/features/study";
 import { selectSubTopicsId } from "@/redux/features/study.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
-import { ExpandMore } from "@mui/icons-material";
 import { Collapse } from "@mui/material";
 import clsx from "clsx";
 import React from "react";
@@ -53,7 +52,15 @@ const FN = ({ subTopic }: { subTopic: ITopic }) => {
                         "rotate-180": isExpand,
                     })}
                 >
-                    <ExpandMore />{" "}
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                    >
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
+                    </svg>
                 </div>
             </div>
             <Collapse in={isExpand} unmountOnExit timeout="auto">

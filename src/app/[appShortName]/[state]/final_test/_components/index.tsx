@@ -9,7 +9,7 @@ import { Fragment } from "react";
 import LoadDataFinalTest from "./load";
 import MainViewFinalTest from "./mainView";
 
-const FinalTestLayout = ({ contentSeo }: { contentSeo: string }) => {
+const FinalTestLayout = ({ contentSeo }: { contentSeo?: string }) => {
     return (
         <Fragment>
             <Grid2 container>

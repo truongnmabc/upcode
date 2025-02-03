@@ -1,26 +1,20 @@
-import axiosInstance from "@/config/axios";
-import { API_PATH } from "@/constants/api.constants";
 import BannerDownloadApp from "@/components/bannerDownload/bannerDownloadApp";
 import MyContainer from "@/components/container";
-import SeoContent from "@/components/seoContent/seoContent";
-import MainStudyView from "./_components/mainStudyView";
 import HeaderMobile from "@/components/headerMobile";
-import QuestionGroup from "./_components/questionGroup";
+import SeoContent from "@/components/seoContent/seoContent";
+import { requestGetTitleSeoPage } from "@/services/titleSeo.service";
 import Grid2 from "@mui/material/Grid2";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
+import MainStudyView from "./_components/mainStudyView";
+import QuestionGroup from "./_components/questionGroup";
 
 type Params = Promise<{ appShortName: string; slug: string }>;
 
 export default async function Page(props: { params: Params }) {
     const params = await props.params;
 
-    const appShortName = params?.appShortName;
+    const { content } = await requestGetTitleSeoPage(params.slug);
 
-    const response = await axiosInstance.get(
-        `${API_PATH.GET_SEO}/${appShortName}?search=${params.slug}`
-    );
-
-    const contentSeo = response.data.data.content;
     return (
         <Fragment>
             <Grid2 container>
@@ -57,9 +51,9 @@ export default async function Page(props: { params: Params }) {
                         <div className="w-full  min-h-full flex flex-1 flex-col gap-4 sm:gap-6   h-full">
                             <MainStudyView />
                             <BannerDownloadApp />
-                            {contentSeo && (
+                            {content && (
                                 <div className="p-4 mb-28 sm:mb-0 sm:p-6 rounded-md  overflow-hidden bg-white dark:bg-black">
-                                    <SeoContent content={contentSeo} />
+                                    <SeoContent content={content} />
                                 </div>
                             )}
                         </div>

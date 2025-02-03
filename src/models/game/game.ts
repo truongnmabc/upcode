@@ -77,4 +77,6 @@ export interface IGameReducer {
     enableKeyboardShortcuts?: boolean; // Có kích hoạt phím tắt không?
 
     isDataLoaded?: boolean;
+
+    hasRetakenDiagnosticTest?: boolean;
 }

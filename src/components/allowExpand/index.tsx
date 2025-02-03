@@ -10,7 +10,6 @@ import { usePathname } from "next/navigation";
 import React, { useContext } from "react";
 import { AllowExpandContext, IContextAllowExpand } from "./provider";
 import TitleCollapse from "./titleCollapse";
-
 const AllowExpand = () => {
     const pathname = usePathname();
     const { mainTopic } = useContext<IContextAllowExpand>(AllowExpandContext);

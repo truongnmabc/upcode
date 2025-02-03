@@ -7,6 +7,7 @@ import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
 import { IQuestion } from "@/models/question/questions";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ICurrentGame } from "@/models/game/game";
+import { RootState } from "@/redux/store";
 
 type IInitQuestion = {
     testId?: number | null;
@@ -23,8 +24,7 @@ type IInitQuestion = {
 const setDataStore = async (
     parentId: number,
     question: IQuestion[],
-    totalDuration: number,
-    remainingTime: number
+    totalDuration: number
 ) => {
     await db?.testQuestions.add({
         parentId,
@@ -32,7 +32,6 @@ const setDataStore = async (
         totalDuration,
         isGamePaused: false,
         startTime: new Date().getTime(),
-        remainingTime: remainingTime,
         gameMode: "practiceTests",
         elapsedTime: 0,
         status: 0,
@@ -124,9 +123,18 @@ export const mapQuestionsWithProgress = (
  */
 const initPracticeThunk = createAsyncThunk(
     "initPracticeThunk",
-    async ({ testId }: IInitQuestion) => {
+    async ({ testId }: IInitQuestion, thunkAPI) => {
         let currentTest;
         let id = testId || 0;
+
+        const state = thunkAPI.getState() as RootState;
+        let { isDataFetched } = state.appInfoReducer;
+
+        while (!isDataFetched) {
+            await new Promise((resolve) => setTimeout(resolve, 100)); // Đợi 100ms trước khi kiểm tra lại
+            isDataFetched = (thunkAPI.getState() as RootState).appInfoReducer
+                .isDataFetched;
+        }
 
         if (!testId) {
             const res = await db?.testQuestions
@@ -153,7 +161,7 @@ const initPracticeThunk = createAsyncThunk(
 
         if (!listQuestion) {
             listQuestion = await fetchQuestions(id);
-            await setDataStore(id, listQuestion, totalDuration, remainingTime);
+            await setDataStore(id, listQuestion, totalDuration);
         }
 
         const progressData = await getLocalUserProgress(

@@ -1,7 +1,7 @@
 import { IAppInfo } from "@/models/app/appInfo";
-import Config from "../config";
 import { requestGetData, requestPostData } from "./request";
 import RouterApp from "@/constants/router.constant";
+import { BASE_URL } from "@/constants";
 
 export const sendEmailApi = async ({
     email,
@@ -123,7 +123,7 @@ export const sendEmailSubscribeApiV4 = async (
 ) => {
     //https://test-dot-micro-enigma-235001.appspot.com/api/web?type=send-email&fromEmail=hiepnx27@gmail.com&subject=title&content=content
     const response = await requestPostData({
-        url: Config.BASE_URL + `/api/web?type=send-email`,
+        url: BASE_URL + `/api/web?type=send-email`,
         data: {
             subject: `Web ${appName} Support`,
             fromEmail: email,

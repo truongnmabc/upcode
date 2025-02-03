@@ -1,27 +1,27 @@
 import { requestGetData } from "@/services/request";
 
 export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ slug: string }> }
+    request: Request,
+    { params }: { params: Promise<{ slug: string }> }
 ) {
-  const slug = (await params).slug;
-  console.log("🚀 ~ slug:", slug);
+    const slug = (await params).slug;
+    console.log("🚀 ~ slug:", slug);
 
-  try {
-    const data = await requestGetData({
-      url: `/asvab/web-data/all-data.json?t=${new Date().getTime()}`,
-      config: {
-        baseURL:
-          "https://storage.googleapis.com/micro-enigma-235001.appspot.com",
-      },
-    });
-    return Response.json({
-      data: data,
-      code: 200,
-      status: 1,
-    });
-  } catch (error) {
-    console.log("🚀 ~ error:", error);
-    return Response.json({ error: "Failed to read appInfos.json" });
-  }
+    try {
+        const data = await requestGetData({
+            url: `/asvab/web-data/all-data.json?t=${new Date().getTime()}`,
+            config: {
+                baseURL:
+                    "https://storage.googleapis.com/micro-enigma-235001.appspot.com",
+            },
+        });
+        return Response.json({
+            data: data,
+            code: 200,
+            status: 1,
+        });
+    } catch (error) {
+        console.log("🚀 ~ error:", error);
+        return Response.json({ error: "Failed to read appInfos.json" });
+    }
 }

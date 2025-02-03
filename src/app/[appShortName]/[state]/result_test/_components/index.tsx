@@ -66,12 +66,20 @@ const mixData = ({
 }) => {
     const userMap = new Map(user.map((u) => [u.id, u]));
 
-    return questions.map((item) => ({
-        ...item,
-        selectedAnswer: userMap
-            .get(item.id)
-            ?.selectedAnswers.find((s) => s.parentId === testId),
-    }));
+    return questions.map((item) => {
+        const selectedAnswers =
+            userMap
+                .get(item.id)
+                ?.selectedAnswers.filter((s) => s.parentId === testId) || [];
+
+        return {
+            ...item,
+            selectedAnswer:
+                selectedAnswers.length > 0
+                    ? selectedAnswers[selectedAnswers.length - 1]
+                    : undefined,
+        };
+    });
 };
 
 const ResultTestLayout = () => {
@@ -109,6 +117,7 @@ const ResultTestLayout = () => {
 
         if ((idTopic || testId) && type) {
             const id = idTopic !== -1 ? idTopic : Number(testId);
+
             const { user, topics, questions } = await fetchData(id);
 
             const list = listQuestion?.length
