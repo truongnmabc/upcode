@@ -1,17 +1,18 @@
-import Grid2 from "@mui/material/Grid2";
-import SeoContent from "@/components/seoContent/seoContent";
 import BannerDownloadApp from "@/components/bannerDownload/bannerDownloadApp";
 import MyContainer from "@/components/container";
-import { Fragment } from "react";
-import HeaderMobile from "@/components/headerMobile";
-import AnswerSheet from "@/components/listLeftQuestions";
+import FinalTestBtn from "@/components/finalTestBtn";
 import GridTestsLeft from "@/components/gridTests";
 import GridTopicLeft from "@/components/gridTopics";
-import FinalTestBtn from "@/components/finalTestBtn";
+import HeaderMobile from "@/components/headerMobile";
+import AnswerSheet from "@/components/listLeftQuestions";
+import SeoContent from "@/components/seoContent/seoContent";
+import { requestGetTitleSeoPage } from "@/services/titleSeo.service";
+import Grid2 from "@mui/material/Grid2";
+import { Fragment } from "react";
 import ContentTestView from "./_components/content";
 
 export default async function DiagnosticPage() {
-    const contentSeo = "";
+    const { content } = await requestGetTitleSeoPage("diagnostic_test");
     return (
         <Fragment>
             <Grid2 container>
@@ -57,9 +58,9 @@ export default async function DiagnosticPage() {
                         <div className="w-full min-h-full flex flex-1 flex-col gap-4 sm:gap-6 h-full pb-24 sm:pb-0">
                             <ContentTestView />
                             <BannerDownloadApp />
-                            {contentSeo && (
+                            {content && (
                                 <div className="p-4 mb-28 sm:mb-0 sm:p-6 rounded-md  overflow-hidden bg-white dark:bg-black">
-                                    <SeoContent content={contentSeo} />
+                                    <SeoContent content={content} />
                                 </div>
                             )}
                         </div>

@@ -10,6 +10,7 @@ import {
     mapQuestionsWithProgress,
 } from "./initPracticeTest";
 import { ITestQuestion } from "@/models/tests/testQuestions";
+import { RootState } from "@/redux/store";
 
 /**
  * Lưu trữ dữ liệu bài kiểm tra chuẩn đoán vào local database (IndexedDB).
@@ -145,7 +146,16 @@ export const getExistingDiagnosticTest = async (diagnostic: ITestQuestion) => {
  */
 const initDiagnosticTestQuestionThunk = createAsyncThunk(
     "initDiagnosticTest",
-    async () => {
+    async (_, thunkAPI) => {
+        const state = thunkAPI.getState() as RootState;
+        let { isDataFetched } = state.appInfoReducer;
+
+        while (!isDataFetched) {
+            await new Promise((resolve) => setTimeout(resolve, 100)); // Đợi 100ms trước khi kiểm tra lại
+            isDataFetched = (thunkAPI.getState() as RootState).appInfoReducer
+                .isDataFetched;
+        }
+
         const diagnostic = await db?.testQuestions
             .where("gameMode")
             .equals("diagnosticTest")

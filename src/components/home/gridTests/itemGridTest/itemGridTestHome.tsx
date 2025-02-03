@@ -82,7 +82,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
                 const _href = `/study/${TypeParam.practiceTest}?type=test&testId=${id}`;
                 router.push(_href);
             } else {
-                const _href = `${RouterApp.ResultTest}?type=${TypeParam.practiceTest}&testId=${res[0].id}`;
+                const _href = `${RouterApp.ResultTest}?type=${TypeParam?.practiceTest}&testId=${res[0]?.id}`;
                 router.push(_href);
             }
         }

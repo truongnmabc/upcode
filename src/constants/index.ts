@@ -155,3 +155,23 @@ export const PAYPAL_CLIENT_ID = isProduction
     : "ASZuK4V1rzGFj333OzSTQM_TeNeD7VWkhTCUjoy2y6p7dgbIAoSYTSGaKwMGiGVoaHMxC-Mdb8D3wa3E";
 
 export const PAYPAL_CURRENCY = "USD";
+
+export const HTTP_REQUEST_SUCCESS = 200;
+
+export const HTTP_REQUEST_TIMEOUT = 30000;
+
+export const BASE_WP = "https://api.cdl-prep.com";
+
+export const PURCHASED = 1;
+
+export const TESTER_KEY = "TESTER_KEY";
+
+export const BASE_URL = "https://test-dot-micro-enigma-235001.appspot.com";
+
+export const BASE_URL_DEV = "https://dev-dot-micro-enigma-235001.appspot.com";
+
+export const DASHBOARD_API = `https://dashboard-api2.abc-elearning.org/`;
+
+export const KEY_CLICK_ADS = "sdakcilc";
+
+export const MAX_CLICK_ADS_PER_USER = 3;

@@ -11,11 +11,8 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("message", async (event) => {
     if (event.data.type === "INIT_DB") {
         const { appShortName, apiPath } = event.data.payload;
-        console.log("start sw", new Date().toISOString());
 
         await handleInitData(appShortName, apiPath);
-
-        console.log("end sw", new Date().toISOString());
 
         event.ports[0].postMessage({
             status: "success",
@@ -256,8 +253,7 @@ const initDataTest = async (tests, db, apiPath) => {
                         question: listQuestion,
                         totalDuration: test.duration,
                         isPaused: false,
-                        startTime: "",
-                        remainTime: test.duration * 60,
+                        startTime: Date.now(),
                         gameMode: name,
                         status: 0,
                         elapsedTime: 0,

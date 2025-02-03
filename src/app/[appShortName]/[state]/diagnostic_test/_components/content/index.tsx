@@ -1,20 +1,26 @@
 "use client";
 import BottomActions from "@/components/bottomActions";
 import ChoicesPanel from "@/components/choicesPanel";
-import ExplanationDetail from "@/components/explanation";
+import ProgressQuestion from "@/components/progressQuestion";
 import QuestionContent from "@/components/question";
+import TitleQuestion from "@/components/titleQuestion";
 import { MathJaxContext } from "better-react-mathjax";
-import React, { useEffect } from "react";
 import EmotionComponent from "../emotion/emotionComponent";
 import TimeTestGetLever from "../timeTest";
-import ProgressQuestion from "@/components/progressQuestion";
-import TitleQuestion from "@/components/titleQuestion";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { selectCurrentTopicId } from "@/redux/features/game.reselect";
-import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
+
 import { useIsMobile } from "@/hooks/useIsMobile";
-import CountTimeDiagnostic from "../countTimeRemain";
-import ClockIcon from "@/components/icon/ClockIcon";
+
+import dynamic from "next/dynamic";
+import Explanation from "./explanationDetail";
+import LoadDataDiagnosticTest from "./loadData";
+
+const ClockIcon = dynamic(() => import("@/components/icon/ClockIcon"), {
+    ssr: false,
+});
+
+const CountTimeDiagnostic = dynamic(() => import("../countTimeRemain"), {
+    ssr: false,
+});
 
 const ContentTestView = () => {
     const isMobile = useIsMobile();
@@ -48,26 +54,14 @@ const ContentTestView = () => {
                         <EmotionComponent />
                     </div>
                     <ChoicesPanel />
-                    <ExplanationDetail unLock={true} />
+                    <Explanation />
                 </div>
 
                 <BottomActions isShow={true} type="diagnostic" />
             </div>
-            <LoadData />
+            <LoadDataDiagnosticTest />
         </MathJaxContext>
     );
 };
 
 export default ContentTestView;
-
-const LoadData = () => {
-    const idTopics = useAppSelector(selectCurrentTopicId);
-    const dispatch = useAppDispatch();
-    useEffect(() => {
-        if (!idTopics || idTopics === -1) {
-            dispatch(initDiagnosticTestQuestionThunk());
-        }
-    }, [idTopics, dispatch]);
-
-    return null;
-};

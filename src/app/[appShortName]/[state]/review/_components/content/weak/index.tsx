@@ -19,6 +19,7 @@ const WeakQuestions = () => {
             db?.userProgress.toArray(),
             db?.topics.toArray(),
         ]);
+        console.log("🚀 ~ handleGetData ~ data:", data);
 
         if (data?.length && topics?.length) {
             const listSub = topics
@@ -32,11 +33,12 @@ const WeakQuestions = () => {
                     )
                 )
                 .filter(Boolean);
+            console.log("🚀 ~ handleGetData ~ listSub:", listSub);
 
             const list = data
-                .filter((item) =>
-                    listSub?.some((topic) => item.parentIds.includes(topic?.id))
-                )
+                // .filter((item) =>
+                //     listSub?.some((topic) => item.parentIds.includes(topic?.id))
+                // )
                 .map((item) => {
                     const matchingTopic = listSub.find((topic) =>
                         item.parentIds.includes(topic?.id)
@@ -47,6 +49,7 @@ const WeakQuestions = () => {
                         tag: matchingTopic?.mainTag,
                     };
                 });
+            console.log("🚀 ~ handleGetData ~ list:", list);
 
             const incorrect = list.filter((item) => {
                 const lastThreeAnswers = item.selectedAnswers?.slice(-3) || [];
@@ -61,7 +64,6 @@ const WeakQuestions = () => {
 
                 return incorrectPercentage >= 50;
             });
-            console.log("🚀 ~ handleGetData ~ incorrect:", incorrect);
 
             const mathType = incorrect.map((item) => ({
                 ...item,
