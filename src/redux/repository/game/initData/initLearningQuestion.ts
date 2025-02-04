@@ -25,67 +25,8 @@ interface IResInitQuestion {
 }
 
 /**
- * Fetches question data from the database or API.
- * @param {IInitQuestion} params - The parameters for fetching questions.
- * @return {Promise<IResInitQuestion>} The processed question data.
- */
-const fetchQuestions = async ({
-    partId,
-    subTopicId,
-    isReset,
-}: IInitQuestion): Promise<IResInitQuestion> => {
-    const listQuestions = await db?.questions
-        .where("partId")
-        .equals(partId)
-        .toArray();
-
-    let progressData: IUserQuestionProgress[] = [];
-
-    if (!listQuestions || listQuestions?.length === 0) {
-        const data = (await requestGetData({
-            url: `api/question/get-questions-by-part-id?partId=${partId}`,
-            config: {
-                baseURL:
-                    "https://api-cms-v2-dot-micro-enigma-235001.appspot.com",
-            },
-        })) as IQuestion[];
-
-        return {
-            questions: data.map((item) => ({
-                ...item,
-                text: item.text,
-                explanation: item.explanation,
-                localStatus: "new",
-            })),
-            progressData: [],
-            id: partId || 0,
-            parentId: subTopicId || 0,
-            gameMode: "learn",
-        };
-    }
-
-    const questionIdsSet = new Set(listQuestions.map((q) => q.id));
-
-    progressData = (await db?.userProgress
-        .filter(
-            (item) => item.gameMode === "learn" && questionIdsSet.has(item.id)
-        )
-        .toArray()) as IUserQuestionProgress[];
-
-    const list = processQuestions(listQuestions, progressData, isReset);
-
-    return {
-        questions: list,
-        progressData: isReset ? [] : progressData,
-        id: partId,
-        parentId: 1,
-        gameMode: "learn",
-    };
-};
-
-/**
  * Processes the fetched question data.
- * @param {ITopicQuestion} res - The database response.
+ * @param {ITopicQuestion} questions - The database response.
  * @param {IUserQuestionProgress[]} progressData - The progress data.
  * @param {boolean} isReset - Flag to reset progress.
  * @return {IResInitQuestion} The processed question data.
@@ -222,6 +163,63 @@ const handleAllQuestionsAnswered = (
         (item) => item?.id === wrongAnswers[0]?.id
     );
     state.incorrectQuestionIds = wrongAnswers.map((item) => item.id);
+};
+
+/**
+ * Fetches question data from the database or API.
+ * @param {IInitQuestion} params - The parameters for fetching questions.
+ * @return {Promise<IResInitQuestion>} The processed question data.
+ */
+const fetchQuestions = async ({
+    partId,
+    subTopicId,
+    isReset,
+}: IInitQuestion): Promise<IResInitQuestion> => {
+    const listQuestions = await db?.questions
+        .where("partId")
+        .equals(partId)
+        .toArray();
+
+    let progressData: IUserQuestionProgress[] = [];
+
+    if (!listQuestions || listQuestions?.length === 0) {
+        const data = (await requestGetData({
+            url: `api/question/get-questions-by-part-id?partId=${partId}`,
+            config: {
+                baseURL:
+                    "https://api-cms-v2-dot-micro-enigma-235001.appspot.com",
+            },
+        })) as IQuestion[];
+
+        return {
+            questions: data.map((item) => ({
+                ...item,
+                text: item.text,
+                explanation: item.explanation,
+                localStatus: "new",
+            })),
+            progressData: [],
+            id: partId || 0,
+            parentId: subTopicId || 0,
+            gameMode: "learn",
+        };
+    }
+
+    const questionIdsSet = new Set(listQuestions.map((q) => q.id));
+
+    progressData = (await db?.userProgress
+        .filter((item) => questionIdsSet.has(item.id))
+        .toArray()) as IUserQuestionProgress[];
+
+    const list = processQuestions(listQuestions, progressData, isReset);
+
+    return {
+        questions: list,
+        progressData: isReset ? [] : progressData,
+        id: partId,
+        parentId: subTopicId || 0,
+        gameMode: "learn",
+    };
 };
 
 const initLearnQuestionThunk = createAsyncThunk(

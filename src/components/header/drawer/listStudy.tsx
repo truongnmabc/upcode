@@ -1,7 +1,7 @@
 "use client";
 import { handleGetNextPart } from "@/components/home/gridTopic/item/titleTopic";
 import { db } from "@/db/db.model";
-import { ITopic } from "@/models/topics/topics";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { selectSubTopics, selectTopics } from "@/redux/features/study";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -21,7 +21,7 @@ const ListStudyDrawer = ({
     const appInfo = useAppSelector(selectAppInfo);
     const [isExpand, setIsExpand] = useState(false);
 
-    const [list, setList] = useState<ITopic[]>([]);
+    const [list, setList] = useState<ITopicProgress[]>([]);
     const dispatch = useAppDispatch();
     const router = useRouter();
 
@@ -35,7 +35,7 @@ const ListStudyDrawer = ({
     }, [handleGetDataTopic]);
 
     const handleClick = useCallback(
-        async (topic: ITopic) => {
+        async (topic: ITopicProgress) => {
             trackingEventGa4({
                 eventName: "click_topic",
                 value: {
@@ -43,18 +43,19 @@ const ListStudyDrawer = ({
                     to: topic.tag,
                 },
             });
-            const { partId } = await handleGetNextPart({
+            const { partId, subTopicId } = await handleGetNextPart({
                 topic,
             });
             const _href = `/study/${topic.tag}-practice-test?type=learn&partId=${partId}`;
 
             dispatch(selectTopics(topic.id));
-            // if (subTopicId) dispatch(selectSubTopics(subTopicId));
+            if (subTopicId) dispatch(selectSubTopics(subTopicId));
 
             if (partId) {
                 dispatch(
                     initQuestionThunk({
                         partId,
+                        subTopicId,
                     })
                 );
             }

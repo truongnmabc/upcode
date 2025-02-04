@@ -1,5 +1,5 @@
 "use client";
-import { ITopic } from "@/models/topics/topics";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { selectSubTopicsId } from "@/redux/features/study.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { groupTopics } from "@/utils/math";
@@ -67,7 +67,7 @@ function getCenterPosition(
     return { x: 0, y: 0 };
 }
 
-const TopicLevelProgress = ({ subTopic }: { subTopic: ITopic }) => {
+const TopicLevelProgress = ({ subTopic }: { subTopic: ITopicProgress }) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const selectedSubTopics = useAppSelector(selectSubTopicsId);
@@ -141,16 +141,14 @@ const TopicLevelProgress = ({ subTopic }: { subTopic: ITopic }) => {
                             )}
                             key={index}
                         >
-                            {line.value.map((part, i) => {
-                                return (
-                                    <IconProgress
-                                        part={part}
-                                        index={index * 3 + i + 1}
-                                        key={i}
-                                        isPass={part.status === 1}
-                                    />
-                                );
-                            })}
+                            {line.value.map((part, i) => (
+                                <IconProgress
+                                    part={part}
+                                    index={index * 3 + i + 1}
+                                    key={i}
+                                    isPass={part.status === 1}
+                                />
+                            ))}
                         </div>
                     ))}
             </div>

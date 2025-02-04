@@ -13,11 +13,11 @@ export class DB extends Dexie {
     testQuestions!: Table<ITestQuestion>;
 
     paymentInfos!: Table<IPaymentInfos>;
-    // -
+
     questions!: Table<ITopicQuestion>;
-    // -
+
     topics!: Table<ITopicProgress>;
-    // -
+
     useActions!: Table<IUserActions>;
 
     constructor(appName: string) {
@@ -33,7 +33,7 @@ export class DB extends Dexie {
             paymentInfos: "++id,userId",
 
             //  Chứa thông tin câu hỏi của app
-            questions: "++id,partId,testId",
+            questions: "++id,partId,testId,subTopicId",
 
             //  chứa thông tin của mainTopic và subTopic
             topics: "++id,slug",

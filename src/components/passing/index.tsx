@@ -12,21 +12,15 @@ const PassingProbability = () => {
 
     const handleGetData = useCallback(async () => {
         try {
-            const data = await db?.questions.toArray();
-
-            const level = data?.reduce(
-                (acc, item) => acc + (item.level === -1 ? 50 : item.level),
-                0
-            );
-            console.log("🚀 ~ handleGetData ~ level:", level);
-
-            const user = await db?.userProgress.toArray();
-            console.log("🚀 ~ handleGetData ~ user:", user);
-
+            // const data = await db?.questions.toArray();
+            // const level = data?.reduce(
+            //     (acc, item) => acc + (item.level === -1 ? 50 : item.level),
+            //     0
+            // );
+            // const user = await db?.userProgress.toArray();
             // if (data?.length) {
             //     const passing = totalPassingApp(user);
             //     const total = data.length;
-
             //     setPassingValue(total > 0 ? (passing / total) * 100 : 0);
             // } else {
             //     setPassingValue(0);

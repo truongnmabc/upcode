@@ -1,17 +1,17 @@
 import { IAppInfo } from "@/models/app/appInfo";
-import { ITopic } from "@/models/topics/topics";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
 import clsx from "clsx";
-import TitleTopic from "./item/titleTopic";
-import Wrapper from "./item/wrapper";
 import React from "react";
 import PassingHome from "../passing";
+import TitleTopic from "./item/titleTopic";
+import Wrapper from "./item/wrapper";
 
 const GridTopics = ({
     topics,
     appInfo,
 }: {
     appInfo: IAppInfo;
-    topics: ITopic[];
+    topics: ITopicProgress[];
 }) => {
     return (
         <div className="w-full  pt-6 sm:pt-14">
@@ -46,7 +46,7 @@ const GridTopics = ({
                             classNames=" h-[52px] sm:h-[72px]"
                             imgClassNames="w-[36px] h-[36px] sm:w-[56px] sm:h-[56px]"
                         />
-                        <Wrapper />
+                        <Wrapper topicsId={topic.id} />
                     </div>
                 ))}
             </div>

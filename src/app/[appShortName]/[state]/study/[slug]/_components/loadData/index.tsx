@@ -14,7 +14,7 @@ const LoadDataStudy = () => {
     const subTopic = useSearchParams()?.get("subTopic");
     const partId = useSearchParams()?.get("partId");
     useEffect(() => {
-        if (partId && type === "learn") {
+        if (partId && type === "learn" && (!id || id === -1)) {
             dispatch(
                 initLearnQuestionThunk({
                     partId: Number(partId),

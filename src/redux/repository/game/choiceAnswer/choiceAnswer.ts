@@ -10,11 +10,8 @@ const choiceAnswer = createAsyncThunk(
         { question, choice }: { question: ICurrentGame; choice: IAnswer },
         thunkAPI
     ) => {
-        console.log("🚀 ~ question:", question);
         const state = thunkAPI.getState() as RootState;
-        const { gameMode, attemptNumber, currentTopicId } = state.gameReducer;
-        console.log("🚀 ~ currentTopicId:", currentTopicId);
-        console.log("🚀 ~ gameMode:", gameMode);
+        const { attemptNumber, currentTopicId } = state.gameReducer;
 
         const parentId = currentTopicId;
         const isEx = await db?.userProgress.get(question.id);

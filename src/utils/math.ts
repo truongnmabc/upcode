@@ -1,12 +1,12 @@
 import { ICurrentGame } from "@/models/game/game";
-import { ITopic } from "@/models/topics/topics";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { v4 as uuidv4 } from "uuid";
 
 export const groupTopics = (
-    listTopic: ITopic[],
+    listTopic: ITopicProgress[],
     sequence: number
-): Array<{ id: number; value: ITopic[] }> => {
-    const arr: Array<{ id: number; value: ITopic[] }> = [];
+): Array<{ id: number; value: ITopicProgress[] }> => {
+    const arr: Array<{ id: number; value: ITopicProgress[] }> = [];
     let idx = 0;
 
     for (let i = 0; i < listTopic.length; i++) {

@@ -1,9 +1,9 @@
 "use client";
+import RouterApp from "@/constants/router.constant";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { ITopic } from "@/models/topics/topics";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useAppSelector } from "@/redux/hooks";
-import RouterApp from "@/constants/router.constant";
 import ctx from "@/utils/mergeClass";
 import { Collapse } from "@mui/material";
 import { usePathname } from "next/navigation";
@@ -33,9 +33,14 @@ const AllowExpand = () => {
                 <div className="flex gap-2 flex-col ">
                     {mainTopic?.topics &&
                         mainTopic?.topics?.length > 0 &&
-                        mainTopic?.topics?.map((subTopic: ITopic, index) => (
-                            <TitleCollapse subTopic={subTopic} key={index} />
-                        ))}
+                        mainTopic?.topics?.map(
+                            (subTopic: ITopicProgress, index) => (
+                                <TitleCollapse
+                                    subTopic={subTopic}
+                                    key={index}
+                                />
+                            )
+                        )}
                 </div>
             </div>
         </Collapse>
