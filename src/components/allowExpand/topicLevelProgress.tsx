@@ -1,12 +1,10 @@
 "use client";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { db } from "@/db/db.model";
-import { IPartProgress } from "@/models/progress/subTopicProgress";
 import { ITopic } from "@/models/topics/topics";
-import { studyState } from "@/redux/features/study";
+import { selectSubTopicsId } from "@/redux/features/study.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { groupTopics } from "@/utils/math";
 import clsx from "clsx";
+import React, { useEffect, useRef } from "react";
 import IconProgress from "./iconProgress";
 
 type CenterPosition = {
@@ -72,27 +70,8 @@ function getCenterPosition(
 const TopicLevelProgress = ({ subTopic }: { subTopic: ITopic }) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const { selectedSubTopics } = useAppSelector(studyState);
-
+    const selectedSubTopics = useAppSelector(selectSubTopicsId);
     const isExpand = selectedSubTopics === subTopic.id;
-    const [listPlayed, setListPlayed] = useState<IPartProgress[]>([]);
-
-    const handleCheckProgress = useCallback(async () => {
-        if (subTopic.id) {
-            const subTopicProgress = await db?.subTopicProgress
-                .where("id")
-                .equals(subTopic.id)
-                .first();
-
-            if (subTopicProgress && subTopicProgress.part) {
-                setListPlayed(subTopicProgress.part);
-            }
-        }
-    }, [subTopic.id]);
-
-    useEffect(() => {
-        handleCheckProgress();
-    }, [subTopic, handleCheckProgress]);
 
     useEffect(() => {
         if (!isExpand) return;
@@ -162,22 +141,16 @@ const TopicLevelProgress = ({ subTopic }: { subTopic: ITopic }) => {
                             )}
                             key={index}
                         >
-                            {line.value.map((part, i) => (
-                                <IconProgress
-                                    part={part}
-                                    subTopicTag={subTopic.tag}
-                                    subTopic={subTopic}
-                                    index={index * 3 + i + 1}
-                                    key={i}
-                                    isCurrentPlaying={listPlayed?.find(
-                                        (item) => item.status === 0
-                                    )}
-                                    isPass={listPlayed
-                                        ?.filter((item) => item.status === 1)
-                                        ?.map((item) => item.id)
-                                        .includes(part.id)}
-                                />
-                            ))}
+                            {line.value.map((part, i) => {
+                                return (
+                                    <IconProgress
+                                        part={part}
+                                        index={index * 3 + i + 1}
+                                        key={i}
+                                        isPass={part.status === 1}
+                                    />
+                                );
+                            })}
                         </div>
                     ))}
             </div>

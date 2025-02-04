@@ -46,7 +46,7 @@ const GridTopics = ({
                             classNames=" h-[52px] sm:h-[72px]"
                             imgClassNames="w-[36px] h-[36px] sm:w-[56px] sm:h-[56px]"
                         />
-                        <Wrapper topic={topic} />
+                        <Wrapper />
                     </div>
                 ))}
             </div>

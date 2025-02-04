@@ -43,21 +43,18 @@ const ListStudyDrawer = ({
                     to: topic.tag,
                 },
             });
-            const { tag, subTopicTag, partId, subTopicId } =
-                await handleGetNextPart({
-                    parentId: topic.id,
-                });
-            const _href = `/study/${topic.tag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${tag}`;
-            dispatch(selectTopics(topic.id));
-            if (subTopicId) dispatch(selectSubTopics(subTopicId));
+            const { partId } = await handleGetNextPart({
+                topic,
+            });
+            const _href = `/study/${topic.tag}-practice-test?type=learn&partId=${partId}`;
 
-            if (tag && subTopicTag) {
+            dispatch(selectTopics(topic.id));
+            // if (subTopicId) dispatch(selectSubTopics(subTopicId));
+
+            if (partId) {
                 dispatch(
                     initQuestionThunk({
-                        partTag: tag,
-                        subTopicTag,
                         partId,
-                        subTopicId,
                     })
                 );
             }

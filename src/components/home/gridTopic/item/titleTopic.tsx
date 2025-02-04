@@ -1,87 +1,62 @@
 "use client";
 import LazyLoadImage from "@/components/images";
 import MtUiRipple, { useRipple } from "@/components/ripple";
+import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { IPartProgress } from "@/models/progress/subTopicProgress";
 import { ITopic } from "@/models/topics/topics";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
-import { setIndexSubTopic } from "@/redux/features/game";
-import { selectSubTopics, selectTopics } from "@/redux/features/study";
+import { selectTopics } from "@/redux/features/study";
 import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
+import initLearnQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 import { AppDispatch } from "@/redux/store";
-import RouterApp from "@/constants/router.constant";
 import { trackingEventGa4 } from "@/services/googleEvent";
 import ctx from "@/utils/mergeClass";
 import clsx from "clsx";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { usePathname, useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import Priority from "./priority";
 
 export const handleGetNextPart = async ({
-    parentId,
     topic,
 }: {
-    parentId: number;
-    topic?: ITopic;
-}): Promise<{
-    tag?: string;
-    subTopicTag: string;
-    partId?: number;
-    subTopicId?: number;
-    index?: number;
-}> => {
-    const progress =
-        (await db?.subTopicProgress
-            .where("parentId")
-            .equals(parentId)
-            .toArray()) || [];
-
-    if (!progress.length && topic) {
-        const firstTopic = topic.topics?.[0];
-        const firstSubTopic = firstTopic?.topics?.[0];
-
-        const part = firstTopic?.topics?.map((item) => ({
-            id: item.id || -1,
-            parentId: item.parentId,
-            status: 0,
-            totalQuestion: item?.totalQuestion || 0,
-            tag: item.tag,
-            turn: 1,
-        })) as IPartProgress[];
-
-        await db?.subTopicProgress.add({
-            id: firstTopic?.id || 0,
-            parentId: topic.id,
-            part: part,
-            subTopicTag: firstTopic?.tag || "",
-            pass: false,
-        });
-
-        return {
-            tag: firstSubTopic?.tag || "",
-            subTopicTag: firstTopic?.tag || "",
-            partId: firstSubTopic?.id,
-            subTopicId: firstTopic?.id,
-            index: 0,
-        };
+    topic: ITopic;
+}): Promise<{ partId?: number }> => {
+    if (!db) {
+        toast.error("Error: Database not initialized");
+        return { partId: undefined };
     }
 
-    const incompleteProgress = progress.find(
-        (item) => !item.pass && item.part?.some((p) => p.status === 0)
-    );
+    const currentTopic = await db.topics.where("id").equals(topic?.id).first();
 
-    const nextPart = incompleteProgress?.part?.find((p) => p.status === 0);
+    if (!currentTopic) {
+        toast.error("Error: Can't get data");
+        return { partId: undefined };
+    }
 
-    const index = incompleteProgress?.part?.findIndex((p) => p === nextPart);
-    return {
-        tag: nextPart?.tag,
-        subTopicTag: incompleteProgress?.subTopicTag || "",
-        subTopicId: incompleteProgress?.id,
-        index: index,
-    };
+    // Nếu topic hiện tại đã hoàn thành, tìm topic tiếp theo
+    const targetTopic =
+        currentTopic.status === 1
+            ? await db.topics.filter((item) => item.status === 0).first()
+            : currentTopic;
+
+    if (!targetTopic) return { partId: undefined };
+
+    // Tìm subTopic có status = 0
+    const nextSubTopics = targetTopic.topics.find((item) => item.status === 0);
+    if (!nextSubTopics) return { partId: undefined };
+
+    // Tìm part tiếp theo trong subTopic
+    const nextPart = findNextPart(nextSubTopics);
+    return { partId: nextPart?.id };
+};
+
+// ✅ Hàm tìm part tiếp theo trong subTopic
+const findNextPart = (subTopic: ITopicProgress) => {
+    return subTopic.topics.find((item) => item.status === 0);
 };
 
 type IPropsHandleNavigateStudy = {
@@ -91,32 +66,24 @@ type IPropsHandleNavigateStudy = {
     appShortName: string;
     isReplace?: boolean;
 };
+
 export const handleNavigateStudy = async ({
     topic,
     dispatch,
     router,
     isReplace = false,
 }: IPropsHandleNavigateStudy) => {
-    const { tag, subTopicTag, partId, subTopicId, index } =
-        await handleGetNextPart({
-            parentId: topic.id,
-            topic,
-        });
-    const _href = `/study/${topic.tag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${tag}`;
-    dispatch(selectTopics(topic.id));
+    const { partId } = await handleGetNextPart({ topic });
 
-    if (tag && subTopicTag) {
-        dispatch(
-            initQuestionThunk({
-                partTag: tag,
-                subTopicTag,
-                partId,
-                subTopicId,
-            })
-        );
+    if (!partId) {
+        toast.error("Error: Không tìm thấy partId hợp lệ");
+        return;
     }
-    if (subTopicId) dispatch(selectSubTopics(subTopicId));
-    dispatch(setIndexSubTopic((index || 0) + 1));
+
+    const _href = `/study/${topic.tag}-practice-test?type=learn&partId=${partId}`;
+
+    dispatch(selectTopics(topic.id));
+    dispatch(initLearnQuestionThunk({ partId: Number(partId) }));
 
     if (isReplace) return router.push(_href);
     router.push(_href);

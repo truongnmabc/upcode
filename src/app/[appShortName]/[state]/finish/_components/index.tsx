@@ -69,6 +69,9 @@ const FinishLayout = () => {
             const currentPassing = passingDb?.topics?.find(
                 (item) => item.id === Number(partId)
             );
+
+            console.log("🚀 ~ handleGetData ~ currentPassing:", currentPassing);
+
             let passingApp = 0;
             let extraPoint = 0;
             if (passingDb && currentPassing) {
@@ -76,19 +79,32 @@ const FinishLayout = () => {
                     useProgress,
                     currentPassing?.averageLevel
                 );
+                console.log("🚀 ~ handleGetData ~ totalPassing:", totalPassing);
 
                 const listPass = await db?.passing.toArray();
                 if (listPass) {
                     const totalQuestion = totalQuestionApp(listPass);
+                    console.log(
+                        "🚀 ~ handleGetData ~ totalQuestion:",
+                        totalQuestion
+                    );
                     const totalQuestionTopic = listPass
                         .filter((item) => item.parentId === passingDb.parentId)
                         ?.reduce((acc, cur) => acc + cur.totalQuestion, 0);
+                    console.log(
+                        "🚀 ~ handleGetData ~ totalQuestionTopic:",
+                        totalQuestionTopic
+                    );
 
-                    extraPoint = totalPassing / totalQuestionTopic;
+                    extraPoint = (totalPassing / totalQuestion) * 100;
+                    console.log("🚀 ~ handleGetData ~ extraPoint:", extraPoint);
 
                     const prev = await totalPassingApp(listPass);
 
-                    passingApp = (prev + totalPassing) / (totalQuestion || 1);
+                    passingApp =
+                        ((prev + totalPassing) / (totalQuestion || 1)) * 100;
+
+                    console.log("🚀 ~ handleGetData ~ passingApp:", passingApp);
 
                     const listNew = passingDb.topics?.map((item) =>
                         item.id === Number(partId)

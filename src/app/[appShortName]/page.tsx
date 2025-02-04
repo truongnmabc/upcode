@@ -1,14 +1,11 @@
-import axiosInstance from "@/config/axios";
-import { API_PATH } from "@/constants/api.constants";
 import MyContainer from "@/components/container";
 import GridTest from "@/components/home/gridTests/gridTestHome";
 import GridTopics from "@/components/home/gridTopic/gridTopics";
 import TitleHomeApp from "@/components/home/title";
 import SeoContent from "@/components/seoContent/seoContent";
 import HomeSingleApp from "@/components/state-app";
-import { ITopic } from "@/models/topics/topics";
+import { fetchAppDataHomePage } from "@/services/homeData.service";
 import { getAppType } from "@/utils/web";
-import { fetchAppData } from "@/utils/getAppInfos";
 import dynamic from "next/dynamic";
 const BannerHome = dynamic(
     () => import("@/components/state-app/newHome/banner/index")
@@ -19,47 +16,23 @@ type Params = {
 
 export default async function Home({ params }: Params) {
     try {
-        const resolvedParams = await params;
+        const appShortName = (await params)?.appShortName;
+        const appType = getAppType(appShortName);
 
-        const appShortName = resolvedParams?.appShortName || process.env.APP_ID;
+        const { appInfos, contentSeo, topics } = await fetchAppDataHomePage(
+            appShortName
+        );
 
-        const { appInfo } = await fetchAppData(appShortName);
-
-        if (!appInfo) {
-            return;
-        }
-        const [response, dataSeo] = await Promise.all([
-            axiosInstance.get(
-                `${API_PATH.GET_DATA_STUDY}/${appInfo?.appShortName}`
-            ),
-            axiosInstance.get(`${API_PATH.GET_SEO}/${appInfo?.appShortName}`),
-        ]);
-
-        const topics: ITopic[] = response?.data?.data?.topic || [];
-
-        const appType = getAppType(appInfo.appShortName);
-
-        const contentSeo = dataSeo.data?.content;
-
-        const newTopics = topics.map((topic) => ({
-            ...topic,
-            id: Number(topic.id),
-            topics: topic.topics?.map((item) => ({
-                ...item,
-                slug: `${item.tag}-practice-test`,
-                topics: item.topics?.filter((item) => item.contentType === 0),
-            })),
-            slug: `${topic.tag}-practice-test`,
-        }));
+        if (!appInfos) return;
 
         if (appType === "default") {
             return (
                 <MyContainer>
-                    <TitleHomeApp appInfo={appInfo} />
-                    <GridTopics topics={newTopics} appInfo={appInfo} />
+                    <TitleHomeApp appInfo={appInfos} />
+                    <GridTopics topics={topics} appInfo={appInfos} />
                     <GridTest />
                     <div className="sm:my-[48px] sm:mb-[120px] my-[24px] mb-[48px]">
-                        <BannerHome appInfo={appInfo} isHomePage={true} />
+                        <BannerHome appInfo={appInfos} isHomePage={true} />
                     </div>
                     {contentSeo && (
                         <div className="p-4 mb-28 sm:mb-0 sm:p-6 rounded-md  overflow-hidden bg-white dark:bg-black">
@@ -73,7 +46,7 @@ export default async function Home({ params }: Params) {
         if (appType === "state") {
             return (
                 <section className="w-full h-full  pb-12 sm:pb-6 ">
-                    <HomeSingleApp appInfo={appInfo} />
+                    <HomeSingleApp appInfo={appInfos} />
                 </section>
             );
         }

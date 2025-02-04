@@ -1,7 +1,7 @@
+import { BASE_URL } from "@/constants";
+import RouterApp from "@/constants/router.constant";
 import { IAppInfo } from "@/models/app/appInfo";
 import { requestGetData, requestPostData } from "./request";
-import RouterApp from "@/constants/router.constant";
-import { BASE_URL } from "@/constants";
 
 export const sendEmailApi = async ({
     email,
