@@ -9,9 +9,9 @@ import { requestGetData } from "@/services/request";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 type IInitQuestion = {
-    subTopicTag: string;
-    partTag: string;
-    partId?: number;
+    subTopicTag?: string;
+    partTag?: string;
+    partId: number;
     subTopicId?: number;
     isReset?: boolean;
 };
@@ -30,18 +30,18 @@ interface IResInitQuestion {
  * @return {Promise<IResInitQuestion>} The processed question data.
  */
 const fetchQuestions = async ({
-    subTopicTag,
-    partTag,
-    ...rest
+    partId,
+    subTopicId,
+    isReset,
 }: IInitQuestion): Promise<IResInitQuestion> => {
-    const res = await db?.topicQuestion
-        .where("[subTopicTag+tag]")
-        .equals([subTopicTag, partTag])
-        .first();
-    let progressData: IUserQuestionProgress[] = [];
-    const { partId, subTopicId, isReset } = rest;
+    const listQuestions = await db?.questions
+        .where("partId")
+        .equals(partId)
+        .toArray();
 
-    if (!res) {
+    let progressData: IUserQuestionProgress[] = [];
+
+    if (!listQuestions || listQuestions?.length === 0) {
         const data = (await requestGetData({
             url: `api/question/get-questions-by-part-id?partId=${partId}`,
             config: {
@@ -64,21 +64,23 @@ const fetchQuestions = async ({
         };
     }
 
-    if (res?.id) {
-        console.log("🚀 ~ res:", res);
-        progressData =
-            (await db?.userProgress
-                .filter(
-                    (item) =>
-                        item.gameMode === "learn" &&
-                        item.parentIds.includes(res.id)
-                )
-                .toArray()) || [];
+    const questionIdsSet = new Set(listQuestions.map((q) => q.id));
 
-        console.log("🚀 ~ progressData:", progressData);
-    }
+    progressData = (await db?.userProgress
+        .filter(
+            (item) => item.gameMode === "learn" && questionIdsSet.has(item.id)
+        )
+        .toArray()) as IUserQuestionProgress[];
 
-    return processQuestions(res, progressData, isReset);
+    const list = processQuestions(listQuestions, progressData, isReset);
+
+    return {
+        questions: list,
+        progressData: isReset ? [] : progressData,
+        id: partId,
+        parentId: 1,
+        gameMode: "learn",
+    };
 };
 
 /**
@@ -89,16 +91,16 @@ const fetchQuestions = async ({
  * @return {IResInitQuestion} The processed question data.
  */
 const processQuestions = (
-    res: ITopicQuestion,
+    questions: ITopicQuestion[],
     progressData: IUserQuestionProgress[],
     isReset?: boolean
-): IResInitQuestion => {
-    const questions = isReset
-        ? res.questions?.map((item) => ({
+) => {
+    const list = isReset
+        ? questions?.map((item) => ({
               ...item,
               localStatus: "new" as IStatusAnswer,
           }))
-        : res.questions?.map((que) => {
+        : questions?.map((que) => {
               const progress = progressData.find((pro) => que.id === pro.id);
               const selectedAnswers = progress?.selectedAnswers || [];
 
@@ -115,20 +117,8 @@ const processQuestions = (
               };
           });
 
-    return {
-        questions,
-        progressData: isReset ? [] : progressData,
-        id: res.id,
-        parentId: res.parentId,
-        gameMode: "learn",
-    };
+    return list;
 };
-
-const initLearnQuestionThunk = createAsyncThunk(
-    "initLearnQuestionThunk",
-    fetchQuestions
-);
-export default initLearnQuestionThunk;
 
 /**
  * Handles initializing the learn question state.
@@ -233,3 +223,9 @@ const handleAllQuestionsAnswered = (
     );
     state.incorrectQuestionIds = wrongAnswers.map((item) => item.id);
 };
+
+const initLearnQuestionThunk = createAsyncThunk(
+    "initLearnQuestionThunk",
+    fetchQuestions
+);
+export default initLearnQuestionThunk;

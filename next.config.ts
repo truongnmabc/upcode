@@ -90,28 +90,29 @@ const nextConfig: NextConfig = {
             const result = [
                 {
                     source: "/",
-                    destination: `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}`,
+                    destination: `/${process.env["NEXT_PUBLIC_APP_SHORT_NAME"]}`,
                 },
             ];
             pageStatic.forEach((e) => {
                 result.push({
                     source: "/" + e,
                     destination:
-                        `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/` + e,
+                        `/${process.env["NEXT_PUBLIC_APP_SHORT_NAME"]}/` + e,
                 });
             });
             pageDynamic1.forEach((e) => {
                 result.push({
                     source: "/" + e,
                     destination:
-                        `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/all/` + e,
+                        `/${process.env["NEXT_PUBLIC_APP_SHORT_NAME"]}/all/` +
+                        e,
                 });
             });
             pageDynamic.forEach((e) => {
                 result.push({
                     source: "/" + e + "/:path",
                     destination:
-                        `/${process.env.NEXT_PUBLIC_APP_SHORT_NAME}/all/` +
+                        `/${process.env["NEXT_PUBLIC_APP_SHORT_NAME"]}/all/` +
                         e +
                         "/:path",
                 });

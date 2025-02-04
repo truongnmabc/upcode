@@ -16,27 +16,19 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { IconSubTopic } from "./iconTopic";
 import { AllowExpandContext, IContextAllowExpand } from "./provider";
+
 type IProps = {
     part: ITopic;
     index: number;
-    subTopicTag: string;
-    isCurrentPlaying?: IPartProgress;
-    subTopic: ITopic;
     isPass: boolean;
 };
 
-const IconProgress = ({
-    part,
-    index,
-    subTopicTag,
-    isCurrentPlaying,
-    subTopic,
-    isPass,
-}: IProps) => {
+const IconProgress = ({ part, index, isPass }: IProps) => {
     const currentGame = useAppSelector(selectCurrentGame);
     const listQuestion = useAppSelector(selectListQuestion);
     const turn = useAppSelector(selectAttemptNumber);
     const idTopic = useAppSelector(selectCurrentTopicId);
+    const isCurrentPlaying = idTopic === part?.id;
 
     const { mainTopicTag } =
         useContext<IContextAllowExpand>(AllowExpandContext);
@@ -44,49 +36,48 @@ const IconProgress = ({
     const router = useRouter();
     const dispatch = useAppDispatch();
     const pathname = usePathname();
-    const tag = useSearchParams()?.get("tag");
+    const partId = useSearchParams()?.get("partId");
     const [progress, setProgress] = useState(0);
 
     const handleListenerChange = useCallback(async () => {
-        const result =
-            (await db?.userProgress
-                .filter((item) => item.parentIds.includes(part.id))
-                .toArray()) || [];
+        console.log("🚀 ~ IconProgress ~ listQuestion:", part);
 
-        const pass = result.filter((item) =>
-            item.selectedAnswers?.find(
-                (ans) => ans.turn === turn && ans.correct
-            )
-        );
+        const progress = await db?.userProgress
+            .where("parentId")
+            ?.equals(part.id)
+            .toArray();
+        console.log("🚀 ~ handleListenerChange ~ progress:", progress);
 
-        setProgress(Math.floor((pass.length / listQuestion.length) * 100));
-    }, [part.id, listQuestion, turn]);
+        // const result =
+        //     (await db?.userProgress
+        //         .filter((item) => item.parentIds.includes(part.id))
+        //         .toArray()) || [];
+        // const pass = result.filter((item) =>
+        //     item.selectedAnswers?.find(
+        //         (ans) => ans.turn === turn && ans.correct
+        //     )
+        // );
+        // setProgress(Math.floor((pass.length / listQuestion.length) * 100));
+    }, [part, listQuestion, turn]);
 
     const handleClick = useCallback(async () => {
-        if (
-            pathname?.includes(`/study/${mainTopicTag}-practice-test`) &&
-            tag === part.tag
-        ) {
-            return;
-        }
+        console.log("first");
+        // if (Number(partId) === part.id) {
+        //     return;
+        // }
 
         dispatch(setIndexSubTopic(index));
 
-        if (isPass) {
-            const _href = `/finish?subTopicProgressId=${subTopic.id}&topic=${mainTopicTag}-practice-test&partId=${part.id}`;
-            return router.push(_href);
-        }
+        // if (isPass) {
+        //     const _href = `/finish?subTopicProgressId=${subTopic.id}&topic=${mainTopicTag}-practice-test&partId=${part.id}`;
+        //     return router.push(_href);
+        // }
         if (part.id === isCurrentPlaying?.id) {
-            // trackingEventGa4({
-
-            // })
-
-            const _href = `/study/${mainTopicTag}-practice-test?type=learn&subTopic=${subTopicTag}&tag=${part?.tag}`;
+            const _href = `/study/${mainTopicTag}-practice-test?type=learn&partId=${part?.id}`;
 
             dispatch(
                 initQuestionThunk({
-                    partTag: part?.tag,
-                    subTopicTag,
+                    partId: part.id,
                 })
             );
             dispatch(
@@ -100,39 +91,11 @@ const IconProgress = ({
 
             return router.push(_href);
         }
-    }, [
-        part,
-        isCurrentPlaying,
-        isPass,
-        dispatch,
-        mainTopicTag,
-        pathname,
-        router,
-        subTopic.id,
-        subTopicTag,
-        tag,
-        index,
-    ]);
+    }, [part, isPass, dispatch, mainTopicTag, pathname, router, partId, index]);
 
     useEffect(() => {
-        if (
-            (!isPass || (isPass && idTopic === part.id)) &&
-            isCurrentPlaying &&
-            idTopic &&
-            part.id &&
-            idTopic === part.id
-        ) {
-            handleListenerChange();
-        }
-    }, [
-        isCurrentPlaying,
-        idTopic,
-        part.id,
-        listQuestion,
-        isPass,
-        handleListenerChange,
-        turn,
-    ]);
+        handleListenerChange();
+    }, [handleListenerChange]);
 
     return (
         <div
@@ -147,13 +110,13 @@ const IconProgress = ({
             onClick={handleClick}
         >
             <IconSubTopic
-                lock={part.id !== isCurrentPlaying?.id}
+                lock={!isCurrentPlaying && index !== 1}
                 activeAnim={currentGame.parentId === part?.id}
                 isFinishThisLevel={isPass}
                 currentLevelScore={
                     isPass && currentGame.parentId !== part?.id
                         ? progress
-                        : currentGame.parentId !== part?.id && isPass
+                        : isCurrentPlaying && isPass
                         ? 100
                         : progress
                 }

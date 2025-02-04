@@ -1,22 +1,9 @@
-import { IAnswer, IQuestion } from "../question/questions";
+import { IAnswer } from "../question/questions";
 
-export interface IUserQuestionProgress
-    extends Omit<
-        IQuestion,
-        | "createDate"
-        | "databaseId"
-        | "hasChild"
-        | "hint"
-        | "lastUpdate"
-        | "oldId"
-        | "paragraphId"
-        | "index"
-        | "appId"
-        | "parentId"
-    > {
-    selectedAnswers: IAnswer[];
-    gameMode?: "test" | "learn";
-    parentIds: number[];
+export interface IUserQuestionProgress {
+    selectedAnswers: Omit<IAnswer, "explanation" | "index" | "text">[];
+    id: number;
+    parentId: number;
 }
 
 export default class UserQuestionProgress implements IUserQuestionProgress {

@@ -19,6 +19,7 @@ export interface ITopicQuestion {
     subTopicTag?: string;
     attemptNumber?: number;
     paragraph?: IParagraph;
+    level: number;
 }
 export default class TopicQuestion implements ITopicQuestion {
     id: number;

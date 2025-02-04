@@ -12,5 +12,5 @@ export interface IPartProgress {
     status: number;
     totalQuestion: number;
     tag: string;
-    turn: number;
+    turn?: number;
 }

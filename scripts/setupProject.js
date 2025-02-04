@@ -46,22 +46,23 @@ const setupDynamicApp = async () => {
     appendJson(appInfo);
     console.log("Setup completed successfully.");
 };
+
 const showHelper = () => {
     console.log(`
-Usage: yarn setup <command> [option]
+        Usage: yarn setup <command> [option]
 
-Commands:
-  s    Setup single app. Requires an app  appShortName as the option.
-       Example: yarn setup s <appId>
-  d    Setup dynamic app. No option required.
-       Example: yarn setup d
+        Commands:
+        s    Setup single app. Requires an app  appShortName as the option.
+            Example: yarn setup s <appId>
+        d    Setup dynamic app. No option required.
+            Example: yarn setup d
 
-Options:
-  <appId>   The appShortName of the app you want to set up (required for single app setup).
+        Options:
+        <appId>   The appShortName of the app you want to set up (required for single app setup).
 
-Examples:
-  yarn setup s my-app-id     # Setup a single app with appShortName 'my-app-id'
-  yarn setup d               # Setup dynamic app
+        Examples:
+        yarn setup s my-app-id     # Setup a single app with appShortName 'my-app-id'
+        yarn setup d               # Setup dynamic app
     `);
 };
 

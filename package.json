@@ -13,6 +13,7 @@
     "test:unit": "jest --runInBand",
     "test:e2e": "playwright test",
     "prepare": "husky",
+    "deploy": "node  scripts/build.js ",
     "setup": "node  scripts/setupProject.js"
   },
   "dependencies": {
