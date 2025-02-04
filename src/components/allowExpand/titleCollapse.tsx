@@ -1,4 +1,4 @@
-import { ITopic } from "@/models/topics/topics";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { selectSubTopics } from "@/redux/features/study";
 import { selectSubTopicsId } from "@/redux/features/study.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -8,7 +8,8 @@ import clsx from "clsx";
 import React from "react";
 import LazyLoadImage from "../images";
 import TopicLevelProgress from "./topicLevelProgress";
-const FN = ({ subTopic }: { subTopic: ITopic }) => {
+
+const TitleCollapse = ({ subTopic }: { subTopic: ITopicProgress }) => {
     const selectedSubTopics = useAppSelector(selectSubTopicsId);
     const isExpand = selectedSubTopics === subTopic.id;
     const dispatch = useAppDispatch();
@@ -70,6 +71,4 @@ const FN = ({ subTopic }: { subTopic: ITopic }) => {
     );
 };
 
-const TitleCollapse = React.memo(FN);
-
-export default TitleCollapse;
+export default React.memo(TitleCollapse);

@@ -4,7 +4,6 @@ import MtUiRipple, { useRipple } from "@/components/ripple";
 import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { ITopic } from "@/models/topics/topics";
 import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { selectTopics } from "@/redux/features/study";
@@ -23,44 +22,43 @@ import Priority from "./priority";
 export const handleGetNextPart = async ({
     topic,
 }: {
-    topic: ITopic;
-}): Promise<{ partId?: number }> => {
-    if (!db) {
-        toast.error("Error: Database not initialized");
-        return { partId: undefined };
-    }
-
-    const currentTopic = await db.topics.where("id").equals(topic?.id).first();
+    topic: ITopicProgress;
+}): Promise<{
+    partId?: number;
+    subTopicId?: number;
+    allCompleted?: boolean;
+}> => {
+    const currentTopic = await db?.topics.where("id").equals(topic?.id).first();
 
     if (!currentTopic) {
         toast.error("Error: Can't get data");
         return { partId: undefined };
     }
 
-    // Nếu topic hiện tại đã hoàn thành, tìm topic tiếp theo
-    const targetTopic =
-        currentTopic.status === 1
-            ? await db.topics.filter((item) => item.status === 0).first()
-            : currentTopic;
+    if (currentTopic.status === 1) {
+        const lastSubTopic = currentTopic?.topics?.reverse()?.[0];
+        const lastPart = lastSubTopic?.topics?.reverse()?.[0];
 
-    if (!targetTopic) return { partId: undefined };
+        return {
+            partId: lastPart?.id,
+            subTopicId: lastSubTopic?.id,
+            allCompleted: true,
+        };
+    }
 
-    // Tìm subTopic có status = 0
-    const nextSubTopics = targetTopic.topics.find((item) => item.status === 0);
+    const nextSubTopics = currentTopic.topics.find((item) => item.status === 0);
     if (!nextSubTopics) return { partId: undefined };
 
-    // Tìm part tiếp theo trong subTopic
     const nextPart = findNextPart(nextSubTopics);
-    return { partId: nextPart?.id };
+    return { partId: nextPart?.id, subTopicId: nextPart?.parentId };
 };
 
-// ✅ Hàm tìm part tiếp theo trong subTopic
 const findNextPart = (subTopic: ITopicProgress) => {
     return subTopic.topics.find((item) => item.status === 0);
 };
 
 type IPropsHandleNavigateStudy = {
-    topic: ITopic;
+    topic: ITopicProgress;
     dispatch: AppDispatch;
     router: AppRouterInstance;
     appShortName: string;
@@ -73,17 +71,31 @@ export const handleNavigateStudy = async ({
     router,
     isReplace = false,
 }: IPropsHandleNavigateStudy) => {
-    const { partId } = await handleGetNextPart({ topic });
+    const { partId, subTopicId, allCompleted } = await handleGetNextPart({
+        topic,
+    });
+    console.log("🚀 ~ partId:", partId);
+    console.log("🚀 ~ allCompleted:", allCompleted);
+    console.log("🚀 ~ subTopicId:", subTopicId);
 
     if (!partId) {
         toast.error("Error: Không tìm thấy partId hợp lệ");
         return;
     }
+    if (allCompleted) {
+        toast.error("Error: All completed");
+        return;
+    }
 
-    const _href = `/study/${topic.tag}-practice-test?type=learn&partId=${partId}`;
+    const _href = `/study/${topic.tag}-practice-test?type=learn&partId=${partId}&subTopicId=${subTopicId}`;
 
     dispatch(selectTopics(topic.id));
-    dispatch(initLearnQuestionThunk({ partId: Number(partId) }));
+    dispatch(
+        initLearnQuestionThunk({
+            partId: Number(partId),
+            subTopicId: Number(subTopicId),
+        })
+    );
 
     if (isReplace) return router.push(_href);
     router.push(_href);
@@ -95,7 +107,7 @@ const TitleTopic = ({
     classNames,
     imgClassNames,
 }: {
-    topic: ITopic;
+    topic: ITopicProgress;
     priority: number;
     classNames: string;
     imgClassNames?: string;

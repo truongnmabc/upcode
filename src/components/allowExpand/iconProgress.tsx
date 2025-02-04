@@ -1,13 +1,12 @@
 "use client";
 import { db } from "@/db/db.model";
-import { IPartProgress } from "@/models/progress/subTopicProgress";
-import { ITopic } from "@/models/topics/topics";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { setIndexSubTopic, setTurtGame } from "@/redux/features/game";
 import {
+    selectAttemptNumber,
     selectCurrentGame,
     selectCurrentTopicId,
     selectListQuestion,
-    selectAttemptNumber,
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
@@ -18,7 +17,7 @@ import { IconSubTopic } from "./iconTopic";
 import { AllowExpandContext, IContextAllowExpand } from "./provider";
 
 type IProps = {
-    part: ITopic;
+    part: ITopicProgress;
     index: number;
     isPass: boolean;
 };
@@ -40,39 +39,37 @@ const IconProgress = ({ part, index, isPass }: IProps) => {
     const [progress, setProgress] = useState(0);
 
     const handleListenerChange = useCallback(async () => {
-        console.log("🚀 ~ IconProgress ~ listQuestion:", part);
-
-        const progress = await db?.userProgress
-            .where("parentId")
-            ?.equals(part.id)
-            .toArray();
-        console.log("🚀 ~ handleListenerChange ~ progress:", progress);
-
-        // const result =
-        //     (await db?.userProgress
-        //         .filter((item) => item.parentIds.includes(part.id))
-        //         .toArray()) || [];
-        // const pass = result.filter((item) =>
-        //     item.selectedAnswers?.find(
-        //         (ans) => ans.turn === turn && ans.correct
-        //     )
-        // );
-        // setProgress(Math.floor((pass.length / listQuestion.length) * 100));
+        if (listQuestion.length && part.id && turn) {
+            const progress = await db?.userProgress
+                .where("parentId")
+                .equals(part.id)
+                .filter((item) =>
+                    item.selectedAnswers.find(
+                        (ans) => ans.turn === turn && ans.correct
+                    )
+                        ? true
+                        : false
+                )
+                .toArray();
+            if (progress)
+                setProgress(
+                    Math.floor((progress.length / listQuestion.length) * 100)
+                );
+        }
     }, [part, listQuestion, turn]);
 
     const handleClick = useCallback(async () => {
-        console.log("first");
-        // if (Number(partId) === part.id) {
-        //     return;
-        // }
+        if (Number(partId) === part.id) {
+            return;
+        }
 
         dispatch(setIndexSubTopic(index));
 
-        // if (isPass) {
-        //     const _href = `/finish?subTopicProgressId=${subTopic.id}&topic=${mainTopicTag}-practice-test&partId=${part.id}`;
-        //     return router.push(_href);
-        // }
-        if (part.id === isCurrentPlaying?.id) {
+        if (isPass) {
+            const _href = `/finish?partId=${part.id}`;
+            return router.push(_href);
+        }
+        if (isCurrentPlaying) {
             const _href = `/study/${mainTopicTag}-practice-test?type=learn&partId=${part?.id}`;
 
             dispatch(
@@ -91,7 +88,17 @@ const IconProgress = ({ part, index, isPass }: IProps) => {
 
             return router.push(_href);
         }
-    }, [part, isPass, dispatch, mainTopicTag, pathname, router, partId, index]);
+    }, [
+        part,
+        isPass,
+        dispatch,
+        mainTopicTag,
+        pathname,
+        router,
+        partId,
+        index,
+        isCurrentPlaying,
+    ]);
 
     useEffect(() => {
         handleListenerChange();

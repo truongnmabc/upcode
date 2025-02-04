@@ -1,16 +1,16 @@
 "use client";
 
 import { db } from "@/db/db.model";
-import { ICurrentGame } from "@/models/game/game";
 import { IQuestion } from "@/models/question/questions";
+import { ITopicQuestion } from "@/models/question/topicQuestion";
+import { ITestQuestion } from "@/models/tests/testQuestions";
+import { RootState } from "@/redux/store";
 import { generateRandomNegativeId } from "@/utils/math";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
     getLocalUserProgress,
     mapQuestionsWithProgress,
 } from "./initPracticeTest";
-import { ITestQuestion } from "@/models/tests/testQuestions";
-import { RootState } from "@/redux/store";
 
 /**
  * Lưu trữ dữ liệu bài kiểm tra chuẩn đoán vào local database (IndexedDB).
@@ -19,12 +19,12 @@ export const setDataStoreDiagnostic = async ({
     listQuestion,
     parentId,
 }: {
-    listQuestion: ICurrentGame[];
+    listQuestion: ITopicQuestion[];
     parentId: number;
 }) => {
     await db?.testQuestions.add({
         parentId,
-        question: listQuestion as IQuestion[],
+        question: listQuestion,
         totalDuration: 1,
         isGamePaused: false,
         startTime: Date.now(),
@@ -47,7 +47,7 @@ const getTopics = async () => {
  * Lấy danh sách câu hỏi của một subtopic từ database.
  */
 export const getQuestionsBySubtopic = async (subtopicId: number) => {
-    const ques = await db?.topicQuestion
+    const ques = await db?.questions
         .where("parentId")
         .equals(subtopicId)
         .toArray();
@@ -60,7 +60,7 @@ export const getQuestionsBySubtopic = async (subtopicId: number) => {
 /**
  * Chọn câu hỏi ngẫu nhiên từ danh sách câu hỏi.
  */
-export const getRandomQuestion = (questions: IQuestion[]) => {
+export const getRandomQuestion = (questions: ITopicQuestion[]) => {
     const priorityQuestions = questions?.filter(
         (item) => item.level === -1 || item.level === 50
     );
@@ -75,36 +75,62 @@ export const getRandomQuestion = (questions: IQuestion[]) => {
 /**
  * Xử lý logic khởi tạo bài kiểm tra mới.
  */
+
 export const createNewDiagnosticTest = async () => {
     const parentId = generateRandomNegativeId();
-    const listQuestion: ICurrentGame[] = [];
+    const listQuestion: ITopicQuestion[] = [];
+
     const topics = await getTopics();
+    if (!topics?.length) {
+        return {
+            listQuestion,
+            isGamePaused: false,
+            currentTopicId: parentId,
+            progressData: [],
+        };
+    }
 
-    if (topics) {
-        for (const topic of topics) {
-            for (const subtopic of topic.topics) {
-                const currentTopicId = subtopic.id;
-                if (!currentTopicId) continue;
+    const listSubTopic = topics.flatMap((topic) => topic.topics);
+    const subTopicIds = listSubTopic.map((sub) => sub.id);
 
-                const questions = await getQuestionsBySubtopic(currentTopicId);
+    if (!subTopicIds.length) {
+        return {
+            listQuestion,
+            isGamePaused: false,
+            currentTopicId: parentId,
+            progressData: [],
+        };
+    }
 
-                if (!questions.length) continue;
+    // Lấy tất cả câu hỏi của các subTopic trong một lần truy vấn
+    const allQuestions = await db?.questions
+        .where("subTopicId")
+        .anyOf(subTopicIds)
+        .toArray();
 
-                const randomItem = getRandomQuestion(questions);
+    if (!allQuestions?.length) {
+        return {
+            listQuestion,
+            isGamePaused: false,
+            currentTopicId: parentId,
+            progressData: [],
+        };
+    }
 
-                listQuestion.push({
-                    ...randomItem,
-                    tag: topic.tag,
-                    icon: topic.icon,
-                });
-            }
+    for (const subtopic of listSubTopic) {
+        const questions = allQuestions.filter(
+            (q) => q.subTopicId === subtopic.id
+        );
+        if (!questions.length) continue;
+
+        const randomItem = getRandomQuestion(questions);
+        if (randomItem) {
+            listQuestion.push(randomItem);
         }
     }
 
-    setDataStoreDiagnostic({
-        listQuestion,
-        parentId,
-    });
+    // Lưu vào IndexedDB
+    await setDataStoreDiagnostic({ listQuestion, parentId });
 
     return {
         listQuestion,
@@ -123,6 +149,7 @@ export const getExistingDiagnosticTest = async (diagnostic: ITestQuestion) => {
         "test",
         diagnostic.attemptNumber
     );
+    console.log("🚀 ~ getExistingDiagnosticTest ~ progressData:", progressData);
 
     if (progressData) {
         const questions = mapQuestionsWithProgress(
@@ -142,7 +169,7 @@ export const getExistingDiagnosticTest = async (diagnostic: ITestQuestion) => {
 };
 
 /**
- * Khởi tạo bài kiểm tra chuẩn đoán (Diagnostic Test).
+ * Khởi tạo bài kiểm tra  (Diagnostic Test).
  */
 const initDiagnosticTestQuestionThunk = createAsyncThunk(
     "initDiagnosticTest",

@@ -1,17 +1,26 @@
 "use client";
-import { ITopic } from "@/models/topics/topics";
-import AllowExpandProvider from "../../../allowExpand/provider";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-const AllowExpand = dynamic(() => import("../../../allowExpand"), {
+import { useCallback, useEffect, useState } from "react";
+import { db } from "@/db/db.model";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
+import AllowExpandProvider from "@/components/allowExpand/provider";
+const AllowExpand = dynamic(() => import("@/components/allowExpand"), {
     ssr: false,
 });
-const Wrapper = () => {
-    const [topic, setTopic] = useState<ITopic>({});
+
+const Wrapper = ({ topicsId }: { topicsId: number }) => {
+    const [topic, setTopic] = useState<ITopicProgress | null>(null);
+
+    const handleGetData = useCallback(async () => {
+        if (topicsId) {
+            const topics = await db?.topics.get(topicsId);
+            if (topics) setTopic(topics);
+        }
+    }, [topicsId]);
 
     useEffect(() => {
-        return () => {};
-    }, []);
+        handleGetData();
+    }, [handleGetData]);
 
     return (
         <AllowExpandProvider topic={topic}>
