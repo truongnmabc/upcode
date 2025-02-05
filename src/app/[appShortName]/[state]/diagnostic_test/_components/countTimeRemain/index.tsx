@@ -37,6 +37,7 @@ const CountTimeDiagnostic = () => {
                             index: -1,
                             text: "",
                             turn: 1,
+                            type: "test",
                         },
                     })
                 );

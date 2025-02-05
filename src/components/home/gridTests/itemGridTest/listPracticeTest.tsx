@@ -20,7 +20,7 @@ const ListPracticeTest = ({ open }: { open: boolean }) => {
             setListPracticeTests(
                 listData?.map((item) => ({
                     duration: item.totalDuration,
-                    parentId: item.parentId,
+                    parentId: item.id,
                 }))
             );
         }

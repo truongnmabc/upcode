@@ -1,11 +1,11 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
-import React, { Dispatch, SetStateAction } from "react";
+import { MtUiButton } from "@/components/button";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { Dispatch, SetStateAction } from "react";
+import { IFeedBack } from ".";
 import { CardFeeBack } from "./cardFeedBack";
 import CardProgress from "./cardProgress";
 import CardTopic from "./cardTopic";
-import { MtUiButton } from "@/components/button";
-import { ITopic } from "@/models/topics/topics";
-import { IFeedBack } from ".";
 
 type IProps = {
     isShowBtnCancel: boolean;
@@ -19,9 +19,9 @@ type IProps = {
     setPassing: Dispatch<SetStateAction<number>>;
     passing: number;
     handleSelectAll: () => void;
-    listTopic: ITopic[];
-    selectListTopic: ITopic[];
-    setSelectListTopic: Dispatch<SetStateAction<ITopic[]>>;
+    listTopic: ITopicProgress[];
+    selectListTopic: ITopicProgress[];
+    setSelectListTopic: Dispatch<SetStateAction<ITopicProgress[]>>;
     onStart: () => Promise<void>;
     loading: boolean;
 };

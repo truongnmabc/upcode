@@ -29,7 +29,7 @@ export interface IQuestion {
     databaseId?: number;
     explanation: string;
     hasChild?: boolean;
-    hint: string;
+    hint?: string;
     id: number;
     image: string;
     lastUpdate?: number;
@@ -38,7 +38,7 @@ export interface IQuestion {
     paragraphId?: number;
     parentId: number;
     status: number;
-    syncStatus: number;
+    syncStatus?: number;
     text: string;
     localStatus?: IStatusAnswer;
     selectedAnswer?: IAnswer | null;

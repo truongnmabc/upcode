@@ -58,7 +58,7 @@ const initFinalTestThunk = createAsyncThunk(
                 return {
                     questions,
                     progressData,
-                    currentTopicId: dataStore.parentId,
+                    currentTopicId: dataStore.id,
                     gameMode: "test" as const,
                     totalDuration: dataStore.totalDuration,
                     isGamePaused: dataStore?.isGamePaused || false,

@@ -1,6 +1,6 @@
 "use client";
 
-import { ICurrentGame } from "@/models/game/game";
+import { ITopicQuestion } from "@/models/question/topicQuestion";
 import { ITestQuestion } from "@/models/tests/testQuestions";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
@@ -16,19 +16,19 @@ const choiceStartCustomTestThunk = createAsyncThunk(
     async ({ item }: { item: IProps }) => {
         const listQuestion = item?.question;
         const progressData = await getLocalUserProgress(
-            item.parentId,
+            [item.id],
             "test",
             item.attemptNumber + 1
         );
         if (progressData) {
             const questions = mapQuestionsWithProgress(
-                listQuestion as ICurrentGame[],
+                listQuestion as ITopicQuestion[],
                 progressData
             );
             return {
                 questions,
                 progressData,
-                currentTopicId: item.parentId,
+                currentTopicId: item.id,
                 gameMode: "test" as const,
                 totalDuration: item.totalDuration,
                 isGamePaused: item?.isGamePaused || false,

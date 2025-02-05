@@ -42,7 +42,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
             dispatch(initFinalTestThunk());
             router.push(RouterApp.Final_test);
         } else {
-            const _href = `${RouterApp.ResultTest}?type=${TypeParam.finalTest}&testId=${data.parentId}`;
+            const _href = `${RouterApp.ResultTest}?type=${TypeParam.finalTest}&testId=${data.id}`;
             router.push(_href);
         }
     }, [dispatch, router]);
@@ -59,7 +59,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
             dispatch(initDiagnosticTestQuestionThunk());
             router.push(RouterApp.Diagnostic_test);
         } else {
-            const _href = `${RouterApp.ResultTest}?type=${TypeParam.diagnosticTest}&testId=${diagnostic.parentId}`;
+            const _href = `${RouterApp.ResultTest}?type=${TypeParam.diagnosticTest}&testId=${diagnostic.id}`;
             router.push(_href);
         }
     }, [dispatch, router]);

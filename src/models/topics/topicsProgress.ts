@@ -14,6 +14,6 @@ export interface ITopicProgress {
     averageLevel: number;
     // Tổng số câu hỏi
     totalQuestion: number;
-
     turn: number;
+    partId: number;
 }

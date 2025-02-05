@@ -1,18 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { ITopic } from "@/models/topics/topics";
-import { db } from "@/db/db.model";
-import { MtUiButton } from "@/components/button";
-import { ICurrentGame } from "@/models/game/game";
 import CardTopic, {
     IconCheck,
 } from "@/app/[appShortName]/[state]/custom_test/_components/modalSetting/cardTopic";
 import { ITopicEndTest } from "@/app/[appShortName]/[state]/result_test/_components";
+import { MtUiButton } from "@/components/button";
 import DialogResponsive from "@/components/dialogResponsive";
+import { db } from "@/db/db.model";
+import { ICurrentGame } from "@/models/game/game";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
 import ctx from "@/utils/mergeClass";
+import React, { useCallback, useEffect, useState } from "react";
 type IProps = {
     result?: {
         listTopic: ITopicEndTest[];
-
         all: ICurrentGame[];
         correct: ICurrentGame[];
         incorrect: ICurrentGame[];
@@ -25,8 +24,10 @@ type IProps = {
 };
 const FilterIcon: React.FC<IProps> = ({ setTabletData, result }) => {
     const [open, setOpen] = React.useState(false);
-    const [listTopic, setListTopic] = useState<ITopic[]>([]);
-    const [selectListTopic, setSelectListTopic] = useState<ITopic[]>([]);
+    const [listTopic, setListTopic] = useState<ITopicProgress[]>([]);
+    const [selectListTopic, setSelectListTopic] = useState<ITopicProgress[]>(
+        []
+    );
 
     const handleClose = useCallback(() => setOpen(false), []);
     const handleOpen = useCallback(() => setOpen(true), []);

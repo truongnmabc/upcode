@@ -14,7 +14,6 @@ const finishFinalThunk = createAsyncThunk(
                 .equals(currentTopicId)
                 .modify((item) => {
                     item.attemptNumber = item.attemptNumber + 1;
-                    item.remainingTime = item.remainingTime * 60;
                     item.isGamePaused = false;
                     item.status = 1;
                 });

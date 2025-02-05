@@ -33,7 +33,7 @@ const FN = () => {
             setListPracticeTests(
                 listData?.map((item) => ({
                     duration: item.totalDuration,
-                    parentId: item.parentId,
+                    parentId: item.id,
                 }))
             );
         }

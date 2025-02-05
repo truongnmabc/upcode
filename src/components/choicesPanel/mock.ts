@@ -7,6 +7,7 @@ export const MOCK_TEMP_LIST_ANSWER: IAnswer[] = [
         index: 0,
         correct: false,
         explanation: "",
+        type: "test",
     },
     {
         id: -2,
@@ -14,6 +15,7 @@ export const MOCK_TEMP_LIST_ANSWER: IAnswer[] = [
         index: 0,
         correct: false,
         explanation: "",
+        type: "test",
     },
     {
         id: -3,
@@ -21,6 +23,7 @@ export const MOCK_TEMP_LIST_ANSWER: IAnswer[] = [
         index: 0,
         correct: false,
         explanation: "",
+        type: "test",
     },
     {
         id: -4,
@@ -28,5 +31,6 @@ export const MOCK_TEMP_LIST_ANSWER: IAnswer[] = [
         index: 0,
         correct: false,
         explanation: "",
+        type: "test",
     },
 ];

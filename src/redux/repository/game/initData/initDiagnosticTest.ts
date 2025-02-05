@@ -11,29 +11,62 @@ import {
     getLocalUserProgress,
     mapQuestionsWithProgress,
 } from "./initPracticeTest";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { IGroupExam } from "@/models/tests/tests";
 
 /**
  * Lưu trữ dữ liệu bài kiểm tra chuẩn đoán vào local database (IndexedDB).
  */
 export const setDataStoreDiagnostic = async ({
-    listQuestion,
-    parentId,
+    totalQuestion,
+    id,
+    topicIds,
+    groupExamData,
 }: {
-    listQuestion: ITopicQuestion[];
-    parentId: number;
+    totalQuestion: number;
+    id: number;
+    topicIds: number[];
+    groupExamData: IGroupExam[];
 }) => {
     await db?.testQuestions.add({
-        id: parentId,
-        question: listQuestion,
+        id: id,
         totalDuration: 1,
         isGamePaused: false,
         startTime: Date.now(),
         remainingTime: 80,
         gameMode: "diagnosticTest",
-        isPaused: false,
         status: 0,
         attemptNumber: 1,
         elapsedTime: 0,
+        topicIds,
+        groupExamData: groupExamData,
+        passingThreshold: 0,
+        totalQuestion,
+    });
+};
+
+const mixData = async ({
+    topics,
+    questions,
+}: {
+    topics: ITopicProgress[];
+    questions: ITopicQuestion[];
+}) => {
+    return topics.map((topic) => {
+        // Lấy danh sách các subtopic thuộc topic hiện tại
+        const subtopicIds = topic.topics.map((subtopic) => subtopic.id);
+
+        // Lọc ra danh sách câu hỏi thuộc các subtopic này
+        const questionIds = questions
+            .filter((question) => subtopicIds.includes(question.subTopicId))
+            .map((question) => question.id);
+
+        return {
+            title: topic.name,
+            passingPercent: 0,
+            totalQuestion: questionIds.length,
+            questionIds,
+        };
     });
 };
 
@@ -78,7 +111,7 @@ export const getRandomQuestion = (questions: ITopicQuestion[]) => {
  */
 
 export const createNewDiagnosticTest = async () => {
-    const parentId = generateRandomNegativeId();
+    const id = generateRandomNegativeId();
     const listQuestion: ITopicQuestion[] = [];
 
     const topics = await getTopics();
@@ -86,7 +119,7 @@ export const createNewDiagnosticTest = async () => {
         return {
             listQuestion,
             isGamePaused: false,
-            currentTopicId: parentId,
+            currentTopicId: id,
             progressData: [],
         };
     }
@@ -98,7 +131,7 @@ export const createNewDiagnosticTest = async () => {
         return {
             listQuestion,
             isGamePaused: false,
-            currentTopicId: parentId,
+            currentTopicId: id,
             progressData: [],
         };
     }
@@ -113,7 +146,7 @@ export const createNewDiagnosticTest = async () => {
         return {
             listQuestion,
             isGamePaused: false,
-            currentTopicId: parentId,
+            currentTopicId: id,
             progressData: [],
         };
     }
@@ -129,14 +162,22 @@ export const createNewDiagnosticTest = async () => {
             listQuestion.push(randomItem);
         }
     }
-
+    const groupExamData = await mixData({
+        topics,
+        questions: listQuestion,
+    });
     // Lưu vào IndexedDB
-    await setDataStoreDiagnostic({ listQuestion, parentId });
+    await setDataStoreDiagnostic({
+        totalQuestion: listQuestion.length,
+        id,
+        topicIds: topics.map((item) => item.id),
+        groupExamData,
+    });
 
     return {
         listQuestion,
         isGamePaused: false,
-        currentTopicId: parentId,
+        currentTopicId: id,
         progressData: [],
     };
 };
@@ -145,28 +186,27 @@ export const createNewDiagnosticTest = async () => {
  * Lấy dữ liệu bài kiểm tra đã tồn tại từ database.
  */
 export const getExistingDiagnosticTest = async (diagnostic: ITestQuestion) => {
+    const listIds =
+        diagnostic.groupExamData?.flatMap((item) => item.questionIds) || [];
     const progressData = await getLocalUserProgress(
-        diagnostic.parentId,
+        listIds,
         "test",
         diagnostic.attemptNumber
     );
-    console.log("🚀 ~ getExistingDiagnosticTest ~ progressData:", progressData);
 
-    if (progressData) {
-        const questions = mapQuestionsWithProgress(
-            diagnostic.question,
-            progressData
-        );
+    const quesID =
+        diagnostic.groupExamData?.flatMap((item) => item.questionIds) || [];
 
-        return {
-            progressData,
-            listQuestion: questions,
-            isGamePaused: true,
-            currentTopicId: diagnostic.id,
-        };
-    }
+    const list =
+        (await db?.questions.where("id").anyOf(quesID).toArray()) || [];
+    const questions = mapQuestionsWithProgress(list, progressData || []);
 
-    return undefined;
+    return {
+        progressData,
+        listQuestion: questions,
+        isGamePaused: true,
+        currentTopicId: diagnostic.id,
+    };
 };
 
 /**

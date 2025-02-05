@@ -67,7 +67,7 @@ const initDataTest = async (tests, db) => {
             testQuestionsStore.add({
                 id: test.id,
                 totalDuration: test.duration,
-                isPaused: false,
+                totalQuestion: test.totalQuestion,
                 startTime: Date.now(),
                 gameMode: tests.finalTests.includes(test)
                     ? "finalTests"
@@ -76,7 +76,9 @@ const initDataTest = async (tests, db) => {
                 elapsedTime: 0,
                 attemptNumber: 1,
                 topicIds: test.topicIds,
+                passingThreshold: test.passingPercent,
                 groupExamData: test.groupExamData.flatMap((g) => g.examData),
+                isGamePaused: false,
             })
         )
     );

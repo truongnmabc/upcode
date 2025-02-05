@@ -1,19 +1,14 @@
+import DialogResponsive from "@/components/dialogResponsive";
 import { db } from "@/db/db.model";
-import { useIsMobile } from "@/hooks/useIsMobile";
-import { ICurrentGame } from "@/models/game/game";
-import { IQuestion } from "@/models/question/questions";
+import { ITopicQuestion } from "@/models/question/topicQuestion";
 import { ITestQuestion } from "@/models/tests/testQuestions";
-import { ITopic } from "@/models/topics/topics";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { startCustomTest } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
 import { generateRandomNegativeId } from "@/utils/math";
-import Dialog from "@mui/material/Dialog";
 import React, { useEffect, useState } from "react";
 import ContentSetting from "./contentSetting";
-import dynamic from "next/dynamic";
-const Sheet = dynamic(() => import("@/components/sheet"), {
-    ssr: false,
-});
+
 export type IFeedBack = "newbie" | "expert" | "exam";
 
 type IProps = {
@@ -30,13 +25,14 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
     isShowBtnCancel,
     listTestLength,
 }) => {
-    const [listTopic, setListTopic] = useState<ITopic[]>([]);
+    const [listTopic, setListTopic] = useState<ITopicProgress[]>([]);
     const [count, setCount] = useState(0);
     const [duration, setDuration] = useState(0);
     const [passing, setPassing] = useState(0);
-    const isMobile = useIsMobile();
     const [selectFeedback, setSelectFeedback] = useState<IFeedBack>("newbie");
-    const [selectListTopic, setSelectListTopic] = useState<ITopic[]>([]);
+    const [selectListTopic, setSelectListTopic] = useState<ITopicProgress[]>(
+        []
+    );
 
     useEffect(() => {
         const handleGetData = async () => {
@@ -50,23 +46,25 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
 
     useEffect(() => {
         if (item) {
-            setCount(item.count || 0);
+            setCount(item.totalQuestion || 0);
             setDuration(item.totalDuration);
             setPassing(item.passingThreshold ?? 0);
             setSelectFeedback(item.gameDifficultyLevel ?? "newbie");
             setSelectListTopic(
-                item.subject
-                    ? item.subject.map(
-                          (id): ITopic => ({
+                item.topicIds
+                    ? item.topicIds.map(
+                          (id): ITopicProgress => ({
                               id,
                               parentId: -1,
                               name: "Default Topic Name",
                               icon: "default-icon",
                               tag: "default-tag",
-                              type: 0,
                               contentType: 0,
-                              orderIndex: 0,
                               topics: [],
+                              averageLevel: 0,
+                              status: 0,
+                              totalQuestion: 0,
+                              turn: 0,
                           })
                       )
                     : []
@@ -89,13 +87,14 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
     const dispatch = useAppDispatch();
     const onStart = async () => {
         if (count > 0 && selectListTopic.length > 0) {
-            let listQuestion: ICurrentGame[] = [];
+            let listQuestion: ITopicQuestion[] = [];
             try {
                 setLoading(true);
 
                 const countQuestionTopic = Math.floor(
                     count / selectListTopic.length
                 );
+
                 const remainderQuestionTopic = count % selectListTopic.length;
 
                 for (const [topicIndex, topic] of selectListTopic.entries()) {
@@ -111,19 +110,19 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
 
                         for (const [partIndex, part] of listPart.entries()) {
                             if (part?.id) {
-                                const topicData = await db?.topicQuestion
-                                    ?.where("id")
+                                const topicData = await db?.questions
+                                    ?.where("partId")
                                     .equals(part.id)
-                                    .first();
+                                    .toArray();
 
-                                if (topicData?.questions) {
+                                if (topicData?.length) {
                                     const questionCount =
                                         partIndex === listPart.length - 1
                                             ? countQuestionPart +
                                               remainderQuestionPart
                                             : countQuestionPart;
 
-                                    const randomQuestions = topicData.questions
+                                    const randomQuestions = topicData
                                         .sort(() => Math.random() - 0.5)
                                         .slice(0, questionCount)
                                         .map((item) => ({
@@ -147,23 +146,21 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                         ) {
                             const id = listPart[listPart.length - 1]?.id;
                             if (id) {
-                                const extraQuestions = await db?.topicQuestion
-                                    ?.where("id")
+                                const extraQuestions = await db?.questions
+                                    ?.where("partId")
                                     .equals(id)
-                                    .first();
+                                    .toArray();
 
-                                if (extraQuestions?.questions) {
-                                    const extraRandomQuestions =
-                                        extraQuestions.questions
-
-                                            .sort(() => Math.random() - 0.5)
-                                            .slice(0, remainderQuestionTopic)
-                                            .map((item) => ({
-                                                ...item,
-                                                tag: topic.tag,
-                                                icon: topic.icon,
-                                                parentId: topic.id,
-                                            }));
+                                if (extraQuestions?.length) {
+                                    const extraRandomQuestions = extraQuestions
+                                        .sort(() => Math.random() - 0.5)
+                                        .slice(0, remainderQuestionTopic)
+                                        .map((item) => ({
+                                            ...item,
+                                            tag: topic.tag,
+                                            icon: topic.icon,
+                                            parentId: topic.id,
+                                        }));
 
                                     listQuestion = [
                                         ...listQuestion,
@@ -175,23 +172,25 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                     }
                 }
                 const parentId = generateRandomNegativeId();
+                console.log("🚀 ~ onStart ~ parentId:", parentId);
 
                 await db?.testQuestions.add({
                     totalDuration: duration,
                     passingThreshold: passing,
                     isGamePaused: false,
-                    parentId: parentId,
-                    question: listQuestion as IQuestion[],
+                    id: parentId,
+                    question: listQuestion as ITopicQuestion[],
                     remainingTime: duration * 60,
                     startTime: new Date().getTime(),
                     gameMode: "customTets",
-                    count: count,
                     gameDifficultyLevel: selectFeedback,
-                    subject: selectListTopic?.map((item) => item.id),
+                    topicIds: selectListTopic?.map((item) => item.id),
                     status: 0,
                     attemptNumber: 1,
                     elapsedTime: 0,
+                    totalQuestion: count,
                 });
+                console.log("🚀 ~ onStart ~ listQuestion:", listQuestion);
 
                 dispatch(
                     startCustomTest({
@@ -222,53 +221,29 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
             setSelectListTopic(listTopic);
         if (selectListTopic.length === listTopic.length) setSelectListTopic([]);
     };
-    if (isMobile) {
-        return (
-            <Sheet
-                visible={open}
-                height={600}
-                mask
-                handler
-                // autoHeight
-                swipeToClose={false}
-                // snapPoints={[100]}
-                // defaultSnapPoint={600}
-                className="custom-sheet-handler"
-            >
-                <ContentSetting
-                    count={count}
-                    duration={duration}
-                    handleSelectAll={handleSelectAll}
-                    isShowBtnCancel={isShowBtnCancel}
-                    listTopic={listTopic}
-                    loading={loading}
-                    onCancel={onCancel}
-                    onStart={onStart}
-                    passing={passing}
-                    selectFeedback={selectFeedback}
-                    selectListTopic={selectListTopic}
-                    setCount={setCount}
-                    setDuration={setDuration}
-                    setPassing={setPassing}
-                    setSelectFeedback={setSelectFeedback}
-                    setSelectListTopic={setSelectListTopic}
-                />
-            </Sheet>
-        );
-    }
+
     return (
-        <Dialog
+        <DialogResponsive
             open={open}
-            onClose={() => {
+            close={() => {
                 if (isShowBtnCancel) onClose();
             }}
-            sx={{
-                "& .MuiDialog-paper": {
-                    width: "100%",
-                    maxWidth: "900px",
-                    maxHeight: "780px",
-                    height: "100%",
+            dialogRest={{
+                sx: {
+                    "& .MuiDialog-paper": {
+                        width: "100%",
+                        maxWidth: "900px",
+                        maxHeight: "780px",
+                        height: "100%",
+                    },
                 },
+            }}
+            sheetRest={{
+                mask: true,
+                height: 600,
+                handler: true,
+                swipeToClose: false,
+                className: "custom-sheet-handler",
             }}
         >
             <ContentSetting
@@ -289,7 +264,7 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
                 setSelectFeedback={setSelectFeedback}
                 setSelectListTopic={setSelectListTopic}
             />
-        </Dialog>
+        </DialogResponsive>
     );
 };
 

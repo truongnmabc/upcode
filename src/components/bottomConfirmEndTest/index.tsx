@@ -1,10 +1,11 @@
 "use client";
 import { MtUiButton } from "@/components/button";
+import RouterApp from "@/constants/router.constant";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { endTest } from "@/redux/features/game";
 import {
-    selectListQuestion,
     selectCurrentTopicId,
+    selectListQuestion,
 } from "@/redux/features/game.reselect";
 import { shouldOpenSubmitTest, testState } from "@/redux/features/tests";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -12,7 +13,6 @@ import finishCustomTestThunk from "@/redux/repository/game/finish/finishCustomTe
 import finishDiagnosticThunk from "@/redux/repository/game/finish/finishDiagnostic";
 import finishFinalThunk from "@/redux/repository/game/finish/finishFinal";
 import finishPracticeThunk from "@/redux/repository/game/finish/finishPracticeTest";
-import RouterApp from "@/constants/router.constant";
 import { Dialog } from "@mui/material";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -84,7 +84,7 @@ const BottomConfirmTest = () => {
             dispatch(shouldOpenSubmitTest(false));
             dispatch(endTest());
 
-            router.push(_href);
+            router.replace(_href);
         }
     }, [dispatch, router, pathname, type, testId, id]);
 
