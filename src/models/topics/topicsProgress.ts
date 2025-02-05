@@ -11,7 +11,9 @@ export interface ITopicProgress {
     //  Các phần của topic đã hoàn thành hết chưa
     status: number;
     //  level trung bình của  topic
-    averageLevel?: number;
+    averageLevel: number;
     // Tổng số câu hỏi
-    totalQuestion?: number;
+    totalQuestion: number;
+
+    turn: number;
 }

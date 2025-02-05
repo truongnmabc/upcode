@@ -1,8 +1,8 @@
 "use client";
-import { TESTER_KEY } from "@/constants";
 import { selectCurrentSubTopicIndex } from "@/redux/features/game.reselect";
-import { useAppSelector } from "@/redux/hooks";
-import { setSession } from "@/utils/session";
+import { setIsTester } from "@/redux/features/user";
+import { selectIsTester } from "@/redux/features/user.reselect";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import clsx from "clsx";
 import { useParams, usePathname } from "next/navigation";
 import React from "react";
@@ -40,10 +40,14 @@ const TitleQuestion = ({ type }: { type?: string }) => {
         getKeyTest(param?.["slug"]) || getLastPathSegment(pathname);
 
     const index = useAppSelector(selectCurrentSubTopicIndex);
-
+    const isTestTer = useAppSelector(selectIsTester);
     let tempCount = 0;
-
-    const setIsTester = () => {
+    const dispatch = useAppDispatch();
+    const setIsTesterFn = () => {
+        if (isTestTer) {
+            dispatch(setIsTester(false));
+            return;
+        }
         tempCount++;
         if (tempCount == 0) {
             setTimeout(() => {
@@ -51,9 +55,7 @@ const TitleQuestion = ({ type }: { type?: string }) => {
             }, 5000);
         }
         if (tempCount >= 3) {
-            setSession(TESTER_KEY, true);
-            alert("You are tester!");
-            location.reload();
+            dispatch(setIsTester(true));
         }
     };
     return (
@@ -61,7 +63,7 @@ const TitleQuestion = ({ type }: { type?: string }) => {
             className={clsx(
                 "w-full text-center hidden sm:block capitalize text-xl font-semibold"
             )}
-            onClick={setIsTester}
+            onClick={setIsTesterFn}
         >
             {defaultTitle} {type === "learn" ? `- Core ${index}` : ""}
         </div>

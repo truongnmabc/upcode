@@ -1,5 +1,6 @@
 "use client";
 import { MtUiButton } from "@/components/button";
+import RouterApp from "@/constants/router.constant";
 import {
     selectCurrentGame,
     selectCurrentTopicId,
@@ -47,7 +48,7 @@ const BtnNextQuestion = () => {
             );
 
             router.push(
-                `/finish?subTopicProgressId=${subTopicProgressId}&topic=${params?.["slug"]}&partId=${idTopic}`,
+                `${RouterApp.Finish}?subTopicId=${subTopicProgressId}&topic=${params?.["slug"]}&partId=${idTopic}`,
                 {
                     scroll: true,
                 }

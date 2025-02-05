@@ -12,9 +12,10 @@ const pauseTestThunk = createAsyncThunk(
         const state = thunkAPI.getState() as RootState;
         const { currentTopicId } = state.gameReducer;
         const id = testId || currentTopicId;
-
+        console.log("🚀 ~ id:", id);
+        if (id === -1) return;
         await db?.testQuestions
-            .where("parentId")
+            .where("id")
             .equals(id)
             .modify((item) => {
                 const currentTime = Date.now();

@@ -1,8 +1,10 @@
 "use client";
 import { handleGetNextPart } from "@/components/home/gridTopic/item/titleTopic";
+import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
 import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
+import { setIndexSubTopic } from "@/redux/features/game";
 import { selectSubTopics, selectTopics } from "@/redux/features/study";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
@@ -12,6 +14,7 @@ import { ExpandMore } from "@mui/icons-material";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const ListStudyDrawer = ({
     setOpenMenuDrawer,
@@ -43,13 +46,25 @@ const ListStudyDrawer = ({
                     to: topic.tag,
                 },
             });
-            const { partId, subTopicId } = await handleGetNextPart({
-                topic,
-            });
+            const { partId, subTopicId, allCompleted, currentIndex } =
+                await handleGetNextPart({
+                    topic,
+                });
+            if (!partId) {
+                toast.error("Error: Không tìm thấy partId hợp lệ");
+                return;
+            }
+            if (allCompleted) {
+                router.push(
+                    `${RouterApp.Finish}?partId=${partId}&subTopicId=${subTopicId}&topic=${topic.tag}`
+                );
+                return;
+            }
             const _href = `/study/${topic.tag}-practice-test?type=learn&partId=${partId}`;
 
             dispatch(selectTopics(topic.id));
             if (subTopicId) dispatch(selectSubTopics(subTopicId));
+            dispatch(setIndexSubTopic(currentIndex + 1));
 
             if (partId) {
                 dispatch(

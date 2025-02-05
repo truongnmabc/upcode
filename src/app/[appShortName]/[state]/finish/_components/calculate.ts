@@ -2,36 +2,31 @@ import { db } from "@/db/db.model";
 import { IPassingModel } from "@/models/passing/passingModel";
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
 
-export const totalPassingPart = (
-    userProgress: IUserQuestionProgress[],
-    averageLevel: number
-) => {
-    const passing = userProgress.reduce((acc, cur) => {
-        if (cur?.selectedAnswers?.length) {
-            const lastThreeElements = cur?.selectedAnswers.slice(-3);
+export const totalPassingPart = ({
+    progress,
+    averageLevel,
+    turn,
+}: {
+    progress: IUserQuestionProgress[];
+    averageLevel: number;
+    turn: number;
+}) => {
+    const passing = progress.reduce((acc, cur) => {
+        if (!cur?.selectedAnswers?.length) return acc;
 
-            const passAnswerCount = lastThreeElements.filter(
-                (item) => item.correct
-            ).length;
+        // Lấy 3 câu trả lời cuối cùng
+        const lastThreeElements = cur.selectedAnswers.slice(-3);
 
-            const passingProbability = passAnswerCount / 3;
+        // Phần trăm đúng của 3 câu trả lời cuối cùng
+        const passAnswerCount = lastThreeElements.filter(
+            (item) => item.correct && item.turn === turn
+        ).length;
 
-            const level = (cur.level === -1 ? 50 : cur.level) / averageLevel;
+        const passingProbability = passAnswerCount / 3;
 
-            const passing = passingProbability * level;
+        const levelRatio = cur.level / (averageLevel || 1);
 
-            return acc + passing;
-        } else {
-            return acc + 0;
-        }
-    }, 0);
-
-    return passing;
-};
-
-export const totalPassingApp = (listPass: IPassingModel[]) => {
-    const passing = listPass.reduce((acc, cur) => {
-        return acc + cur.passing;
+        return acc + passingProbability * levelRatio;
     }, 0);
 
     return passing;
@@ -45,12 +40,32 @@ export const totalQuestionApp = (listPass: IPassingModel[]) => {
     return passing;
 };
 
-export const saveDataPassing = async ({
-    id,
-    data,
-}: {
-    id: number;
-    data: IPassingModel;
-}) => {
-    await db?.passing.update(id, data);
+export const calculatePassingApp = async () => {
+    const [users, app] = await Promise.all([
+        db?.userProgress.toArray(),
+        db?.passingApp.get(-1),
+    ]);
+
+    if (!app || !users?.length) return 0;
+
+    const { totalQuestion, averageLevel } = app;
+
+    const totalPassing = users.reduce((acc, cur) => {
+        if (!cur?.selectedAnswers?.length) return acc;
+
+        const lastThreeAnswers = cur.selectedAnswers.slice(-3);
+
+        const correctAnswers = lastThreeAnswers.filter(
+            (ans) => ans.correct
+        ).length;
+
+        const passingProbability = correctAnswers / 3;
+        const levelRatio = cur.level / (averageLevel || 1);
+
+        return acc + passingProbability * levelRatio;
+    }, 0);
+
+    const passingApp = (totalPassing / (totalQuestion || 1)) * 100;
+
+    return passingApp > 96 ? 96 : passingApp;
 };

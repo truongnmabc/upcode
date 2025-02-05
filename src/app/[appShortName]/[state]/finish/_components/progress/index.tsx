@@ -1,47 +1,25 @@
-import React, { useEffect } from "react";
-import "./styles.css";
-import { IAnswer } from "@/models/question/questions";
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import React from "react";
 import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import "./styles.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 const labels = ["correct", "incorrect"];
 const backgroundColors = ["#12E1AF", "#F9586B"];
 
-const ProgressFinishPage = ({ listAnswer }: { listAnswer: IAnswer[] }) => {
-    const [status, setStatus] = React.useState({
-        success: 0,
-        total: 0,
-        dataValues: [0, 0],
-    });
-
-    useEffect(() => {
-        if (listAnswer.length > 0) {
-            const success = listAnswer?.filter((item) => item.correct).length;
-            const total = listAnswer.length;
-            const sortedAnswers = listAnswer.reduce(
-                (acc, item) => {
-                    if (item.correct) acc.correct++;
-                    else acc.incorrect++;
-                    return acc;
-                },
-                { correct: 0, incorrect: 0 }
-            );
-
-            setStatus({
-                success: success,
-                total: total,
-                dataValues: [sortedAnswers.correct, sortedAnswers.incorrect],
-            });
-        }
-    }, [listAnswer]);
-
+const ProgressFinishPage = ({
+    correct,
+    total,
+}: {
+    correct: number;
+    total: number;
+}) => {
     const data = {
         labels,
         datasets: [
             {
                 label: "Questions",
-                data: status.dataValues,
+                data: [correct, total - correct],
                 backgroundColor: backgroundColors,
                 borderWidth: 4,
                 borderColor: "transparent",
@@ -85,7 +63,7 @@ const ProgressFinishPage = ({ listAnswer }: { listAnswer: IAnswer[] }) => {
                 <div className="absolute z-0 bottom-0 right-0 top-0 left-0 flex items-center justify-center">
                     <div className="text-center">
                         <p className="text-[#7C6F5B] text-2xl font-semibold">
-                            {status.success}/{status.total}
+                            {correct}/{total}
                         </p>
                         <p className="text-base font-normal text-[#7C6F5B]">
                             questions
@@ -97,7 +75,7 @@ const ProgressFinishPage = ({ listAnswer }: { listAnswer: IAnswer[] }) => {
             <div className="text-sm sm:text-base pt-6 text-center sm:pt-8 font-normal">
                 You correctly answered{" "}
                 <span className="text-base font-semibold">
-                    {status.success}/{status.total}
+                    {correct}/{total}
                 </span>{" "}
                 questions on the first turn.
             </div>

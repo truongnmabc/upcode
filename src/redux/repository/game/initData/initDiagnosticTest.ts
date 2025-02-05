@@ -23,13 +23,14 @@ export const setDataStoreDiagnostic = async ({
     parentId: number;
 }) => {
     await db?.testQuestions.add({
-        parentId,
+        id: parentId,
         question: listQuestion,
         totalDuration: 1,
         isGamePaused: false,
         startTime: Date.now(),
         remainingTime: 80,
         gameMode: "diagnosticTest",
+        isPaused: false,
         status: 0,
         attemptNumber: 1,
         elapsedTime: 0,
@@ -161,7 +162,7 @@ export const getExistingDiagnosticTest = async (diagnostic: ITestQuestion) => {
             progressData,
             listQuestion: questions,
             isGamePaused: true,
-            currentTopicId: diagnostic.parentId,
+            currentTopicId: diagnostic.id,
         };
     }
 

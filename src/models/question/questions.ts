@@ -8,6 +8,7 @@ export interface IAnswer {
     text: string;
     turn?: number;
     parentId?: number;
+    type: "test" | "learn";
 }
 export interface IParagraph {
     id: number;

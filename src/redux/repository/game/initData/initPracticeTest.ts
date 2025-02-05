@@ -5,12 +5,12 @@ import { API_PATH } from "@/constants/api.constants";
 import { db } from "@/db/db.model";
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
 import { IQuestion } from "@/models/question/questions";
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ICurrentGame } from "@/models/game/game";
+import { ITopicQuestion } from "@/models/question/topicQuestion";
 import { RootState } from "@/redux/store";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 type IInitQuestion = {
-    testId?: number | null;
+    testId: number;
 };
 
 /**
@@ -23,7 +23,7 @@ type IInitQuestion = {
  */
 const setDataStore = async (
     parentId: number,
-    question: IQuestion[],
+    question: ITopicQuestion[],
     totalDuration: number
 ) => {
     await db?.testQuestions.add({
@@ -57,39 +57,38 @@ export const fetchQuestions = async (
 /**
  * Lấy tiến trình người dùng từ local database (IndexedDB).
  *
- * @param {number} parentId - ID của bài test.
- * @param {"test"} gameMode - Loại tiến trình ("test").
+ * @param {number} listIds - ID của bài test.
+ * @param {"test" | "learn"} gameMode - Loại tiến trình ("test").
  * @param {number} turn - Số lần thực hiện bài test.
  * @return {Promise<IUserQuestionProgress[] | null>} - Danh sách tiến trình người dùng hoặc null nếu không có.
  */
 export const getLocalUserProgress = async (
-    parentId: number,
-    gameMode: "test",
+    listIds: number[],
+    gameMode: "test" | "learn",
     turn: number
-): Promise<IUserQuestionProgress[] | null> => {
-    return (
-        (await db?.userProgress
-            .filter(
-                (item) =>
-                    item.gameMode === gameMode &&
-                    item.parentIds.includes(parentId) &&
-                    item.selectedAnswers.some((i) => i.turn === turn)
+) => {
+    return await db?.userProgress
+        .where("parentId")
+        .anyOf(listIds)
+        .filter((item) =>
+            item.selectedAnswers.every(
+                (i) => i.turn === turn && i.type == gameMode
             )
-            .toArray()) ?? null
-    );
+        )
+        .toArray();
 };
 
 /**
  * Kết hợp dữ liệu câu hỏi với tiến trình người dùng.
  *
- * @param {ICurrentGame[]} questions - Danh sách câu hỏi.
+ * @param {ITopicQuestion[]} questions - Danh sách câu hỏi.
  * @param {IUserQuestionProgress[]} progressData - Dữ liệu tiến trình người dùng.
  * @return {ICurrentGame[]} - Danh sách câu hỏi đã được cập nhật trạng thái từ tiến trình.
  */
 export const mapQuestionsWithProgress = (
-    questions: ICurrentGame[],
+    questions: ITopicQuestion[],
     progressData: IUserQuestionProgress[]
-): ICurrentGame[] => {
+) => {
     return questions.map((question) => {
         const progress = progressData.find((pro) => question.id === pro.id);
         const selectedAnswers = progress?.selectedAnswers || [];
@@ -103,7 +102,7 @@ export const mapQuestionsWithProgress = (
                     ? "correct"
                     : "incorrect"
                 : "new",
-        } as ICurrentGame;
+        };
     });
 };
 
@@ -124,9 +123,6 @@ export const mapQuestionsWithProgress = (
 const initPracticeThunk = createAsyncThunk(
     "initPracticeThunk",
     async ({ testId }: IInitQuestion, thunkAPI) => {
-        let currentTest;
-        let id = testId || 0;
-
         const state = thunkAPI.getState() as RootState;
         let { isDataFetched } = state.appInfoReducer;
 
@@ -136,50 +132,50 @@ const initPracticeThunk = createAsyncThunk(
                 .isDataFetched;
         }
 
-        if (!testId) {
-            const res = await db?.testQuestions
-                .where("gameMode")
-                .equals("practiceTests")
-                .filter((item) => item.status === 0)
-                .first();
+        const currentTest = await db?.testQuestions
+            .where("id")
+            .equals(testId)
+            .first();
 
-            if (res && res.id) {
-                currentTest = res;
-                id = res.id;
-            }
-        } else {
-            currentTest = await db?.testQuestions
-                .where("parentId")
-                .equals(Number(testId))
-                .first();
+        let listQuestion: ITopicQuestion[] = [];
+        const totalDuration = currentTest?.totalDuration || 60;
+
+        const listIds =
+            currentTest?.groupExamData?.flatMap((item) => item.questionIds) ||
+            [];
+        if (listIds?.length) {
+            const questionsFromDb = await db?.questions
+                .where("id")
+                .anyOf(listIds)
+                .toArray();
+            if (questionsFromDb) listQuestion = questionsFromDb;
         }
 
-        let listQuestion = currentTest?.question;
-        const totalDuration = currentTest?.totalDuration || 60;
-        const remainingTime =
-            totalDuration * 60 - (currentTest?.elapsedTime || 0);
-
-        if (!listQuestion) {
-            listQuestion = await fetchQuestions(id);
-            await setDataStore(id, listQuestion, totalDuration);
+        if (listQuestion.length === 0) {
+            const result = await fetchQuestions(testId);
+            listQuestion = result as unknown as ITopicQuestion[];
+            await setDataStore(testId, listQuestion, totalDuration);
         }
 
         const progressData = await getLocalUserProgress(
-            id,
+            listIds,
             "test",
             currentTest?.attemptNumber || 1
         );
+        console.log("🚀 ~ listIds:", listIds);
+        console.log("🚀 ~ progressData:", progressData);
+        const remainingTime =
+            totalDuration * 60 - (currentTest?.elapsedTime || 0);
 
         if (progressData) {
             const questions = mapQuestionsWithProgress(
                 listQuestion,
                 progressData
             );
-
             return {
                 questions,
                 progressData,
-                currentTopicId: id,
+                currentTopicId: testId,
                 gameMode: "test" as const,
                 totalDuration,
                 isGamePaused: currentTest?.isGamePaused || false,

@@ -4,6 +4,7 @@ export interface IUserQuestionProgress {
     selectedAnswers: Omit<IAnswer, "explanation" | "index" | "text">[];
     id: number;
     parentId: number;
+    level: number;
 }
 
 export default class UserQuestionProgress implements IUserQuestionProgress {

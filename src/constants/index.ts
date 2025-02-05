@@ -164,8 +164,6 @@ export const BASE_WP = "https://api.cdl-prep.com";
 
 export const PURCHASED = 1;
 
-export const TESTER_KEY = "TESTER_KEY";
-
 export const BASE_URL = "https://test-dot-micro-enigma-235001.appspot.com";
 
 export const BASE_URL_DEV = "https://dev-dot-micro-enigma-235001.appspot.com";

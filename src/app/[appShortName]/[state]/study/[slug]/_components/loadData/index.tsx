@@ -9,15 +9,15 @@ const LoadDataStudy = () => {
     const dispatch = useAppDispatch();
     const id = useAppSelector(selectCurrentTopicId);
     const type = useSearchParams()?.get("type");
-    const tag = useSearchParams()?.get("tag");
     const testId = useSearchParams()?.get("testId");
-    const subTopic = useSearchParams()?.get("subTopic");
     const partId = useSearchParams()?.get("partId");
+    const subTopicId = useSearchParams()?.get("subTopicId");
     useEffect(() => {
         if (partId && type === "learn" && (!id || id === -1)) {
             dispatch(
                 initLearnQuestionThunk({
                     partId: Number(partId),
+                    subTopicId: Number(subTopicId),
                 })
             );
         }
@@ -25,7 +25,7 @@ const LoadDataStudy = () => {
         if ((!id || id === -1) && type === "test" && testId) {
             dispatch(initPracticeThunk({ testId: Number(testId) }));
         }
-    }, [id, dispatch, type, tag, subTopic, testId, partId]);
+    }, [id, dispatch, type, subTopicId, testId, partId]);
     return null;
 };
 

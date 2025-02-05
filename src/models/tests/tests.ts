@@ -25,6 +25,7 @@ export interface IGroupExam {
     totalQuestion: number;
     duration: number;
     examData: IExamData[];
+    questionIds: number[];
 }
 export interface IExamData {
     topicName: string;

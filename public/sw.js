@@ -70,8 +70,8 @@ const initDataTest = async (tests, db) => {
                 isPaused: false,
                 startTime: Date.now(),
                 gameMode: tests.finalTests.includes(test)
-                    ? "finalTest"
-                    : "practiceTest",
+                    ? "finalTests"
+                    : "practiceTests",
                 status: 0,
                 elapsedTime: 0,
                 attemptNumber: 1,
@@ -87,6 +87,7 @@ const initDataTest = async (tests, db) => {
 const processQuestionsData = async (allQuestions, db) => {
     const questionTx = db.transaction("questions", "readwrite");
     const questionStore = questionTx.objectStore("questions");
+
     await Promise.all(
         allQuestions.map((question) => questionStore.put(question))
     );
@@ -102,11 +103,11 @@ const processTopic = async (topic, db, apiPath) => {
     if (await isTopicExists(topicId, db)) return;
 
     const data = await fetchTopicData(apiPath, topic.id);
+
     if (!data) return;
 
     const topicData = buildTopicData(topic, data);
     await saveTopicToDB(topicData, db);
-
     const allQuestions = extractAllQuestions(data, topic);
     await processQuestionsData(allQuestions, db);
 };
@@ -144,6 +145,7 @@ const buildTopicData = (topic, data) => {
         totalQuestion: calculateTotalQuestionsTopic(data),
         averageLevel: calculateAverageLevelTopic(data),
         status: 0,
+        turn: 1,
     };
 };
 
@@ -220,6 +222,7 @@ const mapSubTopics = (topics = [], data) =>
                 slug: `${tag}-practice-test`,
                 topics: [],
                 status: 0,
+                turn: 1,
                 totalQuestion: total,
                 averageLevel:
                     (subTopicData?.questions?.reduce(
@@ -247,6 +250,7 @@ const mapTopics = (topics = [], data) =>
             totalQuestion: total,
             averageLevel: averageLevel / total,
             status: 0,
+            turn: 1,
         };
     });
 

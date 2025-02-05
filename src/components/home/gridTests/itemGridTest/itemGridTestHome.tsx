@@ -65,26 +65,27 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     }, [dispatch, router]);
 
     const handlePracticeTest = useCallback(async () => {
+        let _href = "";
         const res = await db?.testQuestions
             .where("gameMode")
             .equals("practiceTests")
             .toArray();
+
         if (res) {
             const currentTest = res.find((item) => item?.status === 0);
             if (currentTest && currentTest?.id) {
-                const id = currentTest?.parentId;
+                const id = currentTest?.id;
                 dispatch(
                     initTestQuestionThunk({
                         testId: id,
                     })
                 );
 
-                const _href = `/study/${TypeParam.practiceTest}?type=test&testId=${id}`;
-                router.push(_href);
+                _href = `/study/${TypeParam.practiceTest}?type=test&testId=${id}`;
             } else {
-                const _href = `${RouterApp.ResultTest}?type=${TypeParam?.practiceTest}&testId=${res[0]?.id}`;
-                router.push(_href);
+                _href = `${RouterApp.ResultTest}?type=${TypeParam?.practiceTest}&testId=${res[0]?.id}`;
             }
+            router.push(_href);
         }
     }, [dispatch, router]);
 
