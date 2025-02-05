@@ -34,17 +34,24 @@ const initFinalTestThunk = createAsyncThunk(
             .first();
 
         if (dataStore) {
-            const listQuestion = dataStore?.question;
+            const listIds =
+                dataStore.groupExamData?.flatMap((item) => item.questionIds) ||
+                [];
+
+            const questionsDb = await db?.questions
+                .where("id")
+                .anyOf(listIds)
+                .toArray();
 
             const progressData = await getLocalUserProgress(
-                dataStore.parentId,
+                listIds,
                 "test",
                 dataStore.attemptNumber
             );
 
-            if (progressData) {
+            if (progressData && questionsDb) {
                 const questions = mapQuestionsWithProgress(
-                    listQuestion as ICurrentGame[],
+                    questionsDb,
                     progressData
                 );
                 await updateDB();

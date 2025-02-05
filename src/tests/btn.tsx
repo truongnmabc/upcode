@@ -1,12 +1,10 @@
 "use client";
-import { TESTER_KEY } from "@/constants";
-import { getSession } from "@/utils/session";
-import React from "react";
+import { userState } from "@/redux/features/user";
+import { useAppSelector } from "@/redux/hooks";
 
 const BtnTets = ({ correct }: { correct: boolean }) => {
-    const isTest = getSession(TESTER_KEY);
-
-    if (isTest && correct)
+    const { isTester } = useAppSelector(userState);
+    if (isTester && correct)
         return (
             <div>
                 <span>★</span>

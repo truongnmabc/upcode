@@ -30,8 +30,8 @@ const Reaction = ({ item }: { item?: ICurrentGame }) => {
     });
 
     useEffect(() => {
-        if (item?.id || currentGame?.id) {
-            const question = listActions.find(
+        if (item?.id || currentGame?.id || listActions.length) {
+            const question = listActions?.find(
                 (a) =>
                     a.questionId === item?.id || a.questionId === currentGame.id
             );

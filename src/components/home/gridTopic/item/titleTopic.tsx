@@ -6,7 +6,7 @@ import { db } from "@/db/db.model";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
-import { selectTopics } from "@/redux/features/study";
+import { selectSubTopics, selectTopics } from "@/redux/features/study";
 import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initLearnQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
@@ -18,6 +18,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Priority from "./priority";
+import { setIndexSubTopic } from "@/redux/features/game";
 
 export const handleGetNextPart = async ({
     topic,
@@ -25,32 +26,55 @@ export const handleGetNextPart = async ({
     topic: ITopicProgress;
 }): Promise<{
     partId?: number;
-    subTopicId?: number;
+    subTopicId: number;
     allCompleted?: boolean;
+    currentIndex: number;
 }> => {
     const currentTopic = await db?.topics.where("id").equals(topic?.id).first();
 
     if (!currentTopic) {
         toast.error("Error: Can't get data");
-        return { partId: undefined };
+        return {
+            partId: undefined,
+            subTopicId: -1,
+            allCompleted: false,
+            currentIndex: 0,
+        };
     }
-
+    //   trường hợp tất cả subtopic trong topic đã hoàn thành thì sẽ chuyển sang màn finish của subtopic cuối cùng
     if (currentTopic.status === 1) {
-        const lastSubTopic = currentTopic?.topics?.reverse()?.[0];
-        const lastPart = lastSubTopic?.topics?.reverse()?.[0];
+        const lastSubTopic =
+            currentTopic?.topics?.[currentTopic.topics.length - 1];
+        const lastPart = lastSubTopic?.topics?.[lastSubTopic.topics.length - 1];
 
         return {
             partId: lastPart?.id,
             subTopicId: lastSubTopic?.id,
             allCompleted: true,
+            currentIndex: lastSubTopic?.topics?.findIndex(
+                (item) => item.id === lastPart?.id
+            ),
         };
     }
 
     const nextSubTopics = currentTopic.topics.find((item) => item.status === 0);
-    if (!nextSubTopics) return { partId: undefined };
+    if (!nextSubTopics)
+        return {
+            partId: undefined,
+            subTopicId: -1,
+            allCompleted: false,
+            currentIndex: 0,
+        };
 
     const nextPart = findNextPart(nextSubTopics);
-    return { partId: nextPart?.id, subTopicId: nextPart?.parentId };
+    const currentIndex =
+        nextSubTopics.topics.findIndex((item) => item.id === nextPart?.id) || 0;
+
+    return {
+        partId: nextPart?.id,
+        subTopicId: nextPart?.parentId || -1,
+        currentIndex,
+    };
 };
 
 const findNextPart = (subTopic: ITopicProgress) => {
@@ -71,25 +95,27 @@ export const handleNavigateStudy = async ({
     router,
     isReplace = false,
 }: IPropsHandleNavigateStudy) => {
-    const { partId, subTopicId, allCompleted } = await handleGetNextPart({
-        topic,
-    });
-    console.log("🚀 ~ partId:", partId);
-    console.log("🚀 ~ allCompleted:", allCompleted);
-    console.log("🚀 ~ subTopicId:", subTopicId);
+    const { partId, subTopicId, allCompleted, currentIndex } =
+        await handleGetNextPart({
+            topic,
+        });
 
     if (!partId) {
         toast.error("Error: Không tìm thấy partId hợp lệ");
         return;
     }
     if (allCompleted) {
-        toast.error("Error: All completed");
+        router.push(
+            `${RouterApp.Finish}?partId=${partId}&subTopicId=${subTopicId}&topic=${topic.tag}`
+        );
         return;
     }
 
     const _href = `/study/${topic.tag}-practice-test?type=learn&partId=${partId}&subTopicId=${subTopicId}`;
 
     dispatch(selectTopics(topic.id));
+    dispatch(selectSubTopics(subTopicId));
+    dispatch(setIndexSubTopic(currentIndex + 1));
     dispatch(
         initLearnQuestionThunk({
             partId: Number(partId),

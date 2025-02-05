@@ -43,7 +43,7 @@ const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
             className={clsx(
                 "bg-white cursor-pointer p-2 hover:border-primary rounded-md border border-solid w-full flex items-center",
                 {
-                    "border-primary": testId === test.parentId.toString(),
+                    "border-primary": testId === test?.parentId?.toString(),
                 }
             )}
             onClick={handleCLick}

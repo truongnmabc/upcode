@@ -6,6 +6,7 @@ import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { IUserQuestionProgress } from "../models/progress/userQuestionProgress";
 import { ITopicQuestion } from "../models/question/topicQuestion";
 import { IUserActions } from "../models/user/userReactions";
+import { IPassingModel } from "@/models/passing/passingModel";
 
 export class DB extends Dexie {
     userProgress!: Table<IUserQuestionProgress>;
@@ -20,15 +21,15 @@ export class DB extends Dexie {
 
     useActions!: Table<IUserActions>;
 
+    passingApp!: Table<IPassingModel>;
+
     constructor(appName: string) {
         super(appName);
 
         this.version(1).stores({
-            // *NOTE: chứa câu trả lời của người dùng.
-
             userProgress: "++id,parentId",
 
-            testQuestions: "++id,parentId,gameMode",
+            testQuestions: "++id,gameMode",
 
             paymentInfos: "++id,userId",
 
@@ -40,6 +41,8 @@ export class DB extends Dexie {
 
             // lưu thông tin bookmark, like của người dùng
             useActions: "++id,partId,questionId",
+
+            passingApp: "++id",
         });
     }
 }

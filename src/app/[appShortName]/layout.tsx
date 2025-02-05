@@ -8,6 +8,7 @@ import { fetchAppData } from "@/utils/getAppInfos";
 import replaceYear from "@/utils/replaceYear";
 import type { Metadata } from "next";
 import NotFound from "../not-found";
+import InitPassing from "@/components/passing/initPassing";
 
 type Props = {
     params: { appShortName: string };
@@ -70,6 +71,7 @@ export default async function RootLayout({
             <InitDataStore appConfig={appConfig} appInfo={appInfo} />
             <InitializeDB appInfo={appInfo} />
             <ServiceWorkerInit appInfo={appInfo} />
+            <InitPassing />
             <AppThemeProvider>
                 <AppLayout>{children}</AppLayout>
                 <EventListener />

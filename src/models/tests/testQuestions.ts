@@ -1,10 +1,9 @@
-import { IQuestion } from "../question/questions";
+import { ITopicQuestion } from "../question/topicQuestion";
 import { IGroupExam } from "./tests";
 
 export interface ITestQuestion {
-    parentId: number;
-    id?: number;
-    question: IQuestion[];
+    id: number;
+    question: ITopicQuestion[];
     totalDuration: number;
     isGamePaused: boolean;
     startTime: number;
@@ -19,4 +18,5 @@ export interface ITestQuestion {
     attemptNumber: number;
     topicIds?: number[];
     groupExamData?: IGroupExam[];
+    isPaused: boolean;
 }

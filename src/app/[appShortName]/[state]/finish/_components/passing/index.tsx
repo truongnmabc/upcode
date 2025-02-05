@@ -1,185 +1,113 @@
 import { MtUiButton } from "@/components/button";
 import { db } from "@/db/db.model";
-import { ITopic } from "@/models/topics/topics";
-import { selectAppInfo } from "@/redux/features/appInfo.reselect";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { setIndexSubTopic, setTurtGame } from "@/redux/features/game";
-import { selectCurrentSubTopicIndex } from "@/redux/features/game.reselect";
-import { selectSubTopics } from "@/redux/features/study";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { calculatePassingApp } from "../calculate";
 
 type NavigateToHrefParams = {
     topicName: string;
-    subTopicTag: string;
-    partTag: string;
-    appShortName: string;
+    nextPart: ITopicProgress;
+};
+
+const updateTurnTopic = async ({
+    partId,
+    currentTopicId,
+    subTopicId,
+}: {
+    partId: number;
+    currentTopicId: number;
+    subTopicId: number;
+}) => {
+    if (!partId || !currentTopicId || !subTopicId) return;
+
+    try {
+        await db?.topics
+            .where("id")
+            .equals(currentTopicId)
+            .modify((topic) => {
+                topic.topics = topic.topics.map((subTopic) => {
+                    if (subTopic.id === subTopicId) {
+                        return {
+                            ...subTopic,
+                            topics: subTopic.topics.map((part) =>
+                                part.id === partId
+                                    ? { ...part, turn: (part.turn ?? 0) + 1 }
+                                    : part
+                            ),
+                        };
+                    }
+                    return subTopic;
+                });
+            });
+    } catch (error) {
+        console.error("❌ Lỗi khi cập nhật turn của part:", error);
+    }
 };
 
 const PassingFinishPage = ({
     nextPart,
-    currentPartTag,
+    currentPart,
     currentTurn,
-    passing,
     extraPoint,
+    currentTopicId,
+    indexSubTopic,
 }: {
-    currentPartTag: string;
-    nextPart: {
-        subTopicTag: string;
-        tag: string;
-    };
+    currentPart: ITopicProgress | null;
+    nextPart: ITopicProgress | null;
     currentTurn: number;
-    passing: number;
     extraPoint: number;
+    currentTopicId: number;
+    indexSubTopic: number;
 }) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const topicName = useSearchParams()?.get("topic");
-    const appInfo = useAppSelector(selectAppInfo);
-    const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
+    const [passing, setPassing] = useState(0);
+
+    useEffect(() => {
+        const handleFn = async () => {
+            const passing = await calculatePassingApp();
+            setPassing(passing);
+        };
+        handleFn();
+    }, []);
 
     const navigateToHref = useCallback(
-        ({ topicName, subTopicTag, partTag }: NavigateToHrefParams) => {
+        ({ topicName, nextPart }: NavigateToHrefParams) => {
             dispatch(
                 initQuestionThunk({
-                    partTag: partTag,
-                    subTopicTag: subTopicTag,
+                    partId: nextPart.id,
+                    subTopicId: nextPart.parentId,
                 })
             );
-            const _href = `study/${topicName}?type=learn&subTopic=${subTopicTag}&tag=${partTag}`;
+            const _href = `study/${topicName}?type=learn&subTopic=${nextPart.parentId}&partId=${nextPart.id}`;
             router.push(_href);
         },
         [dispatch, router]
     );
 
-    const updateDb = useCallback(
-        async ({
-            currentTopic,
-            listTopic,
-        }: {
-            listTopic: ITopic[];
-            currentTopic: ITopic;
-        }) => {
-            await db?.topics
-                .where("id")
-                .equals(currentTopic?.id)
-                .modify((item) => {
-                    item.status = 1;
-                });
-
-            const nextMainTopic = listTopic?.find(
-                (item) => item?.id !== currentTopic.id && item.status === 0
-            );
-            if (nextMainTopic && nextMainTopic.topics) {
-                for (const subTopic of nextMainTopic.topics) {
-                    const subTopicProgress = await db?.subTopicProgress
-                        .where("id")
-                        .equals(subTopic.id)
-                        .first();
-
-                    if (subTopicProgress && subTopicProgress.part) {
-                        const nextPart = subTopicProgress.part?.find(
-                            (item) => item.status === 0
-                        );
-                        if (nextPart && topicName) {
-                            navigateToHref({
-                                topicName,
-                                partTag: nextPart.tag,
-                                subTopicTag: subTopic.tag,
-                                appShortName: appInfo.appShortName,
-                            });
-                            return;
-                        }
-                    }
-                }
-            }
-        },
-        [navigateToHref, appInfo.appShortName, topicName]
-    );
-
-    const handleNextSubTopic = useCallback(async () => {
-        const listTopic = await db?.topics.toArray();
-
-        // *NOTE : next subtopic tiếp theo trong 1 mainTopic
-
-        const currentTopic = listTopic?.find((item) => item.slug === topicName);
-
-        if (listTopic && currentTopic && currentTopic?.topics) {
-            for (const t of currentTopic?.topics) {
-                const subTopic = await db?.subTopicProgress
-                    ?.where("id")
-                    .equals(t.id)
-                    .first();
-
-                if (subTopic && !subTopic?.pass) {
-                    const nextPart = subTopic.part?.find(
-                        (item) => item?.status === 0
-                    );
-                    const index = subTopic?.part?.findIndex(
-                        (p) => p === nextPart
-                    );
-
-                    if (nextPart && topicName) {
-                        navigateToHref({
-                            topicName,
-                            partTag: nextPart.tag,
-                            subTopicTag: subTopic.subTopicTag,
-                            appShortName: appInfo.appShortName,
-                        });
-                        dispatch(setIndexSubTopic(index + 1));
-                        dispatch(selectSubTopics(subTopic.id));
-                        return;
-                    }
-                }
-            }
-
-            updateDb({
-                currentTopic,
-                listTopic,
-            });
-        }
-    }, [appInfo.appShortName, topicName, dispatch, updateDb, navigateToHref]);
-
     const handleNextPart = useCallback(async () => {
-        dispatch(
-            setTurtGame({
-                turn: 1,
-            })
-        );
-
-        // *NOTE : next part tiếp theo trong 1 subtopic
-        if (
-            nextPart.subTopicTag &&
-            nextPart.tag &&
-            topicName &&
-            appInfo.appShortName
-        ) {
+        if (nextPart && topicName) {
             navigateToHref({
                 topicName,
-                partTag: nextPart.tag,
-                subTopicTag: nextPart.subTopicTag,
-                appShortName: appInfo.appShortName,
+                nextPart: nextPart,
             });
-
             dispatch(setIndexSubTopic(indexSubTopic + 1));
-
+            dispatch(
+                setTurtGame({
+                    turn: 1,
+                })
+            );
             return;
         }
-
-        await handleNextSubTopic();
-    }, [
-        nextPart,
-        navigateToHref,
-        appInfo.appShortName,
-        dispatch,
-        topicName,
-        handleNextSubTopic,
-        indexSubTopic,
-    ]);
+    }, [nextPart, navigateToHref, dispatch, topicName, indexSubTopic]);
 
     const handleTryAgainFn = useCallback(async () => {
-        if (currentPartTag && nextPart.subTopicTag) {
+        if (currentPart?.id) {
             dispatch(
                 setTurtGame({
                     turn: currentTurn + 1,
@@ -187,26 +115,25 @@ const PassingFinishPage = ({
             );
             dispatch(
                 initQuestionThunk({
-                    partTag: currentPartTag,
-                    subTopicTag: nextPart.subTopicTag,
+                    partId: currentPart.id,
+                    subTopicId: currentPart.parentId,
                     isReset: true,
                 })
             );
-
-            const _href = `study/${topicName}?type=learn&subTopic=${nextPart.subTopicTag}&tag=${currentPartTag}`;
-
+            await updateTurnTopic({
+                partId: currentPart.id,
+                currentTopicId: currentTopicId,
+                subTopicId: currentPart.parentId,
+            });
+            const _href = `study/${topicName}?type=learn&subTopic=${currentPart.parentId}&partId=${currentPart.id}`;
             router.push(_href);
         }
-    }, [
-        currentPartTag,
-        currentTurn,
-        nextPart.subTopicTag,
-        topicName,
-        dispatch,
-        router,
-    ]);
+    }, [currentPart, currentTurn, topicName, dispatch, router, currentTopicId]);
 
     const oldPassing = passing - extraPoint;
+    const oldPassingRounded = Math.ceil(oldPassing);
+    const passingRounded = Math.round(passing * 10) / 10;
+    const extraPointRounded = Math.round(extraPoint * 10) / 10;
 
     return (
         <div className="flex w-full  flex-col justify-center items-center">
@@ -216,43 +143,46 @@ const PassingFinishPage = ({
                         Passing Probability{" "}
                     </p>
                     <span className="text-2xl text-white">
-                        {passing.toFixed(4)} %
+                        {Number.isInteger(passingRounded)
+                            ? passingRounded
+                            : passingRounded.toFixed(1)}{" "}
+                        %
                     </span>
                 </div>
 
                 <div className="bg-white custom-progress rounded-lg h-9  flex-1 relative">
                     <div className="w-full absolute p-2 inset-0 z-10">
                         <progress
-                            value={passing.toFixed(2)}
-                            max={passing.toFixed(2)}
+                            value={extraPointRounded}
+                            max={extraPointRounded}
                             className="rounded-lg"
                             style={{
-                                width: `${passing}%`,
+                                width: `${extraPointRounded}%`,
                             }}
                         ></progress>
                     </div>
                     <div className="w-full absolute p-2  inset-0 z-20">
                         <progress
-                            value={oldPassing.toFixed(2)}
-                            max={oldPassing.toFixed(2)}
+                            value={oldPassingRounded}
+                            max={oldPassingRounded}
                             className=" rounded-lg"
                             style={{
-                                width: `${oldPassing}%`,
+                                width: `${oldPassingRounded}%`,
                                 background: "#12E1AF",
                             }}
                         ></progress>
                     </div>
 
-                    <p className="absolute text-[#12E1AF] text-base right-2 top-0 bottom-0 flex items-center z-10">
+                    <p className="absolute text-[#12E1AF] text-base right-2 top-0 bottom-0 flex items-center z-50">
                         {" "}
-                        + {extraPoint.toFixed(2)} %
+                        + {extraPointRounded} %
                     </p>
                 </div>
             </div>
 
             <div className="flex fixed sm:static bottom-0 left-0 z-20 bg-theme-white   sm:bg-transparent pb-8 sm:pb-2 px-4 pt-6 gap-4 max-w-[480px] w-full items-center">
                 <MtUiButton
-                    className="text-primary border-primary"
+                    className="text-primary bg-white border-primary"
                     block
                     size="large"
                     onClick={handleTryAgainFn}
@@ -272,4 +202,4 @@ const PassingFinishPage = ({
     );
 };
 
-export default PassingFinishPage;
+export default React.memo(PassingFinishPage);
