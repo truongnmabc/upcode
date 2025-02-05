@@ -2,7 +2,7 @@ import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
 import { IExamData } from "@/models/tests/tests";
 import { ITestQuestion } from "@/models/tests/testQuestions";
 import { ICurrentGame } from "@/models/game/game";
-import { ITopic } from "@/models/topics/topics";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
 import { ITopicEndTest } from ".";
 import { TypeParam } from "@/constants";
 
@@ -16,7 +16,7 @@ export const filterCorrectList = (user: IUserQuestionProgress[]) => {
 export const getReviewTopics = (
     uniqueTags: string[],
     listQuestion: ICurrentGame[],
-    topics: ITopic[]
+    topics: ITopicProgress[]
 ): ITopicEndTest[] => {
     return uniqueTags
         .map((tag) => {
@@ -39,7 +39,7 @@ export const getReviewTopics = (
 
 type ITopics = {
     type: string | null;
-    topics: ITopic[] | undefined;
+    topics: ITopicProgress[] | undefined;
     questions: ITestQuestion | undefined;
     listExam: IExamData[];
     listQuestion: ICurrentGame[];
@@ -88,14 +88,14 @@ export const calculateTopics = ({
 
     if (type === TypeParam.customTest) {
         if (topics && questions) {
-            const totalCount = questions?.count || 0;
-            const subjectCount = questions?.subject?.length || 1;
+            const totalCount = questions?.totalQuestion || 0;
+            const subjectCount = questions?.topicIds?.length || 1;
 
             const baseQuestionCount = Math.floor(totalCount / subjectCount);
             const remainder = totalCount % subjectCount;
 
             listTopic = topics
-                ?.filter((t) => questions?.subject?.includes(t.id))
+                ?.filter((t) => questions?.topicIds?.includes(t.id))
                 ?.map((t, index, array) => {
                     const isLast = index === array.length - 1;
                     const topicQuestions = listQuestion.filter(
@@ -123,7 +123,7 @@ type IAll = {
     type: string | null;
     listExam: IExamData[];
     listQuestion: ICurrentGame[];
-    topics: ITopic[] | undefined;
+    topics: ITopicProgress[] | undefined;
 };
 export const processAllQuestions = ({
     listExam,

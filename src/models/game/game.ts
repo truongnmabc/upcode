@@ -1,32 +1,24 @@
-import { IAnswer, IQuestion } from "@/models/question/questions";
-import { IStatusAnswer } from "@/components/statusAnswer";
 import { IFeedBack } from "@/app/[appShortName]/[state]/custom_test/_components/modalSetting";
+import { IStatusAnswer } from "@/components/statusAnswer";
+import { IAnswer } from "@/models/question/questions";
+import { ITopicQuestion, ITopicQuestionState } from "../question/topicQuestion";
+import { IGameMode } from "../tests/testQuestions";
 
-export interface ICurrentGame
-    extends Omit<
-        IQuestion,
-        | "createDate"
-        | "databaseId"
-        | "hasChild"
-        | "hint"
-        | "image"
-        | "lastUpdate"
-        | "oldId"
-        | "paragraphId"
-    > {
+export interface ICurrentGame extends ITopicQuestion {
     localStatus?: IStatusAnswer;
     selectedAnswer?: IAnswer | null;
-    turn?: number;
-    tag?: string;
     feedBack?: IFeedBack;
     passing?: number;
     image?: string;
-    icon?: string;
-    type?: "test" | "learn";
+    type?: IGameMode;
+    partId: number;
+    id: number;
+    parentId: number;
+    count?: number;
 }
 export interface IGameReducer {
     currentGame: ICurrentGame;
-    listQuestion: ICurrentGame[];
+    listQuestion: ITopicQuestionState[];
 
     // idTopic: number;
     currentTopicId: number; // ID của chủ đề hiện tại trong game
@@ -50,7 +42,7 @@ export interface IGameReducer {
     totalDuration: number; // Tổng thời gian của bài test
 
     // type: "test" | "learn";
-    gameMode: "test" | "learn"; // Chế độ của game: learn/test
+    gameMode: IGameMode; // Chế độ của game: learn/test
 
     // isPaused: boolean;
     isGamePaused: boolean; // Game đang bị tạm dừng hay không

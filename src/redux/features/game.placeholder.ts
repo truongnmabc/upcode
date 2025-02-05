@@ -1,15 +1,22 @@
 import { IStatusAnswer } from "@/components/statusAnswer";
-import { IGameReducer } from "@/models/game/game";
-import UserQuestionProgress from "@/models/progress/userQuestionProgress";
+import { ICurrentGame, IGameReducer } from "@/models/game/game";
 
-const init = new UserQuestionProgress();
-
-export const plateHolderCurrentGame = {
-    ...init,
+export const plateHolderCurrentGame: ICurrentGame = {
     localStatus: "new" as IStatusAnswer,
     selectedAnswer: null,
     text: "",
     turn: 1,
+    answers: [],
+    explanation: "",
+    id: -1,
+    level: 50,
+    question: "",
+    topicId: -1,
+    parentId: -1,
+    status: 0,
+    syncStatus: 0,
+    image: "",
+    partId: -1,
 };
 
 export const initGameReducer: IGameReducer = {

@@ -55,14 +55,14 @@ const ReportMistake = ({ onClose }: { onClose: () => void }) => {
             dispatch(
                 userActionsThunk({
                     status: "dislike",
-                    questionId: currentGame.id,
+                    questionId: currentGame?.id,
                     partId: idTopic,
                 })
             );
 
             onClose();
         },
-        [dispatch, idTopic, currentGame.id, onClose]
+        [dispatch, idTopic, currentGame?.id, onClose]
     );
 
     return (

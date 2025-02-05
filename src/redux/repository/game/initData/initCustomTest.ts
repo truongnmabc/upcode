@@ -34,7 +34,7 @@ const initCustomTestThunk = createAsyncThunk(
                 return {
                     progressData: progressData || [],
                     questions: currentTest.question,
-                    currentTopicId: currentTest.parentId,
+                    currentTopicId: currentTest.id,
                     gameMode: "test" as "test" | "learn",
                     totalDuration: currentTest.totalDuration,
                     isGamePaused: currentTest.isGamePaused,

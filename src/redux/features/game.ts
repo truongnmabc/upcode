@@ -163,7 +163,7 @@ export const gameSlice = createSlice({
         });
 
         builder.addCase(initPracticeThunk.fulfilled, (state, action) => {
-            state.gameMode = "test";
+            state.gameMode = "practiceTests";
             if (action.payload) {
                 handleInitTestQuestion(state, action.payload);
             }
@@ -176,7 +176,7 @@ export const gameSlice = createSlice({
         });
 
         builder.addCase(initFinalTestThunk.fulfilled, (state, action) => {
-            state.gameMode = "test";
+            state.gameMode = "finalTests";
 
             if (action.payload) {
                 handleInitTestQuestion(state, action.payload);
@@ -186,7 +186,7 @@ export const gameSlice = createSlice({
         builder.addCase(
             choiceStartCustomTestThunk.fulfilled,
             (state, action) => {
-                state.gameMode = "test";
+                state.gameMode = "customTets";
                 if (action.payload) {
                     state.currentSubTopicIndex =
                         action.payload.currentSubTopicIndex;
@@ -209,7 +209,7 @@ export const gameSlice = createSlice({
                 state.listQuestion = [];
                 state.currentGame = plateHolderCurrentGame;
                 state.isGamePaused = false;
-                state.gameMode = "test";
+                state.gameMode = "customTets";
             }
             state.isDataLoaded = true;
         });
@@ -247,7 +247,7 @@ export const gameSlice = createSlice({
                         progressData,
                     } = action.payload;
                     handleInitTestQuestion(state, {
-                        gameMode: "test",
+                        gameMode: "diagnosticTest",
                         progressData,
                         questions: listQuestion,
                         currentTopicId: currentTopicId,

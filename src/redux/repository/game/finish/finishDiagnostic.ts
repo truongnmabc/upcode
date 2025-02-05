@@ -1,6 +1,6 @@
 "use client";
 import { db } from "@/db/db.model";
-import { IQuestion } from "@/models/question/questions";
+import { ITopicQuestion } from "@/models/question/topicQuestion";
 import { RootState } from "@/redux/store";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -16,7 +16,7 @@ const finishDiagnosticThunk = createAsyncThunk(
                 .filter((item) => item.status === 0)
                 .modify((item) => {
                     item.status = 1;
-                    item.question = listQuestion as IQuestion[];
+                    item.question = listQuestion as ITopicQuestion[];
                 });
         } catch (error) {
             console.error("Error in finishQuestionThunk:", error);

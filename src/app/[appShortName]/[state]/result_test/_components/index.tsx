@@ -1,23 +1,27 @@
 "use client";
+import { MtUiButton } from "@/components/button";
 import MyContainer from "@/components/container";
 import ReviewAnswerResult from "@/components/reviewAnswers";
 import { TypeParam } from "@/constants";
 import { db } from "@/db/db.model";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { ICurrentGame } from "@/models/game/game";
-import { ITopic } from "@/models/topics/topics";
+import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
+import { IQuestion } from "@/models/question/questions";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
 import {
     selectCurrentTopicId,
     selectListQuestion,
     selectPassingThreshold,
 } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
+import { calculatorAverageLevel } from "@/utils/math";
 import clsx from "clsx";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import HeaderResultTest from "./header";
-import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
-import { calculatorAverageLevel } from "@/utils/math";
 import { totalPassingPart } from "../../finish/_components/calculate";
+import DrawerAnswers from "./drawer";
+import HeaderResultTest from "./header";
 import ItemListTopicResult from "./listTopicResult/item";
 import {
     calculateTopics,
@@ -25,23 +29,17 @@ import {
     getUniqueTags,
     processAllQuestions,
 } from "./utils";
-import { useIsMobile } from "@/hooks/useIsMobile";
-import { MtUiButton } from "@/components/button";
-import DrawerAnswers from "./drawer";
-import { IQuestion } from "@/models/question/questions";
 
-export interface ITopicEndTest extends ITopic {
+export interface ITopicEndTest extends ITopicProgress {
     totalQuestion: number;
     correct: number;
 }
 
 const fetchData = async (idTopic: number) => {
     const [user, topics, questions] = await Promise.all([
-        db?.userProgress
-            .filter((item) => item.parentIds.includes(idTopic))
-            .toArray(),
+        db?.userProgress.filter((item) => item.parentId === idTopic).toArray(),
         db?.topics.toArray(),
-        db?.testQuestions?.where("parentId").equals(idTopic).first(),
+        db?.testQuestions?.get(idTopic),
     ]);
 
     return { user, topics, questions };
@@ -119,6 +117,9 @@ const ResultTestLayout = () => {
             const id = idTopic !== -1 ? idTopic : Number(testId);
 
             const { user, topics, questions } = await fetchData(id);
+            console.log("🚀 ~ handleGetData ~ user:", user);
+            console.log("🚀 ~ handleGetData ~ questions:", questions);
+            console.log("🚀 ~ handleGetData ~ topics:", topics);
 
             const list = listQuestion?.length
                 ? listQuestion

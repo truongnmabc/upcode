@@ -71,17 +71,7 @@ const GridLeftCustomTest = () => {
 
     const handleDelete = useCallback(async () => {
         if (itemSelect) {
-            await db?.testQuestions
-                .where("parentId")
-                .equals(itemSelect?.parentId)
-                .delete();
-            await db?.userProgress
-                .filter(
-                    (item) =>
-                        item.parentIds.includes(itemSelect?.parentId) &&
-                        item.gameMode === "test"
-                )
-                .delete();
+            await db?.testQuestions.where("id").equals(itemSelect?.id).delete();
 
             const startTest = await db?.testQuestions
                 .where("gameMode")
@@ -91,7 +81,7 @@ const GridLeftCustomTest = () => {
 
             setListTest((prev) => {
                 const updatedList = prev.filter(
-                    (item) => item.parentId !== itemSelect.parentId
+                    (item) => item.id !== itemSelect.id
                 );
                 if (updatedList.length === 0) {
                     setItemSelect(null);
@@ -104,7 +94,7 @@ const GridLeftCustomTest = () => {
                     startCustomTest({
                         listQuestion: startTest?.question,
                         totalDuration: startTest?.totalDuration * 60,
-                        parentId: startTest.parentId,
+                        parentId: startTest.id,
                         passingThreshold: startTest.passingThreshold,
                         gameDifficultyLevel: startTest.gameDifficultyLevel,
                         indexSubTopic: 1,

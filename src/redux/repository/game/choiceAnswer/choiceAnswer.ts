@@ -13,7 +13,6 @@ const choiceAnswer = createAsyncThunk(
         const state = thunkAPI.getState() as RootState;
         const { attemptNumber, currentTopicId, gameMode } = state.gameReducer;
 
-        const parentId = currentTopicId;
         const isEx = await db?.userProgress.get(question.id);
 
         const updatedSelectedAnswers = isEx
@@ -21,7 +20,7 @@ const choiceAnswer = createAsyncThunk(
                   ...(isEx?.selectedAnswers || []),
                   {
                       turn: attemptNumber,
-                      parentId,
+                      parentId: currentTopicId,
                       id: choice.id,
                       index: choice.index,
                       correct: choice.correct,
@@ -31,7 +30,8 @@ const choiceAnswer = createAsyncThunk(
             : [
                   {
                       turn: 1,
-                      parentId,
+                      parentId: currentTopicId,
+
                       id: choice.id,
                       correct: choice.correct,
                       index: choice.index,
@@ -42,7 +42,7 @@ const choiceAnswer = createAsyncThunk(
         const data = {
             selectedAnswers: updatedSelectedAnswers,
             id: question.id,
-            parentId,
+            parentId: question.partId,
             level: question.level === -1 ? 50 : question.level,
         };
 

@@ -47,7 +47,7 @@ const BtnNextQuestion = () => {
                 })
             );
 
-            router.push(
+            router.replace(
                 `${RouterApp.Finish}?subTopicId=${subTopicProgressId}&topic=${params?.["slug"]}&partId=${idTopic}`,
                 {
                     scroll: true,

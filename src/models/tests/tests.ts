@@ -19,20 +19,21 @@ export interface ITest {
     testType?: string;
 }
 export interface IGroupExam {
-    groupId: number;
+    groupId?: number;
     title: string;
-    passingPercent: number;
+    passingPercent?: number;
     totalQuestion: number;
-    duration: number;
-    examData: IExamData[];
+    duration?: number;
+    examData?: IExamData[];
     questionIds: number[];
 }
 export interface IExamData {
     topicName: string;
     totalQuestion: number;
-    required: boolean;
+    required?: boolean;
     topicId: number;
     questionIds: number[];
+    id: number;
 }
 
 export interface ITestInfo {

@@ -4,32 +4,41 @@ import AllowExpand from "@/components/allowExpand";
 import AllowExpandProvider from "@/components/allowExpand/provider";
 import TitleTopic from "@/components/home/gridTopic/item/titleTopic";
 import { db } from "@/db/db.model";
-import Topic, { ITopic } from "@/models/topics/topics";
+import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
+import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
-import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useSearchParams } from "next/navigation";
 import React, { Fragment, useCallback, useEffect, useState } from "react";
-import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 
-export const generateMockTopics = (size: number): ITopic[] => {
+export const generateMockTopics = (size: number): ITopicProgress[] => {
     return Array.from({ length: size }, (_, index) => {
-        const initData = new Topic({
-            id: index,
-        });
         return {
-            ...initData,
+            id: index,
+            contentType: 1,
+            icon: "",
+            name: "",
+            status: 0,
+            tag: "",
+            totalQuestion: 0,
+            parentId: 0,
+            topics: [],
+            slug: "",
+            averageLevel: 0, // or any default value
+            turn: 0, // or any default value
         };
     });
 };
-export const mockData: ITopic[] = generateMockTopics(10);
+export const mockData: ITopicProgress[] = generateMockTopics(10);
 
 const FN = () => {
     const appInfo = useAppSelector(selectAppInfo);
     const selectedTopics = useAppSelector(selectTopicsId);
-    const [listMainTopics, setListMainTopics] = useState<ITopic[]>(mockData);
+    const [listMainTopics, setListMainTopics] =
+        useState<ITopicProgress[]>(mockData);
     const type = useSearchParams()?.get("type");
 
     const [open, setOpen] = React.useState(type === "learn");
@@ -37,12 +46,10 @@ const FN = () => {
     const handleClick = () => setOpen(!open);
 
     const handleGetData = useCallback(async () => {
-        // if (selectedTopics !== -1) {
         const listData = await db?.topics.toArray();
         if (listData) {
             setListMainTopics(listData);
         }
-        // }
     }, []);
 
     useEffect(() => {

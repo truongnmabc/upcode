@@ -100,8 +100,8 @@ const HeaderResultTest: React.FC<{
                 .filter((item) => item.status === 0)
                 .first();
 
-            dispatch(initPracticeThunk({}));
-            const _href = `/study/${TypeParam.practiceTest}?type=test&testId=${currentTest?.parentId}`;
+            dispatch(initPracticeThunk({ testId: currentTest?.id || -1 }));
+            const _href = `/study/${TypeParam.practiceTest}?type=test&testId=${currentTest?.id}`;
             return router.push(_href);
         }
         if (type === TypeParam.customTest) {

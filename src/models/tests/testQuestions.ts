@@ -1,22 +1,24 @@
-import { ITopicQuestion } from "../question/topicQuestion";
 import { IGroupExam } from "./tests";
 
+export type IGameMode =
+    | "finalTests"
+    | "practiceTests"
+    | "diagnosticTest"
+    | "customTets"
+    | "learn";
 export interface ITestQuestion {
     id: number;
-    question: ITopicQuestion[];
     totalDuration: number;
     isGamePaused: boolean;
     startTime: number;
     remainingTime?: number;
     elapsedTime: number;
-    gameMode: "finalTests" | "practiceTests" | "diagnosticTest" | "customTets";
+    gameMode: IGameMode;
     gameDifficultyLevel?: "newbie" | "expert" | "exam";
-    passingThreshold?: number;
-    count?: number;
-    subject?: number[];
-    status?: number;
+    passingThreshold: number;
+    totalQuestion: number;
+    status: number;
     attemptNumber: number;
-    topicIds?: number[];
+    topicIds: number[];
     groupExamData?: IGroupExam[];
-    isPaused: boolean;
 }

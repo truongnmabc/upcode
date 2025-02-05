@@ -2,7 +2,11 @@
 import React from "react";
 import GridLeftCustomTest from "../gridLeft";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import AnswerSheet from "@/components/listLeftQuestions";
+import dynamic from "next/dynamic";
+const AnswerSheet = dynamic(() => import("@/components/listLeftQuestions"), {
+    ssr: false,
+});
+
 const LeftLayout = () => {
     const isMobile = useIsMobile();
     return (

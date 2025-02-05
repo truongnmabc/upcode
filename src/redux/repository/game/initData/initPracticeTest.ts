@@ -27,8 +27,7 @@ const setDataStore = async (
     totalDuration: number
 ) => {
     await db?.testQuestions.add({
-        parentId,
-        question,
+        id: parentId,
         totalDuration,
         isGamePaused: false,
         startTime: new Date().getTime(),
@@ -36,6 +35,10 @@ const setDataStore = async (
         elapsedTime: 0,
         status: 0,
         attemptNumber: 1,
+        groupExamData: [],
+        passingThreshold: 0,
+        topicIds: [],
+        totalQuestion: question.length,
     });
 };
 
@@ -68,7 +71,7 @@ export const getLocalUserProgress = async (
     turn: number
 ) => {
     return await db?.userProgress
-        .where("parentId")
+        .where("id")
         .anyOf(listIds)
         .filter((item) =>
             item.selectedAnswers.every(
@@ -79,7 +82,7 @@ export const getLocalUserProgress = async (
 };
 
 /**
- * Kết hợp dữ liệu câu hỏi với tiến trình người dùng.
+ * Kết hợp dữ liệu câu hỏi với tiến trình người dùng và sắp xếp lại danh sách.
  *
  * @param {ITopicQuestion[]} questions - Danh sách câu hỏi.
  * @param {IUserQuestionProgress[]} progressData - Dữ liệu tiến trình người dùng.
@@ -89,7 +92,7 @@ export const mapQuestionsWithProgress = (
     questions: ITopicQuestion[],
     progressData: IUserQuestionProgress[]
 ) => {
-    return questions.map((question) => {
+    const mappedQuestions = questions.map((question) => {
         const progress = progressData.find((pro) => question.id === pro.id);
         const selectedAnswers = progress?.selectedAnswers || [];
 
@@ -102,8 +105,14 @@ export const mapQuestionsWithProgress = (
                     ? "correct"
                     : "incorrect"
                 : "new",
+            hasAnswer: selectedAnswers.length > 0, // Thêm thuộc tính để hỗ trợ sắp xếp
         };
     });
+
+    // Sắp xếp: Câu hỏi đã có câu trả lời lên đầu
+    return mappedQuestions.sort(
+        (a, b) => Number(b.hasAnswer) - Number(a.hasAnswer)
+    );
 };
 
 /**
@@ -162,8 +171,6 @@ const initPracticeThunk = createAsyncThunk(
             "test",
             currentTest?.attemptNumber || 1
         );
-        console.log("🚀 ~ listIds:", listIds);
-        console.log("🚀 ~ progressData:", progressData);
         const remainingTime =
             totalDuration * 60 - (currentTest?.elapsedTime || 0);
 
