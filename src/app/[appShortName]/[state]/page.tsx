@@ -3,11 +3,11 @@ import { listAppState } from "@/constants";
 import { API_PATH } from "@/constants/api.constants";
 import NewHome from "@/components/state-app/newHome";
 import { ITestInfo } from "@/models/tests/tests";
-import { ITopicResState } from "@/models/topics/topics";
 import { getSEOAndHeaderContentApi } from "@/services/home.service";
 import { fetchAppData } from "@/utils/getAppInfos";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 
 type Props = {
     params: Promise<{ appShortName: string; state: string }>;
@@ -31,7 +31,7 @@ type Params = {
 
 type IRes = {
     fullTests: ITestInfo[];
-    topics: ITopicResState[];
+    topics: ITopicBase[];
 };
 
 export default async function StatePage({ params }: Params) {

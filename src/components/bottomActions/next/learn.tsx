@@ -60,7 +60,10 @@ const BtnNextQuestion = () => {
         }
     };
 
-    if (indexCurrentQuestion + 1 === listQuestion?.length && type === "test") {
+    if (
+        indexCurrentQuestion + 1 === listQuestion?.length &&
+        type === "practiceTests"
+    ) {
         return null;
     }
     return (
@@ -70,7 +73,7 @@ const BtnNextQuestion = () => {
             onClick={handleFinish}
             disabled={
                 !currentGame?.selectedAnswer ||
-                (type === "test" && isEndTimeTest)
+                (type === "practiceTests" && isEndTimeTest)
             }
             type="primary"
             className="py-3 px-8"

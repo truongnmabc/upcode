@@ -1,12 +1,12 @@
 import MyContainer from "@/components/container";
 import { IAppInfo } from "@/models/app/appInfo";
 import { ITestInfo } from "@/models/tests/tests";
-import { ITopicResState } from "@/models/topics/topics";
 import BannerHome from "./newHome/banner";
 import Handbook from "./newHome/handBook";
 import ListHome from "./newHome/list/list";
 import SelectState from "./newHome/selectState";
 import ListBlock from "./newHome/slider";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 
 const NewHome = ({
     appInfo,
@@ -15,7 +15,7 @@ const NewHome = ({
     tests,
 }: {
     appInfo: IAppInfo;
-    listTopics: ITopicResState[];
+    listTopics: ITopicBase[];
     tests: ITestInfo[];
     _state: string;
 }) => {

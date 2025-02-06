@@ -22,7 +22,7 @@ import {
     useRouter,
     useSearchParams,
 } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import AnswerButton from "../answer";
 import { MOCK_TEMP_LIST_ANSWER } from "./mock";
 import { shouldOpenSubmitTest } from "@/redux/features/tests";
@@ -51,6 +51,9 @@ const ChoicesPanel: React.FC<IProps> = ({
     const router = useRouter();
     const params = useParams();
     const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const type = searchParams?.get("type");
+
     const idTopic = useAppSelector(selectCurrentTopicId);
     const currentGame = useAppSelector(selectCurrentGame);
     const listQuestion = useAppSelector(selectListQuestion);
@@ -58,135 +61,115 @@ const ChoicesPanel: React.FC<IProps> = ({
     const subTopicProgressId = useAppSelector(selectCurrentSubTopicProgressId);
     const indexCurrentQuestion = useAppSelector(selectCurrentQuestionIndex);
     const isListen = useAppSelector(selectEnableKeyboardShortcuts);
-    const type = useSearchParams()?.get("type");
-    const [listLength, setListLength] = useState(0);
+    const listLength = listQuestion.length;
 
-    useEffect(() => {
-        if (listQuestion.length) setListLength(listQuestion.length);
-    }, [listQuestion.length]);
-
-    const [listRandomQuestion, setListRandomQuestion] = useState(
-        MOCK_TEMP_LIST_ANSWER
+    const listRandomQuestion = useMemo(
+        () =>
+            currentGame?.answers
+                ? shuffleArray(currentGame.answers)
+                : MOCK_TEMP_LIST_ANSWER,
+        [currentGame?.answers]
     );
 
-    useEffect(() => {
-        if (currentGame?.answers) {
-            const listRandomQuestion = shuffleArray(currentGame?.answers);
-            if (listRandomQuestion.length > 0)
-                setListRandomQuestion(listRandomQuestion);
-        }
-    }, [currentGame?.answers]);
-
-    const handleEnterLearning = useCallback(async () => {
-        const isFinal = listQuestion.every(
-            (item) => item.localStatus === "correct"
-        );
-        if (isFinal) {
-            dispatch(
-                finishQuestionThunk({
-                    subTopicProgressId: subTopicProgressId,
-                    topicId: idTopic,
-                })
+    const handleEnter = useCallback(async () => {
+        if (type === "learn") {
+            const isFinal = listQuestion.every(
+                (item) => item.localStatus === "correct"
             );
-
-            const _href = `/finish?subTopicProgressId=${subTopicProgressId}&topic=${params?.["slug"]}&partId=${idTopic}`;
-
-            router.push(_href, {
-                scroll: true,
-            });
+            if (isFinal) {
+                dispatch(
+                    finishQuestionThunk({
+                        subTopicProgressId,
+                        topicId: idTopic,
+                    })
+                );
+                router.replace(
+                    `/finish?subTopicId=${subTopicProgressId}&topic=${params?.["slug"]}&partId=${idTopic}`,
+                    { scroll: true }
+                );
+            } else {
+                dispatch(nextQuestionThunk());
+            }
             return;
         }
-        dispatch(nextQuestionThunk());
-    }, [dispatch, subTopicProgressId, params, listQuestion, router, idTopic]);
+        // xử lý với trường hợp làm bài practice test
+        if (type === "test") {
+            if (indexCurrentQuestion + 1 === listLength) {
+                dispatch(finishPracticeThunk());
 
-    const handleEnterPractice = useCallback(async () => {
-        if (indexCurrentQuestion + 1 === listLength) {
-            dispatch(finishPracticeThunk());
-
-            router.push(RouterApp.ResultTest, {
-                scroll: true,
-            });
-        } else {
-            dispatch(nextQuestionThunk());
+                router.push(RouterApp.ResultTest, {
+                    scroll: true,
+                });
+            } else {
+                dispatch(nextQuestionThunk());
+            }
+            return;
         }
-    }, [dispatch, indexCurrentQuestion, listLength, router]);
 
-    const handleEnterDiagnostic = useCallback(async () => {
-        if (indexCurrentQuestion + 1 === listLength) {
-            dispatch(finishDiagnosticThunk());
+        if (pathname?.includes("diagnostic_test")) {
+            if (indexCurrentQuestion + 1 === listLength) {
+                dispatch(finishDiagnosticThunk());
 
-            router.push(RouterApp.ResultTest, {
-                scroll: true,
-            });
-        } else {
-            dispatch(nextQuestionDiagnosticThunk());
+                router.push(RouterApp.ResultTest, {
+                    scroll: true,
+                });
+            } else {
+                dispatch(nextQuestionDiagnosticThunk());
+            }
+            return;
         }
-    }, [dispatch, indexCurrentQuestion, listLength, router]);
 
-    const handleEnterFinalTest = useCallback(() => {
-        if (indexCurrentQuestion + 1 < listLength) {
-            dispatch(viewTest(indexCurrentQuestion + 1));
-        } else {
-            dispatch(shouldOpenSubmitTest(true));
+        if (pathname?.includes("final_test")) {
+            if (indexCurrentQuestion + 1 < listLength) {
+                dispatch(viewTest(indexCurrentQuestion + 1));
+            } else {
+                dispatch(shouldOpenSubmitTest(true));
+            }
+            return;
         }
-    }, [dispatch, indexCurrentQuestion, listLength]);
 
-    const handleEnterCustomTest = useCallback(async () => {
-        if (feedBack === "newbie") {
-            dispatch(nextQuestionDiagnosticThunk());
+        if (pathname?.includes("custom_test")) {
+            if (feedBack === "newbie") dispatch(nextQuestionDiagnosticThunk());
+            else if (feedBack === "exam")
+                dispatch(viewTest(indexCurrentQuestion + 1));
+            else if (feedBack === "expert") dispatch(nextQuestionThunk());
         }
-        if (feedBack === "exam") {
-            dispatch(viewTest(indexCurrentQuestion + 1));
-        }
-        if (feedBack === "expert") {
-            dispatch(nextQuestionThunk());
-        }
-    }, [feedBack, indexCurrentQuestion, dispatch]);
+    }, [
+        dispatch,
+        listQuestion,
+        idTopic,
+        subTopicProgressId,
+        indexCurrentQuestion,
+        listLength,
+        type,
+        pathname,
+        router,
+        params,
+        feedBack,
+    ]);
 
-    const handleEnterEvent = useCallback(
+    const handleKeyboardEvent = useCallback(
         (event: globalThis.KeyboardEvent) => {
             if (currentGame?.answers && !currentGame.selectedAnswer) {
-                const key = event.key;
-                const index = parseInt(key, 10);
-
+                const index = parseInt(event.key, 10);
                 if (index >= 0 && index <= currentGame.answers.length) {
-                    const btn = document.getElementById(index.toString());
-                    btn?.click();
+                    document.getElementById(index.toString())?.click();
                 }
             }
 
-            if (event && event.code === "Enter" && currentGame.selectedAnswer) {
-                if (type === "learn") handleEnterLearning();
-                if (type === "test") handleEnterPractice();
-                if (pathname?.includes("diagnostic_test")) {
-                    handleEnterDiagnostic();
-                }
-
-                if (pathname?.includes("final_test")) handleEnterFinalTest();
-                if (pathname?.includes("custom_test")) handleEnterCustomTest();
+            if (event.code === "Enter" && currentGame.selectedAnswer) {
+                handleEnter();
             }
         },
-        [
-            handleEnterLearning,
-            handleEnterDiagnostic,
-            handleEnterFinalTest,
-            handleEnterCustomTest,
-            handleEnterPractice,
-            currentGame?.answers,
-            currentGame?.selectedAnswer,
-            type,
-            pathname,
-        ]
+        [handleEnter, currentGame?.answers, currentGame?.selectedAnswer]
     );
 
     useEffect(() => {
         if (!isBlockEnter && isListen)
-            document.addEventListener("keydown", handleEnterEvent, true);
-
-        return () => {
-            document.removeEventListener("keydown", handleEnterEvent, true);
-        };
-    }, [handleEnterEvent, isBlockEnter, isListen]);
+            document.addEventListener("keydown", handleKeyboardEvent, true);
+        return () =>
+            document.removeEventListener("keydown", handleKeyboardEvent, true);
+    }, [handleKeyboardEvent, isBlockEnter, isListen]);
 
     return (
         <div className={"grid gap-2 grid-cols-1 sm:grid-cols-2"}>

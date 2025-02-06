@@ -2,6 +2,7 @@ import CountTime from "@/components/countTime";
 import {
     selectCurrentGame,
     selectCurrentQuestionIndex,
+    selectIsGamePaused,
     selectListQuestion,
     selectRemainingTime,
 } from "@/redux/features/game.reselect";
@@ -20,11 +21,12 @@ const CountTimeDiagnostic = () => {
     const indexCurrentQuestion = useAppSelector(selectCurrentQuestionIndex);
     const listLength = listQuestion?.length || 0;
     const router = useRouter();
+    const isPause = useAppSelector(selectIsGamePaused);
 
     const handleEndTime = useCallback(() => {
         if (indexCurrentQuestion + 1 === listLength) {
             dispatch(finishDiagnosticThunk());
-            router.push(RouterApp.ResultTest, { scroll: true });
+            router.replace(RouterApp.ResultTest, { scroll: true });
         } else {
             if (!currentGame.selectedAnswer) {
                 dispatch(
@@ -37,7 +39,8 @@ const CountTimeDiagnostic = () => {
                             index: -1,
                             text: "",
                             turn: 1,
-                            type: "test",
+                            type: "diagnosticTest",
+                            parentId: -1,
                         },
                     })
                 );
@@ -45,9 +48,11 @@ const CountTimeDiagnostic = () => {
         }
     }, [indexCurrentQuestion, listLength, dispatch, currentGame, router]);
 
+    const pause = isPause || (currentGame?.selectedAnswer ? true : false);
+
     return (
         <CountTime
-            isPause={currentGame?.selectedAnswer ? true : false}
+            isPause={pause}
             key={currentGame?.id}
             duration={remainTime}
             onEndTime={handleEndTime}

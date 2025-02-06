@@ -1,8 +1,8 @@
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
 import { IExamData } from "@/models/tests/tests";
-import { ITestQuestion } from "@/models/tests/testQuestions";
+import { ITestBase } from "@/models/tests";
 import { ICurrentGame } from "@/models/game/game";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import { ITopicEndTest } from ".";
 import { TypeParam } from "@/constants";
 
@@ -16,7 +16,7 @@ export const filterCorrectList = (user: IUserQuestionProgress[]) => {
 export const getReviewTopics = (
     uniqueTags: string[],
     listQuestion: ICurrentGame[],
-    topics: ITopicProgress[]
+    topics: ITopicBase[]
 ): ITopicEndTest[] => {
     return uniqueTags
         .map((tag) => {
@@ -39,8 +39,8 @@ export const getReviewTopics = (
 
 type ITopics = {
     type: string | null;
-    topics: ITopicProgress[] | undefined;
-    questions: ITestQuestion | undefined;
+    topics: ITopicBase[] | undefined;
+    questions: ITestBase | undefined;
     listExam: IExamData[];
     listQuestion: ICurrentGame[];
 };
@@ -123,7 +123,7 @@ type IAll = {
     type: string | null;
     listExam: IExamData[];
     listQuestion: ICurrentGame[];
-    topics: ITopicProgress[] | undefined;
+    topics: ITopicBase[] | undefined;
 };
 export const processAllQuestions = ({
     listExam,

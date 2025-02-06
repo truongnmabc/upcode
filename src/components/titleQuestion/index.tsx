@@ -52,9 +52,11 @@ const TitleQuestion = ({ type }: { type?: string }) => {
         if (tempCount == 0) {
             setTimeout(() => {
                 tempCount = 0;
-            }, 5000);
+            }, 2000);
         }
         if (tempCount >= 3) {
+            tempCount = 0;
+            alert("♠️");
             dispatch(setIsTester(true));
         }
     };

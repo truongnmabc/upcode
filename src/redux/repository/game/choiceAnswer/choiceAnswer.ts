@@ -1,6 +1,6 @@
 import { db } from "@/db/db.model";
 import { ICurrentGame } from "@/models/game/game";
-import { IAnswer } from "@/models/question/questions";
+import { IAnswer } from "@/models/question";
 import { RootState } from "@/redux/store";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -29,9 +29,8 @@ const choiceAnswer = createAsyncThunk(
               ]
             : [
                   {
-                      turn: 1,
+                      turn: attemptNumber,
                       parentId: currentTopicId,
-
                       id: choice.id,
                       correct: choice.correct,
                       index: choice.index,

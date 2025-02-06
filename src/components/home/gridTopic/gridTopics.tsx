@@ -1,5 +1,5 @@
 import { IAppInfo } from "@/models/app/appInfo";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import clsx from "clsx";
 import React from "react";
 import PassingHome from "../passing";
@@ -11,7 +11,7 @@ const GridTopics = ({
     appInfo,
 }: {
     appInfo: IAppInfo;
-    topics: ITopicProgress[];
+    topics: ITopicBase[];
 }) => {
     return (
         <div className="w-full  pt-6 sm:pt-14">

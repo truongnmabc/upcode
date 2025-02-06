@@ -1,9 +1,9 @@
 "use client";
-import { IStatusAnswer } from "@/components/statusAnswer";
 import { db } from "@/db/db.model";
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
-import { IQuestion } from "@/models/question/questions";
-import { ITopicQuestion } from "@/models/question/topicQuestion";
+import { IQuestionOpt } from "@/models/question";
+import { IStatusAnswer } from "@/models/question/questions";
+import { IGameMode } from "@/models/tests";
 import { RootState } from "@/redux/store";
 import { requestGetData } from "@/services/request";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -18,24 +18,24 @@ type IInitQuestion = {
 
 interface IResInitQuestion {
     progressData?: IUserQuestionProgress[] | null | undefined;
-    questions?: IQuestion[];
+    questions: IQuestionOpt[];
     id: number;
     parentId: number;
-    gameMode: "learn" | "test";
+    gameMode: IGameMode;
 }
 
 /**
  * Processes the fetched question data.
- * @param {ITopicQuestion} questions - The database response.
+ * @param {IQuestionOpt} questions - The database response.
  * @param {IUserQuestionProgress[]} progressData - The progress data.
  * @param {boolean} isReset - Flag to reset progress.
  * @return {IResInitQuestion} The processed question data.
  */
 const processQuestions = (
-    questions: ITopicQuestion[],
+    questions: IQuestionOpt[],
     progressData: IUserQuestionProgress[],
     isReset?: boolean
-) => {
+): IQuestionOpt[] => {
     const list = isReset
         ? questions?.map((item) => ({
               ...item,
@@ -48,7 +48,12 @@ const processQuestions = (
               return {
                   ...que,
                   selectedAnswer: progress
-                      ? selectedAnswers[selectedAnswers.length - 1]
+                      ? {
+                            ...selectedAnswers[selectedAnswers.length - 1],
+                            explanation: "",
+                            index: 0,
+                            text: "",
+                        }
                       : null,
                   localStatus: (!progress
                       ? "new"
@@ -91,11 +96,11 @@ export const handleInitLearnQuestion = (
 /**
  * Initializes the state when no progress data exists.
  * @param {RootState["gameReducer"]} state - The game state.
- * @param {IQuestion[]} questions - The list of questions.
+ * @param {IQuestionOpt[]} questions - The list of questions.
  */
 const initializeNewState = (
     state: RootState["gameReducer"],
-    questions: IQuestion[]
+    questions: IQuestionOpt[]
 ) => {
     state.currentQuestionIndex = 0;
     state.currentGame = questions[0];
@@ -105,12 +110,12 @@ const initializeNewState = (
 /**
  * Updates the state based on existing progress data.
  * @param {RootState["gameReducer"]} state - The game state.
- * @param {IQuestion[]} questions - The list of questions.
+ * @param {IQuestionOpt[]} questions - The list of questions.
  * @param {IUserQuestionProgress[]} progressData - The user's progress data.
  */
 const updateExistingState = (
     state: RootState["gameReducer"],
-    questions: IQuestion[],
+    questions: IQuestionOpt[],
     progressData: IUserQuestionProgress[]
 ) => {
     const firstUnansweredIndex = questions.findIndex(
@@ -136,12 +141,12 @@ const updateExistingState = (
 /**
  * Handles the state when all questions have been answered once.
  * @param {RootState["gameReducer"]} state - The game state.
- * @param {IQuestion[]} questions - The list of questions.
+ * @param {IQuestionOpt[]} questions - The list of questions.
  * @param {IUserQuestionProgress[]} progressData - The user's progress data.
  */
 const handleAllQuestionsAnswered = (
     state: RootState["gameReducer"],
-    questions: IQuestion[],
+    questions: IQuestionOpt[],
     progressData: IUserQuestionProgress[]
 ) => {
     const wrongAnswers = questions.filter(
@@ -158,6 +163,17 @@ const handleAllQuestionsAnswered = (
         ...wrongAnswers[0],
         localStatus: "new",
         selectedAnswer: null,
+        paragraph: {
+            id: -1,
+            text: "",
+        },
+        partId: -1,
+        subTopicId: -1,
+        subTopicTag: "",
+        icon: "1",
+        contentType: 0,
+        tag: "",
+        turn: 1,
     };
     state.currentQuestionIndex = questions.findIndex(
         (item) => item?.id === wrongAnswers[0]?.id
@@ -189,7 +205,7 @@ const fetchQuestions = async ({
                 baseURL:
                     "https://api-cms-v2-dot-micro-enigma-235001.appspot.com",
             },
-        })) as IQuestion[];
+        })) as IQuestionOpt[];
 
         return {
             questions: data.map((item) => ({

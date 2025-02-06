@@ -1,12 +1,11 @@
+import CircleProgress from "@/components/circleProgress";
 import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic";
 import LazyLoadImage from "@/components/images";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { useAppDispatch } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
 import { ITopicEndTest } from "..";
-import CircleProgress from "@/components/circleProgress";
-import { selectAppInfo } from "@/redux/features/appInfo.reselect";
-import { useIsMobile } from "@/hooks/useIsMobile";
 
 type IProps = {
     item: ITopicEndTest;
@@ -15,18 +14,17 @@ type IProps = {
 const ItemListTopicResult: React.FC<IProps> = ({ item }) => {
     const progress = Math.floor((item.correct / item.totalQuestion) * 100);
     const router = useRouter();
-    const appInfo = useAppSelector(selectAppInfo);
     const isMobile = useIsMobile();
     const dispatch = useAppDispatch();
+
     const handleImprove = useCallback(() => {
         handleNavigateStudy({
-            appShortName: appInfo.appShortName,
             dispatch,
             router,
             topic: item,
             isReplace: true,
         });
-    }, [router, appInfo.appShortName, dispatch, item]);
+    }, [router, dispatch, item]);
 
     return (
         <div className="w-full p-4 rounded-xl border border-solid bg-white gap-2 sm:gap-4 flex flex-col sm:flex-row items-center justify-between">

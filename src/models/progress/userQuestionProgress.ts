@@ -1,4 +1,4 @@
-import { IAnswer } from "../question/questions";
+import { IAnswer } from "../question";
 
 export interface IUserQuestionProgress {
     selectedAnswers: Omit<IAnswer, "explanation" | "index" | "text">[];

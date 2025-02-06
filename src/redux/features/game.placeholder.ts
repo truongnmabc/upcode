@@ -1,5 +1,5 @@
-import { IStatusAnswer } from "@/components/statusAnswer";
 import { ICurrentGame, IGameReducer } from "@/models/game/game";
+import { IStatusAnswer } from "@/models/question/questions";
 
 export const plateHolderCurrentGame: ICurrentGame = {
     localStatus: "new" as IStatusAnswer,
@@ -10,13 +10,20 @@ export const plateHolderCurrentGame: ICurrentGame = {
     explanation: "",
     id: -1,
     level: 50,
-    question: "",
     topicId: -1,
     parentId: -1,
     status: 0,
     syncStatus: 0,
     image: "",
     partId: -1,
+    contentType: 0,
+    icon: "",
+    paragraphId: -1,
+    subTopicId: -1,
+    subTopicTag: "",
+    tag: "",
+    count: 1,
+    feedBack: "exam",
 };
 
 export const initGameReducer: IGameReducer = {

@@ -6,75 +6,81 @@ import { MtUiButton } from "@/components/button";
 import DialogResponsive from "@/components/dialogResponsive";
 import { db } from "@/db/db.model";
 import { ICurrentGame } from "@/models/game/game";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import ctx from "@/utils/mergeClass";
 import React, { useCallback, useEffect, useState } from "react";
 type IProps = {
-    result?: {
-        listTopic: ITopicEndTest[];
-        all: ICurrentGame[];
-        correct: ICurrentGame[];
-        incorrect: ICurrentGame[];
-    };
+    listTopic: ITopicEndTest[];
+    all: ICurrentGame[];
+    correctIds: number[];
     setTabletData?: (e: {
         all: ICurrentGame[];
         correct: ICurrentGame[];
         incorrect: ICurrentGame[];
     }) => void;
 };
-const FilterIcon: React.FC<IProps> = ({ setTabletData, result }) => {
+const FilterIcon: React.FC<IProps> = ({
+    setTabletData,
+    listTopic,
+    all,
+    correctIds,
+}) => {
     const [open, setOpen] = React.useState(false);
-    const [listTopic, setListTopic] = useState<ITopicProgress[]>([]);
-    const [selectListTopic, setSelectListTopic] = useState<ITopicProgress[]>(
-        []
-    );
+    const [topics, setTopics] = useState<ITopicBase[]>([]);
+    const [selectListTopic, setSelectListTopic] = useState<ITopicBase[]>([]);
 
     const handleClose = useCallback(() => setOpen(false), []);
     const handleOpen = useCallback(() => setOpen(true), []);
 
     const handleSelectAll = useCallback(() => {
-        if (
-            result?.listTopic.length &&
-            selectListTopic.length !== result?.listTopic.length
-        )
-            setSelectListTopic?.(result?.listTopic);
+        if (listTopic?.length && selectListTopic.length !== listTopic.length)
+            setSelectListTopic?.(listTopic);
 
-        if (selectListTopic.length === result?.listTopic.length)
+        if (selectListTopic.length === listTopic?.length)
             setSelectListTopic?.([]);
-    }, [result?.listTopic, selectListTopic]);
+    }, [listTopic, selectListTopic]);
 
     const handleApply = useCallback(() => {
-        if (!result?.all) return;
-        const newList = result?.all?.filter((item) =>
+        // Lọc danh sách câu hỏi thuộc các chủ đề đã chọn
+        const newList = all?.filter((item) =>
             selectListTopic.some(
-                (selectedTopic) => item.parentId === selectedTopic.id
+                (selectedTopic) => item.topicId === selectedTopic.id
             )
         );
 
+        // Xác định danh sách câu hỏi đúng và sai
+        const correctList = newList.filter((item) =>
+            correctIds.includes(item.id)
+        );
+        const incorrectList = newList.filter(
+            (item) => !correctIds.includes(item.id)
+        );
+
+        // Cập nhật state
         setTabletData?.({
             all: newList,
-            correct: newList.filter((item) => item.selectedAnswer?.correct),
-            incorrect: newList.filter((item) => !item.selectedAnswer?.correct),
+            correct: correctList,
+            incorrect: incorrectList,
         });
 
         handleClose();
-    }, [selectListTopic, setTabletData, handleClose, result]);
+    }, [selectListTopic, all, setTabletData, correctIds, handleClose]);
 
     useEffect(() => {
         const handleGetData = async () => {
             const data = await db?.topics.toArray();
             if (data) {
-                setListTopic(data);
+                setTopics(data);
             }
         };
         handleGetData();
     }, []);
 
     useEffect(() => {
-        if (result && result.listTopic?.length > 0) {
-            setSelectListTopic(result.listTopic);
+        if (listTopic?.length > 0) {
+            setSelectListTopic(listTopic);
         }
-    }, [result]);
+    }, [listTopic]);
 
     return (
         <div className=" rounded-lg px-2 sm:px-5 py-2 bg-[#5497FF1F]">
@@ -159,10 +165,10 @@ const FilterIcon: React.FC<IProps> = ({ setTabletData, result }) => {
                                     {
                                         "border-primary bg-primary ":
                                             selectListTopic.length ===
-                                            result?.listTopic.length,
+                                            listTopic.length,
                                         "border-[#21212152] ":
                                             selectListTopic.length !==
-                                            result?.listTopic.length,
+                                            listTopic.length,
                                     }
                                 )}
                             >
@@ -170,7 +176,7 @@ const FilterIcon: React.FC<IProps> = ({ setTabletData, result }) => {
                             </div>
                         </div>
                         <div className="grid mt-4 gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-3">
-                            {listTopic?.map((item) => (
+                            {topics?.map((item) => (
                                 <CardTopic
                                     item={item}
                                     key={item.id}

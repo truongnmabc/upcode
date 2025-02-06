@@ -2,7 +2,7 @@ import React from "react";
 import CardItem from "./card";
 import { ITestInfo } from "@/models/tests/tests";
 import { IAppInfo } from "@/models/app/appInfo";
-import { ITopicResState } from "@/models/topics/topics";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 
 const ItemTopicHome = ({
     topic,
@@ -10,7 +10,7 @@ const ItemTopicHome = ({
     _state,
     test,
 }: {
-    topic: ITopicResState;
+    topic: ITopicBase;
     test?: ITestInfo;
     _state: string;
     appInfo: IAppInfo;

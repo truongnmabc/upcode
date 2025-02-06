@@ -1,7 +1,7 @@
 "use client";
 import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import { setIndexSubTopic, setTurtGame } from "@/redux/features/game";
 import {
     selectAttemptNumber,
@@ -17,10 +17,10 @@ import { IconSubTopic } from "./iconTopic";
 import { AllowExpandContext, IContextAllowExpand } from "./provider";
 
 type IProps = {
-    part: ITopicProgress;
+    part: ITopicBase;
     index: number;
     isPass: boolean;
-    readySubTopic?: ITopicProgress;
+    readySubTopic?: ITopicBase;
 };
 
 const IconProgress = ({ part, index, isPass, readySubTopic }: IProps) => {

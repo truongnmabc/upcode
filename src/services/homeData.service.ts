@@ -1,7 +1,7 @@
 import axiosInstance from "@/config/axios";
 import { API_PATH } from "@/constants/api.constants";
 import { IAppInfo } from "@/models/app/appInfo";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import { fetchAppData } from "@/utils/getAppInfos";
 import fs from "fs/promises";
 import path from "path";
@@ -18,7 +18,7 @@ const filePaths = {
 // ✅ Type cho dữ liệu trả về
 interface IRes {
     appInfos: IAppInfo;
-    topics: ITopicProgress[];
+    topics: ITopicBase[];
     contentSeo: string;
 }
 
@@ -38,7 +38,7 @@ export const fetchAppDataHomePage = async (
     appShortName: string
 ): Promise<IRes> => {
     let appInfos: IAppInfo = {} as IAppInfo;
-    let topics: ITopicProgress[] = [];
+    let topics: ITopicBase[] = [];
     let contentSeo = "";
 
     try {
@@ -48,7 +48,7 @@ export const fetchAppDataHomePage = async (
             // 📌 Đọc dữ liệu từ file JSON nếu là Single App
             const [appInfosData, topicsData, seoData] = await Promise.all([
                 readJsonFile<IAppInfo>(filePaths.appInfos),
-                readJsonFile<{ topic: ITopicProgress[] }>(filePaths.topics),
+                readJsonFile<{ topic: ITopicBase[] }>(filePaths.topics),
                 readJsonFile<{ content: string }>(filePaths.seo),
             ]);
 
@@ -70,7 +70,7 @@ export const fetchAppDataHomePage = async (
         } else {
             // 📌 Gọi API nếu không phải Single App
             const [topicsRes, seoRes, appInfoRes] = await Promise.all([
-                axiosInstance.get<{ topic: ITopicProgress[] }>(
+                axiosInstance.get<{ topic: ITopicBase[] }>(
                     `${API_PATH.GET_DATA_STUDY}/${appShortName}`
                 ),
                 axiosInstance.get<{ content: string }>(

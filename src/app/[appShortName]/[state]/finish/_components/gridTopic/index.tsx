@@ -1,7 +1,7 @@
 import AllowExpand from "@/components/allowExpand";
 import AllowExpandProvider from "@/components/allowExpand/provider";
 import { db } from "@/db/db.model";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import { selectTopics } from "@/redux/features/study";
 import { useAppDispatch } from "@/redux/hooks";
 import clsx from "clsx";
@@ -9,7 +9,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 const GridTopicProgress = () => {
-    const [listSubTopics, setListSubTopics] = useState<ITopicProgress | null>();
+    const [listSubTopics, setListSubTopics] = useState<ITopicBase | null>();
     const slug = useSearchParams()?.get("topic");
     const dispatch = useAppDispatch();
     const pathname = usePathname();
@@ -18,7 +18,7 @@ const GridTopicProgress = () => {
             const data = await db?.topics.where("slug").equals(slug).first();
             if (data) {
                 dispatch(selectTopics(data.id));
-                setListSubTopics(data as ITopicProgress);
+                setListSubTopics(data as ITopicBase);
             }
         }
     }, [slug, dispatch]);

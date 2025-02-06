@@ -8,14 +8,6 @@ import {
 } from "@mui/icons-material";
 import React from "react";
 
-export type IStatusAnswer =
-    | "incorrect"
-    | "correct"
-    | "learning"
-    | "review"
-    | "new"
-    | "skip";
-
 const StatusAnswer = () => {
     const currentGame = useAppSelector(selectCurrentGame);
     if (currentGame?.localStatus === "incorrect") {

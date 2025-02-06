@@ -1,8 +1,8 @@
 import React from "react";
 import ItemTopicHome from "./item";
-import { ITopicResState } from "@/models/topics/topics";
 import { IAppInfo } from "@/models/app/appInfo";
 import { ITestInfo } from "@/models/tests/tests";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 const listImg = {
     "general-knowledge": {
         lear: "/images/cdl_v2/home/1.png",
@@ -51,7 +51,7 @@ const ListHome = ({
     _state,
 }: {
     appInfo: IAppInfo;
-    listTopics: ITopicResState[];
+    listTopics: ITopicBase[];
     tests: ITestInfo[];
     _state: string;
 }) => {
@@ -60,10 +60,7 @@ const ListHome = ({
             {listTopics.map((topic, index) => (
                 <ItemTopicHome
                     key={index}
-                    topic={{
-                        ...topic,
-                        img: listImg[topic.tag as ListImgKey]?.lear,
-                    }}
+                    topic={topic}
                     test={tests
                         .map((item) => ({
                             ...item,

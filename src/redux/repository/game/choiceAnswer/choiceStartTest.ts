@@ -1,30 +1,29 @@
 "use client";
 
-import { ITopicQuestion } from "@/models/question/topicQuestion";
-import { ITestQuestion } from "@/models/tests/testQuestions";
+import { db } from "@/db/db.model";
+import { ITestBase } from "@/models/tests";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-    getLocalUserProgress,
-    mapQuestionsWithProgress,
-} from "../initData/initPracticeTest";
+import { getLocalUserProgress } from "../initData/initPracticeTest";
 
-interface IProps extends ITestQuestion {
+interface IProps extends ITestBase {
     indexSubTopic: number;
 }
 const choiceStartCustomTestThunk = createAsyncThunk(
     "startCustomTest",
     async ({ item }: { item: IProps }) => {
-        const listQuestion = item?.question;
+        const listIds = item?.groupExamData.flatMap((item) => item.questionIds);
         const progressData = await getLocalUserProgress(
-            [item.id],
-            "test",
-            item.attemptNumber + 1
+            listIds,
+            "customTets",
+            item.attemptNumber
         );
+
+        const questions = await db?.questions
+            .where("id")
+            .anyOf(listIds)
+            .toArray();
+
         if (progressData) {
-            const questions = mapQuestionsWithProgress(
-                listQuestion as ITopicQuestion[],
-                progressData
-            );
             return {
                 questions,
                 progressData,

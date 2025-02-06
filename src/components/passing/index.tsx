@@ -1,4 +1,5 @@
 "use client";
+
 import { calculatePassingApp } from "@/app/[appShortName]/[state]/finish/_components/calculate";
 import React, { useEffect, useState } from "react";
 import "./passing.css";
@@ -10,14 +11,7 @@ const PassingProbability = () => {
         const handleGetData = async () => {
             try {
                 const passing = await calculatePassingApp();
-
-                if (passing) {
-                    const passingRounded = Math.round(passing * 10) / 10;
-
-                    setPassingValue(passingRounded);
-                } else {
-                    setPassingValue(0);
-                }
+                setPassingValue(passing ? Math.round(passing * 10) / 10 : 0);
             } catch (error) {
                 console.error("Error in handleGetData:", error);
                 setPassingValue(0);
@@ -25,6 +19,7 @@ const PassingProbability = () => {
         };
         handleGetData();
     }, []);
+
     return (
         <div className="p-4 rounded-md bg-[#2121210A] dark:bg-black">
             <h3 className="font-semibold truncate text-lg">
@@ -36,7 +31,7 @@ const PassingProbability = () => {
                     max={100}
                     className="w-full"
                 ></progress>
-                <div className="progress-label ">{passingValue}%</div>
+                <div className="progress-label">{passingValue}%</div>
             </div>
         </div>
     );

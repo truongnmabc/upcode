@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 // import withPlugins from "next-compose-plugins";
 
 const nextConfig: NextConfig = {
-    reactStrictMode: false,
+    reactStrictMode: true,
     eslint: {
         ignoreDuringBuilds: false,
     },

@@ -1,9 +1,8 @@
 "use client";
 
 import { db } from "@/db/db.model";
-import { IQuestion } from "@/models/question/questions";
-import { ITopicQuestion } from "@/models/question/topicQuestion";
-import { ITestQuestion } from "@/models/tests/testQuestions";
+import { IQuestionOpt } from "@/models/question";
+import { ITestBase } from "@/models/tests";
 import { RootState } from "@/redux/store";
 import { generateRandomNegativeId } from "@/utils/math";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -11,7 +10,7 @@ import {
     getLocalUserProgress,
     mapQuestionsWithProgress,
 } from "./initPracticeTest";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import { IGroupExam } from "@/models/tests/tests";
 
 /**
@@ -45,12 +44,12 @@ export const setDataStoreDiagnostic = async ({
     });
 };
 
-const mixData = async ({
+export const generateGroupExamData = async ({
     topics,
     questions,
 }: {
-    topics: ITopicProgress[];
-    questions: ITopicQuestion[];
+    topics: ITopicBase[];
+    questions: IQuestionOpt[];
 }) => {
     return topics.map((topic) => {
         // Lấy danh sách các subtopic thuộc topic hiện tại
@@ -62,10 +61,11 @@ const mixData = async ({
             .map((question) => question.id);
 
         return {
-            title: topic.name,
+            topicName: topic.name,
             passingPercent: 0,
             totalQuestion: questionIds.length,
             questionIds,
+            topicId: topic.id,
         };
     });
 };
@@ -78,23 +78,9 @@ const getTopics = async () => {
 };
 
 /**
- * Lấy danh sách câu hỏi của một subtopic từ database.
- */
-export const getQuestionsBySubtopic = async (subtopicId: number) => {
-    const ques = await db?.questions
-        .where("parentId")
-        .equals(subtopicId)
-        .toArray();
-
-    return ques
-        ?.filter((item) => item.contentType === 0)
-        ?.flatMap((item) => item?.questions) as IQuestion[];
-};
-
-/**
  * Chọn câu hỏi ngẫu nhiên từ danh sách câu hỏi.
  */
-export const getRandomQuestion = (questions: ITopicQuestion[]) => {
+export const getRandomQuestion = (questions: IQuestionOpt[]) => {
     const priorityQuestions = questions?.filter(
         (item) => item.level === -1 || item.level === 50
     );
@@ -112,7 +98,7 @@ export const getRandomQuestion = (questions: ITopicQuestion[]) => {
 
 export const createNewDiagnosticTest = async () => {
     const id = generateRandomNegativeId();
-    const listQuestion: ITopicQuestion[] = [];
+    const listQuestion: IQuestionOpt[] = [];
 
     const topics = await getTopics();
     if (!topics?.length) {
@@ -133,6 +119,7 @@ export const createNewDiagnosticTest = async () => {
             isGamePaused: false,
             currentTopicId: id,
             progressData: [],
+            attemptNumber: 1,
         };
     }
 
@@ -148,6 +135,7 @@ export const createNewDiagnosticTest = async () => {
             isGamePaused: false,
             currentTopicId: id,
             progressData: [],
+            attemptNumber: 1,
         };
     }
 
@@ -162,7 +150,7 @@ export const createNewDiagnosticTest = async () => {
             listQuestion.push(randomItem);
         }
     }
-    const groupExamData = await mixData({
+    const groupExamData = await generateGroupExamData({
         topics,
         questions: listQuestion,
     });
@@ -179,18 +167,20 @@ export const createNewDiagnosticTest = async () => {
         isGamePaused: false,
         currentTopicId: id,
         progressData: [],
+        attemptNumber: 1,
     };
 };
 
 /**
  * Lấy dữ liệu bài kiểm tra đã tồn tại từ database.
  */
-export const getExistingDiagnosticTest = async (diagnostic: ITestQuestion) => {
+export const getExistingDiagnosticTest = async (diagnostic: ITestBase) => {
     const listIds =
         diagnostic.groupExamData?.flatMap((item) => item.questionIds) || [];
+
     const progressData = await getLocalUserProgress(
         listIds,
-        "test",
+        "diagnosticTest",
         diagnostic.attemptNumber
     );
 
@@ -199,13 +189,17 @@ export const getExistingDiagnosticTest = async (diagnostic: ITestQuestion) => {
 
     const list =
         (await db?.questions.where("id").anyOf(quesID).toArray()) || [];
-    const questions = mapQuestionsWithProgress(list, progressData || []);
+    const questions = mapQuestionsWithProgress(
+        list,
+        progressData || []
+    ) as IQuestionOpt[];
 
     return {
         progressData,
         listQuestion: questions,
-        isGamePaused: true,
+        isGamePaused: diagnostic.isGamePaused,
         currentTopicId: diagnostic.id,
+        attemptNumber: diagnostic.attemptNumber,
     };
 };
 
@@ -227,7 +221,6 @@ const initDiagnosticTestQuestionThunk = createAsyncThunk(
         const diagnostic = await db?.testQuestions
             .where("gameMode")
             .equals("diagnosticTest")
-            .filter((item) => item.status === 0)
             .first();
 
         return diagnostic
