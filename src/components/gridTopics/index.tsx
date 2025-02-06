@@ -4,7 +4,7 @@ import AllowExpand from "@/components/allowExpand";
 import AllowExpandProvider from "@/components/allowExpand/provider";
 import TitleTopic from "@/components/home/gridTopic/item/titleTopic";
 import { db } from "@/db/db.model";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useAppSelector } from "@/redux/hooks";
@@ -14,7 +14,7 @@ import Collapse from "@mui/material/Collapse";
 import { useSearchParams } from "next/navigation";
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 
-export const generateMockTopics = (size: number): ITopicProgress[] => {
+export const generateMockTopics = (size: number): ITopicBase[] => {
     return Array.from({ length: size }, (_, index) => {
         return {
             id: index,
@@ -29,16 +29,17 @@ export const generateMockTopics = (size: number): ITopicProgress[] => {
             slug: "",
             averageLevel: 0, // or any default value
             turn: 0, // or any default value
+            partId: -1,
         };
     });
 };
-export const mockData: ITopicProgress[] = generateMockTopics(10);
+export const mockData: ITopicBase[] = generateMockTopics(10);
 
 const FN = () => {
     const appInfo = useAppSelector(selectAppInfo);
     const selectedTopics = useAppSelector(selectTopicsId);
     const [listMainTopics, setListMainTopics] =
-        useState<ITopicProgress[]>(mockData);
+        useState<ITopicBase[]>(mockData);
     const type = useSearchParams()?.get("type");
 
     const [open, setOpen] = React.useState(type === "learn");

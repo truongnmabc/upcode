@@ -3,55 +3,21 @@ import { RootState } from "@/redux/store";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 type IRes = {
-    type: "customTest" | "finalTest" | "diagnosticTest" | "practiceTest";
-};
-
-const deleteDataQuestion = async (parentId?: number) => {
-    if (parentId) {
-        await db?.testQuestions
-            .where("parentId")
-            .equals(parentId)
-            .delete()
-            .then((res) => console.log("deleteDataQuestion", res))
-            .catch((err) => console.log("err", err));
-    }
-};
-
-const deleteDataUser = async (parentId?: number) => {
-    if (parentId) {
-        await db?.userProgress
-            .where("parentId")
-            .equals(parentId)
-            .and((item) => item.gameMode === "test")
-            .delete()
-            .then((res) => console.log("delete success", res));
-    }
+    type: "customTest" | "finalTests" | "diagnosticTest" | "practiceTests";
 };
 
 const resumedTestThunk = createAsyncThunk(
     "resumedTestThunk",
-    async ({ type }: IRes, thunkAPI) => {
-        const state = thunkAPI.getState() as RootState;
-        const { currentTopicId } = state.gameReducer;
-
-        if (type === "diagnosticTest") {
-            const data = await db?.testQuestions
-                ?.where("gameMode")
-                .equals(type)
-                .first();
-
-            if (data) {
-                deleteDataQuestion(currentTopicId);
-                deleteDataUser(currentTopicId);
-                return {
-                    remainTime: 60,
-                    listQuestion: data?.question,
-                };
-            }
-        } else {
-            deleteDataUser(currentTopicId);
-        }
-        return undefined;
+    async ({ type }: IRes) => {
+        await db?.testQuestions
+            ?.where("gameMode")
+            .equals(type)
+            .modify((item) => {
+                item.attemptNumber = item.attemptNumber + 1;
+                item.isGamePaused = false;
+                item.elapsedTime = 0;
+                item.status = 0;
+            });
     }
 );
 
@@ -59,14 +25,14 @@ export default resumedTestThunk;
 
 export const updateTimeTest = createAsyncThunk(
     "updateTimeTest",
-    async ({}, thunkAPI) => {
+    async (_, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
         const { currentTopicId } = state.gameReducer;
         await db?.testQuestions
-            .where("parentId")
+            .where("id")
             .equals(currentTopicId)
             .modify((item) => {
-                item.startTime = new Date().getTime();
+                item.startTime = Date.now();
             });
     }
 );

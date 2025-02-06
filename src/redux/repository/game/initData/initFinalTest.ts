@@ -1,14 +1,15 @@
 "use client";
 
 import { db } from "@/db/db.model";
-import { ICurrentGame } from "@/models/game/game";
+import { IQuestionOpt } from "@/models/question";
+import { IGameMode } from "@/models/tests";
+import { RootState } from "@/redux/store";
+import { requestGetData } from "@/services/request";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
     getLocalUserProgress,
     mapQuestionsWithProgress,
 } from "./initPracticeTest";
-import { requestGetData } from "@/services/request";
-import { RootState } from "@/redux/store";
 
 const updateDB = async () => {
     db?.testQuestions
@@ -45,7 +46,7 @@ const initFinalTestThunk = createAsyncThunk(
 
             const progressData = await getLocalUserProgress(
                 listIds,
-                "test",
+                "finalTests",
                 dataStore.attemptNumber
             );
 
@@ -53,13 +54,14 @@ const initFinalTestThunk = createAsyncThunk(
                 const questions = mapQuestionsWithProgress(
                     questionsDb,
                     progressData
-                );
+                ) as IQuestionOpt[];
                 await updateDB();
                 return {
                     questions,
                     progressData,
+                    attemptNumber: dataStore.attemptNumber,
                     currentTopicId: dataStore.id,
-                    gameMode: "test" as const,
+                    gameMode: "finalTests" as IGameMode,
                     totalDuration: dataStore.totalDuration,
                     isGamePaused: dataStore?.isGamePaused || false,
                     remainingTime:
@@ -78,10 +80,10 @@ const initFinalTestThunk = createAsyncThunk(
             });
 
             return {
-                questions: data as ICurrentGame[],
+                questions: data as IQuestionOpt[],
                 progressData: [],
                 currentTopicId: 4886547081986048,
-                gameMode: "test" as const,
+                gameMode: "finalTests" as IGameMode,
                 totalDuration: 150,
                 isGamePaused: false,
                 remainingTime: 150 * 60,

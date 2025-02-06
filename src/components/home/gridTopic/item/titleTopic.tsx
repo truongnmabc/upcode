@@ -4,7 +4,7 @@ import MtUiRipple, { useRipple } from "@/components/ripple";
 import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { selectSubTopics, selectTopics } from "@/redux/features/study";
 import { selectTopicsId } from "@/redux/features/study.reselect";
@@ -18,17 +18,18 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Priority from "./priority";
-import { setIndexSubTopic } from "@/redux/features/game";
+import { setIndexSubTopic, setTurtGame } from "@/redux/features/game";
 
 export const handleGetNextPart = async ({
     topic,
 }: {
-    topic: ITopicProgress;
+    topic: ITopicBase;
 }): Promise<{
     partId?: number;
     subTopicId: number;
     allCompleted?: boolean;
     currentIndex: number;
+    turn?: number;
 }> => {
     const currentTopic = await db?.topics.where("id").equals(topic?.id).first();
 
@@ -74,18 +75,18 @@ export const handleGetNextPart = async ({
         partId: nextPart?.id,
         subTopicId: nextPart?.parentId || -1,
         currentIndex,
+        turn: nextPart?.turn,
     };
 };
 
-const findNextPart = (subTopic: ITopicProgress) => {
+const findNextPart = (subTopic: ITopicBase) => {
     return subTopic.topics.find((item) => item.status === 0);
 };
 
 type IPropsHandleNavigateStudy = {
-    topic: ITopicProgress;
+    topic: ITopicBase;
     dispatch: AppDispatch;
     router: AppRouterInstance;
-    appShortName: string;
     isReplace?: boolean;
 };
 
@@ -95,7 +96,7 @@ export const handleNavigateStudy = async ({
     router,
     isReplace = false,
 }: IPropsHandleNavigateStudy) => {
-    const { partId, subTopicId, allCompleted, currentIndex } =
+    const { partId, subTopicId, allCompleted, currentIndex, turn } =
         await handleGetNextPart({
             topic,
         });
@@ -122,7 +123,12 @@ export const handleNavigateStudy = async ({
             subTopicId: Number(subTopicId),
         })
     );
-
+    if (turn)
+        dispatch(
+            setTurtGame({
+                turn: turn,
+            })
+        );
     if (isReplace) return router.push(_href);
     router.push(_href);
 };
@@ -133,7 +139,7 @@ const TitleTopic = ({
     classNames,
     imgClassNames,
 }: {
-    topic: ITopicProgress;
+    topic: ITopicBase;
     priority: number;
     classNames: string;
     imgClassNames?: string;
@@ -159,7 +165,6 @@ const TitleTopic = ({
 
         if (!isMobile && currentPathname === RouterApp.Home) {
             return handleNavigateStudy({
-                appShortName: appInfo.appShortName,
                 dispatch,
                 router,
                 topic,

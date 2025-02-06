@@ -49,6 +49,16 @@ const finishQuestionThunk = createAsyncThunk(
                 topics: updatedTopics,
                 status: isAllSubTopicsCompleted ? 1 : currentProgress.status,
             });
+
+            // await db?.topics
+            //     .where("id")
+            //     .equals(currentProgress.id)
+            //     .modify((item) => {
+            //         (item.topics = updatedTopics),
+            //             (item.status = isAllSubTopicsCompleted
+            //                 ? 1
+            //                 : currentProgress.status);
+            //     });
         } catch (error) {
             console.error("Error in finishQuestionThunk:", error);
         }

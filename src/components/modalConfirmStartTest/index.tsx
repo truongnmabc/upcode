@@ -17,6 +17,7 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { usePathname, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect } from "react";
+import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -31,6 +32,7 @@ const ModalConfirm = () => {
     const [open, setOpen] = React.useState(false);
     const pathname = usePathname();
     const typeParam = useSearchParams()?.get("type");
+    const testId = useSearchParams()?.get("testId");
     const dispatch = useAppDispatch();
     const isPaused = useAppSelector(selectIsGamePaused);
     const idTopic = useAppSelector(selectCurrentTopicId);
@@ -41,25 +43,31 @@ const ModalConfirm = () => {
             resumedTestThunk({
                 type:
                     typeParam === "test"
-                        ? "practiceTest"
+                        ? "practiceTests"
                         : pathname?.includes("custom_test")
                         ? "customTest"
                         : pathname?.includes("final_test")
-                        ? "finalTest"
+                        ? "finalTests"
                         : "diagnosticTest",
             })
         );
         if (pathname?.includes("diagnostic_test")) {
             dispatch(initDiagnosticTestQuestionThunk());
         }
-
+        if (pathname?.includes("practice_test") && testId) {
+            dispatch(
+                initTestQuestionThunk({
+                    testId: Number(testId),
+                })
+            );
+        }
         dispatch(startOverGame());
         setOpen(false);
-    }, [typeParam, pathname, dispatch]);
+    }, [typeParam, pathname, dispatch, testId]);
 
     const handleContinue = useCallback(() => {
-        dispatch(continueGame());
         dispatch(updateTimeTest());
+        dispatch(continueGame());
         setOpen(false);
     }, [dispatch]);
 
@@ -76,7 +84,7 @@ const ModalConfirm = () => {
 
     useEffect(() => {
         return () => {
-            if (idTopic && idTopic !== -1 && type === "test") {
+            if (idTopic && idTopic !== -1 && type !== "learn") {
                 dispatch(
                     pauseTestThunk({
                         testId: idTopic,

@@ -17,33 +17,37 @@ const initCustomTestThunk = createAsyncThunk(
                 .isDataFetched;
         }
 
-        const list = await db?.testQuestions
+        const currentTest = await db?.testQuestions
             .where("gameMode")
             .equals("customTets")
-            .toArray();
+            .filter((item) => item.status === 0)
+            .first();
 
-        if (list && list?.length > 0) {
-            const currentTest = list.find((item) => item.status === 0);
-            if (currentTest) {
-                const progressData = await getLocalUserProgress(
-                    currentTest.parentId,
-                    "test",
-                    currentTest.attemptNumber
-                );
+        if (currentTest) {
+            const listIds =
+                currentTest.groupExamData.flatMap((i) => i.questionIds) || [];
 
-                return {
-                    progressData: progressData || [],
-                    questions: currentTest.question,
-                    currentTopicId: currentTest.id,
-                    gameMode: "test" as "test" | "learn",
-                    totalDuration: currentTest.totalDuration,
-                    isGamePaused: currentTest.isGamePaused,
-                    remainingTime: currentTest.remainingTime,
-                    passingThreshold: currentTest.passingThreshold,
-                    attemptNumber: currentTest.attemptNumber,
-                };
-            }
-            return null;
+            const progressData = await getLocalUserProgress(
+                listIds,
+                "customTets",
+                currentTest.attemptNumber
+            );
+            const questionsFromDb = await db?.questions
+                .where("id")
+                .anyOf(listIds)
+                .toArray();
+
+            return {
+                progressData: progressData || [],
+                questions: questionsFromDb,
+                currentTopicId: currentTest.id,
+                gameMode: "customTets",
+                totalDuration: currentTest.totalDuration,
+                isGamePaused: currentTest.isGamePaused,
+                remainingTime: currentTest.remainingTime,
+                passingThreshold: currentTest.passingThreshold,
+                attemptNumber: currentTest.attemptNumber,
+            };
         }
         return null;
     }

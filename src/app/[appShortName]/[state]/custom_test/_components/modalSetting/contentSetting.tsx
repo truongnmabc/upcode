@@ -1,6 +1,6 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
 import { MtUiButton } from "@/components/button";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import { Dispatch, SetStateAction } from "react";
 import { IFeedBack } from ".";
 import { CardFeeBack } from "./cardFeedBack";
@@ -19,9 +19,9 @@ type IProps = {
     setPassing: Dispatch<SetStateAction<number>>;
     passing: number;
     handleSelectAll: () => void;
-    listTopic: ITopicProgress[];
-    selectListTopic: ITopicProgress[];
-    setSelectListTopic: Dispatch<SetStateAction<ITopicProgress[]>>;
+    listTopic: ITopicBase[];
+    selectListTopic: ITopicBase[];
+    setSelectListTopic: Dispatch<SetStateAction<ITopicBase[]>>;
     onStart: () => Promise<void>;
     loading: boolean;
 };

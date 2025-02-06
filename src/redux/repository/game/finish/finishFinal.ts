@@ -10,10 +10,9 @@ const finishFinalThunk = createAsyncThunk(
         const { currentTopicId } = state.gameReducer;
         try {
             await db?.testQuestions
-                .where("parentId")
+                .where("id")
                 .equals(currentTopicId)
                 .modify((item) => {
-                    item.attemptNumber = item.attemptNumber + 1;
                     item.isGamePaused = false;
                     item.status = 1;
                 });

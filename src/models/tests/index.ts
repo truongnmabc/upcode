@@ -6,7 +6,8 @@ export type IGameMode =
     | "diagnosticTest"
     | "customTets"
     | "learn";
-export interface ITestQuestion {
+
+export interface ITestBase {
     id: number;
     totalDuration: number;
     isGamePaused: boolean;
@@ -20,5 +21,5 @@ export interface ITestQuestion {
     status: number;
     attemptNumber: number;
     topicIds: number[];
-    groupExamData?: IGroupExam[];
+    groupExamData: IGroupExam[];
 }

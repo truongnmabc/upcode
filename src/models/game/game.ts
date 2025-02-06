@@ -1,15 +1,14 @@
 import { IFeedBack } from "@/app/[appShortName]/[state]/custom_test/_components/modalSetting";
-import { IStatusAnswer } from "@/components/statusAnswer";
-import { IAnswer } from "@/models/question/questions";
-import { ITopicQuestion, ITopicQuestionState } from "../question/topicQuestion";
-import { IGameMode } from "../tests/testQuestions";
+import { IAnswer } from "@/models/question";
+import { IQuestionOpt } from "../question";
+import { IGameMode } from "../tests";
+import { IStatusAnswer } from "../question/questions";
 
-export interface ICurrentGame extends ITopicQuestion {
+export interface ICurrentGame extends IQuestionOpt {
     localStatus?: IStatusAnswer;
     selectedAnswer?: IAnswer | null;
     feedBack?: IFeedBack;
     passing?: number;
-    image?: string;
     type?: IGameMode;
     partId: number;
     id: number;
@@ -18,7 +17,7 @@ export interface ICurrentGame extends ITopicQuestion {
 }
 export interface IGameReducer {
     currentGame: ICurrentGame;
-    listQuestion: ITopicQuestionState[];
+    listQuestion: IQuestionOpt[];
 
     // idTopic: number;
     currentTopicId: number; // ID của chủ đề hiện tại trong game

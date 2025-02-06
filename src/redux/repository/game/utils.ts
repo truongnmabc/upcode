@@ -1,13 +1,13 @@
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
-import { ITopicQuestionState } from "@/models/question/topicQuestion";
-import { IGameMode } from "@/models/tests/testQuestions";
+import { IQuestionOpt } from "@/models/question";
+import { IGameMode } from "@/models/tests";
 import { RootState } from "@/redux/store";
 
 export const handleInitTestQuestion = (
     state: RootState["gameReducer"],
     payload: {
         progressData: IUserQuestionProgress[];
-        questions: ITopicQuestionState[];
+        questions: IQuestionOpt[];
         gameMode: IGameMode;
         currentTopicId: number;
         totalDuration: number;

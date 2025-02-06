@@ -1,37 +1,14 @@
-import React from "react";
-import Drawer from "@mui/material/Drawer";
 import IconBack from "@/components/icon/iconBack";
 import ReviewAnswerResult from "@/components/reviewAnswers";
-import { ITopicEndTest } from "..";
-import { ICurrentGame } from "@/models/game/game";
+import Drawer from "@mui/material/Drawer";
+import { useResultContext } from "../resultContext";
 
 type IProps = {
     openDrawer: boolean;
     handleCloseDrawer: () => void;
-    tableData: {
-        all: ICurrentGame[];
-        correct: ICurrentGame[];
-        incorrect: ICurrentGame[];
-    };
-    result?: {
-        listTopic: ITopicEndTest[];
-        all: ICurrentGame[];
-        correct: ICurrentGame[];
-        incorrect: ICurrentGame[];
-    };
-    setTabletData?: (e: {
-        all: ICurrentGame[];
-        correct: ICurrentGame[];
-        incorrect: ICurrentGame[];
-    }) => void;
 };
-const DrawerAnswers = ({
-    openDrawer,
-    handleCloseDrawer,
-    tableData,
-    setTabletData,
-    result,
-}: IProps) => {
+const DrawerAnswers = ({ openDrawer, handleCloseDrawer }: IProps) => {
+    const { tableData, setTableData, listTopic } = useResultContext();
     return (
         <Drawer
             open={openDrawer}
@@ -59,8 +36,8 @@ const DrawerAnswers = ({
                         all={tableData.all}
                         correct={tableData.correct}
                         incorrect={tableData.incorrect}
-                        setTabletData={setTabletData}
-                        result={result}
+                        setTabletData={setTableData}
+                        listTopic={listTopic}
                         type="custom"
                     />
                 </div>

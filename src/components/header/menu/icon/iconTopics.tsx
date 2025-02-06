@@ -2,8 +2,7 @@
 
 import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic";
 import { db } from "@/db/db.model";
-import { selectAppInfo } from "@/redux/features/appInfo.reselect";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
@@ -12,12 +11,10 @@ const FN = () => {
     const pathname = usePathname();
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const appInfo = useAppSelector(selectAppInfo);
     const handleNavigate = async () => {
         const topics = await db?.topics.toArray();
         if (topics)
             return handleNavigateStudy({
-                appShortName: appInfo.appShortName,
                 dispatch,
                 router,
                 topic: topics[0],

@@ -2,14 +2,14 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
 import { db } from "@/db/db.model";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import AllowExpandProvider from "@/components/allowExpand/provider";
 const AllowExpand = dynamic(() => import("@/components/allowExpand"), {
     ssr: false,
 });
 
 const Wrapper = ({ topicsId }: { topicsId: number }) => {
-    const [topic, setTopic] = useState<ITopicProgress | null>(null);
+    const [topic, setTopic] = useState<ITopicBase | null>(null);
 
     const handleGetData = useCallback(async () => {
         if (topicsId) {

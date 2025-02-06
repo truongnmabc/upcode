@@ -191,6 +191,7 @@ const extractAllQuestions = (data, topic) => {
                         appId: item.appId,
                         partId: part.id,
                         subTopicId: part.parentId,
+                        topicId: t.parentId,
                         explanation: item.explanation,
                         id: item.id,
                         image: item.image,

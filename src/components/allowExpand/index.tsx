@@ -1,7 +1,7 @@
 "use client";
 import RouterApp from "@/constants/router.constant";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import { selectTopicsId } from "@/redux/features/study.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import ctx from "@/utils/mergeClass";
@@ -34,7 +34,7 @@ const AllowExpand = () => {
                     {mainTopic?.topics &&
                         mainTopic?.topics?.length > 0 &&
                         mainTopic?.topics?.map(
-                            (subTopic: ITopicProgress, index) => (
+                            (subTopic: ITopicBase, index) => (
                                 <TitleCollapse
                                     subTopic={subTopic}
                                     key={index}

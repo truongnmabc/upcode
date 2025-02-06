@@ -1,7 +1,7 @@
 "use client";
 import { db } from "@/db/db.model";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { ITestQuestion } from "@/models/tests/testQuestions";
+import { ITestBase } from "@/models/tests";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import choiceStartCustomTestThunk from "@/redux/repository/game/choiceAnswer/choiceStartTest";
 import React, { Fragment, useCallback, useEffect, useState } from "react";
@@ -16,10 +16,10 @@ import {
 import { resetState, startCustomTest } from "@/redux/features/game";
 import clsx from "clsx";
 const GridLeftCustomTest = () => {
-    const [listTest, setListTest] = useState<ITestQuestion[]>([]);
+    const [listTest, setListTest] = useState<ITestBase[]>([]);
     const [openModalSetting, setOpenModalSetting] = React.useState(false);
     const [openDelete, setOpenDelete] = React.useState(false);
-    const [itemSelect, setItemSelect] = useState<ITestQuestion | null>(null);
+    const [itemSelect, setItemSelect] = useState<ITestBase | null>(null);
     const listQuestion = useAppSelector(selectListQuestion);
     const dispatch = useAppDispatch();
     const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
@@ -55,12 +55,12 @@ const GridLeftCustomTest = () => {
         setItemSelect(null);
     }, []);
 
-    const handleOpenModalSetting = useCallback((e: ITestQuestion) => {
+    const handleOpenModalSetting = useCallback((e: ITestBase) => {
         setOpenModalSetting(true);
         setItemSelect(e);
     }, []);
 
-    const handleOpenModalDelete = useCallback((e: ITestQuestion) => {
+    const handleOpenModalDelete = useCallback((e: ITestBase) => {
         setItemSelect(e);
         setOpenDelete(true);
     }, []);
@@ -89,10 +89,19 @@ const GridLeftCustomTest = () => {
                 }
                 return updatedList;
             });
-            if (startTest)
+            if (startTest) {
+                const listIds = startTest.groupExamData.flatMap(
+                    (i) => i.questionIds
+                );
+
+                const questions = await db?.questions
+                    .where("id")
+                    .anyOf(listIds)
+                    .toArray();
+
                 dispatch(
                     startCustomTest({
-                        listQuestion: startTest?.question,
+                        listQuestion: questions,
                         totalDuration: startTest?.totalDuration * 60,
                         parentId: startTest.id,
                         passingThreshold: startTest.passingThreshold,
@@ -100,12 +109,14 @@ const GridLeftCustomTest = () => {
                         indexSubTopic: 1,
                     })
                 );
+            }
+
             setOpenDelete(false);
         }
     }, [itemSelect, dispatch]);
 
     const handleClickChoiceTest = useCallback(
-        (item: ITestQuestion, index: number) => {
+        (item: ITestBase, index: number) => {
             dispatch(
                 choiceStartCustomTestThunk({
                     item: {

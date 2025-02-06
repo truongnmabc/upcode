@@ -1,7 +1,8 @@
 import { MtUiButton } from "@/components/button";
 import { db } from "@/db/db.model";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import { setIndexSubTopic, setTurtGame } from "@/redux/features/game";
+import { selectSubTopics } from "@/redux/features/study";
 import { useAppDispatch } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -10,7 +11,7 @@ import { calculatePassingApp } from "../calculate";
 
 type NavigateToHrefParams = {
     topicName: string;
-    nextPart: ITopicProgress;
+    nextPart: ITopicBase;
 };
 
 const updateTurnTopic = async ({
@@ -56,8 +57,8 @@ const PassingFinishPage = ({
     currentTopicId,
     indexSubTopic,
 }: {
-    currentPart: ITopicProgress | null;
-    nextPart: ITopicProgress | null;
+    currentPart: ITopicBase | null;
+    nextPart: ITopicBase | null;
     currentTurn: number;
     extraPoint: number;
     currentTopicId: number;
@@ -92,16 +93,18 @@ const PassingFinishPage = ({
 
     const handleNextPart = useCallback(async () => {
         if (nextPart && topicName) {
-            navigateToHref({
-                topicName,
-                nextPart: nextPart,
-            });
             dispatch(setIndexSubTopic(indexSubTopic + 1));
             dispatch(
                 setTurtGame({
                     turn: 1,
                 })
             );
+            dispatch(selectSubTopics(nextPart.parentId));
+            navigateToHref({
+                topicName,
+                nextPart: nextPart,
+            });
+
             return;
         }
     }, [nextPart, navigateToHref, dispatch, topicName, indexSubTopic]);

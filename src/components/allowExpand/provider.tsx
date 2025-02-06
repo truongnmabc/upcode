@@ -1,9 +1,9 @@
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import React, { ReactNode } from "react";
 
 export interface IContextAllowExpand {
     color?: string;
-    mainTopic?: ITopicProgress | null;
+    mainTopic?: ITopicBase | null;
     mainTopicTag: string | null;
 }
 
@@ -18,7 +18,7 @@ const AllowExpandProvider = ({
     topic,
 }: {
     children: ReactNode;
-    topic: ITopicProgress | null;
+    topic: ITopicBase | null;
 }) => {
     const value = {
         mainTopic: topic,

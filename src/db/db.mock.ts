@@ -1,6 +1,6 @@
 import "fake-indexeddb/auto";
 import Dexie, { Table } from "dexie";
-import { ITestQuestion } from "@/models/tests/testQuestions";
+import { ITestBase } from "@/models/tests";
 import { ISubTopicProgress } from "../models/progress/subTopicProgress";
 import { IUserQuestionProgress } from "../models/progress/userQuestionProgress";
 import { ITopicQuestion } from "../models/question/topicQuestion";
@@ -16,7 +16,7 @@ class DB extends Dexie {
     topicQuestion!: Table<ITopicQuestion>;
     topicStatus!: Table<ITopicStatus>;
     topics!: Table<ITopic>;
-    testQuestions!: Table<ITestQuestion>;
+    testQuestions!: Table<ITestBase>;
     useActions!: Table<IUserActions>;
     passing!: Table<IPassingModel>;
     paymentInfos!: Table<IPaymentInfos>;

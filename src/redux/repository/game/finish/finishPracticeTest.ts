@@ -10,12 +10,11 @@ const finishPracticeThunk = createAsyncThunk(
         const { currentTopicId } = state.gameReducer;
         try {
             await db?.testQuestions
-                .where("parentId")
+                .where("id")
                 .equals(currentTopicId)
-                .filter((item) => item.status === 0)
                 .modify((item) => {
-                    item.status = 1;
                     item.isGamePaused = false;
+                    item.status = 1;
                 });
         } catch (error) {
             console.error("Error in finishQuestionThunk:", error);

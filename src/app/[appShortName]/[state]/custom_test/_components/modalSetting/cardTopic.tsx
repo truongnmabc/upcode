@@ -1,13 +1,13 @@
 import LazyLoadImage from "@/components/images";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import ctx from "@/utils/mergeClass";
 import clsx from "clsx";
 
 type ICardTopic = {
-    item: ITopicProgress;
-    selectListTopic: ITopicProgress[];
+    item: ITopicBase;
+    selectListTopic: ITopicBase[];
     setSelectListTopic: (
-        e: ITopicProgress[] | ((prev: ITopicProgress[]) => ITopicProgress[])
+        e: ITopicBase[] | ((prev: ITopicBase[]) => ITopicBase[])
     ) => void;
 };
 const CardTopic = ({
@@ -17,12 +17,12 @@ const CardTopic = ({
 }: ICardTopic) => {
     const isCheck = selectListTopic.some((s) => s.id === item.id);
     const handleSelect = () => {
-        setSelectListTopic((prev: ITopicProgress[]) => {
+        setSelectListTopic((prev: ITopicBase[]) => {
             const isAlreadySelected = prev.some(
-                (s: ITopicProgress) => s.id === item.id
+                (s: ITopicBase) => s.id === item.id
             );
             if (isAlreadySelected) {
-                return prev.filter((s: ITopicProgress) => s.id !== item.id);
+                return prev.filter((s: ITopicBase) => s.id !== item.id);
             }
             return [...prev, item];
         });

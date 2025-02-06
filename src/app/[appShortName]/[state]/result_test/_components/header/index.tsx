@@ -6,14 +6,11 @@ import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic
 import { TypeParam } from "@/constants";
 import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
-import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { selectCurrentTopicId } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
-import tryAgainDiagnosticThunk from "@/redux/repository/game/tryAgain/tryAgainDiagnostic";
-import tryAgainPracticesThunk from "@/redux/repository/game/tryAgain/tryAgainPractices";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { IconFailResultTest } from "../icon/iconFailResultTest";
@@ -21,16 +18,14 @@ import { IconPassResultTest } from "../icon/iconPassResultTest";
 import DashboardCard from "./chartHeader";
 import HeaderResultDiagnostic from "./headerResultDiagnostic";
 import { TitleMiss, TitlePass } from "./titleResultTest";
+import { useResultContext } from "../resultContext";
+import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
+import resumedTestThunk from "@/redux/repository/game/pauseAndResumed/resumedTest";
 
-const HeaderResultTest: React.FC<{
-    correct: number;
-    total: number;
-    isPass: boolean;
-    passing: number;
-}> = ({ correct, total, isPass, passing }) => {
+const HeaderResultTest = () => {
+    const { correct, total, isPass, passing } = useResultContext();
     const router = useRouter();
     const idTopic = useAppSelector(selectCurrentTopicId);
-    const appInfo = useAppSelector(selectAppInfo);
     const type = useSearchParams()?.get("type");
     const dispatch = useAppDispatch();
     const testId = useSearchParams()?.get("testId");
@@ -65,17 +60,33 @@ const HeaderResultTest: React.FC<{
         const id = idTopic !== -1 ? idTopic : Number(testId) || -1;
         switch (type) {
             case TypeParam.diagnosticTest:
-                dispatch(tryAgainDiagnosticThunk({ testId: id }));
+                await dispatch(
+                    resumedTestThunk({
+                        type: "diagnosticTest",
+                    })
+                );
+                dispatch(initDiagnosticTestQuestionThunk());
+
                 _href = RouterApp.Diagnostic_test;
                 break;
 
             case TypeParam.finalTest:
+                await dispatch(
+                    resumedTestThunk({
+                        type: "finalTests",
+                    })
+                );
                 dispatch(initFinalTestThunk());
                 _href = RouterApp.Final_test;
                 break;
 
             case TypeParam.practiceTest:
-                dispatch(tryAgainPracticesThunk({ testId: id }));
+                await dispatch(
+                    resumedTestThunk({
+                        type: "practiceTests",
+                    })
+                );
+                dispatch(initPracticeThunk({ testId: id }));
                 _href = `/study/${TypeParam.practiceTest}?type=test&testId=${id}`;
                 break;
 
@@ -88,7 +99,7 @@ const HeaderResultTest: React.FC<{
         }
 
         if (_href) {
-            router.push(_href);
+            router.replace(_href);
         }
     }, [router, idTopic, dispatch, type, testId]);
 
@@ -116,12 +127,11 @@ const HeaderResultTest: React.FC<{
             handleNavigateStudy({
                 dispatch,
                 router,
-                appShortName: appInfo.appShortName,
                 topic: listTopic[0],
                 isReplace: true,
             });
         }
-    }, [dispatch, router, appInfo.appShortName]);
+    }, [dispatch, router]);
 
     const back = useCallback(() => router.push(RouterApp.Home), [router]);
 

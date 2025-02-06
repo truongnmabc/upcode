@@ -2,8 +2,7 @@
 import MyContainer from "@/components/container";
 import { db } from "@/db/db.model";
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
-import { ITopicQuestion } from "@/models/question/topicQuestion";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import { selectAttemptNumber } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { useSearchParams } from "next/navigation";
@@ -13,6 +12,7 @@ import GridTopicProgress from "./gridTopic";
 import PassingFinishPage from "./passing";
 import ProgressFinishPage from "./progress";
 import TitleFinishPage from "./title";
+import { IQuestionBase } from "@/models/question";
 
 const getCurrentProgressData = async ({
     partId,
@@ -32,7 +32,7 @@ const getCurrentProgressData = async ({
 
 const calculateProgress = (
     progress: IUserQuestionProgress[],
-    questions: ITopicQuestion[],
+    questions: IQuestionBase[],
     turn: number
 ) => {
     return {
@@ -48,8 +48,8 @@ const findNextPart = async ({
     currentTopic,
     currentSubTopic,
 }: {
-    currentTopic: ITopicProgress;
-    currentSubTopic?: ITopicProgress;
+    currentTopic: ITopicBase;
+    currentSubTopic?: ITopicBase;
 }) => {
     if (!currentTopic || !currentSubTopic) return { nextPart: null, index: -1 };
 
@@ -135,8 +135,8 @@ const FinishLayout = () => {
     const turn = useAppSelector(selectAttemptNumber);
 
     const [game, setGame] = useState<{
-        currentPart: ITopicProgress | null;
-        nextPart: ITopicProgress | null;
+        currentPart: ITopicBase | null;
+        nextPart: ITopicBase | null;
         currentTurn: number;
         extraPoint: number;
         total: number;

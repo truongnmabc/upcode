@@ -1,23 +1,23 @@
 import Dexie, { Table } from "dexie";
 
-import { IPaymentInfos } from "@/models/payment/payment";
-import { ITestQuestion } from "@/models/tests/testQuestions";
-import { ITopicProgress } from "@/models/topics/topicsProgress";
-import { IUserQuestionProgress } from "../models/progress/userQuestionProgress";
-import { ITopicQuestion } from "../models/question/topicQuestion";
-import { IUserActions } from "../models/user/userReactions";
 import { IPassingModel } from "@/models/passing/passingModel";
+import { IPaymentInfos } from "@/models/payment/payment";
+import { IQuestionBase } from "@/models/question";
+import { ITestBase } from "@/models/tests";
+import { ITopicBase } from "@/models/topics/topicsProgress";
+import { IUserQuestionProgress } from "../models/progress/userQuestionProgress";
+import { IUserActions } from "../models/user/userReactions";
 
 export class DB extends Dexie {
     userProgress!: Table<IUserQuestionProgress>;
 
-    testQuestions!: Table<ITestQuestion>;
+    testQuestions!: Table<ITestBase>;
 
     paymentInfos!: Table<IPaymentInfos>;
 
-    questions!: Table<ITopicQuestion>;
+    questions!: Table<IQuestionBase>;
 
-    topics!: Table<ITopicProgress>;
+    topics!: Table<ITopicBase>;
 
     useActions!: Table<IUserActions>;
 
@@ -34,7 +34,7 @@ export class DB extends Dexie {
             paymentInfos: "++id,userId",
 
             //  Chứa thông tin câu hỏi của app
-            questions: "++id,partId,testId,subTopicId",
+            questions: "++id,partId,subTopicId",
 
             //  chứa thông tin của mainTopic và subTopic
             topics: "++id,slug",

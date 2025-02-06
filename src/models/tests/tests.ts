@@ -20,7 +20,8 @@ export interface ITest {
 }
 export interface IGroupExam {
     groupId?: number;
-    title: string;
+    topicName?: string;
+    topicId: number;
     passingPercent?: number;
     totalQuestion: number;
     duration?: number;

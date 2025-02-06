@@ -14,9 +14,6 @@ import initLearnQuestionThunk, {
 import initPracticeThunk from "../repository/game/initData/initPracticeTest";
 import nextQuestionThunk from "../repository/game/nextQuestion/nextQuestion";
 import nextQuestionDiagnosticThunk from "../repository/game/nextQuestion/nextQuestionDiagnosticTest";
-import resumedTestThunk from "../repository/game/pauseAndResumed/resumedTest";
-import tryAgainDiagnosticThunk from "../repository/game/tryAgain/tryAgainDiagnostic";
-import tryAgainPracticesThunk from "../repository/game/tryAgain/tryAgainPractices";
 import { handleInitTestQuestion } from "../repository/game/utils";
 import { reloadStateThunk } from "../repository/utils/reload";
 import { RootState } from "../store";
@@ -138,16 +135,16 @@ export const gameSlice = createSlice({
             state.attemptNumber = attemptNumber;
         });
 
-        builder.addCase(resumedTestThunk.fulfilled, (state, action) => {
-            if (action.payload) {
-                const { remainTime, listQuestion } = action.payload;
-                state.attemptNumber = 1;
-                state.remainingTime = remainTime;
-                state.listQuestion = listQuestion;
-                state.currentGame = listQuestion[0];
-                state.currentQuestionIndex = 0;
-            }
-        });
+        // builder.addCase(resumedTestThunk.fulfilled, (state, action) => {
+        //     if (action.payload) {
+        //         const { remainTime, listQuestion } = action.payload;
+        //         state.attemptNumber = 1;
+        //         state.remainingTime = remainTime;
+        //         state.listQuestion = listQuestion;
+        //         state.currentGame = listQuestion[0];
+        //         state.currentQuestionIndex = 0;
+        //     }
+        // });
 
         builder.addCase(nextQuestionThunk.fulfilled, (state, action) => {
             const data = action.payload;
@@ -214,28 +211,6 @@ export const gameSlice = createSlice({
             state.isDataLoaded = true;
         });
 
-        builder.addCase(tryAgainDiagnosticThunk.fulfilled, (state, action) => {
-            const { listQuestion, attemptNumber } = action.payload;
-            state.currentGame = listQuestion[0];
-            state.listQuestion = listQuestion;
-            state.currentQuestionIndex = 0;
-            state.attemptNumber = attemptNumber + 1;
-            state.isGamePaused = false;
-            state.remainingTime = state.totalDuration * 80;
-            state.hasRetakenDiagnosticTest = true;
-        });
-
-        builder.addCase(tryAgainPracticesThunk.fulfilled, (state, action) => {
-            const { listQuestion, attemptNumber, remainingTime } =
-                action.payload;
-            state.currentGame = listQuestion[0];
-            state.listQuestion = listQuestion;
-            state.currentQuestionIndex = 0;
-            state.attemptNumber = attemptNumber + 1;
-            state.isGamePaused = false;
-            state.remainingTime = remainingTime * 60;
-        });
-
         builder.addCase(
             initDiagnosticTestQuestionThunk.fulfilled,
             (state, action) => {
@@ -245,15 +220,18 @@ export const gameSlice = createSlice({
                         isGamePaused,
                         currentTopicId,
                         progressData,
+                        attemptNumber,
                     } = action.payload;
+
                     handleInitTestQuestion(state, {
                         gameMode: "diagnosticTest",
-                        progressData,
+                        progressData: progressData || [],
                         questions: listQuestion,
                         currentTopicId: currentTopicId,
                         totalDuration: 1,
                         isGamePaused: isGamePaused,
                         remainingTime: 80,
+                        attemptNumber,
                     });
                 }
             }

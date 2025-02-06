@@ -2,7 +2,7 @@ import Empty from "@/components/empty";
 import QuestionResult from "@/components/questionReview";
 import { db } from "@/db/db.model";
 import { ICurrentGame } from "@/models/game/game";
-import { IQuestion } from "@/models/question/questions";
+import { IQuestionOpt } from "@/models/question";
 import { IUserActions } from "@/models/user/userReactions";
 import { setListQuestionGames } from "@/redux/features/game";
 import { setListReactions } from "@/redux/features/user";
@@ -38,7 +38,7 @@ const getSavedActions = async (list: IUserActions[]) => {
 };
 
 const getSavedQuestions = async (partIds: number[], list: IUserActions[]) => {
-    const listSaved: IQuestion[] = [];
+    const listSaved: IQuestionOpt[] = [];
     for (const id of partIds) {
         const result = await db?.topicQuestion.where("id").equals(id).first();
         if (result?.questions) {
@@ -52,7 +52,7 @@ const getSavedQuestions = async (partIds: number[], list: IUserActions[]) => {
 };
 
 const SavedQuestions = () => {
-    const [data, setData] = useState<IQuestion[]>([]);
+    const [data, setData] = useState<IQuestionOpt[]>([]);
     const dispatch = useAppDispatch();
 
     useEffect(() => {

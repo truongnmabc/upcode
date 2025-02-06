@@ -1,7 +1,6 @@
 "use client";
 import MtUiSkeleton from "@/components/loading-skeleton";
 import { ICurrentGame } from "@/models/game/game";
-import { IAnswer } from "@/models/question/questions";
 import { useAppDispatch } from "@/redux/hooks";
 import choiceAnswer from "@/redux/repository/game/choiceAnswer/choiceAnswer";
 import BtnTets from "@/tests/btn";
@@ -9,6 +8,7 @@ import ctx from "@/utils/mergeClass";
 import { MathJax } from "better-react-mathjax";
 import React, { useCallback } from "react";
 import GetIconPrefix from "../choicesPanel/getIcon";
+import { IAnswer } from "@/models/question";
 const AnswerButton = ({
     choice,
     index,

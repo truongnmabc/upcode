@@ -13,12 +13,7 @@ type IProps = {
     correct: ICurrentGame[];
     incorrect: ICurrentGame[];
     showFilter?: boolean;
-    result?: {
-        listTopic: ITopicEndTest[];
-        all: ICurrentGame[];
-        correct: ICurrentGame[];
-        incorrect: ICurrentGame[];
-    };
+    listTopic: ITopicEndTest[];
     setTabletData?: (e: {
         all: ICurrentGame[];
         correct: ICurrentGame[];
@@ -33,7 +28,7 @@ const ReviewAnswerResult: React.FC<IProps> = ({
     correct,
     incorrect,
     setTabletData,
-    result,
+    listTopic,
     showFilter = true,
     title,
     type,
@@ -79,7 +74,12 @@ const ReviewAnswerResult: React.FC<IProps> = ({
                     />
                 </AntTabs>
                 {showFilter && (
-                    <FilterIcon setTabletData={setTabletData} result={result} />
+                    <FilterIcon
+                        setTabletData={setTabletData}
+                        listTopic={listTopic}
+                        all={all}
+                        correctIds={correct.map((i) => i.id)}
+                    />
                 )}
             </div>
             {all?.length > 0 ? (

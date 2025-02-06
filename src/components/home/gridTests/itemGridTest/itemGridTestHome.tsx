@@ -26,6 +26,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     } = useRipple();
 
     const dispatch = useAppDispatch();
+
     const handleCustomTest = useCallback(() => {
         dispatch(initCustomTestThunk());
         router.push(RouterApp.Custom_test);

@@ -1,4 +1,4 @@
-import { ITopicProgress } from "@/models/topics/topicsProgress";
+import { ITopicBase } from "@/models/topics/topicsProgress";
 import { selectSubTopics } from "@/redux/features/study";
 import { selectSubTopicsId } from "@/redux/features/study.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -9,7 +9,7 @@ import React from "react";
 import LazyLoadImage from "../images";
 import TopicLevelProgress from "./topicLevelProgress";
 
-const TitleCollapse = ({ subTopic }: { subTopic: ITopicProgress }) => {
+const TitleCollapse = ({ subTopic }: { subTopic: ITopicBase }) => {
     const selectedSubTopics = useAppSelector(selectSubTopicsId);
     const isExpand = selectedSubTopics === subTopic.id;
     const dispatch = useAppDispatch();

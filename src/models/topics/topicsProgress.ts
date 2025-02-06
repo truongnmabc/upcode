@@ -1,4 +1,4 @@
-export interface ITopicProgress {
+export interface ITopicBase {
     id: number;
     parentId: number;
     name: string;
@@ -6,7 +6,7 @@ export interface ITopicProgress {
     tag: string;
     // Nôị dung có phải do ai render ra không: 0 là không, 1 là có
     contentType: number;
-    topics: ITopicProgress[];
+    topics: ITopicBase[];
     slug?: string;
     //  Các phần của topic đã hoàn thành hết chưa
     status: number;
