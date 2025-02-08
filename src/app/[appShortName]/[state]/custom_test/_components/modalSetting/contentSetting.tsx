@@ -1,138 +1,183 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
 import { MtUiButton } from "@/components/button";
 import { ITopicBase } from "@/models/topics/topicsProgress";
-import { Dispatch, SetStateAction } from "react";
+import { useMemo } from "react";
 import { IFeedBack } from ".";
 import { CardFeeBack } from "./cardFeedBack";
 import CardProgress from "./cardProgress";
 import CardTopic from "./cardTopic";
 
+type IState = {
+    selectFeedback: IFeedBack;
+    count: number;
+    duration: number;
+    passing: number;
+    listTopic: ITopicBase[];
+    selectListTopic: ITopicBase[];
+};
+
 type IProps = {
     isShowBtnCancel: boolean;
     onCancel: () => void;
-    setSelectFeedback: Dispatch<SetStateAction<IFeedBack>>;
-    selectFeedback: IFeedBack;
-    count: number;
-    setCount: Dispatch<SetStateAction<number>>;
-    duration: number;
-    setDuration: Dispatch<SetStateAction<number>>;
-    setPassing: Dispatch<SetStateAction<number>>;
-    passing: number;
+    state: IState;
+    setState: React.Dispatch<React.SetStateAction<IState>>;
+    onUpdate: () => Promise<void>;
     handleSelectAll: () => void;
-    listTopic: ITopicBase[];
-    selectListTopic: ITopicBase[];
-    setSelectListTopic: Dispatch<SetStateAction<ITopicBase[]>>;
     onStart: () => Promise<void>;
     loading: boolean;
+    isUpdate: boolean;
 };
-const ContentSetting = (props: IProps) => {
+
+const ContentSetting: React.FC<IProps> = ({
+    isShowBtnCancel,
+    onCancel,
+    state,
+    setState,
+    onUpdate,
+    handleSelectAll,
+    onStart,
+    loading,
+    isUpdate,
+}) => {
     const {
-        isShowBtnCancel,
-        onCancel,
-        setSelectFeedback,
         selectFeedback,
         count,
-        setCount,
         duration,
-        setDuration,
-        setPassing,
         passing,
-        handleSelectAll,
         listTopic,
         selectListTopic,
-        setSelectListTopic,
-        onStart,
-        loading,
-    } = props;
+    } = state;
+
+    const isDisabled = useMemo(
+        () => count === 0 || selectListTopic.length === 0,
+        [count, selectListTopic.length]
+    );
+
     return (
-        <div className="w-full  flex flex-col justify-between max-w-[900px] max-h-[780px]  h-full p-4  sm:p-6 bg-theme-white">
+        <div className="w-full flex flex-col justify-between max-w-[900px] max-h-[790px]  h-full p-4 sm:p-6 bg-theme-white">
             <div className="flex-1 overflow-y-auto scrollbar-none">
+                {/* Header */}
                 <div className="flex items-center justify-between">
-                    <p className="text-2xl text-center w-full  sm:text-start font-semibold">
+                    <p className="text-2xl text-center w-full sm:text-start font-semibold">
                         Customize Your Test
                     </p>
                     {isShowBtnCancel && (
-                        <div
+                        <button
+                            aria-label="Close"
                             onClick={onCancel}
                             className="w-8 h-8 cursor-pointer rounded-full bg-white flex items-center justify-center"
                         >
                             <CloseIcon />
-                        </div>
+                        </button>
                     )}
                 </div>
 
-                <div className="mt-6 flex-1">
+                {/* Feedback Modes */}
+                <section className="mt-6">
                     <p className="text-lg font-semibold">Feedback Modes</p>
-
-                    <div className=" mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <CardFeeBack
-                            text="Newbie Mode"
-                            type="newbie"
-                            onSelect={setSelectFeedback}
-                            select={selectFeedback}
-                            des="Answers and explanations are displayed immediately after each question."
-                        />{" "}
-                        <CardFeeBack
-                            onSelect={setSelectFeedback}
-                            text="Expert Mode"
-                            select={selectFeedback}
-                            type="expert"
-                            des="Only answer accuracy is evaluated after each question. No explanation provided."
-                        />{" "}
-                        <CardFeeBack
-                            onSelect={setSelectFeedback}
-                            text="Exam Mode"
-                            select={selectFeedback}
-                            type="exam"
-                            des="The final score is shown after answering all questions."
-                        />
-                    </div>
-
-                    <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <CardProgress
-                            title="Question Count:"
-                            max={100}
-                            defaultValue={count}
-                            changeProgress={setCount}
-                        />{" "}
-                        <CardProgress
-                            title="Duration:"
-                            suffix="minutes"
-                            defaultValue={duration}
-                            max={90}
-                            changeProgress={setDuration}
-                        />{" "}
-                        <CardProgress
-                            changeProgress={setPassing}
-                            title="Passing Score:"
-                            defaultValue={passing}
-                            suffix="%"
-                            max={100}
-                        />
-                    </div>
-                </div>
-                <div>
-                    <div className="flex items-center gap-3 mt-4">
-                        <p className="text-lg font-semibold">Subjects</p>
-                        <span
-                            className=" underline cursor-pointer text-sm font-normal"
-                            onClick={handleSelectAll}
-                        >
-                            Select All
-                        </span>
-                    </div>{" "}
-                    <div className="grid mt-4 gap-4 grid-cols-1 sm:grid-cols-3">
-                        {listTopic?.map((item) => (
-                            <CardTopic
-                                item={item}
-                                key={item.id}
-                                selectListTopic={selectListTopic}
-                                setSelectListTopic={setSelectListTopic}
+                    <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        {[
+                            {
+                                type: "newbie",
+                                text: "Newbie Mode",
+                                des: "Answers and explanations are displayed immediately after each question.",
+                            },
+                            {
+                                type: "expert",
+                                text: "Expert Mode",
+                                des: "Only answer accuracy is evaluated after each question. No explanation provided.",
+                            },
+                            {
+                                type: "exam",
+                                text: "Exam Mode",
+                                des: "The final score is shown after answering all questions.",
+                            },
+                        ].map(({ type, text, des }) => (
+                            <CardFeeBack
+                                key={type}
+                                text={text}
+                                type={type as IFeedBack}
+                                onSelect={(value) =>
+                                    setState((prev) => ({
+                                        ...prev,
+                                        selectFeedback: value,
+                                    }))
+                                }
+                                select={selectFeedback}
+                                des={des}
                             />
                         ))}
                     </div>
-                </div>
+                </section>
+
+                {/* Test Settings */}
+                <section className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <CardProgress
+                        title="Question Count:*"
+                        max={100}
+                        defaultValue={count}
+                        changeProgress={(value) =>
+                            setState((prev) => ({ ...prev, count: value }))
+                        }
+                    />
+                    <CardProgress
+                        title="Duration:"
+                        suffix="minutes"
+                        max={90}
+                        defaultValue={duration}
+                        changeProgress={(value) =>
+                            setState((prev) => ({ ...prev, duration: value }))
+                        }
+                    />
+                    <CardProgress
+                        title="Passing Score:"
+                        suffix="%"
+                        max={100}
+                        defaultValue={passing}
+                        changeProgress={(value) =>
+                            setState((prev) => ({ ...prev, passing: value }))
+                        }
+                    />
+                </section>
+
+                {/* Topics Selection */}
+                <section className="mt-6 pb-1">
+                    <div className="flex items-center gap-3">
+                        <p className="text-lg font-semibold">Subjects</p>
+                        <button
+                            aria-label="Select All Topics"
+                            className="underline cursor-pointer text-sm font-normal"
+                            onClick={handleSelectAll}
+                        >
+                            Select All
+                        </button>
+                    </div>
+                    <div className="grid mt-4 gap-4 grid-cols-1 sm:grid-cols-3">
+                        {listTopic.map((item) => (
+                            <CardTopic
+                                key={item.id}
+                                item={item}
+                                selectListTopic={selectListTopic}
+                                setSelectListTopic={(newList) =>
+                                    setState((prev) => ({
+                                        ...prev,
+                                        selectListTopic:
+                                            typeof newList === "function"
+                                                ? (
+                                                      newList as (
+                                                          prev: ITopicBase[]
+                                                      ) => ITopicBase[]
+                                                  )(prev.selectListTopic)
+                                                : newList,
+                                    }))
+                                }
+                            />
+                        ))}
+                    </div>
+                </section>
             </div>
+
+            {/* Footer Buttons */}
             <div className="flex pb-6 sm:pb-0 w-full mt-6 items-center justify-end gap-4">
                 {isShowBtnCancel && (
                     <MtUiButton
@@ -149,12 +194,12 @@ const ContentSetting = (props: IProps) => {
                     size="large"
                     type="primary"
                     block
-                    onClick={onStart}
-                    disabled={count === 0 || selectListTopic.length === 0}
+                    onClick={isUpdate ? onUpdate : onStart}
+                    disabled={isDisabled}
                     className="sm:max-w-32"
                     loading={loading}
                 >
-                    Start
+                    {isUpdate ? "Update" : "Start"}
                 </MtUiButton>
             </div>
         </div>

@@ -1,17 +1,18 @@
 import DialogResponsive from "@/components/dialogResponsive";
 import { db } from "@/db/db.model";
+import { IQuestionOpt } from "@/models/question";
 import { ITestBase } from "@/models/tests";
+import { IGroupExam } from "@/models/tests/tests";
 import { ITopicBase } from "@/models/topics/topicsProgress";
 import { startCustomTest } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
-import { generateRandomNegativeId } from "@/utils/math";
-import React, { useEffect, useState } from "react";
-import ContentSetting from "./contentSetting";
-import { IQuestionOpt } from "@/models/question";
-import { IGroupExam } from "@/models/tests/tests";
 import { generateGroupExamData } from "@/redux/repository/game/initData/initDiagnosticTest";
+import { generateRandomNegativeId } from "@/utils/math";
+import React, { useCallback, useEffect, useState } from "react";
+import ContentSetting from "./contentSetting";
 
 export type IFeedBack = "newbie" | "expert" | "exam";
+
 type IPropsUpdateDb = {
     totalDuration: number;
     passingThreshold: number;
@@ -113,7 +114,7 @@ const fetchQuestionsForTopics = async (
     return listQuestion;
 };
 
-const handleUpdateDb = async ({
+export const handleAddNewDb = async ({
     totalDuration,
     id,
     passingThreshold,
@@ -140,150 +141,214 @@ const handleUpdateDb = async ({
     });
 };
 
-type IProps = {
+export const handleUpdateCustomTestDb = async ({
+    totalDuration,
+    id,
+    passingThreshold,
+    selectFeedback,
+    topicIds,
+    totalQuestion,
+    groupExamData,
+}: IPropsUpdateDb) => {
+    await db?.testQuestions.add({
+        totalDuration,
+        passingThreshold,
+        isGamePaused: false,
+        id,
+        remainingTime: totalDuration * 60,
+        startTime: new Date().getTime(),
+        gameMode: "customTets",
+        gameDifficultyLevel: selectFeedback,
+        topicIds: topicIds,
+        status: 0,
+        attemptNumber: 1,
+        elapsedTime: 0,
+        totalQuestion,
+        groupExamData,
+    });
+};
+const ModalSettingCustomTest: React.FC<{
     open: boolean;
     onClose: () => void;
     item?: ITestBase | null;
     isShowBtnCancel: boolean;
     listTestLength: number;
-};
-const ModalSettingCustomTest: React.FC<IProps> = ({
-    open,
-    onClose,
-    item,
-    isShowBtnCancel,
-    listTestLength,
-}) => {
-    const [listTopic, setListTopic] = useState<ITopicBase[]>([]);
-    const [count, setCount] = useState(0);
-    const [duration, setDuration] = useState(0);
-    const [passing, setPassing] = useState(0);
-    const [selectFeedback, setSelectFeedback] = useState<IFeedBack>("newbie");
-    const [selectListTopic, setSelectListTopic] = useState<ITopicBase[]>([]);
+}> = ({ open, onClose, item, isShowBtnCancel, listTestLength }) => {
+    const [state, setState] = useState({
+        listTopic: [] as ITopicBase[],
+        count: 0,
+        duration: 0,
+        passing: 0,
+        selectFeedback: "newbie" as IFeedBack,
+        selectListTopic: [] as ITopicBase[],
+    });
 
     useEffect(() => {
-        const handleGetData = async () => {
+        const fetchData = async () => {
             const data = await db?.topics.toArray();
-            if (data) {
-                setListTopic(data);
-            }
+            if (data) setState((prev) => ({ ...prev, listTopic: data }));
         };
-        handleGetData();
+        fetchData();
     }, []);
 
     useEffect(() => {
-        if (item) {
-            setCount(item.totalQuestion || 0);
-            setDuration(item.totalDuration);
-            setPassing(item.passingThreshold ?? 0);
-            setSelectFeedback(item.gameDifficultyLevel ?? "newbie");
-            // setSelectListTopic(
-            //     item.topicIds
-            //         ? item.topicIds.map(
-            //               (id): ITopicBase => ({
-            //                   id,
-            //                   parentId: -1,
-            //                   name: "Default Topic Name",
-            //                   icon: "default-icon",
-            //                   tag: "default-tag",
-            //                   contentType: 0,
-            //                   topics: [],
-            //                   averageLevel: 0,
-            //                   status: 0,
-            //                   totalQuestion: 0,
-            //                   turn: 0,
-            //               })
-            //           )
-            //         : []
-            // );
+        if (item && state.listTopic.length) {
+            setState((prev) => ({
+                ...prev,
+                count: item.totalQuestion || 0,
+                duration: item.totalDuration,
+                passing: item.passingThreshold ?? 0,
+                selectFeedback: item.gameDifficultyLevel ?? "newbie",
+                selectListTopic: prev.listTopic.filter((topic) =>
+                    item.topicIds?.includes(topic.id)
+                ),
+            }));
         }
-    }, [item]);
+    }, [item, state.listTopic.length]);
 
-    const resetState = () => {
-        setCount(0);
-        setDuration(0);
-        setPassing(0);
-        setSelectFeedback("newbie");
-        setSelectListTopic([]);
-    };
-    const onCancel = () => {
+    const resetState = useCallback(() => {
+        setState({
+            listTopic: [],
+            count: 0,
+            duration: 0,
+            passing: 0,
+            selectFeedback: "newbie",
+            selectListTopic: [],
+        });
+    }, []);
+
+    const onCancel = useCallback(() => {
         resetState();
         onClose();
-    };
-    const [loading, setLoading] = useState(false);
+    }, [onClose, resetState]);
+
     const dispatch = useAppDispatch();
-    const onStart = async () => {
-        if (count > 0 && selectListTopic.length > 0) {
+    const [loading, setLoading] = useState(false);
+
+    const onStart = useCallback(async () => {
+        if (state.count > 0 && state.selectListTopic.length > 0) {
             try {
                 setLoading(true);
 
                 const countQuestionTopic = Math.floor(
-                    count / selectListTopic.length
+                    state.count / state.selectListTopic.length
                 );
 
-                const remainderQuestionTopic = count % selectListTopic.length;
-
+                const remainderQuestionTopic =
+                    state.count % state.selectListTopic.length;
                 const listQuestion = await fetchQuestionsForTopics(
-                    selectListTopic,
+                    state.selectListTopic,
                     countQuestionTopic,
                     remainderQuestionTopic
                 );
                 const id = generateRandomNegativeId();
                 const groupExamData = await generateGroupExamData({
                     questions: listQuestion,
-                    topics: selectListTopic,
+                    topics: state.selectListTopic,
                 });
-                await handleUpdateDb({
+
+                await handleAddNewDb({
                     id,
-                    passingThreshold: passing,
-                    topicIds: selectListTopic?.map((item) => item.id),
-                    selectFeedback: selectFeedback,
-                    totalDuration: duration,
-                    totalQuestion: count,
+                    passingThreshold: state.passing,
+                    topicIds: state.selectListTopic.map((t) => t.id),
+                    selectFeedback: state.selectFeedback,
+                    totalDuration: state.duration,
+                    totalQuestion: state.count,
                     groupExamData,
                 });
+
                 dispatch(
                     startCustomTest({
                         listQuestion,
-                        remainingTime: duration * 60,
+                        remainingTime: state.duration * 60,
                         parentId: id,
-                        passingThreshold: passing,
-                        gameDifficultyLevel: selectFeedback,
+                        passingThreshold: state.passing,
+                        gameDifficultyLevel: state.selectFeedback,
                         currentSubTopicIndex: listTestLength + 1,
                     })
                 );
                 onCancel();
             } catch (err) {
-                console.error("Error while fetching questions:", err);
+                console.error("Error fetching questions:", err);
             } finally {
                 setLoading(false);
-                console.log("End time:", new Date().toISOString());
             }
         } else {
             alert(
                 "Please ensure that duration > 0, question count > 0, and at least one topic is selected."
             );
         }
-    };
+    }, [state, listTestLength, dispatch, onCancel]);
 
-    const handleSelectAll = () => {
-        if (selectListTopic.length < listTopic.length)
-            setSelectListTopic(listTopic);
-        if (selectListTopic.length === listTopic.length) setSelectListTopic([]);
-    };
+    const onUpdate = useCallback(async () => {
+        try {
+            setLoading(true);
+
+            const countQuestionTopic = Math.floor(
+                state.count / state.selectListTopic.length
+            );
+
+            const remainderQuestionTopic =
+                state.count % state.selectListTopic.length;
+            const listQuestion = await fetchQuestionsForTopics(
+                state.selectListTopic,
+                countQuestionTopic,
+                remainderQuestionTopic
+            );
+            const id = generateRandomNegativeId();
+            const groupExamData = await generateGroupExamData({
+                questions: listQuestion,
+                topics: state.selectListTopic,
+            });
+
+            await handleAddNewDb({
+                id,
+                passingThreshold: state.passing,
+                topicIds: state.selectListTopic.map((t) => t.id),
+                selectFeedback: state.selectFeedback,
+                totalDuration: state.duration,
+                totalQuestion: state.count,
+                groupExamData,
+            });
+
+            dispatch(
+                startCustomTest({
+                    listQuestion,
+                    remainingTime: state.duration * 60,
+                    parentId: id,
+                    passingThreshold: state.passing,
+                    gameDifficultyLevel: state.selectFeedback,
+                    currentSubTopicIndex: listTestLength + 1,
+                })
+            );
+            onCancel();
+        } catch (err) {
+            console.error("Error fetching questions:", err);
+        } finally {
+            setLoading(false);
+        }
+    }, [state, dispatch, onCancel, listTestLength]);
+
+    const handleSelectAll = useCallback(() => {
+        setState((prev) => ({
+            ...prev,
+            selectListTopic:
+                prev.selectListTopic.length < prev.listTopic.length
+                    ? prev.listTopic
+                    : [],
+        }));
+    }, []);
 
     return (
         <DialogResponsive
             open={open}
-            close={() => {
-                if (isShowBtnCancel) onClose();
-            }}
+            close={() => isShowBtnCancel && onClose()}
             dialogRest={{
                 sx: {
                     "& .MuiDialog-paper": {
                         width: "100%",
                         maxWidth: "900px",
-                        maxHeight: "780px",
+                        maxHeight: "790px",
                         height: "100%",
                     },
                 },
@@ -297,22 +362,15 @@ const ModalSettingCustomTest: React.FC<IProps> = ({
             }}
         >
             <ContentSetting
-                count={count}
-                duration={duration}
+                state={state}
+                setState={setState}
                 handleSelectAll={handleSelectAll}
                 isShowBtnCancel={isShowBtnCancel}
-                listTopic={listTopic}
                 loading={loading}
                 onCancel={onCancel}
                 onStart={onStart}
-                passing={passing}
-                selectFeedback={selectFeedback}
-                selectListTopic={selectListTopic}
-                setCount={setCount}
-                setDuration={setDuration}
-                setPassing={setPassing}
-                setSelectFeedback={setSelectFeedback}
-                setSelectListTopic={setSelectListTopic}
+                onUpdate={onUpdate}
+                isUpdate={!!item}
             />
         </DialogResponsive>
     );
