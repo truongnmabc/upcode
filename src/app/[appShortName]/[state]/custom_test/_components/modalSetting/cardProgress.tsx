@@ -1,6 +1,7 @@
 import useDebounce from "@/hooks/useDebounce";
 import Slider from "@mui/material/Slider";
 import { useEffect, useState } from "react";
+
 type ICardProgress = {
     title: string;
     suffix?: string;
@@ -17,17 +18,23 @@ const CardProgress = ({
     changeProgress,
 }: ICardProgress) => {
     const [value, setValue] = useState(defaultValue);
-    useEffect(() => {
-        if (defaultValue) setValue(defaultValue);
-    }, [defaultValue]);
     const progress = useDebounce(value, 500);
 
     useEffect(() => {
-        changeProgress(progress);
-    }, [progress, changeProgress]);
+        setValue(defaultValue);
+    }, [defaultValue]);
+    console.log("🚀 ~ useEffect ~ defaultValue:", defaultValue);
+
+    useEffect(() => {
+        // if (progress !== defaultValue) {
+        //     changeProgress(progress);
+        // }
+    }, [progress, changeProgress, defaultValue]);
+
     const handleSliderChange = (event: Event, newValue: number | number[]) => {
         setValue(newValue as number);
     };
+
     return (
         <div className="w-full h-fill ">
             <div className="w-full flex items-center justify-between">
@@ -39,7 +46,6 @@ const CardProgress = ({
             </div>
             <div className="bg-white mt-2 w-full h-fill p-4 rounded-lg border border-solid">
                 <Slider
-                    defaultValue={30}
                     value={value}
                     onChange={handleSliderChange}
                     sx={{

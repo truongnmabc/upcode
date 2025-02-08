@@ -15,6 +15,7 @@ import {
 } from "@/redux/features/game.reselect";
 import { resetState, startCustomTest } from "@/redux/features/game";
 import clsx from "clsx";
+import { Tooltip } from "@mui/material";
 const GridLeftCustomTest = () => {
     const [listTest, setListTest] = useState<ITestBase[]>([]);
     const [openModalSetting, setOpenModalSetting] = React.useState(false);
@@ -135,61 +136,84 @@ const GridLeftCustomTest = () => {
                 <Fragment>
                     <div className="flex justify-between items-center">
                         <p className="font-semibold text-xl">Custom Test</p>
-                        <div
-                            onClick={() => {
-                                setOpenModalSetting(true);
-                                setItemSelect(null);
-                            }}
-                            className="w-7 h-7 cursor-pointer rounded-full bg-[#21212114] flex items-center justify-center "
-                        >
-                            <IconPlus />
-                        </div>
+                        <Tooltip title="Add Custom Test">
+                            <div
+                                onClick={() => {
+                                    setOpenModalSetting(true);
+                                    setItemSelect(null);
+                                }}
+                                className="w-7 h-7 cursor-pointer rounded-full bg-[#21212114] flex items-center justify-center "
+                            >
+                                <IconPlus />
+                            </div>
+                        </Tooltip>
                     </div>
-                    {listTest?.length > 0 && (
+                    {listTest?.length ? (
                         <div className="flex flex-col gap-3 bg-white p-4 rounded-md">
                             {listTest?.map((item, index) => (
                                 <div
                                     key={index}
                                     className={clsx(
-                                        "flex bg-[#2121210A]  hover:border-primary border border-solid rounded-lg px-3 py-[10px] gap-2 justify-between items-center",
+                                        "flex bg-[#2121210A]   border border-solid rounded-lg px-3 py-[10px] gap-2 justify-between items-center",
                                         {
                                             "border-primary":
                                                 indexSubTopic - 1 === index,
                                         }
                                     )}
                                 >
-                                    <p
-                                        className="text-sm cursor-pointer font-medium"
-                                        onClick={() => {
-                                            handleClickChoiceTest(
-                                                item,
-                                                index + 1
-                                            );
-                                        }}
+                                    <Tooltip
+                                        title={
+                                            indexSubTopic - 1 !== index
+                                                ? `Start Custom Test ${
+                                                      index + 1
+                                                  }`
+                                                : ""
+                                        }
                                     >
-                                        Custom Test {index + 1}
-                                    </p>
+                                        <p
+                                            className="text-sm hover:text-primary cursor-pointer font-medium"
+                                            onClick={() => {
+                                                if (indexSubTopic - 1 === index)
+                                                    return;
+                                                handleClickChoiceTest(
+                                                    item,
+                                                    index + 1
+                                                );
+                                            }}
+                                        >
+                                            Custom Test {index + 1}
+                                        </p>
+                                    </Tooltip>
+
                                     <div className="flex items-center gap-2">
-                                        <div
-                                            onClick={() => {
-                                                handleOpenModalSetting(item);
-                                            }}
-                                            className="w-6 h-6 rounded flex cursor-pointer items-center justify-center bg-[#2121210F]"
-                                        >
-                                            <IconEdit />
-                                        </div>
-                                        <div
-                                            onClick={() => {
-                                                handleOpenModalDelete(item);
-                                            }}
-                                            className="w-6 h-6 rounded flex items-center cursor-pointer justify-center bg-[#2121210F]"
-                                        >
-                                            <IconDelete />
-                                        </div>
+                                        <Tooltip title="Edit">
+                                            <div
+                                                onClick={() => {
+                                                    handleOpenModalSetting(
+                                                        item
+                                                    );
+                                                }}
+                                                className="w-6 h-6 rounded flex cursor-pointer hover:bg-primary items-center justify-center bg-[#2121210F]"
+                                            >
+                                                <IconEdit />
+                                            </div>
+                                        </Tooltip>
+                                        <Tooltip title="Delete">
+                                            <div
+                                                onClick={() => {
+                                                    handleOpenModalDelete(item);
+                                                }}
+                                                className="w-6 h-6 rounded flex items-center hover:bg-primary cursor-pointer justify-center bg-[#2121210F]"
+                                            >
+                                                <IconDelete />
+                                            </div>
+                                        </Tooltip>
                                     </div>
                                 </div>
                             ))}
                         </div>
+                    ) : (
+                        <></>
                     )}
                 </Fragment>
             )}
