@@ -40,7 +40,6 @@ export interface IGameReducer {
     // time: number;
     totalDuration: number; // Tổng thời gian của bài test
 
-    // type: "test" | "learn";
     gameMode: IGameMode; // Chế độ của game: learn/test
 
     // isPaused: boolean;

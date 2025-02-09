@@ -23,7 +23,6 @@ const ChoiceQuestionBeforeStart = ({
             <div className="flex items-center justify-between gap-4 px-6 py-6">
                 <p className="text-base font-medium">0</p>
                 <Slider
-                    defaultValue={30}
                     value={value}
                     valueLabelDisplay="auto"
                     onChange={handleSliderChange}

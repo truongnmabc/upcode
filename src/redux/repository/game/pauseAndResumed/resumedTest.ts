@@ -1,16 +1,13 @@
 import { db } from "@/db/db.model";
+import { IGameMode } from "@/models/tests";
 import { RootState } from "@/redux/store";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-type IRes = {
-    type: "customTest" | "finalTests" | "diagnosticTest" | "practiceTests";
-};
-
 const resumedTestThunk = createAsyncThunk(
     "resumedTestThunk",
-    async ({ type }: IRes) => {
+    async ({ type }: { type: IGameMode }) => {
         await db?.testQuestions
-            ?.where("gameMode")
+            .where("gameMode")
             .equals(type)
             .modify((item) => {
                 item.attemptNumber = item.attemptNumber + 1;

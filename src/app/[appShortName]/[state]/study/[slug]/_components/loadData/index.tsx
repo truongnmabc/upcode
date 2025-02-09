@@ -22,7 +22,7 @@ const LoadDataStudy = () => {
             );
         }
 
-        if ((!id || id === -1) && type === "test" && testId) {
+        if ((!id || id === -1) && type === "practiceTests" && testId) {
             dispatch(initPracticeThunk({ testId: Number(testId) }));
         }
     }, [id, dispatch, type, subTopicId, testId, partId]);

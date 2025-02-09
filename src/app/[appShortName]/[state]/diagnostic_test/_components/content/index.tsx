@@ -57,7 +57,7 @@ const ContentTestView = () => {
                     <Explanation />
                 </div>
 
-                <BottomActions isShow={true} type="diagnostic" />
+                <BottomActions type="diagnosticTest" />
             </div>
             <LoadDataDiagnosticTest />
         </MathJaxContext>

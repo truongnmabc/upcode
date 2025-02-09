@@ -5,14 +5,15 @@ import FinalTestBtn from "@/components/finalTestBtn";
 import GridTestsLeft from "@/components/gridTests";
 import GridTopicLeft from "@/components/gridTopics";
 import { useSearchParams } from "next/navigation";
+import { IGameMode } from "@/models/tests";
 
 const QuestionGroup = () => {
-    const type = useSearchParams()?.get("type");
+    const type = useSearchParams()?.get("type") as IGameMode;
     return (
         <div className="hidden sm:block w-full">
             <div className="flex p-3 bg-white rounded-xl flex-col gap-4">
-                {type === "test" && <AnswerSheet />}
-                {type === "test" ? (
+                {type === "practiceTests" && <AnswerSheet />}
+                {type === "practiceTests" ? (
                     <>
                         <GridTestsLeft />
                         <div className="w-full h-[1px] bg-[#21212129]"></div>

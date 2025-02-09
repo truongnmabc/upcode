@@ -1,5 +1,6 @@
 "use client";
 import { MtUiButton } from "@/components/button";
+import { IGameMode } from "@/models/tests";
 import { continueGame, startOverGame } from "@/redux/features/game";
 import {
     selectCurrentTopicId,
@@ -8,16 +9,15 @@ import {
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
+import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
 import pauseTestThunk from "@/redux/repository/game/pauseAndResumed/pauseTest";
-import resumedTestThunk, {
-    updateTimeTest,
-} from "@/redux/repository/game/pauseAndResumed/resumedTest";
+import { updateTimeTest } from "@/redux/repository/game/pauseAndResumed/resumedTest";
+import { updateDbTestQuestions } from "@/utils/updateDb";
 import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { usePathname, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect } from "react";
-import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -31,26 +31,24 @@ const Transition = React.forwardRef(function Transition(
 const ModalConfirm = () => {
     const [open, setOpen] = React.useState(false);
     const pathname = usePathname();
-    const typeParam = useSearchParams()?.get("type");
     const testId = useSearchParams()?.get("testId");
     const dispatch = useAppDispatch();
     const isPaused = useAppSelector(selectIsGamePaused);
     const idTopic = useAppSelector(selectCurrentTopicId);
-    const type = useAppSelector(selectGameMode);
+    const type = useAppSelector(selectGameMode) as IGameMode;
 
     const handleStartOver = useCallback(async () => {
-        await dispatch(
-            resumedTestThunk({
-                type:
-                    typeParam === "test"
-                        ? "practiceTests"
-                        : pathname?.includes("custom_test")
-                        ? "customTest"
-                        : pathname?.includes("final_test")
-                        ? "finalTests"
-                        : "diagnosticTest",
-            })
-        );
+        if (testId)
+            await updateDbTestQuestions({
+                id: Number(testId),
+                data: {
+                    attemptNumber: 2,
+                    isGamePaused: false,
+                    elapsedTime: 0,
+                    status: 0,
+                },
+                isUpAttemptNumber: true,
+            });
         if (pathname?.includes("diagnostic_test")) {
             dispatch(initDiagnosticTestQuestionThunk());
         }
@@ -63,7 +61,7 @@ const ModalConfirm = () => {
         }
         dispatch(startOverGame());
         setOpen(false);
-    }, [typeParam, pathname, dispatch, testId]);
+    }, [pathname, dispatch, testId]);
 
     const handleContinue = useCallback(() => {
         dispatch(updateTimeTest());

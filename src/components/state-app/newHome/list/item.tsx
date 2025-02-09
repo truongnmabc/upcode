@@ -27,7 +27,7 @@ const ItemTopicHome = ({
                     _state={_state}
                 />
                 <CardItem
-                    type="test"
+                    type="practiceTests"
                     test={test}
                     topic={topic}
                     appInfo={appInfo}

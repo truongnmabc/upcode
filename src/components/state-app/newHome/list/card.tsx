@@ -1,6 +1,7 @@
 "use client";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { IAppInfo } from "@/models/app/appInfo";
+import { IGameMode } from "@/models/tests";
 import { ITestInfo } from "@/models/tests/tests";
 import { ITopicBase } from "@/models/topics/topicsProgress";
 import { useRouter } from "next/navigation";
@@ -16,7 +17,7 @@ const CardItem = ({
 }: {
     topic: ITopicBase;
     test?: ITestInfo;
-    type: "test" | "learn";
+    type: IGameMode;
     _state: string;
     appInfo: IAppInfo;
 }) => {
@@ -98,7 +99,7 @@ const CardItem = ({
 
             // router.push(topic.slug);
         }
-        if (type === "test") {
+        if (type === "practiceTests") {
             // trackingEventGa4()
             // ga.event({
             //     action: "click_full_test",

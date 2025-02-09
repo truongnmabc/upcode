@@ -82,7 +82,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
                     })
                 );
 
-                _href = `/study/${TypeParam.practiceTest}?type=test&testId=${id}`;
+                _href = `/study/${TypeParam.practiceTest}?type=practiceTests&testId=${id}`;
             } else {
                 _href = `${RouterApp.ResultTest}?type=${TypeParam?.practiceTest}&testId=${res[0]?.id}`;
             }

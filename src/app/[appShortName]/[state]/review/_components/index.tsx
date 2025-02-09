@@ -50,7 +50,6 @@ const ReviewView = ({
                     >
                         <div className="w-full h-full flex flex-col gap-4 sm:gap-6 ">
                             {!isMobile && <TitleReview />}
-
                             <ReviewContentGroup isMobile={isMobile} />
                             <BannerDownloadApp />
                             {contentSeo && (
