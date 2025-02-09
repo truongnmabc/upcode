@@ -1,5 +1,5 @@
 "use client";
-import BottomActions, { IPropsType } from "@/components/bottomActions";
+import BottomActions from "@/components/bottomActions";
 import ChoicesPanel from "@/components/choicesPanel";
 import ExplanationDetail from "@/components/explanation";
 import ProgressQuestion from "@/components/progressQuestion";
@@ -9,6 +9,7 @@ import { useSearchParams } from "next/navigation";
 import React from "react";
 import LoadDataStudy from "../loadData";
 
+import { IGameMode } from "@/models/tests";
 import dynamic from "next/dynamic";
 
 const TitleQuestion = dynamic(() => import("@/components/titleQuestion"), {
@@ -24,7 +25,7 @@ const ClockIcon = dynamic(() => import("@/components/icon/ClockIcon"), {
 });
 
 const MainStudyView = () => {
-    const type = useSearchParams()?.get("type") as IPropsType;
+    const type = useSearchParams()?.get("type") as IGameMode;
 
     return (
         <MathJaxContext>
@@ -32,7 +33,7 @@ const MainStudyView = () => {
                 <div className="sm:p-4 flex flex-col gap-3">
                     {type && <TitleQuestion type={type} />}
                     <ProgressQuestion />
-                    {type === "test" && (
+                    {type === "practiceTests" && (
                         <div className="w-full flex items-center justify-center">
                             <div className="flex items-center justify-center w-fit gap-2">
                                 <ClockIcon />

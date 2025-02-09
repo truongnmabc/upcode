@@ -13,9 +13,16 @@ import {
     selectIsDataLoaded,
     selectListQuestion,
 } from "@/redux/features/game.reselect";
-import { resetState, startCustomTest } from "@/redux/features/game";
+import {
+    resetState,
+    setCurrentTopicId,
+    startCustomTest,
+} from "@/redux/features/game";
 import clsx from "clsx";
 import { Tooltip } from "@mui/material";
+import { useRouter } from "next/navigation";
+import RouterApp from "@/constants/router.constant";
+import { TypeParam } from "@/constants";
 const GridLeftCustomTest = () => {
     const [listTest, setListTest] = useState<ITestBase[]>([]);
     const [openModalSetting, setOpenModalSetting] = React.useState(false);
@@ -70,6 +77,7 @@ const GridLeftCustomTest = () => {
         setOpenDelete(false);
     }, []);
 
+    const router = useRouter();
     const handleDelete = useCallback(async () => {
         if (itemSelect) {
             await db?.testQuestions.where("id").equals(itemSelect?.id).delete();
@@ -117,7 +125,13 @@ const GridLeftCustomTest = () => {
     }, [itemSelect, dispatch]);
 
     const handleClickChoiceTest = useCallback(
-        (item: ITestBase, index: number) => {
+        async (item: ITestBase, index: number) => {
+            const tests = await db?.testQuestions.get(item.id);
+            if (tests?.status === 1) {
+                const _href = `${RouterApp.ResultTest}?type=${TypeParam.customTest}&testId=${item.id}`;
+                router.replace(_href);
+                return;
+            }
             dispatch(
                 choiceStartCustomTestThunk({
                     item: {
@@ -126,8 +140,9 @@ const GridLeftCustomTest = () => {
                     },
                 })
             );
+            dispatch(setCurrentTopicId(item.id));
         },
-        [dispatch]
+        [dispatch, router]
     );
 
     return (
@@ -171,10 +186,15 @@ const GridLeftCustomTest = () => {
                                         }
                                     >
                                         <p
-                                            className="text-sm hover:text-primary cursor-pointer font-medium"
+                                            className={clsx(
+                                                "text-sm hover:text-primary cursor-pointer font-medium",
+                                                {
+                                                    "pointer-events-none":
+                                                        indexSubTopic - 1 ===
+                                                        index,
+                                                }
+                                            )}
                                             onClick={() => {
-                                                if (indexSubTopic - 1 === index)
-                                                    return;
                                                 handleClickChoiceTest(
                                                     item,
                                                     index + 1
@@ -193,7 +213,15 @@ const GridLeftCustomTest = () => {
                                                         item
                                                     );
                                                 }}
-                                                className="w-6 h-6 rounded flex cursor-pointer hover:bg-primary items-center justify-center bg-[#2121210F]"
+                                                className={clsx(
+                                                    "w-6 h-6 rounded flex cursor-pointer hover:bg-primary items-center justify-center bg-[#2121210F]",
+                                                    {
+                                                        "pointer-events-none":
+                                                            indexSubTopic -
+                                                                1 ===
+                                                            index,
+                                                    }
+                                                )}
                                             >
                                                 <IconEdit />
                                             </div>
@@ -203,7 +231,15 @@ const GridLeftCustomTest = () => {
                                                 onClick={() => {
                                                     handleOpenModalDelete(item);
                                                 }}
-                                                className="w-6 h-6 rounded flex items-center hover:bg-primary cursor-pointer justify-center bg-[#2121210F]"
+                                                className={clsx(
+                                                    "w-6 h-6 rounded flex items-center hover:bg-primary cursor-pointer justify-center bg-[#2121210F]",
+                                                    {
+                                                        "pointer-events-none":
+                                                            indexSubTopic -
+                                                                1 ===
+                                                            index,
+                                                    }
+                                                )}
                                             >
                                                 <IconDelete />
                                             </div>

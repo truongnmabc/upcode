@@ -6,26 +6,26 @@ import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic
 import { TypeParam } from "@/constants";
 import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
-import { selectCurrentTopicId } from "@/redux/features/game.reselect";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
+import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
+import resumedCustomTestThunk from "@/redux/repository/game/resumed/customeTest";
+import { updateDbTestQuestions } from "@/utils/updateDb";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { IconFailResultTest } from "../icon/iconFailResultTest";
 import { IconPassResultTest } from "../icon/iconPassResultTest";
+import { useResultContext } from "../resultContext";
 import DashboardCard from "./chartHeader";
 import HeaderResultDiagnostic from "./headerResultDiagnostic";
 import { TitleMiss, TitlePass } from "./titleResultTest";
-import { useResultContext } from "../resultContext";
-import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
-import resumedTestThunk from "@/redux/repository/game/pauseAndResumed/resumedTest";
+import { setCurrentTopicId } from "@/redux/features/game";
 
 const HeaderResultTest = () => {
     const { correct, total, isPass, passing } = useResultContext();
     const router = useRouter();
-    const idTopic = useAppSelector(selectCurrentTopicId);
     const type = useSearchParams()?.get("type");
     const dispatch = useAppDispatch();
     const testId = useSearchParams()?.get("testId");
@@ -57,37 +57,42 @@ const HeaderResultTest = () => {
     const handleTryAgain = useCallback(async () => {
         let _href = "";
 
-        const id = idTopic !== -1 ? idTopic : Number(testId) || -1;
+        const id = Number(testId);
+
+        console.log("🚀 ~ handleTryAgain ~ id:", id);
+        if (id)
+            await updateDbTestQuestions({
+                id: Number(id),
+                data: {
+                    isGamePaused: false,
+                    elapsedTime: 0,
+                    status: 0,
+                },
+                isUpAttemptNumber: true,
+            });
         switch (type) {
             case TypeParam.diagnosticTest:
-                await dispatch(
-                    resumedTestThunk({
-                        type: "diagnosticTest",
-                    })
-                );
                 dispatch(initDiagnosticTestQuestionThunk());
-
                 _href = RouterApp.Diagnostic_test;
                 break;
 
             case TypeParam.finalTest:
-                await dispatch(
-                    resumedTestThunk({
-                        type: "finalTests",
-                    })
-                );
                 dispatch(initFinalTestThunk());
                 _href = RouterApp.Final_test;
                 break;
 
             case TypeParam.practiceTest:
+                dispatch(initPracticeThunk({ testId: id }));
+                _href = `/study/${TypeParam.practiceTest}?type=practiceTests&testId=${id}`;
+                break;
+
+            case TypeParam.customTest:
                 await dispatch(
-                    resumedTestThunk({
-                        type: "practiceTests",
+                    resumedCustomTestThunk({
+                        id: id,
                     })
                 );
-                dispatch(initPracticeThunk({ testId: id }));
-                _href = `/study/${TypeParam.practiceTest}?type=test&testId=${id}`;
+                _href = RouterApp.Custom_test;
                 break;
 
             case TypeParam.review:
@@ -101,7 +106,7 @@ const HeaderResultTest = () => {
         if (_href) {
             router.replace(_href);
         }
-    }, [router, idTopic, dispatch, type, testId]);
+    }, [router, dispatch, type, testId]);
 
     const handleNextTets = useCallback(async () => {
         if (type === TypeParam.practiceTest) {
@@ -112,12 +117,14 @@ const HeaderResultTest = () => {
                 .first();
 
             dispatch(initPracticeThunk({ testId: currentTest?.id || -1 }));
-            const _href = `/study/${TypeParam.practiceTest}?type=test&testId=${currentTest?.id}`;
-            return router.push(_href);
+            const _href = `/study/${TypeParam.practiceTest}?type=practiceTests&testId=${currentTest?.id}`;
+            router.push(_href);
+            return;
         }
         if (type === TypeParam.customTest) {
             dispatch(initCustomTestThunk());
-            return router.push(RouterApp.Custom_test);
+            router.push(RouterApp.Custom_test);
+            return;
         }
     }, [router, type, dispatch]);
 
@@ -180,7 +187,9 @@ const HeaderResultTest = () => {
                                 size="large"
                                 onClick={handleNextTets}
                             >
-                                Continue
+                                {type === TypeParam.customTest
+                                    ? "New Test"
+                                    : "Continue"}
                             </MtUiButton>
                         )}
                     </div>

@@ -1,5 +1,5 @@
 "use client";
-import { viewTest } from "@/redux/features/game";
+import { setCurrentQuestion } from "@/redux/features/game";
 import {
     selectCurrentGame,
     selectGameDifficultyLevel,
@@ -26,6 +26,7 @@ import { useCallback, useEffect, useMemo } from "react";
 import AnswerButton from "../answer";
 import { MOCK_TEMP_LIST_ANSWER } from "./mock";
 import { shouldOpenSubmitTest } from "@/redux/features/tests";
+import { IGameMode } from "@/models/tests";
 
 function shuffleArray<T>(array: T[]): T[] {
     if (array && array.length) {
@@ -52,7 +53,7 @@ const ChoicesPanel: React.FC<IProps> = ({
     const params = useParams();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const type = searchParams?.get("type");
+    const type = searchParams?.get("type") as IGameMode;
 
     const idTopic = useAppSelector(selectCurrentTopicId);
     const currentGame = useAppSelector(selectCurrentGame);
@@ -93,7 +94,7 @@ const ChoicesPanel: React.FC<IProps> = ({
             return;
         }
         // xử lý với trường hợp làm bài practice test
-        if (type === "test") {
+        if (type === "practiceTests") {
             if (indexCurrentQuestion + 1 === listLength) {
                 dispatch(finishPracticeThunk());
 
@@ -121,7 +122,7 @@ const ChoicesPanel: React.FC<IProps> = ({
 
         if (pathname?.includes("final_test")) {
             if (indexCurrentQuestion + 1 < listLength) {
-                dispatch(viewTest(indexCurrentQuestion + 1));
+                dispatch(setCurrentQuestion(indexCurrentQuestion + 1));
             } else {
                 dispatch(shouldOpenSubmitTest(true));
             }
@@ -131,7 +132,7 @@ const ChoicesPanel: React.FC<IProps> = ({
         if (pathname?.includes("custom_test")) {
             if (feedBack === "newbie") dispatch(nextQuestionDiagnosticThunk());
             else if (feedBack === "exam")
-                dispatch(viewTest(indexCurrentQuestion + 1));
+                dispatch(setCurrentQuestion(indexCurrentQuestion + 1));
             else if (feedBack === "expert") dispatch(nextQuestionThunk());
         }
     }, [
