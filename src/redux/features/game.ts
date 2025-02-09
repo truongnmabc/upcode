@@ -81,6 +81,9 @@ export const gameSlice = createSlice({
             state.isGamePaused = false;
             state.remainingTime = -1;
         },
+        setCurrentTopicId: (state, action) => {
+            state.currentTopicId = action.payload;
+        },
         startCustomTest: (state, action) => {
             const {
                 listQuestion,
@@ -256,6 +259,7 @@ export const {
     startRandomReview,
     startTryAgainDiagnostic,
     shouldEndTimeTest,
+    setCurrentTopicId,
 } = actions;
 
 export const gameState = (state: RootState) => state.gameReducer;

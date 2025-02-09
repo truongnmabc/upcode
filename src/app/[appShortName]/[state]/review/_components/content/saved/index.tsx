@@ -61,10 +61,13 @@ const SavedQuestions = () => {
 
     return (
         <div
-            className={clsx("w-full flex-1 flex flex-col transition-all", {
-                "h-[400px]": data.length > 0,
-                "h-[800px]": data.length > 2,
-            })}
+            className={clsx(
+                "w-full h-full flex-1 flex flex-col transition-all",
+                {
+                    "h-[400px]": data.length > 0,
+                    "h-[800px]": data.length > 2,
+                }
+            )}
         >
             {data.length > 0 ? (
                 <MathJaxContext>
@@ -86,7 +89,7 @@ const SavedQuestions = () => {
                     </div>
                 </MathJaxContext>
             ) : (
-                <Empty />
+                <Empty title="You haven't added any questions to your saved list, try adding some then practice more." />
             )}
         </div>
     );

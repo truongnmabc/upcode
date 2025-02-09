@@ -5,6 +5,7 @@ import {
     selectCurrentQuestionIndex,
     selectCurrentSubTopicProgressId,
     selectCurrentTopicId,
+    selectGameDifficultyLevel,
     selectIsTimeUp,
     selectListQuestion,
 } from "@/redux/features/game.reselect";
@@ -30,79 +31,70 @@ const WrapperBtnActions: React.FC<IPropsBottomAction> = ({
     const idTopic = useAppSelector(selectCurrentTopicId);
     const listQuestion = useAppSelector(selectListQuestion);
     const indexCurrentQuestion = useAppSelector(selectCurrentQuestionIndex);
-
     const isEndTimeTest = useAppSelector(selectIsTimeUp);
+    const gameDifficultyLevel = useAppSelector(selectGameDifficultyLevel);
 
     const setOpenConfirm = () => dispatch(shouldOpenSubmitTest(true));
 
-    const isFinish = useMemo(() => {
-        if (type !== "learn") return false;
+    const isFinish =
+        type === "learn" &&
+        listQuestion.every((item) => item.localStatus === "correct");
 
-        return listQuestion.every((item) => item.localStatus === "correct");
-    }, [type, listQuestion]);
-
-    const listQuestionLength = useMemo(
-        () => listQuestion.length,
-        [listQuestion.length]
-    );
+    const listQuestionLength = listQuestion.length;
 
     const isDisabled = useMemo(() => {
-        if (isEndTimeTest) return true;
-        const isLast = indexCurrentQuestion === listQuestionLength - 1;
-        if (isLast) return true;
-
-        // if (type === "finalTests") return false;
-
-        if (type === "learn") return !currentGame?.selectedAnswer;
-        return false;
+        if (indexCurrentQuestion === listQuestionLength - 1 || isEndTimeTest)
+            return true;
+        if (gameDifficultyLevel === "exam") return false;
+        return (
+            ["practiceTests", "learn", "diagnosticTest", "customTets"].includes(
+                type
+            ) && !currentGame?.selectedAnswer
+        );
     }, [
         currentGame,
         isEndTimeTest,
         type,
         indexCurrentQuestion,
         listQuestionLength,
+        gameDifficultyLevel,
     ]);
 
     const handleFinish = useCallback(() => {
-        console.log("🚀 ~ handleFinish ~ type:", type);
-
-        if (type === "finalTests") {
-            dispatch(setCurrentQuestion(indexCurrentQuestion + 1));
-            return;
-        }
-        if (type === "diagnosticTest") {
-            dispatch(nextQuestionDiagnosticThunk());
-            return;
-        }
-        if (type === "learn") {
-            if (isFinish) {
-                dispatch(
-                    finishQuestionThunk({
-                        subTopicProgressId,
-                        topicId: idTopic,
-                    })
-                );
-
-                router.replace(
-                    `${RouterApp.Finish}?subTopicId=${subTopicProgressId}&topic=${params?.["slug"]}&partId=${idTopic}`,
-                    { scroll: true }
-                );
-            } else {
+        switch (type) {
+            case "finalTests":
+                dispatch(setCurrentQuestion(indexCurrentQuestion + 1));
+                break;
+            case "diagnosticTest":
+                dispatch(nextQuestionDiagnosticThunk());
+                break;
+            case "learn":
+                if (isFinish) {
+                    dispatch(
+                        finishQuestionThunk({
+                            subTopicProgressId,
+                            topicId: idTopic,
+                        })
+                    );
+                    router.replace(
+                        `${RouterApp.Finish}?subTopicId=${subTopicProgressId}&topic=${params?.["slug"]}&partId=${idTopic}`,
+                        { scroll: true }
+                    );
+                } else {
+                    dispatch(nextQuestionThunk());
+                }
+                break;
+            case "practiceTests":
+            case "customTets":
+                if (gameDifficultyLevel === "exam") {
+                    dispatch(setCurrentQuestion(indexCurrentQuestion + 1));
+                } else {
+                    dispatch(nextQuestionThunk());
+                }
+                break;
+            default:
                 dispatch(nextQuestionThunk());
-            }
-        }
-
-        if (type === "practiceTests") {
-            console.log("🚀 ~ handleFinish ~ type:", type);
-            // if (indexCurrentQuestion + 1 === listQuestionLength) {
-            //     dispatch(finishPracticeThunk());
-
-            //     router.push(RouterApp.ResultTest, {
-            //         scroll: true,
-            //     });
-            // } else {
-            //     dispatch(nextQuestionThunk());
-            // }
+                break;
         }
     }, [
         isFinish,
@@ -113,7 +105,9 @@ const WrapperBtnActions: React.FC<IPropsBottomAction> = ({
         params,
         type,
         indexCurrentQuestion,
+        gameDifficultyLevel,
     ]);
+
     return (
         <Fragment>
             {[

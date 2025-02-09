@@ -21,6 +21,7 @@ import ItemListTopicResult from "./listTopicResult/item";
 import { ResultProvider } from "./resultContext";
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
 import { ITestBase } from "@/models/tests";
+import { totalPassingPart } from "../../finish/_components/calculate";
 
 export interface ITopicEndTest extends ITopicBase {
     totalQuestion: number;
@@ -35,7 +36,6 @@ type IPropsState = {
 
 const fetchData = async (idTopic: number) => {
     const tests = await db?.testQuestions?.get(idTopic);
-
     return tests;
 };
 const getFilteredUserProgress = async ({
@@ -138,6 +138,27 @@ const separateCorrectAndIncorrectQuestions = (
     return { correctQuestions, incorrectQuestions };
 };
 
+const calculatePassing = async ({
+    progress,
+    turn,
+}: {
+    progress: IUserQuestionProgress[];
+    turn: number;
+}) => {
+    const passingAppInfo = await db?.passingApp.get(-1);
+
+    const passingPart = await totalPassingPart({
+        progress,
+        averageLevel: passingAppInfo?.averageLevel || 50,
+        turn,
+    });
+
+    if (passingAppInfo) {
+        return (passingPart / passingAppInfo.totalQuestion) * 100;
+    }
+    return 0;
+};
+
 const ResultTestLayout = () => {
     const listQuestion = useAppSelector(selectListQuestion);
     const passPercent = useAppSelector(selectPassingThreshold);
@@ -190,11 +211,16 @@ const ResultTestLayout = () => {
         const { correctQuestions, incorrectQuestions } =
             separateCorrectAndIncorrectQuestions(questions, userProgress);
 
+        const passing = await calculatePassing({
+            progress: userProgress,
+            turn: tests.attemptNumber,
+        });
+        console.log("🚀 ~ handleGetData ~ passing:", passing);
         setResult({
             listTopic: listTopics,
             all: questions.length,
             correct: correctQuestions.length,
-            passing: 1,
+            passing: passing,
         });
 
         setCorrectIds(correctQuestions.map((i) => i.id));
