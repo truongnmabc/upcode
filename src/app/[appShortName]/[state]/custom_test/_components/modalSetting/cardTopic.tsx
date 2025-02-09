@@ -6,7 +6,7 @@ import { useCallback, useMemo } from "react";
 type ICardTopic = {
     item: ITopicBase;
     selectListTopic: ITopicBase[];
-    setSelectListTopic: React.Dispatch<React.SetStateAction<ITopicBase[]>>;
+    setSelectListTopic: (newList: ITopicBase[]) => void;
 };
 
 const CardTopic: React.FC<ICardTopic> = ({
@@ -20,18 +20,18 @@ const CardTopic: React.FC<ICardTopic> = ({
     );
 
     const handleSelect = useCallback(() => {
-        setSelectListTopic((prev) =>
-            prev.some((s) => s.id === item.id)
-                ? prev.filter((s) => s.id !== item.id)
-                : [...prev, item]
-        );
-    }, [setSelectListTopic, item]);
+        const newList = selectListTopic.some((s) => s.id === item.id)
+            ? selectListTopic.filter((s) => s.id !== item.id)
+            : [...selectListTopic, item];
+
+        setSelectListTopic([...newList]);
+    }, [selectListTopic, setSelectListTopic, item]);
 
     return (
         <div
             onClick={handleSelect}
             className={clsx(
-                "cursor-pointer w-full flex bg-white items-center justify-between gap-[10px] rounded-lg sm:border border-solid p-0 sm:p-4",
+                "cursor-pointer w-full flex sm:bg-white items-center justify-between gap-[10px] rounded-lg sm:border border-solid p-0 sm:p-4",
                 isCheck ? "border-primary" : "border-[#2121211F]"
             )}
         >

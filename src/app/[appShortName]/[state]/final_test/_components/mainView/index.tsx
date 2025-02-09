@@ -25,7 +25,7 @@ const MainViewFinalTest = () => {
                     <ChoicesPanel isActions />
                 </div>
 
-                <BottomActions isShow={true} type="final" />
+                <BottomActions type="finalTests" />
             </div>
         </MathJaxContext>
     );

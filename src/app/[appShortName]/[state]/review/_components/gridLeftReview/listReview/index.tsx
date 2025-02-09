@@ -5,6 +5,8 @@ import { useAppDispatch } from "@/redux/hooks";
 import clsx from "clsx";
 import React, { Fragment, useCallback, useContext } from "react";
 import { ISelectReview, ReviewContext } from "../../context";
+import { db } from "@/db/db.model";
+import { toast } from "react-toastify";
 
 const ListReview = ({ isMobile }: { isMobile: boolean }) => {
     const {
@@ -17,8 +19,27 @@ const ListReview = ({ isMobile }: { isMobile: boolean }) => {
     } = useContext(ReviewContext);
     const dispatch = useAppDispatch();
     const handleSelectType = useCallback(
-        (type: ISelectReview) => {
-            setSelectType(type);
+        async (type: ISelectReview) => {
+            if (type === "saved") {
+                const list = await db?.useActions
+                    .filter((item) => item.actions?.includes("save"))
+                    .toArray();
+                if (list?.length === 0) {
+                    toast.info(
+                        "You haven't added any questions to your saved list, try adding some then practice more."
+                    );
+                    return;
+                }
+            }
+            if (type === "weak") {
+                const count = await db?.userProgress.count();
+                if (count === 0) {
+                    toast.info(
+                        "It seems that you're doing well, there are no weaknesses to address."
+                    );
+                    return;
+                }
+            }
             dispatch(resetState());
             if (isMobile && (type === "random" || type === "hard")) {
                 setIsOpenSheet(true);
@@ -30,7 +51,7 @@ const ListReview = ({ isMobile }: { isMobile: boolean }) => {
             ) {
                 setIsShowList(false);
             }
-
+            setSelectType(type);
             setIsStart(false);
         },
         [

@@ -61,7 +61,7 @@ export const fetchQuestions = async (
  * Lấy tiến trình người dùng từ local database (IndexedDB).
  *
  * @param {number} listIds - ID của bài test.
- * @param {"test" | "learn"} gameMode - Loại tiến trình ("test").
+ * @param {"practiceTests" | "learn"} gameMode - Loại tiến trình ("test").
  * @param {number} turn - Số lần thực hiện bài test.
  * @return {Promise<IUserQuestionProgress[] | null>} - Danh sách tiến trình người dùng hoặc null nếu không có.
  */
@@ -136,7 +136,7 @@ export const mapQuestionsWithProgress = (
  *   questions: ICurrentGame[],
  *   progressData: IUserQuestionProgress[],
  *   currentTopicId: number,
- *   gameMode: "test",
+ *   gameMode: "practiceTests",
  *   totalDuration: number,
  *   isGamePaused: boolean,
  *   remainingTime: number

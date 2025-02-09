@@ -1,5 +1,4 @@
-import BtnNextQuestion from "@/components/bottomActions/next/learn";
-import BtnSubmit from "@/components/bottomActions/btnSubmit";
+// import BtnNextQuestion from "@/components/bottomActions/next/learn";
 import Keyboard from "@/components/keyboard";
 import SubAction from "@/components/reaction";
 import React from "react";
@@ -12,8 +11,8 @@ const BottomActionGroup = () => {
                 <SubAction />
             </div>
             <div className="px-4 w-full flex items-center gap-2 sm:p-4 sm:w-fit">
-                <BtnSubmit isShow={true} />
-                <BtnNextQuestion />
+                {/* <BtnSubmit isShow={true} /> */}
+                {/* <BtnNextQuestion /> */}
             </div>
         </div>
     );

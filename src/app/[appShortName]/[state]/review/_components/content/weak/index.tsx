@@ -3,55 +3,20 @@ import VariableSizeList from "@/components/infinite";
 import QuestionResult from "@/components/questionReview";
 import { db } from "@/db/db.model";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
+import { IQuestionOpt } from "@/models/question";
 import { setListQuestionGames } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
 import { MathJaxContext } from "better-react-mathjax";
 import React, { useCallback, useEffect } from "react";
 
 const WeakQuestions = () => {
-    const [listTopic, setListTopic] = React.useState<IUserQuestionProgress[]>(
-        []
-    );
+    const [listTopic, setListTopic] = React.useState<IQuestionOpt[]>([]);
     const dispatch = useAppDispatch();
     const handleGetData = useCallback(async () => {
-        const [data, topics] = await Promise.all([
-            db?.userProgress.toArray(),
-            db?.topics.toArray(),
-        ]);
-        console.log("🚀 ~ handleGetData ~ data:", data);
+        const progress = await db?.userProgress.toArray();
 
-        if (data?.length && topics?.length) {
-            const listSub = topics
-                ?.flatMap((mainTopic) =>
-                    mainTopic.topics?.flatMap((subTopic) =>
-                        subTopic.topics?.map((topic) => ({
-                            ...topic,
-                            mainIcon: mainTopic.icon,
-                            mainTag: mainTopic.tag,
-                        }))
-                    )
-                )
-                .filter(Boolean);
-            console.log("🚀 ~ handleGetData ~ listSub:", listSub);
-
-            const list = data
-                // .filter((item) =>
-                //     listSub?.some((topic) => item.parentIds.includes(topic?.id))
-                // )
-                .map((item) => {
-                    const matchingTopic = listSub.find((topic) =>
-                        item.parentIds.includes(topic?.id)
-                    );
-                    return {
-                        ...item,
-                        icon: matchingTopic?.mainIcon,
-                        tag: matchingTopic?.mainTag,
-                    };
-                });
-            console.log("🚀 ~ handleGetData ~ list:", list);
-
-            const incorrect = list.filter((item) => {
+        if (progress?.length) {
+            const incorrect = progress.filter((item) => {
                 const lastThreeAnswers = item.selectedAnswers?.slice(-3) || [];
 
                 const totalAnswers = lastThreeAnswers.length;
@@ -65,13 +30,13 @@ const WeakQuestions = () => {
                 return incorrectPercentage >= 50;
             });
 
-            const mathType = incorrect.map((item) => ({
-                ...item,
-                parentId: -1,
-            }));
+            const ids = incorrect.map((item) => item.id);
 
-            setListTopic(mathType);
-            dispatch(setListQuestionGames(mathType));
+            const questions =
+                (await db?.questions.where("id").anyOf(ids).toArray()) || [];
+
+            setListTopic(questions);
+            dispatch(setListQuestionGames(questions));
         }
     }, [dispatch]);
 

@@ -29,7 +29,7 @@ const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
             );
 
             router.push(
-                `/study/${TypeParam.practiceTest}?type=test&testId=${test.parentId}`
+                `/study/${TypeParam.practiceTest}?type=practiceTests&testId=${test.parentId}`
             );
         } else {
             const _href = `${RouterApp.ResultTest}?type=${TypeParam.practiceTest}&testId=${test.parentId}`;

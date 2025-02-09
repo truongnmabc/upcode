@@ -16,6 +16,7 @@ import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useSearchParams } from "next/navigation";
 import clsx from "clsx";
+import { IGameMode } from "@/models/tests";
 
 const QuestionContent = ({
     showStatus = true,
@@ -33,7 +34,7 @@ const QuestionContent = ({
     const [text, setText] = useState<string>("");
     const [loading, setLoading] = useState(true);
     const isMobile = useIsMobile();
-    const type = useSearchParams()?.get("type");
+    const type = useSearchParams()?.get("type") as IGameMode;
 
     useEffect(() => {
         if (currentGame?.text && currentGame?.id) {
@@ -63,7 +64,7 @@ const QuestionContent = ({
                 <MtUiSkeleton className="min-h-8" />
             ) : (
                 <Fragment>
-                    {(type === "test" || showQuestionsCount) && (
+                    {(type === "practiceTests" || showQuestionsCount) && (
                         <div className="flex sm:hidden text-sm font-semibold">
                             Question {indexGame + 1} / {list.length}
                         </div>

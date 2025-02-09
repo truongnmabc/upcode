@@ -8,6 +8,7 @@ import Collapse from "@mui/material/Collapse";
 import { useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import ItemTestLeft from "./itemTest";
+import { IGameMode } from "@/models/tests";
 
 type IListTest = {
     parentId: number;
@@ -17,9 +18,9 @@ const FN = () => {
     const appInfo = useAppSelector(selectAppInfo);
 
     const [listPracticeTests, setListPracticeTests] = useState<IListTest[]>([]);
-    const type = useSearchParams()?.get("type");
+    const type = useSearchParams()?.get("type") as IGameMode;
 
-    const [open, setOpen] = React.useState(type === "test");
+    const [open, setOpen] = React.useState(type === "practiceTests");
 
     const handleClick = useCallback(() => {
         setOpen(!open);

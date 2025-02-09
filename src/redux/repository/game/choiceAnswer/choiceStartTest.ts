@@ -28,7 +28,7 @@ const choiceStartCustomTestThunk = createAsyncThunk(
                 questions,
                 progressData,
                 currentTopicId: item.id,
-                gameMode: "test" as const,
+                gameMode: "practiceTests",
                 totalDuration: item.totalDuration,
                 isGamePaused: item?.isGamePaused || false,
                 remainingTime: item?.remainingTime || item.totalDuration * 60,

@@ -66,13 +66,16 @@ const DashboardCard = ({
 
                     <div className="relative custom-progress w-full h-5 mt-1 z-10 bg-white rounded-full">
                         <div
-                            className="absolute w-1/2 top-0 left-0 h-5 bg-yellow-500 rounded"
+                            className="absolute w-1/2 top-0 left-0 h-5 bg-yellow-500 rounded-full"
                             style={{
                                 background:
                                     "linear-gradient(90deg, #E3C151 0%, #E3A651 50%, #F39153 100%)",
-                                width: `${passing < 3 ? 3 : passing}%`,
+                                width: `${passing < 3 ? 6 : passing}%`,
                             }}
                         ></div>
+                        <div className="absolute w-full h-5 leading-5 text-primary text-xs font-semibold text-center">
+                            + {passing.toFixed(2)}%
+                        </div>
                     </div>
                     <div className="absolute inset-0 pt-2 z-0">
                         <Pattern />
