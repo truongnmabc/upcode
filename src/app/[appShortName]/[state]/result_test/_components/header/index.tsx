@@ -20,7 +20,8 @@ import HeaderResultDiagnostic from "./headerResultDiagnostic";
 import { TitleMiss, TitlePass } from "./titleResultTest";
 import { useResultContext } from "../resultContext";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
-import resumedTestThunk from "@/redux/repository/game/pauseAndResumed/resumedTest";
+import resumedCustomTestThunk from "@/redux/repository/game/resumed/customeTest";
+import { updateDbTestQuestions } from "@/utils/updateDb";
 
 const HeaderResultTest = () => {
     const { correct, total, isPass, passing } = useResultContext();
@@ -58,36 +59,40 @@ const HeaderResultTest = () => {
         let _href = "";
 
         const id = idTopic !== -1 ? idTopic : Number(testId) || -1;
+        if (id)
+            await updateDbTestQuestions({
+                id: Number(id),
+                data: {
+                    isGamePaused: false,
+                    elapsedTime: 0,
+                    status: 0,
+                },
+                isUpAttemptNumber: true,
+            });
         switch (type) {
             case TypeParam.diagnosticTest:
-                await dispatch(
-                    resumedTestThunk({
-                        type: "diagnosticTest",
-                    })
-                );
                 dispatch(initDiagnosticTestQuestionThunk());
 
                 _href = RouterApp.Diagnostic_test;
                 break;
 
             case TypeParam.finalTest:
-                await dispatch(
-                    resumedTestThunk({
-                        type: "finalTests",
-                    })
-                );
                 dispatch(initFinalTestThunk());
                 _href = RouterApp.Final_test;
                 break;
 
             case TypeParam.practiceTest:
+                dispatch(initPracticeThunk({ testId: id }));
+                _href = `/study/${TypeParam.practiceTest}?type=practiceTests&testId=${id}`;
+                break;
+
+            case TypeParam.customTest:
                 await dispatch(
-                    resumedTestThunk({
-                        type: "practiceTests",
+                    resumedCustomTestThunk({
+                        id: id,
                     })
                 );
-                dispatch(initPracticeThunk({ testId: id }));
-                _href = `/study/${TypeParam.practiceTest}?type=test&testId=${id}`;
+                _href = RouterApp.Custom_test;
                 break;
 
             case TypeParam.review:
@@ -112,7 +117,7 @@ const HeaderResultTest = () => {
                 .first();
 
             dispatch(initPracticeThunk({ testId: currentTest?.id || -1 }));
-            const _href = `/study/${TypeParam.practiceTest}?type=test&testId=${currentTest?.id}`;
+            const _href = `/study/${TypeParam.practiceTest}?type=practiceTests&testId=${currentTest?.id}`;
             return router.push(_href);
         }
         if (type === TypeParam.customTest) {
@@ -180,7 +185,9 @@ const HeaderResultTest = () => {
                                 size="large"
                                 onClick={handleNextTets}
                             >
-                                Continue
+                                {type === TypeParam.customTest
+                                    ? "New Test"
+                                    : "Continue"}
                             </MtUiButton>
                         )}
                     </div>

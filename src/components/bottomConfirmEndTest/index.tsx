@@ -2,6 +2,7 @@
 import { MtUiButton } from "@/components/button";
 import RouterApp from "@/constants/router.constant";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { IGameMode } from "@/models/tests";
 import { endTest } from "@/redux/features/game";
 import {
     selectCurrentTopicId,
@@ -40,7 +41,7 @@ const BottomConfirmTest = () => {
     const pathname = usePathname();
     const listQuestions = useAppSelector(selectListQuestion);
     const router = useRouter();
-    const type = useSearchParams()?.get("type");
+    const type = useSearchParams()?.get("type") as IGameMode;
     const testId = useSearchParams()?.get("testId");
     const id = useAppSelector(selectCurrentTopicId);
     const [info, setInfo] = useState({
@@ -70,7 +71,7 @@ const BottomConfirmTest = () => {
 
         if (testType) {
             dispatch(actionMap[testType]());
-        } else if (type === "test") {
+        } else if (type === "practiceTests") {
             dispatch(finishPracticeThunk());
         }
 

@@ -49,11 +49,7 @@ const BottomLestTest = () => {
         [handleClose, listQuestions, dispatch]
     );
     if (isStart) return null;
-    if (
-        selectType === "saved" ||
-        selectType === "weak" ||
-        selectType === "all"
-    ) {
+    if (selectType === "saved" || selectType === "weak") {
         return (
             <div className=" fixed z-20 bottom-0 left-0 right-0 h-fit">
                 <div className="w-full h-full  py-4 bg-[#F9F7EE] flex items-center justify-center">

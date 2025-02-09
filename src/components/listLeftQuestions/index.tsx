@@ -1,7 +1,7 @@
 "use client";
 
 import { ICurrentGame } from "@/models/game/game";
-import { viewTest } from "@/redux/features/game";
+import { setCurrentQuestion } from "@/redux/features/game";
 import {
     selectCurrentGame,
     selectCurrentQuestionIndex,
@@ -76,7 +76,7 @@ const AnswerSheet: React.FC<IProps> = ({
                         className={getClassNames(q, index)}
                         onClick={() => {
                             if (isActions && currentGame?.id !== q.id)
-                                dispatch(viewTest(index));
+                                dispatch(setCurrentQuestion(index));
                         }}
                     >
                         {index + 1}

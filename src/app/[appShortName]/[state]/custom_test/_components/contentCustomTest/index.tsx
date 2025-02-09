@@ -35,7 +35,7 @@ const ContentCustomTest = () => {
                     )}
                 </div>
 
-                <BottomActions isShow={true} type="custom" />
+                <BottomActions type="customTets" />
             </div>
         </MathJaxContext>
     );

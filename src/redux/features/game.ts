@@ -26,7 +26,7 @@ export const gameSlice = createSlice({
         setCurrentGame: (state, action: PayloadAction<ICurrentGame>) => {
             state.currentGame = action.payload;
         },
-        viewTest: (state, action) => {
+        setCurrentQuestion: (state, action) => {
             const payload = action.payload;
             const index = payload === state.listQuestion?.length ? 0 : payload;
             state.currentQuestionIndex = index;
@@ -252,7 +252,7 @@ export const {
     startCustomTest,
     resetState,
     setIndexSubTopic,
-    viewTest,
+    setCurrentQuestion,
     startRandomReview,
     startTryAgainDiagnostic,
     shouldEndTimeTest,

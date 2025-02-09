@@ -1,5 +1,5 @@
 import { MtUiButton } from "@/components/button";
-import { viewTest } from "@/redux/features/game";
+import { setCurrentQuestion } from "@/redux/features/game";
 import {
     selectCurrentQuestionIndex,
     selectListQuestion,
@@ -14,7 +14,7 @@ const NextQuestionFinalPage = () => {
     const dispatch = useAppDispatch();
 
     const handleFinish = () => {
-        dispatch(viewTest(indexCurrentQuestion + 1));
+        dispatch(setCurrentQuestion(indexCurrentQuestion + 1));
     };
 
     return (

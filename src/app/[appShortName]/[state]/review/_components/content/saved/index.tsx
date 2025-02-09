@@ -8,6 +8,7 @@ import { setListQuestionGames } from "@/redux/features/game";
 import { setListReactions } from "@/redux/features/user";
 import { useAppDispatch } from "@/redux/hooks";
 import { MathJaxContext } from "better-react-mathjax";
+import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { FixedSizeList as List } from "react-window";
@@ -27,28 +28,8 @@ const Row = ({
         </div>
     );
 };
-const getSavedActions = async (list: IUserActions[]) => {
-    return list?.reduce<number[]>(
-        (prev, next) =>
-            next?.partId && !prev.includes(next.partId)
-                ? [...prev, next.partId]
-                : prev,
-        []
-    );
-};
-
-const getSavedQuestions = async (partIds: number[], list: IUserActions[]) => {
-    const listSaved: IQuestionOpt[] = [];
-    for (const id of partIds) {
-        const result = await db?.topicQuestion.where("id").equals(id).first();
-        if (result?.questions) {
-            const filteredQuestions = result.questions.filter((item) =>
-                list.some((l) => l.questionId === item.id)
-            );
-            listSaved.push(...filteredQuestions);
-        }
-    }
-    return listSaved;
+const getSavedActionsId = async (list: IUserActions[]) => {
+    return list?.map((item) => item.questionId);
 };
 
 const SavedQuestions = () => {
@@ -63,15 +44,15 @@ const SavedQuestions = () => {
 
             dispatch(setListReactions(list));
             if (list?.length) {
-                const savedActions = await getSavedActions(list);
-                if (savedActions) {
-                    const savedQuestions = await getSavedQuestions(
-                        savedActions,
-                        list
-                    );
-                    setData(savedQuestions);
-                    dispatch(setListQuestionGames(savedQuestions));
-                }
+                const savedActions = await getSavedActionsId(list);
+                const questions =
+                    (await db?.questions
+                        .where("id")
+                        .anyOf(savedActions)
+                        .toArray()) || [];
+
+                setData(questions);
+                dispatch(setListQuestionGames(questions));
             }
         };
 
@@ -79,10 +60,15 @@ const SavedQuestions = () => {
     }, [dispatch]);
 
     return (
-        <div className="w-full flex-1 h-full transition-all">
+        <div
+            className={clsx("w-full flex-1 flex flex-col transition-all", {
+                "h-[400px]": data.length > 0,
+                "h-[800px]": data.length > 2,
+            })}
+        >
             {data.length > 0 ? (
                 <MathJaxContext>
-                    <div className="w-full flex-1 ">
+                    <div className="w-full flex-1 h-full">
                         <AutoSizer>
                             {({ height, width }) => (
                                 <List

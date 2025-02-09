@@ -1,60 +1,75 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
 import { MtUiButton } from "@/components/button";
 import { ITopicBase } from "@/models/topics/topicsProgress";
-import { useMemo } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { IFeedBack } from ".";
 import { CardFeeBack } from "./cardFeedBack";
 import CardProgress from "./cardProgress";
 import CardTopic from "./cardTopic";
 
-type IState = {
+type IFormState = {
     selectFeedback: IFeedBack;
     count: number;
     duration: number;
     passing: number;
-    listTopic: ITopicBase[];
     selectListTopic: ITopicBase[];
 };
 
 type IProps = {
     isShowBtnCancel: boolean;
     onCancel: () => void;
-    state: IState;
-    setState: React.Dispatch<React.SetStateAction<IState>>;
-    onUpdate: () => Promise<void>;
+    listTopic: ITopicBase[];
+    onUpdate: (data: IFormState) => Promise<void>;
     handleSelectAll: () => void;
-    onStart: () => Promise<void>;
+    onStart: (data: IFormState) => Promise<void>;
     loading: boolean;
     isUpdate: boolean;
+    defaultValues: IFormState;
 };
+
+// ✅ Schema validation với Yup
+const schema = yup.object().shape({
+    selectFeedback: yup.string().oneOf(["newbie", "expert", "exam"]).required(),
+    count: yup.number().min(1, "Must be at least 1").max(100).required(),
+    duration: yup
+        .number()
+        .min(1, "Must be at least 1 minute")
+        .max(90)
+        .required(),
+    passing: yup.number().min(1).max(100).required(),
+    selectListTopic: yup.array().min(1, "Select at least one topic").required(),
+});
 
 const ContentSetting: React.FC<IProps> = ({
     isShowBtnCancel,
     onCancel,
-    state,
-    setState,
+    listTopic,
     onUpdate,
     handleSelectAll,
     onStart,
     loading,
     isUpdate,
+    defaultValues,
 }) => {
+    // ✅ Khởi tạo form với React Hook Form
     const {
-        selectFeedback,
-        count,
-        duration,
-        passing,
-        listTopic,
-        selectListTopic,
-    } = state;
+        handleSubmit,
+        control,
+        watch,
+        setValue,
+        formState: { errors },
+    } = useForm<IFormState>({
+        resolver: yupResolver(schema),
+        defaultValues,
+    });
 
-    const isDisabled = useMemo(
-        () => count === 0 || selectListTopic.length === 0,
-        [count, selectListTopic.length]
-    );
+    const selectListTopic = watch("selectListTopic");
+    const count = watch("count");
 
     return (
-        <div className="w-full flex flex-col justify-between max-w-[900px] max-h-[790px]  h-full p-4 sm:p-6 bg-theme-white">
+        <div className="w-full flex flex-col justify-between max-w-[900px] max-h-[790px] h-full p-4 sm:p-6 bg-theme-white">
             <div className="flex-1 overflow-y-auto scrollbar-none">
                 {/* Header */}
                 <div className="flex items-center justify-between">
@@ -76,35 +91,29 @@ const ContentSetting: React.FC<IProps> = ({
                 <section className="mt-6">
                     <p className="text-lg font-semibold">Feedback Modes</p>
                     <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        {[
-                            {
-                                type: "newbie",
-                                text: "Newbie Mode",
-                                des: "Answers and explanations are displayed immediately after each question.",
-                            },
-                            {
-                                type: "expert",
-                                text: "Expert Mode",
-                                des: "Only answer accuracy is evaluated after each question. No explanation provided.",
-                            },
-                            {
-                                type: "exam",
-                                text: "Exam Mode",
-                                des: "The final score is shown after answering all questions.",
-                            },
-                        ].map(({ type, text, des }) => (
-                            <CardFeeBack
+                        {["newbie", "expert", "exam"].map((type) => (
+                            <Controller
                                 key={type}
-                                text={text}
-                                type={type as IFeedBack}
-                                onSelect={(value) =>
-                                    setState((prev) => ({
-                                        ...prev,
-                                        selectFeedback: value,
-                                    }))
-                                }
-                                select={selectFeedback}
-                                des={des}
+                                name="selectFeedback"
+                                control={control}
+                                render={({ field }) => (
+                                    <CardFeeBack
+                                        text={`${
+                                            type.charAt(0).toUpperCase() +
+                                            type.slice(1)
+                                        } Mode`}
+                                        type={type as IFeedBack}
+                                        select={field.value}
+                                        onSelect={field.onChange}
+                                        des={
+                                            type === "newbie"
+                                                ? "Answers and explanations are displayed immediately after each question."
+                                                : type === "expert"
+                                                ? "Only answer accuracy is evaluated after each question. No explanation provided."
+                                                : "The final score is shown after answering all questions."
+                                        }
+                                    />
+                                )}
                             />
                         ))}
                     </div>
@@ -112,31 +121,43 @@ const ContentSetting: React.FC<IProps> = ({
 
                 {/* Test Settings */}
                 <section className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <CardProgress
-                        title="Question Count:*"
-                        max={100}
-                        defaultValue={count}
-                        changeProgress={(value) =>
-                            setState((prev) => ({ ...prev, count: value }))
-                        }
+                    <Controller
+                        name="count"
+                        control={control}
+                        render={({ field }) => (
+                            <CardProgress
+                                title="Question Count:*"
+                                max={100}
+                                defaultValue={field.value}
+                                changeProgress={field.onChange}
+                            />
+                        )}
                     />
-                    <CardProgress
-                        title="Duration:"
-                        suffix="minutes"
-                        max={90}
-                        defaultValue={duration}
-                        changeProgress={(value) =>
-                            setState((prev) => ({ ...prev, duration: value }))
-                        }
+                    <Controller
+                        name="duration"
+                        control={control}
+                        render={({ field }) => (
+                            <CardProgress
+                                title="Duration:"
+                                suffix="minutes"
+                                max={90}
+                                defaultValue={field.value}
+                                changeProgress={field.onChange}
+                            />
+                        )}
                     />
-                    <CardProgress
-                        title="Passing Score:"
-                        suffix="%"
-                        max={100}
-                        defaultValue={passing}
-                        changeProgress={(value) =>
-                            setState((prev) => ({ ...prev, passing: value }))
-                        }
+                    <Controller
+                        name="passing"
+                        control={control}
+                        render={({ field }) => (
+                            <CardProgress
+                                title="Passing Score:"
+                                suffix="%"
+                                max={100}
+                                defaultValue={field.value}
+                                changeProgress={field.onChange}
+                            />
+                        )}
                     />
                 </section>
 
@@ -159,21 +180,16 @@ const ContentSetting: React.FC<IProps> = ({
                                 item={item}
                                 selectListTopic={selectListTopic}
                                 setSelectListTopic={(newList) =>
-                                    setState((prev) => ({
-                                        ...prev,
-                                        selectListTopic:
-                                            typeof newList === "function"
-                                                ? (
-                                                      newList as (
-                                                          prev: ITopicBase[]
-                                                      ) => ITopicBase[]
-                                                  )(prev.selectListTopic)
-                                                : newList,
-                                    }))
+                                    setValue("selectListTopic", newList)
                                 }
                             />
                         ))}
                     </div>
+                    {errors.selectListTopic && (
+                        <p className="text-red-500 text-sm">
+                            {errors.selectListTopic.message}
+                        </p>
+                    )}
                 </section>
             </div>
 
@@ -194,8 +210,8 @@ const ContentSetting: React.FC<IProps> = ({
                     size="large"
                     type="primary"
                     block
-                    onClick={isUpdate ? onUpdate : onStart}
-                    disabled={isDisabled}
+                    onClick={handleSubmit(isUpdate ? onUpdate : onStart)}
+                    disabled={count === 0 || selectListTopic.length === 0}
                     className="sm:max-w-32"
                     loading={loading}
                 >
