@@ -157,8 +157,8 @@ const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
                                 style={{
                                     fontSize: 12,
                                 }}
-                                dynamic
-                                renderMode="post"
+                                // dynamic
+                                // renderMode="post"
                             >
                                 <span
                                     dangerouslySetInnerHTML={{

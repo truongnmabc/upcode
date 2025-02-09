@@ -22,8 +22,6 @@ const resumedCustomTestThunk = createAsyncThunk(
                 .where("id")
                 .anyOf(listIds)
                 .toArray();
-            console.log("🚀 ~ progressData:", progressData);
-            console.log("🚀 ~ questionsFromDb:", questionsFromDb);
 
             return {
                 progressData: progressData || [],

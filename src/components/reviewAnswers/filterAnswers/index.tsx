@@ -28,22 +28,32 @@ const FilterIcon: React.FC<IProps> = ({
     const [open, setOpen] = React.useState(false);
     const [topics, setTopics] = useState<ITopicBase[]>([]);
     const [selectListTopic, setSelectListTopic] = useState<ITopicBase[]>([]);
+    const [tempSelectListTopic, setTempSelectListTopic] = useState<
+        ITopicBase[]
+    >([]);
 
-    const handleClose = useCallback(() => setOpen(false), []);
+    const handleClose = useCallback(() => {
+        // Khi đóng, reset lại temp về giá trị trước đó
+        setTempSelectListTopic(selectListTopic);
+        setOpen(false);
+    }, [selectListTopic]);
     const handleOpen = useCallback(() => setOpen(true), []);
 
     const handleSelectAll = useCallback(() => {
-        if (listTopic?.length && selectListTopic.length !== listTopic.length)
-            setSelectListTopic?.(listTopic);
-
-        if (selectListTopic.length === listTopic?.length)
-            setSelectListTopic?.([]);
-    }, [listTopic, selectListTopic]);
+        if (
+            listTopic?.length &&
+            tempSelectListTopic.length !== listTopic.length
+        )
+            setTempSelectListTopic(listTopic);
+        else setTempSelectListTopic([]);
+    }, [listTopic, tempSelectListTopic]);
 
     const handleApply = useCallback(() => {
+        setSelectListTopic(tempSelectListTopic);
+
         // Lọc danh sách câu hỏi thuộc các chủ đề đã chọn
         const newList = all?.filter((item) =>
-            selectListTopic.some(
+            tempSelectListTopic.some(
                 (selectedTopic) => item.topicId === selectedTopic.id
             )
         );
@@ -63,8 +73,8 @@ const FilterIcon: React.FC<IProps> = ({
             incorrect: incorrectList,
         });
 
-        handleClose();
-    }, [selectListTopic, all, setTabletData, correctIds, handleClose]);
+        setOpen(false);
+    }, [tempSelectListTopic, all, setTabletData, correctIds]);
 
     useEffect(() => {
         const handleGetData = async () => {
@@ -79,6 +89,7 @@ const FilterIcon: React.FC<IProps> = ({
     useEffect(() => {
         if (listTopic?.length > 0) {
             setSelectListTopic(listTopic);
+            setTempSelectListTopic(listTopic);
         }
     }, [listTopic]);
 
@@ -134,7 +145,10 @@ const FilterIcon: React.FC<IProps> = ({
                                     className="hidden sm:block underline cursor-pointer text-sm font-normal"
                                     onClick={handleSelectAll}
                                 >
-                                    Select All
+                                    {tempSelectListTopic.length ===
+                                    listTopic.length
+                                        ? "Deselect All"
+                                        : "Select All"}
                                 </span>
                             </div>
                             <div className="hidden sm:flex">
@@ -142,11 +156,7 @@ const FilterIcon: React.FC<IProps> = ({
                                     type="primary"
                                     size="large"
                                     onClick={handleApply}
-                                    disabled={
-                                        selectListTopic.length > 0
-                                            ? false
-                                            : true
-                                    }
+                                    disabled={tempSelectListTopic.length === 0}
                                 >
                                     Apply Filter
                                 </MtUiButton>
@@ -157,17 +167,19 @@ const FilterIcon: React.FC<IProps> = ({
                             onClick={handleSelectAll}
                         >
                             <span className=" underline cursor-pointer text-sm font-normal">
-                                Select All
+                                {tempSelectListTopic.length === listTopic.length
+                                    ? "Deselect All"
+                                    : "Select All"}
                             </span>
                             <div
                                 className={ctx(
                                     "w-5 h-5 rounded-md border border-solid flex items-center overflow-hidden  justify-center ",
                                     {
                                         "border-primary bg-primary ":
-                                            selectListTopic.length ===
+                                            tempSelectListTopic.length ===
                                             listTopic.length,
                                         "border-[#21212152] ":
-                                            selectListTopic.length !==
+                                            tempSelectListTopic.length !==
                                             listTopic.length,
                                     }
                                 )}
@@ -180,8 +192,8 @@ const FilterIcon: React.FC<IProps> = ({
                                 <CardTopic
                                     item={item}
                                     key={item.id}
-                                    selectListTopic={selectListTopic}
-                                    setSelectListTopic={setSelectListTopic}
+                                    selectListTopic={tempSelectListTopic}
+                                    setSelectListTopic={setTempSelectListTopic}
                                 />
                             ))}
                         </div>
@@ -192,7 +204,7 @@ const FilterIcon: React.FC<IProps> = ({
                             size="large"
                             block
                             onClick={handleApply}
-                            disabled={selectListTopic.length > 0 ? false : true}
+                            disabled={tempSelectListTopic.length === 0}
                         >
                             Apply Filter
                         </MtUiButton>
