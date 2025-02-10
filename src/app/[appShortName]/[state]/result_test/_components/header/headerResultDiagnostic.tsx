@@ -5,24 +5,25 @@ import MyContainer from "@/components/container";
 import LazyLoadImage from "@/components/images";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
-import React, { useCallback } from "react";
 
 type IProps = {
     handleStartLearning: () => void;
     handleTryAgain: () => void;
+    handleBack: () => void;
     percentage: number;
 };
-const HeaderResultDiagnostic = ({ handleTryAgain, percentage }: IProps) => {
-    const router = useRouter();
-    const back = useCallback(() => router.back(), [router]);
+const HeaderResultDiagnostic = ({
+    handleTryAgain,
+    percentage,
+    handleBack,
+}: IProps) => {
     const isMobile = useIsMobile();
     return (
         <MyContainer className="sm:py-8  flex flex-col sm:flex-row gap-8 ">
             <div className="bg-white rounded-xl w-full p-4 sm:p-6 flex flex-col sm:flex-row  justify-between">
                 <div
                     className="w-10 h-10 rounded-full cursor-pointer bg-[#21212114] flex items-center justify-center"
-                    onClick={back}
+                    onClick={handleBack}
                 >
                     <CloseIcon />
                 </div>

@@ -71,14 +71,17 @@ const QuestionContent = ({
                     )}
 
                     <div className="w-full flex items-center justify-between">
-                        <MathJax renderMode="post">
-                            <span
-                                dangerouslySetInnerHTML={{
-                                    __html: text,
-                                }}
-                                className="text-sm  font-normal sm:text-base"
-                            />
-                        </MathJax>
+                        {text && (
+                            <MathJax>
+                                <span
+                                    dangerouslySetInnerHTML={{
+                                        __html: text,
+                                    }}
+                                    className="text-sm  font-normal sm:text-base"
+                                />
+                            </MathJax>
+                        )}
+
                         {currentGame?.image && (
                             <LazyLoadImage
                                 key={currentGame?.image}

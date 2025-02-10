@@ -1,9 +1,10 @@
 "use client";
 
 import { db } from "@/db/db.model";
-import { ITestBase } from "@/models/tests";
+import { IGameMode, ITestBase } from "@/models/tests";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getLocalUserProgress } from "../initData/initPracticeTest";
+import { IQuestionOpt } from "@/models/question";
 
 interface IProps extends ITestBase {
     indexSubTopic: number;
@@ -18,17 +19,16 @@ const choiceStartCustomTestThunk = createAsyncThunk(
             item.attemptNumber
         );
 
-        const questions = await db?.questions
-            .where("id")
-            .anyOf(listIds)
-            .toArray();
+        const questions =
+            (await db?.questions.where("id").anyOf(listIds).toArray()) ||
+            ([] as IQuestionOpt[]);
 
         if (progressData) {
             return {
                 questions,
                 progressData,
                 currentTopicId: item.id,
-                gameMode: "practiceTests",
+                gameMode: "practiceTests" as IGameMode,
                 totalDuration: item.totalDuration,
                 isGamePaused: item?.isGamePaused || false,
                 remainingTime: item?.remainingTime || item.totalDuration * 60,

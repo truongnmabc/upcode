@@ -22,6 +22,10 @@ import { PAYPAL_CLIENT_ID, PAYPAL_CURRENCY } from "@/constants";
 export type CreateOrderData = {
     paymentSource: FUNDING_SOURCE;
 };
+
+type IRes = {
+    status: number;
+};
 const initialOptions = {
     clientId: PAYPAL_CLIENT_ID,
     currency: PAYPAL_CURRENCY,
@@ -57,13 +61,13 @@ const PayPalBtn = ({
                     }),
                 ];
 
-                const responses = await Promise.all(promises);
-
-                // *NOTE: check lai res
+                const responses = (await Promise.all(
+                    promises
+                )) as unknown as IRes[];
 
                 const allSuccess = responses.every(
-                    // (response) => response && response.status === 200
-                    (response) => response
+                    (response: { status: number }) =>
+                        response && response.status === 200
                 );
                 if (allSuccess) {
                     dispatch(

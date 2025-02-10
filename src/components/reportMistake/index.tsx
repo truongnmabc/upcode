@@ -1,5 +1,6 @@
 "use client";
 import { MtUiButton } from "@/components/button";
+import { selectAppInfo } from "@/redux/features/appInfo.reselect";
 import { setShouldListenKeyboard } from "@/redux/features/game";
 import {
     selectCurrentGame,
@@ -7,6 +8,7 @@ import {
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import userActionsThunk from "@/redux/repository/user/actions";
+import reportMistakeApi from "@/services/report.service";
 import {
     Box,
     Checkbox,
@@ -32,7 +34,7 @@ const ReportMistake = ({ onClose }: { onClose: () => void }) => {
     const dispatch = useAppDispatch();
     const currentGame = useAppSelector(selectCurrentGame);
     const idTopic = useAppSelector(selectCurrentTopicId);
-
+    const appInfos = useAppSelector(selectAppInfo);
     const handleCheckboxChange = useCallback((value: string) => {
         setSelectedValues((prev) =>
             prev.includes(value)
@@ -51,7 +53,18 @@ const ReportMistake = ({ onClose }: { onClose: () => void }) => {
     const handleSubmit = useCallback(
         async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-
+            const selectedLabels = listReport
+                .filter((item) => selectedValues.includes(item.value))
+                .map((item) => item.label);
+            const data = await reportMistakeApi({
+                appId: appInfos.appId,
+                appName: appInfos.appShortName,
+                questionId: idTopic,
+                details: selectedLabels,
+                reason: otherReason,
+            });
+            console.log("🚀 ~ data:", data);
+            console.log("🚀 ~ selectedValues:", selectedValues);
             dispatch(
                 userActionsThunk({
                     status: "dislike",
@@ -62,7 +75,15 @@ const ReportMistake = ({ onClose }: { onClose: () => void }) => {
 
             onClose();
         },
-        [dispatch, idTopic, currentGame?.id, onClose]
+        [
+            dispatch,
+            idTopic,
+            currentGame?.id,
+            onClose,
+            otherReason,
+            appInfos,
+            selectedValues,
+        ]
     );
 
     return (

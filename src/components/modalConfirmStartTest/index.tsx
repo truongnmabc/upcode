@@ -1,16 +1,13 @@
 "use client";
 import { MtUiButton } from "@/components/button";
-import { IGameMode } from "@/models/tests";
 import { continueGame, startOverGame } from "@/redux/features/game";
 import {
     selectCurrentTopicId,
-    selectGameMode,
     selectIsGamePaused,
 } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
 import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
-import pauseTestThunk from "@/redux/repository/game/pauseAndResumed/pauseTest";
 import { updateTimeTest } from "@/redux/repository/game/pauseAndResumed/resumedTest";
 import { updateDbTestQuestions } from "@/utils/updateDb";
 import Dialog from "@mui/material/Dialog";
@@ -35,14 +32,12 @@ const ModalConfirm = () => {
     const dispatch = useAppDispatch();
     const isPaused = useAppSelector(selectIsGamePaused);
     const idTopic = useAppSelector(selectCurrentTopicId);
-    const type = useAppSelector(selectGameMode) as IGameMode;
 
     const handleStartOver = useCallback(async () => {
         if (testId)
             await updateDbTestQuestions({
                 id: Number(testId),
                 data: {
-                    attemptNumber: 2,
                     isGamePaused: false,
                     elapsedTime: 0,
                     status: 0,
@@ -79,18 +74,6 @@ const ModalConfirm = () => {
             });
         };
     }, [setOpen]);
-
-    useEffect(() => {
-        return () => {
-            if (idTopic && idTopic !== -1 && type !== "learn") {
-                dispatch(
-                    pauseTestThunk({
-                        testId: idTopic,
-                    })
-                );
-            }
-        };
-    }, [idTopic, type, dispatch]);
 
     useEffect(() => {
         if (isPaused && idTopic) {

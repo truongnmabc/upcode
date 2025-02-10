@@ -1,8 +1,12 @@
 "use client";
 import CountTime from "@/components/countTime";
 import ClockIcon from "@/components/icon/ClockIcon";
+import { TypeParam } from "@/constants";
 import RouterApp from "@/constants/router.constant";
-import { selectRemainingTime } from "@/redux/features/game.reselect";
+import {
+    selectCurrentTopicId,
+    selectRemainingTime,
+} from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import finishCustomTestThunk from "@/redux/repository/game/finish/finishCustomTest";
 import { useRouter } from "next/navigation";
@@ -12,14 +16,14 @@ const CountTimeCustomTest = () => {
 
     const remainTime = useAppSelector(selectRemainingTime);
     const router = useRouter();
+    const idTopics = useAppSelector(selectCurrentTopicId);
 
     const handleEndTime = useCallback(() => {
         dispatch(finishCustomTestThunk());
 
-        router.push(RouterApp.ResultTest, {
-            scroll: true,
-        });
-    }, [dispatch, router]);
+        const _href = `${RouterApp.ResultTest}?type=${TypeParam.customTest}&testId=${idTopics}`;
+        router.replace(_href);
+    }, [dispatch, router, idTopics]);
     if (remainTime > 0) {
         return (
             <div className="w-full flex items-center justify-center">

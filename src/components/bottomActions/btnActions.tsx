@@ -43,13 +43,20 @@ const WrapperBtnActions: React.FC<IPropsBottomAction> = ({
     const listQuestionLength = listQuestion.length;
 
     const isDisabled = useMemo(() => {
-        if (indexCurrentQuestion === listQuestionLength - 1 || isEndTimeTest)
+        if (
+            type !== "learn" &&
+            (indexCurrentQuestion === listQuestionLength - 1 || isEndTimeTest)
+        )
             return true;
         if (gameDifficultyLevel === "exam") return false;
         return (
-            ["practiceTests", "learn", "diagnosticTest", "customTets"].includes(
-                type
-            ) && !currentGame?.selectedAnswer
+            [
+                "practiceTests",
+                "learn",
+                "diagnosticTest",
+                "customTets",
+                "review",
+            ].includes(type) && !currentGame?.selectedAnswer
         );
     }, [
         currentGame,
@@ -85,6 +92,7 @@ const WrapperBtnActions: React.FC<IPropsBottomAction> = ({
                 }
                 break;
             case "practiceTests":
+            case "review":
             case "customTets":
                 if (gameDifficultyLevel === "exam") {
                     dispatch(setCurrentQuestion(indexCurrentQuestion + 1));
@@ -115,6 +123,7 @@ const WrapperBtnActions: React.FC<IPropsBottomAction> = ({
                 "finalTests",
                 "diagnosticTest",
                 "customTets",
+                "review",
             ].includes(type) && (
                 <MtUiButton
                     animated
@@ -129,11 +138,11 @@ const WrapperBtnActions: React.FC<IPropsBottomAction> = ({
                 animated
                 block
                 onClick={handleFinish}
-                disabled={isDisabled}
+                disabled={isFinish ? false : isDisabled}
                 type="primary"
                 className="py-3 px-8"
             >
-                {isFinish ? "Finish" : "Continue"}
+                Continue
             </MtUiButton>
         </Fragment>
     );

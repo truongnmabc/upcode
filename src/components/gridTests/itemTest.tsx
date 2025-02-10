@@ -7,6 +7,7 @@ import RouterApp from "@/constants/router.constant";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
+import pauseTestThunk from "@/redux/repository/game/pauseAndResumed/pauseTest";
 type IListTest = {
     parentId: number;
     duration: number;
@@ -22,6 +23,16 @@ const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
             .equals(test.parentId)
             .first();
         if (data?.status === 0) {
+            if (testId !== test?.parentId?.toString()) {
+                console.log("🚀 ~ handleCLick ~ testId:", testId);
+
+                dispatch(
+                    pauseTestThunk({
+                        testId: Number(testId),
+                    })
+                );
+            }
+
             dispatch(
                 initTestQuestionThunk({
                     testId: test.parentId,
@@ -36,7 +47,7 @@ const ItemTestLeft = ({ test, index }: { test: IListTest; index: number }) => {
             router.push(_href);
         }
         return;
-    }, [test.parentId, dispatch, router]);
+    }, [test.parentId, dispatch, router, testId]);
 
     return (
         <div

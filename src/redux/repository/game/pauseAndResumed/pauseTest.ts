@@ -18,10 +18,8 @@ const pauseTestThunk = createAsyncThunk(
             .equals(id)
             .modify((item) => {
                 const currentTime = Date.now();
-
                 const elapsedTimeInSeconds =
-                    (currentTime - item.startTime || 0) / 1000;
-
+                    (currentTime - (item.startTime || 0)) / 1000;
                 item.isGamePaused = true;
                 item.elapsedTime =
                     (item.elapsedTime || 0) + elapsedTimeInSeconds;

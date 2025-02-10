@@ -3,7 +3,7 @@ import { TypeParam } from "@/constants";
 import { db } from "@/db/db.model";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { resetState } from "@/redux/features/game";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
@@ -14,11 +14,15 @@ import { useRouter } from "next/navigation";
 import React, { Fragment, useCallback } from "react";
 import { IPropsItemTest } from "../type";
 import ListPracticeTest from "./listPracticeTest";
+import { selectUserInfo } from "@/redux/features/user.reselect";
 
 const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     const [open, setOpen] = React.useState(false);
     const isMobile = useIsMobile();
     const router = useRouter();
+
+    const userInfo = useAppSelector(selectUserInfo);
+
     const {
         ripples,
         onClick: onRippleClickHandler,
@@ -28,11 +32,21 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     const dispatch = useAppDispatch();
 
     const handleCustomTest = useCallback(() => {
+        if (!userInfo.isPro) {
+            const _href = `${RouterApp.Get_pro}`;
+            router.push(_href);
+            return;
+        }
         dispatch(initCustomTestThunk());
         router.push(RouterApp.Custom_test);
-    }, [dispatch, router]);
+    }, [dispatch, router, userInfo]);
 
     const handleFinalTest = useCallback(async () => {
+        if (!userInfo.isPro) {
+            const _href = `${RouterApp.Get_pro}`;
+            router.push(_href);
+            return;
+        }
         const data = await db?.testQuestions
             .where("gameMode")
             .equals("finalTests")
@@ -46,7 +60,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
             const _href = `${RouterApp.ResultTest}?type=${TypeParam.finalTest}&testId=${data.id}`;
             router.push(_href);
         }
-    }, [dispatch, router]);
+    }, [dispatch, router, userInfo]);
 
     const handleDiagnosticTest = useCallback(async () => {
         const diagnostic = await db?.testQuestions

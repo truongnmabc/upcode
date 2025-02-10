@@ -1,59 +1,49 @@
 import "fake-indexeddb/auto";
 import Dexie, { Table } from "dexie";
-import { ITestBase } from "@/models/tests";
-import { ISubTopicProgress } from "../models/progress/subTopicProgress";
-import { IUserQuestionProgress } from "../models/progress/userQuestionProgress";
-import { ITopicQuestion } from "../models/question/topicQuestion";
-import { ITopicStatus } from "../models/question/topicStatus";
-import { ITopic } from "../models/topics/topics";
-import { IUserActions } from "../models/user/userReactions";
+
 import { IPassingModel } from "@/models/passing/passingModel";
 import { IPaymentInfos } from "@/models/payment/payment";
+import { IQuestionBase } from "@/models/question";
+import { ITestBase } from "@/models/tests";
+import { ITopicBase } from "@/models/topics/topicsProgress";
+import { IUserQuestionProgress } from "../models/progress/userQuestionProgress";
+import { IUserActions } from "../models/user/userReactions";
 
 class DB extends Dexie {
     userProgress!: Table<IUserQuestionProgress>;
-    subTopicProgress!: Table<ISubTopicProgress>;
-    topicQuestion!: Table<ITopicQuestion>;
-    topicStatus!: Table<ITopicStatus>;
-    topics!: Table<ITopic>;
+
     testQuestions!: Table<ITestBase>;
-    useActions!: Table<IUserActions>;
-    passing!: Table<IPassingModel>;
+
     paymentInfos!: Table<IPaymentInfos>;
+
+    questions!: Table<IQuestionBase>;
+
+    topics!: Table<ITopicBase>;
+
+    useActions!: Table<IUserActions>;
+
+    passingApp!: Table<IPassingModel>;
 
     constructor(appName: string) {
         super(appName);
 
         this.version(1).stores({
-            // *NOTE: chứa câu trả lời của người dùng.
+            userProgress: "++id,parentId",
 
-            userProgress: "++id,parentId,type",
-
-            // *NOTE: Chứa tiến trình hiện tại của người dùng,  theo subTopic
-
-            subTopicProgress: "++privateId,id,parentId",
-
-            // *NOTE: Chứa thông tin câu hỏi của part
-
-            topicQuestion: "++id,parentId,[subTopicTag+tag]",
-
-            // *NOTE: Xem mainTopic đã có dữ liệu chưa
-
-            topicStatus: "++id",
-
-            // *NOTE: chứa thông tin của mainTopic và subTopic
-
-            topics: "++id, slug",
-
-            // *NOTE: chứa thông tin của part: id,name,slug,status,tag,...
-
-            useActions: "++id,partId,questionId",
-
-            testQuestions: "++id,parentId,type",
-
-            passing: "++id,parentId",
+            testQuestions: "++id,gameMode",
 
             paymentInfos: "++id,userId",
+
+            //  Chứa thông tin câu hỏi của app
+            questions: "++id,partId,subTopicId",
+
+            //  chứa thông tin của mainTopic và subTopic
+            topics: "++id,slug",
+
+            // lưu thông tin bookmark, like của người dùng
+            useActions: "++id,partId,questionId",
+
+            passingApp: "++id",
         });
     }
 }

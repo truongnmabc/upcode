@@ -32,18 +32,22 @@ const BottomLestTest = () => {
         async (e: number) => {
             const listQuestionLength = listQuestions.length;
 
+            const questions = listQuestions;
             if (e > listQuestionLength) {
                 const remainLength = e - listQuestionLength;
                 const listQuestion = await genRandomQuestion({
                     value: remainLength,
                     excludeListID: listQuestions?.map((item) => item.id),
                 });
-                dispatch(
-                    startRandomReview({
-                        listQuestion: listQuestion,
-                    })
-                );
+                questions.push(...listQuestion);
             }
+
+            console.log("🚀 ~ questions:", questions);
+            dispatch(
+                startRandomReview({
+                    listQuestion: questions,
+                })
+            );
             handleClose();
         },
         [handleClose, listQuestions, dispatch]

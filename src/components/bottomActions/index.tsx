@@ -7,7 +7,7 @@ import WrapperBtnActions from "./btnActions";
 import BtnMobile from "./btnMobile";
 
 export type IPropsBottomAction = {
-    type: IGameMode;
+    type: IGameMode | "review";
 };
 
 // Bản mobile và test custom, test final, test diagnostic sẽ sử dụng component BtnMobile

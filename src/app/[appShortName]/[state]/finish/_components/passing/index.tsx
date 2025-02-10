@@ -140,7 +140,7 @@ const PassingFinishPage = ({
 
     return (
         <div className="flex w-full  flex-col justify-center items-center">
-            <div className="w-full rounded-xl bg-[#7C6F5BAD] gap-6 items-center flex px-4 py-2 ">
+            <div className="w-full rounded-xl bg-[#7C6F5B] gap-6 items-center flex px-4 py-2 ">
                 <div className="flex items-center flex-col sm:flex-row justify-start gap-2">
                     <p className="text-xs sm:text-lg max-w-32 sm:max-w-72 text-center font-medium text-white">
                         Passing Probability{" "}
