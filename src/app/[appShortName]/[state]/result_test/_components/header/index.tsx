@@ -21,6 +21,7 @@ import { useResultContext } from "../resultContext";
 import DashboardCard from "./chartHeader";
 import HeaderResultDiagnostic from "./headerResultDiagnostic";
 import { TitleMiss, TitlePass } from "./titleResultTest";
+import { startTryAgainDiagnostic } from "@/redux/features/game";
 
 const HeaderResultTest = () => {
     const { correct, total, isPass, passing } = useResultContext();
@@ -58,7 +59,6 @@ const HeaderResultTest = () => {
 
         const id = Number(testId);
 
-        console.log("🚀 ~ handleTryAgain ~ id:", id);
         if (id)
             await updateDbTestQuestions({
                 id: Number(id),
@@ -71,6 +71,7 @@ const HeaderResultTest = () => {
             });
         switch (type) {
             case TypeParam.diagnosticTest:
+                dispatch(startTryAgainDiagnostic());
                 dispatch(initDiagnosticTestQuestionThunk());
                 _href = RouterApp.Diagnostic_test;
                 break;

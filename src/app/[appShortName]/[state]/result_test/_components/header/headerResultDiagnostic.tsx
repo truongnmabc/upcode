@@ -34,7 +34,7 @@ const HeaderResultDiagnostic = ({
                 <div className=" flex w-full flex-col-reverse sm:flex-row gap-3 sm:gap-4 justify-center items-center">
                     <div className="p-2 rounded-full bg-[#7C6F5B1F]">
                         <CircleProgress
-                            percentage={20}
+                            percentage={percentage}
                             color="#7C6F5B"
                             size={isMobile ? 220 : 260}
                             bgColor="#7C6F5B3D"

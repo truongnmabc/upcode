@@ -127,7 +127,8 @@ const calculateTotalQuestionsTopic = (data) => {
         return (
             total +
             (topic.topics?.reduce(
-                (sum, part) => sum + (part.questions?.length || 0),
+                (sum, part) =>
+                    sum + (part.contentType === 0 ? part.questions?.length : 0),
                 0
             ) || 0)
         );
@@ -157,6 +158,7 @@ const calculateAverageLevelTopic = (data) => {
 
     for (const topic of data) {
         for (const part of topic.topics || []) {
+            if (part.contentType === 1) continue;
             for (const question of part.questions || []) {
                 totalLevel += question.level === -1 ? 50 : question.level;
                 totalQuestions += 1;
@@ -270,7 +272,11 @@ const fetchTopicData = async (apiPath, topicId) => {
 
 const calculateSubTopicTotalQuestions = (data) => {
     return (
-        data?.reduce((sum, part) => sum + (part.questions?.length || 0), 0) || 0
+        data?.reduce(
+            (sum, part) =>
+                sum + (part.contentType === 0 ? part.questions?.length : 0),
+            0
+        ) || 0
     );
 };
 
@@ -279,7 +285,13 @@ const calculateAverageLevel = (data) => {
         return (
             total +
             (topic.questions?.reduce(
-                (sum, part) => sum + (part.level === -1 ? 50 : part.level),
+                (sum, part) =>
+                    sum +
+                    (part.contentType === 0
+                        ? part.level === -1
+                            ? 50
+                            : part.level
+                        : 0),
                 0
             ) || 0)
         );

@@ -68,7 +68,7 @@ export const gameSlice = createSlice({
             state.remainingTime = state.totalDuration * 60;
         },
         startTryAgainDiagnostic: (state) => {
-            console.log("🚀 ~ state:", state);
+            state.hasRetakenDiagnosticTest = true;
         },
         continueGame: (state) => {
             state.isGamePaused = false;
