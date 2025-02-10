@@ -3,9 +3,9 @@ import ExplanationDetail from "@/components/explanation";
 import QuestionContent from "@/components/question";
 import { MathJaxContext } from "better-react-mathjax";
 import React, { useContext } from "react";
-import BottomActionGroup from "./bottom";
 import ProgressQuestion from "@/components/progressQuestion";
 import { ReviewContext } from "../../context";
+import BottomActions from "@/components/bottomActions";
 
 const RandomGameContent = () => {
     const { selectType } = useContext(ReviewContext);
@@ -24,7 +24,7 @@ const RandomGameContent = () => {
                     <ChoicesPanel />
                     <ExplanationDetail />
                 </div>
-                <BottomActionGroup />
+                <BottomActions type="review" />
             </div>
         </MathJaxContext>
     );

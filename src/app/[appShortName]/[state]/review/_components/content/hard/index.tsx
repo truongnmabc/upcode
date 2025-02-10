@@ -29,7 +29,6 @@ const HardQuestions = ({ isMobile }: { isMobile: boolean }) => {
                 remainderQuestionTopic,
                 selectListTopic: topics,
             });
-            console.log("🚀 ~ handleStartTest ~ list:", list);
             dispatch(
                 startRandomReview({
                     listQuestion: list,

@@ -27,6 +27,7 @@ import AnswerButton from "../answer";
 import { MOCK_TEMP_LIST_ANSWER } from "./mock";
 import { shouldOpenSubmitTest } from "@/redux/features/tests";
 import { IGameMode } from "@/models/tests";
+import { TypeParam } from "@/constants";
 
 function shuffleArray<T>(array: T[]): T[] {
     if (array && array.length) {
@@ -98,9 +99,8 @@ const ChoicesPanel: React.FC<IProps> = ({
             if (indexCurrentQuestion + 1 === listLength) {
                 dispatch(finishPracticeThunk());
 
-                router.push(RouterApp.ResultTest, {
-                    scroll: true,
-                });
+                const _href = `${RouterApp.ResultTest}?type=${TypeParam.practiceTest}&testId=${idTopic}`;
+                router.replace(_href);
             } else {
                 dispatch(nextQuestionThunk());
             }
@@ -111,9 +111,8 @@ const ChoicesPanel: React.FC<IProps> = ({
             if (indexCurrentQuestion + 1 === listLength) {
                 dispatch(finishDiagnosticThunk());
 
-                router.push(RouterApp.ResultTest, {
-                    scroll: true,
-                });
+                const _href = `${RouterApp.ResultTest}?type=${TypeParam.diagnosticTest}&testId=${idTopic}`;
+                router.replace(_href);
             } else {
                 dispatch(nextQuestionDiagnosticThunk());
             }

@@ -1,11 +1,14 @@
 "use client";
 
 import { db } from "@/db/db.model";
-import { startRandomReview } from "@/redux/features/game";
+import { setCurrentTopicId, startRandomReview } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
 import React, { useCallback } from "react";
 import ChoiceQuestionBeforeStart from "./choiceQuestionBeforeStart";
-import { fetchQuestionsForTopics } from "@/utils/math";
+import {
+    fetchQuestionsForTopics,
+    generateRandomNegativeId,
+} from "@/utils/math";
 
 /* 
     value: số câu cần lấy ra
@@ -45,11 +48,15 @@ const RandomQuestions = ({ isMobile }: { isMobile: boolean }) => {
                 value: value,
             });
 
+            const id = generateRandomNegativeId();
+            console.log("🚀 ~ id:", id);
+
             dispatch(
                 startRandomReview({
                     listQuestion: list,
                 })
             );
+            dispatch(setCurrentTopicId(id));
         },
         [dispatch]
     );

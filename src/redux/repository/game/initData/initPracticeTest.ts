@@ -42,6 +42,13 @@ const setDataStore = async (
     });
 };
 
+const updateStartTime = async (id: number) => {
+    const currentTime = Date.now();
+
+    await db?.testQuestions.update(id, {
+        startTime: currentTime,
+    });
+};
 /**
  * Lấy danh sách câu hỏi từ API dựa trên Test ID.
  *
@@ -145,7 +152,6 @@ export const mapQuestionsWithProgress = (
 const initPracticeThunk = createAsyncThunk(
     "initPracticeThunk",
     async ({ testId }: IInitQuestion, thunkAPI) => {
-        console.log("🚀 ~ testId:", testId);
         const state = thunkAPI.getState() as RootState;
         let { isDataFetched } = state.appInfoReducer;
 
@@ -193,6 +199,7 @@ const initPracticeThunk = createAsyncThunk(
                 listQuestion,
                 progressData
             ) as IQuestionOpt[];
+            await updateStartTime(testId);
             return {
                 questions,
                 progressData,

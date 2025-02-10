@@ -8,4 +8,5 @@ export const API_PATH = {
     GET_QUESTION_BY_ID: "/api/getQuestion",
     GET_APP_REVIEW: "/api/getAppReview",
     GET_LIST_BLOCK: "/api/getListBlock",
+    REPORT_MISTAKE: "/report_mistake",
 };

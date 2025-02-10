@@ -68,7 +68,7 @@ const initDataTest = async (tests, db) => {
                 id: test.id,
                 totalDuration: test.duration,
                 totalQuestion: test.totalQuestion,
-                startTime: Date.now(),
+                startTime: 0,
                 gameMode: tests.finalTests.includes(test)
                     ? "finalTests"
                     : "practiceTests",

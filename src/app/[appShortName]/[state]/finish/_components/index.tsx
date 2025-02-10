@@ -35,11 +35,19 @@ const calculateProgress = (
     questions: IQuestionBase[],
     turn: number
 ) => {
+    const correctAnswers =
+        progress?.filter((item) => {
+            // Lấy lần đầu tiên người dùng trả lời câu hỏi trong lần làm bài (turn)
+            const firstAnswer = item.selectedAnswers.find(
+                (answer) => answer.turn === turn
+            );
+
+            // Nếu lần đầu tiên trả lời đúng, tính vào số câu đúng
+            return firstAnswer?.correct;
+        }).length || 0;
+
     return {
-        correct:
-            progress?.filter((item) =>
-                item.selectedAnswers.some((i) => i.correct && i.turn === turn)
-            ).length || 0,
+        correct: correctAnswers,
         total: questions?.length || 1,
     };
 };

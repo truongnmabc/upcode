@@ -8,6 +8,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import { IQuestionOpt } from "@/models/question";
 import { ITopicBase } from "@/models/topics/topicsProgress";
 import {
+    selectCurrentTopicId,
     selectListQuestion,
     selectPassingThreshold,
 } from "@/redux/features/game.reselect";
@@ -161,6 +162,7 @@ const calculatePassing = async ({
 
 const ResultTestLayout = () => {
     const listQuestion = useAppSelector(selectListQuestion);
+    const reviewId = useAppSelector(selectCurrentTopicId);
     const passPercent = useAppSelector(selectPassingThreshold);
     const type = useSearchParams()?.get("type");
     const testId = useSearchParams()?.get("testId");
@@ -186,7 +188,75 @@ const ResultTestLayout = () => {
     });
 
     const handleGetData = useCallback(async () => {
-        if (type === TypeParam.review && !listQuestion) return;
+        if (type === TypeParam.review) {
+            // Lấy danh sách unique topicId & questionId
+            const listTopicIds = [
+                ...new Set(listQuestion.map((q) => q.topicId)),
+            ];
+            const listQuestionIds = [...new Set(listQuestion.map((q) => q.id))];
+
+            // Lấy dữ liệu từ IndexedDB
+            const [topics, userProgress] = await Promise.all([
+                db?.topics.where("id").anyOf(listTopicIds).toArray() || [],
+                db?.userProgress.where("id").anyOf(listQuestionIds).toArray() ||
+                    [],
+            ]);
+
+            // Lọc câu trả lời theo reviewId
+            const filteredProgress = userProgress.map((progress) => ({
+                ...progress,
+                selectedAnswers: progress.selectedAnswers.filter(
+                    (ans) => ans.parentId === reviewId
+                ),
+            }));
+
+            // Tính điểm passing
+            const passing = await calculatePassing({
+                progress: filteredProgress,
+                turn: 1,
+            });
+
+            // Tổng hợp thông tin chủ đề
+            const listTopic = topics.map((topic) => {
+                const topicQuestions = listQuestion.filter(
+                    (q) => q.topicId === topic.id
+                );
+                return {
+                    ...topic,
+                    totalQuestion: topicQuestions.length,
+                    correct: topicQuestions.filter(
+                        (q) => q.selectedAnswer?.correct
+                    ).length,
+                };
+            });
+
+            // Phân loại câu hỏi đúng/sai
+            const [correctQuestions, incorrectQuestions] = listQuestion.reduce(
+                (acc, q) => {
+                    acc[q.selectedAnswer?.correct ? 0 : 1].push(q);
+                    return acc;
+                },
+                [[], []] as [typeof listQuestion, typeof listQuestion]
+            );
+
+            // Cập nhật state
+            setResult({
+                listTopic,
+                all: listQuestion.length,
+                correct: correctQuestions.length,
+                passing,
+            });
+
+            setCorrectIds(correctQuestions.map((q) => q.id));
+
+            setTabletData({
+                all: listQuestion,
+                incorrect: incorrectQuestions,
+                correct: correctQuestions,
+            });
+
+            return;
+        }
 
         if (!testId || !type) return;
 
@@ -230,7 +300,7 @@ const ResultTestLayout = () => {
             incorrect: incorrectQuestions,
             correct: correctQuestions,
         });
-    }, [listQuestion, type, testId]);
+    }, [listQuestion, type, testId, reviewId]);
 
     useEffect(() => {
         handleGetData();

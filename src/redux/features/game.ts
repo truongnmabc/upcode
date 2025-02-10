@@ -18,6 +18,7 @@ import { handleInitTestQuestion } from "../repository/game/utils";
 import { reloadStateThunk } from "../repository/utils/reload";
 import { RootState } from "../store";
 import { initGameReducer, plateHolderCurrentGame } from "./game.placeholder";
+import { IGameMode } from "@/models/tests";
 
 export const gameSlice = createSlice({
     name: "game",
@@ -165,7 +166,10 @@ export const gameSlice = createSlice({
         builder.addCase(initPracticeThunk.fulfilled, (state, action) => {
             state.gameMode = "practiceTests";
             if (action.payload) {
-                handleInitTestQuestion(state, action.payload);
+                handleInitTestQuestion(state, {
+                    ...action.payload,
+                    questions: action.payload.questions || [],
+                });
             }
         });
 
@@ -200,8 +204,12 @@ export const gameSlice = createSlice({
                 const data = {
                     ...action.payload,
                     remainingTime: action.payload.remainingTime || 0,
+                    questions: action.payload.questions || [],
+                    gameMode: action.payload.gameMode as IGameMode,
                 };
-                handleInitTestQuestion(state, data);
+                handleInitTestQuestion(state, {
+                    ...data,
+                });
                 const { passingThreshold, attemptNumber } = action.payload;
                 state.passingThreshold = passingThreshold;
                 state.attemptNumber = attemptNumber;

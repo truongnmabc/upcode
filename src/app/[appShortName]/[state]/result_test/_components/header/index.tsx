@@ -21,7 +21,6 @@ import { useResultContext } from "../resultContext";
 import DashboardCard from "./chartHeader";
 import HeaderResultDiagnostic from "./headerResultDiagnostic";
 import { TitleMiss, TitlePass } from "./titleResultTest";
-import { setCurrentTopicId } from "@/redux/features/game";
 
 const HeaderResultTest = () => {
     const { correct, total, isPass, passing } = useResultContext();
@@ -147,6 +146,7 @@ const HeaderResultTest = () => {
             <HeaderResultDiagnostic
                 handleStartLearning={handleStartLearning}
                 handleTryAgain={handleTryAgain}
+                handleBack={back}
                 percentage={(correct / total) * 100}
             />
         );

@@ -1,5 +1,6 @@
 import CountTime from "@/components/countTime";
 import {
+    selectCurrentTopicId,
     selectIsGamePaused,
     selectRemainingTime,
 } from "@/redux/features/game.reselect";
@@ -8,6 +9,7 @@ import finishFinalThunk from "@/redux/repository/game/finish/finishFinal";
 import RouterApp from "@/constants/router.constant";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
+import { TypeParam } from "@/constants";
 
 const CountTimeFinalTest = () => {
     const dispatch = useAppDispatch();
@@ -15,14 +17,13 @@ const CountTimeFinalTest = () => {
     const remainTime = useAppSelector(selectRemainingTime);
     const isPause = useAppSelector(selectIsGamePaused);
     const router = useRouter();
+    const idTopics = useAppSelector(selectCurrentTopicId);
 
     const handleEndTime = useCallback(() => {
         dispatch(finishFinalThunk());
-
-        router.push(RouterApp.ResultTest, {
-            scroll: true,
-        });
-    }, [dispatch, router]);
+        const _href = `${RouterApp.ResultTest}?type=${TypeParam.finalTest}&testId=${idTopics}`;
+        router.replace(_href);
+    }, [dispatch, router, idTopics]);
 
     return (
         <CountTime
