@@ -15,15 +15,17 @@ type IProps = {
     correctIds: number[];
     setTabletData?: (e: {
         all: ICurrentGame[];
+        default: ICurrentGame[];
         correct: ICurrentGame[];
         incorrect: ICurrentGame[];
     }) => void;
+    defaultData: ICurrentGame[];
 };
 const FilterIcon: React.FC<IProps> = ({
     setTabletData,
     listTopic,
-    all,
     correctIds,
+    defaultData,
 }) => {
     const [open, setOpen] = React.useState(false);
     const [topics, setTopics] = useState<ITopicBase[]>([]);
@@ -52,7 +54,7 @@ const FilterIcon: React.FC<IProps> = ({
         setSelectListTopic(tempSelectListTopic);
 
         // Lọc danh sách câu hỏi thuộc các chủ đề đã chọn
-        const newList = all?.filter((item) =>
+        const newList = defaultData?.filter((item) =>
             tempSelectListTopic.some(
                 (selectedTopic) => item.topicId === selectedTopic.id
             )
@@ -69,12 +71,13 @@ const FilterIcon: React.FC<IProps> = ({
         // Cập nhật state
         setTabletData?.({
             all: newList,
+            default: defaultData,
             correct: correctList,
             incorrect: incorrectList,
         });
 
         setOpen(false);
-    }, [tempSelectListTopic, all, setTabletData, correctIds]);
+    }, [tempSelectListTopic, setTabletData, defaultData, correctIds]);
 
     useEffect(() => {
         const handleGetData = async () => {

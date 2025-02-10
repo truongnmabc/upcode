@@ -6,6 +6,7 @@ import { ICurrentGame } from "@/models/game/game";
 import React, { Fragment } from "react";
 import Empty from "../empty";
 import FilterIcon from "./filterAnswers";
+import { IQuestionOpt } from "@/models/question";
 
 type IProps = {
     all: ICurrentGame[];
@@ -17,9 +18,11 @@ type IProps = {
         all: ICurrentGame[];
         correct: ICurrentGame[];
         incorrect: ICurrentGame[];
+        default: IQuestionOpt[];
     }) => void;
     title?: string;
     type?: "default" | "custom";
+    defaultData: ICurrentGame[];
 };
 
 const ReviewAnswerResult: React.FC<IProps> = ({
@@ -31,6 +34,7 @@ const ReviewAnswerResult: React.FC<IProps> = ({
     showFilter = true,
     title,
     type,
+    defaultData,
 }) => {
     const [value, setValue] = React.useState(0);
 
@@ -77,6 +81,7 @@ const ReviewAnswerResult: React.FC<IProps> = ({
                         setTabletData={setTabletData}
                         listTopic={listTopic}
                         all={all}
+                        defaultData={defaultData}
                         correctIds={correct.map((i) => i.id)}
                     />
                 )}

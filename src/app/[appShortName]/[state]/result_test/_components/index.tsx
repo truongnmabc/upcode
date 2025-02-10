@@ -181,10 +181,12 @@ const ResultTestLayout = () => {
         all: IQuestionOpt[];
         correct: IQuestionOpt[];
         incorrect: IQuestionOpt[];
+        default: IQuestionOpt[];
     }>({
         all: [],
         correct: [],
         incorrect: [],
+        default: [],
     });
 
     const handleGetData = useCallback(async () => {
@@ -251,6 +253,7 @@ const ResultTestLayout = () => {
 
             setTabletData({
                 all: listQuestion,
+                default: listQuestion,
                 incorrect: incorrectQuestions,
                 correct: correctQuestions,
             });
@@ -285,7 +288,6 @@ const ResultTestLayout = () => {
             progress: userProgress,
             turn: tests.attemptNumber,
         });
-        console.log("🚀 ~ handleGetData ~ passing:", passing);
         setResult({
             listTopic: listTopics,
             all: questions.length,
@@ -299,6 +301,7 @@ const ResultTestLayout = () => {
             all: questions,
             incorrect: incorrectQuestions,
             correct: correctQuestions,
+            default: questions,
         });
     }, [listQuestion, type, testId, reviewId]);
 
@@ -366,6 +369,7 @@ const ResultTestLayout = () => {
                         >
                             <ReviewAnswerResult
                                 all={tableData.all}
+                                defaultData={tableData.default}
                                 correct={tableData.correct}
                                 incorrect={tableData.incorrect}
                                 setTabletData={setTabletData}

@@ -18,6 +18,7 @@ interface ResultContextType {
     };
     setTableData: (data: {
         all: IQuestionOpt[];
+        default: IQuestionOpt[];
         correct: IQuestionOpt[];
         incorrect: IQuestionOpt[];
     }) => void;

@@ -1,5 +1,6 @@
 "use client";
 import CrownIcon from "@/components/icon/iconCrown";
+import RouterApp from "@/constants/router.constant";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { selectCurrentGame } from "@/redux/features/game.reselect";
 import { selectUserInfo } from "@/redux/features/user.reselect";
@@ -67,7 +68,7 @@ const FN: React.FC<IProps> = ({ unLock = false }) => {
                             value: {},
                         });
 
-                        window.open("/get-pro", "_blank");
+                        window.open(RouterApp.Get_pro, "_blank");
                     }
                 }}
             >
