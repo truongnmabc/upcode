@@ -33,17 +33,18 @@ const TitleCollapse = ({ subTopic }: { subTopic: ITopicBase }) => {
                 }}
             >
                 <div className="flex flex-1 overflow-hidden gap-2 items-center">
-                    <div className="p-1 w-fit h-fit bg-primary-16 flex items-center justify-center rounded-md">
+                    <div className="p-1 w-fit h-fit bg-white flex items-center justify-center rounded-md">
                         <LazyLoadImage
                             src={subTopic.icon}
                             classNames="w-6 flex items-center justify-center h-6"
                             imgClassNames="w-5 h-5"
                             alt={subTopic.name}
                             styles={{
-                                filter: "brightness(0) saturate(100%) invert(81%) sepia(50%) saturate(2746%) hue-rotate(336deg) brightness(100%) contrast(98%) ",
+                                filter: "brightness(0) saturate(100%) invert(8%) sepia(10%) saturate(0%) hue-rotate(0deg) brightness(95%) contrast(95%)",
                             }}
                         />
                     </div>
+
                     <h4 className="text-xs flex-1 truncate overflow-hidden font-medium">
                         {subTopic.name}
                     </h4>

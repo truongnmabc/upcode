@@ -9,7 +9,6 @@ import {
     selectGameDifficultyLevel,
 } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
-import { MathJaxContext } from "better-react-mathjax";
 import React from "react";
 import CountTimeCustomTest from "../countTimeCustomTest";
 
@@ -18,26 +17,24 @@ const ContentCustomTest = () => {
     const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
 
     return (
-        <MathJaxContext>
-            <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
-                <div className="sm:p-4 flex flex-col gap-3">
-                    <div className="w-full hidden sm:block text-center capitalize text-xl font-semibold">
-                        Custom Test {indexSubTopic}
-                    </div>
-                    <ProgressQuestion />
-                    <CountTimeCustomTest />
-                    <QuestionContent
-                        showStatus={feedBack !== "exam" ? true : false}
-                    />
-                    <ChoicesPanel />
-                    {feedBack !== "exam" && (
-                        <ExplanationDetail unLock={feedBack === "newbie"} />
-                    )}
+        <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
+            <div className="sm:p-4 flex flex-col gap-3">
+                <div className="w-full hidden sm:block text-center capitalize text-xl font-semibold">
+                    Custom Test {indexSubTopic}
                 </div>
-
-                <BottomActions type="customTets" />
+                <ProgressQuestion />
+                <CountTimeCustomTest />
+                <QuestionContent
+                    showStatus={feedBack !== "exam" ? true : false}
+                />
+                <ChoicesPanel />
+                {feedBack !== "exam" && (
+                    <ExplanationDetail unLock={feedBack === "newbie"} />
+                )}
             </div>
-        </MathJaxContext>
+
+            <BottomActions type="customTets" />
+        </div>
     );
 };
 

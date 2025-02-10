@@ -6,7 +6,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import { IQuestionOpt } from "@/models/question";
 import { setListQuestionGames } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
-import { MathJaxContext } from "better-react-mathjax";
+import clsx from "clsx";
 import React, { useCallback, useEffect } from "react";
 
 const WeakQuestions = () => {
@@ -49,22 +49,25 @@ const WeakQuestions = () => {
         listTopic[index]?.image ? (isMobile ? 460 : 400) : isMobile ? 420 : 330;
 
     return (
-        <div className="flex-1 h-full w-full">
+        <div
+            className={clsx({
+                "min-h-[400px]": listTopic.length <= 1,
+                "min-h-[820px]": listTopic.length > 1,
+            })}
+        >
             {listTopic?.length > 0 ? (
-                <MathJaxContext>
-                    <VariableSizeList
-                        data={listTopic}
-                        getItemSize={getItemSize}
-                        item={(item) => (
-                            <QuestionResult
-                                item={{
-                                    ...item,
-                                    parentId: -1,
-                                }}
-                            />
-                        )}
-                    />
-                </MathJaxContext>
+                <VariableSizeList
+                    data={listTopic}
+                    getItemSize={getItemSize}
+                    item={(item) => (
+                        <QuestionResult
+                            item={{
+                                ...item,
+                                parentId: -1,
+                            }}
+                        />
+                    )}
+                />
             ) : (
                 <Empty />
             )}

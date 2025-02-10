@@ -3,6 +3,7 @@
 import { SessionProvider } from "next-auth/react";
 import React, { useRef, useState } from "react";
 import ScrollToTopArrow from "../scrollTop";
+import { MathJaxContext } from "better-react-mathjax";
 
 const WrapperScroll = ({ children }: { children: React.ReactNode }) => {
     const [isScrollRef, setIsShowRef] = useState(false);
@@ -25,7 +26,7 @@ const WrapperScroll = ({ children }: { children: React.ReactNode }) => {
                 }}
                 ref={scrollRef}
             >
-                {children}
+                <MathJaxContext>{children}</MathJaxContext>
                 {isScrollRef && <ScrollToTopArrow scrollRef={scrollRef} />}
             </div>
         </SessionProvider>

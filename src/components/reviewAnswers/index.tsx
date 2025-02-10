@@ -1,12 +1,11 @@
 "use client";
-import { ICurrentGame } from "@/models/game/game";
-import { MathJaxContext } from "better-react-mathjax";
-import React, { Fragment } from "react";
-import FilterIcon from "./filterAnswers";
-import { AntTab, AntTabs } from "@/components/tabs";
-import TabPanelReview from "@/app/[appShortName]/[state]/result_test/_components/tabPanelReview";
 import { ITopicEndTest } from "@/app/[appShortName]/[state]/result_test/_components";
+import TabPanelReview from "@/app/[appShortName]/[state]/result_test/_components/tabPanelReview";
+import { AntTab, AntTabs } from "@/components/tabs";
+import { ICurrentGame } from "@/models/game/game";
+import React, { Fragment } from "react";
 import Empty from "../empty";
+import FilterIcon from "./filterAnswers";
 
 type IProps = {
     all: ICurrentGame[];
@@ -84,26 +83,24 @@ const ReviewAnswerResult: React.FC<IProps> = ({
             </div>
             {all?.length > 0 ? (
                 <div className="w-full flex-1 h-full transition-all">
-                    <MathJaxContext>
-                        <TabPanelReview
-                            value={value}
-                            index={0}
-                            data={all}
-                            type={type}
-                        />
-                        <TabPanelReview
-                            value={value}
-                            index={1}
-                            data={correct}
-                            type={type}
-                        />
-                        <TabPanelReview
-                            value={value}
-                            index={2}
-                            type={type}
-                            data={incorrect}
-                        />
-                    </MathJaxContext>
+                    <TabPanelReview
+                        value={value}
+                        index={0}
+                        data={all}
+                        type={type}
+                    />
+                    <TabPanelReview
+                        value={value}
+                        index={1}
+                        data={correct}
+                        type={type}
+                    />
+                    <TabPanelReview
+                        value={value}
+                        index={2}
+                        type={type}
+                        data={incorrect}
+                    />
                 </div>
             ) : (
                 <Empty />

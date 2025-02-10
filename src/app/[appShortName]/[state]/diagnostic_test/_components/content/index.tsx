@@ -4,13 +4,13 @@ import ChoicesPanel from "@/components/choicesPanel";
 import ProgressQuestion from "@/components/progressQuestion";
 import QuestionContent from "@/components/question";
 import TitleQuestion from "@/components/titleQuestion";
-import { MathJaxContext } from "better-react-mathjax";
 import EmotionComponent from "../emotion/emotionComponent";
 import TimeTestGetLever from "../timeTest";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 import dynamic from "next/dynamic";
+import { Fragment } from "react";
 import Explanation from "./explanationDetail";
 import LoadDataDiagnosticTest from "./loadData";
 
@@ -26,7 +26,7 @@ const ContentTestView = () => {
     const isMobile = useIsMobile();
 
     return (
-        <MathJaxContext>
+        <Fragment>
             <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
                 <div className="sm:p-4  flex flex-col gap-3">
                     <TitleQuestion />
@@ -60,7 +60,7 @@ const ContentTestView = () => {
                 <BottomActions type="diagnosticTest" />
             </div>
             <LoadDataDiagnosticTest />
-        </MathJaxContext>
+        </Fragment>
     );
 };
 

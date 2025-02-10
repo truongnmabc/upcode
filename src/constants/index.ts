@@ -166,6 +166,9 @@ export const PURCHASED = 1;
 
 export const BASE_URL = "https://test-dot-micro-enigma-235001.appspot.com";
 
+export const BASE_URL_PROP =
+    "https://api-cms-v2-dot-micro-enigma-235001.appspot.com";
+
 export const BASE_URL_DEV = "https://dev-dot-micro-enigma-235001.appspot.com";
 
 export const DASHBOARD_API = `https://dashboard-api2.abc-elearning.org/`;
@@ -176,3 +179,21 @@ export const MAX_CLICK_ADS_PER_USER = 3;
 
 export const BASE_STORE_URL =
     "https://storage.googleapis.com/micro-enigma-235001.appspot.com";
+
+export const I_GAME_TYPE = {
+    study: "study",
+    practiceTest: "practiceTest",
+    audio: "audio",
+    examModeSimulator: "examModeSimulator",
+    examModeFinal: "examModeFinal",
+    practiceModeRandom: "practiceModeRandom",
+    practiceModeWeak: "practiceModeWeak",
+    practiceModeHardest: "practiceModeHardest",
+    practiceModeFavorite: "practiceModeFavorite",
+    finalTest: "finalTest",
+    diagnosticTest: "diagnosticTest",
+    allQuestions: "allQuestions",
+    improvePassingProb: "improvePassingProb",
+} as const;
+
+export type IGameType = keyof typeof I_GAME_TYPE; // Type cho gameType

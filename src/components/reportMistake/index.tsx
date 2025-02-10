@@ -6,6 +6,7 @@ import {
     selectCurrentGame,
     selectCurrentTopicId,
 } from "@/redux/features/game.reselect";
+import { selectUserInfo } from "@/redux/features/user.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import userActionsThunk from "@/redux/repository/user/actions";
 import reportMistakeApi from "@/services/report.service";
@@ -19,23 +20,24 @@ import {
 import React, { useCallback, useEffect, useState } from "react";
 
 const listReport = [
-    { label: "Incorrect Answer", value: "1" },
-    { label: "Wrong Explanation", value: "2" },
-    { label: "Wrong Category", value: "3" },
-    { label: "Grammatical Error", value: "4" },
-    { label: "Missing Content", value: "5" },
-    { label: "Type", value: "6" },
-    { label: "Bad Image Quality", value: "7" },
+    { label: "Incorrect Answer", value: 0 },
+    { label: "Wrong Explanation", value: 1 },
+    { label: "Wrong Category", value: 2 },
+    { label: "Grammatical Error", value: 3 },
+    { label: "Missing Content", value: 4 },
+    { label: "Type", value: 5 },
+    { label: "Bad Image Quality", value: 6 },
 ];
 
 const ReportMistake = ({ onClose }: { onClose: () => void }) => {
-    const [selectedValues, setSelectedValues] = useState<string[]>([]);
+    const [selectedValues, setSelectedValues] = useState<number[]>([]);
     const [otherReason, setOtherReason] = useState<string>("");
     const dispatch = useAppDispatch();
     const currentGame = useAppSelector(selectCurrentGame);
     const idTopic = useAppSelector(selectCurrentTopicId);
     const appInfos = useAppSelector(selectAppInfo);
-    const handleCheckboxChange = useCallback((value: string) => {
+    const userInfos = useAppSelector(selectUserInfo);
+    const handleCheckboxChange = useCallback((value: number) => {
         setSelectedValues((prev) =>
             prev.includes(value)
                 ? prev.filter((v) => v !== value)
@@ -53,18 +55,15 @@ const ReportMistake = ({ onClose }: { onClose: () => void }) => {
     const handleSubmit = useCallback(
         async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-            const selectedLabels = listReport
-                .filter((item) => selectedValues.includes(item.value))
-                .map((item) => item.label);
-            const data = await reportMistakeApi({
-                appId: appInfos.appId,
-                appName: appInfos.appShortName,
-                questionId: idTopic,
-                details: selectedLabels,
-                reason: otherReason,
+
+            await reportMistakeApi({
+                appId: Number(appInfos.appId),
+                questionId: currentGame.id,
+                reasons: selectedValues,
+                otherReason: otherReason,
+                gameType: "allQuestions",
+                userId: Number(userInfos.id || -1),
             });
-            console.log("🚀 ~ data:", data);
-            console.log("🚀 ~ selectedValues:", selectedValues);
             dispatch(
                 userActionsThunk({
                     status: "dislike",
@@ -83,6 +82,7 @@ const ReportMistake = ({ onClose }: { onClose: () => void }) => {
             otherReason,
             appInfos,
             selectedValues,
+            userInfos,
         ]
     );
 
