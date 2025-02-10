@@ -11,7 +11,7 @@ export default async function Page() {
     const { content } = await requestGetTitleSeoPage("review");
 
     return (
-        <MyContainer className="py-4 sm:py-0">
+        <MyContainer className="py-4 h-full sm:py-0">
             <ReviewView isMobile={isMobile} contentSeo={content} />
         </MyContainer>
     );

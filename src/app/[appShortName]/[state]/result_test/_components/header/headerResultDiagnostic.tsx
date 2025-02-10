@@ -2,6 +2,7 @@ import CloseIcon from "@/asset/icon/CloseIcon";
 import { MtUiButton } from "@/components/button";
 import CircleProgress from "@/components/circleProgress";
 import MyContainer from "@/components/container";
+import IconBack from "@/components/icon/iconBack";
 import LazyLoadImage from "@/components/images";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import clsx from "clsx";
@@ -22,16 +23,19 @@ const HeaderResultDiagnostic = ({
         <MyContainer className="sm:py-8  flex flex-col sm:flex-row gap-8 ">
             <div className="bg-white rounded-xl w-full p-4 sm:p-6 flex flex-col sm:flex-row  justify-between">
                 <div
-                    className="w-10 h-10 rounded-full cursor-pointer bg-[#21212114] flex items-center justify-center"
+                    className="w-10 h-10 hidden sm:flex rounded-full cursor-pointer bg-[#21212114]  items-center justify-center"
                     onClick={handleBack}
                 >
                     <CloseIcon />
                 </div>
+                <div className=" sm:hidden " onClick={handleBack}>
+                    <IconBack />
+                </div>
                 <div className=" flex w-full flex-col-reverse sm:flex-row gap-3 sm:gap-4 justify-center items-center">
-                    <div>
+                    <div className="p-2 rounded-full bg-[#7C6F5B1F]">
                         <CircleProgress
-                            percentage={percentage}
-                            color="red"
+                            percentage={20}
+                            color="#7C6F5B"
                             size={isMobile ? 220 : 260}
                             bgColor="#7C6F5B3D"
                             strokeWidth={16}

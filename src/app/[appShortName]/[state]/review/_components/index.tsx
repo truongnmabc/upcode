@@ -24,7 +24,7 @@ const ReviewView = ({
     }, [dispatch]);
 
     return (
-        <div className="sm:py-4 pb-4 " id="v4-study-main-view-0">
+        <div className="sm:py-4 h-full pb-4 " id="v4-study-main-view-0">
             <ReviewProvider>
                 <Grid2
                     container

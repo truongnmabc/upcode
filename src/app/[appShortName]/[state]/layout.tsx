@@ -8,7 +8,7 @@ export default function BlogLayout({
     children: React.ReactNode;
 }) {
     return (
-        <section>
+        <section className="w-full h-full">
             {children}
             <BottomConfirmTest />
             <ModalConfirm />

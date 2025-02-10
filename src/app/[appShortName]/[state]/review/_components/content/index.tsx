@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import React, { useContext } from "react";
+import React, { Fragment, useContext } from "react";
 import BottomLestTest from "../bottom";
 import { ReviewContext } from "../context";
 import SheetSelectQuestions from "../sheet";
@@ -35,11 +35,11 @@ const ReviewContentGroup = ({ isMobile }: { isMobile: boolean }) => {
     };
 
     return (
-        <div>
+        <Fragment>
             {isStart ? <RandomGameContent /> : componentMapping[selectType]}
             <BottomLestTest />
             {isMobile && <SheetSelectQuestions />}
-        </div>
+        </Fragment>
     );
 };
 

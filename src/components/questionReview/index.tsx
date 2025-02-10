@@ -116,7 +116,7 @@ const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
                     <MathJax>
                         <span
                             dangerouslySetInnerHTML={{
-                                __html: MyCrypto.decrypt(item?.text),
+                                __html: MyCrypto.decrypt(item?.text) || "",
                             }}
                             className="text-sm font-normal line-clamp-1 sm:text-base"
                         />
@@ -153,16 +153,13 @@ const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
                             answerCorrect={choice.correct}
                         />
                         {choice?.text && (
-                            <MathJax
-                                style={{
-                                    fontSize: 12,
-                                }}
-                                // dynamic
-                                // renderMode="post"
-                            >
+                            <MathJax>
                                 <span
                                     dangerouslySetInnerHTML={{
-                                        __html: choice?.text,
+                                        __html: choice?.text || "",
+                                    }}
+                                    style={{
+                                        fontSize: 12,
                                     }}
                                 />
                             </MathJax>
@@ -172,10 +169,11 @@ const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
             </div>
             <div className=" hidden sm:block">
                 {item?.explanation && (
-                    <MathJax className="">
+                    <MathJax>
                         <span
                             dangerouslySetInnerHTML={{
-                                __html: MyCrypto.decrypt(item?.explanation),
+                                __html:
+                                    MyCrypto.decrypt(item?.explanation) || "",
                             }}
                             className={clsx(
                                 "text-sm font-normal  line-clamp-2 h-full  sm:text-base",

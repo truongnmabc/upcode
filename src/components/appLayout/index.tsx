@@ -11,6 +11,7 @@ import WrapperScroll from "./wrapperScroll";
 import SyncData from "../sync";
 import AdsBlockerDetect from "../ads/detectAdsBlocker";
 import PopupSubscription from "../checkSubscription";
+
 const FN = ({ children }: { children: React.ReactNode }) => {
     return (
         <WrapperScroll>

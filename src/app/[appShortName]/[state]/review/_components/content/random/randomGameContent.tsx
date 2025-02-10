@@ -1,32 +1,47 @@
+import BottomActions from "@/components/bottomActions";
 import ChoicesPanel from "@/components/choicesPanel";
 import ExplanationDetail from "@/components/explanation";
-import QuestionContent from "@/components/question";
-import { MathJaxContext } from "better-react-mathjax";
-import React, { useContext } from "react";
+import IconBack from "@/components/icon/iconBack";
+import IconSubmit from "@/components/icon/iconSubmit";
 import ProgressQuestion from "@/components/progressQuestion";
+import QuestionContent from "@/components/question";
+import RouterApp from "@/constants/router.constant";
+import { shouldOpenSubmitTest } from "@/redux/features/tests";
+import { useAppDispatch } from "@/redux/hooks";
+import { useRouter } from "next/navigation";
+import React, { useCallback, useContext } from "react";
 import { ReviewContext } from "../../context";
-import BottomActions from "@/components/bottomActions";
 
 const RandomGameContent = () => {
     const { selectType } = useContext(ReviewContext);
+    const router = useRouter();
+    const dispatch = useAppDispatch();
+    const handleBack = useCallback(() => {
+        router.push(RouterApp.Home);
+    }, [router]);
+    const setOpenConfirm = () => dispatch(shouldOpenSubmitTest(true));
 
     return (
-        <MathJaxContext>
-            <div className="sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
-                <div className="p-0 sm:p-4 flex flex-col gap-3">
-                    <div className="flex items-center justify-center ">
-                        <h3 className="text-xl capitalize font-semibold ">
-                            {selectType} Questions
-                        </h3>
+        <div className="sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
+            <div className="p-0 sm:p-4 flex flex-col gap-3">
+                <div className="flex items-center justify-between ">
+                    <div onClick={handleBack}>
+                        <IconBack />
                     </div>
-                    <ProgressQuestion />
-                    <QuestionContent />
-                    <ChoicesPanel />
-                    <ExplanationDetail />
+                    <h3 className="text-xl capitalize font-semibold ">
+                        {selectType} Questions
+                    </h3>
+                    <div onClick={setOpenConfirm}>
+                        <IconSubmit />
+                    </div>
                 </div>
-                <BottomActions type="review" />
+                <ProgressQuestion />
+                <QuestionContent />
+                <ChoicesPanel />
+                <ExplanationDetail />
             </div>
-        </MathJaxContext>
+            <BottomActions type="review" />
+        </div>
     );
 };
 

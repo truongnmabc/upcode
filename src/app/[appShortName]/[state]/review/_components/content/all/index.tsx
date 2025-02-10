@@ -59,9 +59,7 @@ const AllQuestions = () => {
     }, [handleGetData]);
 
     return (
-        <div
-            className={clsx("w-full flex-1 flex flex-col transition-all ", {})}
-        >
+        <div className={clsx("w-full flex-1 flex flex-col transition-all ")}>
             <ReviewAnswerResult
                 all={tableData.all}
                 correct={tableData.correct}

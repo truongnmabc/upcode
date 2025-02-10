@@ -141,7 +141,7 @@ const FooterLandingV4 = () => {
         pathname?.includes("result_test") ||
         pathname?.includes("custom_test")
     ) {
-        return <div className="w-full h-32 sm:h-8 "></div>;
+        return <div className="w-full flex-1  "></div>;
     }
 
     return (

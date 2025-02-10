@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { VariableSizeList as List } from "react-window";
 import Empty from "../empty";
@@ -78,7 +78,7 @@ const VariableSizeList = <T,>({ data, getItemSize, item }: IProps<T>) => {
     };
 
     return (
-        <div className="w-full min-h-screen h-full">
+        <Fragment>
             {data.length > 0 ? (
                 <AutoSizer>
                     {({ height, width }) => (
@@ -102,7 +102,7 @@ const VariableSizeList = <T,>({ data, getItemSize, item }: IProps<T>) => {
             ) : (
                 <Empty />
             )}
-        </div>
+        </Fragment>
     );
 };
 

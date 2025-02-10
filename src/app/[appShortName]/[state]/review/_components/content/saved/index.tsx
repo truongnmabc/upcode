@@ -7,7 +7,6 @@ import { IUserActions } from "@/models/user/userReactions";
 import { setListQuestionGames } from "@/redux/features/game";
 import { setListReactions } from "@/redux/features/user";
 import { useAppDispatch } from "@/redux/hooks";
-import { MathJaxContext } from "better-react-mathjax";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import AutoSizer from "react-virtualized-auto-sizer";
@@ -70,24 +69,22 @@ const SavedQuestions = () => {
             )}
         >
             {data.length > 0 ? (
-                <MathJaxContext>
-                    <div className="w-full flex-1 h-full">
-                        <AutoSizer>
-                            {({ height, width }) => (
-                                <List
-                                    height={height}
-                                    itemCount={data.length}
-                                    itemSize={400}
-                                    width={width}
-                                    itemData={data}
-                                    className="scrollbar-none"
-                                >
-                                    {Row}
-                                </List>
-                            )}
-                        </AutoSizer>
-                    </div>
-                </MathJaxContext>
+                <div className="w-full flex-1 h-full">
+                    <AutoSizer>
+                        {({ height, width }) => (
+                            <List
+                                height={height}
+                                itemCount={data.length}
+                                itemSize={400}
+                                width={width}
+                                itemData={data}
+                                className="scrollbar-none"
+                            >
+                                {Row}
+                            </List>
+                        )}
+                    </AutoSizer>
+                </div>
             ) : (
                 <Empty title="You haven't added any questions to your saved list, try adding some then practice more." />
             )}

@@ -7,7 +7,6 @@ import { db } from "@/db/db.model";
 import { startRandomReview } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
 import { fetchQuestionsHardForTopics } from "@/utils/math";
-import { MathJaxContext } from "better-react-mathjax";
 import { useState } from "react";
 import ChoiceQuestionBeforeStart from "../random/choiceQuestionBeforeStart";
 
@@ -45,23 +44,21 @@ const HardQuestions = ({ isMobile }: { isMobile: boolean }) => {
             }}
         >
             {isStart && (
-                <MathJaxContext>
-                    <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
-                        <div className="sm:p-4 flex flex-col gap-3">
-                            <div className="flex items-center justify-center ">
-                                <h3 className="text-xl font-semibold ">
-                                    Hard Questions
-                                </h3>
-                            </div>
-                            <ProgressQuestion />
-                            <QuestionContent />
-                            <ChoicesPanel />
-                            <ExplanationDetail />
+                <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
+                    <div className="sm:p-4 flex flex-col gap-3">
+                        <div className="flex items-center justify-center ">
+                            <h3 className="text-xl font-semibold ">
+                                Hard Questions
+                            </h3>
                         </div>
-
-                        <BottomActions type="learn" />
+                        <ProgressQuestion />
+                        <QuestionContent />
+                        <ChoicesPanel />
+                        <ExplanationDetail />
                     </div>
-                </MathJaxContext>
+
+                    <BottomActions type="learn" />
+                </div>
             )}
             {!isMobile && !isStart && (
                 <ChoiceQuestionBeforeStart handleStartTest={handleStartTest} />

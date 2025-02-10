@@ -118,13 +118,23 @@ const calculateProgressPassing = async ({
     averageLevel: number;
     turn: number;
 }) => {
+    console.log("🚀 ~ progress:", progress);
+    console.log("🚀 ~ averageLevel:", averageLevel);
+    const average = progress.reduce((acc, cur) => acc + cur.level, 0);
+    console.log("🚀 ~ average:", average / progress.length);
+
+    const topics = await db?.topics.get(4643957105491968);
+    console.log("🚀 ~ topics:", topics);
+
     const passingPart = await totalPassingPart({
         progress,
-        averageLevel,
+        averageLevel: average / progress.length,
         turn,
     });
+    console.log("🚀 ~ passingPart:", passingPart);
 
     const passingAppInfo = await db?.passingApp.get(-1);
+    console.log("🚀 ~ passingAppInfo:", passingAppInfo);
 
     if (passingAppInfo) {
         return {
