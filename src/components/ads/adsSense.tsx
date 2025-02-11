@@ -16,6 +16,7 @@ const AdsSense = () => {
     useEffect(() => {
         const checkConditions = async () => {
             const adClient = getAdClientId();
+            console.log("🚀 ~ checkConditions ~ adClient:", adClient);
             const result = (await getCountryAPI()) as IRes;
             if (adClient && result.country !== "VN") {
                 clientId.current = adClient;

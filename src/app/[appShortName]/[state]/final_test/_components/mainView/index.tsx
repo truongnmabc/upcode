@@ -10,7 +10,7 @@ import CountTimeFinalTest from "../countTimeFinal";
 const MainViewFinalTest = () => {
     return (
         <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
-            <div className="sm:p-4 flex flex-col gap-3">
+            <div className="sm:p-4 flex flex-1 overflow-auto flex-col gap-3">
                 <TitleQuestion />
                 <ProgressQuestion isActions />
                 <div className="w-full flex items-center justify-center">

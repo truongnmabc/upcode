@@ -7,10 +7,12 @@ import { useCallback, useEffect, useState } from "react";
 const AllQuestions = () => {
     const [tableData, setTabletData] = useState<{
         all: ICurrentGame[];
+        defaultData: ICurrentGame[];
         correct: ICurrentGame[];
         incorrect: ICurrentGame[];
     }>({
         all: [],
+        defaultData: [],
         correct: [],
         incorrect: [],
     });
@@ -49,6 +51,7 @@ const AllQuestions = () => {
 
         setTabletData({
             all: allQuestions,
+            defaultData: allQuestions,
             correct: correctQuestions,
             incorrect: incorrectQuestions,
         });
@@ -62,6 +65,7 @@ const AllQuestions = () => {
         <div className={clsx("w-full flex-1 flex flex-col transition-all ")}>
             <ReviewAnswerResult
                 all={tableData.all}
+                defaultData={tableData.defaultData}
                 correct={tableData.correct}
                 incorrect={tableData.incorrect}
                 showFilter={false}

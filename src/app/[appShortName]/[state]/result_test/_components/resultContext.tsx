@@ -25,6 +25,7 @@ interface ResultContextType {
     correct: number;
     total: number;
     isPass: boolean;
+    defaultData: IQuestionOpt[];
     passing: number;
     listTopic: ITopicEndTest[];
 }

@@ -11,11 +11,11 @@ import {
     mapQuestionsWithProgress,
 } from "./initPracticeTest";
 
-const updateDB = async () => {
-    db?.testQuestions
-        .where("gameMode")
-        .equals("finalTests")
-        .modify((item) => (item.isGamePaused = false));
+const updateDB = async (id: number) => {
+    db?.testQuestions.update(id, {
+        isGamePaused: false,
+        startTime: Date.now(),
+    });
 };
 const initFinalTestThunk = createAsyncThunk(
     "initFinalTestThunk",
@@ -55,7 +55,11 @@ const initFinalTestThunk = createAsyncThunk(
                     questionsDb,
                     progressData
                 ) as IQuestionOpt[];
-                await updateDB();
+                await updateDB(dataStore.id);
+                const remainingTime =
+                    dataStore.totalDuration * 60 -
+                    (dataStore?.elapsedTime || 0);
+
                 return {
                     questions,
                     progressData,
@@ -64,9 +68,7 @@ const initFinalTestThunk = createAsyncThunk(
                     gameMode: "finalTests" as IGameMode,
                     totalDuration: dataStore.totalDuration,
                     isGamePaused: dataStore?.isGamePaused || false,
-                    remainingTime:
-                        dataStore?.remainingTime ||
-                        dataStore.totalDuration * 60,
+                    remainingTime: remainingTime,
                 };
             }
             return undefined;

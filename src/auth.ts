@@ -94,4 +94,5 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         maxAge: 60 * 60 * 48,
     },
     secret: process.env["AUTH_SECRET"],
+    trustHost: true,
 });
