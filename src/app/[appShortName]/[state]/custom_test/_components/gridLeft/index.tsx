@@ -1,29 +1,29 @@
 "use client";
+import { IconDelete, IconEdit, IconPlus } from "@/components/icon/iconGridLeft";
+import { TypeParam } from "@/constants";
+import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { ITestBase } from "@/models/tests";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import choiceStartCustomTestThunk from "@/redux/repository/game/choiceAnswer/choiceStartTest";
-import React, { Fragment, useCallback, useEffect, useState } from "react";
-import ModalSettingCustomTest from "../modalSetting";
-import { IconDelete, IconEdit, IconPlus } from "@/components/icon/iconGridLeft";
-import ModalDelete from "../modalDelete";
+import {
+    resetState,
+    setCurrentTopicId,
+    setIndexSubTopic,
+} from "@/redux/features/game";
 import {
     selectCurrentSubTopicIndex,
     selectIsDataLoaded,
     selectListQuestion,
     selectShouldLoading,
 } from "@/redux/features/game.reselect";
-import {
-    resetState,
-    setCurrentTopicId,
-    startCustomTest,
-} from "@/redux/features/game";
-import clsx from "clsx";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import choiceStartCustomTestThunk from "@/redux/repository/game/choiceAnswer/choiceStartTest";
 import { Tooltip } from "@mui/material";
+import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import RouterApp from "@/constants/router.constant";
-import { TypeParam } from "@/constants";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
+import ModalDelete from "../modalDelete";
+import ModalSettingCustomTest from "../modalSetting";
 
 const GridLeftCustomTest = () => {
     const [listTest, setListTest] = useState<ITestBase[]>([]);
@@ -83,33 +83,17 @@ const GridLeftCustomTest = () => {
                 const updatedList = prev.filter(
                     (item) => item.id !== itemSelect.id
                 );
-                if (updatedList.length === 0) {
-                    setItemSelect(null);
+                if (!updatedList.length) {
                     dispatch(resetState());
+                    setItemSelect(null);
+                } else if (startTest) {
+                    const index = updatedList.findIndex(
+                        (i) => i.id === startTest.id
+                    );
+                    dispatch(setIndexSubTopic(index !== -1 ? index + 1 : 1));
                 }
                 return updatedList;
             });
-            if (startTest) {
-                const listIds = startTest.groupExamData.flatMap(
-                    (i) => i.questionIds
-                );
-
-                const questions = await db?.questions
-                    .where("id")
-                    .anyOf(listIds)
-                    .toArray();
-
-                dispatch(
-                    startCustomTest({
-                        listQuestion: questions,
-                        totalDuration: startTest?.totalDuration * 60,
-                        parentId: startTest.id,
-                        passingThreshold: startTest.passingThreshold,
-                        gameDifficultyLevel: startTest.gameDifficultyLevel,
-                        indexSubTopic: 1,
-                    })
-                );
-            }
 
             setOpenDelete(false);
         }
@@ -220,7 +204,13 @@ const GridLeftCustomTest = () => {
                                                     setOpenDelete(true);
                                                 }}
                                                 className={clsx(
-                                                    "w-6 h-6 rounded flex items-center hover:bg-primary cursor-pointer justify-center bg-[#2121210F]"
+                                                    "w-6 h-6 rounded flex items-center hover:bg-primary cursor-pointer justify-center bg-[#2121210F]",
+                                                    {
+                                                        "pointer-events-none":
+                                                            indexSubTopic -
+                                                                1 ===
+                                                            index,
+                                                    }
                                                 )}
                                             >
                                                 <IconDelete />

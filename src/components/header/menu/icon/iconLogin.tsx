@@ -75,14 +75,14 @@ const FN = ({ classNames }: { classNames?: string }) => {
         <Fragment>
             <Tooltip title={userInfo?.email || ""} placement="bottom">
                 <div className="cursor-pointer" onClick={handleClick}>
-                    {userInfo.isPro && (
-                        <LazyLoadImage
-                            classNames="absolute bottom-full left-2 w-[14px] h-[9px]"
-                            src="images/header/crown.png"
-                            alt="crown"
-                            draggable={false}
-                        />
-                    )}
+                    {/* {userInfo.isPro && ( */}
+                    <LazyLoadImage
+                        classNames="absolute bottom-full left-2 w-[14px] h-[9px]"
+                        src="/images/crown.png"
+                        alt="crown"
+                        draggable={false}
+                    />
+                    {/* )} */}
                     <LazyLoadImage
                         // classNames={`cursor-pointer flex bg-[#cca68b] rounded-full w-[30px] h-[30px] box-border  ${
                         //   isPro
