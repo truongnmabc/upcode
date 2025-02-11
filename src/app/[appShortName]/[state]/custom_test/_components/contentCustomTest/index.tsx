@@ -24,13 +24,9 @@ const ContentCustomTest = () => {
                 </div>
                 <ProgressQuestion />
                 <CountTimeCustomTest />
-                <QuestionContent
-                    showStatus={feedBack !== "exam" ? true : false}
-                />
-                <ChoicesPanel />
-                {feedBack !== "exam" && (
-                    <ExplanationDetail unLock={feedBack === "newbie"} />
-                )}
+                <QuestionContent showStatus={feedBack === "newbie"} />
+                <ChoicesPanel isActions={feedBack === "exam"} />
+                {feedBack === "newbie" && <ExplanationDetail unLock />}
             </div>
 
             <BottomActions type="customTets" />

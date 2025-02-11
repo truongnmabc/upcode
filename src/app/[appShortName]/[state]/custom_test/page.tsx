@@ -7,9 +7,11 @@ import LeftLayout from "./_components/leftLayout";
 import ContentCustomTest from "./_components/contentCustomTest";
 import HeaderMobile from "@/components/headerMobile";
 import LoadDataCustomTest from "./_components/loadDataCustomTest";
+import { requestGetTitleSeoPage } from "@/services/titleSeo.service";
 
 export default async function CustomPage() {
-    const contentSeo = "";
+    const { content } = await requestGetTitleSeoPage("custom_test");
+
     return (
         <Fragment>
             <Grid2 container>
@@ -46,9 +48,9 @@ export default async function CustomPage() {
                         <div className="w-full  min-h-full flex flex-1 flex-col gap-4 sm:gap-6    h-full">
                             <ContentCustomTest />
                             <BannerDownloadApp />
-                            {contentSeo && (
+                            {content && (
                                 <div className="p-4 mb-28 sm:mb-0 sm:p-6 rounded-md  overflow-hidden bg-white dark:bg-black">
-                                    <SeoContent content={contentSeo} />
+                                    <SeoContent content={content} />
                                 </div>
                             )}
                         </div>

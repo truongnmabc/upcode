@@ -1,26 +1,25 @@
 import MtUiRipple, { useRipple } from "@/components/ripple";
 import { TypeParam } from "@/constants";
+import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { resetState } from "@/redux/features/game";
+import { selectUserInfo } from "@/redux/features/user.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initTestQuestionThunk from "@/redux/repository/game/initData/initPracticeTest";
-import RouterApp from "@/constants/router.constant";
 import { Grid2 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { Fragment, useCallback } from "react";
 import { IPropsItemTest } from "../type";
 import ListPracticeTest from "./listPracticeTest";
-import { selectIsTester, selectUserInfo } from "@/redux/features/user.reselect";
 
 const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     const [open, setOpen] = React.useState(false);
     const isMobile = useIsMobile();
     const router = useRouter();
-    const isTester = useAppSelector(selectIsTester);
     const userInfo = useAppSelector(selectUserInfo);
 
     const {
@@ -31,17 +30,34 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
 
     const dispatch = useAppDispatch();
 
-    const handleCustomTest = useCallback(() => {
+    const handleCustomTest = useCallback(async () => {
+        const isTester = localStorage.getItem("isTester");
         if (!userInfo.isPro && !isTester) {
             const _href = `${RouterApp.Get_pro}`;
             router.push(_href);
             return;
         }
-        dispatch(initCustomTestThunk());
-        router.push(RouterApp.Custom_test);
-    }, [dispatch, router, userInfo, isTester]);
+        const tests = await db?.testQuestions
+            .where("gameMode")
+            .equals("customTets")
+            .filter((item) => item.status === 0)
+            .first();
+
+        dispatch(
+            initCustomTestThunk({
+                testId: tests?.id || -1,
+            })
+        );
+        if (tests) {
+            router.push(`${RouterApp.Custom_test}?testId=${tests.id}`);
+        } else {
+            router.push(RouterApp.Custom_test);
+        }
+    }, [dispatch, router, userInfo]);
 
     const handleFinalTest = useCallback(async () => {
+        const isTester = localStorage.getItem("isTester");
+
         if (!userInfo.isPro && !isTester) {
             const _href = `${RouterApp.Get_pro}`;
             router.push(_href);
@@ -60,7 +76,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
             const _href = `${RouterApp.ResultTest}?type=${TypeParam.finalTest}&testId=${data.id}`;
             router.push(_href);
         }
-    }, [dispatch, router, userInfo, isTester]);
+    }, [dispatch, router, userInfo]);
 
     const handleDiagnosticTest = useCallback(async () => {
         const diagnostic = await db?.testQuestions

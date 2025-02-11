@@ -22,4 +22,5 @@ export interface ITestBase {
     attemptNumber: number;
     topicIds: number[];
     groupExamData: IGroupExam[];
+    createDate?: number;
 }

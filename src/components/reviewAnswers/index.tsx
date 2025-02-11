@@ -1,40 +1,30 @@
 "use client";
 import { ITopicEndTest } from "@/app/[appShortName]/[state]/result_test/_components";
+import { ITableData } from "@/app/[appShortName]/[state]/result_test/_components/resultContext";
 import TabPanelReview from "@/app/[appShortName]/[state]/result_test/_components/tabPanelReview";
 import { AntTab, AntTabs } from "@/components/tabs";
-import { ICurrentGame } from "@/models/game/game";
 import React, { Fragment } from "react";
 import Empty from "../empty";
 import FilterIcon from "./filterAnswers";
-import { IQuestionOpt } from "@/models/question";
 
 type IProps = {
-    all: ICurrentGame[];
-    correct: ICurrentGame[];
-    incorrect: ICurrentGame[];
+    tableData: ITableData;
     showFilter?: boolean;
     listTopic: ITopicEndTest[];
-    setTabletData?: (e: {
-        all: ICurrentGame[];
-        correct: ICurrentGame[];
-        incorrect: ICurrentGame[];
-        default: IQuestionOpt[];
-    }) => void;
+    correctIds: number[];
+    setTabletData: (e: ITableData) => void;
     title?: string;
     type?: "default" | "custom";
-    defaultData: ICurrentGame[];
 };
 
 const ReviewAnswerResult: React.FC<IProps> = ({
-    all,
-    correct,
-    incorrect,
+    tableData,
     setTabletData,
     listTopic,
     showFilter = true,
     title,
     type,
-    defaultData,
+    correctIds,
 }) => {
     const [value, setValue] = React.useState(0);
 
@@ -55,7 +45,7 @@ const ReviewAnswerResult: React.FC<IProps> = ({
                         label={
                             <LabelReviewAnswerResult
                                 title="All"
-                                count={all.length}
+                                count={tableData.all.length}
                             />
                         }
                     />
@@ -63,7 +53,7 @@ const ReviewAnswerResult: React.FC<IProps> = ({
                         label={
                             <LabelReviewAnswerResult
                                 title="Correct"
-                                count={correct.length}
+                                count={tableData.correct.length}
                             />
                         }
                     />
@@ -71,40 +61,39 @@ const ReviewAnswerResult: React.FC<IProps> = ({
                         label={
                             <LabelReviewAnswerResult
                                 title="Incorrect"
-                                count={incorrect.length}
+                                count={tableData.incorrect.length}
                             />
                         }
                     />
                 </AntTabs>
                 {showFilter && (
                     <FilterIcon
+                        tableData={tableData}
                         setTabletData={setTabletData}
                         listTopic={listTopic}
-                        all={all}
-                        defaultData={defaultData}
-                        correctIds={correct.map((i) => i.id)}
+                        correctIds={correctIds}
                     />
                 )}
             </div>
-            {all?.length > 0 ? (
+            {tableData.all?.length > 0 ? (
                 <div className="w-full flex-1 h-full transition-all">
                     <TabPanelReview
                         value={value}
                         index={0}
-                        data={all}
+                        data={tableData.all}
                         type={type}
                     />
                     <TabPanelReview
                         value={value}
                         index={1}
-                        data={correct}
+                        data={tableData.correct}
                         type={type}
                     />
                     <TabPanelReview
                         value={value}
                         index={2}
                         type={type}
-                        data={incorrect}
+                        data={tableData.incorrect}
                     />
                 </div>
             ) : (

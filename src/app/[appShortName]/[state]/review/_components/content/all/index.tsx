@@ -64,13 +64,12 @@ const AllQuestions = () => {
     return (
         <div className={clsx("w-full flex-1 flex flex-col transition-all ")}>
             <ReviewAnswerResult
-                all={tableData.all}
-                defaultData={tableData.defaultData}
-                correct={tableData.correct}
-                incorrect={tableData.incorrect}
+                tableData={tableData}
                 showFilter={false}
+                setTabletData={setTabletData}
                 listTopic={[]}
                 title=""
+                correctIds={[]}
             />
         </div>
     );

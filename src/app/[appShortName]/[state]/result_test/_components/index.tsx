@@ -181,12 +181,12 @@ const ResultTestLayout = () => {
         all: IQuestionOpt[];
         correct: IQuestionOpt[];
         incorrect: IQuestionOpt[];
-        default: IQuestionOpt[];
+        defaultData: IQuestionOpt[];
     }>({
         all: [],
         correct: [],
         incorrect: [],
-        default: [],
+        defaultData: [],
     });
 
     const handleGetData = useCallback(async () => {
@@ -253,7 +253,7 @@ const ResultTestLayout = () => {
 
             setTabletData({
                 all: listQuestion,
-                default: listQuestion,
+                defaultData: listQuestion,
                 incorrect: incorrectQuestions,
                 correct: correctQuestions,
             });
@@ -301,7 +301,7 @@ const ResultTestLayout = () => {
             all: questions,
             incorrect: incorrectQuestions,
             correct: correctQuestions,
-            default: questions,
+            defaultData: questions,
         });
     }, [listQuestion, type, testId, reviewId]);
 
@@ -318,9 +318,8 @@ const ResultTestLayout = () => {
             value={{
                 correctIds,
                 result,
-                defaultData: tableData.default,
                 setTableData: setTabletData,
-                tableData,
+                tableData: tableData,
                 correct: result.correct,
                 isPass: isPass,
                 passing: result.passing,
@@ -374,12 +373,10 @@ const ResultTestLayout = () => {
                             })}
                         >
                             <ReviewAnswerResult
-                                all={tableData.all}
-                                defaultData={tableData.default}
-                                correct={tableData.correct}
-                                incorrect={tableData.incorrect}
+                                tableData={tableData}
                                 setTabletData={setTabletData}
                                 listTopic={result.listTopic}
+                                correctIds={correctIds}
                             />
                         </div>
                     )}

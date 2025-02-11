@@ -7,12 +7,14 @@ type ICardTopic = {
     item: ITopicBase;
     selectListTopic: ITopicBase[];
     setSelectListTopic: (newList: ITopicBase[]) => void;
+    disabled?: boolean;
 };
 
 const CardTopic: React.FC<ICardTopic> = ({
     item,
     selectListTopic,
     setSelectListTopic,
+    disabled,
 }) => {
     const isCheck = useMemo(
         () => selectListTopic.some((s) => s.id === item.id),
@@ -32,7 +34,11 @@ const CardTopic: React.FC<ICardTopic> = ({
             onClick={handleSelect}
             className={clsx(
                 "cursor-pointer w-full flex sm:bg-white items-center justify-between gap-[10px] rounded-lg sm:border border-solid p-0 sm:p-4",
-                isCheck ? "border-primary" : "border-[#2121211F]"
+                {
+                    "border-primary": isCheck,
+                    "border-[#2121211F]": !isCheck,
+                    "pointer-events-none": disabled,
+                }
             )}
         >
             <div className="w-8 p-1 h-8 rounded-lg bg-[#7C6F5B]">

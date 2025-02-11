@@ -1,9 +1,7 @@
 "use client";
-import { userState } from "@/redux/features/user";
-import { useAppSelector } from "@/redux/hooks";
 
 const BtnTets = ({ correct }: { correct: boolean }) => {
-    const { isTester } = useAppSelector(userState);
+    const isTester = localStorage.getItem("isTester");
     if (isTester && correct)
         return (
             <div>

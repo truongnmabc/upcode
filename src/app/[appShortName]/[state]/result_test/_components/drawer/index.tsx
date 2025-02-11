@@ -8,7 +8,7 @@ type IProps = {
     handleCloseDrawer: () => void;
 };
 const DrawerAnswers = ({ openDrawer, handleCloseDrawer }: IProps) => {
-    const { tableData, setTableData, listTopic, defaultData } =
+    const { tableData, setTableData, listTopic, correctIds } =
         useResultContext();
     return (
         <Drawer
@@ -34,12 +34,10 @@ const DrawerAnswers = ({ openDrawer, handleCloseDrawer }: IProps) => {
 
                 <div className="flex-1">
                     <ReviewAnswerResult
-                        defaultData={defaultData}
-                        all={tableData.all}
-                        correct={tableData.correct}
-                        incorrect={tableData.incorrect}
+                        tableData={tableData}
                         setTabletData={setTableData}
                         listTopic={listTopic}
+                        correctIds={correctIds}
                         type="custom"
                     />
                 </div>

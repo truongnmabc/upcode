@@ -2,30 +2,24 @@ import CardTopic, {
     IconCheck,
 } from "@/app/[appShortName]/[state]/custom_test/_components/modalSetting/cardTopic";
 import { ITopicEndTest } from "@/app/[appShortName]/[state]/result_test/_components";
+import { ITableData } from "@/app/[appShortName]/[state]/result_test/_components/resultContext";
 import { MtUiButton } from "@/components/button";
 import DialogResponsive from "@/components/dialogResponsive";
 import { db } from "@/db/db.model";
-import { ICurrentGame } from "@/models/game/game";
 import { ITopicBase } from "@/models/topics/topicsProgress";
 import ctx from "@/utils/mergeClass";
 import React, { useCallback, useEffect, useState } from "react";
 type IProps = {
     listTopic: ITopicEndTest[];
-    all: ICurrentGame[];
     correctIds: number[];
-    setTabletData?: (e: {
-        all: ICurrentGame[];
-        default: ICurrentGame[];
-        correct: ICurrentGame[];
-        incorrect: ICurrentGame[];
-    }) => void;
-    defaultData: ICurrentGame[];
+    setTabletData: (e: ITableData) => void;
+    tableData: ITableData;
 };
 const FilterIcon: React.FC<IProps> = ({
     setTabletData,
     listTopic,
     correctIds,
-    defaultData,
+    tableData,
 }) => {
     const [open, setOpen] = React.useState(false);
     const [topics, setTopics] = useState<ITopicBase[]>([]);
@@ -54,7 +48,7 @@ const FilterIcon: React.FC<IProps> = ({
         setSelectListTopic(tempSelectListTopic);
 
         // Lọc danh sách câu hỏi thuộc các chủ đề đã chọn
-        const newList = defaultData?.filter((item) =>
+        const newList = tableData.defaultData?.filter((item) =>
             tempSelectListTopic.some(
                 (selectedTopic) => item.topicId === selectedTopic.id
             )
@@ -71,13 +65,12 @@ const FilterIcon: React.FC<IProps> = ({
         // Cập nhật state
         setTabletData?.({
             all: newList,
-            default: defaultData,
             correct: correctList,
             incorrect: incorrectList,
+            defaultData: tableData.defaultData,
         });
-
         setOpen(false);
-    }, [tempSelectListTopic, setTabletData, defaultData, correctIds]);
+    }, [tempSelectListTopic, setTabletData, tableData, correctIds]);
 
     useEffect(() => {
         const handleGetData = async () => {
