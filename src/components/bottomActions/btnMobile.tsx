@@ -59,7 +59,7 @@ const BtnMobile = () => {
                 onClick={() => handleNavigate("next")}
                 type="primary"
             >
-                {isLastQuestion ? "Submit" : "Next"}
+                Next
             </MtUiButton>
         </div>
     );
