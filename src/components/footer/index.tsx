@@ -137,11 +137,12 @@ const FooterLandingV4 = () => {
     if (
         pathname?.includes("practiceTests") ||
         pathname?.includes("study") ||
+        pathname?.includes("final_test") ||
         pathname?.includes("review") ||
         pathname?.includes("result_test") ||
         pathname?.includes("custom_test")
     ) {
-        return <div className="w-full flex-1  "></div>;
+        return <div className="w-full flex-1 min-h-20 "></div>;
     }
 
     return (

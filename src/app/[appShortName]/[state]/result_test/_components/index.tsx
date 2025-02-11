@@ -312,23 +312,29 @@ const ResultTestLayout = () => {
     const handleOpenDrawer = () => setOpenDrawer(true);
     const handleCloseDrawer = () => setOpenDrawer(false);
 
+    const isPass = (result.correct / result.all) * 100 > (passPercent || 0);
     return (
         <ResultProvider
             value={{
                 correctIds,
                 result,
+                defaultData: tableData.default,
                 setTableData: setTabletData,
                 tableData,
                 correct: result.correct,
-                isPass:
-                    (result.correct / result.all) * 100 > (passPercent || 0),
+                isPass: isPass,
                 passing: result.passing,
                 total: result.all,
                 listTopic: result.listTopic,
             }}
         >
             <div className="w-full flex-1">
-                <div className="bg-white sm:bg-[#FFE1E1] ">
+                <div
+                    className={clsx("bg-white  ", {
+                        "sm:bg-[#FFE1E1]": !isPass,
+                        "sm:bg-[#F2FFFB]": isPass,
+                    })}
+                >
                     <HeaderResultTest />
                 </div>
                 <MyContainer className="sm:pb-6 pb-4">

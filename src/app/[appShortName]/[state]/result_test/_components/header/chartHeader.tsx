@@ -16,7 +16,7 @@ const DashboardCard = ({
 }) => {
     const isMobile = useIsMobile();
     return (
-        <div className="relative mx-auto min-w-[320px] w-full sm:w-fit h-[300px] sm:h-[340px] z-0 flex flex-col items-center">
+        <div className="relative mx-auto min-w-[320px]  w-full sm:w-fit h-[300px] sm:h-[340px] z-0 flex flex-col items-center">
             <CircleProgress
                 percentage={percent}
                 color="#12E1AF"
@@ -24,14 +24,14 @@ const DashboardCard = ({
                 bgColor="#F87171"
                 strokeWidth={16}
                 halfCircle
-                textClassName="text-5xl font-bold"
+                textClassName="text-7xl font-bold"
                 textAttributes={{
                     fill: "#F87171",
                 }}
             />
 
             <div className=" absolute  bottom-0 left-0 w-full z-20">
-                <div className="mt-4 flex justify-between w-full ">
+                <div className="mt-4 px-8 sm:px-0 flex justify-between w-full ">
                     <div className="flex  gap-2">
                         <div className="h-1 mt-3 rounded-md bg-[#15CB9F] w-3"></div>
                         <div>

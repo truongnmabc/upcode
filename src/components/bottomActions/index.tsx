@@ -23,13 +23,7 @@ const BottomActions: React.FC<IPropsBottomAction> = ({ type = "learn" }) => {
             </div>
 
             <div className="px-4 w-full flex items-center gap-2 sm:p-4 sm:w-fit">
-                {isMobile &&
-                [
-                    "finalTests",
-                    "diagnosticTest",
-                    "customTets",
-                    "review",
-                ].includes(type) ? (
+                {isMobile && type !== "learn" ? (
                     <BtnMobile />
                 ) : (
                     <WrapperBtnActions type={type} />
