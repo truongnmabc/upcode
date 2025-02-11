@@ -79,6 +79,7 @@ const initDataTest = async (tests, db) => {
                 passingThreshold: test.passingPercent,
                 groupExamData: test.groupExamData.flatMap((g) => g.examData),
                 isGamePaused: false,
+                createData: Date.now(),
             })
         )
     );
@@ -127,8 +128,7 @@ const calculateTotalQuestionsTopic = (data) => {
         return (
             total +
             (topic.topics?.reduce(
-                (sum, part) =>
-                    sum + (part.contentType === 0 ? part.questions?.length : 0),
+                (sum, part) => sum + (part.questions?.length ?? 0),
                 0
             ) || 0)
         );
@@ -158,7 +158,6 @@ const calculateAverageLevelTopic = (data) => {
 
     for (const topic of data) {
         for (const part of topic.topics || []) {
-            if (part.contentType === 1) continue;
             for (const question of part.questions || []) {
                 totalLevel += question.level === -1 ? 50 : question.level;
                 totalQuestions += 1;
@@ -180,63 +179,56 @@ const extractAllQuestions = (data, topic) => {
     return data.flatMap((t) => {
         const subTopicTag = t.tag;
         return (
-            t.topics
-                ?.filter(
-                    (part) => part.contentType === 0 && part.questions?.length
-                )
-                .flatMap((part) =>
-                    part.questions.map((item) => ({
-                        icon: topic.icon,
-                        tag: topic.tag,
-                        subTopicTag,
-                        status: 0,
-                        appId: item.appId,
-                        partId: part.id,
-                        subTopicId: part.parentId,
-                        topicId: t.parentId,
-                        explanation: item.explanation,
-                        id: item.id,
-                        image: item.image,
-                        level: item.level,
-                        paragraphId: item.paragraphId,
-                        paragraph: {
-                            id: item?.paragraph?.id,
-                            text: item?.paragraph?.text,
-                        },
-                        text: item.text,
-                        answers: item.answers,
-                    }))
-                ) || []
+            t.topics.flatMap((part) =>
+                part.questions.map((item) => ({
+                    icon: topic.icon,
+                    tag: topic.tag,
+                    subTopicTag,
+                    status: 0,
+                    appId: item.appId,
+                    partId: part.id,
+                    subTopicId: part.parentId,
+                    topicId: t.parentId,
+                    explanation: item.explanation,
+                    id: item.id,
+                    image: item.image,
+                    level: item.level,
+                    paragraphId: item.paragraphId,
+                    paragraph: {
+                        id: item?.paragraph?.id,
+                        text: item?.paragraph?.text,
+                    },
+                    text: item.text,
+                    answers: item.answers,
+                }))
+            ) || []
         );
     });
 };
 
 const mapSubTopics = (topics = [], data) =>
-    topics
-        .filter(({ contentType }) => contentType === 0)
-        .map(({ id, icon, tag, contentType, name, parentId }) => {
-            const subTopicData = data.find((t) => Number(t.id) === id);
-            const total = subTopicData?.questions?.length || 0;
-            return {
-                id: Number(id),
-                icon,
-                tag,
-                contentType,
-                name,
-                parentId,
-                slug: `${tag}-practice-test`,
-                topics: [],
-                status: 0,
-                turn: 1,
-                totalQuestion: total,
-                averageLevel:
-                    (subTopicData?.questions?.reduce(
-                        (sum, part) =>
-                            sum + (part.level === -1 ? 50 : part.level),
-                        0
-                    ) || 0) / total,
-            };
-        });
+    topics.map(({ id, icon, tag, contentType, name, parentId }) => {
+        const subTopicData = data.find((t) => Number(t.id) === id);
+        const total = subTopicData?.questions?.length || 0;
+        return {
+            id: Number(id),
+            icon,
+            tag,
+            contentType,
+            name,
+            parentId,
+            slug: `${tag}-practice-test`,
+            topics: [],
+            status: 0,
+            turn: 1,
+            totalQuestion: total,
+            averageLevel:
+                (subTopicData?.questions?.reduce(
+                    (sum, part) => sum + (part.level === -1 ? 50 : part.level),
+                    0
+                ) || 0) / total,
+        };
+    });
 
 const mapTopics = (topics = [], data) =>
     topics.map(({ id, icon, tag, contentType, name, parentId, topics }) => {
@@ -272,11 +264,7 @@ const fetchTopicData = async (apiPath, topicId) => {
 
 const calculateSubTopicTotalQuestions = (data) => {
     return (
-        data?.reduce(
-            (sum, part) =>
-                sum + (part.contentType === 0 ? part.questions?.length : 0),
-            0
-        ) || 0
+        data?.reduce((sum, part) => sum + (part.questions?.length ?? 0), 0) || 0
     );
 };
 
@@ -285,13 +273,7 @@ const calculateAverageLevel = (data) => {
         return (
             total +
             (topic.questions?.reduce(
-                (sum, part) =>
-                    sum +
-                    (part.contentType === 0
-                        ? part.level === -1
-                            ? 50
-                            : part.level
-                        : 0),
+                (sum, part) => sum + (part.level === -1 ? 50 : part.level),
                 0
             ) || 0)
         );

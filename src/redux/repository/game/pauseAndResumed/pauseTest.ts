@@ -10,9 +10,10 @@ const pauseTestThunk = createAsyncThunk(
     "pauseTestThunk",
     async ({ testId }: IRes, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
-        const { currentTopicId } = state.gameReducer;
+        const { currentTopicId, gameMode } = state.gameReducer;
         const id = testId || currentTopicId;
-        if (id === -1) return;
+
+        if (id === -1 || gameMode === "learn") return;
         await db?.testQuestions
             .where("id")
             .equals(id)

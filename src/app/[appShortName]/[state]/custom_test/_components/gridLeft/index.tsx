@@ -12,6 +12,7 @@ import {
     selectCurrentSubTopicIndex,
     selectIsDataLoaded,
     selectListQuestion,
+    selectShouldLoading,
 } from "@/redux/features/game.reselect";
 import {
     resetState,
@@ -23,6 +24,7 @@ import { Tooltip } from "@mui/material";
 import { useRouter } from "next/navigation";
 import RouterApp from "@/constants/router.constant";
 import { TypeParam } from "@/constants";
+
 const GridLeftCustomTest = () => {
     const [listTest, setListTest] = useState<ITestBase[]>([]);
     const [openModalSetting, setOpenModalSetting] = React.useState(false);
@@ -30,54 +32,43 @@ const GridLeftCustomTest = () => {
     const [itemSelect, setItemSelect] = useState<ITestBase | null>(null);
     const listQuestion = useAppSelector(selectListQuestion);
     const dispatch = useAppDispatch();
+    const router = useRouter();
+
     const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
     const isDataLoaded = useAppSelector(selectIsDataLoaded);
-
+    const isLoading = useAppSelector(selectShouldLoading);
     const isMobile = useIsMobile();
-    const handleGetData = useCallback(async () => {
-        const list = await db?.testQuestions
-            .where("gameMode")
-            .equals("customTets")
-            .toArray();
 
-        if (list?.length === 0) {
-            setOpenModalSetting(true);
-        }
-        if (list) {
-            setListTest(list);
-        }
-    }, []);
     useEffect(() => {
+        const handleGetData = async () => {
+            const list = await db?.testQuestions
+                .where("gameMode")
+                .equals("customTets")
+                .sortBy("createDate");
+
+            if (list?.length === 0) {
+                setOpenModalSetting(true);
+            }
+            if (list?.length) setListTest(list);
+        };
+
+        if (listQuestion?.length === 0 && isDataLoaded)
+            setOpenModalSetting(true);
+
         if (listQuestion?.length) handleGetData();
 
-        if (listQuestion?.length === 0 && isDataLoaded) {
-            setOpenModalSetting(true);
-        }
-        return () => {
-            setOpenModalSetting(false);
-        };
-    }, [listQuestion?.length, isDataLoaded, handleGetData]);
+        return () => setOpenModalSetting(false);
+    }, [listQuestion, isDataLoaded, isLoading]);
 
     const onClose = useCallback(() => {
         setOpenModalSetting(false);
         setItemSelect(null);
     }, []);
 
-    const handleOpenModalSetting = useCallback((e: ITestBase) => {
-        setOpenModalSetting(true);
-        setItemSelect(e);
-    }, []);
-
-    const handleOpenModalDelete = useCallback((e: ITestBase) => {
-        setItemSelect(e);
-        setOpenDelete(true);
-    }, []);
-
     const handleClose = useCallback(() => {
         setOpenDelete(false);
     }, []);
 
-    const router = useRouter();
     const handleDelete = useCallback(async () => {
         if (itemSelect) {
             await db?.testQuestions.where("id").equals(itemSelect?.id).delete();
@@ -132,6 +123,7 @@ const GridLeftCustomTest = () => {
                 router.replace(_href);
                 return;
             }
+
             dispatch(
                 choiceStartCustomTestThunk({
                     item: {
@@ -141,6 +133,8 @@ const GridLeftCustomTest = () => {
                 })
             );
             dispatch(setCurrentTopicId(item.id));
+
+            router.replace(`${RouterApp.Custom_test}?testId=${item?.id}`);
         },
         [dispatch, router]
     );
@@ -209,18 +203,11 @@ const GridLeftCustomTest = () => {
                                         <Tooltip title="Edit">
                                             <div
                                                 onClick={() => {
-                                                    handleOpenModalSetting(
-                                                        item
-                                                    );
+                                                    setItemSelect(item);
+                                                    setOpenModalSetting(true);
                                                 }}
                                                 className={clsx(
-                                                    "w-6 h-6 rounded flex cursor-pointer hover:bg-primary items-center justify-center bg-[#2121210F]",
-                                                    {
-                                                        "pointer-events-none":
-                                                            indexSubTopic -
-                                                                1 ===
-                                                            index,
-                                                    }
+                                                    "w-6 h-6 rounded flex cursor-pointer hover:bg-primary items-center justify-center bg-[#2121210F]"
                                                 )}
                                             >
                                                 <IconEdit />
@@ -229,16 +216,11 @@ const GridLeftCustomTest = () => {
                                         <Tooltip title="Delete">
                                             <div
                                                 onClick={() => {
-                                                    handleOpenModalDelete(item);
+                                                    setItemSelect(item);
+                                                    setOpenDelete(true);
                                                 }}
                                                 className={clsx(
-                                                    "w-6 h-6 rounded flex items-center hover:bg-primary cursor-pointer justify-center bg-[#2121210F]",
-                                                    {
-                                                        "pointer-events-none":
-                                                            indexSubTopic -
-                                                                1 ===
-                                                            index,
-                                                    }
+                                                    "w-6 h-6 rounded flex items-center hover:bg-primary cursor-pointer justify-center bg-[#2121210F]"
                                                 )}
                                             >
                                                 <IconDelete />
@@ -268,7 +250,7 @@ const GridLeftCustomTest = () => {
                     }
                     open={openModalSetting}
                     onClose={onClose}
-                    listTestLength={listTest?.length}
+                    indexSubTopic={listTest?.length + 1}
                 />
             ) : null}
         </Fragment>

@@ -1,11 +1,9 @@
 "use client";
 import { selectCurrentSubTopicIndex } from "@/redux/features/game.reselect";
-import { setIsTester } from "@/redux/features/user";
-import { selectIsTester } from "@/redux/features/user.reselect";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppSelector } from "@/redux/hooks";
 import clsx from "clsx";
 import { useParams, usePathname } from "next/navigation";
-import React from "react";
+import React, { useMemo, useRef } from "react";
 
 export const getKeyTest = (
     pathname: string | string[] | undefined
@@ -33,31 +31,29 @@ export const getLastPathSegment = (pathname?: string | null): string | null => {
 };
 
 const TitleQuestion = ({ type }: { type?: string }) => {
-    const param = useParams();
+    const params = useParams();
     const pathname = usePathname();
 
-    const defaultTitle =
-        getKeyTest(param?.["slug"]) || getLastPathSegment(pathname);
-
+    const defaultTitle = useMemo(
+        () => getKeyTest(params?.["slug"]) || getLastPathSegment(pathname),
+        [params, pathname]
+    );
     const index = useAppSelector(selectCurrentSubTopicIndex);
-    const isTestTer = useAppSelector(selectIsTester);
-    let tempCount = 0;
-    const dispatch = useAppDispatch();
-    const setIsTesterFn = () => {
-        if (isTestTer) {
-            dispatch(setIsTester(false));
-            return;
-        }
-        tempCount++;
-        if (tempCount == 0) {
-            setTimeout(() => {
-                tempCount = 0;
-            }, 2000);
-        }
-        if (tempCount >= 3) {
-            tempCount = 0;
-            alert("♠️");
-            dispatch(setIsTester(true));
+    const tempCountRef = useRef(0);
+
+    const handleTesterMode = () => {
+        const isTester = localStorage.getItem("isTester");
+
+        if (isTester) {
+            localStorage.removeItem("isTester");
+        } else {
+            tempCountRef.current++;
+            setTimeout(() => (tempCountRef.current = 0), 2000);
+
+            if (tempCountRef.current >= 3) {
+                localStorage.setItem("isTester", "true");
+                tempCountRef.current = 0;
+            }
         }
     };
     return (
@@ -65,7 +61,7 @@ const TitleQuestion = ({ type }: { type?: string }) => {
             className={clsx(
                 "w-full text-center hidden sm:block capitalize text-xl font-semibold"
             )}
-            onClick={setIsTesterFn}
+            onClick={handleTesterMode}
         >
             {defaultTitle} {type === "learn" ? `- Core ${index}` : ""}
         </div>

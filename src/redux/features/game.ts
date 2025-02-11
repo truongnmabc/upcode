@@ -82,6 +82,9 @@ export const gameSlice = createSlice({
             state.isGamePaused = false;
             state.remainingTime = -1;
         },
+        shouldLoading: (state) => {
+            state.shouldLoading = !state.shouldLoading;
+        },
         setCurrentTopicId: (state, action) => {
             state.currentTopicId = action.payload;
         },
@@ -210,9 +213,16 @@ export const gameSlice = createSlice({
                 handleInitTestQuestion(state, {
                     ...data,
                 });
-                const { passingThreshold, attemptNumber } = action.payload;
+                const {
+                    passingThreshold,
+                    attemptNumber,
+                    gameDifficultyLevel,
+                    currentSubTopicIndex,
+                } = action.payload;
+                state.currentSubTopicIndex = currentSubTopicIndex;
                 state.passingThreshold = passingThreshold;
                 state.attemptNumber = attemptNumber;
+                state.gameDifficultyLevel = gameDifficultyLevel;
             } else {
                 state.listQuestion = [];
                 state.currentGame = plateHolderCurrentGame;
@@ -268,6 +278,7 @@ export const {
     startTryAgainDiagnostic,
     shouldEndTimeTest,
     setCurrentTopicId,
+    shouldLoading,
 } = actions;
 
 export const gameState = (state: RootState) => state.gameReducer;

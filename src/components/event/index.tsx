@@ -2,6 +2,7 @@
 import { resetState } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
 import pauseTestThunk from "@/redux/repository/game/pauseAndResumed/pauseTest";
+// import pauseTestThunk from "@/redux/repository/game/pauseAndResumed/pauseTest";
 import beforeUnLoadThunk, {
     reloadStateThunk,
 } from "@/redux/repository/utils/reload";

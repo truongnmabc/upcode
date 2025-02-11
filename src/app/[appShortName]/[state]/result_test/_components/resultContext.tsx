@@ -3,6 +3,12 @@ import { ITopicEndTest } from "@/app/[appShortName]/[state]/result_test/_compone
 import { IQuestionOpt } from "@/models/question";
 import { createContext, ReactNode, useContext } from "react";
 
+export interface ITableData {
+    all: IQuestionOpt[];
+    defaultData: IQuestionOpt[];
+    correct: IQuestionOpt[];
+    incorrect: IQuestionOpt[];
+}
 interface ResultContextType {
     result: {
         listTopic: ITopicEndTest[];
@@ -11,21 +17,11 @@ interface ResultContextType {
         passing: number;
     };
     correctIds: number[];
-    tableData: {
-        all: IQuestionOpt[];
-        correct: IQuestionOpt[];
-        incorrect: IQuestionOpt[];
-    };
-    setTableData: (data: {
-        all: IQuestionOpt[];
-        default: IQuestionOpt[];
-        correct: IQuestionOpt[];
-        incorrect: IQuestionOpt[];
-    }) => void;
+    tableData: ITableData;
+    setTableData: (data: ITableData) => void;
     correct: number;
     total: number;
     isPass: boolean;
-    defaultData: IQuestionOpt[];
     passing: number;
     listTopic: ITopicEndTest[];
 }

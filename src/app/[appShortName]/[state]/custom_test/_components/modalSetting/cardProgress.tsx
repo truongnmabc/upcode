@@ -10,6 +10,7 @@ type ICardProgress = {
     defaultValue: number;
     required?: boolean;
     errorMess?: string;
+    disabled?: boolean;
 };
 
 const CardProgress = ({
@@ -20,6 +21,7 @@ const CardProgress = ({
     changeProgress,
     required,
     errorMess,
+    disabled,
 }: ICardProgress) => {
     const [value, setValue] = useState(defaultValue);
     const progress = useDebounce(value, 500);
@@ -51,6 +53,7 @@ const CardProgress = ({
                 <div className="bg-white mt-2 w-full h-fill p-4 rounded-lg border border-solid">
                     <Slider
                         value={value}
+                        disabled={disabled}
                         onChange={handleSliderChange}
                         sx={{
                             height: "10px",

@@ -161,7 +161,7 @@ const ChoicesPanel: React.FC<IProps> = ({
                 handleEnter();
             }
         },
-        [handleEnter, currentGame?.answers, currentGame?.selectedAnswer]
+        [handleEnter, currentGame]
     );
 
     useEffect(() => {

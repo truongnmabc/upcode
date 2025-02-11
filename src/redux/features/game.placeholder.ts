@@ -47,4 +47,5 @@ export const initGameReducer: IGameReducer = {
     enableKeyboardShortcuts: true, // Có kích hoạt phím tắt không?
     isDataLoaded: false, // Xác định xem đã load data xong chưa
     hasRetakenDiagnosticTest: false, // Xác định rằng đã làm qua 1 lần diagnostic test, nhưng lần sau là làm lại
+    shouldLoading: false,
 };

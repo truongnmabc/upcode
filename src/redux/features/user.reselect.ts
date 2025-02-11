@@ -15,8 +15,3 @@ export const selectListActions = createSelector(
     [userState],
     (userReducer) => userReducer.listActions
 );
-
-export const selectIsTester = createSelector(
-    [userState],
-    (userReducer) => userReducer.isTester
-);

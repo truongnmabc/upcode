@@ -30,9 +30,10 @@ const choiceStartCustomTestThunk = createAsyncThunk(
                 currentTopicId: item.id,
                 gameMode: "practiceTests" as IGameMode,
                 totalDuration: item.totalDuration,
-                isGamePaused: item?.isGamePaused || false,
+                isGamePaused: false,
                 remainingTime: item?.remainingTime || item.totalDuration * 60,
                 currentSubTopicIndex: item.indexSubTopic,
+                gameDifficultyLevel: item.gameDifficultyLevel,
             };
         }
         return undefined;

@@ -9,7 +9,6 @@ export interface IUserReducer {
     userInfo: IUserInfo;
     listActions: IUserActions[];
     shouldOpenLogin: boolean;
-    isTester: boolean;
 }
 
 const init = new UserInfo();
@@ -18,7 +17,6 @@ const initState: IUserReducer = {
     userInfo: { ...init },
     listActions: [],
     shouldOpenLogin: false,
-    isTester: false,
 };
 
 export const userSlice = createSlice({
@@ -44,9 +42,6 @@ export const userSlice = createSlice({
         },
         setListReactions: (state, action) => {
             state.listActions = action.payload;
-        },
-        setIsTester: (state, action) => {
-            state.isTester = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -87,7 +82,6 @@ export const {
     shouldOpenModalLogin,
     shouldIsPro,
     setListReactions,
-    setIsTester,
 } = actions;
 
 export const userState = (state: RootState) => state.userReducer;

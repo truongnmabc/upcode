@@ -5,11 +5,13 @@ import ExplanationDetail from "@/components/explanation";
 import ProgressQuestion from "@/components/progressQuestion";
 import QuestionContent from "@/components/question";
 import { useSearchParams } from "next/navigation";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import LoadDataStudy from "../loadData";
 
 import { IGameMode } from "@/models/tests";
 import dynamic from "next/dynamic";
+import { useAppDispatch } from "@/redux/hooks";
+import pauseTestThunk from "@/redux/repository/game/pauseAndResumed/pauseTest";
 
 const TitleQuestion = dynamic(() => import("@/components/titleQuestion"), {
     ssr: false,
@@ -25,7 +27,14 @@ const ClockIcon = dynamic(() => import("@/components/icon/ClockIcon"), {
 
 const MainStudyView = () => {
     const type = useSearchParams()?.get("type") as IGameMode;
+    const testId = useSearchParams()?.get("testId") as IGameMode;
+    const dispatch = useAppDispatch();
 
+    useEffect(() => {
+        return () => {
+            dispatch(pauseTestThunk({ testId: Number(testId) }));
+        };
+    }, [dispatch, testId]);
     return (
         <Fragment>
             <div className=" sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
