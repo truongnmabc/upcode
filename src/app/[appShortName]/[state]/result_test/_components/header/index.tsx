@@ -6,8 +6,8 @@ import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic
 import { TypeParam } from "@/constants";
 import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
+import { resetState, startTryAgainDiagnostic } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
-import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
@@ -21,7 +21,6 @@ import { useResultContext } from "../resultContext";
 import DashboardCard from "./chartHeader";
 import HeaderResultDiagnostic from "./headerResultDiagnostic";
 import { TitleMiss, TitlePass } from "./titleResultTest";
-import { startTryAgainDiagnostic } from "@/redux/features/game";
 
 const HeaderResultTest = () => {
     const { correct, total, isPass, passing } = useResultContext();
@@ -122,8 +121,8 @@ const HeaderResultTest = () => {
             return;
         }
         if (type === TypeParam.customTest) {
-            dispatch(initCustomTestThunk());
-            router.push(RouterApp.Custom_test);
+            dispatch(resetState());
+            router.push(`${RouterApp.Custom_test}?isCreate=true`);
             return;
         }
     }, [router, type, dispatch]);

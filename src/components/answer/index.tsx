@@ -50,17 +50,15 @@ const AnswerButton = ({
         <div
             onClick={handleClick}
             className={ctx(
-                "flex gap-2 w-full h-full bg-white sm:bg-transparent items-center rounded-md border border-solid px-4 py-3 hover:bg-[#2121210a]",
+                "flex gap-2 w-full h-full bg-white sm:bg-transparent cursor-pointer items-center rounded-md border border-solid px-4 py-3 hover:bg-[#2121210a]",
                 {
                     "border-[#21212185]":
                         isActions &&
                         currentGame?.selectedAnswer?.id === choice?.id,
                     "border-[#07C58C]": statusChoice === "pass" && !isActions,
                     "border-[#FF746D]": statusChoice === "miss" && !isActions,
-                    "cursor-not-allowed ": currentGame?.selectedAnswer !== null,
-                    "cursor-pointer ":
-                        currentGame?.selectedAnswer === null ||
-                        !currentGame?.selectedAnswer,
+                    " pointer-events-none":
+                        !isActions && currentGame?.selectedAnswer,
                 }
             )}
             id={(index + 1).toString()}

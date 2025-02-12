@@ -22,16 +22,16 @@ const RandomGameContent = () => {
     const setOpenConfirm = () => dispatch(shouldOpenSubmitTest(true));
 
     return (
-        <div className="sm:shadow-custom bg-transparent sm:bg-white  rounded-2xl dark:bg-black">
+        <div className="sm:shadow-custom bg-transparent sm:bg-white pb-12 sm:pb-0  rounded-2xl dark:bg-black">
             <div className="p-0 sm:p-4 flex flex-col gap-3">
-                <div className="flex items-center justify-between ">
-                    <div onClick={handleBack}>
+                <div className="flex items-center justify-between sm:justify-center ">
+                    <div className="sm:hidden" onClick={handleBack}>
                         <IconBack />
                     </div>
                     <h3 className="text-xl capitalize font-semibold ">
                         {selectType} Questions
                     </h3>
-                    <div onClick={setOpenConfirm}>
+                    <div className="sm:hidden" onClick={setOpenConfirm}>
                         <IconSubmit />
                     </div>
                 </div>

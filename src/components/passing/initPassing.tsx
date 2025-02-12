@@ -13,7 +13,10 @@ const InitPassing = () => {
             const isEx = await db?.passingApp.get(-1);
             if (isEx) return;
 
-            const topics = await db?.topics.toArray();
+            const [topics, questions] = await Promise.all([
+                db?.topics.toArray(),
+                db?.questions.toArray(),
+            ]);
 
             const totalQuestion =
                 topics?.reduce((acc, topic) => {
@@ -30,12 +33,12 @@ const InitPassing = () => {
                     );
                 }, 0) || 0;
 
-            const totalAve = topics?.reduce(
-                (acc, topic) => acc + topic.averageLevel,
+            const totalAve = questions?.reduce(
+                (acc, topic) => acc + (topic.level === -1 ? 50 : topic.level),
                 0
             );
 
-            const averageLevel = (totalAve || 0) / (topics?.length || 1);
+            const averageLevel = (totalAve || 0) / totalQuestion;
 
             await db?.passingApp.add({
                 id: -1,

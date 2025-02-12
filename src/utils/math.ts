@@ -64,6 +64,7 @@ export const fetchQuestionsForTopics = async (
     excludeListID: number[] = [] // Danh sách ID cần loại trừ
 ): Promise<IQuestionOpt[]> => {
     const listQuestion: IQuestionOpt[] = [];
+    const selectedQuestionIds = new Set<number>(); // Set để lưu ID đã chọn
 
     // Lấy tất cả partId từ tất cả topics
     const allPartIds = selectListTopic.flatMap((topic) =>
@@ -75,7 +76,6 @@ export const fetchQuestionsForTopics = async (
     if (!allPartIds.length) return [];
 
     // Truy vấn tất cả câu hỏi của các partId trong một lần truy vấn
-
     let allQuestions = await fetchQuestionsDb({
         ids: allPartIds,
         key: "partId",
@@ -118,13 +118,17 @@ export const fetchQuestionsForTopics = async (
 
             const randomQuestions = topicData
                 .sort(() => Math.random() - 0.5)
+                .filter((item) => !selectedQuestionIds.has(item.id)) // Loại bỏ câu hỏi trùng
                 .slice(0, questionCount)
-                .map((item) => ({
-                    ...item,
-                    tag: topic.tag,
-                    icon: topic.icon,
-                    parentId: topic.id,
-                }));
+                .map((item) => {
+                    selectedQuestionIds.add(item.id); // Lưu ID đã chọn
+                    return {
+                        ...item,
+                        tag: topic.tag,
+                        icon: topic.icon,
+                        parentId: topic.id,
+                    };
+                });
 
             listQuestion.push(...randomQuestions);
         }
@@ -140,13 +144,17 @@ export const fetchQuestionsForTopics = async (
                 if (extraQuestions.length) {
                     const extraRandomQuestions = extraQuestions
                         .sort(() => Math.random() - 0.5)
+                        .filter((item) => !selectedQuestionIds.has(item.id)) // Loại bỏ câu hỏi trùng
                         .slice(0, remainderQuestionTopic)
-                        .map((item) => ({
-                            ...item,
-                            tag: topic.tag,
-                            icon: topic.icon,
-                            parentId: topic.id,
-                        }));
+                        .map((item) => {
+                            selectedQuestionIds.add(item.id); // Lưu ID đã chọn
+                            return {
+                                ...item,
+                                tag: topic.tag,
+                                icon: topic.icon,
+                                parentId: topic.id,
+                            };
+                        });
 
                     listQuestion.push(...extraRandomQuestions);
                 }

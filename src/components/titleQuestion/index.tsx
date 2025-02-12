@@ -2,7 +2,7 @@
 import { selectCurrentSubTopicIndex } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import clsx from "clsx";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { useMemo, useRef } from "react";
 
 export const getKeyTest = (
@@ -33,7 +33,7 @@ export const getLastPathSegment = (pathname?: string | null): string | null => {
 const TitleQuestion = ({ type }: { type?: string }) => {
     const params = useParams();
     const pathname = usePathname();
-
+    const router = useRouter();
     const defaultTitle = useMemo(
         () => getKeyTest(params?.["slug"]) || getLastPathSegment(pathname),
         [params, pathname]
@@ -42,17 +42,21 @@ const TitleQuestion = ({ type }: { type?: string }) => {
     const tempCountRef = useRef(0);
 
     const handleTesterMode = () => {
-        const isTester = localStorage.getItem("isTester");
+        const isTester = sessionStorage.getItem("isTester");
 
         if (isTester) {
-            localStorage.removeItem("isTester");
+            sessionStorage.removeItem("isTester");
+            alert("By! Tester");
+            router.back();
         } else {
             tempCountRef.current++;
             setTimeout(() => (tempCountRef.current = 0), 2000);
 
             if (tempCountRef.current >= 3) {
-                localStorage.setItem("isTester", "true");
+                alert("Hello! Tester");
+                sessionStorage.setItem("isTester", "true");
                 tempCountRef.current = 0;
+                router.back();
             }
         }
     };

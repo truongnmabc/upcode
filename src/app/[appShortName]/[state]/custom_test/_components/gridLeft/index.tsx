@@ -20,7 +20,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import choiceStartCustomTestThunk from "@/redux/repository/game/choiceAnswer/choiceStartTest";
 import { Tooltip } from "@mui/material";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 import ModalDelete from "../modalDelete";
 import ModalSettingCustomTest from "../modalSetting";
@@ -33,7 +33,7 @@ const GridLeftCustomTest = () => {
     const listQuestion = useAppSelector(selectListQuestion);
     const dispatch = useAppDispatch();
     const router = useRouter();
-
+    const isCreate = useSearchParams().get("isCreate");
     const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
     const isDataLoaded = useAppSelector(selectIsDataLoaded);
     const isLoading = useAppSelector(selectShouldLoading);
@@ -51,14 +51,16 @@ const GridLeftCustomTest = () => {
             }
             if (list?.length) setListTest(list);
         };
+        if (listQuestion?.length) {
+            handleGetData();
+            return;
+        }
 
-        if (listQuestion?.length === 0 && isDataLoaded)
+        if ((listQuestion?.length === 0 && isDataLoaded) || isCreate)
             setOpenModalSetting(true);
 
-        if (listQuestion?.length) handleGetData();
-
         return () => setOpenModalSetting(false);
-    }, [listQuestion, isDataLoaded, isLoading]);
+    }, [listQuestion, isDataLoaded, isLoading, isCreate]);
 
     const onClose = useCallback(() => {
         setOpenModalSetting(false);

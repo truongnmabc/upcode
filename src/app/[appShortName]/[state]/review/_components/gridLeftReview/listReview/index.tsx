@@ -32,8 +32,13 @@ const ListReview = ({ isMobile }: { isMobile: boolean }) => {
                 }
             }
             if (type === "weak") {
-                const count = await db?.userProgress.count();
-                if (count === 0) {
+                const list = await db?.userProgress.limit(50).toArray();
+
+                const hasWeakQuestions = list?.some((item) =>
+                    item.selectedAnswers?.some((answer) => !answer.correct)
+                );
+
+                if (!hasWeakQuestions) {
                     toast.info(
                         "It seems that you're doing well, there are no weaknesses to address."
                     );
@@ -66,7 +71,7 @@ const ListReview = ({ isMobile }: { isMobile: boolean }) => {
     if (!isShowList) return null;
     return (
         <Fragment>
-            <p className="text-xl text-center sm:text-start font-semibold">
+            <p className="text-xl pt-2 sm:pt-0 text-center sm:text-start font-semibold">
                 Review
             </p>
             <div className="flex flex-col gap-3">

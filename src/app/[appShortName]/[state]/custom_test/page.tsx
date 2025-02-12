@@ -45,7 +45,7 @@ export default async function CustomPage() {
                             xs: 12,
                         }}
                     >
-                        <div className="w-full  min-h-full flex flex-1 flex-col gap-4 sm:gap-6    h-full">
+                        <div className="w-full  min-h-full flex flex-1 flex-col gap-4 sm:gap-6  pb-12 sm:pb-0  h-full">
                             <ContentCustomTest />
                             <BannerDownloadApp />
                             {content && (

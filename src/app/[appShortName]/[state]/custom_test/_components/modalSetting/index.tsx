@@ -149,7 +149,6 @@ const ModalSettingCustomTest: React.FC<{
     }, [item, listTopic, setValue]);
 
     const onSubmit = async (data: IFormState) => {
-        console.log("🚀 ~ onSubmit ~ data:", data);
         try {
             setLoading(true);
 
@@ -165,6 +164,7 @@ const ModalSettingCustomTest: React.FC<{
                 countQuestionTopic,
                 remainderQuestionTopic
             );
+
             const id = isUpdate ? item!.id : generateRandomNegativeId();
             const groupExamData = await generateGroupExamData({
                 questions: listQuestion,

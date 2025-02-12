@@ -74,14 +74,11 @@ const getFilteredUserProgress = async ({
 };
 
 const fetchTopicsAndQuestions = async (test: ITestBase) => {
+    const ids = test?.groupExamData?.flatMap((item) => item.questionIds) || [];
+
     const [topics, questions] = await Promise.all([
         db?.topics.where("id").anyOf(test?.topicIds).toArray(),
-        db?.questions
-            .where("id")
-            .anyOf(
-                test?.groupExamData?.flatMap((item) => item.questionIds) || []
-            )
-            .toArray(),
+        db?.questions.where("id").anyOf(ids).toArray(),
     ]);
     return { topics, questions };
 };
