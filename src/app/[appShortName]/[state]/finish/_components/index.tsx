@@ -117,15 +117,16 @@ const calculateProgressPassing = async ({
     averageLevel: number;
     turn: number;
 }) => {
-    const average = progress.reduce((acc, cur) => acc + cur.level, 0);
+    // const average = progress.reduce((acc, cur) => acc + cur.level, 0);
+    // console.log("🚀 ~ average:", average);
+    const passingAppInfo = await db?.passingApp.get(-1);
 
     const passingPart = await totalPassingPart({
         progress,
-        averageLevel: average / progress.length,
+        averageLevel: passingAppInfo?.averageLevel || 50,
+        // averageLevel: average / progress.length,
         turn,
     });
-
-    const passingAppInfo = await db?.passingApp.get(-1);
 
     if (passingAppInfo) {
         return {
@@ -188,9 +189,12 @@ const FinishLayout = () => {
 
         const { extraPoint } = await calculateProgressPassing({
             progress,
-            averageLevel: currentTopic.averageLevel,
+            averageLevel: 56.756493506493506,
             turn,
         });
+
+        console.log("🚀 ~ handleGetData ~ extraPoint:", extraPoint);
+
         setGame({
             currentPart,
             currentTopicId: currentTopic.id,
