@@ -121,7 +121,7 @@ const PassingFinishPage = ({
                 initQuestionThunk({
                     partId: currentPart.id,
                     subTopicId: currentPart.parentId,
-                    isReset: true,
+                    attemptNumber: currentTurn + 1,
                 })
             );
             await updateTurnTopic({

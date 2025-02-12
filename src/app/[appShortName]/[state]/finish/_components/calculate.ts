@@ -11,7 +11,6 @@ export const totalPassingPart = ({
     averageLevel: number;
     turn: number;
 }) => {
-    console.log("🚀 ~ averageLevel:", averageLevel);
     const passing = progress.reduce((acc, cur) => {
         if (!cur?.selectedAnswers?.length) return acc;
 

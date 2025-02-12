@@ -1,6 +1,6 @@
 "use client";
 
-import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic";
+import { handleNavigateStudy } from "@/utils/handleNavigateStudy";
 import { db } from "@/db/db.model";
 import { useAppDispatch } from "@/redux/hooks";
 import clsx from "clsx";

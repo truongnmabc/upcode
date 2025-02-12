@@ -2,16 +2,16 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
 import { MtUiButton } from "@/components/button";
 import MyContainer from "@/components/container";
-import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic";
 import { TypeParam } from "@/constants";
 import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
+import { handleNavigateStudy } from "@/utils/handleNavigateStudy";
 import { resetState, startTryAgainDiagnostic } from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
+import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
-import resumedCustomTestThunk from "@/redux/repository/game/resumed/customeTest";
 import { updateDbTestQuestions } from "@/utils/updateDb";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
@@ -87,11 +87,11 @@ const HeaderResultTest = () => {
 
             case TypeParam.customTest:
                 await dispatch(
-                    resumedCustomTestThunk({
-                        id: id,
+                    initCustomTestThunk({
+                        testId: id,
                     })
                 );
-                _href = RouterApp.Custom_test;
+                _href = `${RouterApp.Custom_test}?testId=${id}`;
                 break;
 
             case TypeParam.review:

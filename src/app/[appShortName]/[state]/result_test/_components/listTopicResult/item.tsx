@@ -1,8 +1,8 @@
 import CircleProgress from "@/components/circleProgress";
-import { handleNavigateStudy } from "@/components/home/gridTopic/item/titleTopic";
 import LazyLoadImage from "@/components/images";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useAppDispatch } from "@/redux/hooks";
+import { handleNavigateStudy } from "@/utils/handleNavigateStudy";
 import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
 import { ITopicEndTest } from "..";

@@ -30,8 +30,7 @@ const initCustomTestThunk = createAsyncThunk(
         const listTests = await db?.testQuestions
             .where("gameMode")
             .equals("customTets")
-            .sortBy("createData"); // Sắp xếp theo ngày tạo
-
+            .sortBy("createDate"); // Sắp xếp theo ngày tạo
         if (!listTests?.length) return null;
 
         // Lấy bài test có status = 0
