@@ -31,7 +31,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     const dispatch = useAppDispatch();
 
     const handleCustomTest = useCallback(async () => {
-        const isTester = localStorage.getItem("isTester");
+        const isTester = sessionStorage.getItem("isTester");
         if (!userInfo.isPro && !isTester) {
             const _href = `${RouterApp.Get_pro}`;
             router.push(_href);
@@ -56,7 +56,7 @@ const ItemGridTest: React.FC<IPropsItemTest> = ({ item }) => {
     }, [dispatch, router, userInfo]);
 
     const handleFinalTest = useCallback(async () => {
-        const isTester = localStorage.getItem("isTester");
+        const isTester = sessionStorage.getItem("isTester");
 
         if (!userInfo.isPro && !isTester) {
             const _href = `${RouterApp.Get_pro}`;

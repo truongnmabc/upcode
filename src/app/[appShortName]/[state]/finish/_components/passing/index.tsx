@@ -72,6 +72,7 @@ const PassingFinishPage = ({
     useEffect(() => {
         const handleFn = async () => {
             const passing = await calculatePassingApp();
+            console.log("🚀 ~ handleFn ~ passing:", passing);
             setPassing(passing);
         };
         handleFn();
