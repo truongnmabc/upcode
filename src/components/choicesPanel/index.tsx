@@ -148,8 +148,8 @@ const ChoicesPanel: React.FC<IProps> = ({
         feedBack,
     ]);
 
-    const handleKeyboardEvent = useCallback(
-        (event: globalThis.KeyboardEvent) => {
+    useEffect(() => {
+        const handleKeyboardEvent = (event: globalThis.KeyboardEvent) => {
             if (currentGame?.answers && !currentGame.selectedAnswer) {
                 const index = parseInt(event.key, 10);
                 if (index >= 0 && index <= currentGame.answers.length) {
@@ -160,16 +160,12 @@ const ChoicesPanel: React.FC<IProps> = ({
             if (event.code === "Enter" && currentGame.selectedAnswer) {
                 handleEnter();
             }
-        },
-        [handleEnter, currentGame]
-    );
-
-    useEffect(() => {
+        };
         if (!isBlockEnter && isListen)
             document.addEventListener("keydown", handleKeyboardEvent, true);
         return () =>
             document.removeEventListener("keydown", handleKeyboardEvent, true);
-    }, [handleKeyboardEvent, isBlockEnter, isListen]);
+    }, [isBlockEnter, currentGame, isListen, handleEnter]);
 
     return (
         <div className={"grid gap-2 grid-cols-1 sm:grid-cols-2"}>

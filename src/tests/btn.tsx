@@ -1,7 +1,7 @@
 "use client";
 
 const BtnTets = ({ correct }: { correct: boolean }) => {
-    const isTester = localStorage.getItem("isTester");
+    const isTester = sessionStorage.getItem("isTester");
     if (isTester && correct)
         return (
             <div>

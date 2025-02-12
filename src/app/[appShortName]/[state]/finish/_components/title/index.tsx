@@ -1,4 +1,5 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
+import RouterApp from "@/constants/router.constant";
 import { selectCurrentSubTopicIndex } from "@/redux/features/game.reselect";
 import { useAppSelector } from "@/redux/hooks";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -13,7 +14,7 @@ const TitleFinishPage = () => {
     const topicName = useSearchParams()?.get("topic");
     const topic = replaceName(topicName || "");
     const router = useRouter();
-    const handleBack = () => router.back();
+    const handleBack = () => router.push(RouterApp.Home);
     const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
     return (
         <div className="w-full flex flex-col gap-4 sm:gap-6">

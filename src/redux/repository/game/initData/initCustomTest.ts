@@ -14,7 +14,7 @@ const initCustomTestThunk = createAsyncThunk(
         {
             testId,
         }: {
-            testId: number;
+            testId?: number;
         },
         thunkAPI
     ) => {
@@ -35,7 +35,9 @@ const initCustomTestThunk = createAsyncThunk(
         if (!listTests?.length) return null;
 
         // Lấy bài test có status = 0
-        const currentTest = listTests.find((item) => item.id === testId);
+        const currentTest = listTests.find((item) =>
+            testId ? item.id === testId : item.status === 0
+        );
 
         if (currentTest) {
             // Xác định vị trí của bài test trong danh sách

@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import React, { Fragment, useContext } from "react";
 import BottomLestTest from "../bottom";
 import { ReviewContext } from "../context";
-import SheetSelectQuestions from "../sheet";
 
 const RandomQuestions = dynamic(() => import("./random"), {
     ssr: false,
@@ -38,7 +37,6 @@ const ReviewContentGroup = ({ isMobile }: { isMobile: boolean }) => {
         <Fragment>
             {isStart ? <RandomGameContent /> : componentMapping[selectType]}
             <BottomLestTest />
-            {isMobile && <SheetSelectQuestions />}
         </Fragment>
     );
 };
