@@ -1,10 +1,10 @@
 "use client";
-import { handleGetNextPart } from "@/components/home/gridTopic/item/titleTopic";
+import { handleGetNextPart } from "@/utils/handleNavigateStudy";
 import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
 import { ITopicBase } from "@/models/topics/topicsProgress";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
-import { setIndexSubTopic, setTurtGame } from "@/redux/features/game";
+import { setIndexSubTopic } from "@/redux/features/game";
 import { selectSubTopics, selectTopics } from "@/redux/features/study";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import initQuestionThunk from "@/redux/repository/game/initData/initLearningQuestion";
@@ -65,17 +65,13 @@ const ListStudyDrawer = ({
             dispatch(selectTopics(topic.id));
             if (subTopicId) dispatch(selectSubTopics(subTopicId));
             dispatch(setIndexSubTopic(currentIndex + 1));
-            if (turn)
-                dispatch(
-                    setTurtGame({
-                        turn: turn,
-                    })
-                );
+
             if (partId) {
                 dispatch(
                     initQuestionThunk({
                         partId,
                         subTopicId,
+                        attemptNumber: turn,
                     })
                 );
             }

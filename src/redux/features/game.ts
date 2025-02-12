@@ -142,17 +142,6 @@ export const gameSlice = createSlice({
             state.attemptNumber = attemptNumber;
         });
 
-        // builder.addCase(resumedTestThunk.fulfilled, (state, action) => {
-        //     if (action.payload) {
-        //         const { remainTime, listQuestion } = action.payload;
-        //         state.attemptNumber = 1;
-        //         state.remainingTime = remainTime;
-        //         state.listQuestion = listQuestion;
-        //         state.currentGame = listQuestion[0];
-        //         state.currentQuestionIndex = 0;
-        //     }
-        // });
-
         builder.addCase(nextQuestionThunk.fulfilled, (state, action) => {
             const data = action.payload;
             state.currentGame = data?.nextQuestion ?? state.listQuestion[0];

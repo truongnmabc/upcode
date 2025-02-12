@@ -267,17 +267,18 @@ const FooterLandingV4 = () => {
             </div>
             <div className="v4-footer-landing-container-1">
                 <div className="footer-social max-w-component-desktop">
-                    <span>
-                        ©2024 {appInfo.appName} Prep by ABC-Elearning. All
-                        rights reserved.
-                    </span>
+                    <WrapperFooter appName={appInfo.appName} />
                     <PlatformContactsLogo appInfo={appInfo} />
                 </div>
             </div>
         </div>
     );
 };
-
+const WrapperFooter = ({ appName }: { appName: string }) => {
+    return (
+        <span>©2024 {appName} Prep by ABC-Elearning. All rights reserved.</span>
+    );
+};
 const PlatformContactsLogo = ({ appInfo }: { appInfo: IAppInfo }) => {
     const { facebook, twitter, youtube } = getContactApp(appInfo.appShortName);
     const { appConfig } = useAppSelector(appConfigState);

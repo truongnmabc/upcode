@@ -108,7 +108,7 @@ const SubScriptionButton = ({
                 // });
                 // await saveToDashboardAPI({
                 //     app: appInfo.appShortName,
-                //     price: price,
+                //     price: Number(price),
                 //     email: userInfo.email,
                 // });
                 // await sendEmailSubscribeSuccessAPI({

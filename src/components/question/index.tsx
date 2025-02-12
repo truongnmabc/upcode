@@ -52,7 +52,7 @@ const QuestionContent = ({
     return (
         <div
             className={clsx(
-                "w-full rounded-md p-3 flex flex-col gap-2 bg-white sm:bg-transparent   relative py-2",
+                "w-full rounded-md p-3 flex flex-col gap-2 bg-white sm:bg-transparent relative py-2",
                 {
                     "shadow-custom sm:shadow-none": showShadow,
                 }
@@ -71,31 +71,40 @@ const QuestionContent = ({
                     )}
 
                     <div className="w-full flex items-center justify-between">
-                        {text && (
-                            <MathJax>
-                                <span
-                                    dangerouslySetInnerHTML={{
-                                        __html: text,
-                                    }}
-                                    className="text-sm  font-normal sm:text-base"
-                                />
-                            </MathJax>
-                        )}
+                        <div className="flex-1">
+                            {text && (
+                                <MathJax dynamic>
+                                    <div
+                                        dangerouslySetInnerHTML={{
+                                            __html: text,
+                                        }}
+                                        className="text-sm font-normal sm:text-base math-content"
+                                    />
+                                </MathJax>
+                            )}
+                        </div>
 
                         {currentGame?.image && (
-                            <LazyLoadImage
-                                key={currentGame?.image}
-                                isPreview
-                                src={`${baseImageUrl}${appInfo.appShortName}/images/${currentGame?.image}`}
-                                alt={currentGame?.image}
-                                classNames="w-16 sm:w-24 cursor-pointer aspect-video min-h-16 max-h-24"
-                            />
+                            <div className="flex-shrink-0 ml-4">
+                                <LazyLoadImage
+                                    key={currentGame?.image}
+                                    isPreview
+                                    src={`${baseImageUrl}${appInfo.appShortName}/images/${currentGame?.image}`}
+                                    alt={currentGame?.image}
+                                    classNames="w-16 sm:w-24 cursor-pointer aspect-video min-h-16 max-h-24"
+                                />
+                            </div>
                         )}
                     </div>
                     {currentGame.parentId !== -1 && (
-                        <p className="text-sm  font-normal sm:text-base">
-                            {currentGame.paragraph?.text}
-                        </p>
+                        <MathJax dynamic>
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: currentGame.paragraph?.text || "",
+                                }}
+                                className="text-sm font-normal sm:text-base math-content"
+                            />
+                        </MathJax>
                     )}
                 </Fragment>
             )}

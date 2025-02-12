@@ -2,11 +2,14 @@
 import { db } from "@/db/db.model";
 import { IUserQuestionProgress } from "@/models/progress/userQuestionProgress";
 import { IQuestionOpt } from "@/models/question";
-import { IStatusAnswer } from "@/models/question/questions";
 import { IGameMode } from "@/models/tests";
 import { RootState } from "@/redux/store";
 import { requestGetData } from "@/services/request";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import {
+    getLocalUserProgress,
+    mapQuestionsWithProgress,
+} from "./initPracticeTest";
 
 type IInitQuestion = {
     subTopicTag?: string;
@@ -14,6 +17,7 @@ type IInitQuestion = {
     partId: number;
     subTopicId?: number;
     isReset?: boolean;
+    attemptNumber?: number;
 };
 
 interface IResInitQuestion {
@@ -22,49 +26,8 @@ interface IResInitQuestion {
     id: number;
     parentId: number;
     gameMode: IGameMode;
+    attemptNumber: number;
 }
-
-/**
- * Processes the fetched question data.
- * @param {IQuestionOpt} questions - The database response.
- * @param {IUserQuestionProgress[]} progressData - The progress data.
- * @param {boolean} isReset - Flag to reset progress.
- * @return {IResInitQuestion} The processed question data.
- */
-const processQuestions = (
-    questions: IQuestionOpt[],
-    progressData: IUserQuestionProgress[],
-    isReset?: boolean
-): IQuestionOpt[] => {
-    const list = isReset
-        ? questions?.map((item) => ({
-              ...item,
-              localStatus: "new" as IStatusAnswer,
-          }))
-        : questions?.map((que) => {
-              const progress = progressData.find((pro) => que.id === pro.id);
-              const selectedAnswers = progress?.selectedAnswers || [];
-
-              return {
-                  ...que,
-                  selectedAnswer: progress
-                      ? {
-                            ...selectedAnswers[selectedAnswers.length - 1],
-                            explanation: "",
-                            index: 0,
-                            text: "",
-                        }
-                      : null,
-                  localStatus: (!progress
-                      ? "new"
-                      : selectedAnswers.find((pro) => pro.correct)
-                      ? "correct"
-                      : "incorrect") as IStatusAnswer,
-              };
-          });
-
-    return list;
-};
 
 /**
  * Handles initializing the learn question state.
@@ -75,7 +38,8 @@ export const handleInitLearnQuestion = (
     state: RootState["gameReducer"],
     payload: IResInitQuestion
 ) => {
-    const { progressData, questions, id, parentId, gameMode } = payload;
+    const { progressData, questions, id, parentId, gameMode, attemptNumber } =
+        payload;
     state.gameMode = gameMode;
     if (!questions || questions.length === 0) {
         console.error("Questions data is undefined or empty!");
@@ -85,6 +49,7 @@ export const handleInitLearnQuestion = (
     state.listQuestion = questions;
     state.currentTopicId = id;
     state.currentSubTopicProgressId = parentId;
+    state.attemptNumber = attemptNumber;
 
     if (!progressData || progressData.length === 0) {
         initializeNewState(state, questions);
@@ -190,13 +155,12 @@ const fetchQuestions = async ({
     partId,
     subTopicId,
     isReset,
+    attemptNumber,
 }: IInitQuestion): Promise<IResInitQuestion> => {
     const listQuestions = await db?.questions
         .where("partId")
         .equals(partId)
         .toArray();
-
-    let progressData: IUserQuestionProgress[] = [];
 
     if (!listQuestions || listQuestions?.length === 0) {
         const data = (await requestGetData({
@@ -218,23 +182,30 @@ const fetchQuestions = async ({
             id: partId || 0,
             parentId: subTopicId || 0,
             gameMode: "learn",
+            attemptNumber: attemptNumber || 1,
         };
     }
 
-    const questionIdsSet = new Set(listQuestions.map((q) => q.id));
+    const questionIdsSet = listQuestions.map((q) => q.id);
 
-    progressData = (await db?.userProgress
-        .filter((item) => questionIdsSet.has(item.id))
-        .toArray()) as IUserQuestionProgress[];
+    const progressData = await getLocalUserProgress(
+        questionIdsSet,
+        "learn",
+        attemptNumber || 1
+    );
 
-    const list = processQuestions(listQuestions, progressData, isReset);
+    const questions = mapQuestionsWithProgress(
+        listQuestions,
+        progressData
+    ) as IQuestionOpt[];
 
     return {
-        questions: list,
+        questions: questions,
         progressData: isReset ? [] : progressData,
         id: partId,
         parentId: subTopicId || 0,
         gameMode: "learn",
+        attemptNumber: attemptNumber || 1,
     };
 };
 

@@ -39,7 +39,7 @@ const calculateProgress = (
         progress?.filter((item) => {
             // Lấy lần đầu tiên người dùng trả lời câu hỏi trong lần làm bài (turn)
             const firstAnswer = item.selectedAnswers.find(
-                (answer) => answer.turn === turn
+                (answer) => answer.turn === turn && answer.type === "learn"
             );
 
             // Nếu lần đầu tiên trả lời đúng, tính vào số câu đúng
@@ -114,17 +114,13 @@ const calculateProgressPassing = async ({
     turn,
 }: {
     progress: IUserQuestionProgress[];
-    averageLevel: number;
     turn: number;
 }) => {
-    // const average = progress.reduce((acc, cur) => acc + cur.level, 0);
-    // console.log("🚀 ~ average:", average);
     const passingAppInfo = await db?.passingApp.get(-1);
 
     const passingPart = await totalPassingPart({
         progress,
         averageLevel: passingAppInfo?.averageLevel || 50,
-        // averageLevel: average / progress.length,
         turn,
     });
 
@@ -189,11 +185,8 @@ const FinishLayout = () => {
 
         const { extraPoint } = await calculateProgressPassing({
             progress,
-            averageLevel: 56.756493506493506,
             turn,
         });
-
-        console.log("🚀 ~ handleGetData ~ extraPoint:", extraPoint);
 
         setGame({
             currentPart,
