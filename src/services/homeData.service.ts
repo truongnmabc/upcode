@@ -3,17 +3,11 @@ import { API_PATH } from "@/constants/api.constants";
 import { IAppInfo } from "@/models/app/appInfo";
 import { ITopicBase } from "@/models/topics/topicsProgress";
 import { fetchAppData } from "@/utils/getAppInfos";
-import fs from "fs/promises";
-import path from "path";
 
-const DATA_PATH = process.cwd();
-const rootPath = path.join(DATA_PATH, "src", "data", "home");
-
-const filePaths = {
-    appInfos: path.join(rootPath, "appInfos.json"),
-    topics: path.join(rootPath, "topics.json"),
-    seo: path.join(rootPath, "seo.json"),
-};
+// 📌 Import JSON thay vì dùng fs.readFile()
+import appInfosData from "@/data/home/appInfos.json";
+import topicsData from "@/data/home/topics.json";
+import seoData from "@/data/home/seo.json";
 
 // ✅ Type cho dữ liệu trả về
 interface IRes {
@@ -21,17 +15,6 @@ interface IRes {
     topics: ITopicBase[];
     contentSeo: string;
 }
-
-// ✅ Hàm đọc file JSON an toàn
-const readJsonFile = async <T>(filePath: string): Promise<T | null> => {
-    try {
-        const data = await fs.readFile(filePath, "utf-8");
-        return JSON.parse(data);
-    } catch (error) {
-        console.error(`❌ Lỗi đọc file: ${filePath}`, error);
-        return null;
-    }
-};
 
 // ✅ Hàm fetch dữ liệu trang chủ
 export const fetchAppDataHomePage = async (
@@ -46,13 +29,7 @@ export const fetchAppDataHomePage = async (
 
         if (isSingleApp) {
             // 📌 Đọc dữ liệu từ file JSON nếu là Single App
-            const [appInfosData, topicsData, seoData] = await Promise.all([
-                readJsonFile<IAppInfo>(filePaths.appInfos),
-                readJsonFile<{ topic: ITopicBase[] }>(filePaths.topics),
-                readJsonFile<{ content: string }>(filePaths.seo),
-            ]);
-
-            appInfos = appInfosData || ({} as IAppInfo);
+            appInfos = appInfosData as unknown as IAppInfo;
             contentSeo = seoData?.content || "";
 
             topics = (topicsData?.topic || []).map((topic) => ({
@@ -66,7 +43,7 @@ export const fetchAppDataHomePage = async (
                     ),
                 })),
                 slug: `${topic.tag}-practice-test`,
-            }));
+            })) as unknown as ITopicBase[];
         } else {
             // 📌 Gọi API nếu không phải Single App
             const [topicsRes, seoRes, appInfoRes] = await Promise.all([

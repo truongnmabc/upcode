@@ -164,6 +164,16 @@ const ModalSettingCustomTest: React.FC<{
                 countQuestionTopic,
                 remainderQuestionTopic
             );
+            console.log(
+                "🚀 ~ onSubmit ~ remainderQuestionTopic:",
+                remainderQuestionTopic
+            );
+            console.log(
+                "🚀 ~ onSubmit ~ countQuestionTopic:",
+                countQuestionTopic
+            );
+
+            console.log("🚀 ~ onSubmit ~ listQuestion:", listQuestion);
 
             const id = isUpdate ? item!.id : generateRandomNegativeId();
             const groupExamData = await generateGroupExamData({
