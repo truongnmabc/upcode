@@ -1,0 +1,39 @@
+# dependencies
+/node_modules
+/.pnp
+/.pnp.js
+
+# testing
+/coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/tests-examples
+/tests
+/e2e
+
+# next.js
+/.next/
+/.next/cache/
+/out/
+/build
+
+# misc
+.DS_Store
+*.pem
+.env*.local
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# other
+/ssh_keys
+/scripts
+
+# Ignore thư mục Git
+.git
+.gitignore

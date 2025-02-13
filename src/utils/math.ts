@@ -133,32 +133,33 @@ export const fetchQuestionsForTopics = async (
             listQuestion.push(...randomQuestions);
         }
 
-        // Xử lý phần câu hỏi dư nếu có
+        // ✅ Xử lý phần câu hỏi dư từ **5 part cuối cùng**
         if (
             topicIndex === selectListTopic.length - 1 &&
             remainderQuestionTopic > 0
         ) {
-            const lastPartId = listPart[listPart.length - 1]?.id;
-            if (lastPartId) {
-                const extraQuestions = questionMap.get(lastPartId) || [];
-                if (extraQuestions.length) {
-                    const extraRandomQuestions = extraQuestions
-                        .sort(() => Math.random() - 0.5)
-                        .filter((item) => !selectedQuestionIds.has(item.id)) // Loại bỏ câu hỏi trùng
-                        .slice(0, remainderQuestionTopic)
-                        .map((item) => {
-                            selectedQuestionIds.add(item.id); // Lưu ID đã chọn
-                            return {
-                                ...item,
-                                tag: topic.tag,
-                                icon: topic.icon,
-                                parentId: topic.id,
-                            };
-                        });
+            // Lấy **5 part cuối cùng** từ danh sách `listPart`
+            const lastParts = listPart.slice(-5).map((part) => part.id);
 
-                    listQuestion.push(...extraRandomQuestions);
-                }
-            }
+            // Lọc các câu hỏi từ 5 part này
+            const extraQuestions = lastParts
+                .flatMap((partId) => questionMap.get(partId) || [])
+                .sort(() => Math.random() - 0.5) // Trộn ngẫu nhiên
+                .filter((item) => !selectedQuestionIds.has(item.id)) // Loại bỏ câu hỏi trùng
+                .slice(0, remainderQuestionTopic)
+                .map((item) => {
+                    selectedQuestionIds.add(item.id); // Lưu ID đã chọn
+                    return {
+                        ...item,
+                        tag: topic.tag,
+                        icon: topic.icon,
+                        parentId: topic.id,
+                    };
+                });
+
+            console.log("🚀 ~ extraQuestions:", extraQuestions);
+
+            listQuestion.push(...extraQuestions);
         }
     }
 
