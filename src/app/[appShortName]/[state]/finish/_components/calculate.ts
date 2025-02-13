@@ -17,16 +17,16 @@ export const totalPassingPart = ({
         // Lấy 3 câu trả lời cuối cùng
         const lastThreeElements = cur.selectedAnswers.slice(-3);
 
-        // Phần trăm đúng của 3 câu trả lời cuối cùng
-        const passAnswerCount = lastThreeElements.filter(
-            (item) => item.correct && item.turn === turn
-        ).length;
-
-        const passingProbability = passAnswerCount / 3;
+        const score = lastThreeElements.reduce((sum, item) => {
+            if (item.turn === turn) {
+                return sum + (item.correct ? 1 : 0.25) / 3;
+            }
+            return sum;
+        }, 0);
 
         const levelRatio = cur.level / (averageLevel || 1);
 
-        return acc + passingProbability * levelRatio;
+        return acc + score * levelRatio;
     }, 0);
 
     return passing;
@@ -55,14 +55,13 @@ export const calculatePassingApp = async () => {
 
         const lastThreeAnswers = cur.selectedAnswers.slice(-3);
 
-        const correctAnswers = lastThreeAnswers.filter(
-            (ans) => ans.correct
-        ).length;
+        const score = lastThreeAnswers.reduce((sum, item) => {
+            return sum + (item.correct ? 1 : 0.25) / 3;
+        }, 0);
 
-        const passingProbability = correctAnswers / 3;
         const levelRatio = cur.level / (averageLevel || 1);
 
-        return acc + passingProbability * levelRatio;
+        return acc + score * levelRatio;
     }, 0);
 
     const passingApp = (totalPassing / (totalQuestion || 1)) * 100;
