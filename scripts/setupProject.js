@@ -25,7 +25,7 @@ const appendEnv = (appInfo, isSingle) => {
         "NEXT_PUBLIC_GOOGLE_ID",
         "792314426707-gp1p1ml492uqehflmnm96r6in0jait6n.apps.googleusercontent.com"
     );
-    appendToEnvFile("NEXT_PUBLIC_API_URL", "http://localhost:3000/");
+    appendToEnvFile("NEXT_PUBLIC_API_URL", "https://asvab.cd.worksheetzone.org/");
     if (isSingle)
         appendToEnvFile("NEXT_PUBLIC_APP_SHORT_NAME", appInfo.appShortName);
 };
