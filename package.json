@@ -14,7 +14,8 @@
     "test:e2e": "playwright test",
     "prepare": "husky",
     "deploy": "node  scripts/build.js ",
-    "setup": "node  scripts/setupProject.js"
+    "setup": "node  scripts/setupProject.js",
+    "cap": "node  scripts/caprover-deploy.js"
   },
   "dependencies": {
     "@emotion/react": "^11.13.5",
