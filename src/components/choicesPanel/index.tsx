@@ -150,22 +150,31 @@ const ChoicesPanel: React.FC<IProps> = ({
 
     useEffect(() => {
         const handleKeyboardEvent = (event: globalThis.KeyboardEvent) => {
-            if (currentGame?.answers && !currentGame.selectedAnswer) {
+            if (
+                (currentGame?.answers && !currentGame.selectedAnswer) ||
+                pathname?.includes("final_test")
+            ) {
                 const index = parseInt(event.key, 10);
                 if (index >= 0 && index <= currentGame.answers.length) {
                     document.getElementById(index.toString())?.click();
                 }
             }
 
-            if (event.code === "Enter" && currentGame.selectedAnswer) {
-                handleEnter();
+            if (event.key === "Enter" || event.code === "NumpadEnter") {
+                event.preventDefault(); // Ngăn chặn hành vi mặc định của phím Enter
+                if (currentGame.selectedAnswer) {
+                    handleEnter(); // Gọi hàm xử lý khi có đáp án được chọn
+                }
             }
         };
-        if (!isBlockEnter && isListen)
-            document.addEventListener("keydown", handleKeyboardEvent, true);
-        return () =>
-            document.removeEventListener("keydown", handleKeyboardEvent, true);
-    }, [isBlockEnter, currentGame, isListen, handleEnter]);
+        if (!isBlockEnter && isListen) {
+            document.addEventListener("keydown", handleKeyboardEvent);
+        }
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyboardEvent);
+        };
+    }, [isBlockEnter, currentGame, isListen, handleEnter, pathname]);
 
     return (
         <div className={"grid gap-2 grid-cols-1 sm:grid-cols-2"}>

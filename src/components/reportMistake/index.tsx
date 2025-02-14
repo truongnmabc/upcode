@@ -37,6 +37,7 @@ const ReportMistake = ({ onClose }: { onClose: () => void }) => {
     const idTopic = useAppSelector(selectCurrentTopicId);
     const appInfos = useAppSelector(selectAppInfo);
     const userInfos = useAppSelector(selectUserInfo);
+    const [isLoading, setIsLoading] = useState(false);
     const handleCheckboxChange = useCallback((value: number) => {
         setSelectedValues((prev) =>
             prev.includes(value)
@@ -54,25 +55,32 @@ const ReportMistake = ({ onClose }: { onClose: () => void }) => {
 
     const handleSubmit = useCallback(
         async (e: React.FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
+            try {
+                setIsLoading(true);
+                e.preventDefault();
 
-            await reportMistakeApi({
-                appId: Number(appInfos.appId),
-                questionId: currentGame.id,
-                reasons: selectedValues,
-                otherReason: otherReason,
-                gameType: "allQuestions",
-                userId: Number(userInfos.id || -1),
-            });
-            dispatch(
-                userActionsThunk({
-                    status: "dislike",
-                    questionId: currentGame?.id,
-                    partId: idTopic,
-                })
-            );
+                await reportMistakeApi({
+                    appId: Number(appInfos.appId),
+                    questionId: currentGame.id,
+                    reasons: selectedValues,
+                    otherReason: otherReason,
+                    gameType: "allQuestions",
+                    userId: Number(userInfos.id || -1),
+                });
+                dispatch(
+                    userActionsThunk({
+                        status: "dislike",
+                        questionId: currentGame?.id,
+                        partId: idTopic,
+                    })
+                );
 
-            onClose();
+                onClose();
+            } catch (error) {
+                console.log("🚀 ~ handleSubmit ~ error:", error);
+            } finally {
+                setIsLoading(false);
+            }
         },
         [
             dispatch,
@@ -150,6 +158,7 @@ const ReportMistake = ({ onClose }: { onClose: () => void }) => {
                 size="large"
                 htmlType="submit"
                 disabled={selectedValues.length === 0 && !otherReason}
+                loading={isLoading}
             >
                 Report
             </MtUiButton>

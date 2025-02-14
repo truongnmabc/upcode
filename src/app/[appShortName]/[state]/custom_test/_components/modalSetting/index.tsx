@@ -1,44 +1,52 @@
 import CloseIcon from "@/asset/icon/CloseIcon";
 import { MtUiButton } from "@/components/button";
 import DialogResponsive from "@/components/dialogResponsive";
+import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
+import { IQuestionOpt } from "@/models/question";
 import { IGameMode, ITestBase } from "@/models/tests";
 import { IGroupExam } from "@/models/tests/tests";
 import { ITopicBase } from "@/models/topics/topicsProgress";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useCallback, useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
-import { CardFeeBack } from "./cardFeedBack";
-import CardProgress from "./cardProgress";
-import CardTopic from "./cardTopic";
 import {
-    fetchQuestionsForTopics,
-    generateRandomNegativeId,
-} from "@/utils/math";
-import { generateGroupExamData } from "@/redux/repository/game/initData/initDiagnosticTest";
-import { shouldLoading, startCustomTest } from "@/redux/features/game";
+    shouldCreateNewTest,
+    shouldLoading,
+    startCustomTest,
+    updateFeedbackCustomTest,
+} from "@/redux/features/game";
 import {
     selectCurrentSubTopicIndex,
     selectCurrentTopicId,
 } from "@/redux/features/game.reselect";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { generateGroupExamData } from "@/redux/repository/game/initData/initDiagnosticTest";
 import {
     getLocalUserProgress,
     mapQuestionsWithProgress,
 } from "@/redux/repository/game/initData/initPracticeTest";
-import { IQuestionOpt } from "@/models/question";
+import {
+    fetchQuestionsForTopics,
+    generateRandomNegativeId,
+} from "@/utils/math";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/navigation";
+import React, { useCallback, useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import * as yup from "yup";
+import { CardFeeBack } from "./cardFeedBack";
+import CardProgress from "./cardProgress";
+import CardTopic from "./cardTopic";
 
 export type IFeedBack = "newbie" | "expert" | "exam";
 
 type IPropsUpdateDb = {
-    totalDuration: number;
-    passingThreshold: number;
+    totalDuration?: number;
+    passingThreshold?: number;
     id: number;
-    selectFeedback: IFeedBack;
-    topicIds: number[];
-    totalQuestion: number;
-    groupExamData: IGroupExam[];
+    selectFeedback?: IFeedBack;
+    topicIds?: number[];
+    totalQuestion?: number;
+    groupExamData?: IGroupExam[];
 };
 
 const handleSaveToDb = async (props: IPropsUpdateDb, isUpdate: boolean) => {
@@ -50,21 +58,23 @@ const handleSaveToDb = async (props: IPropsUpdateDb, isUpdate: boolean) => {
     }
 
     const data = {
-        totalDuration: props.totalDuration,
-        passingThreshold: props.passingThreshold,
+        totalDuration: props.totalDuration || existingData?.totalDuration || 0,
+        passingThreshold:
+            props.passingThreshold || existingData?.passingThreshold || 0,
         isGamePaused: false,
         id: props.id,
         startTime: isUpdate
             ? Date.now()
             : existingData?.startTime || Date.now(),
         gameMode: "customTets" as IGameMode,
-        gameDifficultyLevel: props.selectFeedback,
-        topicIds: props.topicIds,
+        gameDifficultyLevel:
+            props.selectFeedback || existingData?.gameDifficultyLevel,
+        topicIds: props.topicIds || existingData?.topicIds || [],
         status: 0,
         attemptNumber: existingData?.attemptNumber ?? 1,
         elapsedTime: existingData?.elapsedTime ?? 0,
-        totalQuestion: props.totalQuestion,
-        groupExamData: props.groupExamData,
+        totalQuestion: props.totalQuestion || existingData?.totalQuestion || 0,
+        groupExamData: props.groupExamData || existingData?.groupExamData || [],
         createDate: isUpdate ? existingData?.createDate : Date.now(), // Giữ nguyên createData khi update
     };
 
@@ -103,7 +113,9 @@ const ModalSettingCustomTest: React.FC<{
     const [loading, setLoading] = useState(false);
     const currentId = useAppSelector(selectCurrentTopicId);
     const currentIndex = useAppSelector(selectCurrentSubTopicIndex);
+    const router = useRouter();
 
+    // Với bài test đang làm sẽ disable việc thay đổi các opt ngoài feedback
     const isDisabled = currentId === item?.id;
 
     const {
@@ -151,7 +163,26 @@ const ModalSettingCustomTest: React.FC<{
     const onSubmit = async (data: IFormState) => {
         try {
             setLoading(true);
+            const id = isUpdate ? item!.id : generateRandomNegativeId();
 
+            if (isDisabled) {
+                await handleSaveToDb(
+                    {
+                        id,
+                        selectFeedback: data.selectFeedback,
+                    },
+                    isUpdate
+                );
+                dispatch(
+                    updateFeedbackCustomTest({
+                        gameDifficultyLevel: data.selectFeedback,
+                    })
+                );
+                dispatch(shouldLoading());
+                dispatch(shouldCreateNewTest(false));
+                onClose();
+                return;
+            }
             const countQuestionTopic = Math.floor(
                 data.count / data.selectListTopic.length
             );
@@ -159,23 +190,35 @@ const ModalSettingCustomTest: React.FC<{
             const remainderQuestionTopic =
                 data.count % data.selectListTopic.length;
 
-            const listQuestion = await fetchQuestionsForTopics(
-                data.selectListTopic,
+            const listTests = await db?.testQuestions
+                .where("gameMode")
+                .equals("customTets")
+                .toArray();
+            const appInfos = await db?.passingApp.get(-1);
+            const listQuestionIds =
+                listTests?.flatMap((test) =>
+                    test.groupExamData.flatMap((item) => item.questionIds)
+                ) || [];
+
+            const listQuestion = await fetchQuestionsForTopics({
+                selectListTopic: data.selectListTopic,
                 countQuestionTopic,
-                remainderQuestionTopic
-            );
-            console.log(
-                "🚀 ~ onSubmit ~ remainderQuestionTopic:",
-                remainderQuestionTopic
-            );
-            console.log(
-                "🚀 ~ onSubmit ~ countQuestionTopic:",
-                countQuestionTopic
-            );
+                remainderQuestionTopic,
+                excludeListID: listQuestionIds,
+                target: data.count,
+            });
 
-            console.log("🚀 ~ onSubmit ~ listQuestion:", listQuestion);
+            const ids = listQuestion?.map((item) => item.id);
 
-            const id = isUpdate ? item!.id : generateRandomNegativeId();
+            if (
+                listQuestionIds?.length + ids?.length ===
+                appInfos?.totalQuestion
+            ) {
+                toast.error("Not enough questions left to create this test");
+                onClose();
+                return;
+            }
+
             const groupExamData = await generateGroupExamData({
                 questions: listQuestion,
                 topics: data.selectListTopic,
@@ -193,6 +236,9 @@ const ModalSettingCustomTest: React.FC<{
                 },
                 isUpdate
             );
+
+            console.log("🚀 ~ onSubmit ~ isDisabled:", isDisabled);
+            console.log("🚀 ~ onSubmit ~ isUpdate:", isUpdate);
             if (!isUpdate || isDisabled) {
                 const listIds =
                     item?.groupExamData.flatMap((i) => i.questionIds) || [];
@@ -220,6 +266,7 @@ const ModalSettingCustomTest: React.FC<{
                 );
             }
             dispatch(shouldLoading());
+            dispatch(shouldCreateNewTest(false));
             onClose();
         } catch (err) {
             console.error("Error fetching questions:", err);
@@ -235,10 +282,17 @@ const ModalSettingCustomTest: React.FC<{
         );
     }, [listTopic, selectListTopic, setValue]);
 
+    const handleClose = () => {
+        if (isShowBtnCancel) {
+            onClose();
+        } else {
+            router.push(RouterApp.Home);
+        }
+    };
     return (
         <DialogResponsive
             open={open}
-            close={() => isShowBtnCancel && onClose()}
+            close={handleClose}
             dialogRest={{
                 sx: {
                     "& .MuiDialog-paper": {
@@ -266,16 +320,14 @@ const ModalSettingCustomTest: React.FC<{
                         <p className="text-2xl text-center w-full sm:text-start font-semibold">
                             Customize Your Test
                         </p>
-                        {isShowBtnCancel && (
-                            <button
-                                aria-label="Close"
-                                onClick={onClose}
-                                type="button"
-                                className="w-8 h-8 cursor-pointer rounded-full bg-white flex items-center justify-center"
-                            >
-                                <CloseIcon />
-                            </button>
-                        )}
+                        <button
+                            aria-label="Close"
+                            onClick={handleClose}
+                            type="button"
+                            className="w-8 h-8 cursor-pointer rounded-full bg-white flex items-center justify-center"
+                        >
+                            <CloseIcon />
+                        </button>
                     </div>
 
                     {/* Feedback Modes */}

@@ -48,7 +48,7 @@ export default async function Page(props: { params: Params }) {
                             xs: 12,
                         }}
                     >
-                        <div className="w-full pb-12 sm:pb-0  min-h-full flex flex-1 flex-col gap-4 sm:gap-6   h-full">
+                        <div className="w-full pb-24 sm:pb-0  min-h-full flex flex-1 flex-col gap-4 sm:gap-6   h-full">
                             <MainStudyView />
                             <BannerDownloadApp />
                             {content && (

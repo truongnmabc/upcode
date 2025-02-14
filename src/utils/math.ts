@@ -57,16 +57,22 @@ export const fetchQuestionsDb = async ({
     return allQuestions || [];
 };
 
-export const fetchQuestionsForTopics = async (
-    selectListTopic: ITopicBase[],
-    countQuestionTopic: number,
-    remainderQuestionTopic: number,
-    excludeListID: number[] = [] // Danh sách ID cần loại trừ
-): Promise<IQuestionOpt[]> => {
+export const fetchQuestionsForTopics = async ({
+    selectListTopic,
+    countQuestionTopic,
+    remainderQuestionTopic,
+    excludeListID = [],
+    target,
+}: {
+    selectListTopic: ITopicBase[];
+    countQuestionTopic: number;
+    remainderQuestionTopic: number;
+    excludeListID?: number[];
+    target: number;
+}) => {
     const listQuestion: IQuestionOpt[] = [];
-    const selectedQuestionIds = new Set<number>(); // Set để lưu ID đã chọn
+    const selectedQuestionIds = new Set<number>();
 
-    // Lấy tất cả partId từ tất cả topics
     const allPartIds = selectListTopic.flatMap((topic) =>
         topic.topics.flatMap((subTopic) =>
             subTopic.topics.map((part) => part.id)
@@ -75,20 +81,17 @@ export const fetchQuestionsForTopics = async (
 
     if (!allPartIds.length) return [];
 
-    // Truy vấn tất cả câu hỏi của các partId trong một lần truy vấn
     let allQuestions = await fetchQuestionsDb({
         ids: allPartIds,
         key: "partId",
     });
 
-    // Loại bỏ các câu hỏi có trong excludeListID
     if (excludeListID.length) {
         allQuestions = allQuestions?.filter(
             (question) => !excludeListID.includes(question.id)
         );
     }
 
-    // Tạo một Map để tra cứu nhanh câu hỏi theo partId
     const questionMap = new Map<number, IQuestionOpt[]>();
 
     allQuestions?.forEach((question) => {
@@ -118,10 +121,10 @@ export const fetchQuestionsForTopics = async (
 
             const randomQuestions = topicData
                 .sort(() => Math.random() - 0.5)
-                .filter((item) => !selectedQuestionIds.has(item.id)) // Loại bỏ câu hỏi trùng
+                .filter((item) => !selectedQuestionIds.has(item.id))
                 .slice(0, questionCount)
                 .map((item) => {
-                    selectedQuestionIds.add(item.id); // Lưu ID đã chọn
+                    selectedQuestionIds.add(item.id);
                     return {
                         ...item,
                         tag: topic.tag,
@@ -133,22 +136,19 @@ export const fetchQuestionsForTopics = async (
             listQuestion.push(...randomQuestions);
         }
 
-        // ✅ Xử lý phần câu hỏi dư từ **5 part cuối cùng**
         if (
             topicIndex === selectListTopic.length - 1 &&
             remainderQuestionTopic > 0
         ) {
-            // Lấy **5 part cuối cùng** từ danh sách `listPart`
             const lastParts = listPart.slice(-5).map((part) => part.id);
 
-            // Lọc các câu hỏi từ 5 part này
             const extraQuestions = lastParts
                 .flatMap((partId) => questionMap.get(partId) || [])
-                .sort(() => Math.random() - 0.5) // Trộn ngẫu nhiên
-                .filter((item) => !selectedQuestionIds.has(item.id)) // Loại bỏ câu hỏi trùng
+                .sort(() => Math.random() - 0.5)
+                .filter((item) => !selectedQuestionIds.has(item.id))
                 .slice(0, remainderQuestionTopic)
                 .map((item) => {
-                    selectedQuestionIds.add(item.id); // Lưu ID đã chọn
+                    selectedQuestionIds.add(item.id);
                     return {
                         ...item,
                         tag: topic.tag,
@@ -157,10 +157,33 @@ export const fetchQuestionsForTopics = async (
                     };
                 });
 
-            console.log("🚀 ~ extraQuestions:", extraQuestions);
-
             listQuestion.push(...extraQuestions);
         }
+    }
+
+    if (listQuestion.length < target) {
+        const remainingCount = target - listQuestion.length;
+
+        // Get all available questions that haven't been selected yet
+        const remainingQuestions = allQuestions
+            .filter((question) => !selectedQuestionIds.has(question.id))
+            .sort(() => Math.random() - 0.5)
+            .slice(0, remainingCount)
+            .map((item) => {
+                const topic = selectListTopic.find((t) =>
+                    t.topics.some((st) =>
+                        st.topics.some((p) => p.id === item.partId)
+                    )
+                );
+                return {
+                    ...item,
+                    tag: topic?.tag || "",
+                    icon: topic?.icon || "",
+                    parentId: topic?.id || 0,
+                };
+            });
+
+        listQuestion.push(...remainingQuestions);
     }
 
     return listQuestion;
@@ -170,14 +193,16 @@ export const fetchQuestionsHardForTopics = async ({
     selectListTopic,
     countQuestionTopic,
     remainderQuestionTopic,
+    target,
 }: {
     selectListTopic: ITopicBase[];
     countQuestionTopic: number;
     remainderQuestionTopic: number;
-}): Promise<IQuestionOpt[]> => {
+    target: number;
+}) => {
     const listQuestion: IQuestionOpt[] = [];
+    const selectedQuestionIds = new Set<number>();
 
-    // Lấy tất cả partId từ tất cả topics
     const allPartIds = selectListTopic.flatMap((topic) =>
         topic.topics.flatMap((subTopic) =>
             subTopic.topics.map((part) => part.id)
@@ -186,18 +211,15 @@ export const fetchQuestionsHardForTopics = async ({
 
     if (!allPartIds.length) return [];
 
-    // Truy vấn tất cả câu hỏi của các partId trong một lần truy vấn
-
     let allQuestions = await fetchQuestionsDb({
         ids: allPartIds,
         key: "partId",
     });
-    // Chỉ lấy các câu hỏi có level >= 50
+
     allQuestions = allQuestions?.filter(
         (question) => question.level >= 50 || question.level === -1
     );
 
-    // Tạo một Map để tra cứu nhanh câu hỏi theo partId
     const questionMap = new Map<number, IQuestionOpt[]>();
 
     allQuestions?.forEach((question) => {
@@ -227,18 +249,21 @@ export const fetchQuestionsHardForTopics = async ({
 
             const randomQuestions = topicData
                 .sort(() => Math.random() - 0.5)
+                .filter((item) => !selectedQuestionIds.has(item.id))
                 .slice(0, questionCount)
-                .map((item) => ({
-                    ...item,
-                    tag: topic.tag,
-                    icon: topic.icon,
-                    parentId: topic.id,
-                }));
+                .map((item) => {
+                    selectedQuestionIds.add(item.id);
+                    return {
+                        ...item,
+                        tag: topic.tag,
+                        icon: topic.icon,
+                        parentId: topic.id,
+                    };
+                });
 
             listQuestion.push(...randomQuestions);
         }
 
-        // Xử lý phần câu hỏi dư nếu có
         if (
             topicIndex === selectListTopic.length - 1 &&
             remainderQuestionTopic > 0
@@ -263,5 +288,41 @@ export const fetchQuestionsHardForTopics = async ({
         }
     }
 
+    if (listQuestion.length < target) {
+        const remainingCount = target - listQuestion.length;
+
+        const remainingQuestions = allQuestions
+            .filter((question) => !selectedQuestionIds.has(question.id))
+            .sort(() => Math.random() - 0.5)
+            .slice(0, remainingCount)
+            .map((item) => {
+                const topic = selectListTopic.find((t) =>
+                    t.topics.some((st) =>
+                        st.topics.some((p) => p.id === item.partId)
+                    )
+                );
+                return {
+                    ...item,
+                    tag: topic?.tag || "",
+                    icon: topic?.icon || "",
+                    parentId: topic?.id || 0,
+                };
+            });
+
+        listQuestion.push(...remainingQuestions);
+    }
+
     return listQuestion;
+};
+
+export const findDuplicates = (
+    ids: number[],
+    listQuestionIds: number[] = []
+) => {
+    const duplicates = ids.filter((id) => listQuestionIds.includes(id));
+    if (duplicates.length > 0) {
+        console.warn("Found duplicate question IDs:", duplicates);
+        return true;
+    }
+    return false;
 };

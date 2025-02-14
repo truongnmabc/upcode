@@ -59,7 +59,13 @@ const findNextPart = async ({
     currentTopic: ITopicBase;
     currentSubTopic?: ITopicBase;
 }) => {
-    if (!currentTopic || !currentSubTopic) return { nextPart: null, index: -1 };
+    if (!currentTopic || !currentSubTopic)
+        return {
+            nextPart: null,
+            index: -1,
+            isNextSubTopic: false,
+            isNextTopic: false,
+        };
 
     // Tìm part chưa hoàn thành trong subtopic hiện tại
     const nextPartIndex = currentSubTopic.topics.findIndex(
@@ -69,6 +75,8 @@ const findNextPart = async ({
         return {
             nextPart: currentSubTopic.topics[nextPartIndex],
             index: nextPartIndex,
+            isNextSubTopic: false,
+            isNextTopic: false,
         };
     }
 
@@ -82,6 +90,8 @@ const findNextPart = async ({
             return {
                 nextPart: nextSubTopic.topics[nextPartIndex],
                 index: nextPartIndex,
+                isNextSubTopic: true,
+                isNextTopic: false,
             };
         }
     }
@@ -100,13 +110,20 @@ const findNextPart = async ({
                 return {
                     nextPart: nextSubTopic.topics[nextPartIndex],
                     index: nextPartIndex,
+                    isNextSubTopic: false,
+                    isNextTopic: true,
                 };
             }
         }
     }
 
     // Nếu không tìm thấy part nào, trả về null
-    return { nextPart: null, index: -1 };
+    return {
+        nextPart: null,
+        index: -1,
+        isNextSubTopic: false,
+        isNextTopic: false,
+    };
 };
 
 const calculateProgressPassing = async ({
@@ -149,6 +166,8 @@ const FinishLayout = () => {
         correct: number;
         currentTopicId: number;
         indexSubTopic: number;
+        isNextSubTopic: boolean;
+        isNextTopic: boolean;
     }>({
         currentPart: null,
         currentTopicId: 0,
@@ -158,6 +177,8 @@ const FinishLayout = () => {
         total: 1,
         correct: 0,
         indexSubTopic: 1,
+        isNextSubTopic: false,
+        isNextTopic: false,
     });
 
     const handleGetData = useCallback(async () => {
@@ -165,6 +186,10 @@ const FinishLayout = () => {
 
         const { currentTopic, progress, questions } =
             await getCurrentProgressData({ partId, topicName });
+
+        console.log("🚀 ~ handleGetData ~ currentTopic:", currentTopic);
+        console.log("🚀 ~ handleGetData ~ progress:", progress);
+        console.log("🚀 ~ handleGetData ~ questions:", questions);
 
         if (!currentTopic || !progress || !questions) return;
 
@@ -178,10 +203,11 @@ const FinishLayout = () => {
             currentSubTopic?.topics.find((p) => p.id === Number(partId)) ||
             null;
 
-        const { nextPart, index } = await findNextPart({
-            currentTopic,
-            currentSubTopic,
-        });
+        const { nextPart, index, isNextSubTopic, isNextTopic } =
+            await findNextPart({
+                currentTopic,
+                currentSubTopic,
+            });
 
         const { extraPoint } = await calculateProgressPassing({
             progress,
@@ -197,6 +223,8 @@ const FinishLayout = () => {
             currentTurn: currentPart?.turn || 1,
             extraPoint,
             indexSubTopic: index,
+            isNextSubTopic,
+            isNextTopic,
         });
     }, [subTopicId, partId, turn, topicName]);
 

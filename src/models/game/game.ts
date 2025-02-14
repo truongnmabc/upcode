@@ -71,4 +71,6 @@ export interface IGameReducer {
     hasRetakenDiagnosticTest?: boolean;
 
     shouldLoading?: boolean;
+
+    isCreateNewTest?: boolean;
 }

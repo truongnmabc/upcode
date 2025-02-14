@@ -56,6 +56,8 @@ const PassingFinishPage = ({
     extraPoint,
     currentTopicId,
     indexSubTopic,
+    isNextSubTopic,
+    isNextTopic,
 }: {
     currentPart: ITopicBase | null;
     nextPart: ITopicBase | null;
@@ -63,6 +65,8 @@ const PassingFinishPage = ({
     extraPoint: number;
     currentTopicId: number;
     indexSubTopic: number;
+    isNextSubTopic: boolean;
+    isNextTopic: boolean;
 }) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
@@ -193,14 +197,16 @@ const PassingFinishPage = ({
                 >
                     Try Again
                 </MtUiButton>
-                <MtUiButton
-                    block
-                    size="large"
-                    onClick={handleNextPart}
-                    type="primary"
-                >
-                    Continue
-                </MtUiButton>
+                {!isNextTopic && (
+                    <MtUiButton
+                        block
+                        size="large"
+                        onClick={handleNextPart}
+                        type="primary"
+                    >
+                        {isNextSubTopic ? "Next Sub Topic" : "Continue"}
+                    </MtUiButton>
+                )}
             </div>
         </div>
     );
