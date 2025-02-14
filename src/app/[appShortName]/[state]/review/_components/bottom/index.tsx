@@ -6,7 +6,7 @@ import { selectListQuestion } from "@/redux/features/game.reselect";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Dialog } from "@mui/material";
 import { useCallback, useContext, useState } from "react";
-import { genRandomQuestion } from "../content/random";
+// import { genRandomQuestion } from "../content/random";
 import ChoiceQuestionBeforeStart from "../content/random/choiceQuestionBeforeStart";
 import { ReviewContext } from "../context";
 
@@ -30,22 +30,25 @@ const BottomLestTest = () => {
 
     const handleStartTest = useCallback(
         async (e: number) => {
-            const listQuestionLength = listQuestions.length;
+            // const listQuestionLength = listQuestions.length;
 
-            const questions = listQuestions;
-            if (e > listQuestionLength) {
-                const remainLength = e - listQuestionLength;
-                const listQuestion = await genRandomQuestion({
-                    value: remainLength,
-                    excludeListID: listQuestions?.map((item) => item.id),
-                });
-                questions.push(...listQuestion);
-            }
+            // const questions = [...listQuestions];
+            // if (e > listQuestionLength) {
+            //     const remainLength = e - listQuestionLength;
 
-            console.log("🚀 ~ questions:", questions);
+            //     console.log("🚀 ~ remainLength:", remainLength);
+
+            //     const listQuestion = await genRandomQuestion({
+            //         value: remainLength,
+            //         excludeListID: listQuestions?.map((item) => item.id),
+            //     });
+            //     questions.push(...listQuestion);
+            // }
+
+            const ques = listQuestions?.slice(0, e);
             dispatch(
                 startRandomReview({
-                    listQuestion: questions,
+                    listQuestion: ques,
                 })
             );
             handleClose();

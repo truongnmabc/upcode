@@ -12,6 +12,7 @@ import {
 } from "@/redux/features/game";
 import {
     selectCurrentSubTopicIndex,
+    selectIsCreateNewTest,
     selectIsDataLoaded,
     selectListQuestion,
     selectShouldLoading,
@@ -20,7 +21,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import choiceStartCustomTestThunk from "@/redux/repository/game/choiceAnswer/choiceStartTest";
 import { Tooltip } from "@mui/material";
 import clsx from "clsx";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 import ModalDelete from "../modalDelete";
 import ModalSettingCustomTest from "../modalSetting";
@@ -33,11 +34,15 @@ const GridLeftCustomTest = () => {
     const listQuestion = useAppSelector(selectListQuestion);
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const isCreate = useSearchParams().get("isCreate");
     const indexSubTopic = useAppSelector(selectCurrentSubTopicIndex);
     const isDataLoaded = useAppSelector(selectIsDataLoaded);
     const isLoading = useAppSelector(selectShouldLoading);
+    const isCreateNewTest = useAppSelector(selectIsCreateNewTest);
     const isMobile = useIsMobile();
+
+    useEffect(() => {
+        if (isCreateNewTest) setOpenModalSetting(true);
+    }, [isCreateNewTest]);
 
     useEffect(() => {
         const handleGetData = async () => {
@@ -56,11 +61,11 @@ const GridLeftCustomTest = () => {
             return;
         }
 
-        if ((listQuestion?.length === 0 && isDataLoaded) || isCreate)
+        if (listQuestion?.length === 0 && isDataLoaded)
             setOpenModalSetting(true);
 
         return () => setOpenModalSetting(false);
-    }, [listQuestion, isDataLoaded, isLoading, isCreate]);
+    }, [listQuestion, isDataLoaded, isLoading]);
 
     const onClose = useCallback(() => {
         setOpenModalSetting(false);
@@ -238,7 +243,8 @@ const GridLeftCustomTest = () => {
                 <ModalSettingCustomTest
                     item={itemSelect}
                     isShowBtnCancel={
-                        listTest?.length > 0 || listQuestion?.length > 0
+                        !isCreateNewTest &&
+                        (listTest?.length > 0 || listQuestion?.length > 0)
                     }
                     open={openModalSetting}
                     onClose={onClose}

@@ -95,3 +95,8 @@ export const selectShouldLoading = createSelector(
     [gameState],
     (reducer) => reducer.shouldLoading
 );
+
+export const selectIsCreateNewTest = createSelector(
+    [gameState],
+    (reducer) => reducer.isCreateNewTest
+);

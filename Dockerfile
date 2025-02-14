@@ -1,35 +1,40 @@
-# ✅ 1️⃣ Build stage: Cài đặt dependencies và build ứng dụng
-FROM node:22-alpine AS builder
-WORKDIR /app/web
+FROM node:22-alpine AS base
 
-# ✅ 2️⃣ Copy package.json và yarn.lock trước để tối ưu cache Docker
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --production=false
+FROM base AS deps
 
-# ✅ 3️⃣ Copy toàn bộ source code (không copy node_modules từ máy local)
+RUN apk add --no-cache libc6-compat
+
+WORKDIR /app
+
+COPY package.json yarn.lock* ./
+
+RUN yarn install --frozen-lockfile 
+
+FROM base AS builder
+
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# ✅ 4️⃣ Build ứng dụng Next.js
-RUN yarn build
+COPY .env.local .env.production
+RUN yarn run build
 
+FROM base AS runner
+WORKDIR /app
 
-# ✅ 5️⃣ Production stage: Chỉ chứa các file cần thiết để chạy ứng dụng
-FROM node:22-alpine AS runner
-WORKDIR /app/web
-
-# ✅ 6️⃣ Copy build output từ builder stage
-COPY --from=builder /app/web/.next .next
-COPY --from=builder /app/web/public public
-COPY --from=builder /app/web/package.json package.json
-
-# ✅ 7️⃣ Cài đặt **chỉ dependencies cần thiết** để chạy production
-RUN yarn install --production --frozen-lockfile
-
-# ✅ 8️⃣ Thiết lập môi trường production
 ENV NODE_ENV=production
 
-# ✅ 9️⃣ Mở cổng ứng dụng
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
 EXPOSE 3000
 
-# ✅ 🔟 Chạy ứng dụng Next.js
-CMD ["yarn", "start", "-p", "3000"]
+ENV PORT=3000
+
+CMD HOSTNAME="0.0.0.0" node server.js

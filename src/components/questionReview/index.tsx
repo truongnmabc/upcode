@@ -113,7 +113,7 @@ const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
         <div className="rounded-b-lg  bg-white flex flex-1 overflow-hidden  flex-col gap-2 p-4">
             <div className="w-full flex justify-between gap-2 ">
                 {item?.text && (
-                    <MathJax>
+                    <MathJax dynamic>
                         <span
                             dangerouslySetInnerHTML={{
                                 __html: MyCrypto.decrypt(item?.text) || "",
@@ -153,14 +153,12 @@ const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
                             answerCorrect={choice.correct}
                         />
                         {choice?.text && (
-                            <MathJax>
+                            <MathJax dynamic>
                                 <span
                                     dangerouslySetInnerHTML={{
                                         __html: choice?.text || "",
                                     }}
-                                    style={{
-                                        fontSize: 12,
-                                    }}
+                                    className="text-xs"
                                 />
                             </MathJax>
                         )}
@@ -169,7 +167,7 @@ const ContentAnswer = ({ item }: { item: ICurrentGame }) => {
             </div>
             <div className=" hidden sm:block">
                 {item?.explanation && (
-                    <MathJax>
+                    <MathJax dynamic>
                         <span
                             dangerouslySetInnerHTML={{
                                 __html:

@@ -45,7 +45,7 @@ const FinalTestLayout = ({ contentSeo }: { contentSeo?: string }) => {
                             xs: 12,
                         }}
                     >
-                        <div className="w-full flex flex-1 flex-col gap-4 sm:gap-6 pb-12  sm:p-0  h-full">
+                        <div className="w-full flex flex-1 flex-col gap-4 sm:gap-6 pb-24  sm:p-0  h-full">
                             <MainViewFinalTest />
                             <BannerDownloadApp />
                             {contentSeo && (

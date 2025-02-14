@@ -20,6 +20,7 @@ export const handleGetNextPart = async ({
     turn?: number;
 }> => {
     const currentTopic = await db?.topics.get(topic?.id);
+    console.log("🚀 ~ currentTopic:", currentTopic);
 
     if (!currentTopic) {
         toast.error("Error: Can't get data");
@@ -95,7 +96,7 @@ export const handleNavigateStudy = async ({
     }
     if (allCompleted) {
         router.push(
-            `${RouterApp.Finish}?partId=${partId}&subTopicId=${subTopicId}&topic=${topic.tag}`
+            `${RouterApp.Finish}?partId=${partId}&subTopicId=${subTopicId}&topic=${topic.slug}`
         );
         return;
     }

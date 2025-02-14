@@ -1,5 +1,8 @@
-# dependencies
-/node_modules
+Dockerfile
+.dockerignore
+node_modules
+README.md
+
 /.pnp
 /.pnp.js
 
@@ -14,15 +17,11 @@
 /e2e
 
 # next.js
-/.next/
-/.next/cache/
-/out/
-/build
+.next
 
 # misc
 .DS_Store
 *.pem
-.env*.local
 
 # debug
 npm-debug.log*
@@ -37,3 +36,4 @@ yarn-error.log*
 # Ignore thư mục Git
 .git
 .gitignore
+docker

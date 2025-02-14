@@ -27,6 +27,7 @@ const HardQuestions = ({ isMobile }: { isMobile: boolean }) => {
                 countQuestionTopic,
                 remainderQuestionTopic,
                 selectListTopic: topics,
+                target: value,
             });
             dispatch(
                 startRandomReview({

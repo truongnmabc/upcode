@@ -22,7 +22,7 @@ const ContentCustomTest = () => {
                 <div className="w-full hidden sm:block text-center capitalize text-xl font-semibold">
                     Custom Test {indexSubTopic}
                 </div>
-                <ProgressQuestion />
+                <ProgressQuestion isActions={feedBack === "exam"} />
                 <CountTimeCustomTest />
                 <QuestionContent showStatus={feedBack === "newbie"} />
                 <ChoicesPanel isActions={feedBack === "exam"} />

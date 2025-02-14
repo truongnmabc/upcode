@@ -27,12 +27,13 @@ export const genRandomQuestion = async ({
         const countQuestionTopic = Math.floor(value / topics.length);
         const remainderQuestionTopic = value % topics.length;
 
-        const listQuestion = await fetchQuestionsForTopics(
-            topics,
+        const listQuestion = await fetchQuestionsForTopics({
+            selectListTopic: topics,
             countQuestionTopic,
             remainderQuestionTopic,
-            excludeListID
-        );
+            excludeListID,
+            target: value,
+        });
         return listQuestion;
     }
 

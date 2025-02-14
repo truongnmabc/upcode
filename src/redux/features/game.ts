@@ -88,6 +88,9 @@ export const gameSlice = createSlice({
         setCurrentTopicId: (state, action) => {
             state.currentTopicId = action.payload;
         },
+        shouldCreateNewTest: (state, action) => {
+            state.isCreateNewTest = action.payload;
+        },
         startCustomTest: (state, action) => {
             const {
                 listQuestion,
@@ -97,6 +100,7 @@ export const gameSlice = createSlice({
                 passingThreshold,
                 currentSubTopicIndex,
             } = action.payload;
+
             state.listQuestion = listQuestion;
             state.currentGame = listQuestion[0];
             state.currentTopicId = parentId;
@@ -107,6 +111,11 @@ export const gameSlice = createSlice({
             state.gameDifficultyLevel = gameDifficultyLevel;
             state.passingThreshold = passingThreshold;
             state.currentSubTopicIndex = currentSubTopicIndex;
+        },
+
+        updateFeedbackCustomTest: (state, action) => {
+            const { gameDifficultyLevel } = action.payload;
+            state.gameDifficultyLevel = gameDifficultyLevel;
         },
 
         resetState: () => {
@@ -258,6 +267,7 @@ export const {
     setTurtGame,
     startOverGame,
     continueGame,
+    shouldCreateNewTest,
     endTest,
     startCustomTest,
     resetState,
@@ -268,6 +278,7 @@ export const {
     shouldEndTimeTest,
     setCurrentTopicId,
     shouldLoading,
+    updateFeedbackCustomTest,
 } = actions;
 
 export const gameState = (state: RootState) => state.gameReducer;

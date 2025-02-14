@@ -5,13 +5,16 @@ import MyContainer from "@/components/container";
 import { TypeParam } from "@/constants";
 import RouterApp from "@/constants/router.constant";
 import { db } from "@/db/db.model";
-import { handleNavigateStudy } from "@/utils/handleNavigateStudy";
-import { resetState, startTryAgainDiagnostic } from "@/redux/features/game";
+import {
+    shouldCreateNewTest,
+    startTryAgainDiagnostic,
+} from "@/redux/features/game";
 import { useAppDispatch } from "@/redux/hooks";
 import initCustomTestThunk from "@/redux/repository/game/initData/initCustomTest";
 import initDiagnosticTestQuestionThunk from "@/redux/repository/game/initData/initDiagnosticTest";
 import initFinalTestThunk from "@/redux/repository/game/initData/initFinalTest";
 import initPracticeThunk from "@/redux/repository/game/initData/initPracticeTest";
+import { handleNavigateStudy } from "@/utils/handleNavigateStudy";
 import { updateDbTestQuestions } from "@/utils/updateDb";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
@@ -121,7 +124,7 @@ const HeaderResultTest = () => {
             return;
         }
         if (type === TypeParam.customTest) {
-            dispatch(resetState());
+            dispatch(shouldCreateNewTest(true));
             router.push(`${RouterApp.Custom_test}?isCreate=true`);
             return;
         }

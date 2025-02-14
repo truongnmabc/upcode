@@ -37,7 +37,7 @@ export const DialogDetailQuestionReview = ({
             <div className="rounded-b-lg  bg-white sm:min-w-[1024px] flex flex-1 overflow-hidden  flex-col gap-2 p-3 sm:p-6">
                 <div className="w-full flex flex-col sm:flex-row justify-between gap-2 ">
                     {item?.text && (
-                        <MathJax>
+                        <MathJax dynamic>
                             <span
                                 dangerouslySetInnerHTML={{
                                     __html: MyCrypto.decrypt(item?.text),

@@ -95,8 +95,6 @@ const finishQuestionThunk = createAsyncThunk(
                 .where("id")
                 .equals(currentProgress.id)
                 .modify((topic) => {
-                    let isAllSubTopicsCompleted = true;
-
                     topic.topics.forEach((subTopic) => {
                         if (subTopic.id === subTopicProgressId) {
                             subTopic.topics.forEach((part) => {
@@ -110,17 +108,20 @@ const finishQuestionThunk = createAsyncThunk(
                                 (part) => part.status === 1
                             );
 
-                            if (!isSubTopicCompleted)
-                                isAllSubTopicsCompleted = false;
-
                             subTopic.status = isSubTopicCompleted
                                 ? 1
                                 : subTopic.status;
                         }
                     });
 
+                    const isSubTopicCompleted = topic.topics.every(
+                        (part) => part.status === 1
+                    );
+
                     // Nếu tất cả subtopic đã hoàn thành, cập nhật trạng thái topic
-                    topic.status = isAllSubTopicsCompleted ? 1 : topic.status;
+                    topic.status = isSubTopicCompleted ? 1 : topic.status;
+
+                    console.log("🚀 ~ .modify ~ topic:", topic);
                 });
 
             console.log("✅ Update success: Topics modified.");
