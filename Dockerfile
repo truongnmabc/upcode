@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-COPY .env.local .env.production
+COPY .env .env.production
 RUN yarn run build
 
 FROM base AS runner
@@ -37,4 +37,4 @@ EXPOSE 3000
 
 ENV PORT=3000
 
-CMD HOSTNAME="https://asvab.cd.worksheetzone.org/" node server.js
+CMD HOSTNAME="0.0.0.0" node server.js
