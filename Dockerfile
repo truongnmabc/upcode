@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-COPY .env.local .env.production
+COPY .env .env.production
 RUN yarn run build
 
 FROM base AS runner
