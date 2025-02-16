@@ -25,12 +25,14 @@ jobs:
               run: |
                 touch .env
                 echo "NEXT_PUBLIC_API_URL=${{ secrets.API_URL }}" >> .env
+                echo "DEV_BASE_API=${{ secrets.API_URL }}" >> .env
                 echo "APP_ID=${{ secrets.APP_ID }}" >> .env
                 echo "NEXT_PUBLIC_APPLE_ID=${{ secrets.NEXT_PUBLIC_APPLE_ID }}" >> .env
                 echo "NEXT_PUBLIC_APP_SHORT_NAME=${{ secrets.NEXT_PUBLIC_APP_SHORT_NAME }}" >> .env
                 echo "NEXT_PUBLIC_GOOGLE_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_ID }}" >> .env
                 echo "NEXT_PUBLIC_SECRET_KEY=${{ secrets.NEXT_PUBLIC_SECRET_KEY }}" >> .env
                 echo "AUTH_TRUST_HOST=${{ secrets.API_URL }}" >> .env
+                echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env
                 cat .env
 
             - name: Set Docker Image Name
