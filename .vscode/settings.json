@@ -1,0 +1,27 @@
+{
+    "cSpell.words": [
+        "adsbygoogle",
+        "asvab",
+        "braintree",
+        "clsx",
+        "Dexie",
+        "embla",
+        "indexeddb",
+        "mathjax",
+        "mtui",
+        "passemail",
+        "passemall",
+        "persistor",
+        "reduxjs",
+        "rgba",
+        "subcription",
+        "totoro",
+        "turbopack",
+        "uuidv",
+        "vampiro"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.tslint": "always",
+        "source.fixAll.eslint": "always"
+    }
+}

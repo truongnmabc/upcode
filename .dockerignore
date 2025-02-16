@@ -1,0 +1,39 @@
+Dockerfile
+.dockerignore
+node_modules
+README.md
+
+/.pnp
+/.pnp.js
+
+# testing
+/coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/tests-examples
+/tests
+/e2e
+
+# next.js
+.next
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# other
+/ssh_keys
+/scripts
+
+# Ignore thư mục Git
+.git
+.gitignore
+docker
