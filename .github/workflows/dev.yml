@@ -12,6 +12,7 @@ jobs:
         permissions:
             contents: read
             issues: write
+        environment: dev
         strategy:
             matrix:
                 node-version: [22.x]
