@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
     push:
-        branches: ["dev"]
+        branches: ["asvab-dev"]
     pull_request:
-        branches: ["dev"]
+        branches: ["asvab-dev"]
 
 jobs:
     build_and_deploy:
@@ -23,17 +23,18 @@ jobs:
 
             - name: Create .env file
               run: |
-                touch .env
-                echo "NEXT_PUBLIC_API_URL=${{ secrets.API_URL }}" >> .env
-                echo "DEV_BASE_API=${{ secrets.API_URL }}" >> .env
-                echo "APP_ID=${{ secrets.APP_ID }}" >> .env
-                echo "NEXT_PUBLIC_APPLE_ID=${{ secrets.NEXT_PUBLIC_APPLE_ID }}" >> .env
-                echo "NEXT_PUBLIC_APP_SHORT_NAME=${{ secrets.NEXT_PUBLIC_APP_SHORT_NAME }}" >> .env
-                echo "NEXT_PUBLIC_GOOGLE_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_ID }}" >> .env
-                echo "NEXT_PUBLIC_SECRET_KEY=${{ secrets.NEXT_PUBLIC_SECRET_KEY }}" >> .env
-                echo "AUTH_TRUST_HOST=${{ secrets.API_URL }}" >> .env
-                echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env
-                cat .env
+                  touch .env
+                  echo "NEXT_PUBLIC_API_URL=${{ secrets.ASVAB_API_URL }}" >> .env
+                  echo "DEV_BASE_API=${{ secrets.ASVAB_API_URL }}" >> .env
+                  echo "APP_ID=${{ secrets.APP_ID }}" >> .env
+                  echo "NEXT_PUBLIC_APPLE_ID=${{ secrets.NEXT_PUBLIC_APPLE_ID }}" >> .env
+                  echo "NEXT_PUBLIC_APP_SHORT_NAME=${{ secrets.NEXT_PUBLIC_APP_SHORT_NAME }}" >> .env
+                  echo "NEXT_PUBLIC_GOOGLE_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_ID }}" >> .env
+                  echo "NEXT_PUBLIC_SECRET_KEY=${{ secrets.NEXT_PUBLIC_SECRET_KEY }}" >> .env
+                  echo "AUTH_TRUST_HOST=${{ secrets.ASVAB_API_URL }}" >> .env
+                  echo "NEXT_PUBLIC_WORDPRESS_API_URL=${{ secrets.NEXT_PUBLIC_WORDPRESS_API_URL }}" >> .env
+                  echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env
+                  cat .env
 
             - name: Set Docker Image Name
               run: |
@@ -55,7 +56,7 @@ jobs:
               uses: docker/build-push-action@v5
               with:
                   context: .
-                  file: ./Dockerfile
+                  file: docker/asvab/Dockerfile
                   push: true
                   tags: ${{ env.IMAGE_URL }},${{ env.IMAGE_URL_LATEST }}
                   cache-from: type=gha
@@ -67,6 +68,6 @@ jobs:
               uses: caprover/deploy-from-github@v1.1.2
               with:
                   server: "${{ secrets.CAPROVER_SERVER }}"
-                  app: "${{ secrets.APP_NAME }}"
+                  app: "${{ secrets.CAPROVER_APP_NAME_ASVAB }}"
                   token: "${{ secrets.CAPROVER_API_TOKEN }}"
                   image: ${{ env.IMAGE_URL }}
