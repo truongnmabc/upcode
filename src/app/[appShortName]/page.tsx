@@ -23,6 +23,7 @@ export default async function Home({ params }: Params) {
         const headersList = await headers();
         const userAgent = headersList.get("user-agent");
         const isMobile = detectAgent(userAgent || "");
+        console.log("🚀 ~ Home ~ isMobile:", isMobile)
         const appType = getAppType(appShortName);
 
         const { appInfos, contentSeo, topics } = await fetchAppDataHomePage(
