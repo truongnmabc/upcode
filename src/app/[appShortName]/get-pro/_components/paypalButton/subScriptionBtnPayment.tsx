@@ -56,8 +56,8 @@ const SubScriptionButton = ({
 
                 let price = "";
                 // cancel subscription trước đó (trường hợp upgrade lên gói mới) (cancel trên paypal)
-                if (details.billing_info.last_payment) {
-                    price = details.billing_info.last_payment?.amount?.value;
+                if (details?.billing_info?.last_payment) {
+                    price = details?.billing_info?.last_payment?.amount?.value;
                 } else {
                     // *NOTE: cho check lai
                     // let item = details.billing_info.cycle_executions?.find(
