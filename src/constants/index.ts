@@ -144,13 +144,13 @@ export const ONE_TIME_PRO = "oneTimePro";
 export const SUBSCRIPTION = "subcription";
 export const ONETIME = "onetime";
 
-export const PAYPAL_SUBSCRIPTION_CLIENT_ID = isProduction
+export const PAYPAL_SUBSCRIPTION_CLIENT_ID = false
     ? "AdB2eO_M5-okrwgabqjSMgbxuJGSXuw7tOTXNIPonty8TiHtCTZGjIErVHaBRYhsGQWNYZQjQlq4tJat"
     : "AVyimUfmrrnWOGW7GFSXlYm77H4O-JvvRBSBMqBDNj1_ATxF-hRsccOmXxx8lenoD1SND5UjC-MlY9Jm";
 
 export const PAYPAL_SUBSCRIPTION_KEY = "subcription_key";
 
-export const PAYPAL_CLIENT_ID = isProduction
+export const PAYPAL_CLIENT_ID = false
     ? "AdB2eO_M5-okrwgabqjSMgbxuJGSXuw7tOTXNIPonty8TiHtCTZGjIErVHaBRYhsGQWNYZQjQlq4tJat"
     : "ASZuK4V1rzGFj333OzSTQM_TeNeD7VWkhTCUjoy2y6p7dgbIAoSYTSGaKwMGiGVoaHMxC-Mdb8D3wa3E";
 
