@@ -74,7 +74,7 @@ const nextConfig: NextConfig = {
     async rewrites() {
         const isSingleApp = process.env["NEXT_PUBLIC_APP_SHORT_NAME"];
         if (isSingleApp) {
-            const pageStatic = ["about-us", "contact", "getPro", "billing"];
+            const pageStatic = ["about-us", "contact", "get-pro", "billing"];
             const pageDynamic1 = [
                 "review",
                 "result_test",

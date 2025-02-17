@@ -1,6 +1,6 @@
 const RouterApp = {
     Home: "/",
-    Get_pro: "/getPro",
+    Get_pro: "/get-pro",
     Topics: "/topics",
     Finish: "/finish",
     About: "/about-us",

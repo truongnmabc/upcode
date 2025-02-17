@@ -5,8 +5,11 @@ import TitleHomeApp from "@/components/home/title";
 import SeoContent from "@/components/seoContent/seoContent";
 import HomeSingleApp from "@/components/state-app";
 import { fetchAppDataHomePage } from "@/services/homeData.service";
+import { detectAgent } from "@/utils/detectDevice";
 import { getAppType } from "@/utils/web";
 import dynamic from "next/dynamic";
+import { headers } from "next/headers";
+
 const BannerHome = dynamic(
     () => import("@/components/state-app/newHome/banner/index")
 );
@@ -17,6 +20,9 @@ type Params = {
 export default async function Home({ params }: Params) {
     try {
         const appShortName = (await params)?.appShortName;
+        const headersList = await headers();
+        const userAgent = headersList.get("user-agent");
+        const isMobile = detectAgent(userAgent || "");
         const appType = getAppType(appShortName);
 
         const { appInfos, contentSeo, topics } = await fetchAppDataHomePage(
@@ -29,7 +35,11 @@ export default async function Home({ params }: Params) {
             return (
                 <MyContainer>
                     <TitleHomeApp appInfo={appInfos} />
-                    <GridTopics topics={topics} appInfo={appInfos} />
+                    <GridTopics
+                        isMobile={isMobile}
+                        topics={topics}
+                        appInfo={appInfos}
+                    />
                     <GridTest />
                     <div className="sm:my-[48px] sm:mb-[120px] my-[24px] mb-[48px]">
                         <BannerHome appInfo={appInfos} isHomePage={true} />

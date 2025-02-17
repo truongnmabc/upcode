@@ -9,9 +9,11 @@ import Wrapper from "./item/wrapper";
 const GridTopics = ({
     topics,
     appInfo,
+    isMobile
 }: {
     appInfo: IAppInfo;
     topics: ITopicBase[];
+    isMobile:boolean
 }) => {
     return (
         <div className="w-full  pt-6 sm:pt-14">
@@ -26,7 +28,7 @@ const GridTopics = ({
                 the list below and practice now!
             </h3>
 
-            <PassingHome />
+            <PassingHome isMobile={isMobile} />
 
             <div
                 className={clsx(
