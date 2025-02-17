@@ -141,7 +141,6 @@ const SubScriptionButton = ({
 
         
         (data: Record<string, unknown>, actions: CreateSubscriptionActions) => {
-            console.log("🚀 ~ valueButton:", valueButton.planId)
 
             return actions.subscription.create({
                 plan_id: valueButton.planId,
