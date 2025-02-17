@@ -3,7 +3,7 @@ import { useAppSelector } from "@/redux/hooks";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useEffect, useState } from "react";
 import MyContainer from "@/components/container";
-import ProPackage from "@/app/[appShortName]/getPro/_components/proPackage";
+import ProPackage from "@/app/[appShortName]/get-pro/_components/proPackage";
 import { db } from "@/db/db.model";
 import { IPaymentInfos } from "@/models/payment/payment";
 import { selectAppInfo } from "@/redux/features/appInfo.reselect";
