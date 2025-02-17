@@ -107,9 +107,9 @@ export const getConfigProV2 = (appInfo: IAppInfo): IResult => {
             );
 
             // Development mode mock data
-            if (process.env.NODE_ENV === "development") {
+            // if (process.env.NODE_ENV === "development") {
                 mockPlanIds(result.prices as IPriceConfig[]);
-            }
+            // }
         } else if (oneTime) {
             // *NOTE: oneTime hiện chưa check
             // result.type = ONETIME;
