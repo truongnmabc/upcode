@@ -28,6 +28,7 @@ const ProPackage = () => {
     useEffect(() => {
         if (appInfo) {
             const { prices, type } = getConfigProV2(appInfo);
+            console.log("🚀 ~ useEffect ~ prices:", prices)
             setPrices(prices);
             setActive(prices[1]);
             setType(type);
